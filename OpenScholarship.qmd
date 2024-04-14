@@ -1,6 +1,6 @@
 ---
-#bibliography: references.bib
 engine: knitr
+bibliography: references.bib
 ---
 
 ```{css}
@@ -10,5 +10,98 @@ p {
 }
 ```
 
-# Open Scolarship
+```{r include=FALSE}
+library(checkdown)
+```
 
+# Open Scholarship
+
+This book aims to provide a stepping stone for students and scholars of traditionally less quantitative and computational disciplines - such as some branches of linguistics and language education research - to gather first (hopefully positive!) experiences with statistical and computational approaches to working with empirical data[^openscholarship-1]. The underlying belief is that these methods ought to be accessible to all, regardless of their academic background or personal circumstances. To this end, this book embraces the principles of Open Scholarship. Open Scholarship "reflects the idea that knowledge of all kinds should be openly shared, transparent, rigorous, reproducible, replicable, accumulative, and inclusive (allowing for all knowledge systems)" [@parsonsCommunitysourcedGlossaryOpen2022]. For this to be the case, teaching materials need to shared openly and the tools and software taught in these resources need to be freely accessible, too. In the following, we will briefly consider the role of Open Educational Resources (OERs) and open-source software in our pursuit of Open Scholarship.
+
+[^openscholarship-1]: Emprical data is based on what is experienced or observed rather than on theory alone.
+
+## Open Source
+
+In line with its aim to provide an accessible introduction to statistics and data visualisation, this textbook relies exclusively on open-source software and programming languages, foremost LibreOffice Calc, R and RStudio. Open source refers to software whose source code is available under a license that grants anyone the rights to study, modify, and distribute the software to anyone and for any purpose. If we think of a software application as a cake, the source code is like its recipe. It contains the list of ingredients and the steps to bake the cake. Open source means that the recipe is publicly available. You can access it, read it, and use it to bake the cake. You can also modify it to add your own twist, such as adding a new ingredient or making it vegan, and share it with others. In the context of software, this allows many people to collaborate, make improvements, and share their versions, resulting in better and more diverse software.
+
+Using open-source software in this introductory textbook means that anyone[^openscholarship-2] can download, install and use the required software at no cost. However, it is very important to note that not all free software (*freeware*) is open source. Let us illustrate the difference by comparing different spreadsheet programmes as, in the following chapter, we will begin exploring tabular data structures in a spreadsheet programme.
+
+[^openscholarship-2]: Provided that they have access to the internet and a functioning personal computer.
+
+The most most widely used spreadsheet programme to date is undoubtedly Microsoft Excel. Excel is a commercial, proprietary spreadsheet editor which forms part of the Microsoft 365 package. As such, to use Excel on your personal computer, you need to buy a license or be a member of an organisation (e.g., your university or company) that pays for such a license. It is true that Microsoft now also offers a free (functionally limited) web-based version of Excel, yet this still does not make it open source. This is because Microsoft does not share the source code of any Excel version, which means that, even if they are giving away free cake, we do not have the recipe to bake the cake ourselves should the company decide to start charging money for the cake or to no longer distribute it at all! Similarly, you may be familiar with a popular, web-based alternative to Excel: Google Sheets. Whilst it is (currently) free to use, as the name suggests, Google Sheets is owned by Google and is therefore not open source, either. By contrast, LibreOffice Calc is a project of The Document Foundation (TDF) that provides a popular, free, open-source office productivity software suite comparable to Microsoft 365 called LibreOffice. LibreOffice is developed collaboratively by very many different people across the world who all do so on a volunteer basis. The Document Foundation estimates that there are 200 million active LibreOffice users worldwide, about 25% of whom are thought to be students [figures from 2018 see @LibreOffice2024]. Its popularity is likely due to the fact that it not only uses open formats (e.g., `.odt` and `.ods`), but can also open and save to a range of popular formats including those used by Microsoft (e.g., `.docx` and `.xlsx`).
+
+> ## Quiz time!
+>
+> 1\) Which of these is an open-source alternative to Microsoft Word?
+>
+> ```{r Word-question, echo=FALSE, results="asis"}
+> check_question("LibreOffice Writer", options = c("LibreOffice Writer", "Google Docs", "Pages"), type = "radio",
+> button_label = "Check answer", q_id = 1,
+> right = "Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Writer as part of the LibreOffice package.",
+> wrong = "No, this software is not open source. It is owned by a company.")
+> ```
+>
+>  
+>
+> 2\) Which of these is an open-source alternative to Microsoft Powerpoint?
+>
+> ```{r Powerpoint-question, echo=FALSE, results="asis"}
+> check_question("LibreOffice Impress", options = c("Keynote", "Google Slides", "LibreOffice Impress"), type = "radio",
+> button_label = "Check answer", q_id = 2,
+> right = "Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Impress as part of the LibreOffice package.",
+> wrong = "No, this software is not open source.")
+> ```
+>
+>  
+>
+> 3\) Not only can software be open source, programming languages can, too. In fact, most modern programming languages are open source. In this book, we will focus on the open-source programming language `R`. Which of these is another open-source programming language?
+>
+> ```{r Python-question, echo=FALSE, results="asis"}
+> check_question("Python", options = c("MATLAB", "Flash", "Python"), type = "radio",
+> button_label = "Check answer", q_id = 3,
+> right = "Correct!",
+> wrong = "No, this is one of the few genuinely closed-source programming languages.")
+> ```
+>
+>  
+>
+> 4\) There are also many open-source operating systems. Which of these is an open-source alternative to the operating system Windows?
+>
+> ```{r Windows-question, echo=FALSE, results="asis"}
+> check_question("Ubuntu", options = c("MacOS", "Ubuntu", "iOS"), type = "radio",
+> button_label = "Check answer", q_id = 4,
+> right = "Correct! Ubuntu is one of many Linux distributions, a family of open source operating systems. You can find out more here: https://itsfoss.com/getting-started-with-ubuntu/.",
+> wrong = "No, this operating system is not open source. It is owned by Apple.")
+> ```
+>
+>  
+
+::: callout-caution
+## Task 1
+
+Your first task is to **download** and **install** **LibreOffice** as we will use its spreadsheet editor, **LibreOffice Calc**, in the next few chapters.
+
+-   LibreOffice is available for Windows, Mac and Linux. You can download it from here: <https://www.libreoffice.org/download/download-libreoffice/.>
+
+-   You will find detailed installation instructions here: [https://www.libreoffice.org/get-help/install-howto/.](https://www.libreoffice.org/get-help/install-howto/.You)
+
+-   Detailed documentation is also available in many different languages: <https://documentation.libreoffice.org/en/english-documentation/>
+:::
+
+## Open Education
+
+The web-based version of this textbook is published as an Open Educational Resource (OER) under the Creative Commons license: [CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/). This means that it is free to read and use, as well as edit and transform, provided that a) the original author and source is mentioned, b) any derived version is not made into a commercial product, and c) that any derived versions of this textbook (e.g., a translated version or a version adapted for historians) are also shared with this same license.
+
+In line with the principles of Open Education, all of the datasets that we will work with in this textbook have been published in Open Access, which means that we can freely use them to learn about statistics and data visualisation using real datasets from published research studies in applied linguistics and language education.
+
+::: callout-note
+## Going further
+
+This chapter has simplified things considerably. To be considered open source, software distributions actually have to comply with ten criteria. You can read up on them here:
+
+-   <https://opensource.org/osd>
+
+To find out more about open source software in the context of research, I recommend reading:
+
+-   <https://the-turing-way.netlify.app/reproducible-research/open/open-source>
+:::
