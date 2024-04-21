@@ -6,7 +6,8 @@
 \documentclass[
   letterpaper,
   DIV=11,
-  numbers=noendperiod]{scrreprt}
+  numbers=noendperiod,
+  oneside]{scrreprt}
 
 \usepackage{amsmath,amssymb}
 \usepackage{iftex}
@@ -40,17 +41,32 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
+\usepackage[left=1in,marginparwidth=2.0666666666667in,textwidth=4.1333333333333in,marginparsep=0.3in]{geometry}
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{5}
 % Make \paragraph and \subparagraph free-standing
+\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+\makeatother
 
 
 \providecommand{\tightlist}{%
@@ -175,6 +191,10 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
+\makeatletter
+\@ifpackageloaded{sidenotes}{}{\usepackage{sidenotes}}
+\@ifpackageloaded{marginnote}{}{\usepackage{marginnote}}
+\makeatother
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -202,7 +222,7 @@
 \subtitle{A very gentle introduction to statistics and data
 visualisation in R}
 \author{Elen Le Foll}
-\date{2024-04-20}
+\date{2024-04-21}
 
 \begin{document}
 \maketitle
@@ -220,10 +240,12 @@ visualisation in R}
 
 \markboth{Preface}{Preface}
 
-\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomrule=.15mm, coltitle=black, breakable, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, arc=.35mm, left=2mm, opacitybacktitle=0.6, opacityback=0, bottomtitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, breakable, titlerule=0mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, bottomtitle=1mm, arc=.35mm, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, toptitle=1mm, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
 
 This textbook draft is very much \textbf{work in progress}. I intend to
 progressively add to it over the course of the summer semester 2024.
+Note that the PDF version is not optimised in any way. I recommend only
+looking at the web-book.
 
 This first draft is intended as complementary materials to my summer
 semester M.A.~class: ``More than counting words: Introduction to
@@ -265,7 +287,7 @@ A}.
 
 }
 
-\caption{\emph{Artwork by @allison\_horst}}
+\caption{Artwork by @allison\_horst}
 
 \end{figure}%
 
@@ -374,7 +396,7 @@ an open-source alternative to the operating system Windows?
 ~
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomrule=.15mm, coltitle=black, breakable, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, titlerule=0mm, colframe=quarto-callout-caution-color-frame, colback=white, arc=.35mm, left=2mm, opacitybacktitle=0.6, opacityback=0, bottomtitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Task 1}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, breakable, titlerule=0mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, bottomtitle=1mm, arc=.35mm, colback=white, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Task 1}, toptitle=1mm, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
 
 Your first task is to \textbf{download} and \textbf{install}
 \textbf{LibreOffice} as we will use its spreadsheet editor,
@@ -398,7 +420,8 @@ Your first task is to \textbf{download} and \textbf{install}
 \section{Open Education}\label{open-education}
 
 The web-based version of this textbook is published as an Open
-Educational Resource (OER) under the Creative Commons license:
+Educational Resource (OER; see Figure~\ref{fig-OER}) under the Creative
+Commons license:
 \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{\texttt{CC\ BY-NC-SA}}.
 This means that it is free to read and use, as well as edit, remix, and
 expand upon, provided that a) the original author and source is
@@ -418,17 +441,21 @@ which means that we can freely use them to learn about statistics and
 data visualisation using real datasets from published research studies
 in applied linguistics and language education.
 
-\begin{figure}[H]
+\begin{figure}
 
-{\centering \includegraphics{images/oer.jpg}
+\centering{
+
+\includegraphics{images/oer.jpg}
 
 }
 
-\caption{OER sketch note by Yvonne Stry}
+\caption{\label{fig-OER}OER sketch note by
+\href{https://leko.th-nuernberg.de/portal_digitale_lehre/praxisbeispiele/lehrmaterialien-teilen-fuer-flexibles-lernen/}{Yvonne
+Stry}}
 
 \end{figure}%
 
-\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomrule=.15mm, coltitle=black, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, arc=.35mm, left=2mm, opacitybacktitle=0.6, opacityback=0, bottomtitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Tips to go further}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, leftrule=.75mm, breakable, titlerule=0mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, bottomtitle=1mm, arc=.35mm, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Tips to go further}, toptitle=1mm, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
 
 This chapter has simplified things considerably. To be considered open
 source, software distributions actually have to comply with ten
@@ -463,146 +490,40 @@ exploring the following OER databases:
 
 \bookmarksetup{startatroot}
 
-\chapter{Data}\label{data}
+\chapter{Installing R and RStudio}\label{installing-r-and-rstudio}
 
-Most research in the language sciences is empirical, which means that it
-is based on the analysis of data. But what kind of data are analysed in
-(applied) linguistics and language education research?
+\subsubsection*{\texorpdfstring{\textbf{Chapter
+overview}}{Chapter overview}}\label{chapter-overview}
+\addcontentsline{toc}{subsubsection}{\textbf{Chapter overview}}
 
-\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomrule=.15mm, coltitle=black, breakable, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, titlerule=0mm, colframe=quarto-callout-caution-color-frame, colback=white, arc=.35mm, left=2mm, opacitybacktitle=0.6, opacityback=0, bottomtitle=1mm, leftrule=.75mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Task 1}, toptitle=1mm]
-
-To find out more, visit the \href{https://iris-database.org/}{IRIS
-website}. IRIS is a public, open repository where anyone can deposit the
-data, materials, instruments, code, and tools that they used ``for
-research into languages, including first, second, and beyond, and signed
-language learning, multilingualism, language education, language use,
-and language processing''. Go to its
-\href{https://iris-database.org/search}{\texttt{Search\ and\ Download}}
-page and scroll down to the filter option \texttt{Data\ Type} to get an
-impression of the range of data types commonly used in language-related
-research.
-
-\begin{figure}[H]
-
-{\centering \includegraphics[width=2.60417in,height=\textheight]{images/IRISDataTypes.png}
-
-}
-
-\caption{\emph{Screenshot from the IRIS database search page (accessed
-on 17 April 2024)}}
-
-\end{figure}%
-
-\end{tcolorbox}
-
-\section{Types of data}\label{types-of-data}
-
-Although the data types listed on the IRIS search page are very broad
-and the categories not clearly defined, the list (see Fig. *) serves to
-illustrate the breadth of research data types analysed in the language
-sciences. The first category, `Oral production', for instance, could
-equally refer to text transcriptions of language users' oral production,
-audio, or video files. It could also either refer to raw data or to
-(more or less) processed data. For example, a transcript of a
-conversation could have been annotated for part-of-speech, meaning that
-every word would be marked for their word class (e.g.,
-\texttt{This\_DT\ is\_VBZ\ not\_RB\ raw\_JJ\ text\_NN\ data\_NN\ .\_PUNC}),
-or it could include placeholders (e.g.,
-\texttt{\textless{}proper\ noun\textgreater{}}) indicating that certain
-words have been retracted for data protection reasons.
-
-The category `Closed response format' includes all kinds of
-questionnaires and tests. Questionnaires may ask study participants to
-disclose personal information relevant to the research questions using
-single or multiple-choice questions, such as what language they speak at
-home, how long they have studied a language for, or how old they are.
-Tests may be designed to assess participants' language competences
-(e.g., in the form of a vocabulary or grammar test), as well as other
-aspects relevant to the research questions being investigated (e.g.,
-short-term memory or basic reaction times).
-
-\section{Data formats}\label{data-formats}
-
-Given the wide range of methods used in language research, there are
-many different types of research data. Naturally, these come in various
-data formats. For instance, audio files may be in \texttt{.wav} or
-\texttt{.mp3} formats. Data may be collected with analogue means, e.g.,
-by getting participants to answer a questionnaire on paper or collecting
-learners' work on paper, but these data are typically digitalised for
-analysis. They are then stored as text files in formats such as
-\texttt{.txt} or \texttt{.csv}.
-
-When researchers conduct an online survey, the data they collect is
-typically stored in the form of tables.
-
-But even if other data types are originally collected and/or analysed,
-researchers will often end up doing their quantitative analyses on the
-basis of tabular data. Consider a team of researchers going into schools
-to investigate how foreign languages are taught and learnt in a specific
-environment. They may record classroom interactions using video and
-collect students' written work on paper. However, when it comes to the
-quantitative data analysis, all of these data are likely to eventualy be
-examined in the form of tables.
-
-In the fieldwork research scenario, researchers may be interested in a
-language community's use of a particular linguistic phenomenon, say
-formal and informal forms of address. To this end, they obtain informed
-consent from members of this community to record their interactions over
-several weeks. The linguists will then transcribe their field
-recordings. This allows them to search for the relevant forms of address
-in the transcripts and, if necessary, to annotate the linguistic
-features for various (e.g., socio-cultural) aspects. For the
-quantitative data analysis, the forms of address and their associated
-annotations would then be converted to a table format.
-
-{[}Flowchart figure showing: picture of fieldwork with recording device
--\textgreater{} audio file -\textgreater{} text transcript
--\textgreater{} annotated text transcript -\textgreater{} data table{]}
-
-\section{Working with tabular data}\label{working-with-tabular-data}
+This chapter is designed to help you to get started using \texttt{R} and
+\texttt{RStudio}, assuming no prior use of either. We will be covering
+the following topics:
 
 \begin{itemize}
 \tightlist
 \item
-  Dangers of spreadsheet programmes
+  Advantages of learning \texttt{R}
 \item
-  Specific problems of Excel!
+  Downloading \texttt{R} and \texttt{RStudio}
+\item
+  Setting up \texttt{RStudio}
+\item
+  Using the console in \texttt{RStudio}
+\item
+  Installing and loading \texttt{R} packages
+\item
+  Accessing help files
+\item
+  Citing packages
 \end{itemize}
 
-\section{File management}\label{file-management}
-
-\begin{verbatim}
-- File naming
-- File organisation
-\end{verbatim}
-
-\bookmarksetup{startatroot}
-
-\chapter{Getting staRted in R}\label{getting-started-in-r}
-
-\subsection{Chapter overview}\label{chapter-overview}
-
-This chapter is designed to help you to get started using R and RStudio,
-assuming no prior use of either.
-
-We will be covering the following topics in this chapter:
-
-\begin{itemize}
-\tightlist
-\item
-  Downloading R and RStudio
-\item
-  Setting up RStudio
-\item
-  Writing and running code in RStudio
-\end{itemize}
-
-If you already have some experience of using R and RStudio, please
-ensure that your R and RStudio versions are up-to-date. Whilst parts of
-this chapter will likely be revision, others may be the opportunity to
-learn some new tips about setting up and using R in RStudio. Once,
-you've skimmed through this chapter, feel free to swiftly move on to the
-next chapter.
+If you already have some experience of using \texttt{R} and
+\texttt{RStudio}, please ensure that both are up-to-date. Whilst parts
+of this chapter will likely be revision, others may be the opportunity
+to learn some new tips about setting up and using \texttt{R} in
+\texttt{RStudio}, installing and citing packages. Once you've skimmed
+through this chapter, feel free to swiftly move on to the next chapter.
 
 \section{Why learn R?}\label{why-learn-r}
 
@@ -625,13 +546,13 @@ possibilities are endless and that learning how to do new things in
 accessible to beginners and we will use \texttt{RStudio} to work in
 \texttt{R}, which also greatly facilitates the learning process.
 
-What's more, both \texttt{R} and \texttt{RStudio} are free and open
-source (see
+What's more, both \texttt{R} and the \texttt{RStudio\ Desktop} version
+that we will be using are free and open source (see
 \href{https://elenlefoll.github.io/RstatsTextbook/OpenScholarship.html}{Chapter
 1}), which means that they are accessible to all, regardless of their
 institutional affiliation or professional status. All you will need is
-access to the internet, a computer, and the instrinsic motivation to
-work your way through the basic skills taught in this textbook.
+access to the internet, a computer, and the intrinsic motivation to work
+your way through the basic skills taught in this textbook.
 
 \begin{quote}
 ``{[}U{]}sing R - it's like the green and environment-friendly gardening
@@ -659,22 +580,22 @@ vibrant community of users. As an open-source programming environment,
 Everyday, new packages, functions, and resources are being developed,
 improved, and shared with the community. Given that \texttt{R} has
 evolved into one of the most popular languages for scientific
-programming (and is particularly popular among linguists, see e.g., ),
-many of these have been created by scientists and are particularly
-well-suited to research workflows. Moreover, the \texttt{R} community is
-known for being welcoming, supportive, and inclusive (in contrast to
-quite a few other communities in the computing world, sadly). This is
-reflected in the strong presence of many community-led initiatives such
-as \href{https://rladies.org/}{RLadies} and
+programming (and is particularly popular among linguists, see e.g.,
+*REF*), many of these have been created by scientists and are
+particularly well-suited to research workflows. Moreover, the \texttt{R}
+community is known for being welcoming, supportive, and inclusive (in
+contrast to quite a few other communities in the computing world,
+sadly). This is reflected in the strong presence of many community-led
+initiatives such as \href{https://rladies.org/}{RLadies} and
 \href{https://rainbowr.netlify.app/}{RainbowR}, which encourage
 under-represented groups to participate in and contribute to the
-\texttt{R} community.
+\texttt{R} community. 💛🧡❤️💜💙💚
 
 \begin{figure}
 
 \centering{
 
-\includegraphics[width=2.13542in,height=\textheight]{images/rladiesrp_logo.png}
+\includegraphics[width=2.60417in,height=\textheight]{images/rladiesrp_logo.png}
 
 }
 
@@ -686,26 +607,11 @@ RLadies chapters}.}
 
 \end{figure}%
 
-\subsection{\texorpdfstring{\emph{``Look, I am studying languages so why
-should I learn to
-code?''}}{``Look, I am studying languages so why should I learn to code?''}}\label{look-i-am-studying-languages-so-why-should-i-learn-to-code}
-
-The main advantage of coding over using point-and-click tools (i.e.~GUI
-{[}Graphical User Interface{]} software) is that everything single one
-of your steps is recorded in the most precise way. Hence, your research
-steps are entirely transparent and can be reproduced. Although this may
-sound counter-intuitive, I can guarantee you that the person who will
-benefit most from this is\ldots{} your future self! You will save a lot
-of time and unnecessary headaches by being able to re-run your code,
-rather than having to remember exactly what steps you took in each GUI
-software and in what order. You will be far less likely to make mistakes
-and, if you do, you will be able to correct them without fear of having
-to redo all of your work. In other words, learn to use R will
-considerably improve your research workflows from data processing to
-data visualisation and reporting the results of your analyses. It will
-reduce the risk for human errors, make your work more reproducible, and
-help (future) you and others better understand how you processed and
-analysed your data.
+\subsection*{\texorpdfstring{\emph{``Look, I am studying languages so
+why should I learn to code?''}
+🤔}{``Look, I am studying languages so why should I learn to code?'' 🤔}}\label{look-i-am-studying-languages-so-why-should-i-learn-to-code}
+\addcontentsline{toc}{subsection}{\emph{``Look, I am studying languages
+so why should I learn to code?''} 🤔}
 
 As we will see in a future chapter, \texttt{R} code is very easy to
 export and share in various formats (including \texttt{.html} that can
@@ -736,10 +642,11 @@ learn \texttt{Python} at a later stage, many of the same principles that
 you will have learned in \texttt{R} will apply: it should feel somewhat
 like learning Italian when you already speak Spanish or French fluently.
 
-\section{Installing R and RStudio}\label{installing-r-and-rstudio}
+\section{Installing R and RStudio}\label{installing-r-and-rstudio-1}
 
-\subsection{What are R and RStudio? And why do I need
-both?}\label{what-are-r-and-rstudio-and-why-do-i-need-both}
+\subsection{\texorpdfstring{What are \texttt{R} and \texttt{RStudio}?
+And why do I need
+both?}{What are R and RStudio? And why do I need both?}}\label{what-are-r-and-rstudio-and-why-do-i-need-both}
 
 As a beginner, it's easy to confuse \texttt{R} and \texttt{RStudio}, but
 it's important to understand that they are two very different things.
@@ -754,13 +661,73 @@ Hence, even though we will later on appear to only be working in
 \texttt{RStudio}, \texttt{R} will actually be doing the heavy-lifting,
 under the hood.
 
-\subsubsection{\texorpdfstring{How to install
+\begin{figure}
+
+\begin{minipage}{0.50\linewidth}
+
+\centering{
+
+\includegraphics{images/Rlogo.png}
+
+}
+
+\subcaption{\label{fig-RLogo}Logo of the programming language and
+environment \texttt{R}}
+
+\end{minipage}%
+%
+\begin{minipage}{0.50\linewidth}
+
+\centering{
+
+\includegraphics[width=1.92708in,height=1.85417in]{images/RStudio-Logo_Trademark.png}
+
+}
+
+\subcaption{\label{fig-RStudioLogo}Logo of the IDE \texttt{RStudio}
+(Note that RStudio® is a trademark of Posit Software, PBC)}
+
+\end{minipage}%
+
+\caption{\label{fig-Logos}Even the two logos are easy to confuse, but
+remember that \texttt{R} and \texttt{RStudio} are two very different
+things!}
+
+\end{figure}%
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, leftrule=.75mm, breakable, titlerule=0mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, bottomtitle=1mm, arc=.35mm, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Using other IDEs to work in R}, toptitle=1mm, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
+At the time of writing, \texttt{RStudio} is the most widely used
+Integrated Development Environment (IDE) to work in \texttt{R}. However,
+it is worth noting that other IDEs that can be used to access
+\texttt{R}. Among others, these include:
+
+\begin{itemize}
+\item
+  \href{https://jupyter.org/}{Jupyter notebook}
+\item
+  \href{https://code.visualstudio.com/}{Visual Studio Code}
+\item
+  \href{https://www.jetbrains.com/pycharm/}{PyCharm}
+\item
+  \href{https://eclipseide.org/}{Eclipse}
+\end{itemize}
+
+Whilst this textbook will assume that everyone is working in
+\texttt{RStudio}, if you are already familiar with another IDE that
+works well with \texttt{R}, you are welcome to continue working in that
+IDE. Each IDE has a different feel to it and offers different functions
+so, ultimately, it'll be up to you to find the one that suits you best!
+
+\end{tcolorbox}
+
+\subsection{\texorpdfstring{How to install
 \texttt{R}:}{How to install R:}}\label{how-to-install-r}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Go to the website of the The Comprehensive R Archive Network (CRAN):
+  Go to the website of the Comprehensive R Archive Network (CRAN):
   \url{https://cran.r-project.org}.
 \item
   Click on the ``Download R for \ldots{}'' link that matches your
@@ -813,7 +780,7 @@ under the hood.
 
 }
 
-\subcaption{\label{fig-console}Test command in R Console}
+\subcaption{\label{fig-console}Test command in the R Console}
 
 \end{minipage}%
 %
@@ -825,7 +792,9 @@ under the hood.
 
 }
 
-\subcaption{\label{fig-testplot}Resulting plot}
+\subcaption{\label{fig-testplot}Resulting plot (note that the
+proportions of your plot may be different depending on the size of your
+window)}
 
 \end{minipage}%
 
@@ -842,244 +811,443 @@ solutions on the Internet. It is very likely that many other people have
 already encountered the same problem as you and that someone from the
 \texttt{R} community has posted a solution online.
 
-\subsubsection{\texorpdfstring{How to install
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, leftrule=.75mm, breakable, titlerule=0mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, bottomtitle=1mm, arc=.35mm, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{What to do if you cannot get R and/or RStudio working on your computer}, toptitle=1mm, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
+The aim of this chapter is to install both \texttt{R} and
+\texttt{R\ Studio} on your own computer so that you can write and run
+your own scripts locally (i.e., on your own computer without the need
+for an internet connection). In some cases, however, this might not be
+possible. For example, because the programmes are not available for your
+operating system, or because you do not have admin rights on your
+computer, or because your disk is full and you cannot delete anything.
+None of these situations are ideal to do research, but don't give up on
+learning \texttt{R}: there is an alternative!
+
+You can sign up to \href{https://posit.co/products/cloud/cloud/}{Posit
+Cloud}. Posit Cloud will allow you to run \texttt{R} in \texttt{RStudio}
+in a browser (e.g., Firefox or Chrome) without having to install
+anything on your computer. Although Posit Cloud's
+\href{https://posit.cloud/plans/free}{free plan} is limited, it will
+suffice to learn the contents of this textbook. You will be able to
+follow the textbook in exactly the same way as everyone else. However,
+you will need a stable internet connection and you may find that you
+need to be a bit more patient as things are likely to run a little
+slower. If you decide to opt for the Posit Cloud solution, create a free
+account and then go straight to Setting up RStudio.
+
+\end{tcolorbox}
+
+\subsection{\texorpdfstring{How to install
 \texttt{RStudio}:}{How to install RStudio:}}\label{how-to-install-rstudio}
 
-Visit RStudio's website
-(https://www.rstudio.com/products/rstudio/download/) to download RStudio
-Under the column called ``RStudio Desktop FREE'', click ``Download''
-Find your operating system (Mac, Windows, or Linux) Select the ``latest
-release'' on the page for your operating system Download and install the
-application
+When you head over to their website, it may be confusing to you that the
+company that provides \texttt{RStudio}, Posit, also offers paid-for
+versions of \texttt{RStudio} and other paying services. Do not worry, we
+will not need any of these: These are products designed for companies
+and large organisations. The version of \texttt{RStudio\ Desktop} that
+we will be using, however, is completely free and, given that it is open
+source, even if Posit decided to stop working on this product one day,
+others in the \texttt{R} community would take over. Such is the beauty
+of
+\href{https://elenlefoll.github.io/RstatsTextbook/OpenScholarship.html}{open-source
+software}! 🤗
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Head over to this page:
+  \url{https://posit.co/download/rstudio-desktop/} to download the
+  latest version of \texttt{RStudio\ Desktop}.
+\item
+  As you have already installed \texttt{R}, you can jump straight to
+  step ``2: Install RStudio''. The website should have detected which
+  operating system your computer is running on, so that you can most
+  likely simply click on the ``Download RStudio Desktop\ldots{}''
+  button. Your download should start straight away.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    If an incorrect operating system is detected, simply scroll down the
+    page to find your operating system and download the corresponding
+    version of \texttt{RStudio.}
+  \end{itemize}
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  Once you have downloaded \texttt{RStudio}, navigate to the folder
+  where the downloaded file has been saved (by default, this will be
+  your Downloads folder), and double click on the executable file to
+  install \texttt{RStudio}.
+\item
+  Follow the on-screen instructions to install \texttt{RStudio}.
+\end{enumerate}
+
+If you run into any issues that you cannot solve with existing online
+posts, the \href{https://forum.posit.co/}{Posit Community forums} are a
+good place to ask for help.
+
+\section{Setting up RStudio}\label{setting-up-rstudio}
 
-\begin{verbatim}
+From now on, we will only be accessing \texttt{R} through
+\texttt{RStudio}. When you open up \texttt{RStudio} for the first time,
+you might find the layout rather intimidating The application window is
+divided into several sections, which we call `panes'. Each pane also has
+several tabs. Although it may seem overwhelming at first, you will soon
+see that these different panes and tabs will actually make life much
+easier.
 
-If you do have issues, consider the Data Carpentry page (https://datacarpentry.org/R-ecology-lesson/) and then reach out for help. Another excellent place to get help is the RStudio Community forums (https://community.rstudio.com/).
+\subsection{Global options}\label{global-options}
 
-### Setting up RStudio
+Before we get staRted properly, however, we need to change some of the
+default settings of \texttt{RStudio}. The first set of changes that we
+are going to make ensure that, each time we launch a new \texttt{R}
+session in \texttt{RStudio}, we are starting afresh.
 
-Now that we’ve installed both R and RStudio, we will be accessing R through RStudio. One of the most reliable ways to tell if you’re opening R or RStudio is to look at the icons: R Icon and RStudio Icon
+To do so, head over to the `Tools' dropdown menu and click on `Global
+Options'. Make sure that the first three boxes are unticked (see
+Figure~\ref{fig-GOGeneral}). Under ``Save workspace to .RData on exit'',
+select the option ``Never''. Always starting afresh is good programming
+practice. It avoids any problems being carried over from previous
+\texttt{R} sessions. You can think of it like cooking in a freshly
+cleaned, tidy kitchen. It's much safer than preparing a meal in a messy,
+possibly even contaminated kitchen! {\marginnote{\begin{footnotesize}Or
+use the keyboard shortcut
+\texttt{Ctrl/Command\ +\ ,}\end{footnotesize}}}
+
+\begin{figure}
+
+\begin{minipage}{0.50\linewidth}
+
+\centering{
 
-Figure 5.1: Icons
+\includegraphics{images/RStudioGlobalOptionsGeneral.png}
 
-Whenever we want to work with R, we’ll open RStudio. RStudio interfaces directly with R, and is an Integrated Development Environment (IDE). This means that RStudio comes with built-in features that make using R a little easier. If you’d like more information on the difference between R and RStudio, we recommend the “Getting Started” section of the Modern Dive (https://moderndive.com/1-getting-started.html#) textbook (Ismay & Kim, 2019).
+}
 
-You do not have to use RStudio to access R, and many people don’t!
+\subcaption{\label{fig-GOGeneral}General tab}
 
-Other IDEs that work with R include:
-\end{verbatim}
+\end{minipage}%
+%
+\begin{minipage}{0.50\linewidth}
 
-Jupyter notebook (https://jupyter.org/) VisualStudio
-(https://visualstudio.microsoft.com/services/visual-studio-online/) VIM
-(https://github.com/jalvesaq/Nvim-R) IntelliJ IDEA
-(https://plugins.jetbrains.com/plugin/6632-r-language-for-intellij)
-EMACS Speaks Statistics (ESS) (https://ess.r-project.org/)
+\centering{
 
-\begin{verbatim}
+\includegraphics{images/RStudioGlobalOptionsCode.png}
 
-This is a non-exhaustive list, and most of these options require a good deal of familiarity with a given IDE. We bring up alternative IDEs—particularly ESS—because RStudio, as of this writing, is not fully accessible for learners who utilize screen readers. We have chosen to use RStudio in this text in order to standardize the experience, but we encourage you to choose the IDE that best suits your needs!
+}
 
-### RStudio layout
+\subcaption{\label{fig-GOCode}Code tab}
 
-When we open RStudio for the first time, we should see something similar to this: RStudio Default Layout with console, environment, and files
+\end{minipage}%
 
-Figure 5.2: RStudio Layout
+\caption{\label{fig-GlobalOptions}RStudio's Global Options}
 
-We’ll refer to these three “panes” as the “Console pane”, the “Environment pane”, and the “Files pane”. The large square on the left is the Console pane, the square in the top right is the Environment pane, and the square in the bottom right is the Files pane.
+\end{figure}%
 
-As you work with R more, you’ll find yourself using the tabs within each of the panes.
+Next, under the `Global Options' tab `Panes' of the `Global Options'
+window, ensure that the option ``Use native pipe operator'' is ticked
+(see Figure~\ref{fig-GOCode}). This is a new feature in \texttt{R} that
+is very useful so we will make use of it in this textbook.
 
-When we create a new file, such as an R script, an R Markdown file, or a Shiny app, RStudio will open a fourth pane, known as the “source pane”. The source pane should show up as a square in the top left. We can open up an .R script in the source pane by going to “File”, selecting “New File”, and then selecting “R Script”: Creating a New Script in RStudio by going to file then R script
+Finally, head over to the `Pane Layout' tab. From here, you can
+rearrange the panes of your \texttt{RStudio} window. You can also select
+which tabs you would like to see in each pane. If you are already
+familiar with \texttt{RStudio}, feel free to stick to your favourite
+set-up. Personally, I use the panes layout below and, if you are new to
+\texttt{R}, I recommend that you select this layout, too, at least for
+now. You can go back to these `Global Options' to change this setup at
+any stage. Don't forget to click on `OK' to save your settings. Now, the
+panes in your \texttt{RStudio} window should be ordered as in
+Figure~\ref{fig-RStudioNewLayout}.
 
-Figure 5.3: Creating a New R Script in RStudio
+\begin{figure}
 
-You do not need to do anything specific with this file, but we encourage you to experiment with it if you would like! 5.5.2 Customizing RStudio
+\begin{minipage}{0.50\linewidth}
 
-One of the balances we’ve tried to strike in this text is a balance between best practices in your workflow (how you’ll use R in your projects) and your R code. A best practice for your workflow is to ensure that you’re starting with a blank slate every time you open R (through RStudio). To accomplish this, go to “Tools”, and select “Global Options” from the dropdown menu. Selecting Global Options from the Tool Dropdown Menu
+\centering{
 
-Figure 5.4: Selecting Global Options from the Tool Dropdown Menu
+\includegraphics{images/RStudioGlobalOptionsPanes.png}
 
-The “General” tab will open, with several checkboxes selected and unselected. The most important thing you can do is select “Never” next to the “Save workspace to .RData on exit:” prompt. After selecting “Never”, go through and check and uncheck boxes so that your General tab looks like this: General tab from the Global Options in RStudio
+}
 
-Figure 5.5: General Tab from Global Options
+\subcaption{\label{fig-GOPanes}Panes Layout tab}
 
-Last, but certainly not least, click on the “Appearance” tab from within Global Options. From here you can select your RStudio Font, Font Size, and Theme. Go through the options and select an appearance that works best for you, and know that you can always come back and change it! 5.5.3 Minimized and missing panes
+\end{minipage}%
+%
+\begin{minipage}{0.50\linewidth}
 
-If, at any point, you find that one of your panes seems to have “disappeared”, one of two things has likely happened:
-\end{verbatim}
+\centering{
 
-A pane has been minimized A pane has been closed
+\includegraphics{images/RStudioNewLayout.png}
 
-\begin{verbatim}
+}
 
-Let’s look at the Environment pane as an example. If the Environment pane has been minimized, we’ll see something like this: RStudio layout with a minimized Environment Pane
+\subcaption{\label{fig-RStudioNewLayout}Customised panes layout}
 
-Figure 5.6: RStudio Layout with the Environment Pane Minimized
+\end{minipage}%
 
-We know that the Environment pane has been minimized because although we can see the pane headers in the top right, we can’t see the information within the Environment pane. To fix this, we can click on the icon of two squares in the top right of the Environment pane. If you click on the icon of the large square in the top right of the Environment pane, you’ll maximize the Environment pane and minimize the Files pane. We do not want to do this, since we would prefer to see all the panes at once.
+\caption{\label{fig-Panes}Recommended \texttt{RStudio} panes layout}
 
-If the Environment pane has somehow been closed, you can recover it by going to the “View” menu, selecting “Panes”, and then selecting “Pane Layout”, like so: Accessing the Pane Layout from the View Dropdown Menu
+\end{figure}%
 
-Figure 5.7: Accessing the Pane Layout from the View Dropdown Menu
+\subsection{Testing RStudio}\label{testing-rstudio}
 
-When we select Pane Layout, we’ll see this: Pane Layout Options within RStudio
+It is now time we tested whether \texttt{RStudio} is communicating well
+with \texttt{R}. To do so, let's run the same test as in the
+\texttt{R\ Console}. This time, head over to the Console tab in the top
+right pane of your \texttt{RStudio} window and, after the command prompt
+\texttt{\textgreater{}}, type: \texttt{plot(1:10)} and then press enter.
+You should see the same plot as earlier on (see
+Figure~\ref{fig-testplot}), appearing in the Plots tab of the bottom
+right pane of your \texttt{RStudio} window.
 
-Figure 5.8: Pane Layout Options within RStudio
+If you get the following error message
+\texttt{Error\ in\ plot.new()\ :\ figure\ margins\ too\ large}, this is
+because your bottom right pane is hidden from view or too small for the
+plot to be printed there. Click on the small two-window icon in the
+bottom right corner to unhide the bottom right pane, if it is hidden
+(see Figure~\ref{fig-MinimisedPlotPane}). Or, if it too small, click on
+the dividing line between the two right-hand side panes and, whilst
+still holding down the mouse button, drag up the line until it is about
+halfway up. Then, re-type the command \texttt{plot(1:10)} in the Console
+pane and press enter again. The plot should appear as in
+Figure~\ref{fig-testplotRStudio}.
 
-From here, you can select which tabs you’d like to appear within each pane, and you can even change where each pane appears within RStudio. If our Environment Pane had been closed, we would select it from the Pane Layout in order to re-open it within RStudio. 5.6 Writing and running code in RStudio
+\begin{figure}
 
-Up to this point, we’ve been exploring the RStudio interface and setting up our preferences. Now, we’ll shift to some basic coding practices. In order to run code in R, you need to type your code either in the Console or within an .R script.
+\begin{minipage}{0.50\linewidth}
 
-We generally recommend creating an .R script as you’re learning, as it allows you to type all of your code, add comments, and then save your .R script for reference. If you work entirely in the Console, anything that you type in the Console will disappear as soon as you restart or close R, and you will not be able to reference it in the future.
+\centering{
 
-### Writing code in the console
+\includegraphics{images/PlotMarginsError.png}
 
-To run code in the Console, you type your code next to the \> and hit Enter. We’ll spend a little time practicing running code in the Console by exploring some basic properties of coding in R.
+}
 
-In the Console, type 3 + 4 and hit Enter. You should see the following: Adding 3 and 4 on the console
+\subcaption{\label{fig-MinimisedPlotPane}Hidden (minimised) bottom right
+pane}
 
-Figure 5.9: Using the Console as a Calculator
+\end{minipage}%
+%
+\begin{minipage}{0.50\linewidth}
 
-We’ve just used R to add the numbers 3 and 4. R has returned the sum of 3 + 4 on a new line, next to \[1\]. The \[1\] tells us that there is one row of data.
+\centering{
 
-We can also use R to print out text. Type the following in the Console and hit Enter:
+\includegraphics{images/TestplotRStudio.png}
 
-print("I am learning R")
+}
 
-We should see this in the Console: Printing I am learning R on the console
-
-Figure 5.10: Printing Text to the Console
-
-There’s one error that you’re likely going to come across, both when running code in the Console as well as in an R script. Let’s explore that error now by running the following code in the Console and hitting Enter:
-
-print("This is going to cause a problem"
+\subcaption{\label{fig-testplotRStudio}Now the dividing line between the
+two panes is halfway up and the plot has been successfully output in the
+Plots pane}
 
-Make sure that you left off the closing parenthesis! What you’ll see in the Console is: Printing this is going to cause a problem with the last parantheses missing
+\end{minipage}%
 
-Figure 5.11: Incomplete Parentheses Change What R Expects Next
+\caption{\label{fig-testingRStudio}Testing that \texttt{RStudio} is
+communicating well with your \texttt{R} installation.}
 
-When we’re missing a closing parenthesis, R is expecting us to provide more code. We know this because instead of seeing a carat \> in our Console, we see a +, and R has not returned the print statement that we were expecting! There are two ways to fix this problem:
-\end{verbatim}
-
-Type the closing ) in the Console and hit Enter Hit the Esc key ```
-
-Go ahead and run this intentional error, and try each of the options
-above. Compare the output of each, and think about how they're
-different. Can you think of when you might want to use one option
-instead of the other? 5.6.2 Writing code in an R script
-
-There are three main ways to run code in an .R script: - Highlight the
-line(s) of code you'd like to run and press Ctrl + Enter - Highlight the
-line(s) of code you'd like to run and click the ``Run'' button in the R
-script pane - To run every line of code in your file you can press Ctrl
-+ Shift + Enter
+\end{figure}%
 
-Create a new .R script, or open the one you created earlier in this
-chapter. Next, type in the following code and run it using each of the
-options listed above.
-
-print(``We're going to use R as a calculator.'') print(``First up,
-addition!'') 12 + 8 632 + 41 print(``Next, subtraction!'') 48 - 6 0.65 -
-1.42
-
-Feel free to spend some more time writing and running code within your
-.R script, or move on to the next section, where we'll add comments to
-our code. 5.6.3 Commenting your code in R
-
-It is considered good practice to comment your code when working in an
-.R script. Even if you are the only person to ever work on your code, it
-can be helpful to write yourself notes about what you were trying to do
-with a specific piece of code. Moreover, writing comments in your code
-as you work through the examples in this book is a great way to help
-reinforce what you're learning. Comments are ignored by R when running a
-script, so they will not affect your code or analysis.
-
-To comment out a line of code, you can place a pound sign (also called
-an octothorpe!) \# in front of the line of code that you want to exclude
-when you're running your script. Be careful when excluding certain lines
-of code, especially in longer files, as it can be easy to forget where
-you've commented out code. It is often better to simply start a new
-section of code to tinker with until you get it working as expected,
-rather than commenting out individual lines of code.
-
-We can also write comments in line with our code, like this:
-
-\#' this will be a short code example. \#' you are not expected to know
-what this does, \#' nor do you need to try running it on your computer.
-library(readr) \# load the readr package library(here) \# load the here
-package data \textless- read\_csv(here(``file\_path'',
-``file\_name.csv'')) \# save file\_name.csv as data
-
-If you think you'll be writing more than one line of comments, you can
-do a pound sign followed by a single quotation mark (\#`). This will
-continue to comment out lines of text or code each time you hit Enter.
-You can delete the \#' on a new line where you want to write code for R
-to run. This method is useful when you're writing a long description of
-what you're doing in R.
-
-Note: when we refer to ``commenting'' we're referring to adding in
-actual text comments, whereas ``commenting out'' refers to using the
-pound sign (octothorpe) in front of a line of code so that R ignores it.
-We will also use the phrase ``uncomment code'', which means you should
-delete (or omit when typing out) the \# or \#' in an example.
-
-\subsection{Functions introduced}\label{functions-introduced}
-
-For the ``functions introduced'' sections, you will notice that some
-look a little bit different than others. For example,
-devtools::install\_github() is different than install.packages().
-
-The reason is that the install\_github() function comes from a specific
-package (which we'll discuss in great depth in this and the following
-chapter). If you had a hunch that this function comes from the devtools
-package, then you'd be correct. The :: symbols (described more in
-Chapter 6) mean that a specific function comes from a particular
-package, something that we wanted to point out so that you will know
-which package you will need to use if you want to use the function. Not
-sure what some of these terms mean quite yet? Read on in this chapter to
-learn more about installing and using packages! ```
-
-install.packages() devtools::install\_github() library() print()
-readr::read\_csv() here::here() swirl::swirl() swirl::install\_course()
-```
-
-\subsection{Exploring R with the \{swirl\}
-package}\label{exploring-r-with-the-swirl-package}
-
-If you were able to install the \{dataedu\} package without any issues
-or concerns and you're eager to get started exploring everything that R
-can do, you can supplement your learning through \{swirl\}
-(https://swirlstats.com/students.html).
-
-You can install \{swirl\} by running the following code:
-
-install.packages(``swirl'')
-
-\{swirl\} is a set of packages (see more on packages in Chapter 6) that
-you can download, providing an interactive method for learning R by
-using R in the RStudio Console. Since you've already installed R,
-RStudio, and the \{swirl\} package, you can follow the instructions on
-the \{swirl\} webpage or run the following code in your Console pane to
-get started with a beginner-level course in \{swirl\}:
-
-library(swirl) install\_course(``R\_Programming\_E'') swirl()
-
-There are multiple courses available on \{swirl\}, and you can access
-them by installing them and then running the swirl() command in your
-console. We are not affiliated with \{swirl\} in any way, nor is
-\{swirl\} required to progress through this text, but it's a great
-resource that we want to make sure is on your radar!
-
-\subsection{Conclusion}\label{conclusion}
-
-Congratulations! At this point in the book, you've installed R and
-RStudio, explored the RStudio IDE, and even written some basic code. At
-this point, you're set up to either move on to Chapter *, where we'll do
-a deeper dive into projects, packages, and functions, and how those
-relate to your future data tasks. We will also introduce help
-documentation and some skills for when you're working with new or
-unfamiliar information. If that all sounds familiar to you already, you
-can jump ahead to a walkthrough of your choosing!
+\section{\texorpdfstring{Installing \texttt{R}
+packages}{Installing R packages}}\label{installing-r-packages}
+
+\subsection{What are packages?}\label{what-are-packages}
+
+You now have a base installation of \texttt{R}. Base \texttt{R} is very
+powerful and comes with many standard packages and functions that
+\texttt{R} users use on a daily basis. If you click on the Packages tab
+in the bottom right pane and scroll down, you will see that there are
+many packages available. Only a few are selected. These are part of the
+base R installation.
+
+At the same time, thousands of \texttt{R} users have developed and
+shared additional \texttt{R} packages that enable us to vastly increase
+the capacities of base \texttt{R}. Packages are a very helpful way to
+bundle together a set of functions, data, and documentation files so
+that other \texttt{R} users can easily download these bundles and add
+them to their local \texttt{R} installation.
+
+Throughout this textbook, the names of packages will be enclosed in
+curly brackets, e.g.: \{ggplot2\}.
+
+\begin{quote}
+\section*{Quiz time!}\label{quiz-time-1}
+\addcontentsline{toc}{section}{Quiz time!}
+
+\markright{Quiz time!}
+
+1) Which of these packages is not part of base \texttt{R}?
+
+~
+
+2) Is it possible to create an \texttt{R} package that provides access
+to the full texts of Jane Austen's six completed, published novels for
+computational text analysis in \texttt{R}?
+
+~
+
+3) Is the \{janeaustenr\} package installed as part of base \texttt{R}?
+\end{quote}
+
+\subsection{Installing packages}\label{installing-packages}
+
+To install a package, you will first need to download it from the
+internet. Packages are typically stored on different websites (online
+repositories), but the most trustworthy one and easiest to work with is
+\href{https://cran.rstudio.com/index.html}{CRAN} (Comprehensive R
+Archive Network). To install the \{janeaustenr\} package from CRAN,
+simply type the following command in the Console pane and then type
+enter: \texttt{install.packages("janeaustenr")}.
+
+This command will take a few seconds to run (or longer depending on how
+slow your internet connection is). You should then see a message in red
+in the console indicating that the package has been downloaded and its
+size (here: 1.5 megabyte), as well as the path to where the package's
+content has been saved on your computer (see
+Figure~\ref{fig-PckInstalled}). You do not need to worry about any of
+this.
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=4.6875in,height=\textheight]{images/JaneaustenrInstalled.png}
+
+}
+
+\caption{\label{fig-PckInstalled}Screenshot showing that the package has
+been correctly installed.}
+
+\end{figure}%
+
+To check that the package has been successfully downloaded and
+installed, head over to the Packages tab of the bottom-right pane and
+scroll down to the \{janeaustenr\} package, or search for it using the
+search window within this same tab. The \{janeaustenr\} package should
+now be visible, which tells us that the package is installed on your
+computer. Note, however, that the checkbox next to it is currently
+empty. This means that the package hasn't been loaded in our current
+\texttt{R} session and therefore cannot be used yet. Note that whilst
+you only need to install each package once, you will need to load it
+every time we want to use it in a new \texttt{R} session. This is
+because, when we start a new \texttt{R} session, the kitchen is
+perfectly clean and tidy and everything is back in storage. And the good
+news is that we don't even need to do the washing-up! 🙃
+
+\subsection{Loading packages}\label{loading-packages}
+
+You can think of base \texttt{R} as a fully functional student kitchen.
+It is rather small and only has the most essential ingredients and
+equipment, but it still has everything you need to cook simple,
+delicious meals. Downloading and installing additional packages is like
+buying fancier ingredients (these are packages that include datasets) or
+more sophisticated and specialised kitchen devices (these are packages
+that include additional functions).
+
+Once you have downloaded and installed a new package, it is put in
+storage (either in the fridge or in a kitchen cupboard). In this case,
+the package appears in your Packages tab, but is not yet selected. If
+you want to use the new ingredient or the piece of equipment that was
+delivered in the new package, you need to get it out of the fridge or
+the cupboard and place it on the kitchen counter. This is the equivalent
+to loading a package. Once they are unpacked (i.e., installed), packages
+are referred to as libraries.
+
+So the first thing we now need to do to be able to analyse Jane Austen's
+novels in \texttt{R} is to load the \{janeaustenr\} library. The command
+to do is \texttt{library(janeaustenr)}. Type this command in the Console
+and press enter. Ideally, it should look like nothing has happened.
+Indeed, if you do not get an error message (in red), then the library
+has been successfully loaded. We can check that this is actually the
+case by looking again for the \{janeaustenr\} in the Packages tab. The
+checkbox should now be ticked.
+
+\section{Package documentation}\label{package-documentation}
+
+To find out more about any package or function, simply use the command
+\texttt{help()} or its shortcut \texttt{?()}. For example, to find out
+more about the \{janeaustenr\} package, enter the command
+\texttt{help(janeaustenr)} or \texttt{?(janeaustenr)} in the Console.
+The help file will open up in the Help tab of the bottom-right pane. It
+contains the name of the package and a short description, as well as the
+name of the package maintainer, Julia Silge, and some additional links.
+
+One of these links takes us to the package creator's GitHub repository.
+This is where we can find a source code for the package, should we want
+to check how it works under the hood, or amend it in any ways. Click on
+this link and scroll down the package's GitHub page to read its README
+file. This document informs us that the package includes plain text
+versions of Jane Austen's six novels and tells us under what name they
+are stored within the library. For example, to access \emph{Pride and
+Prejudice,} we need to load the library object \texttt{prideprejudice}.
+{\marginnote{\begin{footnotesize}Note that the names of objects in
+\texttt{R} cannot contain spaces or hyphens.\end{footnotesize}}}
+
+Pick your favourite Jane Austen novel and enter its corresponding object
+name in the Console, e.g., \texttt{emma}. The entire novel will be
+printed in the Console output! You can print only a few lines by
+selecting them within square brackets, e.g., the command
+\texttt{emma{[}20:25{]}} will only print lines 20 to 25 of the text
+object \texttt{emma} (see Figure~\ref{fig-emma2025}).
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=4.16667in,height=\textheight]{images/Emma2025.png}
+
+}
+
+\caption{\label{fig-emma2025}Screenshot showing a selection of lines
+from the text object \texttt{emma} (note that you can adjust the size of
+the Console pane to see more or less of the text at any one time).}
+
+\end{figure}%
+
+To find out more about a dataset or function within a package, use the
+functions \texttt{help()} or \texttt{?()}, e.g., \texttt{help(emma)} or
+\texttt{?emma}. In this case, the help file provides us with a short
+description of this object and a link to the original source from which
+the package creator obtained the novel (which is in the
+\href{https://www.gutenberg.org/help/faq.html\#what-books-does-project-gutenberg-publish}{public
+domain}, otherwise it would not be possible to share it in this way).
+
+\section{Citing packages}\label{citing-packages}
+
+When we use a package that is not part of base \texttt{R}, it is very
+important to reference the package adequately. There are two main
+reasons for doing this. For a start, the people who create and maintain
+these packages largely do so in their free time and they deserve full
+credit for their incredibly valuable work and contribution to science.
+Hence, whenever you use a package for your research, you should cite it,
+just like you would other sources.
+
+The help page of the \{janeaustenr\} package already informed us that
+the maintainer of the package is Julia Silge. To get a full citation,
+however, we should use the \texttt{citation()} function. Enter
+\texttt{citation("janeaustenr")} in the Console to find out how to cite
+this package.
+
+Note that the recommended bibliographic reference also includes the
+package version, which is important for reproducibility as the package
+may evolve and someone wanted to reproduce your analysis will need to
+know which version you used. This is the second main reason why we
+should cite the packages that we use properly. In a research report,
+thesis, or academic article, you would cite the \{janeaustenr\} package
+like this:
+
+\begin{quote}
+We used the \{janeaustenr\} package (Silge 2022) to access Jane Austen's
+six, published novels in R (R Core Team 2024).
+\end{quote}
+
+You can see the full references by hovering on the in-text citation
+links or by going to the
+\href{https://elenlefoll.github.io/RstatsTextbook/references.html}{References}
+section of this book.
 
 \bookmarksetup{startatroot}
 
@@ -1099,6 +1267,15 @@ Parsons, Sam, Flávio Azevedo, Mahmoud M. Elsherif, Samuel Guay, Owen N.
 Shahim, Gisela H. Govaart, Emma Norris, et al. 2022. A community-sourced
 glossary of open scholarship terms. \emph{Nature Human Behaviour}.
 Nature 6(3). 312--318. \url{https://doi.org/10.1038/s41562-021-01269-4}.
+
+\bibitem[\citeproctext]{ref-silgeJaneaustenrJaneAusten2022}
+Silge, Julia. 2022. \emph{Janeaustenr: Jane austen's complete novels}.
+\url{https://CRAN.R-project.org/package=janeaustenr}.
+
+\bibitem[\citeproctext]{ref-rcoreteamLanguageEnvironmentStatistical2024}
+Team, R Core. 2024. \emph{R: A language and environment for statistical
+computing}. R Foundation for Statistical Computing.
+\url{https://www.R-project.org/}.
 
 \end{CSLReferences}
 
