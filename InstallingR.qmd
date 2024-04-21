@@ -1,0 +1,275 @@
+---
+engine: knitr
+bibliography: references.bib
+editor:
+  markdown:
+    canonical: true
+---
+
+```{css}
+#| echo: false
+p {
+  text-align: justify
+}
+```
+
+```{r include=FALSE}
+library(checkdown)
+```
+
+# Installing R and RStudio
+
+#### **Chapter overview** {.unnumbered}
+
+This chapter is designed to help you to get started using `R` and `RStudio`, assuming no prior use of either. We will be covering the following topics:
+
+-   Advantages of learning `R`
+-   Downloading `R` and `RStudio`
+-   Setting up `RStudio`
+-   Using the console in `RStudio`
+-   Installing and loading `R` packages
+-   Accessing help files
+-   Citing packages
+
+If you already have some experience of using `R` and `RStudio`, please ensure that both are up-to-date. Whilst parts of this chapter will likely be revision, others may be the opportunity to learn some new tips about setting up and using `R` in `RStudio`, installing and citing packages. Once you've skimmed through this chapter, feel free to swiftly move on to the next chapter.
+
+## Why learn R?
+
+In short, because `R` can do it all! 🙃 This statement is only a slight exaggeration: `R` is indeed a highly versatile programming language and environment that allows you to do a multitude of tasks relevant to the language sciences. These include data handling and processing, statistical analysis, creating effective and appealing (including interactive!) data visualisations, web scraping, text analysis, generating reports in various formats, designing web pages and interactive apps, and much, much more! 💪
+
+Whilst some will claim that `R` has a steep learning curve, this textbook aims to prove that the opposite is true! Whilst it's fair to say that, as with all new things, it will take you a while to get the hang of it, once you've got started, you will see that your possibilities are endless and that learning how to do new things in `R` is fun and very rewarding. This textbook introduces the {tidyverse} approach to programming in R`,` which is very accessible to beginners and we will use `RStudio` to work in `R`, which also greatly facilitates the learning process.
+
+What's more, both `R` and the `RStudio Desktop` version that we will be using are free and open source (see [Chapter 1](https://elenlefoll.github.io/RstatsTextbook/OpenScholarship.html)), which means that they are accessible to all, regardless of their institutional affiliation or professional status. All you will need is access to the internet, a computer, and the intrinsic motivation to work your way through the basic skills taught in this textbook.
+
+> "\[U\]sing R - it’s like the green and environment-friendly gardening alternative to buying plastic wrapped tomatoes in the supermarket that have no taste anyway." ([Martin Schweinberger 2022](https://slcladal.github.io/whyr.html))
+>
+> !["[Tomato Harvest, Yellow & Red](https://www.flickr.com/photos/47264866@N00/9455141053)" by [OakleyOriginals](https://www.flickr.com/photos/47264866@N00) is licensed under [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/?ref=openverse).](images/TomatoHarvest.jpg){#fig-tomatoes fig-alt="Photo of a gardener's tomato harvest, showing tomatoes are various sizes and colours." fig-align="left" width="376"}
+
+Last but not least, in choosing to learn `R`, you are entering a vibrant community of users. As an open-source programming environment, `R` is the product of many different people's contributions. Everyday, new packages, functions, and resources are being developed, improved, and shared with the community. Given that `R` has evolved into one of the most popular languages for scientific programming (and is particularly popular among linguists, see e.g., \*REF\*), many of these have been created by scientists and are particularly well-suited to research workflows. Moreover, the `R` community is known for being welcoming, supportive, and inclusive (in contrast to quite a few other communities in the computing world, sadly). This is reflected in the strong presence of many community-led initiatives such as [RLadies](https://rladies.org/) and [RainbowR](https://rainbowr.netlify.app/), which encourage under-represented groups to participate in and contribute to the `R` community. 💛🧡❤️💜💙💚
+
+![Logo of the [RLadies Ribeirão Preto](https://rladiesrp.github.io/) meet-up group, one of [many RLadies chapters](https://benubah.github.io/r-community-explorer/rladies.html).](images/rladiesrp_logo.png){#fig-RLadies fig-alt="Hex sticker logo showing the R logo painted in the colours of the rainbow and the transgender flags" fig-align="center" width="250"}
+
+### *"Look, I am studying languages so why should I learn to code?"* 🤔 {.unnumbered}
+
+As we will see in a future chapter, `R` code is very easy to export and share in various formats (including `.html` that can be opened in any browser and `.pdf`). And because many other language scientists use `R` too, you will also be able to share your scripts with others, thus making your research more more accessible, transparent, and sustainable and facilitating collaborations. Being open-source, there are no restrictions as to who can run `R` code and older versions are available ensuring that exact reproduction is possible, even years later.
+
+Learning to code in `R` is an excellent way to understand the basics of data literacy and statistical reasoning. These are skills that are highly valued among employers, both in academia and the industry. Many companies, public institutions (e.g., ministries, hospitals, and national agencies) and NGOs hire data scientists who often work in `R`. And, even if you end up doing little to no coding yourself later on, understanding the basic principles of programming is undoubtedly a very useful skill in the modern world.
+
+Some of you may be wondering whether you should be learning `Python` rather than `R`. Both are widely used programming languages in scientific programming and data science. However, there are more resources specifically aimed at linguists and education researchers in `R` than there are in Python simply because it is currently the most widely used language in these disciplines. Should you wish to learn `Python` at a later stage, many of the same principles that you will have learned in `R` will apply: it should feel somewhat like learning Italian when you already speak Spanish or French fluently.
+
+## Installing R and RStudio
+
+### What are `R` and `RStudio`? And why do I need both?
+
+As a beginner, it's easy to confuse `R` and `RStudio`, but it's important to understand that they are two very different things. `R` is a programming environment for statistical computing and graphics that uses the programming language `R`. Think of it as the engine with which we will learn to perform lots of different tasks. `RStudio`, by contrast, is a set of tools, a so-called 'integrated development environment' (IDE). It makes working in `R` much more intuitive and efficient. If `R` is the engine of our car, you can imagine `RStudio` as our dashboard. Hence, even though we will later on appear to only be working in `RStudio`, `R` will actually be doing the heavy-lifting, under the hood.
+
+::: {#fig-Logos layout-ncol="2"}
+![Logo of the programming language and environment `R`](images/Rlogo.png){#fig-RLogo}
+
+![Logo of the IDE `RStudio` (Note that RStudio® is a trademark of Posit Software, PBC)](images/RStudio-Logo_Trademark.svg){#fig-RStudioLogo width="185" height="178"}
+
+Even the two logos are easy to confuse, but remember that `R` and `RStudio` are two very different things!
+:::
+
+::: {.callout-note collapse="true"}
+### Using other IDEs to work in R
+
+At the time of writing, `RStudio` is the most widely used Integrated Development Environment (IDE) to work in `R`. However, it is worth noting that other IDEs that can be used to access `R`. Among others, these include:
+
+-   [Jupyter notebook](https://jupyter.org/)
+
+-   [Visual Studio Code](https://code.visualstudio.com/)
+
+-   [PyCharm](https://www.jetbrains.com/pycharm/)
+
+-   [Eclipse](https://eclipseide.org/)
+
+Whilst this textbook will assume that everyone is working in `RStudio`, if you are already familiar with another IDE that works well with `R`, you are welcome to continue working in that IDE. Each IDE has a different feel to it and offers different functions so, ultimately, it'll be up to you to find the one that suits you best!
+:::
+
+### How to install `R`:
+
+1.  Go to the website of the Comprehensive R Archive Network (CRAN): <https://cran.r-project.org>.
+
+2.  Click on the "Download R for ..." link that matches your operating system (Linux, macOS or Windows), then:
+
+    -   For Windows, click on the top 'base' link, also marked as "install R for the first time" (Note that you should also use this link if you are updating your R version). On the next page, click on the top "Download R" link.
+    -   For MacOS, click on either the top `.pkg` link if you have an Apple silicon Mac (e.g., M1, M2, M3) or the second `.pkg` link, if you have an older Intel Mac.\[\^gettingstarted-1\]
+    -   For Linux, click on your Linux distribution and then follow the instructions on the following pages.
+
+<!-- -->
+
+3.  Once you have downloaded one of these `R` versions, navigate to the folder where you have saved it (by default, this will be your Downloads folder), and double click on the executable file to install `R`.
+
+4.  Follow the on-screen instructions to install `R`.
+
+5.  Test that `R` is correctly installed. On Windows and MacOS, navigate to your Applications folder and double click on the `R` icon. On Linux, open up `R` by typing `R` in your terminal. This should open up an R Console. You can type R commands into the Console after the command prompt `>`. Type the following R code after the command prompt and then press enter: `plot(1:10)`.
+
+::: {#fig-Rtest layout-ncol="2"}
+![Test command in the R Console](images/RConsole.png){#fig-console fit-alt="Screenshot of R Console showing the introduction text displayed starting R version 4.3.1 etc. and then, at the bottom, a single line of code reading plot(1:10)"}
+
+![Resulting plot (note that the proportions of your plot may be different depending on the size of your window)](images/TestingRPlot.png){#fig-testplot fig-alt="A simple, black and white plot of the numbers 1 to 10 on both the x and y axes."}
+
+Testing R
+:::
+
+✅ If you see the plot above, you have successfully installed and tested `R` and you can go on to installing `RStudio`.
+
+⚠️ If that's not the case, make a note of the errors produced (copy and paste them into a text document or take a screenshot) and search for solutions on the Internet. It is very likely that many other people have already encountered the same problem as you and that someone from the `R` community has posted a solution online.
+
+::: {.callout-note collapse="true"}
+### What to do if you cannot get R and/or RStudio working on your computer
+
+The aim of this chapter is to install both `R` and `R Studio` on your own computer so that you can write and run your own scripts locally (i.e., on your own computer without the need for an internet connection). In some cases, however, this might not be possible. For example, because the programmes are not available for your operating system, or because you do not have admin rights on your computer, or because your disk is full and you cannot delete anything. None of these situations are ideal to do research, but don't give up on learning `R`: there is an alternative!
+
+You can sign up to [Posit Cloud](https://posit.co/products/cloud/cloud/). Posit Cloud will allow you to run `R` in `RStudio` in a browser (e.g., Firefox or Chrome) without having to install anything on your computer. Although Posit Cloud's [free plan](https://posit.cloud/plans/free) is limited, it will suffice to learn the contents of this textbook. You will be able to follow the textbook in exactly the same way as everyone else. However, you will need a stable internet connection and you may find that you need to be a bit more patient as things are likely to run a little slower. If you decide to opt for the Posit Cloud solution, create a free account and then go straight to Setting up RStudio.
+:::
+
+### How to install `RStudio`:
+
+When you head over to their website, it may be confusing to you that the company that provides `RStudio`, Posit, also offers paid-for versions of `RStudio` and other paying services. Do not worry, we will not need any of these: These are products designed for companies and large organisations. The version of `RStudio Desktop` that we will be using, however, is completely free and, given that it is open source, even if Posit decided to stop working on this product one day, others in the `R` community would take over. Such is the beauty of [open-source software](https://elenlefoll.github.io/RstatsTextbook/OpenScholarship.html)! 🤗
+
+1.  Head over to this page: <https://posit.co/download/rstudio-desktop/> to download the latest version of `RStudio Desktop`.
+
+2.  As you have already installed `R`, you can jump straight to step "2: Install RStudio". The website should have detected which operating system your computer is running on, so that you can most likely simply click on the "Download RStudio Desktop..." button. Your download should start straight away.
+
+    -   If an incorrect operating system is detected, simply scroll down the page to find your operating system and download the corresponding version of `RStudio.`
+
+<!-- -->
+
+3.  Once you have downloaded `RStudio`, navigate to the folder where the downloaded file has been saved (by default, this will be your Downloads folder), and double click on the executable file to install `RStudio`.
+
+4.  Follow the on-screen instructions to install `RStudio`.
+
+If you run into any issues that you cannot solve with existing online posts, the [Posit Community forums](https://forum.posit.co/) are a good place to ask for help.
+
+## Setting up RStudio
+
+From now on, we will only be accessing `R` through `RStudio`. When you open up `RStudio` for the first time, you might find the layout rather intimidating The application window is divided into several sections, which we call 'panes'. Each pane also has several tabs. Although it may seem overwhelming at first, you will soon see that these different panes and tabs will actually make life much easier.
+
+### Global options
+
+Before we get staRted properly, however, we need to change some of the default settings of `RStudio`. The first set of changes that we are going to make ensure that, each time we launch a new `R` session in `RStudio`, we are starting afresh.
+
+To do so, head over to the 'Tools' dropdown menu and click on 'Global Options'. Make sure that the first three boxes are unticked (see @fig-GOGeneral). Under "Save workspace to .RData on exit", select the option "Never". Always starting afresh is good programming practice. It avoids any problems being carried over from previous `R` sessions. You can think of it like cooking in a freshly cleaned, tidy kitchen. It's much safer than preparing a meal in a messy, possibly even contaminated kitchen! [Or use the keyboard shortcut `Ctrl/Command + ,`]{.aside}
+
+::: {#fig-GlobalOptions layout-ncol="2"}
+![General tab](images/RStudioGlobalOptionsGeneral.png){#fig-GOGeneral fig-alt="Screenshot from RStudio showing that the first three checkboxes should be empty."}
+
+![Code tab](images/RStudioGlobalOptionsCode.png){#fig-GOCode fig-alt="Screenshot from RStudio showing that the checkbox about the native pipe should be selected."}
+
+RStudio's Global Options
+:::
+
+Next, under the 'Global Options' tab 'Panes' of the 'Global Options' window, ensure that the option "Use native pipe operator" is ticked (see @fig-GOCode). This is a new feature in `R` that is very useful so we will make use of it in this textbook.
+
+Finally, head over to the 'Pane Layout' tab. From here, you can rearrange the panes of your `RStudio` window. You can also select which tabs you would like to see in each pane. If you are already familiar with `RStudio`, feel free to stick to your favourite set-up. Personally, I use the panes layout below and, if you are new to `R`, I recommend that you select this layout, too, at least for now. You can go back to these 'Global Options' to change this setup at any stage. Don't forget to click on 'OK' to save your settings. Now, the panes in your `RStudio` window should be ordered as in @fig-RStudioNewLayout.
+
+::: {#fig-Panes layout-ncol="2"}
+![Panes Layout tab](images/RStudioGlobalOptionsPanes.png){#fig-GOPanes fig-alt="Screenshot from RStudio showing the pane layout that Elen recommends."}
+
+![Customised panes layout](images/RStudioNewLayout.png){#fig-RStudioNewLayout fig-alt="Screenshot from RStudio showing the pane layout that Elen recommends."}
+
+Recommended `RStudio` panes layout
+:::
+
+### Testing RStudio
+
+It is now time we tested whether `RStudio` is communicating well with `R`. To do so, let's run the same test as in the `R Console`. This time, head over to the Console tab in the top right pane of your `RStudio` window and, after the command prompt `>`, type: `plot(1:10)` and then press enter. You should see the same plot as earlier on (see @fig-testplot), appearing in the Plots tab of the bottom right pane of your `RStudio` window.
+
+If you get the following error message `Error in plot.new() : figure margins too large`, this is because your bottom right pane is hidden from view or too small for the plot to be printed there. Click on the small two-window icon in the bottom right corner to unhide the bottom right pane, if it is hidden (see @fig-MinimisedPlotPane). Or, if it too small, click on the dividing line between the two right-hand side panes and, whilst still holding down the mouse button, drag up the line until it is about halfway up. Then, re-type the command `plot(1:10)` in the Console pane and press enter again. The plot should appear as in @fig-testplotRStudio.
+
+::: {#fig-testingRStudio layout-ncol="2"}
+![Hidden (minimised) bottom right pane](images/PlotMarginsError.png){#fig-MinimisedPlotPane fig-alt="Screenshot from RStudio showing an error message in the Console because the bottom-right pane is minimised."}
+
+![Now the dividing line between the two panes is halfway up and the plot has been successfully output in the Plots pane](images/TestplotRStudio.png){#fig-testplotRStudio fig-alt="Screenshot from RStudio showing that the bottom-right pane contains a dot plot"}
+
+Testing that `RStudio` is communicating well with your `R` installation.
+:::
+
+## Installing `R` packages
+
+### What are packages?
+
+You now have a base installation of `R`. Base `R` is very powerful and comes with many standard packages and functions that `R` users use on a daily basis. If you click on the Packages tab in the bottom right pane and scroll down, you will see that there are many packages available. Only a few are selected. These are part of the base R installation.
+
+At the same time, thousands of `R` users have developed and shared additional `R` packages that enable us to vastly increase the capacities of base `R`. Packages are a very helpful way to bundle together a set of functions, data, and documentation files so that other `R` users can easily download these bundles and add them to their local `R` installation.
+
+Throughout this textbook, the names of packages will be enclosed in curly brackets, e.g.: {ggplot2}.
+
+> ## Quiz time! {.unnumbered}
+>
+> 1\) Which of these packages is not part of base `R`?
+>
+> ```{r Package-question, echo=FALSE, results="asis"}
+> check_question("{ggplot2}", options = c("{datasets}", "{graphics}", "{ggplot2}", "{stats}"), type = "radio",
+> button_label = "Check answer", q_id = 1,
+> right = "Correct! Though later on, we will install {ggplot2} as part of the {tidyverse} bundle of packages.",
+> wrong = "No, this package is part of the base installation.")
+> ```
+>
+>  
+>
+> 2\) Is it possible to create an `R` package that provides access to the full texts of Jane Austen's six completed, published novels for computational text analysis in `R`?
+>
+> ```{r Package-question2, echo=FALSE, results="asis"}
+> check_question("Yes, pretty much anything is possible in R!", options = c("Yes, pretty much anything is possible in R!", "No way, that sounds impossible!"), type = "radio",
+> button_label = "Check answer", q_id = 2,
+> right = "Not only is it possible, but it has already been done. And what's more, the creator of the package has shared it for the entire R community to use. 🎉",
+> wrong = "Not only is it possible, but it has already been done. And what's more, the creator of the package has shared it for the entire R community to use. 🎉")
+> >
+> ```
+>
+>  
+>
+> 3\) Is the {janeaustenr} package installed as part of base `R`?
+>
+> ```{r Package-question3, echo=FALSE, results="asis"}
+> check_question("No", options = c("Yes", "No"), type = "radio",
+> button_label = "Check answer", q_id = 3,
+> right = "Correct! Let's install now.",
+> wrong = "No, it's not. If you can find it in your Packages pane, this means that you installed it at some point.")
+> >
+> ```
+
+### Installing packages
+
+To install a package, you will first need to download it from the internet. Packages are typically stored on different websites (online repositories), but the most trustworthy one and easiest to work with is [CRAN](https://cran.rstudio.com/index.html) (Comprehensive R Archive Network). To install the {janeaustenr} package from CRAN, simply type the following command in the Console pane and then type enter: `install.packages("janeaustenr")`.
+
+This command will take a few seconds to run (or longer depending on how slow your internet connection is). You should then see a message in red in the console indicating that the package has been downloaded and its size (here: 1.5 megabyte), as well as the path to where the package's content has been saved on your computer (see @fig-PckInstalled). You do not need to worry about any of this.
+
+![Screenshot showing that the package has been correctly installed.](images/JaneaustenrInstalled.png){#fig-PckInstalled fig-alt="Screenshot from RStudio. The console output reads: trying URL 'https://cran.rstudio.com/bin/macosx/big-su r-arm64/contrib/4.3/janeaustenr_1.0.0.tgz' Content type 'application/x-gzip' length 1624062 bytes (1.5 MB) downloaded 1.5 MB The downloaded binary packages are in /var/folders/_x/ycbk0by91blbvnqkbtv105w0000g p/T//Rtmp5xaS1h/downloaded_packages" width="450"}
+
+To check that the package has been successfully downloaded and installed, head over to the Packages tab of the bottom-right pane and scroll down to the {janeaustenr} package, or search for it using the search window within this same tab. The {janeaustenr} package should now be visible, which tells us that the package is installed on your computer. Note, however, that the checkbox next to it is currently empty. This means that the package hasn't been loaded in our current `R` session and therefore cannot be used yet. Note that whilst you only need to install each package once, you will need to load it every time we want to use it in a new `R` session. This is because, when we start a new `R` session, the kitchen is perfectly clean and tidy and everything is back in storage. And the good news is that we don't even need to do the washing-up! 🙃
+
+### Loading packages
+
+You can think of base `R` as a fully functional student kitchen. It is rather small and only has the most essential ingredients and equipment, but it still has everything you need to cook simple, delicious meals. Downloading and installing additional packages is like buying fancier ingredients (these are packages that include datasets) or more sophisticated and specialised kitchen devices (these are packages that include additional functions).
+
+Once you have downloaded and installed a new package, it is put in storage (either in the fridge or in a kitchen cupboard). In this case, the package appears in your Packages tab, but is not yet selected. If you want to use the new ingredient or the piece of equipment that was delivered in the new package, you need to get it out of the fridge or the cupboard and place it on the kitchen counter. This is the equivalent to loading a package. Once they are unpacked (i.e., installed), packages are referred to as libraries.
+
+So the first thing we now need to do to be able to analyse Jane Austen's novels in `R` is to load the {janeaustenr} library. The command to do is `library(janeaustenr)`. Type this command in the Console and press enter. Ideally, it should look like nothing has happened. Indeed, if you do not get an error message (in red), then the library has been successfully loaded. We can check that this is actually the case by looking again for the {janeaustenr} in the Packages tab. The checkbox should now be ticked.
+
+## Package documentation
+
+To find out more about any package or function, simply use the command `help()` or its shortcut `?()`. For example, to find out more about the {janeaustenr} package, enter the command `help(janeaustenr)` or `?(janeaustenr)` in the Console. The help file will open up in the Help tab of the bottom-right pane. It contains the name of the package and a short description, as well as the name of the package maintainer, Julia Silge, and some additional links.
+
+One of these links takes us to the package creator's GitHub repository. This is where we can find a source code for the package, should we want to check how it works under the hood, or amend it in any ways. Click on this link and scroll down the package's GitHub page to read its README file. This document informs us that the package includes plain text versions of Jane Austen's six novels and tells us under what name they are stored within the library. For example, to access *Pride and Prejudice,* we need to load the library object `prideprejudice`. [Note that the names of objects in `R` cannot contain spaces or hyphens.]{.aside}
+
+Pick your favourite Jane Austen novel and enter its corresponding object name in the Console, e.g., `emma`. The entire novel will be printed in the Console output! You can print only a few lines by selecting them within square brackets, e.g., the command `emma[20:25]` will only print lines 20 to 25 of the text object `emma` (see @fig-emma2025).
+
+![Screenshot showing a selection of lines from the text object `emma` (note that you can adjust the size of the Console pane to see more or less of the text at any one time).](images/Emma2025.png){#fig-emma2025 fig-alt="Screenshot from RStudio. The command is: emma[20:25] and the console output reads: [1] \"She was the youngest of the two daughters of a most affectionate,\"        [2] \"indulgent father; and had, in consequence of her sister's marriage, been\" [3] \"mistress of his house from a very early period. Her mother had died\"      [4] \"too long ago for her to have more than an indistinct remembrance of\"      [5] \"her caresses; and her place had been supplied by an excellent woman as\"   [6] \"governess, who had fallen little short of a mother in affection.\"" width="400"}
+
+To find out more about a dataset or function within a package, use the functions `help()` or `?()`, e.g., `help(emma)` or `?emma`. In this case, the help file provides us with a short description of this object and a link to the original source from which the package creator obtained the novel (which is in the [public domain](https://www.gutenberg.org/help/faq.html#what-books-does-project-gutenberg-publish), otherwise it would not be possible to share it in this way).
+
+## Citing packages
+
+When we use a package that is not part of base `R`, it is very important to reference the package adequately. There are two main reasons for doing this. For a start, the people who create and maintain these packages largely do so in their free time and they deserve full credit for their incredibly valuable work and contribution to science. Hence, whenever you use a package for your research, you should cite it, just like you would other sources.
+
+The help page of the {janeaustenr} package already informed us that the maintainer of the package is Julia Silge. To get a full citation, however, we should use the `citation()` function. Enter `citation("janeaustenr")` in the Console to find out how to cite this package.
+
+Note that the recommended bibliographic reference also includes the package version, which is important for reproducibility as the package may evolve and someone wanted to reproduce your analysis will need to know which version you used. This is the second main reason why we should cite the packages that we use properly. In a research report, thesis, or academic article, you would cite the {janeaustenr} package like this:
+
+> We used the {janeaustenr} package [@silgeJaneaustenrJaneAusten2022] to access Jane Austen's six, published novels in R [R Core Team -@rcoreteamLanguageEnvironmentStatistical2024].
+
+You can see the full references by hovering on the in-text citation links or by going to the [References](https://elenlefoll.github.io/RstatsTextbook/references.html) section of this book.
