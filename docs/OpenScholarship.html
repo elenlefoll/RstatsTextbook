@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -230,7 +196,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Open Scholarship</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Open Scholarship</span></h1>
 </div>
 
 
@@ -367,7 +333,7 @@ Task 1
 <h2 data-number="1.2" class="anchored" data-anchor-id="open-education"><span class="header-section-number">1.2</span> Open Education</h2>
 <p>The web-based version of this textbook is published as an Open Educational Resource (OER; see <a href="#fig-OER" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>) under the Creative Commons license: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><code>CC BY-NC-SA</code></a>. This means that it is free to read and use, as well as edit, remix, and expand upon, provided that a) the original author and source is mentioned (as indicated by <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><code>BY</code></a>), b) any derived version is not made into a commercial product (<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><code>NC</code></a> stands for non-commercial), and c) that any derived versions of this textbook (e.g., a translated version or a version adapted for historians) are also shared with this same license (<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><code>SA</code></a> stands for share alike).</p>
 <p>In line with the principles of Open Education, all of the datasets that we will work with in this textbook have been published in Open Access, which means that we can freely use them to learn about statistics and data visualisation using real datasets from published research studies in applied linguistics and language education.</p>
-<div id="fig-OER" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Sketchnote Grafik zu Open Educational Resources">
+<div id="fig-OER" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Sketchnote Grafik zu Open Educational Resources" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-OER-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/oer.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1.1: OER sketch note by Yvonne Stry"><img src="images/oer.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Sketchnote Grafik zu Open Educational Resources"></a>
@@ -406,8 +372,6 @@ Tips to go further
 </div>
 </div>
 
-
-<!-- -->
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-LibreOffice2024" class="csl-entry" role="listitem">
@@ -516,57 +480,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
     clipboardModal.on('success', onCopySuccess);
-  }
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
@@ -914,126 +827,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Installing R and RStudio</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">engine:</span><span class="co"> knitr</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">bibliography:</span><span class="co"> references.bib</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="in">```{css}</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>#<span class="op">|</span> echo<span class="in">:</span> false</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>p {</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">justify</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>```{r include=FALSE}</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>library<span class="in">(</span>checkdown<span class="in">)</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a># Open Scholarship</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>This book aims to provide a stepping stone for students and scholars of traditionally less quantitative and computational disciplines <span class="in">(</span>such as some branches of linguistics and language education research<span class="in">)</span> to gather first <span class="in">(</span>hopefully positive!<span class="in">)</span> experiences with statistical and computational approaches to working with empirical data<span class="ex">[</span><span class="op">^</span><span class="ss">openscholarship-1</span><span class="ex">]</span>. The underlying belief is that these methods ought to be accessible to all<span class="op">,</span> regardless of their academic background or personal circumstances. To this end<span class="op">,</span> this book embraces the principles of Open Scholarship.</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="op">^</span><span class="ss">openscholarship-1</span><span class="ex">]</span><span class="in">:</span> Emprical data is based on what is experienced or observed rather than on theory alone.</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>Open Scholarship "reflects the idea that knowledge of all kinds should be openly shared<span class="op">,</span> transparent<span class="op">,</span> rigorous<span class="op">,</span> reproducible<span class="op">,</span> replicable<span class="op">,</span> accumulative<span class="op">,</span> and inclusive <span class="in">(</span>allowing for all knowledge systems<span class="in">)</span>" <span class="ex">[</span><span class="ss">@parsonsCommunitysourcedGlossaryOpen2022</span><span class="ex">]</span>. For this to be the case<span class="op">,</span> teaching materials need to shared openly and the tools and software taught in these resources need to be freely accessible<span class="op">,</span> too. In the following<span class="op">,</span> we will briefly consider the role of Open Educational Resources <span class="in">(</span>OERs<span class="in">)</span> and open-source software in our pursuit of Open Scholarship.</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>## Open Source</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>In line with its aim to provide an accessible introduction to statistics and data visualisation<span class="op">,</span> this textbook relies exclusively on open-source software and programming languages<span class="op">,</span> foremost `LibreOffice Calc`<span class="op">,</span> `R` and `RStudio`. Open source refers to software whose source code is available under a license that grants anyone the rights to study<span class="op">,</span> modify<span class="op">,</span> and distribute the software to anyone and for any purpose. If we think of a software application as a cake<span class="op">,</span> the source code is like its recipe. It contains the list of ingredients and the steps to bake the cake. Open source means that the recipe is publicly available. You can access it<span class="op">,</span> read it<span class="op">,</span> and use it to bake the cake. You can also modify it to add your own twist<span class="op">,</span> such as adding a new ingredient or making it vegan<span class="op">,</span> and share it with others. In the context of software<span class="op">,</span> this allows many people to collaborate<span class="op">,</span> make improvements<span class="op">,</span> and share their versions<span class="op">,</span> resulting in better and more diverse software.</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>Using open-source software in this introductory textbook means that anyone<span class="ex">[</span><span class="op">^</span><span class="ss">openscholarship-2</span><span class="ex">]</span> can download<span class="op">,</span> install and use the required software at no cost. However<span class="op">,</span> it is very important to note that not all free software <span class="in">(</span><span class="op">*</span>freeware<span class="op">*</span><span class="in">)</span> is open source. Let us illustrate the difference by comparing different spreadsheet programmes as<span class="op">,</span> in the following chapter<span class="op">,</span> we will begin exploring tabular data structures in a spreadsheet programme.</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="op">^</span><span class="ss">openscholarship-2</span><span class="ex">]</span><span class="in">:</span> Provided that they have access to the internet and a functioning personal computer.</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>The most most widely used spreadsheet programme to date is undoubtedly `Microsoft Excel`. Excel is a commercial<span class="op">,</span> proprietary spreadsheet editor which forms part of the Microsoft 365 package. As such<span class="op">,</span> to use Excel on your personal computer<span class="op">,</span> you need to buy a license or be a member of an organisation <span class="in">(</span>e<span class="fu">.g</span>.<span class="op">,</span> your university or company<span class="in">)</span> that pays for such a license. It is true that Microsoft now also offers a free <span class="in">(</span>functionally limited<span class="in">)</span> web-based version of Excel<span class="op">,</span> yet this still does not make it open source. This is because Microsoft does not share the source code of any Excel version<span class="op">,</span> which means that<span class="op">,</span> even if they are giving away free cake<span class="op">,</span> we do not have the recipe to bake the cake ourselves should the company decide to start charging money for the cake or to no longer distribute it at all! Similarly<span class="op">,</span> you may be familiar with a popular<span class="op">,</span> web-based alternative to Excel<span class="in">:</span> `Google Sheets`. Whilst it is <span class="in">(</span>currently<span class="in">)</span> free to use<span class="op">,</span> as the name suggests<span class="op">,</span> Google Sheets is owned by Google and is therefore not open source<span class="op">,</span> either. By contrast<span class="op">,</span> `LibreOffice Calc` is a project of The Document Foundation <span class="in">(</span>TDF<span class="in">)</span> that provides a popular<span class="op">,</span> free<span class="op">,</span> open-source office productivity software suite comparable to Microsoft 365 called `LibreOffice`. LibreOffice is developed collaboratively by very many different people across the world who all do so on a volunteer basis. The Document Foundation estimates that there are 200 million active LibreOffice users worldwide<span class="op">,</span> about 25% of whom are thought to be students <span class="ex">[</span><span class="ss">figures from 2018</span><span class="op">,</span> see LibreOffice <span class="im">@LibreOffice2024</span>]. Its popularity is likely due to the fact that it <span class="kw">not</span> <span class="kw">only</span> uses open formats <span class="fu">(</span><span class="dv">e</span>.<span class="dv">g</span>., `.<span class="dv">odt</span>` <span class="kw">and</span> `.<span class="dv">ods</span>`<span class="fu">)</span>, but can also open <span class="kw">and</span> save to a range of popular formats including those used by Microsoft <span class="fu">(</span><span class="dv">e</span>.<span class="dv">g</span>., `.<span class="dv">docx</span>` <span class="kw">and</span> `.<span class="dv">xlsx</span>`<span class="fu">)</span>.</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>&gt; ## Quiz time! {<span class="fu">.unnumbered</span>}</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> 1\) Which of these is an open-source alternative to Microsoft Word?</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ```{r Word-question<span class="op">,</span> echo=FALSE<span class="op">,</span> results="asis"}</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> check_question<span class="in">(</span>"LibreOffice Writer"<span class="op">,</span> options = c<span class="in">(</span>"LibreOffice Writer"<span class="op">,</span> "Google Docs"<span class="op">,</span> "Pages"<span class="in">)</span><span class="op">,</span> type = "radio"<span class="op">,</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> button_label = "Check answer"<span class="op">,</span> q_id = 1<span class="op">,</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> right = "Correct! And the good news is that<span class="op">,</span> in Task 1 <span class="in">(</span>see below<span class="in">)</span><span class="op">,</span> you will install LibreOffice Writer as part of the LibreOffice package."<span class="op">,</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> wrong = "No<span class="op">,</span> this software is not open source. It is owned by a company."<span class="in">)</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ```</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> &nbsp;</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> 2\) Which of these is an open-source alternative to Microsoft Powerpoint?</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ```{r Powerpoint-question<span class="op">,</span> echo=FALSE<span class="op">,</span> results="asis"}</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> check_question<span class="in">(</span>"LibreOffice Impress"<span class="op">,</span> options = c<span class="in">(</span>"Keynote"<span class="op">,</span> "Google Slides"<span class="op">,</span> "LibreOffice Impress"<span class="in">)</span><span class="op">,</span> type = "radio"<span class="op">,</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> button_label = "Check answer"<span class="op">,</span> q_id = 2<span class="op">,</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> right = "Correct! And the good news is that<span class="op">,</span> in Task 1 <span class="in">(</span>see below<span class="in">)</span><span class="op">,</span> you will install LibreOffice Impress as part of the LibreOffice package."<span class="op">,</span></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> wrong = "No<span class="op">,</span> this software is proprietary."<span class="in">)</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ```</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> &nbsp;</span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> 3\) Not only can software be open source<span class="op">,</span> programming languages can<span class="op">,</span> too. In fact<span class="op">,</span> most modern programming languages are open source. In this book<span class="op">,</span> we will focus on the open-source programming language `R`. Which of these is <span class="op">*</span>not<span class="op">*</span> an open-source programming language?</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ```{r Python-question<span class="op">,</span> echo=FALSE<span class="op">,</span> results="asis"}</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> check_question<span class="in">(</span>"MATLAB"<span class="op">,</span> options = c<span class="in">(</span>"MATLAB"<span class="op">,</span> "JavaScript"<span class="op">,</span> "Python"<span class="in">)</span><span class="op">,</span> type = "radio"<span class="op">,</span></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> button_label = "Check answer"<span class="op">,</span> q_id = 3<span class="op">,</span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> right = "Correct. MATLAB is one of the few genuinely closed-source programming languages that continue to be used in research."<span class="op">,</span></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> wrong = "No<span class="op">,</span> just like `R`<span class="op">,</span> this is also an open-source programming language."<span class="in">)</span></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ```</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> &nbsp;</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> 4\) There are also many open-source operating systems. Which of these is an open-source alternative to the operating system Windows?</span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ```{r Windows-question<span class="op">,</span> echo=FALSE<span class="op">,</span> results="asis"}</span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> check_question<span class="in">(</span>"Ubuntu"<span class="op">,</span> options = c<span class="in">(</span>"MacOS"<span class="op">,</span> "Ubuntu"<span class="op">,</span> "iOS"<span class="in">)</span><span class="op">,</span> type = "radio"<span class="op">,</span></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> button_label = "Check answer"<span class="op">,</span> q_id = 4<span class="op">,</span></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> right = "Correct! Ubuntu is one of many Linux distributions<span class="op">,</span> a family of open source operating systems. You can find out more here<span class="in">:</span> https<span class="in">:</span><span class="er">//itsfoss.com/getting-started-with-ubuntu/.",</span></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> wrong = "No<span class="op">,</span> this operating system is not open source. It is owned by Apple."<span class="in">)</span></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ```</span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> &nbsp;</span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="in">:::</span> callout-caution</span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>## Task 1</span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>Your first task is to <span class="op">**</span>download<span class="op">**</span> and <span class="op">**</span>install<span class="op">**</span> <span class="op">**</span>LibreOffice<span class="op">**</span> as we will use its spreadsheet editor<span class="op">,</span> <span class="op">**</span>LibreOffice Calc<span class="op">**,</span> in the next few chapters.</span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>-   LibreOffice is available for Windows<span class="op">,</span> Mac and Linux. You can download it from here<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//www.libreoffice.org/download/download-libreoffice/.&gt;</span></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>-   You will find detailed installation instructions here<span class="in">:</span> <span class="ex">[</span><span class="ss">https</span><span class="in">:</span><span class="er">//www.libreoffice.org/get-help/install-howto/.](https://www.libreoffice.org/get-help/install-howto/.You)</span></span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>-   Detailed documentation is also available in many different languages<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//documentation.libreoffice.org/en/english-documentation/&gt;</span></span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="in">:::</span></span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>## Open Education</span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>The web-based version of this textbook is published as an Open Educational Resource <span class="in">(</span>OER; see @fig-OER<span class="in">)</span> under the Creative Commons license<span class="in">:</span> <span class="ex">[</span><span class="ss">`CC BY-NC-SA`</span><span class="ex">]</span><span class="in">(</span>https<span class="in">:</span><span class="er">//creativecommons.org/licenses/by-nc-sa/4.0/). This means that it is free to read and use, as well as edit, remix, and expand upon, provided that a) the original author and source is mentioned (as indicated by [`BY`](https://creativecommons.org/licenses/by-nc-sa/4.0/)), b) any derived version is not made into a commercial product ([`NC`](https://creativecommons.org/licenses/by-nc-sa/4.0/) stands for non-commercial), and c) that any derived versions of this textbook (e.g., a translated version or a version adapted for historians) are also shared with this same license ([`SA`](https://creativecommons.org/licenses/by-nc-sa/4.0/) stands for share alike).</span></span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>In line with the principles of Open Education<span class="op">,</span> all of the datasets that we will work with in this textbook have been published in Open Access<span class="op">,</span> which means that we can freely use them to learn about statistics and data visualisation using real datasets from published research studies in applied linguistics and language education.</span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>!<span class="ex">[</span><span class="ss">OER sketch note by [Yvonne Stry</span><span class="ex">]</span><span class="in">(</span>https<span class="in">:</span><span class="er">//leko.th-nuernberg.de/portal_digitale_lehre/praxisbeispiele/lehrmaterialien-teilen-fuer-flexibles-lernen/)](images/oer.jpg){#fig-OER fig-alt="Sketchnote Grafik zu Open Educational Resources" fig-align="center"}</span></span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="in">:::</span> <span class="er">{</span><span class="fu">.callout-note</span> collapse="true"}</span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>## Tips to go further</span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>This chapter has simplified things considerably. To be considered open source<span class="op">,</span> software distributions actually have to comply with ten criteria. You can read up on them here<span class="in">:</span></span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>-   &lt;https<span class="in">:</span><span class="er">//opensource.org/osd&gt;</span></span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>To find out more about the benefits of open-source software in the context of research<span class="op">,</span> I recommend reading<span class="in">:</span></span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>-   &lt;https<span class="in">:</span><span class="er">//book.the-turing-way.org/reproducible-research/open/open-source&gt;</span></span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>To find out more about Open Educational Resources <span class="in">(</span>OERs<span class="in">)</span><span class="op">,</span> I recommend exploring the following OER databases<span class="in">:</span></span>
-<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>-   &lt;https<span class="in">:</span><span class="er">//oercommons.org/&gt;</span></span>
-<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>-   &lt;https<span class="in">:</span><span class="er">//www.twillo.de/oer/web/&gt;</span></span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a><span class="in">:::</span></span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1048,7 +842,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","loop":false});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

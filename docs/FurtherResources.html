@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -197,7 +163,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#recommended-resources-specific-to-the-language-sciences" id="toc-recommended-resources-specific-to-the-language-sciences" class="nav-link active" data-scroll-target="#recommended-resources-specific-to-the-language-sciences"><span class="header-section-number">A.1</span> Recommended resources specific to the language sciences</a></li>
-  <li><a href="#further-open-educational-resources-in-no-particular-order" id="toc-further-open-educational-resources-in-no-particular-order" class="nav-link" data-scroll-target="#further-open-educational-resources-in-no-particular-order"><span class="header-section-number">A.2</span> Further Open Educational Resources (in no particular order)</a></li>
+  <li><a href="#further-open-educational-resources-in-no-particular-order" id="toc-further-open-educational-resources-in-no-particular-order" class="nav-link" data-scroll-target="#further-open-educational-resources-in-no-particular-order"><span class="header-section-number">A.2</span> Further Open Educational Resources (in no particular order)</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">A.2.1</span> </a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -206,7 +175,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./FurtherResources.html">Appendices</a></li><li class="breadcrumb-item"><a href="./FurtherResources.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Next-step resources</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Appendix A — Next-step resources</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<h1 class="title">Appendix A — Next-step resources</h1>
 </div>
 
 
@@ -263,10 +232,11 @@ p {
 <li>Data Visualization in R <a href="https://datavizf23.classes.andrewheiss.com/" class="uri">https://datavizf23.classes.andrewheiss.com/</a></li>
 <li>R for Data Science <a href="https://r4ds.hadley.nz/intro" class="uri">https://r4ds.hadley.nz/intro</a></li>
 </ul>
+<section id="section" class="level3" data-number="A.2.1">
+<h3 data-number="A.2.1" class="anchored" data-anchor-id="section"><span class="header-section-number">A.2.1</span> </h3>
 
 
-<!-- -->
-
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -359,57 +329,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
     clipboardModal.on('success', onCopySuccess);
-  }
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
@@ -754,59 +673,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#bibliography: references.bib</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">engine:</span><span class="co"> knitr</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="in">```{css}</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>#<span class="op">|</span> echo<span class="in">:</span> false</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>p {</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">justify</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a># Next-step resources</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>In the hope that this textbook has inspired you to dive deeper into the wonderful world of quantitative data analysis<span class="op">,</span> statistics<span class="op">,</span> data visualisation<span class="op">,</span> and coding in R<span class="op">,</span> here is a <span class="in">(</span>work-in-progress<span class="in">)</span> curated list of further resources to continue your learning journey! 🚀✨</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>## Recommended resources specific to the language sciences</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>-   Brezina<span class="op">,</span> Vaclav. 2018. Statistics in Corpus Linguistics<span class="in">:</span> A Practical Guide. Cambridge<span class="in">:</span> Cambridge University Press. https<span class="in">:</span><span class="er">//doi.org/10.1017/9781316410899.</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>-   Desagulier<span class="op">,</span> Guillaume. 2017. Corpus Linguistics and Statistics with R<span class="in">:</span> Introduction to Quantitative Methods in Linguistics <span class="in">(</span>Quantitative Methods in the Humanities and Social Sciences<span class="in">)</span>. Cham<span class="in">:</span> Springer International Publishing.</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>-   Gries<span class="op">,</span> Stefan Thomas. 2013. Statistics for linguistics with R<span class="in">:</span> a practical introduction. 2nd revised edition. Berlin<span class="in">:</span> De Gruyter Mouton.</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>-   LADAL contributors. Tutorials of the Language Technology and Data Analysis Laboratory. &lt;https<span class="in">:</span><span class="er">//ladal.edu.au/tutorials.html&gt; `Open Educational Resource`.</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>-   Levshina<span class="op">,</span> Natalia. 2015. How to do linguistics with R<span class="in">:</span> Data exploration and statistical analysis. Amsterdam<span class="in">:</span> John Benjamins.</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>-   Schneider<span class="op">,</span> Dr Gerold <span class="op">&amp;</span> Max Lauber. 2020. Statistics for Linguists. &lt;https<span class="in">:</span><span class="er">//dlf.uzh.ch/openbooks/statisticsforlinguists/&gt; `Open Educational Resource`.</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>-   Winter<span class="op">,</span> Bodo. 2019. Statistics for Linguists<span class="in">:</span> An Introduction Using R. New York<span class="in">:</span> Routledge. <span class="ex">[</span><span class="ss">https</span><span class="in">:</span><span class="er">//doi.org/10.4324/9781315165547](https://doi.org/10.1017/9781316410899).</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>## Further Open Educational Resources <span class="in">(</span>in no particular order<span class="in">)</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>-   Diez<span class="op">,</span> David<span class="op">,</span> Mine Cetinkaya-Rundel<span class="op">,</span> Christopher Barr <span class="op">&amp;</span> OpenIntro. 2015. OpenIntro Statistics. Leanpub. &lt;https<span class="in">:</span><span class="er">//leanpub.next/os&gt;.</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>-   Guide to Effect Sizes and Confidence Intervals<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//matthewbjane.quarto.pub/guide-to-effect-sizes-and-confidence-intervals/&gt;</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>-   Happy Git and GitHub for the useR<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//happygitwithr.com/&gt;</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>-   Quarto <span class="op">&amp;</span> reproducibility<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//ucsbcarpentry.github.io/Reproducible-Publications-with-RStudio-Quarto/index.html&gt;</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>-   Modern Data Visualization with R<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//rkabacoff.github.io/datavis&gt;</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>-   Building reproducible analytical pipelines with R<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//raps-with-r.dev/&gt;</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>-   Modern Plain Text Computing<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//mptc.io/content/01-content.html&gt;</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>-   &lt;https<span class="in">:</span><span class="er">//www.data-to-viz.com/&gt;</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>-   Interpreting data visualisation<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//pressbooks.library.torontomu.ca/criticaldataliteracy/&gt;</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>-   Improve your statistical inferences<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//lakens.github.io/statistical_inferences/&gt;</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>-   What they forgot to teach you about R<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//rstats.wtf/&gt;</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>-   Introduction to Data Science<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//florian-huber.github.io/data_science_course/book/cover.html&gt;</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>-   Data Science in Education Using R<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//datascienceineducation.com/&gt;</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>-   Models Demystified<span class="in">:</span> A Practical Guide from t-tests to Deep Learning &lt;https<span class="in">:</span><span class="er">//m-clark.github.io/book-of-models/&gt;</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>-   Data Visualization in R &lt;https<span class="in">:</span><span class="er">//datavizf23.classes.andrewheiss.com/&gt;</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>-   R for Data Science &lt;https<span class="in">:</span><span class="er">//r4ds.hadley.nz/intro&gt;</span></span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
