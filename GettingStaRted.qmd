@@ -77,7 +77,7 @@ check_question("R returns an error message because it interprets the word as an 
 
 ```{r Caret-question, echo=FALSE, results="asis"}
 check_question("The ^ operator performs an exponentiation operation.", 
-               options = c("The ^ operator performs an exponentiation operation.", "The ^ operator is used to calculate the modulus of 13, with 2 as the base.", "The ^ operator is used to create an vector with 13 occurrences of the integer 2."), 
+               options = c("The ^ operator performs an exponentiation operation.", "The ^ operator is used to calculate the modulus of 13, with 2 as the base.", "The ^ operator is used to create a vector with 13 occurrences of the integer 2."), 
                type = "radio",
                button_label = "Check answer", 
                q_id = 2,
@@ -431,7 +431,7 @@ sqrt(my.favourite.number
 
 Notice that, in this erroneous line of code, we have (intentionally) forgotten to include the final bracket. As a result, after you hit "Enter", the Console output shows a "`+`" instead of the result of the mathematical operation. The "`+`" indicates that the line is incomplete and therefore cannot be interpreted yet. `R` is therefore asking you to complete your line of code.
 
-![Uncomplete function in console](images/ConsoleUncompleteFunction.png){#fig-ConsoleUncompleteFunction fig-alt="RStudio screenshot showing the console with an uncomplete function and a red ellipse around the +-symbol." width="450"}
+![Incomplete function in console](images/ConsoleUncompleteFunction.png){#fig-ConsoleUncompleteFunction fig-alt="RStudio screenshot showing the console with an incomplete function and a red ellipse around the +-symbol." width="450"}
 
 There are two ways to fix this. The first method is to complete the line of code directly in the Console. In this case, this means adding the closing bracket "`)`" after the "`+`" and hitting "Enter". Now that the line has been completed, `R` is able to interpret it as an `R` command and will output the result of the operation.
 
@@ -526,9 +526,9 @@ good.luck <- موفق باشيد"
 ::: {.callout-note collapse="true"}
 #### Click here for the solutions
 
-1.  The first error was `Error: object 'my.favorite.number' not found`. This means that the object `my.favorite.number` is not stored in your environment. If you think it is, the problem is most likely due to a typo. Here, `my.favorite.number`uses American English spelling, whereas we used British English spelling when we created the object. To correct the error, you need to use exactly the same spelling as when you created the object.
+1.  The first error was `object 'my.favorite.number' not found`. This means that the object `my.favorite.number` is not stored in your environment. If you think it is, the problem is most likely due to a typo. Here, `my.favorite.number` uses American English spelling, whereas we used British English spelling when we created the object. To correct the error, you need to use exactly the same spelling as when you created the object.
 
-2.  The second error is also `Error: object 'Negin' not found`. However, here we know that the object `Negin` is not in the environment because we are trying to create and save a new object called `Negin-Fav-Word`! The problem is that `R` interprets the hyphens in this object name as a minus operator and therefore tries to find the object `Negin` in order to then subtract `Fav` and `Word` from it. To correct this error, you need to remove the hyphens or replace them by dots.
+2.  The second error is also `object 'Negin' not found`. However, here we do not expect an object called `Negin` to be in the environment because what we are actually trying to do is create and save a new object called `Negin-Fav-Word`! The problem is that `R` interprets the hyphens in this object name as "minus" and therefore tries to find the object `Negin` in order to then subtract `Fav` and `Word` from it. To correct this error, you need to remove the hyphens or replace them by dots.
 
 3.  The third error is yet another `object not found error`. It is another typo: the correct object name is not in the plural form.
 
@@ -536,13 +536,13 @@ good.luck <- موفق باشيد"
 
 5.  The object `my.favourite..number` is not found because the object that we created does not have two consecutive dots. Hence, to fix this error, you need to remove one of these consecutive dots. It is also worth noting that this line replaces the value originally stored in `ömers_favorite_number` with the value stored in `my.favourite.number`. If you check your environment pane, you will see that, once you have corrected the double dot, this line will change `ömers_favorite_number` to `13` - with no warning! In other words, here, the equal sign `=` behaves in the same way as the assignment operator `<-`.
 
-6.  This line does not actually generate an error. However, you may have noticed that the assignment operator is in the opposite direction. This means that the result of `my.favourite.number` multiplied by two is assigned to a new object called `half.my.fav.number`. Bearing this in mind, you might want to edit the line for the operation to make mathematical sense.
+6.  This line does not actually generate an error. However, you may have noticed that the assignment operator is in the opposite direction. This means that the `my.favourite.number` is multiplied by two and that is number is then assigned to a new object called `half.my.fav.number`. Bearing this in mind, you might want to amend the line for the outcome to make mathematical sense.
 
-7.  Running this line will have caused you to run into a `+` situation in the console. As explained earlier in this chapter, to get out of it, you should first take your mouse cursor to the Console and then press "esc" on your keyboard to cancel this erroneous line. Whilst there is no error message to help you understand where the problem is coming from, `RStudio` helpfully displays a red cross icon. Hovering over it displays a message. The first line of this message is the relevant one: `unexpected token 's.favourite.number <- 5`. This tells us that apostrophes are forbidden in object names. Remove it and the error will be fixed.
+7.  Running this line will have caused you to run into a `+` situation in the console. As explained earlier in this chapter, to get out of it, you should first take your mouse cursor to the Console and then press "esc" on your keyboard to cancel this erroneous line. Whilst there is no error message to help you understand where the problem is coming from, `RStudio` helpfully displays a red cross icon to the left of the line. Hovering over it displays a message. The first line of this message is the relevant one: `unexpected token 's.favourite.number <- 5`. This tells us that apostrophes are forbidden in object names. Remove it and the error will be fixed.
 
 8.  This line also causes a `+` situation. In this case, it is due to a missing quotation mark. To fix this error, first cancel the incomplete line of code using the escape key. Then, add the missing double quotation mark and rerun the line.
 
-9.  The message `Error: unexpected symbol in "2FavNumbers"` is due to the fact that object names cannot start with a number. Change the object name to something like `TwoFavNumbers` or `FavNumbers2` to fix the error.
+9.  The message `Error: unexpected symbol in "2FavNumbers"` is due to the fact that object names cannot start with a number. Change the object name to something like `TwoFavNumbers` or `Fav2Numbers` to fix the error.
 
-10. Here, too, the error message reads `unexpected symbol in "good.luck <- موفق باشيد"`. It is important to understand that the unexpected symbol is not within the character strings, but rather within the command to assign the string to the object name `good.luck`. Hence, the problem is not that this string is in Persian, but rather that one of the quotation marks is missing so that the phrase is not enclosed in quotation marks.
+10. Here, too, the error message reads `unexpected symbol in "good.luck <- موفق باشيد"`. It is important to understand that the unexpected symbol is not within the character strings, but rather within the command to assign the string to the object name `good.luck`. Hence, the problem is not that this string is in Persian, but rather that one of the quotation marks is missing meaning that the phrase is not enclosed in quotation marks as it should be.
 :::
