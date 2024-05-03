@@ -1,0 +1,480 @@
+---
+engine: knitr
+execute:
+  echo: true
+bibliography: references.bib
+---
+
+```{css}
+#| echo: false
+p {
+  text-align: justify
+}
+```
+
+```{r include=FALSE}
+library(checkdown)
+```
+
+# Getting staRted
+
+#### **Chapter overview** {.unnumbered}
+
+In this chapter, you will learn how to:
+
+-   [ ] Use the `R` Console.
+-   [ ] Do basic mathematical operations in `R`.
+-   [ ] Create and use `R` objects.
+-   [ ] Write and save `.R` scripts.
+-   [ ] Add comments to your scripts.
+-   [ ] Keep your cool when errors pop up! 😎
+
+If you are already familiar with the basics of `R` and are keen to learn more about doing statistics in `R`, you can skip most of this chapter. That's said, it's probably not a bad idea to have a go at the quiz questions to refresh your memory.
+
+### Using the Console
+
+One way to write `R` code in `RStudio` is to use the Console which, if you set up `RStudio` as recommended [here](https://elenlefoll.github.io/RstatsTextbook/InstallingR.html#global-options), should be in your right-hand pane. You can type a line of code immediately after the `>` and press "Enter", as you did when you ran commands to test that things were working properly (for that, we used the `plot(1:10)` command) and installed the {janeaustenr} package.
+
+Data input is the most basic operation in `R`. Try inputting a number by typing it out in the Console and then pressing "Enter". `R` will interpret the number and return it. You can input both integers (whole numbers, e.g., `13`) and decimal numbers (e.g., `0.5`).
+
+**To do for Jan: Add screenshot of RStudio with these two numbers having been input in the Console: 13 and 0.5. Note that all images should have the following path: images/filename.png. They should also include a short caption, a #fig-FileName identifier (for cross-referencing), and an alt-text description (see below for example of how to format all this in Quarto).**
+
+`R` can handle not only numbers but also text data, known as "character strings" or just "strings". Strings must always be enclosed in quotation marks. You can choose to use either double quotation marks `" "` or single quotation marks `' '`, but it is important to be consistent. In this textbook, we will use double quotation marks throughout.
+
+Try first inputting a single word and then an entire sentence in the Console.
+
+**To do for Jan: Add screenshot of RStudio with these two strings having been input in the Console: "hello" and "Hi! Are you having fun?".**
+
+::: callout-tip
+#### Quiz time!
+
+1\) What happens if you enter a word without quotation marks?
+
+```{r Word-question, echo=FALSE, results="asis"}
+check_question("R returns an error message because it interprets the word as an object name or command.", 
+               options = c("R returns an error message because it interprets the word as an object name or command.", "R automatically wraps the word in quotation marks and processes it as a string.", "R returns an error indicating that you probably mistyped the word.", "R returns an error message indicating that it expected a number."), 
+               type = "radio",
+               button_label = "Check answer", 
+               q_id = 1,
+               random_answer_order = TRUE,
+               right = "<br>That's right. Without quotation marks, a string of characters is interpreted by `R` as the name of an object or function.",
+               wrong = "<br>No, this is not the issue. Have you tried it in your Console? What does the error message say?")
+```
+:::
+
+### Doing maths in `R`
+
+`R` can also be used as a very powerful calculator. The following lines of code demonstrate mathematical operations involving addition (`+`), subtraction (`-`), division (`/`), and multiplication (`*`). Try out a few yourself!
+
+**To do for Jan: Add screenshot of the Console with these operations having been input in the Console. Then delete the code chunk below.**
+
+```{r}
+13+1
+
+0.5-13
+
+13/0.5
+
+13*13
+```
+
+::: callout-tip
+#### Quiz time!
+
+2\) Try entering `13^2` in the Console. What does the `^` (caret) operator do?
+
+```{r Caret-question, echo=FALSE, results="asis"}
+check_question("The ^ operator performs an exponentiation operation.", 
+               options = c("The ^ operator performs an exponentiation operation.", "The ^ operator is used to calculate the modulus of 13, with 2 as the base.", "The ^ operator is used to create an vector with 13 occurrences of the integer 2."), 
+               type = "radio",
+               button_label = "Check answer", 
+               q_id = 2,
+               random_answer_order = TRUE,
+               right = "That's right. In this case, it raises 13 to the power of 2 so we get the square of 13, which is why the output is the same as for 13*13.",
+               wrong = "No. Compare the output of the operation 13^2 with 13*13. What do you notice?")
+```
+
+ 
+
+3\) Compare `13*13` with `13 * 13`. What is the difference in the output?
+
+```{r SpacesQ, echo=FALSE, results="asis"}
+check_question("There is no difference.", 
+               options = c("There is no difference.", "Adding a space generates an error.", "It is impossible to add a space in the R Console."), 
+               type = "radio",
+               button_label = "Check answer", 
+               q_id = 3,
+               random_answer_order = TRUE,
+               right = "That's right. Adding spaces within operations makes no difference in R. However, it's good practice to keep things consistent.",
+               wrong = "No. Have you tried?")
+```
+:::
+
+### Working with `R` objects
+
+So far, we have used the Console like a calculator. It's important to understand that, just like with a standard calculator, the output of all of our operations was not saved anywhere.
+
+`R` allows us to store values, sequences of values, and the results of computations in so-called "objects" for later use. We use the assignment operator (`<-`) to assign a value or sequence of values to an object name.
+
+Write out the following line to create an object called `my.favourite.number` that contains your own favourite number.
+
+```{r}
+my.favourite.number <- 13
+```
+
+When you enter this line in the Console and press "Enter", it should look like nothing happened: `R` does not return anything in the Console. Instead, it saves the output in an object called `my.favourite.number`. However, if you look in your Environment pane, you should see that an object has appeared.
+
+![](images/ObjectCreation.png){#fig-ObjectCreation fig-alt="RStudio screenshot showing that an object is now stored in the session environment in the left-hand pane."}
+
+To save an object containing a character string, we use quotation marks. Create an object called `my.favourite.word` containing your favourite word (in any written language of your choice).
+
+```{r}
+my.favourite.word <- "empathy"
+
+```
+
+Your Environment pane should now contain two objects. You can print the content of a stored object by entering the object name in the Console.
+
+**To do for Jan: Add screenshot of the Console with these operations having been input in the Console. Then delete the code chunk below.**
+
+```{r}
+my.favourite.number
+
+my.favourite.word
+```
+
+These two objects are of different types. We can use the `class()` function to find out which type of object an object is.
+
+**To do for Jan: Add screenshot of the Console with these operations having been input in the Console. Then delete the code chunk below.**
+
+```{r}
+class(my.favourite.number)
+
+class(my.favourite.word)
+```
+
+Here, `my.favourite.number` is a numeric object, while `my.favourite.word` is a character object.
+
+Object naming conventions in `R` are fairly flexible. We can use dots (`.`), underscores (`_`) and capital letters to make our object names maximally informative and easy for us humans to read. However, spaces and other symbols are not allowed. All of these options work:
+
+```{r}
+word2 <- "cheerful"
+my.second.word <- "cheerful"
+my_second_word <- "cheerful"
+MySecondWord <- "cheerful"
+```
+
+**To-do for Jan: Add screenshot of environment pane with these four objects.**
+
+::: callout-tip
+#### Quiz time!
+
+4\) Which of these object names are not allowed in R? Try to create an object with each of these names and see if you get an error message or not.
+
+```{r ObjectNamingQ, echo=FALSE, results="asis"}
+check_question(c("1TopWord", "BestWordEver!", "my-favourite-word", "top word"),
+options = c("1TopWord", "BestWordEver!", "my-favourite-word", "top word", "Agnès.Favourite.Word", "Top1Word"),
+type = "checkbox",
+button_label = "Check answer", q_id = 4,
+random_answer_order = TRUE,
+right = "That's right! Well done!",
+wrong = "Not quite. Try again!")
+check_hint("Four of these object names are problematic and will return errors.", hint_title = "<br>😇 Hover for a hint", type = "onmouseover")
+```
+:::
+
+Object names should not contain spaces or symbols like `!`, nor should they contain hyphens as the hyphen is reserved for the mathematical operator "minus". Object names cannot start with numbers, although it is possible to put numbers anywhere else within an object name. Whilst it is possible to have special characters such as accented letters like "è", it is not recommended that you use them for object names.
+
+Object names are unique. If you create a new object with an existing object name, it will overwrite the existing object with the new one. In other words, you will loose the values that you saved in the original object. Try it out by running this line and observing what happens in your Environment pane:
+
+```{r}
+word2 <- "surprised"
+```
+
+Earlier on, you created an object called `word2` which contained the string "cheerful". But, by running this new line of code, "cheerful" has been replaced by the string "surprised" -with no warning that you were about to permanently delete "cheerful"!
+
+### Writing and saving `.R` scripts
+
+If we shut down `Rstudio` right now, we will loose all of our work so far. This is because the two objects that we created are only saved in the environment of our current `R` session. Whilst this sounds bad, it is actually a good thing: In the previous chapter, we set our Global Options settings in `RStudio` such that, whenever we restart `RStudio`, we begin with a clean slate, or a perfectly clean and tidy kitchen. We don't want any dirty dishes or stale ingredients lying around! With this in mind, close `RStudio` now and open it again to start a new `R` session.
+
+You should now have an empty history in your Console pane and an empty Environment pane. Whilst nobody wants to start cooking in a messy kitchen, it's also true that, if we want to remember what we did in a previous cooking/baking session, we should write it down. The pages of our recipe book are `.R` scripts. In the following, we will see that writing scripts is much better than running everything from the Console. It allows us to save and rerun our entire analysis pipeline any time we want. It also ensures that our analyses are reproducible and saves us time as we don't have to rewrite our code every time.
+
+There are three ways to create a new `.R` script in `RStudio`. Pick the one that you like best:
+
+1.  Navigate to the top menu item "File", then select "New File", then click on "R Script".
+2.  Click on the icon with a white page and a green plus button in the top left corner of the tool bar.
+3.  Use the keyboard shortcut `Shift + Ctrl/Cmd + N`.
+
+Whichever option you chose, `RStudio` should have opened an empty file in a fourth pane. This is the “Source pane” and it should have appeared in the top-left corner of your `RStudio` window.
+
+We can now type our code in this empty `.R` script in the Source pane, just like we did in the Console. Type the following lines of code:
+
+```{r}
+#| eval: false
+
+13*13
+my.favourite.number <- 13
+my.favourite.word <- "empathy"
+```
+
+You will have noticed that when you pressed "Enter" after every line, nothing happened: Nowhere can we see the result of `13*13`, nor have our two objects been saved to the environment as Environment pane remains empty. Just like a recipe for a cake is not an actual, delicious cake, but simply a set of instructions, a script is only a text file that contains lines of code as instructions. For these instructions to be executed, we need to send them to the `R` Console where they will be interpreted as `R` code.
+
+![Writing code in a script](images/NewScript.png){#fig-NewScript fig-alt="RStudio window showing new R script with the following lines of code: 13*13 my.favourite.number <- 13 my.favourite.word <- \"empathy\". The script is currently unsaved. The environment pane is empty and so is the console output."}
+
+To send a line of code to the Console, or "run" a line of code, select the line that you want to run, or place your mouse cursor anywhere within that line and then click on the 'Run' button (in the top-right corner of the pane) or use the keyboard shortcut `Ctrl/Cmd + Enter`.
+
+Run the three lines of code of your script using these two options and check that a) you are seeing the result of the mathematical operation in the Console output and b) two objects have been added to your environment.
+
+**To-do for Jan: Please redo the screenshot above, adding red ellipses around the "Run" button and the Untitled1\* file name. Save as NewScript.png. No need to write an alt-text for this image as I've already done it.**
+
+It is now very easy to rerun this script any time we want to redo this calculation and recreate these two `R` objects. However, our `.R` script is not yet saved! `RStudio` is warning us about this by highlighting the file name "Untitled1\*" in red. Just like with any unsaved computer file, if we were to shut `RStudio` down now, we would loose our work. So, let us save this `.R` script locally, that is on our own computer. To do so either:
+
+1.  Navigate to the top menu item "File" and then click on "Save",
+2.  Click on the save icon 💾, or
+3.  Use the keyboard shortcut `Ctrl/Cmd+ S`.
+
+Give your script a meaningful file name. Remember that file names should be both computer-readable and human-readable. If you navigate to the folder where you saved your `.R` script, you should see that its file extension is `.R`. You should also see that it is a tiny file because it contains nothing more than a few lines of text. If you double click on an `.R` file, `RStudio` should automatically open it. However, if you wanted, you could open `.R` files with any text-processing software, such as LibreOffice Writer or Microsoft Word.
+
+### Writing comments
+
+Just like in a recipe book, in addition to writing the actual instructions, we can also write some notes, for example to remind ourselves of why we did things in a particular way or for what occasion we created a special dish. In programming, notes are called "comments" and they are typically preceded by the `#` symbol.
+
+Thus, if a line starts with a `#` symbol, we say that it is "commented out". `RStudio` helpfully displays lines that are commented out in a different colour. These lines will not be interpreted as code even if you send them to the Console. Write the following lines in your script and try to run them.
+
+```{r}
+# 13^13
+
+#StringObject3 <- "This line has been commented out so the object will not be saved in the environment even if you try to run it."
+```
+
+As you can see, nothing happens. You can also add comments next to a line of interpretable code. In this case, the code is interpreted up until the `#`. This can be helpful to make a note of what a line of code does, e.g.:
+
+```{r}
+
+sqrt(169) # Here the sqrt() function will compute the square root of 169.
+
+```
+
+It is good practice to comment your code when working in an `.R` script. Comments are crucial for other people to understand what your code does and how it achieves that. But even if you are confident that you are the only person who will ever use your code, it is still a very good idea to use comments to make notes documenting your intentions and your reasoning as you write your script.
+
+Finally, writing comments in your code as you work through the examples in this book is a great way to reinforce what you are learning. From this chapter onwards, I recommend that, for each chapter, you create an `.R` script documenting what you have learnt, adding lots of comments to help you remember how things work. This is generally more efficient (and less error-prone!) than trying to take notes in a separate document (e.g., in a Microsoft Word file) or on paper.
+
+### Using Objects in Operations
+
+Now that we have saved some objects in our environment, we can use them in calculations. Try out the following operations and any other that take your fancy:
+
+```{r}
+
+my.favourite.number / 2
+
+my.favourite.number*my.favourite.number
+
+sqrt(my.favourite.number)
+
+sqrt(my.favourite.number*my.favourite.number)
+
+```
+
+We can also use relational operators to make comparisons. Experiment with the following commands to understand what the relational operators (`>`, `<`, `<=`, `>=`, `==` and `!=`) do:
+
+```{r}
+#| eval: false
+
+my.favourite.number > 10
+my.favourite.number < 10
+my.favourite.number == 25
+my.favourite.number >= 13
+my.favourite.number <= -13
+my.favourite.number != 25
+
+```
+
+::: callout-tip
+#### Quiz time!
+
+5\) What is the relational operator that checks whether a value is "more than or equal to" another value?
+
+```{r RelationalQ, echo=FALSE, results="asis"}
+check_question(answer = ">=", 
+               right = "That's right!",
+               wrong = "No. Experiment with the lines of code above to find the correct operator.")
+check_hint("This operator is a combination of two symbols.", hint_title = "😇 Hover for a hint", type = "onmouseover")
+
+```
+
+ 
+
+6\) What is the relational operator that checks whether a value "is not equal to" another value?
+
+```{r Relational2Q, echo=FALSE, results="asis"}
+check_question(answer = "!=", 
+               right = "That's right!",
+               wrong = "No. Experiment with the lines of code above to find the correct operator.")
+check_hint("This operator is a combination of two symbols.", hint_title = "😇 Hover for a hint", type = "onmouseover")
+
+```
+:::
+
+The relational operators `==` and `!=` can also be used with character objects. Find out how they work by first creating a new character object with a word that was added to the 2025 edition of the *Petit Larousse* dictionary:
+
+```{r}
+New.French.Word <- "écogeste"
+```
+
+Then copy these lines of code to test how the relational operators work with string characters.
+
+```{r}
+#| eval: false
+
+New.French.Word == "écogeste" 
+New.French.Word != "trottinettiste"
+```
+
+::: callout-tip
+#### Quiz time!
+
+7\) Why does this line of code return `FALSE` even though `New.French.Word` was assigned the character string "écogeste"?
+
+```{r}
+#| eval: false
+
+New.French.Word == "ecogeste"
+
+```
+
+```{r RelationalStrings7Q, echo=FALSE, results="asis"}
+
+check_question("Because \"écogeste\" and \"ecogeste\" are two different strings in R and only the former is saved as New.French.Word in the local environment.", 
+               options = c("Because R automatically removed the accent as only the English alphabet can be used in objects saved to the environment.", "Beause the equals operator (==) is not the correct operator for comparing character strings in R.", "Because \"écogeste\" and \"ecogeste\" are two different strings in R and only the former is saved as New.French.Word in the local environment."), 
+               type = "radio",
+               button_label = "Check answer", 
+               q_id = 7,
+               random_answer_order = TRUE,
+               right = "Correct!",
+               wrong = "No, that's not the reason.")
+
+```
+
+ 
+
+8\) Why does this line of code return `FALSE` even though `New.French.Word` was assigned the character string "écogeste"?
+
+```{r}
+#| eval: false
+
+New.French.Word == " écogeste"
+
+```
+
+```{r RelationalStrings8Q, echo=FALSE, results="asis"}
+
+check_question("Because this string includes a space character at the start of the string.", 
+               options = c("Because R is case-sensitive.", "Because this string includes a space character at the start of the string so it does not match the string saved in the environment.", "Because string objects cannot include any symbols or special characters, including spaces."), 
+               type = "radio",
+               button_label = "Check answer", 
+               q_id = 8,
+               random_answer_order = TRUE,
+               right = "Correct!",
+               wrong = "No, that's not the reason.")
+
+```
+
+ 
+
+9\) Why does this line of code return `FALSE` even though `New.French.Word` was assigned the character string "écogeste"?
+
+```{r}
+#| eval: false
+
+New.French.Word != "Écogeste"
+
+```
+
+```{r RelationalStrings9Q, echo=FALSE, results="asis"}
+
+check_question("Because R is case-sensitive.", 
+               options = c("Because R is case-sensitive.", "Because strings should never start with a capital letter.", "Because this word is not in the dictionnary of the Académie Française."), 
+               type = "radio",
+               button_label = "Check answer", 
+               q_id = 9,
+               random_answer_order = TRUE,
+               right = "Correct!",
+               wrong = "No, that's not the reason.")
+
+```
+:::
+
+## Learning to make sense of error messages
+
+When `R` cannot interpret your code, the Console will display an error message in red. A large part of learning to code is really about learning how to interpret these error messages and developing an intuition for the most common reasons why errors occur.
+
+![The process of fixing programming errors is called "debugging" and often involves an array of emotions (artwork by [\@allison_horst](https://allisonhorst.com/allison-horst)).](images/DebuggingMonsters.png){#fig-DebuggingMonster fig-alt="A cartoon of a fuzzy round monster face showing 10 different emotions experienced during the process of debugging code. The progression goes from (1) “I got this” - looking determined and optimistic; (2) “Huh. Really thought that was it.” - looking a bit baffled; (3) “...” - looking up at the ceiling in thought; (4) “Fine. Restarting.” - looking a bit annoyed; (5) “OH WTF.” Looking very frazzled and frustrated; (6) “Zombie meltdown.” - looking like a full meltdown; (7) (blank) - sleeping; (8) “A NEW HOPE!” - a happy looking monster with a lightbulb above; (9) “insert awesome theme song” - looking determined and typing away; (10) “I love coding” - arms raised in victory with a big smile, with confetti falling."}
+
+As you navigate your journey in learning to code in `R`, you are very likely to encounter one problem on a regular basis. So let's take a closer look at that error. Copy and paste this exact line of code and try to run it in your `R` Console:
+
+```{r}
+#| eval: false
+
+sqrt(my.favourite.number
+```
+
+Notice that, in this erroneous line of code, we have (intentionally) forgotten to include the final bracket. As a result, after you hit "Enter", the Console output shows a "`+`" instead of the result of the mathematical operation. The "`+`" indicates that the line is incomplete and therefore cannot be interpreted yet. `R` is therefore asking you to complete your line of code.
+
+**To-do for Jan: Add screenshot of Console pane showing this error with a red ellipse around the + symbol**
+
+There are two ways to fix this. The first method is to complete the line of code directly in the Console. In this case, this means adding the closing bracket "`)`" after the "`+`" and hitting "Enter". Now that the line has been completed, `R` is able to interpret it as an `R` command and will output the result of the operation.
+
+If you are running a line of code just once, from the Console, this first method is fine. As we have seen above, however, most of the times, you will write your code in a script rather than in the Console. So this method is only recommendable for lines of code that you will genuinely only need once. These include commands to install packages, like `install.packages("janeaustenr")`, or to get consult documentation files, e.g., `help(janeaustenr)`.
+
+Given that we will mostly be working in scripts, let's now generate this error from an `.R` script. To do so, copy and past the erroneous line of code in your `.R` script and try to run it by either clicking on the "Run" icon or using the shortcut \`Ctrl/Cmd + Enter\`:
+
+```{r}
+#| eval: false
+
+sqrt(my.favourite.number
+
+```
+
+Again, our incomplete line of code cannot be interpreted and the "`+`" symbol appears in the Console. Now, correct the error in your script by adding the missing "`)`" and try to run the command again:
+
+```{r}
+#| eval: false
+
+sqrt(my.favourite.number)
+
+```
+
+Even though we have corrected the problem, we now get an error! 🤯 At first sight, this does not make sense, but look carefully at what happened in the Console: The line of code that `R` tried to interpret is `sqrt(my.favourite.number + sqrt(my.favourite.number)`, i.e., the combination of the incomplete version of the command plus the complete one. This is obviously nonsense and `R` tells us so by outputting an error message!
+
+**To-do for Jan: Add screenshot of Console pane showing the error and the lines of code that generated it above.**
+
+To be able to enter a new line of code, we must see the command prompt `>` in the Console. So, let's generate the error again and learn how to fix it with the second method. Add this erroneous line to your script again and run it:
+
+```{r}
+#| eval: false
+
+sqrt(my.favourite.number
+
+```
+
+The `+` situation arises again, but we will now solve it using the second method. Head over to the Console and place your cursor next to the `+`. This time, instead of completing the line by adding a closing bracket, press "Esc" on your keyboard. This will cancel the incomplete line of code. Then, you can add the missing `)` in your script and rerun the newly completed line of code from the Source pane.
+
+This second method is the one you should use when you are documenting your code in a script. If you don't make the changes immediately in your script, you will forget and you will run into this error again in the future. Think of it like a pastry chef who realises that they need to put a little more baking powder in a cake batter for the texture to be just right, but does not make a note of that change in their recipe book. Next time, either the pastry chef, they will likely forget and not put the correct amount of baking powder. If it is one of their assistants who prepares the cake, they will not be able to know that the chef made that change!
+
+Learning to make sense of error messages is a very important skill that, like all skills, takes practice. Most errors are very easy to fix if you keep your cool. In fact, 90% of errors are simply typos.
+
+Can you decode the error messages and understand why these lines of code are generating errors?
+
+**To do for Elen: Design quiz questions based on 2_ErrorsAreFun.R script from last week's class.**
+
+------------------------------------------------------------------------
+
+my.favourite.number + my.favorite.number
+
+my.favourite.word + 2
+
+String and number operation is not allowed.
+
+my.favourite.word \<- "joy \# Incomplete code. Need to complete the quotes
+
+------------------------------------------------------------------------
