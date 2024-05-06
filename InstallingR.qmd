@@ -95,7 +95,7 @@ Whilst this textbook will assume that everyone is working in `RStudio`, if you a
 2.  Click on the "Download R for ..." link that matches your operating system (Linux, macOS or Windows), then:
 
     -   For Windows, click on the top 'base' link, also marked as "install R for the first time" (Note that you should also use this link if you are updating your R version). On the next page, click on the top "Download R" link.
-    -   For MacOS, click on either the top `.pkg` link if you have an Apple silicon Mac (e.g., M1, M2, M3) or the second `.pkg` link, if you have an older Intel Mac.\[\^gettingstarted-1\]
+    -   For MacOS, click on either the top `.pkg` link if you have an Apple silicon Mac (e.g., M1, M2, M3) or the second `.pkg` link, if you have an older Intel Mac.
     -   For Linux, click on your Linux distribution and then follow the instructions on the following pages.
 
 <!-- -->
@@ -198,7 +198,7 @@ In addition to the members of the R Core Team who develop and maintain base `R`,
 
 Throughout this textbook, the names of packages will be enclosed in curly brackets like this: {ggplot2}.
 
-> ## Quiz time! {.unnumbered}
+> #### Quiz time! {.unnumbered}
 >
 > 1\) Which of these packages is not part of base `R`?
 >
@@ -264,14 +264,41 @@ Pick your favourite Jane Austen novel and enter its corresponding object name in
 
 To find out more about a dataset or function within a package, use the functions `help()` or `?`, e.g., `help(emma)` or `?emma`. In this case, the help file provides us with a short description of this object and a link to the original source from which the package creator obtained the novel (which is in the [public domain](https://www.gutenberg.org/help/faq.html#what-books-does-project-gutenberg-publish), otherwise it would not be possible to share it in this way).
 
-## Citing packages
+## Citing `R` packages
 
 When we use a package that is not part of base `R`, it is very important to reference the package adequately. There are two main reasons for doing this. For a start, the people who create and maintain these packages largely do so in their free time and they deserve full credit for their incredibly valuable work and contribution to science. Hence, whenever you use a package for your research, you should cite it, just like you would other sources.
 
 The help page of the {janeaustenr} package already informed us that the maintainer of the package is Julia Silge. To get a full citation, however, we should use the `citation()` function. Enter `citation("janeaustenr")` in the Console to find out how to cite this package.
 
-Note that the recommended bibliographic reference also includes the package version, which is important for reproducibility as the package may evolve and someone wanting to reproduce your analysis will need to know which version you used. This is the second main reason why we should be diligent about citing the packages that we use. In a research report, thesis, or academic article, you could cite the {janeaustenr} package like this:
+Note that the recommended bibliographic reference also includes the package version, which is important for reproducibility as the package may evolve and someone wanting to reproduce your analysis (and this may well be future you!) will need to know which version you used. This is the second main reason why we should be diligent about citing the packages that we used. In a research report, thesis, or academic article, you could cite the {janeaustenr} package like this:
 
 > We used the *janeaustenr* package [@silgeJaneaustenrJaneAusten2022] to access Jane Austen's six published novels in R [@rcoreteamLanguageEnvironmentStatistical2024].
 
 You can see the full references by hovering on the in-text citation links or by going to the [References](https://elenlefoll.github.io/RstatsTextbook/references.html) section of this book.
+
+::: {.callout-note collapse="true"}
+### More about referencing packages
+
+You may also want to install the {report} package, which includes a number of useful functions for citing `R` versions and `R` packages:
+
+```{r}
+#| include: false
+
+library(janeaustenr)
+library(report)
+library(knitr)
+
+```
+
+```{r}
+
+report::report_system()
+
+report::cite_packages()
+
+report::report_packages()
+
+```
+
+To find out more, it is also worth reading Steffi LaZerte's blog post on "How to cite R and R packages": <https://ropensci.org/blog/2021/11/16/how-to-cite-r-and-r-packages/>.
+:::

@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -214,7 +248,7 @@ div.csl-indent {
   <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link" data-scroll-target="#loading-packages"><span class="header-section-number">2.4.3</span> Loading packages</a></li>
   </ul></li>
   <li><a href="#package-documentation" id="toc-package-documentation" class="nav-link" data-scroll-target="#package-documentation"><span class="header-section-number">2.5</span> Package documentation</a></li>
-  <li><a href="#citing-packages" id="toc-citing-packages" class="nav-link" data-scroll-target="#citing-packages"><span class="header-section-number">2.6</span> Citing packages</a></li>
+  <li><a href="#citing-r-packages" id="toc-citing-r-packages" class="nav-link" data-scroll-target="#citing-r-packages"><span class="header-section-number">2.6</span> Citing <code>R</code> packages</a></li>
   </ul>
 </nav>
     </div>
@@ -268,7 +302,7 @@ p {
 <p>What’s more, both <code>R</code> and the <code>RStudio Desktop</code> version that we will be using are free and open source (see <a href="https://elenlefoll.github.io/RstatsTextbook/OpenScholarship.html">Chapter 1</a>), which means that they are accessible to all, regardless of their institutional affiliation or professional status. This is in contrast to proprietary statistical software such as SPSS for which you or your university needs to buy an expensive license. To get started in <code>R</code>, all you will need is access to the internet, a computer (unfortunately, a tablet will not suffice), and the intrinsic motivation to work your way through the basic skills taught in this textbook.</p>
 <blockquote class="blockquote">
 <p>“[U]sing R - it’s like the green and environment-friendly gardening alternative to buying plastic wrapped tomatoes in the supermarket that have no taste anyway.” (<a href="https://slcladal.github.io/whyr.html">Martin Schweinberger 2022</a>)</p>
-<div id="fig-tomatoes" class="quarto-figure quarto-figure-left quarto-float anchored" data-fig-align="left" alt="Photo of a gardener's tomato harvest, showing tomatoes are various sizes and colours.">
+<div id="fig-tomatoes" class="quarto-figure quarto-figure-left quarto-float anchored" alt="Photo of a gardener's tomato harvest, showing tomatoes are various sizes and colours." data-fig-align="left">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tomatoes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/TomatoHarvest.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;2.1: “Tomato Harvest, Yellow &amp; Red” by OakleyOriginals is licensed under CC BY 2.0."><img src="images/TomatoHarvest.jpg" class="img-fluid quarto-figure quarto-figure-left figure-img" alt="Photo of a gardener's tomato harvest, showing tomatoes are various sizes and colours." width="376"></a>
@@ -280,7 +314,7 @@ Figure&nbsp;2.1: “<a href="https://www.flickr.com/photos/47264866@N00/94551410
 </div>
 </blockquote>
 <p>Last but not least, in choosing to learn <code>R</code>, you are entering a vibrant community of users. As an open-source programming environment, <code>R</code> is the product of many different people’s contributions. Everyday, new packages, functions, and resources are being developed, improved, and shared with the community. Given that <code>R</code> has evolved into one of the most popular languages for scientific programming <span class="citation" data-cites="WinterStatisticsLinguistsIntroduction2019">(and has become “the de facto standard in the language sciences” <a href="references.html#ref-WinterStatisticsLinguistsIntroduction2019" role="doc-biblioref">Winter 2019: xiii</a>)</span>, many of these have been created by scientists and are particularly well-suited to research workflows. Moreover, the <code>R</code> community is known for being welcoming, supportive, and inclusive (sadly, the same cannot be said of all communities in the computing world). This is reflected in the strong presence of many community-led initiatives such as <a href="https://rladies.org/">RLadies</a> and <a href="https://rainbowr.netlify.app/">RainbowR</a>, which encourage under-represented groups to participate in and contribute to the <code>R</code> community. 🤗</p>
-<div id="fig-RLadies" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Hex sticker logo showing the R logo painted in the colours of the rainbow and the transgender flags">
+<div id="fig-RLadies" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Hex sticker logo showing the R logo painted in the colours of the rainbow and the transgender flags" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-RLadies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/rladiesrp_logo.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2.2: Logo of the RLadies Ribeirão Preto meet-up group, one of many RLadies chapters."><img src="images/rladiesrp_logo.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Hex sticker logo showing the R logo painted in the colours of the rainbow and the transgender flags" width="250"></a>
@@ -383,7 +417,7 @@ Using other IDEs to work in <code>R</code>
 <li><p>Click on the “Download R for …” link that matches your operating system (Linux, macOS or Windows), then:</p>
 <ul>
 <li>For Windows, click on the top ‘base’ link, also marked as “install R for the first time” (Note that you should also use this link if you are updating your R version). On the next page, click on the top “Download R” link.</li>
-<li>For MacOS, click on either the top <code>.pkg</code> link if you have an Apple silicon Mac (e.g., M1, M2, M3) or the second <code>.pkg</code> link, if you have an older Intel Mac.[^gettingstarted-1]</li>
+<li>For MacOS, click on either the top <code>.pkg</code> link if you have an Apple silicon Mac (e.g., M1, M2, M3) or the second <code>.pkg</code> link, if you have an older Intel Mac.</li>
 <li>For Linux, click on your Linux distribution and then follow the instructions on the following pages.</li>
 </ul></li>
 </ol>
@@ -590,12 +624,12 @@ Figure&nbsp;2.7: Testing that <code>RStudio</code> is communicating well with yo
 <section id="installing-r-packages" class="level2 page-columns page-full" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="installing-r-packages"><span class="header-section-number">2.4</span> Installing <code>R</code> packages</h2>
 <section id="what-are-packages" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored"><span class="header-section-number">2.4.1</span> What are packages?</h3>
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="what-are-packages"><span class="header-section-number">2.4.1</span> What are packages?</h3>
 <p>You now have a base installation of <code>R</code>. Base <code>R</code> is very powerful and comes with many standard packages and functions that <code>R</code> users use on a daily basis. If you click on the Packages tab in the bottom-right pane and scroll down, you will see that there are many packages available. Only a few are selected. These are part of the base <code>R</code> installation.</p>
 <p>In addition to the members of the R Core Team who develop and maintain base <code>R</code>, thousands of <code>R</code> users develop and share additional <code>R</code> packages every day. These enable us to vastly increase the capacities of base <code>R</code>. Packages are a very helpful way to bundle together a set of functions, data, and documentation files so that other <code>R</code> users can easily download these bundles and add them to their local <code>R</code> installation.</p>
 <p>Throughout this textbook, the names of packages will be enclosed in curly brackets like this: {ggplot2}.</p>
 <blockquote class="blockquote">
-<h2 id="quiz-time" class="unnumbered anchored" data-anchor-id="what-are-packages">Quiz time!</h2>
+<h4 id="quiz-time" class="unnumbered anchored">Quiz time!</h4>
 <p>1) Which of these packages is not part of base <code>R</code>?</p>
 <form name="form_1" onsubmit="return validate_form_1()" method="post">
 <input type="radio" name="answer_1" id="answer_1_1" value="{ggplot2}">
@@ -694,15 +728,55 @@ Figure&nbsp;2.9: Screenshot showing a selection of lines from the object <code>e
 </div>
 <p>To find out more about a dataset or function within a package, use the functions <code>help()</code> or <code>?</code>, e.g., <code>help(emma)</code> or <code>?emma</code>. In this case, the help file provides us with a short description of this object and a link to the original source from which the package creator obtained the novel (which is in the <a href="https://www.gutenberg.org/help/faq.html#what-books-does-project-gutenberg-publish">public domain</a>, otherwise it would not be possible to share it in this way).</p>
 </section>
-<section id="citing-packages" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="citing-packages"><span class="header-section-number">2.6</span> Citing packages</h2>
+<section id="citing-r-packages" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="citing-r-packages"><span class="header-section-number">2.6</span> Citing <code>R</code> packages</h2>
 <p>When we use a package that is not part of base <code>R</code>, it is very important to reference the package adequately. There are two main reasons for doing this. For a start, the people who create and maintain these packages largely do so in their free time and they deserve full credit for their incredibly valuable work and contribution to science. Hence, whenever you use a package for your research, you should cite it, just like you would other sources.</p>
 <p>The help page of the {janeaustenr} package already informed us that the maintainer of the package is Julia Silge. To get a full citation, however, we should use the <code>citation()</code> function. Enter <code>citation("janeaustenr")</code> in the Console to find out how to cite this package.</p>
-<p>Note that the recommended bibliographic reference also includes the package version, which is important for reproducibility as the package may evolve and someone wanting to reproduce your analysis will need to know which version you used. This is the second main reason why we should be diligent about citing the packages that we use. In a research report, thesis, or academic article, you could cite the {janeaustenr} package like this:</p>
+<p>Note that the recommended bibliographic reference also includes the package version, which is important for reproducibility as the package may evolve and someone wanting to reproduce your analysis (and this may well be future you!) will need to know which version you used. This is the second main reason why we should be diligent about citing the packages that we used. In a research report, thesis, or academic article, you could cite the {janeaustenr} package like this:</p>
 <blockquote class="blockquote">
 <p>We used the <em>janeaustenr</em> package <span class="citation" data-cites="silgeJaneaustenrJaneAusten2022">(<a href="references.html#ref-silgeJaneaustenrJaneAusten2022" role="doc-biblioref">Silge 2022</a>)</span> to access Jane Austen’s six published novels in R <span class="citation" data-cites="rcoreteamLanguageEnvironmentStatistical2024">(<a href="references.html#ref-rcoreteamLanguageEnvironmentStatistical2024" role="doc-biblioref">R Core Team 2024</a>)</span>.</p>
 </blockquote>
 <p>You can see the full references by hovering on the in-text citation links or by going to the <a href="https://elenlefoll.github.io/RstatsTextbook/references.html">References</a> section of this book.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+More about referencing packages
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You may also want to install the {report} package, which includes a number of useful functions for citing <code>R</code> versions and <code>R</code> packages:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report_system</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analyses were conducted using the R Statistical language (version 4.3.1; R Core
+Team, 2023) on macOS Sonoma 14.4.1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">cite_packages</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  - Makowski D, Lüdecke D, Patil I, Thériault R, Ben-Shachar M, Wiernik B (2023). "Automated Results Reporting as a Practical Tool to Improve Reproducibility and Methodological Best Practices Adoption." _CRAN_. &lt;https://easystats.github.io/report/&gt;.
+  - Moroz G (2020). _Create check-fields and check-boxes with checkdown_. &lt;https://CRAN.R-project.org/package=checkdown&gt;.
+  - R Core Team (2023). _R: A Language and Environment for Statistical Computing_. R Foundation for Statistical Computing, Vienna, Austria. &lt;https://www.R-project.org/&gt;.
+  - Silge J (2022). _janeaustenr: Jane Austen's Complete Novels_. R package version 1.0.0, &lt;https://CRAN.R-project.org/package=janeaustenr&gt;.
+  - Xie Y (2023). _knitr: A General-Purpose Package for Dynamic Report Generation in R_. R package version 1.45, &lt;https://yihui.org/knitr/&gt;. Xie Y (2015). _Dynamic Documents with R and knitr_, 2nd edition. Chapman and Hall/CRC, Boca Raton, Florida. ISBN 978-1498716963, &lt;https://yihui.org/knitr/&gt;. Xie Y (2014). "knitr: A Comprehensive Tool for Reproducible Research in R." In Stodden V, Leisch F, Peng RD (eds.), _Implementing Reproducible Computational Research_. Chapman and Hall/CRC. ISBN 978-1466561595.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report_packages</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  - report (version 0.5.8; Makowski D et al., 2023)
+  - checkdown (version 0.0.12; Moroz G, 2020)
+  - R (version 4.3.1; R Core Team, 2023)
+  - janeaustenr (version 1.0.0; Silge J, 2022)
+  - knitr (version 1.45; Xie Y, 2023)</code></pre>
+</div>
+</div>
+<p>To find out more, it is also worth reading Steffi LaZerte’s blog post on “How to cite R and R packages”: <a href="https://ropensci.org/blog/2021/11/16/how-to-cite-r-and-r-packages/" class="uri">https://ropensci.org/blog/2021/11/16/how-to-cite-r-and-r-packages/</a>.</p>
+</div>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -1170,7 +1244,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","descPosition":"bottom","selector":".lightbox","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
