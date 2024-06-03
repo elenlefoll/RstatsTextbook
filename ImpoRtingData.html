@@ -107,11 +107,11 @@ p {
 }
 </style>
 </div>
-<section id="importing-data-in-r" class="level1">
-<h1>Importing data in R</h1>
+<section id="importing-tabular-data-in-r" class="level1">
+<h1>Importing tabular data in R</h1>
 <section id="chapter-overview" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="chapter-overview"><strong>Chapter overview</strong></h4>
-<p>Many <code>R</code> textbooks postpone this section until much later. This is because they include practical tasks that typically rely on datasets that are directly accessible as <code>R</code> data objects. In real life, however, research data rarely comes neatly packaged as an <code>R</code> object. Your data will most likely be stored in a spreadsheet table or as a set of text files. And they will be more messy that you would like to admit…</p>
+<p>Many <code>R</code> textbooks postpone this section until much later. This is because they include practical tasks that typically rely on datasets that are directly accessible as <code>R</code> data objects. In real life, however, research data rarely comes neatly packaged as an <code>R</code> object. Your data will most likely be stored in a spreadsheet table or as text files of some kind. And -let’s be honest- they will be more messy that you would like to admit, which this chapter and the next are crucial to learning how to do data analysis in <code>R</code>.</p>
 <p>This chapter will take you through the process of:</p>
 <ul>
 <li>Downloading data from a real applied linguistics study</li>
@@ -155,6 +155,9 @@ p {
 </blockquote>
 <p><em>Quiz question</em></p>
 <pre><code>4\) On which repository/repositories can the data be found? a. Zenodo b. database.org c. IRIS d. ResearchGate e. All of the above. Hint: Check the links listed in Appendix S4.</code></pre>
+</section>
+<section id="saving-and-examining-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="saving-and-examining-the-data">Saving and examining the data</h2>
 <p>Click on the two links listed in Appendix S4 and download the two datasets. Save them in an appropriate place on your computer (see Chapter *), as we will continue to work with these two files in the following chapters.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -182,7 +185,9 @@ What’s a good place to save these files?
 4,26,F,Web designer,PS,None,BA Fine Art,17,3,3,3,9,8,8,8,8,8,8,8,8,8,8,80,100,53,84.44444444,37,90.625,20,26,15</code></pre>
 <p>This file is a delimiter-separated values (DSV) file.</p>
 <p><em>Quiz question</em></p>
-<pre><code>7\) Which character is used to separate the values in this DSV file? a. comma b. tab c. semi-colon d. colon e. space</code></pre>
+<pre><code>7\) Which character is used to separate the values in this DSV file? a. comma b. tab c. double quotation mark d. colon e. space
+
+8\) Which character is used to delineate the values (i.e. mark their beginning and end) in this DSV file? a. comma b. tab c. double quotation mark d. colon e. space (Problem: this is not actually visible in this example...)</code></pre>
 </section>
 <section id="using-projects-in-rstudio" class="level2">
 <h2 class="anchored" data-anchor-id="using-projects-in-rstudio">Using Projects in RStudio</h2>
@@ -205,8 +210,11 @@ What’s a good place to save these files?
 </div>
 <p>Creating an RStudio project will have generated a new file in your folder project called <code>Dabrowska2019.Rproj</code>. You can see it in the Files pane of RStudio (To for Jan: add screenshot showing this). Note that its file extension is <code>.Rproj</code>. Such <code>.Rproj</code> files contain information about your project options, which, in most cases, you will not need to edit.</p>
 <p>More usefully, <code>.Rproj</code> files can be used as shortcuts for opening your projects. Shut down RStudio. Then, in your computer file system, navigate to your project folder, e.g., in a File Explorer window on Windows and a Finder window on macOS, to locate your <code>.Rproj</code> file. Double-click on the file to automatically launch RStudio with all the correct settings for this particular project. Alternatively, you can use the Project button to open up a project from RStudio itself.</p>
-<p>The folder in which in the <code>.Rproj</code> file was created is your project’s working directory. You can see the path to this working directory at the top of the Console pane in RStudio <strong>(To do for Jan: Add ellipse on screenshot</strong>). The Files pane should also show the content of this directory. Click on the “New Folder” icon in your Files pane <strong>(To do for Jan: Add ellipse on screenshot</strong>) to create a new subfolder called <code>analysis</code>.</p>
-<p>Your folder <code>Dabrowska2019</code> should now contain an <code>.RProj</code> file and two subfolders called <code>analysis</code> and <code>data</code>. Click on the analysis folder to open it and then click on “New Script” icon <strong>(To do for Jan: Add ellipse on second screenshot</strong>) and select “R Script”. This will open a new, empty <code>R</code> script in your Source pane. It is best to always begin by saving a newly created file. Save this empty script with a computer- and human-friendly file name such as as <code>1_DataImport.R</code>.</p>
+<p>The folder in which in the <code>.Rproj</code> file was created is your project’s working directory. You can see the path to this working directory at the top of the Console pane in RStudio <strong>(To do for Jan: Add ellipse on screenshot</strong>). The Files pane should also show the content of this directory. Click on the “New Folder” icon in your Files pane <strong>(To do for Jan: Add ellipse on screenshot</strong>) to create a new subfolder called <code>analysis</code>. Your folder <code>Dabrowska2019</code> should now contain an <code>.RProj</code> file and two subfolders called <code>analysis</code> and <code>data</code>.</p>
+</section>
+<section id="importing-data-from-a-.csv-file" class="level2">
+<h2 class="anchored" data-anchor-id="importing-data-from-a-.csv-file">Importing data from a <code>.csv</code> file</h2>
+<p>Click on the analysis folder to open it and then click on “New Script” icon <strong>(To do for Jan: Add ellipse on second screenshot</strong>) and select “R Script”. This will open a new, empty <code>R</code> script in your Source pane. It is best to always begin by saving a newly created file. Save this empty script with a computer- and human-friendly file name such as as <code>1_DataImport.R</code>.</p>
 <p>Given that we want to import two <code>.csv</code> files, we are going to need to use the base <code>R</code> function <code>read.csv()</code>. You can find out what this function does by typing <code>?read.csv</code> or <code>help(read.csv)</code> in the Console to open up the documentation. This help file contains information about several functions used to import data. Scroll down to the information about the <code>read.csv()</code> function. It reads:</p>
 <pre><code>read.csv(file, header = TRUE, sep = ",", quote = "\"",
          dec = ".", fill = TRUE, comment.char = "", ...)</code></pre>
@@ -215,15 +223,36 @@ What’s a good place to save these files?
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The file path <code>"data/Dabrowska_2018_L1_data.csv"</code> informs <code>R</code> that the data is located in a subfolder of the project’s working directory called <code>data</code> and that, within this subfolder, the file that we want to import is called <code>Dabrowska_2018_L1_data.csv</code>.</p>
-<p>In practice, however, it is often safest to spell things out to remind ourselves of some of the default settings of the function in case they need changing:</p>
+<p>In fact, we could shorten things even further as, unless otherwise specified, <code>R</code> will assume that the first value listed after a function corresponds to the function’s first argument which, here, is <code>file</code>. In other words, this command and the one above are equivalent:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sep =</span> <span class="st">","</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">dec =</span> <span class="st">"."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>The file path <code>"data/Dabrowska_2018_L1_data.csv"</code> informs <code>R</code> that the data is located in a subfolder of the project’s working directory called <code>data</code> and that, within this subfolder, the file that we want to import is called <code>Dabrowska_2018_L1_data.csv</code>.</p>
+<p>In practice, however, it is often safer to spell things out to remind ourselves of some of the default settings of a function in case they need to be checked or changed at a later stage:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sep =</span> <span class="st">","</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">dec =</span> <span class="st">"."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the command above, <code>header = TRUE</code>, tells <code>R</code> to import the first row of the <code>.csv</code> table as column headers rather than values. The arguments <code>sep</code> and <code>quote</code> specify the characters that are used to separate the values on the one hand, and delineate them, on the other. As we saw earlier, <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>’s <code>.csv</code> files use the comma as the separator and the double quotation mark as the quoting character. Note that the <code>"</code> character needs to be preceded by a backslash (<code>\</code>) in the command (we say it needs to be “escaped”) because otherwise <code>R</code> will interpreted it as part of the command syntax, which will lead to an error. Finally, the argument <code>dec = "."</code> explicitly tells <code>R</code> that this <code>.csv</code> file uses the dot as the decimal point. In some countries, e.g., Germany and France, the comma is used for decimals so, if you obtain data from a German or French colleague, this setting may need to be changed to <code>dec = ","</code> for the data to be imported correctly.</p>
+</section>
+<section id="checking-that-data-have-been-correctly-imported" class="level2">
+<h2 class="anchored" data-anchor-id="checking-that-data-have-been-correctly-imported">Checking that data have been correctly imported</h2>
+<p>It is crucial that you check whether your data has genuinely been correctly imported. Here’s a list of things to check (in that order):</p>
+<ol type="1">
+<li><p><label><input type="checkbox">Were you able to run the import command without producing any errors? If you are getting an error, this is most likely due to a typo! Check the name of the file or use press the tab key to get RStudio to auto-complete the file name for you. Also check that you have correctly written the name of the function and have all the necessary brackets and quotation marks.</label></p></li>
+<li><p>Has the <code>R</code> data object appeared in your Environment pane? Does it have the expected number of rows (observations) and columns (variables)? <code>L1.data</code> contains 90 observations and 31 variables.</p></li>
+<li><p>To view the entire table, use the function <code>view()</code> with the name of your data object as the first and only argument, e.g., <code>view(L1.data)</code>. This will open up a new tab in your Source pane that displays the full table, much like in a spreadsheet programme. You can search and filter the table in this tab, but you cannot edit it in any way (and that’s a good thing because, if we want to edit things, we want to ensure that we keep track of our changes in a script!). Browse through the table and check that everything “looks healthy”. This is much like visually inspecting and smelling ingredients before using them in a recipe. It’s not perfect but if something is really off, you should notice it. Check that each cell appears to have one and only one value.</p></li>
+<li><p>Finally, use the <code>str()</code> function to view the structure of your data object in a more compact way. Using the command <code>str(L1.data)</code> will display a summary of the data.frame in the Console. The summary begins by informing us that this data object is a data.frame, that contains 90 observations and 31 variables. Then, it lists all of the variables, followed by the type of values stored in this variable (e.g., character strings or integers) and then the first few values for each variable. Especially with very wide tables that contain a lot of variables, it is often easier to check the summary of the imported data with <code>str()</code> than with <code>view()</code>, though I would always recommend taking a few seconds to do both. This is time well spent!</p></li>
+</ol>
+</section>
+<section id="importing-tabular-data-in-other-formats" class="level2">
+<h2 class="anchored" data-anchor-id="importing-tabular-data-in-other-formats">Importing tabular data in other formats</h2>
+</section>
+<section id="hell-is-empty-and-all-the-devils-are-here.-william-shakespeare-the-tempest" class="level2">
+<h2 class="anchored" data-anchor-id="hell-is-empty-and-all-the-devils-are-here.-william-shakespeare-the-tempest">“Hell is empty, and all the devils are here.” (William Shakespeare, The Tempest)</h2>
 </section>
 <section id="quick-and-dirty-ways-to-import-data-in-r" class="level2">
 <h2 class="anchored" data-anchor-id="quick-and-dirty-ways-to-import-data-in-r">Quick-and-dirty ways to import data in R</h2>
@@ -232,17 +261,14 @@ What’s a good place to save these files?
 <h2 class="anchored" data-anchor-id="hardcoding-file-paths-in-r-scripts">Hardcoding file paths in <code>R</code> scripts</h2>
 <p>Copy-and-paste path</p>
 </section>
-<section id="loading-data-using-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="loading-data-using-rstudio">Loading data using RStudio</h2>
-</section>
-<section id="section" class="level2 unnumbered">
+<section id="loading-data-using-rstudio" class="level2 unnumbered">
 
 
 </section>
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Loading data using RStudio</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-bryanLetGitStarted" class="csl-entry" role="listitem">
 Bryan, Jennifer. n.d. <em>Let’s Git Started | Happy Git and GitHub for the useR</em>. Open Education Resource. <a href="https://happygitwithr.com/">https://happygitwithr.com/</a>.
 </div>
