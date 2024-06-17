@@ -3,6 +3,11 @@ engine: knitr
 bibliography: references.bib
 ---
 
+```{r include=FALSE}
+library(checkdown)
+library(tidyverse)
+```
+
 ```{css}
 #| echo: false
 p {
@@ -14,48 +19,78 @@ p {
 
 #### **Chapter overview** {.unnumbered}
 
-Many `R` textbooks postpone this section until much later. This is because they include practical tasks that typically rely on datasets that are directly accessible as `R` data objects. In real life, however, research data rarely comes neatly packaged as an `R` object. Your data will most likely be stored in a spreadsheet table or as text files of some kind. And -let's be honest- they will be more messy that you would like to admit, which this chapter and the next are crucial to learning how to do data analysis in `R`.
+Many introduction `R` textbooks postpone this section until much later because they include practical tasks that typically rely on datasets that are directly accessible as `R` data objects. In real life, however, research data rarely comes neatly packaged as an `R` data object. Your data will most likely be stored in a spreadsheet table or as text files of some kind. And -let's be honest- they will be more messy that you would like to admit, which this chapter and the next are crucial to learning how to do data analysis in `R`.
 
 This chapter will take you through the process of:
 
 -   Downloading data from a real applied linguistics study
 -   Creating a Project in RStudio
--   Importing a dataset as an `R` object
--   Saving this `R` object for future use
+-   Importing a `.csv` file as an `R` object in `R`
+-   Examining a data frame object
 
-In future chapters, we will continue to work with this data and will learn how to "clean it up" for data analysis.
+In future chapters, we will continue to work with this data. We will learn how to "clean it up" for data analysis, before we begin to explore it using descriptive statistics and data visualisations.
 
 ## Accessing data from a real applied linguistics study
 
-As we saw in Chapter \*, it is good practice to share both the data and materials associated with research studies so that others can reproduce and replicate the research.
+As we saw in Chapter @sec-OpenScholarship, it is good practice to share both the data and materials associated with research studies so that others can reproduce and replicate the research.
 
 In the following chapters, we will focus on data associated with the following study:
 
 > Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <https://doi.org/10.1111/lang.12323>.
 
-![Article title as printed in the journal Language Learning](images/Dabrowska_Title.png){fig-alt="Front page of an EMPIRICAL STUDY journal article published at Language Learning: Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers by Ewa Dabrowska (University of Birmingham" width="461"}
+![Title page from the journal Language Learning](images/Dabrowska_Title.png){fig-alt="Front page of an EMPIRICAL STUDY journal article published at Language Learning: Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers by Ewa Dabrowska (University of Birmingham" width="461"}
 
-Follow the DOI[^importingdata-1] link above and read the abstract to find out what the study was about. You do not need to have institutional or paid access to the full paper to read the abstract.
+Follow the DOI[^importingdata_inprogress-1] link above and read the abstract to find out what the study was about. You do not need to have institutional or paid access to the full paper to read the abstract.
 
-[^importingdata-1]: "Digital Object Identifiers (DOI) are alpha-numeric strings that can be assigned to any entity, including: publications (including preprints), materials, datasets, and feature films - the use of DOIs is not restricted to just scholarly or academic material. DOIs “provides a system for persistent and actionable identification and interoperable exchange of managed information on digital networks.” ([https://doi.org/hb.html)](https://doi.org/hb.html%29). There are many different DOI registration agencies that operate DOIs, but the two that researchers would most likely encounter are Crossref and Datacite." [@parsonsCommunitysourcedGlossaryOpen2022]
+[^importingdata_inprogress-1]: "Digital Object Identifiers (DOI) are alpha-numeric strings that can be assigned to any entity, including: publications (including preprints), materials, datasets, and feature films - the use of DOIs is not restricted to just scholarly or academic material. DOIs “provides a system for persistent and actionable identification and interoperable exchange of managed information on digital networks.” ([https://doi.org/hb.html)](https://doi.org/hb.html%29). There are many different DOI registration agencies that operate DOIs, but the two that researchers would most likely encounter are Crossref and Datacite." [@parsonsCommunitysourcedGlossaryOpen2022]
 
-*Quiz questions*
+::: callout-tip
+#### Quiz time! {.unnumbered}
 
-```         
-1) What kind of data was collected as part of this study? (check boxes, all of which are true)
-- Participants' results on a grammar test
-- Participants' resuls on a vocabulary test
-- Participants' resuls on a collocations test
-- Sociodemograhic information about the participants including their age and level of education
-- Participants' results on a language analytic ability test 
-- Participants' results on a nonverbal intelligence test 
+1\) What kind of data was collected as part of this study?
 
-2) On average, how did the English L2 speakers fare compared to the native speakers? a. On average, L2 speakers performed better on grammar tasks than native speakers. b. On average, native speakers outperformed L2 speakers on all language tasks, with the most significant difference observed in collocation tasks. c. On average, both groups performed equally well on grammar and vocabulary tasks. d. The observed differences in performance between native speakers and L2 speakers were not statistically significant.
-
-3) In this study, did all native speakers perform better in the English vocabularly and grammar tests than the L2 speakers? a. Yes, the L1 speakers clearly outperformed L2 speakers in grammar and vocabulary. b. No, while L1 speakers generally performed better, some L2 speakers demonstrated equally high proficiency in grammar and vocabulary. c. This study only looked at average trends so that no conclusive statement can be made about any individual participants.
+```{r echo=FALSE, results="asis"}
+check_question(c("Participants' results on a grammar test", "Participants' resuls on a vocabulary test", "Participants' resuls on a collocations test", "Sociodemograhic information about the participants including their age and level of education", "Participants' results on a language analytic ability test", "Participants' results on a nonverbal intelligence test"), 
+               options = c("Participants' results on a grammar test", "Participants' resuls on a vocabulary test", "Participants' resuls on a collocations test", "Sociodemograhic information about the participants including their age and level of education", "Participants' results on a language analytic ability test", "Participants' results on a nonverbal intelligence test"), 
+               type = "check",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "Well done!",
+wrong = "That's a good start, but there are more...")
 ```
 
-Though this publication does have an Open Data badge (see \*), the author has made the data used in this study available on an open repository. To find out on which repository, go back to the DOI link and click on the drop-down menu "Supporting Information". It contains a link to a PDF file. Click on the link and scroll to the last page which contains the following information about the data associated with @DabrowskaExperienceAptitudeIndividual2019:
+ 
+
+2\) On average, how did the English L2 speakers fare compared to the native speakers?
+
+```{r echo=FALSE, results="asis"}
+check_question("On average, native speakers outperformed L2 speakers on all language tasks, with the most significant difference observed in collocation tasks.",
+               options = c("On average, L2 speakers performed better on grammar tasks than native speakers", "On average, native speakers outperformed L2 speakers on all language tasks, with the most significant difference observed in collocation tasks.", "On average, both groups performed equally well on grammar and vocabulary tasks.", "The observed differences in performance between native speakers and L2 speakers were not statistically significant."), 
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right.",
+wrong = "No, read the abstract again.")
+```
+
+ 
+
+3\) In this study, did all native speakers perform better in the English vocabulary and grammar tests than the L2 speakers?
+
+```{r echo=FALSE, results="asis"}
+check_question("No, while L1 speakers generally performed better, some L2 speakers demonstrated equally high proficiency in grammar and vocabulary.",
+               options = c("No, while L1 speakers generally performed better, some L2 speakers demonstrated equally high proficiency in grammar and vocabulary.", "Yes, the L1 speakers clearly outperformed the L2 speakers in both grammar and vocabulary.", "This study only looked at average trends so that no conclusive statement can be made about any individual participants."), 
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right.",
+wrong = "No, read the abstract again.")
+```
+
+ 
+:::
+
+The author, Ewa Dąbrowska, has made the data used in this study available on an open repository (see @sec-Sharing). To find out on which repository, go back to the study's DOI link and click on the drop-down menu "Supporting Information". It links to a PDF file. Click on the link and scroll to the last page which contains the following information about the data associated with this study:
 
 > Appendix S4: Datasets
 >
@@ -63,29 +98,56 @@ Though this publication does have an Open Data badge (see \*), the author has ma
 >
 > Dąbrowska, E. (2018). L2 data \[Data set\]. Retrieved from [https://www.iris-database.org/iris/app/home/detail?id=york:935514](https://www.iris-database.org/details/L8w1U-ZDgnH)
 
-*Quiz question*
+::: callout-tip
+#### Quiz time! {.unnumbered}
 
-```         
-4\) On which repository/repositories can the data be found? a. Zenodo b. database.org c. IRIS d. ResearchGate e. All of the above. Hint: Check the links listed in Appendix S4.
+4\) On which repository/repositories can the data be found?
+
+```{r echo=FALSE, results="asis"}
+check_question("IRIS",
+               options = c("Zenodo", "database.org", "IRIS", "ResearchGate", "All of the above."), 
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right!",
+wrong = "Are you sure?")
+check_hint("Check the links listed in Appendix S4.", hint_title = "<br>🐭 Click on the mouse for a hint.")
+
 ```
 
-## Saving and examining the data
-
-Click on the two links listed in Appendix S4 and download the two datasets. Save them in an appropriate place on your computer (see Chapter \*), as we will continue to work with these two files in the following chapters.
-
-::: {.callout-tip collapse="true"}
-#### What's a good place to save these files?
-
-If you haven't already done so, I suggest that you create a folder in which you save everything that you create whilst learning from this textbook. This folder could be called something along the lines of `DataLiteracyTextbook`, `2024_data_literacy`, or `LeFoll_2024_DataLiteracy`. Then, within this folder, I recommend that you create another folder called `Dabrowska2019` (note how I have not included the "ą" character in the folder name as this could cause problems), and within this folder, create another folder called `data`. This is the folder in which you can save these two files.
+ 
 :::
 
-*Quiz question*
+## Saving and examining the data {#sec-SavingData}
 
-```         
-6\) In which data format are these two files saved? a. They are both .csv files. b. They are both .txt files. c. They are both .html files. c. They are both .xslx files.
+Click on the two links listed in Appendix S4 and download the two datasets. Save them in an appropriate place on your computer (see @sec-PathsFolder), as we will continue to work with these two files in the following chapters.
+
+::: {.callout-note collapse="true"}
+#### What's a good place to save these files? 🤔
+
+If you haven't already done so, I suggest that you create a folder in which you save everything that you create whilst learning from this textbook. This folder could be called something along the lines of `DataLiteracyTextbook`, `2024_data_literacy`, or `LeFoll_2024_DataLiteracy` (see @sec-FileNaming). Then, within this folder, I recommend that you create another folder called `Dabrowska2019` (note how I have not included the "ą" character in the folder name as this could cause problems), and within this folder, create another folder called `data`. This is the folder in which you can save these two files.
+:::
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+5\) In which data format are these two files saved?
+
+```{r echo=FALSE, results="asis"}
+check_question("They are both .csv files.",
+               options = c("They are both .csv files.", "They are both .txt files.", "They are both .html files.", "They are both .xslx files."), 
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right!",
+wrong = "Are you sure?")
+
 ```
 
-Below are the first five lines of the file `Dabrowska_2018_L1_data.csv`, which contains the data about the study's L1 participants.
+ 
+:::
+
+The file `Dabrowska_2018_L1_data.csv` contains data about the study's L1 participants. It is a delimiter-separated values (DSV) file (see @sec-DSV). The first five lines of the file are printed below. Note that this is a very wide table as it contains many variables (you can scroll to the right to view all the columns).
 
 ```         
 Participant,Age,Gender,Occupation,OccupGroup,OtherLgs,Education,EduYrs,ReadEng1,ReadEng2,ReadEng3,ReadEng,Active,ObjCl,ObjRel,Passive,Postmod,Q.has,Q.is,Locative,SubCl,SubRel,GrammarR,Grammar,VocabR,Vocab,CollocR,Colloc,Blocks,ART,LgAnalysis
@@ -95,23 +157,51 @@ Participant,Age,Gender,Occupation,OccupGroup,OtherLgs,Education,EduYrs,ReadEng1,
 4,26,F,Web designer,PS,None,BA Fine Art,17,3,3,3,9,8,8,8,8,8,8,8,8,8,8,80,100,53,84.44444444,37,90.625,20,26,15
 ```
 
-This file is a delimiter-separated values (DSV) file.
+::: callout-tip
+#### Quiz time! {.unnumbered}
 
-*Quiz question*
+7\) Which character is used to separate the values in the file `Dabrowska_2018_L1_data.csv`?
 
-```         
-7\) Which character is used to separate the values in this DSV file? a. comma b. tab c. double quotation mark d. colon e. space
+```{r echo=FALSE, results="asis"}
+check_question("comma",
+               options = c("comma", "tab", "double quotation mark", "colon", "space"), 
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right!",
+wrong = "Are you sure?")
 
-8\) Which character is used to delineate the values (i.e. mark their beginning and end) in this DSV file? a. comma b. tab c. double quotation mark d. colon e. space (Problem: this is not actually visible in this example...)
 ```
+
+ 
+
+8\) Which character is used to delineate the values?
+
+```{r echo=FALSE, results="asis"}
+check_question("none",
+               options = c("single quotation mark", "double quotation mark", "none", "space", "dot"), 
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "Yes, this DSV file does not have a delimiter character. This would be problematic if some of the values included commas but, as they don't, it's not a problem.",
+wrong = "No, look at the extract of the DSV file printed above.")
+
+```
+
+ 
+:::
 
 ## Using Projects in RStudio
 
-One of the advantages of working with RStudio is that it allows us to harness the potential of Projects. RStudio Projects help us to keep our digital kitchen nice and tidy. Each project has its own directory, environment, and history which means that we can work on multiple projects at the same time and RStudio will keep them completely separate from each other. This means that we can easily switch between cooking different dishes, say a gluten-free egg curry and vegan pancakes, without fear of accidentally setting the wrong temperature on the cooker or contaminating either dishes.
+One of the advantages of working with RStudio is that it allows us to harness the potential of RStudio Projects. Projects help us to keep our digital kitchen nice and tidy. In RStudio, each project has its own directory, environment, and history which means that we can work on multiple projects at the same time and RStudio will keep them completely separate from each other. This means that we can easily switch between cooking different dishes, say a gluten-free egg curry and vegan pancakes, without fear of accidentally setting the wrong temperature on the cooker or contaminating either dishes.
 
-But even if you don't like multi-tasking (which is not recommended), RStudio Projects are a great way to help you keep together all the data, scripts, and outputs associated with a single project in an organised manner. In the long run, this will make your life much, much easier. It will also be an absolute lifesafer as soon as you need to share your work with others (e.g., your supervisor, colleague, reviewer, etc.).
+Regardless of whether or not you're a keen multi-tasker, RStudio Projects are a great way to help you keep together all the data, scripts, and outputs associated with a single project in an organised manner. In the long run, this will make your life much, much easier. It will also be an absolute lifesaver as soon as you need to share your work with others (e.g., your supervisor, colleagues, reviewers, etc.).
 
-To create a new Project, open RStudio. Select "File", then "New Project...". Alternatively, you can click on the Project button in the top-right corner of RStudio and then select "New Project..." **(To do for Jan: add screenshot showing this second option)**.
+To create a new Project, open RStudio. Select 'File', then 'New Project...'. Alternatively, you can click on the Project button in the top-right corner of RStudio and then select 'New Project...'.
+
+```{r include = FALSE}
+#To do for Jan: Add screenshot with ellipse showing the second option.
+```
 
 Both options will open up a window with three options for creating a new project:
 
@@ -119,32 +209,52 @@ Both options will open up a window with three options for creating a new project
 2.  Existing Directory (which allows you to create a project in an existing folder associated with your project)
 3.  Version Control (see @bryanLetGitStarted).
 
-Given that you already saved the data that we want to import (from @DabrowskaExperienceAptitudeIndividual2019) in a dedicated folder on your computer, you can select the second option: "Existing Directory".
+In @sec-SavingData, you should have already saved the data that we want to import in a dedicated folder on your computer. Here, a folder is the same as a directory. Hence, you can select the second option: 'Existing Directory'.
 
-This will open up the following window. Click on "Browse..." to navigate to the folder corresponding to your @DabrowskaExperienceAptitudeIndividual2019 project. If you followed my suggestions earlier on, this would be a folder called something along the lines of: `Dabrowska2019`. Once you have selected this project folder on your computer, select the option "Open in a new session" and then click on "Create Project".
+This will open up a new window. Click on 'Browse...' to navigate to the folder corresponding to your @DabrowskaExperienceAptitudeIndividual2019 project. If you followed my suggestions earlier on, this would be a folder called something along the lines of `Dabrowska2019`. Once you have selected the correct folder, select the option 'Open in a new session' and then click on 'Create Project'.
 
-![New project window **(To do for Jan: redo this screenshot. It should show a new project being created in a folder called "Dabrowska2019", itself saved in a folder called "**`DataLiteracyTextbook`**"). The checkbox should be ticked and red ellipses should circle the buttons that need to be clicked "Browse", "tickbox" and "Create project". Alt-text needs to be adjusted.)**](images/RStudioNewProject.png){fig-alt="New Project Wizard for Create Project from Existing Directory R Project. It shows the working directory: /Users/lefoll/Documents. There are three buttons: Browse..., Create Project and Cancel" width="440"}
+```{r include=FALSE}
+#To do for Jan: redo the screenshot below. Call the file RStudioNewProject.png. It should show a new project being created in a folder called 'Dabrowska2019', itself saved in a folder called 'DataLiteracyTextbook'. The checkbox should be ticked and red ellipses should circle the buttons that need to be clicked 'Browse', the checkbox and 'Create project'. Add this information to the alt-text
+```
 
-Creating an RStudio project will have generated a new file in your folder project called `Dabrowska2019.Rproj`. You can see it in the Files pane of RStudio (To for Jan: add screenshot showing this). Note that its file extension is `.Rproj`. Such `.Rproj` files contain information about your project options, which, in most cases, you will not need to edit.
+![New project window](images/RStudioNewProject.png){fig-alt="New Project Wizard for Create Project from Existing Directory R Project. It shows the working directory: /Users/lefoll/Documents. There are three buttons: Browse..., Create Project and Cancel" width="440"}
 
-More usefully, `.Rproj` files can be used as shortcuts for opening your projects. Shut down RStudio. Then, in your computer file system, navigate to your project folder, e.g., in a File Explorer window on Windows and a Finder window on macOS, to locate your `.Rproj` file. Double-click on the file to automatically launch RStudio with all the correct settings for this particular project. Alternatively, you can use the Project button to open up a project from RStudio itself.
+Creating an RStudio project will have generated a new file in your folder project called `Dabrowska2019.Rproj`. You can see it in the Files pane of RStudio.
 
-The folder in which in the `.Rproj` file was created is your project's working directory. You can see the path to this working directory at the top of the Console pane in RStudio **(To do for Jan: Add ellipse on screenshot**). The Files pane should also show the content of this directory. Click on the "New Folder" icon in your Files pane **(To do for Jan: Add ellipse on screenshot**) to create a new subfolder called `analysis`. Your folder `Dabrowska2019` should now contain an `.RProj` file and two subfolders called `analysis` and `data`.
+```{r include=FALSE}
+#To for Jan: add screenshot showing File pane with Rproj file.
+```
 
-## Importing data from a `.csv` file
+Note that the extension of this newly created file is `.Rproj`. Such `.Rproj` files store information about your project options, which you will not need to edit. More usefully, `.Rproj` files can be used as shortcuts for opening your projects. To see how this works, shut down RStudio. Then, in your computer file system (e.g., using a File Explorer window on Windows and a Finder window on macOS), navigate to your project folder to locate your `.Rproj` file. Double-click on the file. This will automatically launch RStudio with all the correct settings for this particular project. Alternatively, you can use the Project button to open up a project from RStudio itself.
 
-Click on the analysis folder to open it and then click on "New Script" icon **(To do for Jan: Add ellipse on second screenshot**) and select "R Script". This will open a new, empty `R` script in your Source pane. It is best to always begin by saving a newly created file. Save this empty script with a computer- and human-friendly file name such as as `1_DataImport.R`.
+```{r include=FALSE}
+#To for Jan: add two screenshots next to each other showing these two options to launch a project.
+```
 
-Given that we want to import two `.csv` files, we are going to need to use the base `R` function `read.csv()`. You can find out what this function does by typing `?read.csv` or `help(read.csv)` in the Console to open up the documentation. This help file contains information about several functions used to import data. Scroll down to the information about the `read.csv()` function. It reads:
+## Working directories {#sec-WorkingDirectories}
+
+The folder in which in the `.Rproj` file was created corresponds to your project's **working directory**. Once you have opened a Project, you can see the path to your project's working directory at the top of the Console pane in RStudio. The Files pane should also show the content of this directory.
+
+```{r include = FALSE}
+#To do for Jan: Add screenshot of RStudio window with ellipses to help users understands the paragraphs above and below this chunk.
+```
+
+Click on the "New Folder" icon in your Files pane to create a new subfolder called `analysis`. Your folder `Dabrowska2019` should now contain an `.RProj` file and two subfolders called `analysis` and `data`.
+
+![Contents of the project folder as displayed by RStudio](images/WorkingDirectory.png){fig-alt="Screenshot of the Files pane of RStudio showing the contens of a folder entitled 'Dabrowska2019'. It contains an RProject file called 'Dabrowska2019.Rproj', a folder called 'analysis' and another folder called 'data'." width="440"}
+
+## Importing data from a `.csv` file in `R` {#sec-ImportingDataCSV}
+
+We will begin by creating a new `R` script in which we will write the code necessary to import the data from @DabrowskaExperienceAptitudeIndividual2019's study in `R`. To do, so click on the analysis folder to open it and then click on the 'New Script' icon in the top-left corner of RStudio and select 'R Script'. This will open a new, empty `R` script in your Source pane. It is best to always begin by saving a newly created file. Save this empty script with a computer- and human-friendly file name such as as `1_DataImport.R` (@sec-FileNaming).
+
+Given that we want to import two `.csv` files, we are going to use the function `read.csv()`. You can find out what this function does by running the command `?read.csv` or `help(read.csv)` in the Console to open up the documentation. This help file contains information about several base `R` functions used to import data. Scroll down to find the information about the `read.csv()` function. It reads:
 
 ```         
 read.csv(file, header = TRUE, sep = ",", quote = "\"",
          dec = ".", fill = TRUE, comment.char = "", ...)
 ```
 
-This informs us that this function's first argument is the path to the file from which we want to import the data. It is the only argument that does not have a default value and is therefore the only argument that is compulsory.
-
-In theory, therefore, all we need to write to import the data is:
+This line from the documentation informs us that this function's first argument is the path to the `file` from which we want to import the data. It also informs us that `file` is the only argument that does not have a default value (as it is not followed by an equal sign and a value). In this function, `file` is therefore the only argument that is compulsory. Hence, in theory, all we need to write to import the data is:
 
 ```{r eval=FALSE}
 L1.data <- read.csv(file = "data/Dabrowska_2018_L1_data.csv")
@@ -156,9 +266,9 @@ In fact, we could shorten things even further as, unless otherwise specified, `R
 L1.data <- read.csv("data/Dabrowska_2018_L1_data.csv")
 ```
 
-The file path `"data/Dabrowska_2018_L1_data.csv"` informs `R` that the data is located in a subfolder of the project's working directory called `data` and that, within this subfolder, the file that we want to import is called `Dabrowska_2018_L1_data.csv`.
+The file path `"data/Dabrowska_2018_L1_data.csv"` informs `R` that the data is located in a subfolder of the project's working directory called `data` and that, within this `data` subfolder, the file that we want to import is called `Dabrowska_2018_L1_data.csv`. Note that the file extension must be specified (see @sec-FileExtensions). Note, also, the file path is separated with a single forward slash `/`. In `R`, this should work regardless of the operating system that you are using and, in order to be able to easily share your scripts with others, it is recommended that you use forward slashes even if you are running Windows (\@sec-FoldersPaths).
 
-In practice, however, it is often safer to spell things out to remind ourselves of some of the default settings of a function in case they need to be checked or changed at a later stage:
+Although the command above did the job, in practice, it is often safer to spell things out further to remind ourselves of some of the default settings of the function that we are using in case they need to be checked or changed at a later stage. In this example, we will therefore import the data with the following command:
 
 ```{r eval=FALSE}
 L1.data <- read.csv(file = "data/Dabrowska_2018_L1_data.csv",
@@ -168,30 +278,352 @@ L1.data <- read.csv(file = "data/Dabrowska_2018_L1_data.csv",
                     dec = ".")
 ```
 
-In the command above, `header = TRUE`, tells `R` to import the first row of the `.csv` table as column headers rather than values. The arguments `sep` and `quote` specify the characters that are used to separate the values on the one hand, and delineate them, on the other. As we saw earlier, @DabrowskaExperienceAptitudeIndividual2019's `.csv` files use the comma as the separator and the double quotation mark as the quoting character. Note that the `"` character needs to be preceded by a backslash (`\`) in the command (we say it needs to be "escaped") because otherwise `R` will interpreted it as part of the command syntax, which will lead to an error. Finally, the argument `dec = "."` explicitly tells `R` that this `.csv` file uses the dot as the decimal point. In some countries, e.g., Germany and France, the comma is used for decimals so, if you obtain data from a German or French colleague, this setting may need to be changed to `dec = ","` for the data to be imported correctly.
+In the command above, `header = TRUE`, explicitly tells `R` to import the first row of the `.csv` table as column headers rather than values. This is not strictly necessary because, as we saw from the function's help file, `TRUE` is already set as the default value for this argument, but it is good to reminder ourselves of how this particular dataset is organised.
 
-## Checking that data have been correctly imported
+The arguments `sep` and `quote` specify the characters that, in this `.csv` file are used to separate the values on the one hand, and delineate them, on the other (see @sec-DSV). As we saw above, @DabrowskaExperienceAptitudeIndividual2019's `.csv` files use the comma as the separator and the double quotation mark as the quoting character. Note that the `"` character needs to be preceded by a backslash (`\`) (we say it needs to be "escaped") because otherwise `R` will interpreted it as part of the command syntax, which would lead to an error. Finally, the argument `dec = "."` explicitly tells `R` that this `.csv` file uses the dot as the decimal point. In some countries, e.g., Germany and France, the comma is used to represent decimal places so, if you obtain data from a German or French colleague, this setting may need to be changed to `dec = ","` for the data to be imported correctly.
+
+## Checking that the data have been correctly imported
 
 It is crucial that you check whether your data has genuinely been correctly imported. Here's a list of things to check (in that order):
 
-1.  Were you able to run the import command without producing any errors? If you are getting an error, this is most likely due to a typo! Check the name of the file or use press the tab key to get RStudio to auto-complete the file name for you. Also check that you have correctly written the name of the function and have all the necessary brackets and quotation marks.
+1.  Were you able to run the import command without producing any errors? If you are getting an error, this is most likely due to a typo! Check the name of the file or press the tab key on your keyboard to get RStudio to auto-complete the file name for you. Also check that you have correctly written the name of the function and have all the necessary brackets and quotation marks.
 
-2.  Has the `R` data object appeared in your Environment pane? Does it have the expected number of rows (observations) and columns (variables)? `L1.data` contains 90 observations and 31 variables.
+2.  Has the `R` data object appeared in your Environment pane? Does it have the expected number of rows (observations) and columns (variables)? `L1.data` contains 90 observations and 31 variables. If you are getting different numbers, this might be because you previously opened the `.csv` file with Excel or that your computer converted it to Excel format automatically. To remedy this, ensure that you have followed all the steps described in @sec-DSVLibreOffice.
 
-3.  To view the entire table, use the function `view()` with the name of your data object as the first and only argument, e.g., `view(L1.data)`. This will open up a new tab in your Source pane that displays the full table, much like in a spreadsheet programme. You can search and filter the table in this tab, but you cannot edit it in any way (and that's a good thing because, if we want to edit things, we want to ensure that we keep track of our changes in a script!). Browse through the table and check that everything "looks healthy". This is much like visually inspecting and smelling ingredients before using them in a recipe. It's not perfect but if something is really off, you should notice it. Check that each cell appears to have one and only one value.
+3.  To view the entire table, use the function `View()` with the name of your data object as the first and only argument, e.g., `View(L1.data)`[^importingdata_inprogress-2]. This will open up a new tab in your Source pane that displays the full table, much like in a spreadsheet programme. You can search and filter the table in this tab, but you cannot edit it in any way (and that's a good thing because, if we want to edit things, we want to ensure that we keep track of our changes in a script!). Browse through the table and check that everything "looks healthy". This is much like visually inspecting and smelling ingredients before using them in a recipe. It's not perfect but if something is really off, you should notice it. Check that each cell appears to have one and only one value.
 
-4.  Finally, use the `str()` function to view the structure of your data object in a more compact way. Using the command `str(L1.data)` will display a summary of the data.frame in the Console. The summary begins by informing us that this data object is a data.frame, that contains 90 observations and 31 variables. Then, it lists all of the variables, followed by the type of values stored in this variable (e.g., character strings or integers) and then the first few values for each variable. Especially with very wide tables that contain a lot of variables, it is often easier to check the summary of the imported data with `str()` than with `view()`, though I would always recommend taking a few seconds to do both. This is time well spent!
+4.  Finally, use the `str()` function to view the structure of your data object in a more compact way. Using the command `str(L1.data)` will display a summary of the data.frame in the Console. The summary begins by informing us that this data object is a data.frame, that contains 90 observations and 31 variables. Then, it lists all of the variables, followed by the type of values stored in this variable (e.g., character strings or integers) and then the first few values for each variable. Especially with very wide tables that contain a lot of variables, it is often easier to check the summary of the imported data with `str()` than with `View()`, though I would always recommend taking a few seconds to do both. This is time well spent!
 
-Quiz time!
+[^importingdata_inprogress-2]: Note that, unlike the functions that we have used so far, the `View()` function begins with a capital letter. `R` is a case-sensitive programming language, which means that `view()` and `View()` are not the same thing!
+
+::: callout-tip
+#### Task 1 {.unnumbered}
+
+Import both data files from @DabrowskaExperienceAptitudeIndividual2019 using the `read.csv` function as described above. Save the first as the `R` object `L1.data` (as in the example above) and the second as `L2.data`. Then, answer the following questions.
+
+a\) In the two data files from @DabrowskaExperienceAptitudeIndividual2019, each row corresponds to one participant. How can L1 participants were included in this study?
+
+```{r echo=FALSE, results="asis"}
+check_question("90",
+               options = c("90", "31", "221", "2790", "17"), 
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right!",
+wrong = "Are you sure?")
+check_hint("Use the command `View(L1.data)` to display the full dataset in a new tab.", hint_title = "<br>🐭 Click on the mouse for a hint.")
+
+```
+
+ 
+
+b\) How many L2 participants were included in @DabrowskaExperienceAptitudeIndividual2019's study?
+
+```{r echo=FALSE, results="asis"}
+check_question("67",
+               options = c("67", "45", "90", "220", "306"), 
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right!",
+wrong = "Are you sure?")
+check_hint("How many rows does the dataframe `L2.data` contain?", hint_title = "<br>🐭 Click on the mouse for a hint.")
+
+
+```
+
+ 
+
+c\) Compare the data frames containing the L1 and L2 data. Which datasets contains more variables?
+
+```{r echo=FALSE, results="asis"}
+check_question("L2.data",
+               options = c("L2.data", "L1.data", "They have the same number of variables"), 
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right!",
+wrong = "Are you sure?")
+check_hint("Remember that, in these two data frames, each colum represents a variable. Use the `View()` function to display the data frames and compare them.", hint_title = "<br>🐭 Click on the mouse for a hint.")
+
+
+```
+
+ 
+
+d\) You have saved the two datasets to your local `R` environment as `L1.data` and `L2.data`. What kind of `R` objects are `L1.data` and `L2.data`? You can find out by using the command `class()`. It takes just the name of the object as its only argument.
+
+```{r echo=FALSE, results="asis"}
+check_question("data frame",
+               options = c("character", "integer", "tibble", "table", "list"), 
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right!",
+wrong = "That's incorrect.")
+check_hint("Use the command `class(L1.data)` to find out which type of `R` object `L1.data` is.", hint_title = "<br>🐭 Click on the mouse for a hint.")
+
+```
+
+ 
+
+e\) Why does the L2 dataset contain the variable `NativeLg`, but not the L1 dataset?
+
+```{r echo=FALSE, results="asis"}
+check_question("Because, in this study, all L1 participants have English as their native language.",
+               options = c("Because, in this study, all L1 participants have English as their native language.", "Because some or all of the L1 participants did not wish to answer this question.", "Because this variable was removed from the dataset for data protection reasons.", "Because Dr. Dąbrowska decided not to collect this information for L1 participants."), 
+               type = "check",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right!",
+wrong = "No, that's not it.")
+
+```
+:::
 
 ## Importing tabular data in other formats
 
-## "Hell is empty, and all the devils are here." (William Shakespeare, The Tempest)
+We have seen how to load data from a `.csv` file into `R` by creating an `R` data frame object that contains the data extracted from a `.csv` file. But, as we saw in @sec-Data, not all datasets are stored as `.csv` files. Fear not: there are many import functions in `R`, with which you can import pretty much all kinds of data formats! This section introduces a few of the most useful ones for research in the language sciences.
 
-## Quick-and-dirty ways to import data in R
+We begin with the highly versatible function `read.table()`. The `read.csv()` is actually a variant of `read.table()`. You recall that when we called up the help file for the former using `?read.csv()`, we obtained a combined help file for several functions, the first of which was `read.table()`. By specifying the following arguments as we did earlier, we can actually use the `read.table()` function to import our `.csv` file with exactly the same results:
 
-## Hardcoding file paths in `R` scripts
+```{r eval = FALSE}
 
-Copy-and-paste path
+L1.data <- read.table(file = "data/Dabrowska_2018_L1_data.csv",
+                    header = TRUE,
+                    sep = ",",
+                    quote = "\"",
+                    dec = ".")
 
-## Loading data using RStudio
+```
+
+In @sec-DataFormats, we looked at a DSV file with a `.txt` extension that was separated by tabs. If we change the separator character argument to `\t` for tab, we can import this dataset using the same `read.table()` function:
+
+```{r}
+
+OfflineLearnerData <- read.table(file = "data/offlinedataLearners.txt",
+                                        header = TRUE,
+                                        sep = "\t",
+                                        dec = ".")
+
+```
+
+@fig-BusterudEAData displays an extract of the dataset `AJT_raw_scores_L2.csv` from an experimental study by @busterudVerbPlacementL32023. Although this DSV file has a `.csv` extension, it is actually separated by semicolons. @fig-BusterudEAData shows that, in this dataset, the comma is used to show the decimal place.
+
+![Extract of data file `AJT_raw_scores_L2.csv` from @busterudReplicationDataVerb2023](images/BusterudEA2023_data_snapshot.png){#fig-BusterudEAData fig-alt="To do for Jan"}
+
+If you look carefully, you will also see that this dataset has some empty cells. This data can be downloaded from <https://doi.org/10.18710/JBMAPT>. It is delivered with a README file. As the name suggests, it is always a good idea to read README files! 😄 This particular README explains, among other things, that in this file: "Missing data are represented by empty cells."
+
+If you call up the help file for the `read.table()` function again, you will see that there is an argument called `na.strings`. The default value is `NA`. When we import this dataset `AJT_raw_scores_L2.csv` from @busterudVerbPlacementL32023, we will therefore need to change this argument to ensure that empty cells are recognised as missing values.
+
+In addition to the file path, the command that we can use to import this dataset therefore specifies the separator character as the semicolon (`sep = ";"`), the character used to represent decimals (`dec = ","`), and empty cells (`na.strings = ""`) for missing values:
+
+```{r}
+AJT.raw.scores.L2 <- read.table(file = "data/AJT_raw_scores_L2.csv",
+                          header = TRUE,
+                          sep = ";",
+                          dec = ",",
+                          na.strings = "")
+```
+
+Once we have run this command, we should check that it has been correctly imported, for example using the `View()` function:
+
+```{r eval = FALSE}
+
+View(AJT.raw.scores.L2)
+
+```
+
+```{r echo = FALSE}
+
+AJT.raw.scores.L2 |> 
+  select(ID:`L2.grade`) |> 
+  slice(262:274)
+
+```
+
+Here, we can see that the data has been correctly imported as a table. The commas have been correctly converted to decimal points and the empty cells are now labelled `NA`.[^importingdata_inprogress-3]
+
+[^importingdata_inprogress-3]: If you are wondering why some are labelled `NA` and some `<NA>`, that's because cell F125 in this table contains a hyphen (`-`) rather than either a numeric value or nothing at all for a missing value. As a result, `R` is interpreting this variable (`L3.grade`) as a character string variable rather than a numeric variable. In string variables, `NA` is printed as `<NA>`. If we were to analyse this data further, we would need to convert this erroneous `-` to an `NA` and then convert the variable `L3.data` to a numeric variable. We can actually do that in the `read.table()` function by specifying that missing values are represented by either empty cells or cells containing only a hyphen using the argument `na.strings = c("", "-")`. Download the data and try it out if you're curious!
+
+::: {.callout-note collapse="true"}
+#### Using {readr} from the {tidyverse} to import tabular files
+
+The {tidyverse} is a family of packages that we will use a lot in future chapters. This family of package includes the {readr} package which features some very useful functions to import data into `R`. You can install and load the {readr} package either individually or as part of the {tidyverse} bundle:
+
+```{r eval=FALSE}
+
+# Install the package individually:
+install.packages("readr")
+
+# Or install the full tidyverse (this will take a little longer):
+install.packages("tidyverse")
+
+# Load the library:
+library(readr)
+
+```
+
+##### Delimiter-separated values (DSV) files
+
+The {readr} package includes functions to import DSV files that are similar, but not identical to the base `R` functions explained above. The main difference is that the {readr} functions load data into an `R` object of type "tibble" rather than "data frame". In practice, this will not make a difference for our work in future chapters. Hence, the following two commands can equally be used to import `Dabrowska_2018_L1_data.csv`:
+
+```{r eval=TRUE}
+
+# Import .csv file using the base R function read.csv():
+L1.data <- read.csv(file = "data/Dabrowska_2018_L1_data.csv", 
+                    header = TRUE, 
+                    quote = "\"")
+
+class(L1.data)
+
+# Import .csv file using the {readr} function read_csv():
+L1.data <- read_csv(file = "data/Dabrowska_2018_L1_data.csv", 
+                    col_names = TRUE, 
+                    quote = "\"")
+
+class(L1.data)
+```
+
+Note that instead of the argument `header = TRUE`, the {readr} function `read_csv()` takes the argument `col_names = TRUE`, which has the same effect. There are a few more differences between the two functions
+
+Just like `read.csv()` was a special case of `read.table`, the {readr} function `read_csv()` is a special variant of `read_delim()` that can be used to import data from all kinds of DSV files. Check the help file to find out all the options by running the command `?read_delim`.
+
+##### Fixed width files
+
+Fixed width files (with file extensions such as `.gz`, .`bz2` or `.xz`) are a less common type of data source in the language sciences. In this text-based files, the values are separated not by a specific character such as comma or tab, but by a set amount of white/empty space other than a tab. Fixed width files can be loaded using the [`read_fwf()`](https://readr.tidyverse.org/reference/read_fwf.html) function from {readr}. Fields can be specified by their widths with [`fwf_widths()`](https://readr.tidyverse.org/reference/read_fwf.html) or by their positions with [`fwf_positions()`](https://readr.tidyverse.org/reference/read_fwf.html).
+:::
+
+### Importing files from spreadsheet software
+
+If your data is currently stored in a spreadsheet software (e.g., LibreOffice Calc, Google Sheets, or Microsoft Excel), you can export in to `.csv` or `.tsv`. However, if you do not wish to do this (e.g., because your colleague wishes to maintain the spreadsheet format that includes formatting elements such as bold or coloured cells), there are functions to import these file formats directly into `R`.
+
+For **LibreOffice Calc**, you can install the {readODS} package and use its `read_ods()` function to import `.ods` files. Details about all the options can be found here <https://www.rdocumentation.org/packages/readODS/versions/2.3.0>.
+
+```{r eval = FALSE}
+# Install from CRAN (safest option):
+install.packages("readODS")
+
+# Or install the development version from Github:
+remotes::install_github("ropensci/readODS")
+
+# Load the library:
+library(readODS)
+
+# Import your .ods data:
+MyLibreOfficeData <- read_ods("data/MyLibreOfficeTable.ods",
+                            sheet = 1,
+                            col_names = TRUE,
+                            na = NA)
+
+```
+
+Various packages can be used to import **Microsoft Excel** file formats, but the simplest is {readxl}, which is part of the {tidyverse}. It allows users to import data in both `.xlsx` and the older `.xls` format. You can find out more about its various options here: <https://readxl.tidyverse.org/>.
+
+```{r eval = FALSE}
+# Install from CRAN (safest option):
+install.packages("readxl")
+
+# Or install the development version from Github:
+remotes::install_github("tidyverse/readxl")
+
+# Load the library:
+library(readxl)
+
+# Import your .ods data:
+MyExcelData <- read_excel("data/MyExcelSpreadsheet.xlsx",
+                            sheet = 1,
+                            col_names = TRUE,
+                            na = NA)
+
+```
+
+Finally, there are also several ways to import data from **Google Sheets**. The simplest is to export your tabular data as a `.csv`, `.tsv`, `.xslx`, or `.ods` file by selecting Google Sheet's menu option 'File' \> 'Download'. Then, you can simply import this downloaded file in `R` using the corresponding function as described above.
+
+However, if you want to directly import your data from Google Sheets and be able to dynamically update the analyses that you conduct in `R` even as the input data is amended on Google Sheets, you can use the {googlesheets4} package (which is part of the {tidyverse}):
+
+```{r eval = FALSE}
+# Install from CRAN (safest option):
+install.packages("googlesheets4")
+
+# Or install the development version from Github:
+remotes::install_github("tidyverse/googlesheets4")
+
+# Load the library:
+library(googlesheets4)
+
+# Import your Google Sheets data using your (spread)sheet's URL:
+MySheetsData <- read_sheet("https://docs.google.com/spreadsheets/d/1U6Cf_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY/edit#gid=780868077",
+                            sheet = 1,
+                            col_names = TRUE,
+                            na = "NA")
+
+# Or import your Google Sheets data using just the sheet's ID:
+MySheetsData <- read_sheet("1U6Cf_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY/edit#gid=780868077",
+                            sheet = 1,
+                            col_names = TRUE,
+                            na = "NA")
+
+```
+
+![Dialogue box to consent to the {tidyverse} API Packages having access to your Google Drive to import directly from a Google Sheet. Read this carefully before clicking on 'Continue'.](images/GoogleSheetsTidyverseAccess.png){#fig-TidyverseAPI fig-alt="Sign in with Google. Tidyverse API Packages wants access to your Google Account. Select what Tidyverse API Packages can access • See, edit, create, and delete all your Google Sheets spreadsheets. Because you're using Sign in with Google, Tidyverse API Packages will be able to Associate you with your personal info on Google, See your primary Google Account email address. Make sure you trust Tidyverse API Packages. You may be sharing sensitive info with this site or app. Learn about how Tidyverse API Packages will handle your data by reviewing its privacy policies. You can always see or remove access in your Google Account. Learn about the risks. The two buttons at the bottom read: Cancel and Continue"}
+
+Note that, as spreadsheet software typically allow users to have several "sheets" or "tabs" within a file that each contains separate tables, the functions `read_excel()`, `read_ods()`, and `read_sheet` include an argument called `sheet` which allows you to specify which sheet should be imported. The default value is `1`, which simply means that the first one is imported. If your sheets have names, you can also use its name as the argument value, e.g.:
+
+```{r eval = FALSE}
+
+MyExcelData <- read_excel("data/MyExcelSpreadsheet.xlsx",
+                            sheet = "raw data",
+                            col_names = TRUE,
+                            na = NA)
+
+```
+
+### Importing data files from SPSS, SAS and Stata
+
+If you’ve recently switched from working in SPSS, SAS, or Stata (or are collaborating with someone who uses these programmes), it might be useful to know that you can also import the data files created by programmes directly into `R` using the {haven} package. Details of all the options can be found here: <https://haven.tidyverse.org/>.
+
+```{r eval = FALSE}
+# Install from CRAN (safest option):
+install.packages("haven")
+
+# Or install the development version from Github:
+remotes::install_github("tidyverse/haven")
+
+# Load the library:
+library(haven)
+
+# Import an SAS file
+MySASData <- read_sas("MySASDataFile.sas7bdat")
+
+# Import an SPSS file
+MySPSSDataFile <- read_sav("MySPSSDataFile.sav")
+
+# Import a Stata file
+MyStataData <- read_dta("MyStataDataFile.dta")
+
+```
+
+### Importing other file formats
+
+As you can imagine, there are many more `R` packages and functions that are available and allow you to import all kinds of other file formats including `.json`, `.html`, various database formats and files with complex structures (see, e.g., <https://rc2e.com/inputandoutput>). In this textbook, we will only deal with DSV files (\@sec-DSV).
+
+--------- **To be added** ----------
+
+### Quick-and-dirty (aka bad!) ways to import data in R
+
+#### Loading data using RStudio
+
+Why it's a bad idea.
+
+#### Hardcoding file paths in `R` scripts
+
+Why it's a bad idea to copy-and-paste full file paths.
+
+::: {.callout-important collapse="true"}
+#### "Hell is empty, and all the devils are {here}." 😈
+
+*William Shakespeare, The Tempest*
+
+This box will contain information about using the {here} package.
+:::

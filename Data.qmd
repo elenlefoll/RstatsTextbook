@@ -1,0 +1,480 @@
+---
+engine: knitr
+bibliography: references.bib
+format:
+  html:
+    df-print: kable
+    embed-resources: true
+number-sections: true
+#css: style.css
+---
+
+```{css}
+#| echo: false
+p {
+  text-align: justify
+}
+
+figcaption {
+  margin: auto;
+  text-align: center;
+}
+```
+
+```{r include=FALSE}
+library(checkdown)
+library(here)
+library(tidyverse)
+```
+
+# Data {#sec-DataFormats}
+
+#### **Chapter overview** {.unnumbered}
+
+This chapter first considers what data means in the context of language research, before turning to how these data are formatted and stored. You will learn about:
+
+-   Different types of data used in language research
+-   Computer data formats and file extensions
+-   Sharing and accessing research data and materials
+-   Working with delimiter-separated values (DSV) files
+-   The pitfalls of analysing data in spreadsheet programs such as Microsoft Excel, Numbers, or Google Sheets
+
+Along the way, you will get insights into an eye-tracking study involving cute Playmobil figures and a meta-science investigation that highlights the utmost importance of a solid grounding in data literacy for research. Read on to find out more!
+
+## Data in the language sciences
+
+In this book, we are concerned with empirical research in the language sciences, in other words, with research that is based on the analysis of **data**. But what is data exactly? Data can be collected via surveys, measurements, or observations. To begin with, however, these collected datasets are "raw". Data only becomes **information** once we have analysed and interpreted the data in a meaningful way. Hence, just like uncooked pasta does not make a flavourful meal, we must learn to "cook" the raw data to obtain meaningful information.
+
+What kind of data are analysed in the language sciences? To get a rough idea of the range of data types analysed in the language sciences, let us take a look at the IRIS database. IRIS is a public, open repository where anyone can deposit the data, materials, instruments, code, and tools that they used "for research into languages, including first, second, and beyond, and signed language learning, multilingualism, language education, language use, and language processing". As such, it supports Open Science and Open Scholarship (see @sec-OpenScholarship).
+
+::: callout-caution
+#### Task 1
+
+Connect to the [IRIS website](https://iris-database.org/). Go to its [Search and Download](https://iris-database.org/search) page and scroll down to the filter option Data Type. Browse through the different data types most commonly used in language-related research. For which kinds of studies could these different types of data have been collected?
+
+![Screenshot from the IRIS database search page (accessed on 17 April 2024)](images/IRISDataTypes.png){#fig-IRISDataTypes fig-alt="Data Type filter dropdown menu with the following visible categories: Oral production (168), Closed response format (157), Open response (105), Judgements (97), Written production (76), Reaction times (62), Qualitative (46)" width="250"}
+:::
+
+## Types of research data {#sec-ResearchData}
+
+Given the wide range of methods used in language research, it is no surprise that they are so many different types of research data. Although the data types listed on the IRIS search page (see @fig-IRISDataTypes for extract) are very broad and the categories not clearly defined, the list illustrates well the breadth of research data types typically analysed in language studies. The first data type category, "Oral production", for instance, can equally refer to text transcriptions of language users' oral production, audio, or video files. It can also refer to either raw data or to (more or less) processed data. For example, a transcript of a conversation could have been automatically annotated for part-of-speech, meaning that every word would be marked for their word class (e.g., `This_DT is_VBZ not_RB raw_JJ text_NN data_NN ._PUNC`), or it could have been manually anonymised by adding placeholders (e.g., `Is <NAME> going out with <NAME>?`) indicating that certain words have been retracted for data protection reasons.
+
+The second most frequent data type category, "Closed response format", includes different kinds of questionnaires and tests. Questionnaires may ask study participants to disclose personal information relevant to the research questions using single or multiple-choice questions, such as what language they speak at home, how long they have studied a language for, or how old they are. Tests may be designed to assess participants' language competences (e.g., in the form of a vocabulary or grammar test), as well as other aspects relevant to the research questions being investigated (e.g., short-term memory or baseline reaction times).
+
+In this book, we will focus on research processes that happen post data collection. However, it is crucial to be acutely aware of the conditions and context in which the data that we are analysing were collected and pre-processed as these steps of the research process can entirely change the results of the data analysis. Imagine that we decided to compare the ability of two groups of French L2 learners. To this end, a language production test was administered to two entire classes of secondary school pupils learning French as a second language with two different teaching methods. If one group had 15 minutes to complete the test, whilst the other group had up to 60 minutes, the results would not be comparable.
+
+> #### Quiz time! {.unnumbered}
+>
+> 1\) Which other reasons could potentially jeopardise the comparison of test results data from two different groups of pupils?
+>
+> ```{r echo=FALSE, results="asis"}
+> check_question(c("The two groups having different teachers.", "One group having French lessons on Tuesday mornings, the other on Friday afternoons.", "One group having a higher proportion of pupils from migrant families.", "One group having a single native speaker of French, whilst the other has none.", "One group having a higher proportion of pupils with reading difficulties.", "One group having a classroom decorated with French flags and posters about France."), options = c("The two groups having different teachers.", "One group having French lessons on Tuesday mornings, the other on Friday afternoons.", "One group having a higher proportion of pupils from migrant families.", "One group having a single native speaker of French, whilst the other has none.", "One group having a higher proportion of pupils with reading difficulties.", "One group having a classroom decorated with French flags and posters about France."), type = "checkbox", 
+> random_answer_order = TRUE,
+> button_label = "Check answer",
+> right = "That's right! All of these factors could potentially influence the outcome of this comparison study. <br><br>Can you think of ways to ensure that these factors are controlled for?",
+> wrong = "Not quite. There are more reasons.")
+> ```
+
+In research, we typically differentiate between **primary data**, which is the data that you collected yourself, and **secondary data**, which is data that was collected by others. If you were to conduct a new study based on data that you found on IRIS, this would be a secondary data analysis.
+
+Especially when conducting secondary data analyses, it is crucial that we have enough information about the data itself. This is **metadata**, i.e. data that describes other data. Metadata is crucial for finding, sharing, evaluating, and reusing datasets. Metadata can be generated automatically and stored within the data file. For example, unless this metadata was explicitly deleted or amended, Word files typically contain data describing who created the file, when it was first created, and when the file was last modified. For some data and projects, it also makes sense to create separate metadata files that contain additional or more detailed metadata.
+
+## Data formats and file extensions {#sec-FileExtensions}
+
+Different data types come in different data formats. For audio files, you may be familiar with the MP3 format, but this by no means the only format in which audio files can be saved. Many other audio file formats exist, such as Waveform Audio File Format (WAVE) and Free Lossless Audio Codec (FLAC).
+
+We can usually tell in what format a file is in by looking at its file extension. The file extension is the suffix of the file name. It comes at the end of the file name and is preceded by a dot. The file extension of a WAVE file is `.wav`, whereas that of an MP3 file is `.mp3`; hence the file `recording.wav` is a WAVE file, whereas `recording.mp3` is an MP3 file.
+
+> #### Quiz time! {.unnumbered}
+>
+> 2\) In which format are Microsoft Word files typically saved?
+>
+> ```{r Format-question, echo=FALSE, results="asis"}
+> check_question(".docx", options = c(".odt", ".docx", ".docs", ".msword"), type = "radio", 
+> random_answer_order = TRUE,
+> button_label = "Check answer", q_id = 2,
+> right = "That's right! Though older versions of MS Word used the format `.doc`.",
+> wrong = "That's incorrect. Do you have a Word file on your computer whose file extension you could check?")
+> ```
+>
+>  
+>
+> 3\) Which of these files are audio files?
+>
+> ```{r Format-question2, echo=FALSE, results="asis"}
+> check_question(c("dialogue001.mp3", "dialogue001.wav", "001_dialog.flac"), options = c("dialogue001.mp3", "dialogue001.wav", "dialog_01.csv", "001_dialog.flac", "DIALOGUE.audio"), type = "checkbox",
+> random_answer_order = TRUE,
+> button_label = "Check answer", q_id = 3,
+> right = "That's right!",
+> wrong = "Not quite. Here's a hint: There are three audio files in this list.")
+> >
+> ```
+
+Unfortunately, many "modern" operating systems have a tendency to hide file extensions by default; in which case the files `recording.wav` and `recording.mp3` would both be displayed as `recording` (compare @fig-NoExtensions and @fig-Extensions). This is misleading and can lead to all kinds of problems.
+
+::: {#fig-FileExtensions layout-ncol="2"}
+![Displaying file names without file extensions](images/FinderWindowNoExtensions.png){#fig-NoExtensions fig-alt="File Finder window showing 7 files with file names that do not include a file extension."}
+
+![Displaying file names with their extensions](images/FinderWindowExtensions.png){#fig-Extensions fig-alt="File Finder window showing 7 files with file extensions such as .pdf, .html and .txt."}
+
+Demonstrating the importance of seeing file extensions.
+:::
+
+To ensure that you can always see the extensions of the files on your computer in the File Explorer (on Windows) or the File Finder (on macOS), follow these instructions:
+
+-   On Windows: <https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/>.
+
+-   On macOS: <https://support.apple.com/en-gb/guide/mac-help/mchlp2304/mac> (select the version of your operating system at the top of the page).
+
+## Sharing research data and materials {#sec-Sharing}
+
+In line with the principles of Open Science (see @sec-OpenScholarship), it is important to ensure that both the materials that were used to collect research data (e.g., questionnaire items, audio, image or video stimuli, language aptitude tests, etc.) and the data themselves are made openly available to the research community, whenever legally possible and ethically responsible. Sharing materials ensures that studies can be replicated with new participants. Sharing research data also allows independent researchers to verify published results and to conduct additional analyses that may confirm, contradict, or extend the conclusions of the original studies. @tbl-RepoTable provides a non-exhaustive list of public repositories of research data and materials (number of entries as of early June 2024[^data_inprogress-1]). If you completed the first task in @sec-ResearchData, you are already familiar with at least one of these! 😉
+
+[^data_inprogress-1]: Note that, for some repositories, the number of entries includes other types of research outputs, e.g., preprints and figures.
+
+```{r RepoTable, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-RepoTable
+#| tbl-cap: Non-exhaustive list of public repositories of research data and materials.
+
+PublicRepos <- read.csv(here("data", "06-06-2024_repositories.csv"),
+                        header = TRUE,
+                        sep = ",",
+                        quote = "\"",
+                        encoding = "UTF-8")
+
+PublicRepos |> 
+  rename(`Nb. of entries` = Nb..of.entries,
+         `Provides DOI` = Provides.DOI,
+         `Online since` = Online.since)
+
+```
+
+In the following tasks, we will look at a study by @schimkeFirstLanguageInfluence2018 (see @fig-SchimkeTitle), which is an example of a publication which was awarded the Open Data and the Open Materials badges (see @fig-OpenDataOpenMaterials). This means that the research materials and data associated with this study can be found in an open, online repository. The authors could have chosen to upload their materials and data to any of the online repositories listed in @tbl-RepoTable but, in this case, they chose [IRIS](https://iris-database.org/).
+
+::: {#fig-SchimkeEA2018 layout="[[1,1], [1]]"}
+![Title page of the @schimkeFirstLanguageInfluence2018](images/SchimkeEA2018Abstract.png){#fig-SchimkeTitle fig-alt="Heading of PDF version of the article from the journal Language Learning: A Journal of Research in Language Studies. EMPIRICAL STUDY First Language Influence on SecondLanguage Offline and Online AmbiguousPronoun Resolution Sarah Schimke, Israel de la Fuente, Barbara Hemforth, and Saveria Colonnada from University Münster, University of Lille/CNRS, CNRS/University of Paris Diderot, and University of Paris 8/CNRS"}
+
+![The Open Data and Open Materials badges](images/OpenDataOpenMaterials.jpg){#fig-OpenDataOpenMaterials fig-alt="The Open Data badge is blue and shows a simple barplot and the Open Materials is yellow and shows an open cardbox" width="253"}
+
+![The paper's data and materials availability statement](images/SchimkeEAIris.png){#fig-SchimkeEAIris fig-alt="This article has been awarded Open Materials and Open Data badges. All materials and data are publicly accessible via the IRIS Repository at https://www.iris-database.org/iris/app/home/ detail?id=york:934337. Learn more about the Open Practices badges from the Center for Open Science: https://osf.io/ tvyxz/wiki." width="253"}
+
+An example of a publication for which both research materials and data have been published.
+:::
+
+Among other results, @schimkeFirstLanguageInfluence2018 report on two eye-tracking experiments. One of these experiments involved Spanish-speaking participants listening to ambiguous sentences in Spanish whilst looking at images of Playmobil figures (see @fig-Playmobil for an example).
+
+![Image from Experiment 1 in @schimkeFirstLanguageInfluence2018](images/Playmobil.bmp){#fig-Playmobil fig-alt="Photo of two Playmobil figures. On the left, a street sweeper with a broom and, on the right, a postman with a trolley." width="400"}
+
+::: callout-note
+#### How did the experiment work? {#sec-eyetracking}
+
+In this eye-tracking experiment, participants were instructed to decide whether the sentences they heard matched the Playmobil images or not. Consider the following two sentences from the experiment:
+
+> 1.  *El barrendero se encontró con el cartero antes de que recogiera las cartas.*\
+>     \[The street sweeper met the postman before he fetched the letters.\]
+>
+> 2.  *El barrendero se encontró con el cartero antes de que recogiera la escoba.*\
+>     \[The street sweeper met the postman before he fetched the broom.\]
+
+Up until the point at which either *las* *cartas* \[the letters\] or *la escoba* \[the broom\] are heard, it is unclear who "he" is.
+
+Participants were presented with @fig-Playmobil as they were listening to either Sentence 1 or Sentence 2. At the same time, the researchers measured how long it took for the participants to look at the person referred to by the ambiguous pronoun "he". In other words, for Sentence 1, they were interested in how long it took participants to focus on the postman Playmobil figure and, in Sentence 2, on the street sweeper. These measurements were made using an eye-tracking device.
+:::
+
+::: callout-caution
+#### Task 2
+
+Imagine that you want to run an experiment similar to the one carried out in @schimkeFirstLanguageInfluence2018. To do so, you would like to reuse the Playmobil image files that the researchers created. These can be found in the IRIS database. In which file format do you think the images are archived?
+
+To find out, click [here](https://iris-database.org/search/?s_publicationAPAInlineReference=Schimke%20et%20al.%20(2018)) to go directly to the list of data and materials associated with the study. Next, look for the "Pictorial" entry which contains the images. It allows you to download a ZIP file called `Images_online.zip`. ZIP is an archive file format that can contain one or more compressed files. Download this ZIP file.
+
+Once the download was successful, navigate to the folder where the file was saved on your computer and unzip the file, i.e., decompress it and extract its contents:
+
+-   To unzip on Windows, double-click the file, select 'Extract All', select a folder, and then click 'Extract'.
+-   On a Mac, simply double-click the file to unzip it.
+-   If you are using the Linux command line, use the command `unzip` followed by the name of the file to unzip it. You should find that the ZIP file contains a folder entitled 'Images', which contains 58 pictures of combinations of Playmobil figures that correspond to the experiment's stimulus sentences.
+
+1a) In which file format are these Playmobil image files?
+
+```{r Format-question3, echo=FALSE, results="asis"}
+check_question("BMP", options = c("BMP", "GIMP", "JPEG", "PNG", "GIF"), type = "radio",
+button_label = "Check answer",
+right = "That's right!",
+wrong = "This is an image file format, but these Playmobil images are not saved in this format.")
+```
+
+ 
+
+Image files typically contain metadata that is embedded in the image files themselves. This metadata may include the dimensions of the image and its colour profile. To view this metadata, right-click on one of the image files that you have extracted from the ZIP file and select the option to get more information about the file, e.g., "Get Info" or "Properties".
+
+1b) How wide are these Playmobil images in pixel?
+
+```{r Format-question4, echo=FALSE, results="asis"}
+check_question("1024",
+button_label = "Check answer",
+right = "That's right, well done!",
+wrong = "No. Image dimensions are usually displayed as two numbers separated by an \"x\" symbol. Remember that these Playmobil pictures are all in landscape format so that the larger number corresponds to the width of the images.")
+```
+:::
+
+## Working with tabular data
+
+The measurements made by the eye-tracking device in @schimkeFirstLanguageInfluence2018's eye-tracking experiments were stored in the form of tables. @tbl-EyeTrackingTable is an extract of a table that contains processed eye-tracking data from @schimkeFirstLanguageInfluence2018. It forms part of the study's supplementary materials and can be downloaded from the [IRIS database](https://iris-database.org/details/lYT9m-a75tV).
+
+In this table, each row corresponds to the data associated with one participants' eye movements while listening to a single stimulus sentence and looking at the corresponding Playmobil image (e.g., @fig-Playmobil). This extract only displays the data associated with the first six stimulus sentences (`items`) that participant "s1", a Spanish L2 learner, listened to. The columns `crit1`, `crit2` and `crit3` contain values derived from the measurements made using the eye-tracking device.[^data_inprogress-2] From @tbl-EyeTrackingTable, we can also see that participant "s1" was 19 years old when they started formally learning Spanish (`AoO` stands of "age of onset of formal instruction") and that they were 20 when the experiment was conducted.
+
+[^data_inprogress-2]: Details of what these values mean are not relevant here but, for those of you who are curious, they correspond to the "log odds of looks" that participant made towards one or the other Playmobil figure whilst listening to the experimental stimulus sentences at three time points, called "critical regions". These critical regions include the time window between the onset of the pronoun and 480 milliseconds after the onset of the disambiguating information. @schimkeFirstLanguageInfluence2018: 768-769 explain that "\[a\] positive value of the log odds indicates more looks to the subject than to the object antecedent, while a negative value indicates the reverse pattern."
+
+```{r EyeTrackingTable, echo=FALSE, message=FALSE, warning=FALSE}
+#| label: tbl-EyeTrackingTable
+#| tbl-cap: Extract of table containing eye-tracking data from Schimke et al. (2018)\\'s appendix
+
+SchimkeData <- read.delim(file = here("data", "logoddslearnersfinal.txt"),
+                          sep = "\t",
+                          quote = "\"",
+                          header = TRUE) 
+
+SchimkeData |> 
+  filter(language == "S") |> 
+  head()
+
+```
+
+When working with data, tables are ubiquitous. Data stored in tables are called **tabular data**. Hence, learning to work with tabular data is a crucial data literacy skill. In the language sciences, the results of most studies (whether experimental or corpus studies) are stored in tables.
+
+For example, when researchers conduct an online survey, the data collected by the online survey platform (e.g., [Qualtrics](https://www.qualtrics.com), [SoSci](https://www.soscisurvey.de/), [SurveyMonkey](https://www.surveymonkey.com/)) is automatically stored in the form of one or more table(s). These can then be exported from the survey platform in various tabular file formats (e.g., `.csv`, `.json`, `.xlsx`).
+
+In some cases, data may be collected by analogue means, e.g., by getting participants to answer a paper questionnaire or collecting school children's work on paper. However, for quantitative analysis, analogue research data are first digitalised. Then, the data are typically stored as text files in file formats such as `.txt` or `.csv`.
+
+### Delimiter-separated values (DSV) files {#sec-DSV}
+
+Tables can be stored in many data formats but the simplest and most widely used in linguistic research are **text files with** **delimiter-separated values (DSV)**. For sharing and archiving research data, DSV files are favoured over formats specific to propriety software such as `.xslx` (Microsoft Excel files) or `.numbers` (Apple Numbers files). This is because DSV files can be "understood" by many different programs and on all operating systems. The fact that they are simple text files means that we will also be able to reliably read them in the future, even if programs such as Excel or Numbers have evolved or have been discontinued. Reliability and compatibility are fundamental to maintaining the integrity of research data and ensuring that data can be reused, even in the distant future.
+
+In DSV files, each value (e.g., measurement or response) is separated by a specific **separator** character. In principle, any character can be used to separate values, but the most common separators are the comma (`,`), tab (`\t`), and colon (`:`). Below is the `.csv` file corresponding to @tbl-EyeTrackingTable.
+
+```         
+Repository,Discipline,Nb. of entries,Provides DOI,Online since
+Dryad,All,60000,Yes,2008
+Figshare,All,8000000,Yes,2012
+HAL,All,5000000,No,2001
+Harvard Dataverse,All,160000,Yes,2006
+IRIS,Linguistics,3500,No,2011
+"Open Science Repository, OSF",All,153663,Yes,2012
+"Tromsø Repository of Language and Linguistics,TROLLing",Linguistics,4500,Yes,2014
+Vivil,Clinical research,7000,Yes,2013
+Zenodo,All,3750000,Yes,2013
+```
+
+As you can see, the values are separated by commas.[^data_inprogress-3] Additionally, some of the values are enclosed in, or **delimited** by, double quotation marks (`"`). This prevents any commas that may occur within an actual field value, e.g., the comma in the field `Open Science Repository, OSF`, from being interpreted as a separator character.
+
+[^data_inprogress-3]: Note that the file extension `.csv` stands for "comma-separated values". Confusingly, however, DSV files are often given a `.csv` extension even when the separator character is not the comma. As a result, even though the `.tsv` extension stands for "tab-separated values", `.csv` files are frequently separated by a tab (`\t`) rather than comma. Isn't that fun? 🙃
+
+Given that DSV files are text files, it is possible to open them in a plain-text editor (e.g., Notepad++ or BBEdit) or a text-processing program (e.g., Microsoft Word or LibreOffice Writer). However, these programmes will typically display DSV files as in @fig-DSVinWord.
+
+![The `.csv` file corresponding to @tbl-EyeTrackingTable opened in Word](images/DSVinWord.png){#fig-DSVinWord fig-alt="A screenshot showing a CSV file opened in Microsoft Word. It looks like a long list of words separated by commas." width="562"}
+
+We can probably agree that what we are seeing in @fig-DSVinWord is not a very reader-friendly way to display tabular data! This is why DSV files are more often opened in spreadsheet programs (e.g., LibreOffice Calc, Google Sheets, Microsoft Excel, Numbers) than in text-editing programs. Let's find out how in the next section.
+
+### Opening DSV files in LibreOffice Calc {#sec-DSVLibreOffice}
+
+There are several ways to open a DSV file in LibreOffice Calc but the safest is to launch LibreOffice (see Task 1 in @sec-OpenSource if you have not yet installed LibreOffice) and, from the list of options under 'Create', click on 'Calc Spreadsheet' to open up a blank spreadsheet. Then, from the 'File' drop-down menu, select 'Open...' or use the keyboard shortcut `Ctrl/Cmd + O` and locate the DSV file that you wish to open.
+
+On opening a DSV file in LibreOffice Calc, we get a dialogue box with various options (see @fig-DSVImportCalc).
+
+![Text import dialogue in LibreOfficeCalc](images/DSVImportCalc.png){#fig-DSVImportCalc fig-alt="A screenshot showing the text import dialogue in LibreOffice Calc. It shows that the checkbox for comma is checked and that the string delimiter is set to double quotation mark. All other checkboxes are unchecked." width="450"}
+
+To correctly import this particular DSV file, it is necessary to specify that the separator character is the comma (`,`) and that the delimiter character is the double quotation mark (`"`) (see selected options in @fig-DSVImportCalc). With these settings in LibreOffice Calc, the table is rendered as in @fig-DSVinCalc.
+
+![CSV file opened in LibreOffice Calc](images/DSVinCalc.png){#fig-DSVinCalc fig-alt="A screenshot showing a CSV file opened in LibreOffice Calc. It is formatted as a table." width="601"}
+
+::: {.callout-tip collapse="true"}
+#### Opening a `.csv` or `.tsv` file in LibreOffice from a Finder/Explorer window {#sec-DefaultApp}
+
+As a reminder: Do *not* simply double-click on a `.csv` and `.tsv` file and let the default program open it!
+
+To avoid this happening accidentally double-clicking on a `.csv` and `.tsv` file and having the file corrupted, I recommend making either LibreOffice or a plain-text editor your default application to open up such files.
+
+On MacOS, you can change the default application used to open files of any file extensions by right-clicking on a file name with this particular extension and than selecting 'Get Info'. In the tab 'Open with:', you can then select LibreOffice (provided you have installed it beforehand!) and finally click on 'Change All...'. You will be asked to confirm your choice.
+
+![Get Info of a MacOS file](images/ChangeDefaultAppMac01.png){#fig-OpenFileInfo fig-alt="A screenshot showing the context menu of a macOS file that can be accessed with a right click. The drop-down option 'Get Info' is highlighted." width="450"}
+
+![Info dialogue with highlighted 'Open with' section](images/ChangeDefaultAppMac02.png){fig-alt="A screenshot showing the info dialog of a macOS file with the 'Open with' section highlighted. It shows that the Numbers app is the default to open such files on this particular computer." width="450"}
+
+![Permanently change the app used to open all files of this particular type](images/ChangeDefaultAppMac03.png){#fig-OpenWithChangeAll fig-alt="A screenshot showing the 'Open with' settings with the 'Change All...' button highlighted, allowing users to permanently change the default application for opening all files of this particular type." width="450"}
+
+If your operating system is Windows, you should look inside your Windows' settings for the option 'Default Apps' (see @fig-DefaultAppsWindows).
+
+![Default apps in Windows settings](images/DefaultAppsSetting.png){#fig-DefaultAppsWindows fig-alt="Screenshot of the menu showing the location of the default apps setting in the Windows settings. It can be found under the section 'Apps'." width="643"}
+
+In the next step, select 'Choose default apps by file type'. Here, you can search for `.csv` as a file type, and choose which program you want to set as the default program for opening `.csv` files. If Excel is currently your default (as in @fig-ExcelDefaultApp), you can click on Excel and choose a different program. LibreOffice is a sensible, open-source alternative (see @fig-DefaultAppsChangeDialog). A plain-text editor such as Notepad would also be fine (also listed on @fig-DefaultAppsChangeDialog).
+
+::: {#fig-DefaultExcel layout-ncol="2"}
+![Excel as the default programme for `.csv` files](images/DefaultAppsExcel.png){#fig-ExcelDefaultApp fig-alt="Screenshot of the default setting for the file type '.csv'"}
+
+![Changing the default programme for `.csv` files](images/DefaultAppsChangeDialog.png){#fig-DefaultAppsChangeDialog fig-alt="Screenshot of the selection dialogue for default apps."}
+
+Changing the default app for opening `.csv` files in Windows
+:::
+
+If it is not possible to adjust the default app settings, either due to insufficient permissions or because you only have temporary access to this PC, do *not* to open `.csv` or `.tsv` files with the default program. Instead, right-click on the file name and, using the 'Open with' option, select the option to open the file with LibreOffice, if available, or else with a plain-text editor.
+:::
+
+Note that if you open a DSV file in Excel or Google Sheets, you will not be shown such a dialogue box. Instead, these programs assume that they can guess which separator and delimiter characters your file uses. Whilst this may, at first, sound convenient, this is *not* good news: *you* should be the one in control of how your data files are interpreted, not the program! In the next section, you will learn why opening DSV files such as `.csv` and `.tsv` files in Microsoft Excel, Google Sheets, or Numbers can be very dangerous. In some cases, these programs will "corrupt", i.e. permanently damage, your DSV files, which can lead to irreversible data loss!
+
+The bad news is that, if you are using Windows or MacOS, it is very likely that either Excel or Numbers is your default app to open DSV files. This means that if you double click on a `.csv` and `.tsv` file in your Finder/Explorer window, the file will likely automatically open up in either Excel or Numbers. This is why it is important you do *not* double-click on such files to open them: Files only need to be opened *once* to be corrupted! If this happens to you with a file that you have downloaded from a repository, your best bet is to delete your local version of the file and download a fresh version so that you can start again from scratch.
+
+::: callout-caution
+#### Task 3
+
+In this task, we will practice opening a DSV file in LibreOffice Calc. Our example file is a real dataset from @schimkeFirstLanguageInfluence2018. We will begin by downloading it from the public repository [IRIS](https://iris-database.org/search/?s_publicationAPAInlineReference=Schimke%20et%20al.%20(2018)).
+
+In addition to the eye-tracking experiments, @schimkeFirstLanguageInfluence2018 conducted two further experiments in which participants completed a gap-filling task via an online survey platform. In the first of these experiments, the participants were native (L1) speakers of French, German, and Spanish. In the second, they were French- and Spanish-speaking learners (L2) of German.
+
+In both experiments, the L1 and L2 participants were shown ambiguous sentences similar to the ones used in the eye-tracking experiment with the Playmobil images (@sec-eyetracking). After having read each stimulus, the participants were asked to complete a gap-fill task according to their understanding of the preceding ambiguous sentence. Participants were told "that there were no incorrect responses and that they should answer spontaneously" [@schimkeFirstLanguageInfluence2018: 755]. Below is an example questionnaire item in the three languages examined:
+
+<div>
+
+> 1\. *Der Briefträger ist dem Straßenfeger begegnet, bevor er schnell ein Sandwich geholt hat. \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ hat ein Sandwich geholt.*
+>
+> 2\. *Le facteur a rencontré le balayeur avant qu’il prenne rapidement un sandwich. \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ a pris un sandwich.*
+>
+> *3a. El cartero se reunió con el barrendero antes de que él recogiera velozmente un emparedado. \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ recogió un emparedado.*
+>
+> 3b. *El cartero se reunió con el barrendero antes de que recogiera velozmente un emparedado. \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ recogió un emparedado.*
+
+</div>
+
+Note that, for Spanish, there were two types of stimuli: one with an overt pronoun (as in 3a. with *él*) and one without (as in 3b. with a null pronoun), as both variants are possible in Spanish. All three examples translate as:
+
+> -   *The postman encountered the street sweeper before he quickly fetched a sandwich. \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ fetched a sandwich.*
+
+To complete the gap, participants could either select 'The postman' or 'The street sweeper'.
+
+1.  Go back to the study's page on [IRIS](https://iris-database.org/search/?s_publicationAPAInlineReference=Schimke%20et%20al.%20(2018)) and select the second entry entitled 'Other questionnaire' which, among other things, contains 'Written production data'.
+
+Note that this database entry includes both research data and research materials: the file `sentences_offline_task.xlsx` contains the full list of questionnaire items, including both experimental and filler items, with which we could reconstruct the experiment to replicate it with a new set of participants. For now, however, we are not interested in obtaining materials to replicate the study, but rather in examining the study's original data.
+
+This [IRIS entry](https://iris-database.org/details/lYT9m-a75tV) also contains three data files. The last file (`logoddslearnersfinal.txt`) is the DSV file that was used to create @tbl-EyeTrackingTable above. In this task, we are going to look at the questionnaire data corresponding to the gap-filling task experiment with German L2 learners.
+
+2.  To this end, download the file entitled `offlinedataLearners.txt` and save it on your computer (see @sec-FoldersPaths).
+3.  Launch LibreOffice (see @sec-OpenSource if you have not yet installed LibreOffice) and, from the list of options under 'Create', click on 'Calc Spreadsheet' to open up a blank spreadsheet.
+4.  From the 'File' drop-down menu, select 'Open...' or use the keyboard shortcut 'Ctrl/Cmd + O'. Find `offlinedataLearners.txt` in the folder where you saved it and click on 'Open'.
+5.  A 'Text Import' dialogue box will pop up. This a DSV file, not a fixed-width file, so ensure that the option 'Separated by' is selected. If not already set by default, it is also a good idea to select 'Unicode (UTF-8)' for the 'Character set'.
+6.  Experiment with the different 'Separator Options' until the preview at the bottom of the dialogue box looks like a table.
+7.  Ensure that, apart from the 'Separator Options', all other options in the dialogue box are unselected and then click on 'OK'.
+
+> #### Quiz time! {.unnumbered}
+>
+> a\) What is the separator character in the file `offlinedataLearners.txt`?
+>
+> ```{r echo=FALSE, results="asis"}
+> check_question("Tab", options = c("Tab", "Comma", "Semicolon", "Space", "All of them"), type = "radio", 
+> random_answer_order = FALSE,
+> button_label = "Check answer",
+> right = "That's right!",
+> wrong = "That's incorrect. Try selecting the other separators options in the \"Text Import\" dialogue box until the preview of the table looks like a table.")
+> ```
+>
+>  
+>
+> b\) What is the delimiter character in the file `offlinedataLearners.txt`?
+>
+> ```{r echo=FALSE, results="asis"}
+> check_question("There is none.", options = c("\"", "\'", "There is none.", "Both \" and \'"), type = "radio", 
+> random_answer_order = TRUE,
+> button_label = "Check answer",
+> right = "That's right! This particular DSV file does not use a string delimiter.",
+> wrong = "Not quite. Try opening the file in a plain-text editor or text-processing program to find out.")
+> ```
+>
+>  
+>
+> c\) How many observations does the file `offlinedataLearners.txt` contain?
+>
+> ```{r echo=FALSE, results="asis"}
+> check_question("700", options = c("700", "701", "5", "3500", "3505"), type = "radio", 
+> random_answer_order = TRUE,
+> button_label = "Check answer",
+> right = "That's right! Each observation corresponds to a row.",
+> wrong = "No. In this table, each observation corresponds to a row.")
+> ```
+>
+>  
+>
+> d\) In this table, what does each observation correspond to?
+>
+> ```{r echo=FALSE, results="asis"}
+> check_question("A participant's response to a single sentence gap.", options = c("A participant's response to a single sentence gap.", "All the responses from a single participant.", "All the responses to a single sentence in a single language.", "All the responses in a single language."), type = "radio", 
+> random_answer_order = TRUE,
+> button_label = "Check answer",
+> right = "That's right!",
+> wrong = "I'm afraid not.")
+> ```
+
+ 
+:::
+
+::: {.callout-tip collapse="true"}
+#### What if I absolutely have to open a DSV file in Excel? 😧
+
+If you absolutely must open a DSV file (e.g., a `.csv` or `.tsv` file) in Excel (for example because you do not have sufficient permissions to install LibreOffice on the computer that you are using), do *not* open the file by double clicking on the file as this will automatically trigger Excel's problematic auto-formatting behaviour! Instead, first launch Excel and create a new blank workbook. Then navigate to the 'Data' tab, select the 'Get Data' option, and then 'From Text/CSV' (see @fig-ExcelGetData). In the following dialogue, you can specify how the data should be imported. The options are very similar to the ones offered in LibreOffice (see above).
+
+Note that with this method it *may* be possible to prevent Excel from automatically (and irreversibly!) applying transformations to your data. However, sadly, this may not suffice. Read on to find out more...
+
+![Import data into excel](images/ExcelGetData.png){#fig-ExcelGetData fig-alt="Screenshot of the option to import data into excel from an Text/CSV file. It can be found under 'Get Data', 'From File', and 'From Text/CSV'. The info message for this option reads 'Import data from a text, comma-separated value or formatted text (space-delimited) file.'" width="453"}
+:::
+
+## A word of warning about spreadsheet programs ⚠️
+
+You should be aware that opening DSV files in spreadsheet programs can corrupt the files! Once a file is corrupted, it is often not possible to retrieve the original data so this is very bad news, indeed. Such problems are particularly frequent when opening DSV files with Microsoft Excel and Google Sheets. This is because the default settings in these programs surreptitiously modify files upon opening. These "auto-format" modifications include replacing certain values by dates (e.g., changing `3-4` to `March, 4th`) or numbers (e.g., changing `1.23E5` to `123000`)[^data_inprogress-4], removing leading zeros (e.g., changing `001` to `1`), or misinterpreting special characters (e.g., the value `-ism` will generate an error if the hyphen is interpreted as minus sign). Not only can these auto-format modifications lead to inaccurate data analysis, in the worst of cases, they can cause data loss. The problem is that, often, users do not realise what the program has done in the background. How bad can this be? Find out by completing the task below.
+
+[^data_inprogress-4]: In scientific notation, "E" stands for "exponent", which refers to the number of times a number needs to be multiplied by 10. This notation is used as a shorthand way of writing very large or very small numbers. This is why "1.23E5" is interpreted by Excel as 1.23 multiplied by 10 to the power of 5, which is to say: 1.23 multiplied by 100,000. This operation shifts the decimal point five places to the right, resulting in the number 123000.
+
+::: callout-caution
+#### Task 4
+
+In the field of genetics, researchers who use spreadsheets for their analyses regularly have their data so badly damaged that it affects the results of their publications. A report about this went viral in 2016, when @ziemannGeneNameErrors2016 published a study in which they reported that a fifth of genetics publications with supplementary `.xls` or `.xlsx` files with gene lists contained errors caused by Excel's auto-formatting behaviour.
+
+Click on the link below to read the open-access article "Gene name errors: Lessons not learnt" by @abeysooriyaGeneNameErrors2021 to find out whether the situation has improved since and answer the questions below:
+
+> Abeysooriya, Mandhri, Megan Soria, Mary Sravya Kasu & Mark Ziemann. 2021. Gene name errors: Lessons not learned. PLOS Computational Biology. Public Library of Science 17(7). e1008984. <https://doi.org/10.1371/journal.pcbi.1008984>.
+
+a\) Has the proportion of genetics publications with Excel gene lists affected by these auto-formatting errors decreased since 2016?
+
+```{r echo=FALSE, results="asis"}
+check_question("No, it has remained stable.", options = c("No, it has remained stable.", "No, it increased between 2016 and 2020.", "Yes, it decreased between 2016 and 2020."), 
+type = "radio",
+random_answer_order = TRUE,
+button_label = "Check answer",
+right = "That's right: Even though the first widely-read report about this was back in 2016, it was just as bad a problem in 2020!",
+wrong = "No. Take another look at Fig. 1C from the paper.")
+```
+
+ 
+
+b\) Does using LibreOffice Calc also cause these same issues?
+
+```{r echo=FALSE, results="asis"}
+check_question("Whilst LibreOffice is better than Excel or Google Sheets, it is still less than ideal for data analysis.", options = c("Whilst LibreOffice is better than Excel or Google Sheets, it is still less than ideal for data analysis.", "No, LibreOffice does not lead to such errors.", "Yes, LibreOffice is just as likely to cause such errors.", "No, if you cannot afford Excel, than LibreOffice Calc is a good open-source alternative."), type = "radio", 
+random_answer_order = TRUE,
+button_label = "Check answer",
+right = "That's right. Abeysooriya et al. (2021) found that LibreOffice and Gnumeric did not convert gene names to dates automatically, which means that they are safer to use than Excel or Google Sheets. However, other issues may still occur and the authors conclude that using R or Python for data analysis is best.",
+wrong = "Not quite.")
+```
+
+ 
+
+c\) Did highly reputable journals publish fewer articles with erroneous Excel gene lists?
+
+```{r echo=FALSE, results="asis"}
+check_question("No, they published more.", options = c("No, they published more.", "Yes, they published fewer.", "No, publications with problematic Excel files were found in more or less equal proportions in all journals."), 
+type = "radio",
+random_answer_order = TRUE,
+button_label = "Check answer",
+right = "Yes, that's right. The authors explain why they think that's the case in the discussion section of the paper.",
+wrong = "No. Re-read the section on the correlation between journal impact factor and error proportion.")
+
+```
+:::
+
+It is worth noting that, for some Windows users, these auto-formatting issues can corrupt files that they have *never* actively opened in Excel! 🤯 This happens when Windows applies Excel's default settings to all CSV files, regardless of what program they are actually opened with. To ensure that this does not happen to you, check that Excel is *definitely not* your default app to open `.csv` and `.tsv` files (see @sec-DefaultApp for instructions).
