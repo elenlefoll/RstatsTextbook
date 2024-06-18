@@ -191,7 +191,7 @@ wrong = "No, look at the extract of the DSV file printed above.")
  
 :::
 
-## Using Projects in RStudio
+## Using Projects in RStudio {#sec-RProject}
 
 One of the advantages of working with RStudio is that it allows us to harness the potential of RStudio Projects. Projects help us to keep our digital kitchen nice and tidy. In RStudio, each project has its own directory, environment, and history which means that we can work on multiple projects at the same time and RStudio will keep them completely separate from each other. This means that we can easily switch between cooking different dishes, say a gluten-free egg curry and vegan pancakes, without fear of accidentally setting the wrong temperature on the cooker or contaminating either dishes.
 
@@ -267,6 +267,14 @@ L1.data <- read.csv("data/Dabrowska_2018_L1_data.csv")
 ```
 
 The file path `"data/Dabrowska_2018_L1_data.csv"` informs `R` that the data is located in a subfolder of the project's working directory called `data` and that, within this `data` subfolder, the file that we want to import is called `Dabrowska_2018_L1_data.csv`. Note that the file extension must be specified (see @sec-FileExtensions). Note, also, the file path is separated with a single forward slash `/`. In `R`, this should work regardless of the operating system that you are using and, in order to be able to easily share your scripts with others, it is recommended that you use forward slashes even if you are running Windows (@sec-FoldersPaths).
+
+::: {.callout-important collapse="true"}
+#### "Hell is empty, and all the devils are {here}." 😈
+
+*William Shakespeare, The Tempest*
+
+This box will contain information about using the {here} package.
+:::
 
 Although the command above did the job, in practice, it is often safer to spell things out further to remind ourselves of some of the default settings of the function that we are using in case they need to be checked or changed at a later stage. In this example, we will therefore import the data with the following command:
 
@@ -608,22 +616,71 @@ MyStataData <- read_dta("MyStataDataFile.dta")
 
 As you can imagine, there are many more `R` packages and functions that are available and allow you to import all kinds of other file formats including `.json`, `.html`, various database formats and files with complex structures (see, e.g., <https://rc2e.com/inputandoutput>). In this textbook, we will only deal with DSV files (@sec-DSV).
 
---------- **To be added** ----------
+## Quick-and-dirty (aka bad!) ways to import data in `R`
 
-### Quick-and-dirty (aka bad!) ways to import data in `R`
+Feel free to skip this section if you got on just fine with the importing method introduced above as the following two methods are problematic for a number of reasons. However, they may come in useful in special cases, which is why both are briefly explained below.
 
-#### Loading data using RStudio's GUI ❌
+### Hardcoding file paths in `R` scripts 🥴
 
-Why it's a bad idea.
+Whilst it is certainly not recommended [see, e.g., @bryanProjectorientedWorkflow2017], it is nonetheless worth understanding this method of working with file paths in `R` as you may well come across it in other people's code.
 
-#### Hardcoding file paths in `R` scripts 👎
+Instead of creating an RProject to determine a project's working directory (as we did in @sec-RProject), some researchers begin their script with a line of code that sets their **working directory** for the script using the function `setwd()`, e.g.:
 
-Why it's a bad idea to copy-and-paste full file paths.
+```{r eval = FALSE}
 
-::: {.callout-important collapse="true"}
-#### "Hell is empty, and all the devils are {here}." 😈
+setwd("/Users/lefoll/Documents/UzK/RstatsTextbook/Dabrowska2019")
 
-*William Shakespeare, The Tempest*
+```
 
-This box will contain information about using the {here} package.
-:::
+They can then import their data file using a **relative path** from the working directory just like we did earlier.
+
+```{r eval = FALSE}
+
+L1.data <- read.csv(file = "data/Dabrowska_2018_L1_data.csv")
+
+```
+
+If you have to work with an `R` script that uses this method, you will need to amend the path designated as the working directory by `setwd()` to the corresponding path on your own computer. This might not sound like much of an issue, but as data scientist, `R` expert, and statistics professor Jenny @bryanProjectorientedWorkflow2017 explains:
+
+> "The chance of the `setwd()` command having the desired effect – making the file paths work – for anyone besides its author is 0%. It’s also unlikely to work for the author one or two years or computers from now. The project is not self-contained and portable."
+
+In the language sciences, not everyone is aware of the severity of these issues. Hence, it is not uncommon for researchers to make their scripts even less reproducible by not setting a working directory at all and, instead, relying exclusively on **absolute paths** (@sec-FoldersPaths). Hence, every time they want to import data (and, as we will see later on, export objects from `R`, too), they write out the full file path in the command like this:
+
+```{r eval = FALSE}
+
+L1.data <- read.csv(file = "/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv")
+
+```
+
+Having to work with such a script is particularly laborious because it means that, if you inherit such a script from a colleague, you will have to manually change every single file path in the script to the corresponding file paths on your own computer. And, as @bryanProjectorientedWorkflow2017 points out, this will also apply if you change anything in your own file structure! It should be clear that the potential for making errors in the process is far too important to even consider going down that route!
+
+However, should you have to use this method at some point for whatever reason, you can make use of @sec-FoldersPaths which explained how to copy full file paths from a file Explorer or Finder window. Note that if there are spaces or other special characters other than `_` or `-` anywhere in your file path, your import command will fail (see @sec-FileNaming on naming conventions for folders and files). The following command, for instance, will fail and return an error (see @fig-ImportErrorSpace) because the folder "Uni Work" contains a space.
+
+```{r eval = FALSE}
+L1.data <- read.csv(file = "/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv")
+
+```
+
+![Error message due to an error in the file path](images/ImportErrorSpace.png){#fig-ImportErrorSpace fig-alt="Screenshot of the Console pane of RStudio showing the above command having been run and having returned an error message: Error in file(file, \"rt\") : cannot open the connection In addition: Warning message: In file(file, \"rt\") :   cannot open file '/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv': No such file or directory" width="422"}
+
+The only way to fix this issue is to remove the space in the name of the folder (in your File Finder or Navigator window) and then amend the file path in your `R` script accordingly.
+
+### Loading data using RStudio's GUI 🫤
+
+You may have noticed that, if you click on a data file from the Files pane in RStudio, RStudio will offer to import the dataset for you. This looks like (and genuinely is) a very convenient way to import data in an `R` session using RStudio's GUI (graphical user interface).
+
+RStudio's 'Import Text Data' dialogue box is similar to the one that we saw in LibreOffice Calc (@sec-DSVLibreOffice). It allows you to select the relevant options to correctly import the file and displays a preview to check that the options that you have selected are correct. You can also specify the name of the `R` object to which you want to assign the imported data. By default, the name of the data file (minus the file extension and any special characters) is suggested.
+
+As soon as you click on the 'Import' button, the data is imported and opened using the `View()` function for you to check the sanity of the data.
+
+```{r include=FALSE}
+#To do for Jan: Add several screenshots in this section showing explaining how to import the file Dabrowska_2018_L1_data.csv (from a folder called "data" as explained earlier in the chapter) using RStudio's GUI (i.e. from the Files pane). 
+```
+
+This works a treat so what's not to like? Well, the first problem is that you are not in full control. You cannot select which import function is used; RStudio decides for you. You may have noticed that it chooses to use the {readr} import functions, rather than the base `R` ones. There are lots of good reasons to use the {readr} functions (see above), but it may not be what you wanted to do. When we do research, it is important for us to be in control of every step of the analysis process.
+
+Second, your data import settings are not saved in an `.R` script as the commands were only sent to the Console: they are not saved in your script. This means that if you import your data in this way, do some analyses, and then close RStudio, you will have no way of knowing with which settings you imported the data to obtain the results of your analysis! This can have serious consequences for the reproducibility of your work.
+
+Whilst there is no way of remedying the first issue, the second can easily be fixed. After you have successfully imported your data from RStudio's Files pane, you can (and should!) immediately copy the import commands from the Console into your `.R` script. In this way, the next time you want to re-run your analysis, you can begin by running these import commands directly from your `.R` script rather than by via RStudio's Files pane.
+
+If you are running into errors due to incorrect file paths, it can be useful to try to import your data using RStudio's GUI to see where you are going wrong by comparing your own attempts with the import commands that RStudio generated.
