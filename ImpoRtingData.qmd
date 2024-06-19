@@ -30,7 +30,7 @@ This chapter will take you through the process of:
 
 In future chapters, we will continue to work with this data. We will learn how to "clean it up" for data analysis, before we begin to explore it using descriptive statistics and data visualisations.
 
-## Accessing data from a real applied linguistics study
+## Accessing data from a linguistics study
 
 As we saw in @sec-OpenScholarship, it is good practice to share both the data and materials associated with research studies so that others can reproduce and replicate the research.
 
@@ -454,8 +454,7 @@ Here, we can see that the data have been correctly imported as a table. The comm
 
 [^importingdata-3]: If you are wondering why some are labelled `NA` and some `<NA>`, that's because cell F125 in this table contains a hyphen (`-`) rather than either a numeric value or nothing at all for a missing value. As a result, `R` is interpreting this variable (`L3.grade`) as a character string variable rather than a numeric variable. In string variables, `NA` is printed as `<NA>`. If we were to analyse this data further, we would need to convert this erroneous `-` to an `NA`. We can actually do that in the `read.table()` function by specifying that missing values are represented by both empty cells and cells containing only a hyphen using the argument `na.strings = c("", "-")`. [Download the data](https://doi.org/10.18710/JBMAPT) and try it out if you're curious!
 
-::: {.callout-note collapse="true"}
-#### Using {readr} from the {tidyverse} to import tabular files
+## Using {readr} from the {tidyverse} to import tabular files
 
 The {tidyverse} is a family of packages that we will use a lot in future chapters. This family of package includes the {readr} package which features some very useful functions to import data into `R`. You can install and load the {readr} package either individually or as part of the {tidyverse} bundle:
 
@@ -472,7 +471,7 @@ library(readr)
 
 ```
 
-##### Delimiter-separated values (DSV) files {.unnumbered}
+### Delimiter-separated values (DSV) files {.unnumbered}
 
 The {readr} package includes functions to import DSV files that are similar, but not identical to the base `R` functions explained above. The main difference is that the {readr} functions load data into an `R` object of type "tibble" rather than "data frame". In practice, this will not make a difference for our work in future chapters. Hence, the following two commands can equally be used to import `Dabrowska_2018_L1_data.csv`:
 
@@ -493,16 +492,60 @@ L1.data <- read_csv(file = "data/Dabrowska_2018_L1_data.csv",
 class(L1.data)
 ```
 
-Note that instead of the argument `header = TRUE`, the {readr} function `read_csv()` takes the argument `col_names = TRUE`, which has the same effect. There are a few more differences between the two functions
+Note that instead of the argument `header = TRUE`, the {readr} function `read_csv()` takes the argument `col_names = TRUE`, which has the same effect.
 
-Just like `read.csv()` was a special case of `read.table`, the {readr} function `read_csv()` is a special variant of `read_delim()` that can be used to import data from all kinds of DSV files. Check the help file to find out all the options by running the command `?read_delim`.
+There are a few more differences between the two functions that are worth noting:
 
-##### Fixed width files {.unnumbered}
+-   If the column headers in your original data file contain spaces, these will be automatically replaced by dots (`.`) when you import data using base `R` functions. By contrast, with the {readr} functions, the spaces will, by default, be retained. As we will see later, this behaviour can represent both an advantage and disadvantage, depending on what you want to do.
 
-Fixed width files (with file extensions such as `.gz`, .`bz2` or `.xz`) are a less common type of data source in the language sciences. In this text-based files, the values are separated not by a specific character such as comma or tab, but by a set amount of white/empty space other than a tab. Fixed width files can be loaded using the [`read_fwf()`](https://readr.tidyverse.org/reference/read_fwf.html) function from {readr}. Fields can be specified by their widths with [`fwf_widths()`](https://readr.tidyverse.org/reference/read_fwf.html) or by their positions with [`fwf_positions()`](https://readr.tidyverse.org/reference/read_fwf.html).
-:::
+-   The {readr} functions are quicker and are therefore recommended if you are importing large datasets.
 
-### Importing files from spreadsheet software
+-   The {readr} functions retains the
+
+Note that, just like `read.csv()` was a special case of `read.table`, the {readr} function `read_csv()` is a special variant of the more general function `read_delim()` that can be used to import data from all kinds of DSV files. Check the help file to find out all the options using `?read_delim`.
+
+The help file informs us that the package includes a function specifically designed to import semi-colon separated file with the the comma as the decimal point: `read_csv2()`. It further states that "\[t\]his format is common in some European countries." If you scroll down the help page, you will see that its usage is summarised in the following way:
+
+```         
+read_csv2(
+  file,
+  col_names = TRUE,
+  col_types = NULL,
+  col_select = NULL,
+  id = NULL,
+  locale = default_locale(),
+  na = c("", "NA"),
+  quoted_na = TRUE,
+  quote = "\"",
+  comment = "",
+  trim_ws = TRUE,
+  skip = 0,
+  n_max = Inf,
+  guess_max = min(1000, n_max),
+  progress = show_progress(),
+  name_repair = "unique",
+  num_threads = readr_threads(),
+  show_col_types = should_show_types(),
+  skip_empty_rows = TRUE,
+  lazy = should_read_lazy()
+)
+```
+
+This overview of the `read_csv2` function shows all of the arguments of the function and their default values. For instance, with `na = c("", "NA")`, it tells us that, by default, both empty cells and cells with the value `NA` will be interpreted by the function as `NA` values.
+
+Having checked the default values for all of the arguments of the `read_csv2` function, we may conclude that we can safely use this {readr} function to import the file `AJT_raw_scores_L2.csv` from @busterudVerbPlacementL32023 without changing any of these default values. Hence, all we need is:
+
+```{r eval = FALSE}
+AJT.raw.scores.L2 <- read_csv2(file = "data/AJT_raw_scores_L2.csv")
+```
+
+Note that, whereas when we used the base `R` function `read.table()` the header for the third variable in the file was imported as `Years.of.L3`, using the {readr} function, the variable is entitled `Years of L3`.
+
+### Fixed width files {.unnumbered}
+
+Fixed width files (with file extensions such as `.gz`, .`bz2` or `.xz`) are a less common type of data source in the language sciences. In these text-based files, the values are separated not by a specific character such as the comma or the tab, but by a set amount of white/empty space other than a tab. Fixed width files can be loaded using the [`read_fwf()`](https://readr.tidyverse.org/reference/read_fwf.html) function from {readr}. Fields can be specified by their widths with [`fwf_widths()`](https://readr.tidyverse.org/reference/read_fwf.html) or by their positions with [`fwf_positions()`](https://readr.tidyverse.org/reference/read_fwf.html). :::
+
+## Importing files from spreadsheet software
 
 If your data are currently stored in a spreadsheet software (e.g., LibreOffice Calc, Google Sheets, or Microsoft Excel), you can export in to `.csv` or `.tsv`. However, if you do not wish to do this (e.g., because your colleague wishes to maintain the spreadsheet format that includes formatting elements such as bold or coloured cells), there are functions to import these file formats directly into `R`.
 
