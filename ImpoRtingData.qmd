@@ -30,7 +30,7 @@ This chapter will take you through the process of:
 
 In future chapters, we will continue to work with this data. We will learn how to "clean it up" for data analysis, before we begin to explore it using descriptive statistics and data visualisations.
 
-## Accessing data from a linguistics study
+## Accessing data from a published study
 
 As we saw in @sec-OpenScholarship, it is good practice to share both the data and materials associated with research studies so that others can reproduce and replicate the research.
 
@@ -294,7 +294,13 @@ The arguments `sep` and `quote` specify the characters that, in this `.csv` file
 
 It is crucial that you check whether your data has genuinely been correctly imported. Here's a list of things to check (in that order):
 
-1.  Were you able to run the import command without producing any errors? If you are getting an error, this is most likely due to a typo! Check the name of the file or press the tab key on your keyboard to get RStudio to auto-complete the file name for you. Also check that you have correctly written the name of the function and have all the necessary brackets and quotation marks.
+1.  Were you able to run the import command without producing any errors? If you are getting an error, remember that this is most likely due to a typo (see @sec-Errors)!
+
+    -   If part of the error message reads "No such file or directory", this means that either the file path or the file name is incorrect. Carefully check the path that you specified in your import command (if you're struggling to find the correct path, you may want to try out the import method explained in @sec-ImportingGUI). To ensure that you are not misspelling the name of the file, you can press the tab key on your keyboard to get RStudio to auto-complete the file name for you.
+
+    -   If the error message includes the statement "could not find function", this means that you have either misspelled the name of the function or this is not a base `R` function and you have forgotten to load the library to which this function belongs (see @sec-readr).
+
+    -   As usual whenever you get an error message, also check that you have included all of the necessary brackets and quotation marks (see @sec-Errors).
 
 2.  Has the `R` data object appeared in your Environment pane? Does it have the expected number of rows (observations) and columns (variables)? `L1.data` contains 90 observations and 31 variables. If you are getting different numbers, this might be because you previously opened the `.csv` file with Excel or that your computer converted it to Excel format automatically. To remedy this, ensure that you have followed all the steps described in @sec-DSVLibreOffice.
 
@@ -454,7 +460,7 @@ Here, we can see that the data have been correctly imported as a table. The comm
 
 [^importingdata-3]: If you are wondering why some are labelled `NA` and some `<NA>`, that's because cell F125 in this table contains a hyphen (`-`) rather than either a numeric value or nothing at all for a missing value. As a result, `R` is interpreting this variable (`L3.grade`) as a character string variable rather than a numeric variable. In string variables, `NA` is printed as `<NA>`. If we were to analyse this data further, we would need to convert this erroneous `-` to an `NA`. We can actually do that in the `read.table()` function by specifying that missing values are represented by both empty cells and cells containing only a hyphen using the argument `na.strings = c("", "-")`. [Download the data](https://doi.org/10.18710/JBMAPT) and try it out if you're curious!
 
-## Using {readr} from the {tidyverse} to import tabular files
+## Using {readr} from the {tidyverse} to import tabular files {#sec-readr}
 
 The {tidyverse} is a family of packages that we will use a lot in future chapters. This family of package includes the {readr} package which features some very useful functions to import data into `R`. You can install and load the {readr} package either individually or as part of the {tidyverse} bundle:
 
@@ -630,7 +636,7 @@ MyExcelData <- read_excel("data/MyExcelSpreadsheet.xlsx",
 
 ```
 
-### Importing data files from SPSS, SAS and Stata
+## Importing data files from SPSS, SAS and Stata
 
 If you’ve recently switched from working in SPSS, SAS, or Stata (or are collaborating with someone who uses these programmes), it might be useful to know that you can also import the data files created by programmes directly into `R` using the {haven} package. Details of all the options can be found here: <https://haven.tidyverse.org/>.
 
@@ -655,7 +661,7 @@ MyStataData <- read_dta("MyStataDataFile.dta")
 
 ```
 
-### Importing other file formats
+## Importing other file formats
 
 As you can imagine, there are many more `R` packages and functions that are available and allow you to import all kinds of other file formats including `.json`, `.html`, various database formats and files with complex structures (see, e.g., <https://rc2e.com/inputandoutput>). In this textbook, we will only deal with DSV files (@sec-DSV).
 
@@ -708,7 +714,7 @@ L1.data <- read.csv(file = "/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabr
 
 The only way to fix this issue is to remove the space in the name of the folder (in your File Finder or Navigator window) and then amend the file path in your `R` script accordingly.
 
-### Loading data using RStudio's GUI 🫤
+### Importing data using RStudio's GUI 🫤 {#sec-ImportingGUI}
 
 You may have noticed that, if you click on a data file from the Files pane in RStudio, RStudio will offer to import the dataset for you. This looks like (and genuinely is) a very convenient way to import data in an `R` session using RStudio's GUI (graphical user interface).
 
