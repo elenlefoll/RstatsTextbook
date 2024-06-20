@@ -247,8 +247,8 @@ div.csl-indent {
   <li><a href="#sec-SavingData" id="toc-sec-SavingData" class="nav-link" data-scroll-target="#sec-SavingData"><span class="header-section-number">6.2</span> Saving and examining the data</a></li>
   <li><a href="#sec-RProject" id="toc-sec-RProject" class="nav-link" data-scroll-target="#sec-RProject"><span class="header-section-number">6.3</span> Using Projects in RStudio</a></li>
   <li><a href="#sec-WorkingDirectories" id="toc-sec-WorkingDirectories" class="nav-link" data-scroll-target="#sec-WorkingDirectories"><span class="header-section-number">6.4</span> Working directories</a></li>
-  <li><a href="#sec-ImportingDataCSV" id="toc-sec-ImportingDataCSV" class="nav-link" data-scroll-target="#sec-ImportingDataCSV"><span class="header-section-number">6.5</span> Importing data from a <code>.csv</code> file in <code>R</code></a></li>
-  <li><a href="#checking-that-the-data-have-been-correctly-imported" id="toc-checking-that-the-data-have-been-correctly-imported" class="nav-link" data-scroll-target="#checking-that-the-data-have-been-correctly-imported"><span class="header-section-number">6.6</span> Checking that the data have been correctly imported</a></li>
+  <li><a href="#sec-ImportingDataCSV" id="toc-sec-ImportingDataCSV" class="nav-link" data-scroll-target="#sec-ImportingDataCSV"><span class="header-section-number">6.5</span> Importing data from a <code>.csv</code> file</a></li>
+  <li><a href="#sec-ImportingErrors" id="toc-sec-ImportingErrors" class="nav-link" data-scroll-target="#sec-ImportingErrors"><span class="header-section-number">6.6</span> Importing errors and issues</a></li>
   <li><a href="#importing-tabular-data-in-other-formats" id="toc-importing-tabular-data-in-other-formats" class="nav-link" data-scroll-target="#importing-tabular-data-in-other-formats"><span class="header-section-number">6.7</span> Importing tabular data in other formats</a></li>
   <li><a href="#sec-readr" id="toc-sec-readr" class="nav-link" data-scroll-target="#sec-readr"><span class="header-section-number">6.8</span> Using {readr} from the {tidyverse} to import tabular files</a>
   <ul class="collapse">
@@ -612,8 +612,8 @@ Quiz time!
 </div>
 </section>
 <section id="sec-ImportingDataCSV" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="sec-ImportingDataCSV"><span class="header-section-number">6.5</span> Importing data from a <code>.csv</code> file in <code>R</code></h2>
-<p>We will begin by creating a new <code>R</code> script in which we will write the code necessary to import the data from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>‘s study in <code>R</code>. To do so, click on the analysis folder to open it and then click on the ’New Script’ icon in the top-left corner of RStudio and select ‘R Script’. This will open a new, empty <code>R</code> script in your Source pane. It is best to always begin by saving a newly created file. Save this empty script with a computer- and human-friendly file name such as as <code>1_DataImport.R</code> (<a href="DataManagement.html#sec-FileNaming" class="quarto-xref"><span>Section 3.2</span></a>).</p>
+<h2 data-number="6.5" class="anchored" data-anchor-id="sec-ImportingDataCSV"><span class="header-section-number">6.5</span> Importing data from a <code>.csv</code> file</h2>
+<p>We will begin by creating a new <code>R</code> script in which we will write the code necessary to import the data from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>‘s study in <code>R</code>. To do so, from the Files pane in RStudio, click on the analysis folder to open it and then click on the ’New Script’ icon in the top-left corner of the Files pane and select ‘R Script’. This will open a new, empty <code>R</code> script in your Source pane. It is best to always begin by saving a newly created file. Save this empty script with a computer- and human-friendly file name such as as <code>1_DataImport.R</code> (<a href="DataManagement.html#sec-FileNaming" class="quarto-xref"><span>Section 3.2</span></a>). It should now appear in your analysis folder in the Files pane.</p>
 <p>Given that we want to import two <code>.csv</code> files, we are going to use the function <code>read.csv()</code>. You can find out what this function does by running the command <code>?read.csv</code> or <code>help(read.csv)</code> in the Console to open up the documentation. This help file contains information about several base <code>R</code> functions used to import data. Scroll down to find the information about the <code>read.csv()</code> function. It reads:</p>
 <pre><code>read.csv(file, header = TRUE, sep = ",", quote = "\"",
          dec = ".", fill = TRUE, comment.char = "", ...)</code></pre>
@@ -626,23 +626,6 @@ Quiz time!
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The file path <code>"data/Dabrowska_2018_L1_data.csv"</code> informs <code>R</code> that the data is located in a subfolder of the project’s working directory called <code>data</code> and that, within this <code>data</code> subfolder, the file that we want to import is called <code>Dabrowska_2018_L1_data.csv</code>. Note that the file extension must be specified (see <a href="Data.html#sec-FileExtensions" class="quarto-xref"><span>Section 2.3</span></a>). Note, also, the file path is separated with a single forward slash <code>/</code>. In <code>R</code>, this should work regardless of the operating system that you are using and, in order to be able to easily share your scripts with others, it is recommended that you use forward slashes even if you are running Windows (<a href="DataManagement.html#sec-FoldersPaths" class="quarto-xref"><span>Section 3.3</span></a>).</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-“Hell is empty, and all the devils are {here}.” 😈
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><em>William Shakespeare, The Tempest</em></p>
-<p>This box will contain information about using the {here} package.</p>
-</div>
-</div>
-</div>
 <p>Although the command above did the job, in practice, it is often safer to spell things out further to remind ourselves of some of the default settings of the function that we are using in case they need to be checked or changed at a later stage. In this example, we will therefore import the data with the following command:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>,</span>
@@ -651,11 +634,49 @@ Quiz time!
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>,</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">dec =</span> <span class="st">"."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In the command above, <code>header = TRUE</code>, explicitly tells <code>R</code> to import the first row of the <code>.csv</code> table as column headers rather than values. This is not strictly necessary because, as we saw from the function’s help file, <code>TRUE</code> is already set as the default value for this argument, but it is good to reminder ourselves of how this particular dataset is organised.</p>
+<p>In the command above, <code>header = TRUE</code>, explicitly tells <code>R</code> to import the first row of the <code>.csv</code> table as column headers rather than values. This is not strictly necessary because, as we saw from the function’s help file, <code>TRUE</code> is already set as the default value for this argument, but it is good to remind ourselves of how this particular dataset is organised.</p>
 <p>The arguments <code>sep</code> and <code>quote</code> specify the characters that, in this <code>.csv</code> file are used to separate the values on the one hand, and delineate them, on the other (see <a href="Data.html#sec-DSV" class="quarto-xref"><span>Section 2.5.1</span></a>). As we saw above, <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>’s <code>.csv</code> files use the comma as the separator and the double quotation mark as the quoting character. Note that the <code>"</code> character needs to be preceded by a backslash (<code>\</code>) (we say it needs to be “escaped”) because otherwise <code>R</code> will interpreted it as part of the command syntax, which would lead to an error. Finally, the argument <code>dec = "."</code> explicitly tells <code>R</code> that this <code>.csv</code> file uses the dot as the decimal point. In some countries, e.g., Germany and France, the comma is used to represent decimal places so, if you obtain data from a German or French colleague, this setting may need to be changed to <code>dec = ","</code> for the data to be imported correctly.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+“Hell is empty, and all the devils are {here}.” 😈
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This section title borrows a quote from The Tempest by William Shakespeare to reflect the fact that file paths are perhaps the most frequent source of frustration among (beginner) coders. <a href="#sec-ImportingErrors" class="quarto-xref"><span>Section 6.6</span></a> explains how to deal with the most frequent error messages. Ultimately, however, these errors are typically due to poor data management (see <a href="DataManagement.html" class="quarto-xref"><span>Chapter 3</span></a>). That’s because the devil’s in the detail (remember: no spaces, special characters, differences between different operating systems, etc.). As a result, even advanced users of <code>R</code> and other programming languages frequently find that file path issues continue to plague their work, if they fail to take file management seriously.</p>
+<p>To make your projects more robust to such issues, I strongly recommend working with the <a href="https://here.r-lib.org/">{here}</a> package in addition to RProjects. You will first need to install the package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"here"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When you load the package, it automatically runs the <code>here()</code> function with no argument, which returns the path to your project directory, as determined by the location of the <code>.RProj</code> file associated with your project.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can now use the <code>here()</code> function to build paths relative to this directory with the following syntax:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "/Users/lefoll/Documents/UzK/RstatsTextbook/data/Dabrowska_2018_L1_data.csv"</code></pre>
+</div>
+</div>
+<p>And you can embed this path in your import command like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"Dabrowska_2018_L1_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Using {here} makes the paths that you include in your code far more robust. In other words, they are far less likely to fail and break your code when you share your scripts with your colleagues, or run them yourself from different directories or operating systems. For more reasons to use {here}, check out the blog post “<a href="https://malco.io/articles/2018-11-05-why-should-i-use-the-here-package-when-i-m-already-using-projects">Why should I use the here package when I’m already using projects?</a>” by <span class="citation" data-cites="barrettWhyShouldUse2018">Barrett (<a href="references.html#ref-barrettWhyShouldUse2018" role="doc-biblioref">2018</a>)</span>.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="checking-that-the-data-have-been-correctly-imported" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="checking-that-the-data-have-been-correctly-imported"><span class="header-section-number">6.6</span> Checking that the data have been correctly imported</h2>
+<section id="sec-ImportingErrors" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="sec-ImportingErrors"><span class="header-section-number">6.6</span> Importing errors and issues</h2>
 <p>It is crucial that you check whether your data has genuinely been correctly imported. Here’s a list of things to check (in that order):</p>
 <ol type="1">
 <li><p>Were you able to run the import command without producing any errors? If you are getting an error, remember that this is most likely due to a typo (see <a href="GettingStaRted.html#sec-Errors" class="quarto-xref"><span>Section 5.6</span></a>)!</p>
@@ -701,7 +722,7 @@ Task 1
 </form>
 <script>function validate_form_84941() {var x, text; var x = document.forms['form_84941']['answer_84941'].value;if (x == '90'){text = 'That’s right!';} else {text = 'Are you sure?';} document.getElementById('result_84941').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8;res1 = document.getElementById('result_76617').innerText == 'Well done!'; res2 = document.getElementById('result_80474').innerText == 'That’s right.'; res3 = document.getElementById('result_34832').innerText == 'That’s right.'; res4 = document.getElementById('result_53105').innerText == 'That’s right!'; res5 = document.getElementById('result_665').innerText == 'That’s right!'; res6 = document.getElementById('result_79099').innerText == 'That’s right!'; res7 = document.getElementById('result_70852').innerText == 'Yes, this DSV file does not have a delimiter character. This would be problematic if some of the values included commas but, as they don’t, it’s not a problem.'; res8 = document.getElementById('result_84941').innerText == 'That’s right!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_84941').innerText == 'That’s right!';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 <div id="hint_72882" onclick="return show_hint_72882()"><br>🐭 Click on the mouse for a hint.</div>
@@ -730,7 +751,7 @@ Task 1
 </form>
 <script>function validate_form_58751() {var x, text; var x = document.forms['form_58751']['answer_58751'].value;if (x == '67'){text = 'That’s right!';} else {text = 'Are you sure?';} document.getElementById('result_58751').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9;res1 = document.getElementById('result_76617').innerText == 'Well done!'; res2 = document.getElementById('result_80474').innerText == 'That’s right.'; res3 = document.getElementById('result_34832').innerText == 'That’s right.'; res4 = document.getElementById('result_53105').innerText == 'That’s right!'; res5 = document.getElementById('result_665').innerText == 'That’s right!'; res6 = document.getElementById('result_79099').innerText == 'That’s right!'; res7 = document.getElementById('result_70852').innerText == 'Yes, this DSV file does not have a delimiter character. This would be problematic if some of the values included commas but, as they don’t, it’s not a problem.'; res8 = document.getElementById('result_84941').innerText == 'That’s right!'; res9 = document.getElementById('result_58751').innerText == 'That’s right!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_84941').innerText == 'That’s right!'; res2 = document.getElementById('result_58751').innerText == 'That’s right!';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 <div id="hint_86227" onclick="return show_hint_86227()"><br>🐭 Click on the mouse for a hint.</div>
@@ -753,7 +774,7 @@ Task 1
 </form>
 <script>function validate_form_71348() {var x, text; var x = document.forms['form_71348']['answer_71348'].value;if (x == 'L2.data'){text = 'That’s right!';} else {text = 'Are you sure?';} document.getElementById('result_71348').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10;res1 = document.getElementById('result_76617').innerText == 'Well done!'; res2 = document.getElementById('result_80474').innerText == 'That’s right.'; res3 = document.getElementById('result_34832').innerText == 'That’s right.'; res4 = document.getElementById('result_53105').innerText == 'That’s right!'; res5 = document.getElementById('result_665').innerText == 'That’s right!'; res6 = document.getElementById('result_79099').innerText == 'That’s right!'; res7 = document.getElementById('result_70852').innerText == 'Yes, this DSV file does not have a delimiter character. This would be problematic if some of the values included commas but, as they don’t, it’s not a problem.'; res8 = document.getElementById('result_84941').innerText == 'That’s right!'; res9 = document.getElementById('result_58751').innerText == 'That’s right!'; res10 = document.getElementById('result_71348').innerText == 'That’s right!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_84941').innerText == 'That’s right!'; res2 = document.getElementById('result_58751').innerText == 'That’s right!'; res3 = document.getElementById('result_71348').innerText == 'That’s right!';text = res1 + res2 + res3;element.innerHTML = text;
          return false;
          }}</script>
 <div id="hint_83595" onclick="return show_hint_83595()"><br>🐭 Click on the mouse for a hint.</div>
@@ -785,7 +806,7 @@ Task 1
 </form>
 <script>function validate_form_35981() {var x, text; var x = document.forms['form_35981']['answer_35981'].value;if (x == 'data frame'){text = 'That’s right!';} else {text = 'That’s incorrect.';} document.getElementById('result_35981').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_35981').innerText == 'That’s right!';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_84941').innerText == 'That’s right!'; res2 = document.getElementById('result_58751').innerText == 'That’s right!'; res3 = document.getElementById('result_71348').innerText == 'That’s right!'; res4 = document.getElementById('result_35981').innerText == 'That’s right!';text = res1 + res2 + res3 + res4;element.innerHTML = text;
          return false;
          }}</script>
 <div id="hint_39221" onclick="return show_hint_39221()"><br>🐭 Click on the mouse for a hint.</div>
@@ -811,7 +832,7 @@ Task 1
 </form>
 <script>function validate_form_43488() {var text; var x1 = document.getElementById('answer_43488_1'); var x2 = document.getElementById('answer_43488_2'); var x3 = document.getElementById('answer_43488_3'); var x4 = document.getElementById('answer_43488_4'); if (x1.checked == true&x2.checked == false&x3.checked == false&x4.checked == false){text = 'That’s right!';} else {text = 'No, that’s not it.';} document.getElementById('result_43488').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12;res1 = document.getElementById('result_76617').innerText == 'Well done!'; res2 = document.getElementById('result_80474').innerText == 'That’s right.'; res3 = document.getElementById('result_34832').innerText == 'That’s right.'; res4 = document.getElementById('result_53105').innerText == 'That’s right!'; res5 = document.getElementById('result_665').innerText == 'That’s right!'; res6 = document.getElementById('result_79099').innerText == 'That’s right!'; res7 = document.getElementById('result_70852').innerText == 'Yes, this DSV file does not have a delimiter character. This would be problematic if some of the values included commas but, as they don’t, it’s not a problem.'; res8 = document.getElementById('result_84941').innerText == 'That’s right!'; res9 = document.getElementById('result_58751').innerText == 'That’s right!'; res10 = document.getElementById('result_71348').innerText == 'That’s right!'; res11 = document.getElementById('result_35981').innerText == 'That’s right!'; res12 = document.getElementById('result_43488').innerText == 'That’s right!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_84941').innerText == 'That’s right!'; res2 = document.getElementById('result_58751').innerText == 'That’s right!'; res3 = document.getElementById('result_71348').innerText == 'That’s right!'; res4 = document.getElementById('result_35981').innerText == 'That’s right!'; res5 = document.getElementById('result_43488').innerText == 'That’s right!';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -822,18 +843,18 @@ Task 1
 <p>We have seen how to load data from a <code>.csv</code> file into <code>R</code> by creating an <code>R</code> data frame object that contains the data extracted from a <code>.csv</code> file. But, as we saw in <a href="Data.html" class="quarto-xref"><span>Chapter 2</span></a>, not all datasets are stored as <code>.csv</code> files. Fear not: there are many import functions in <code>R</code>, with which you can import pretty much all kinds of data formats! This section introduces a few of the most useful ones for research in the language sciences.</p>
 <p>We begin with the highly versatile function <code>read.table()</code>. The <code>read.csv()</code> is actually a variant of <code>read.table()</code>. You recall that when we called up the help file for the former using <code>?read.csv()</code>, we obtained a combined help file for several functions, the first of which was <code>read.table()</code>. By specifying the following arguments as we did earlier, we can actually use the <code>read.table()</code> function to import our <code>.csv</code> file with exactly the same results:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sep =</span> <span class="st">","</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">dec =</span> <span class="st">"."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sep =</span> <span class="st">","</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">dec =</span> <span class="st">"."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In <a href="Data.html" class="quarto-xref"><span>Chapter 2</span></a>, we looked at a DSV file with a <code>.txt</code> extension that was separated by tabs. If we change the separator character argument to <code>\t</code> for tab, we can import this dataset using the same <code>read.table()</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>OfflineLearnerData <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"data/offlinedataLearners.txt"</span>,</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">dec =</span> <span class="st">"."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>OfflineLearnerData <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"data/offlinedataLearners.txt"</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">dec =</span> <span class="st">"."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><a href="#fig-BusterudEAData" class="quarto-xref">Figure&nbsp;<span>6.1</span></a> displays an extract of the dataset <code>AJT_raw_scores_L2.csv</code> from an experimental study by <span class="citation" data-cites="busterudVerbPlacementL32023">Busterud et al. (<a href="references.html#ref-busterudVerbPlacementL32023" role="doc-biblioref">2023</a>)</span>. Although this DSV file has a <code>.csv</code> extension, it is actually separated by semicolons. <a href="#fig-BusterudEAData" class="quarto-xref">Figure&nbsp;<span>6.1</span></a> shows that, in this dataset, the comma is used to show the decimal place.</p>
 <div id="fig-BusterudEAData" class="quarto-figure quarto-figure-center quarto-float anchored" alt="To do for Jan">
@@ -850,15 +871,15 @@ Figure&nbsp;6.1: Extract of data file <code>AJT_raw_scores_L2.csv</code> from <s
 <p>If you call up the help file for the <code>read.table()</code> function again, you will see that there is an argument called <code>na.strings</code>. The default value is <code>NA</code>. When we import this dataset <code>AJT_raw_scores_L2.csv</code> from <span class="citation" data-cites="busterudVerbPlacementL32023">Busterud et al. (<a href="references.html#ref-busterudVerbPlacementL32023" role="doc-biblioref">2023</a>)</span>, we will therefore need to change this argument to ensure that empty cells are recognised as missing values.</p>
 <p>In addition to the file path, the command that we can use to import this dataset therefore specifies the separator character as the semicolon (<code>sep = ";"</code>), the character used to represent decimals (<code>dec = ","</code>), and empty cells (<code>na.strings = ""</code>) for missing values:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>AJT.raw.scores.L2 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"data/AJT_raw_scores_L2.csv"</span>,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">sep =</span> <span class="st">";"</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">dec =</span> <span class="st">","</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">na.strings =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>AJT.raw.scores.L2 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"data/AJT_raw_scores_L2.csv"</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">sep =</span> <span class="st">";"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">dec =</span> <span class="st">","</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">na.strings =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Once we have run this command, we should check that the data have been correctly imported, for example using the <code>View()</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(AJT.raw.scores.L2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(AJT.raw.scores.L2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -1028,34 +1049,34 @@ Figure&nbsp;6.1: Extract of data file <code>AJT_raw_scores_L2.csv</code> from <s
 <h2 data-number="6.8" class="anchored" data-anchor-id="sec-readr"><span class="header-section-number">6.8</span> Using {readr} from the {tidyverse} to import tabular files</h2>
 <p>The {tidyverse} is a family of packages that we will use a lot in future chapters. This family of package includes the {readr} package which features some very useful functions to import data into <code>R</code>. You can install and load the {readr} package either individually or as part of the {tidyverse} bundle:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install the package individually:</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readr"</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or install the full tidyverse (this will take a little longer):</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the library:</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install the package individually:</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readr"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or install the full tidyverse (this will take a little longer):</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the library:</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="delimiter-separated-values-dsv-files" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="delimiter-separated-values-dsv-files">Delimiter-separated values (DSV) files</h3>
 <p>The {readr} package includes functions to import DSV files that are similar, but not identical to the base <code>R</code> functions explained above. The main difference is that the {readr} functions load data into an <code>R</code> object of type “tibble” rather than “data frame”. In practice, this will not make a difference for our work in future chapters. Hence, the following two commands can equally be used to import <code>Dabrowska_2018_L1_data.csv</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import .csv file using the base R function read.csv():</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>, </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import .csv file using the base R function read.csv():</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>, </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "data.frame"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import .csv file using the {readr} function read_csv():</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>, </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import .csv file using the {readr} function read_csv():</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame" </code></pre>
 </div>
@@ -1094,7 +1115,7 @@ Figure&nbsp;6.1: Extract of data file <code>AJT_raw_scores_L2.csv</code> from <s
 <p>This overview of the <code>read_csv2</code> function shows all of the arguments of the function and their default values. For instance, with <code>na = c("", "NA")</code>, it tells us that, by default, both empty cells and cells with the value <code>NA</code> will be interpreted by the function as <code>NA</code> values.</p>
 <p>Having checked the default values for all of the arguments of the <code>read_csv2</code> function, we may conclude that we can safely use this {readr} function to import the file <code>AJT_raw_scores_L2.csv</code> from <span class="citation" data-cites="busterudVerbPlacementL32023">Busterud et al. (<a href="references.html#ref-busterudVerbPlacementL32023" role="doc-biblioref">2023</a>)</span> without changing any of these default values. Hence, all we need is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>AJT.raw.scores.L2 <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="at">file =</span> <span class="st">"data/AJT_raw_scores_L2.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>AJT.raw.scores.L2 <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="at">file =</span> <span class="st">"data/AJT_raw_scores_L2.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note that, whereas when we used the base <code>R</code> function <code>read.table()</code> the header for the third variable in the file was imported as <code>Years.of.L3</code>, using the {readr} function, the variable is entitled <code>Years of L3</code>.</p>
 </section>
@@ -1108,61 +1129,61 @@ Figure&nbsp;6.1: Extract of data file <code>AJT_raw_scores_L2.csv</code> from <s
 <p>If your data are currently stored in a spreadsheet software (e.g., LibreOffice Calc, Google Sheets, or Microsoft Excel), you can export in to <code>.csv</code> or <code>.tsv</code>. However, if you do not wish to do this (e.g., because your colleague wishes to maintain the spreadsheet format that includes formatting elements such as bold or coloured cells), there are functions to import these file formats directly into <code>R</code>.</p>
 <p>For <strong>LibreOffice Calc</strong>, you can install the {readODS} package and use its <code>read_ods()</code> function to import <code>.ods</code> files. Details about all the options can be found here <a href="https://www.rdocumentation.org/packages/readODS/versions/2.3.0" class="uri">https://www.rdocumentation.org/packages/readODS/versions/2.3.0</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install from CRAN (safest option):</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readODS"</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or install the development version from Github:</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/readODS"</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the library:</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readODS)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Import your .ods data:</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>MyLibreOfficeData <span class="ot">&lt;-</span> <span class="fu">read_ods</span>(<span class="st">"data/MyLibreOfficeTable.ods"</span>,</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sheet =</span> <span class="dv">1</span>,</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>                            <span class="at">na =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install from CRAN (safest option):</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readODS"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or install the development version from Github:</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/readODS"</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the library:</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readODS)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Import your .ods data:</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>MyLibreOfficeData <span class="ot">&lt;-</span> <span class="fu">read_ods</span>(<span class="st">"data/MyLibreOfficeTable.ods"</span>,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sheet =</span> <span class="dv">1</span>,</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>                            <span class="at">na =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Various packages can be used to import <strong>Microsoft Excel</strong> file formats, but the simplest is {readxl}, which is part of the {tidyverse}. It allows users to import data in both <code>.xlsx</code> and the older <code>.xls</code> format. You can find out more about its various options here: <a href="https://readxl.tidyverse.org/" class="uri">https://readxl.tidyverse.org/</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install from CRAN (safest option):</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readxl"</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or install the development version from Github:</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"tidyverse/readxl"</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the library:</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Import your .ods data:</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>MyExcelData <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/MyExcelSpreadsheet.xlsx"</span>,</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sheet =</span> <span class="dv">1</span>,</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>                            <span class="at">na =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install from CRAN (safest option):</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readxl"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or install the development version from Github:</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"tidyverse/readxl"</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the library:</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Import your .ods data:</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>MyExcelData <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/MyExcelSpreadsheet.xlsx"</span>,</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sheet =</span> <span class="dv">1</span>,</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>                            <span class="at">na =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, there are also several ways to import data from <strong>Google Sheets</strong>. The simplest is to export your tabular data as a <code>.csv</code>, <code>.tsv</code>, <code>.xslx</code>, or <code>.ods</code> file by selecting Google Sheet’s menu option ‘File’ &gt; ‘Download’. Then, you can simply import this downloaded file in <code>R</code> using the corresponding function as described above.</p>
 <p>However, if you want to directly import your data from Google Sheets and be able to dynamically update the analyses that you conduct in <code>R</code> even as the input data is amended on Google Sheets, you can use the {googlesheets4} package (which is part of the {tidyverse}):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install from CRAN (safest option):</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"googlesheets4"</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or install the development version from Github:</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"tidyverse/googlesheets4"</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the library:</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googlesheets4)</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Import your Google Sheets data using your (spread)sheet's URL:</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>MySheetsData <span class="ot">&lt;-</span> <span class="fu">read_sheet</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1U6Cf_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY/edit#gid=780868077"</span>,</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sheet =</span> <span class="dv">1</span>,</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>                            <span class="at">na =</span> <span class="st">"NA"</span>)</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Or import your Google Sheets data using just the sheet's ID:</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>MySheetsData <span class="ot">&lt;-</span> <span class="fu">read_sheet</span>(<span class="st">"1U6Cf_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY/edit#gid=780868077"</span>,</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sheet =</span> <span class="dv">1</span>,</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>                            <span class="at">na =</span> <span class="st">"NA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install from CRAN (safest option):</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"googlesheets4"</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or install the development version from Github:</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"tidyverse/googlesheets4"</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the library:</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googlesheets4)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Import your Google Sheets data using your (spread)sheet's URL:</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>MySheetsData <span class="ot">&lt;-</span> <span class="fu">read_sheet</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1U6Cf_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY/edit#gid=780868077"</span>,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sheet =</span> <span class="dv">1</span>,</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>                            <span class="at">na =</span> <span class="st">"NA"</span>)</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Or import your Google Sheets data using just the sheet's ID:</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>MySheetsData <span class="ot">&lt;-</span> <span class="fu">read_sheet</span>(<span class="st">"1U6Cf_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY/edit#gid=780868077"</span>,</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sheet =</span> <span class="dv">1</span>,</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>                            <span class="at">na =</span> <span class="st">"NA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="fig-TidyverseAPI" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Sign in with Google. Tidyverse API Packages wants access to your Google Account. Select what Tidyverse API Packages can access • See, edit, create, and delete all your Google Sheets spreadsheets. Because you're using Sign in with Google, Tidyverse API Packages will be able to Associate you with your personal info on Google, See your primary Google Account email address. Make sure you trust Tidyverse API Packages. You may be sharing sensitive info with this site or app. Learn about how Tidyverse API Packages will handle your data by reviewing its privacy policies. You can always see or remove access in your Google Account. Learn about the risks. The two buttons at the bottom read: Cancel and Continue">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1176,33 +1197,33 @@ Figure&nbsp;6.2: Dialogue box to consent to the {tidyverse} API Packages having 
 </div>
 <p>Note that, as spreadsheet software typically allow users to have several “sheets” or “tabs” within a file that each contains separate tables, the functions <code>read_excel()</code>, <code>read_ods()</code>, and <code>read_sheet</code> include an argument called <code>sheet</code> which allows you to specify which sheet should be imported. The default value is <code>1</code>, which simply means that the first one is imported. If your sheets have names, you can also use its name as the argument value, e.g.:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>MyExcelData <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/MyExcelSpreadsheet.xlsx"</span>,</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sheet =</span> <span class="st">"raw data"</span>,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">na =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>MyExcelData <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/MyExcelSpreadsheet.xlsx"</span>,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sheet =</span> <span class="st">"raw data"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">na =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="importing-data-files-from-spss-sas-and-stata" class="level2" data-number="6.10">
 <h2 data-number="6.10" class="anchored" data-anchor-id="importing-data-files-from-spss-sas-and-stata"><span class="header-section-number">6.10</span> Importing data files from SPSS, SAS and Stata</h2>
 <p>If you’ve recently switched from working in SPSS, SAS, or Stata (or are collaborating with someone who uses these programmes), it might be useful to know that you can also import the data files created by programmes directly into <code>R</code> using the {haven} package. Details of all the options can be found here: <a href="https://haven.tidyverse.org/" class="uri">https://haven.tidyverse.org/</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install from CRAN (safest option):</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"haven"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or install the development version from Github:</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"tidyverse/haven"</span>)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the library:</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Import an SAS file</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>MySASData <span class="ot">&lt;-</span> <span class="fu">read_sas</span>(<span class="st">"MySASDataFile.sas7bdat"</span>)</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Import an SPSS file</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>MySPSSDataFile <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"MySPSSDataFile.sav"</span>)</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Import a Stata file</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>MyStataData <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"MyStataDataFile.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install from CRAN (safest option):</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"haven"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or install the development version from Github:</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"tidyverse/haven"</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the library:</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Import an SAS file</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>MySASData <span class="ot">&lt;-</span> <span class="fu">read_sas</span>(<span class="st">"MySASDataFile.sas7bdat"</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Import an SPSS file</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>MySPSSDataFile <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"MySPSSDataFile.sav"</span>)</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Import a Stata file</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>MyStataData <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"MyStataDataFile.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="importing-other-file-formats" class="level2" data-number="6.11">
@@ -1217,11 +1238,11 @@ Figure&nbsp;6.2: Dialogue box to consent to the {tidyverse} API Packages having 
 <p>Whilst it is certainly not recommended <span class="citation" data-cites="bryanProjectorientedWorkflow2017">(see, e.g., <a href="references.html#ref-bryanProjectorientedWorkflow2017" role="doc-biblioref">Bryan 2017</a>)</span>, it is nonetheless worth understanding this method of working with file paths in <code>R</code> as you may well come across it in other people’s code.</p>
 <p>Instead of creating an RProject to determine a project’s working directory (as we did in <a href="#sec-RProject" class="quarto-xref"><span>Section 6.3</span></a>), some researchers begin their script with a line of code that sets their <strong>working directory</strong> for the script using the function <code>setwd()</code>, e.g.:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/Users/lefoll/Documents/UzK/RstatsTextbook/Dabrowska2019"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/Users/lefoll/Documents/UzK/RstatsTextbook/Dabrowska2019"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>They can then import their data file using a <strong>relative path</strong> from the working directory just like we did earlier.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you have to work with an <code>R</code> script that uses this method, you will need to amend the path designated as the working directory by <code>setwd()</code> to the corresponding path on your own computer. This might not sound like much of an issue, but as data scientist, <code>R</code> expert, and statistics professor Jenny <span class="citation" data-cites="bryanProjectorientedWorkflow2017">Bryan (<a href="references.html#ref-bryanProjectorientedWorkflow2017" role="doc-biblioref">2017</a>)</span> explains:</p>
 <blockquote class="blockquote">
@@ -1229,12 +1250,12 @@ Figure&nbsp;6.2: Dialogue box to consent to the {tidyverse} API Packages having 
 </blockquote>
 <p>In the language sciences, not everyone is aware of the severity of these issues. Hence, it is not uncommon for researchers to make their scripts even less reproducible by not setting a working directory at all and, instead, relying exclusively on <strong>absolute paths</strong> (<a href="DataManagement.html#sec-FoldersPaths" class="quarto-xref"><span>Section 3.3</span></a>). Hence, every time they want to import data (and, as we will see later on, export objects from <code>R</code>, too), they write out the full file path in the command like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Having to work with such a script is particularly laborious because it means that, if you inherit such a script from a colleague, you will have to manually change every single file path in the script to the corresponding file paths on your own computer. And, as <span class="citation" data-cites="bryanProjectorientedWorkflow2017">Bryan (<a href="references.html#ref-bryanProjectorientedWorkflow2017" role="doc-biblioref">2017</a>)</span> points out, this will also apply if you change anything in your own file structure! It should be clear that the potential for making errors in the process is far too important to even consider going down that route!</p>
 <p>However, should you have to use this method at some point for whatever reason, you can make use of <a href="DataManagement.html#sec-FoldersPaths" class="quarto-xref"><span>Section 3.3</span></a> which explained how to copy full file paths from a file Explorer or Finder window. Note that if there are spaces or other special characters other than <code>_</code> or <code>-</code> anywhere in your file path, your import command will fail (see <a href="DataManagement.html#sec-FileNaming" class="quarto-xref"><span>Section 3.2</span></a> on naming conventions for folders and files). The following command, for instance, will fail and return an error (see <a href="#fig-ImportErrorSpace" class="quarto-xref">Figure&nbsp;<span>6.3</span></a>) because the folder “Uni Work” contains a space.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="fig-ImportErrorSpace" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Screenshot of the Console pane of RStudio showing the above command having been run and having returned an error message: Error in file(file, &quot;rt&quot;) : cannot open the connection In addition: Warning message: In file(file, &quot;rt&quot;) :   cannot open file '/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv': No such file or directory">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1260,6 +1281,9 @@ Figure&nbsp;6.3: Error message due to an error in the file path
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-barrettWhyShouldUse2018" class="csl-entry" role="listitem">
+Barrett, Malcolm. 2018. Why should i use the here package when i’m already using projects? - malcolm barrett. <a href="https://malco.io/articles/2018-11-05-why-should-i-use-the-here-package-when-i-m-already-using-projects">https://malco.io/articles/2018-11-05-why-should-i-use-the-here-package-when-i-m-already-using-projects</a>.
+</div>
 <div id="ref-bryanLetGitStarted" class="csl-entry" role="listitem">
 Bryan, Jennifer. <em>Let’s git started | happy git and GitHub for the useR</em>. Open Education Resource. <a href="https://happygitwithr.com/">https://happygitwithr.com/</a>.
 </div>
@@ -1742,7 +1766,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom","loop":false});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","descPosition":"bottom","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

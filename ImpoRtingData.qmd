@@ -243,9 +243,15 @@ Click on the "New Folder" icon in your Files pane to create a new subfolder call
 
 ![Contents of the project folder as displayed by RStudio](images/WorkingDirectory.png){fig-alt="Screenshot of the Files pane of RStudio showing the contens of a folder entitled 'Dabrowska2019'. It contains an RProject file called 'Dabrowska2019.Rproj', a folder called 'analysis' and another folder called 'data'." width="440"}
 
-## Importing data from a `.csv` file in `R` {#sec-ImportingDataCSV}
+## Importing data from a `.csv` file {#sec-ImportingDataCSV}
 
-We will begin by creating a new `R` script in which we will write the code necessary to import the data from @DabrowskaExperienceAptitudeIndividual2019's study in `R`. To do so, click on the analysis folder to open it and then click on the 'New Script' icon in the top-left corner of RStudio and select 'R Script'. This will open a new, empty `R` script in your Source pane. It is best to always begin by saving a newly created file. Save this empty script with a computer- and human-friendly file name such as as `1_DataImport.R` (@sec-FileNaming).
+We will begin by creating a new `R` script in which we will write the code necessary to import the data from @DabrowskaExperienceAptitudeIndividual2019's study in `R`. To do so, from the Files pane in RStudio, click on the analysis folder to open it and then click on the 'New Script' icon in the top-left corner of the Files pane and select 'R Script'. This will open a new, empty `R` script in your Source pane. It is best to always begin by saving a newly created file. Save this empty script with a computer- and human-friendly file name such as as `1_DataImport.R` (@sec-FileNaming). It should now appear in your analysis folder in the Files pane.
+
+```{r include = FALSE}
+
+#To do for Jan: Add screenshot of Files pane showing an empty "analysis" folder and with red circle around the "new script" icon.
+
+```
 
 Given that we want to import two `.csv` files, we are going to use the function `read.csv()`. You can find out what this function does by running the command `?read.csv` or `help(read.csv)` in the Console to open up the documentation. This help file contains information about several base `R` functions used to import data. Scroll down to find the information about the `read.csv()` function. It reads:
 
@@ -268,14 +274,6 @@ L1.data <- read.csv("data/Dabrowska_2018_L1_data.csv")
 
 The file path `"data/Dabrowska_2018_L1_data.csv"` informs `R` that the data is located in a subfolder of the project's working directory called `data` and that, within this `data` subfolder, the file that we want to import is called `Dabrowska_2018_L1_data.csv`. Note that the file extension must be specified (see @sec-FileExtensions). Note, also, the file path is separated with a single forward slash `/`. In `R`, this should work regardless of the operating system that you are using and, in order to be able to easily share your scripts with others, it is recommended that you use forward slashes even if you are running Windows (@sec-FoldersPaths).
 
-::: {.callout-important collapse="true"}
-#### "Hell is empty, and all the devils are {here}." 😈
-
-*William Shakespeare, The Tempest*
-
-This box will contain information about using the {here} package.
-:::
-
 Although the command above did the job, in practice, it is often safer to spell things out further to remind ourselves of some of the default settings of the function that we are using in case they need to be checked or changed at a later stage. In this example, we will therefore import the data with the following command:
 
 ```{r eval=FALSE}
@@ -286,11 +284,48 @@ L1.data <- read.csv(file = "data/Dabrowska_2018_L1_data.csv",
                     dec = ".")
 ```
 
-In the command above, `header = TRUE`, explicitly tells `R` to import the first row of the `.csv` table as column headers rather than values. This is not strictly necessary because, as we saw from the function's help file, `TRUE` is already set as the default value for this argument, but it is good to reminder ourselves of how this particular dataset is organised.
+In the command above, `header = TRUE`, explicitly tells `R` to import the first row of the `.csv` table as column headers rather than values. This is not strictly necessary because, as we saw from the function's help file, `TRUE` is already set as the default value for this argument, but it is good to remind ourselves of how this particular dataset is organised.
 
 The arguments `sep` and `quote` specify the characters that, in this `.csv` file are used to separate the values on the one hand, and delineate them, on the other (see @sec-DSV). As we saw above, @DabrowskaExperienceAptitudeIndividual2019's `.csv` files use the comma as the separator and the double quotation mark as the quoting character. Note that the `"` character needs to be preceded by a backslash (`\`) (we say it needs to be "escaped") because otherwise `R` will interpreted it as part of the command syntax, which would lead to an error. Finally, the argument `dec = "."` explicitly tells `R` that this `.csv` file uses the dot as the decimal point. In some countries, e.g., Germany and France, the comma is used to represent decimal places so, if you obtain data from a German or French colleague, this setting may need to be changed to `dec = ","` for the data to be imported correctly.
 
-## Checking that the data have been correctly imported
+::: {.callout-important collapse="false"}
+#### "Hell is empty, and all the devils are {here}." 😈
+
+This section title borrows a quote from The Tempest by William Shakespeare to reflect the fact that file paths are perhaps the most frequent source of frustration among (beginner) coders. @sec-ImportingErrors explains how to deal with the most frequent error messages. Ultimately, however, these errors are typically due to poor data management (see @sec-DataManagement). That's because the devil's in the detail (remember: no spaces, special characters, differences between different operating systems, etc.). As a result, even advanced users of `R` and other programming languages frequently find that file path issues continue to plague their work, if they fail to take file management seriously.
+
+To make your projects more robust to such issues, I strongly recommend working with the [{here}](https://here.r-lib.org/) package in addition to RProjects. You will first need to install the package:
+
+```{r eval = FALSE}
+
+install.packages("here")
+
+```
+
+When you load the package, it automatically runs the `here()` function with no argument, which returns the path to your project directory, as determined by the location of the `.RProj` file associated with your project.
+
+```{r}
+library(here)
+```
+
+You can now use the `here()` function to build paths relative to this directory with the following syntax:
+
+```{r}
+here("data", "Dabrowska_2018_L1_data.csv")
+```
+
+And you can embed this path in your import command like this:
+
+```{r eval = FALSE}
+
+library(here)
+
+L1.data <- read.csv(file = here("data", "Dabrowska_2018_L1_data.csv"))
+```
+
+Using {here} makes the paths that you include in your code far more robust. In other words, they are far less likely to fail and break your code when you share your scripts with your colleagues, or run them yourself from different directories or operating systems. For more reasons to use {here}, check out the blog post "[Why should I use the here package when I'm already using projects?](https://malco.io/articles/2018-11-05-why-should-i-use-the-here-package-when-i-m-already-using-projects)" by @barrettWhyShouldUse2018.
+:::
+
+## Importing errors and issues {#sec-ImportingErrors}
 
 It is crucial that you check whether your data has genuinely been correctly imported. Here's a list of things to check (in that order):
 
