@@ -248,8 +248,12 @@ div.csl-indent {
   <li><a href="#sec-RProject" id="toc-sec-RProject" class="nav-link" data-scroll-target="#sec-RProject"><span class="header-section-number">6.3</span> Using Projects in RStudio</a></li>
   <li><a href="#sec-WorkingDirectories" id="toc-sec-WorkingDirectories" class="nav-link" data-scroll-target="#sec-WorkingDirectories"><span class="header-section-number">6.4</span> Working directories</a></li>
   <li><a href="#sec-ImportingDataCSV" id="toc-sec-ImportingDataCSV" class="nav-link" data-scroll-target="#sec-ImportingDataCSV"><span class="header-section-number">6.5</span> Importing data from a <code>.csv</code> file</a></li>
-  <li><a href="#sec-ImportingErrors" id="toc-sec-ImportingErrors" class="nav-link" data-scroll-target="#sec-ImportingErrors"><span class="header-section-number">6.6</span> Importing errors and issues</a></li>
-  <li><a href="#importing-tabular-data-in-other-formats" id="toc-importing-tabular-data-in-other-formats" class="nav-link" data-scroll-target="#importing-tabular-data-in-other-formats"><span class="header-section-number">6.7</span> Importing tabular data in other formats</a></li>
+  <li><a href="#sec-ImportingErrors" id="toc-sec-ImportingErrors" class="nav-link" data-scroll-target="#sec-ImportingErrors"><span class="header-section-number">6.6</span> Importing errors and issues 🥺</a></li>
+  <li><a href="#importing-tabular-data-in-other-formats" id="toc-importing-tabular-data-in-other-formats" class="nav-link" data-scroll-target="#importing-tabular-data-in-other-formats"><span class="header-section-number">6.7</span> Importing tabular data in other formats</a>
+  <ul class="collapse">
+  <li><a href="#tab-separated-file" id="toc-tab-separated-file" class="nav-link" data-scroll-target="#tab-separated-file"><span class="header-section-number">6.7.1</span> Tab-separated file</a></li>
+  <li><a href="#semi-colon-separated-file" id="toc-semi-colon-separated-file" class="nav-link" data-scroll-target="#semi-colon-separated-file"><span class="header-section-number">6.7.2</span> Semi-colon-separated file</a></li>
+  </ul></li>
   <li><a href="#sec-readr" id="toc-sec-readr" class="nav-link" data-scroll-target="#sec-readr"><span class="header-section-number">6.8</span> Using {readr} from the {tidyverse} to import tabular files</a>
   <ul class="collapse">
   <li><a href="#delimiter-separated-values-dsv-files" id="toc-delimiter-separated-values-dsv-files" class="nav-link" data-scroll-target="#delimiter-separated-values-dsv-files">Delimiter-separated values (DSV) files</a></li>
@@ -452,6 +456,7 @@ Quiz time!
 <p>&nbsp;</p>
 </div>
 </div>
+<p>You may have noticed that the datasets were published in 2018 whereas the article <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">(<a href="references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">Dąbrowska 2019</a>)</span> was published in the following year. This is very common in academic publications as it can take many months or even years for an article or book to be published, by which time the author(s) may have already made the data available on a repository. This particular article was actually first published on the journal’s website on 22 October 2018 as an “advanced online publication”, but was not officially published until March 2019 as part of Volume 69, Issue S1 of the journal (see https://doi.org/10.1111/lang.12323).</p>
 </section>
 <section id="sec-SavingData" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="sec-SavingData"><span class="header-section-number">6.2</span> Saving and examining the data</h2>
@@ -507,7 +512,7 @@ Quiz time!
 <p>&nbsp;</p>
 </div>
 </div>
-<p>The file <code>Dabrowska_2018_L1_data.csv</code> contains data about the study’s L1 participants. It is a delimiter-separated values (DSV) file (see <a href="Data.html#sec-DSV" class="quarto-xref"><span>Section 2.5.1</span></a>). The first five lines of the file are printed below. Note that this is a very wide table as it contains many variables (you can scroll to the right to view all the columns).</p>
+<p>The file <code>L1_data.csv</code> contains data about the study’s L1 participants. It is a delimiter-separated values (DSV) file (see <a href="Data.html#sec-DSV" class="quarto-xref"><span>Section 2.5.1</span></a>). The first five lines of the file are printed below. Note that this is a very wide table as it contains many variables (you can scroll to the right to view all the columns).</p>
 <pre><code>Participant,Age,Gender,Occupation,OccupGroup,OtherLgs,Education,EduYrs,ReadEng1,ReadEng2,ReadEng3,ReadEng,Active,ObjCl,ObjRel,Passive,Postmod,Q.has,Q.is,Locative,SubCl,SubRel,GrammarR,Grammar,VocabR,Vocab,CollocR,Colloc,Blocks,ART,LgAnalysis
 1,21,M,Student,PS,None,3rd year of BA,17,1,2,2,5,8,8,8,8,8,8,6,8,8,8,78,95,48,73.33333333,30,68.75,16,17,15
 2,38,M,Student/Support Worker,PS,None,NVQ IV Music Performance,13,1,2,3,6,8,8,8,8,8,8,7,8,8,8,79,97.5,58,95.55555556,35,84.375,11,31,13
@@ -523,7 +528,7 @@ Quiz time!
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>7) Which character is used to separate the values in the file <code>Dabrowska_2018_L1_data.csv</code>?</p>
+<p>7) Which character is used to separate the values in the file <code>L1_data.csv</code>?</p>
 <form name="form_79099" onsubmit="return validate_form_79099()" method="post">
 <input type="radio" name="answer_79099" id="answer_79099_1" value="comma">
 <label>comma</label>
@@ -613,22 +618,22 @@ Quiz time!
 </section>
 <section id="sec-ImportingDataCSV" class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="sec-ImportingDataCSV"><span class="header-section-number">6.5</span> Importing data from a <code>.csv</code> file</h2>
-<p>We will begin by creating a new <code>R</code> script in which we will write the code necessary to import the data from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>‘s study in <code>R</code>. To do so, from the Files pane in RStudio, click on the analysis folder to open it and then click on the ’New Script’ icon in the top-left corner of the Files pane and select ‘R Script’. This will open a new, empty <code>R</code> script in your Source pane. It is best to always begin by saving a newly created file. Save this empty script with a computer- and human-friendly file name such as as <code>1_DataImport.R</code> (<a href="DataManagement.html#sec-FileNaming" class="quarto-xref"><span>Section 3.2</span></a>). It should now appear in your analysis folder in the Files pane.</p>
+<p>We will begin by creating a new <code>R</code> script in which we will write the code necessary to import the data from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>‘s study in <code>R</code>. To do so, from the Files pane in RStudio, click on the analysis folder to open it and then click on the ’New Blank File’ icon in the menu bar of the the Files pane and select ‘R Script’. This will open a new, empty <code>R</code> script in your Source pane. It is best to always begin by saving a newly created file. Save this empty script with a computer- and human-friendly file name such as as <code>1_DataImport.R</code> (<a href="DataManagement.html#sec-FileNaming" class="quarto-xref"><span>Section 3.2</span></a>). It should now appear in your analysis folder in the Files pane.</p>
 <p>Given that we want to import two <code>.csv</code> files, we are going to use the function <code>read.csv()</code>. You can find out what this function does by running the command <code>?read.csv</code> or <code>help(read.csv)</code> in the Console to open up the documentation. This help file contains information about several base <code>R</code> functions used to import data. Scroll down to find the information about the <code>read.csv()</code> function. It reads:</p>
 <pre><code>read.csv(file, header = TRUE, sep = ",", quote = "\"",
          dec = ".", fill = TRUE, comment.char = "", ...)</code></pre>
 <p>This line from the documentation informs us that this function’s first argument is the path to the <code>file</code> from which we want to import the data. It also informs us that <code>file</code> is the only argument that does not have a default value (as it is not followed by an equal sign and a value). In this function, <code>file</code> is therefore the only argument that is compulsory. Hence, in theory, all we need to write to import the data is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In fact, we could shorten things even further as, unless otherwise specified, <code>R</code> will assume that the first value listed after a function corresponds to the function’s first argument which, here, is <code>file</code>. In other words, this command and the one above are equivalent:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The file path <code>"data/Dabrowska_2018_L1_data.csv"</code> informs <code>R</code> that the data is located in a subfolder of the project’s working directory called <code>data</code> and that, within this <code>data</code> subfolder, the file that we want to import is called <code>Dabrowska_2018_L1_data.csv</code>. Note that the file extension must be specified (see <a href="Data.html#sec-FileExtensions" class="quarto-xref"><span>Section 2.3</span></a>). Note, also, the file path is separated with a single forward slash <code>/</code>. In <code>R</code>, this should work regardless of the operating system that you are using and, in order to be able to easily share your scripts with others, it is recommended that you use forward slashes even if you are running Windows (<a href="DataManagement.html#sec-FoldersPaths" class="quarto-xref"><span>Section 3.3</span></a>).</p>
+<p>The file path <code>"data/L1_data.csv"</code> informs <code>R</code> that the data is located in a subfolder of the project’s working directory called <code>data</code> and that, within this <code>data</code> subfolder, the file that we want to import is called <code>L1_data.csv</code>. Note that the file extension must be specified (see <a href="Data.html#sec-FileExtensions" class="quarto-xref"><span>Section 2.3</span></a>). Note, also, the file path is separated with a single forward slash <code>/</code>. In <code>R</code>, this should work regardless of the operating system that you are using and, in order to be able to easily share your scripts with others, it is recommended that you use forward slashes even if you are running Windows (<a href="DataManagement.html#sec-FoldersPaths" class="quarto-xref"><span>Section 3.3</span></a>).</p>
 <p>Although the command above did the job, in practice, it is often safer to spell things out further to remind ourselves of some of the default settings of the function that we are using in case they need to be checked or changed at a later stage. In this example, we will therefore import the data with the following command:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>,</span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/L1_data.csv"</span>,</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sep =</span> <span class="st">","</span>,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>,</span>
@@ -659,16 +664,16 @@ Quiz time!
 </div>
 <p>You can now use the <code>here()</code> function to build paths relative to this directory with the following syntax:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "/Users/lefoll/Documents/UzK/RstatsTextbook/data/Dabrowska_2018_L1_data.csv"</code></pre>
+<pre><code>[1] "/Users/lefoll/Documents/UzK/RstatsTextbook/data/L1_data.csv"</code></pre>
 </div>
 </div>
 <p>And you can embed this path in your import command like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"Dabrowska_2018_L1_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"L1_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Using {here} makes the paths that you include in your code far more robust. In other words, they are far less likely to fail and break your code when you share your scripts with your colleagues, or run them yourself from different directories or operating systems. For more reasons to use {here}, check out the blog post “<a href="https://malco.io/articles/2018-11-05-why-should-i-use-the-here-package-when-i-m-already-using-projects">Why should I use the here package when I’m already using projects?</a>” by <span class="citation" data-cites="barrettWhyShouldUse2018">Barrett (<a href="references.html#ref-barrettWhyShouldUse2018" role="doc-biblioref">2018</a>)</span>.</p>
 </div>
@@ -676,7 +681,7 @@ Quiz time!
 </div>
 </section>
 <section id="sec-ImportingErrors" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="sec-ImportingErrors"><span class="header-section-number">6.6</span> Importing errors and issues</h2>
+<h2 data-number="6.6" class="anchored" data-anchor-id="sec-ImportingErrors"><span class="header-section-number">6.6</span> Importing errors and issues 🥺</h2>
 <p>It is crucial that you check whether your data has genuinely been correctly imported. Here’s a list of things to check (in that order):</p>
 <ol type="1">
 <li><p>Were you able to run the import command without producing any errors? If you are getting an error, remember that this is most likely due to a typo (see <a href="GettingStaRted.html#sec-Errors" class="quarto-xref"><span>Section 5.6</span></a>)!</p>
@@ -774,12 +779,12 @@ Task 1
 </form>
 <script>function validate_form_71348() {var x, text; var x = document.forms['form_71348']['answer_71348'].value;if (x == 'L2.data'){text = 'That’s right!';} else {text = 'Are you sure?';} document.getElementById('result_71348').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_84941').innerText == 'That’s right!'; res2 = document.getElementById('result_58751').innerText == 'That’s right!'; res3 = document.getElementById('result_71348').innerText == 'That’s right!';text = res1 + res2 + res3;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_71348').innerText == 'That’s right!';text = res1;element.innerHTML = text;
          return false;
          }}</script>
-<div id="hint_83595" onclick="return show_hint_83595()"><br>🐭 Click on the mouse for a hint.</div>
-<div id="result_83595" onclick="return show_hint_83595()"></div>
-<script>function show_hint_83595(){var x = document.getElementById('result_83595').innerHTML; if(!x){document.getElementById('result_83595').innerHTML = 'Remember that, in these two data frames, each colum represents a variable. Use the <code>View()</code> function to display the data frames and compare them.';} else {document.getElementById('result_83595').innerHTML = '';}}</script>
+<div id="hint_66347" onclick="return show_hint_66347()"><br>🐭 Click on the mouse for a hint.</div>
+<div id="result_66347" onclick="return show_hint_66347()"></div>
+<script>function show_hint_66347(){var x = document.getElementById('result_66347').innerHTML; if(!x){document.getElementById('result_66347').innerHTML = 'Remember that, in these two data frames, each colum represents a variable. Use the <code>View()</code> function to display the data frames and compare them.';} else {document.getElementById('result_66347').innerHTML = '';}}</script>
 <p>&nbsp;</p>
 <p>d) You have saved the two datasets to your local <code>R</code> environment as <code>L1.data</code> and <code>L2.data</code>. What kind of <code>R</code> objects are <code>L1.data</code> and <code>L2.data</code>? You can find out by using the command <code>class()</code>. It simply takes the name of the object as its only argument.</p>
 <form name="form_35981" onsubmit="return validate_form_35981()" method="post">
@@ -843,19 +848,26 @@ Task 1
 <p>We have seen how to load data from a <code>.csv</code> file into <code>R</code> by creating an <code>R</code> data frame object that contains the data extracted from a <code>.csv</code> file. But, as we saw in <a href="Data.html" class="quarto-xref"><span>Chapter 2</span></a>, not all datasets are stored as <code>.csv</code> files. Fear not: there are many import functions in <code>R</code>, with which you can import pretty much all kinds of data formats! This section introduces a few of the most useful ones for research in the language sciences.</p>
 <p>We begin with the highly versatile function <code>read.table()</code>. The <code>read.csv()</code> is actually a variant of <code>read.table()</code>. You recall that when we called up the help file for the former using <code>?read.csv()</code>, we obtained a combined help file for several functions, the first of which was <code>read.table()</code>. By specifying the following arguments as we did earlier, we can actually use the <code>read.table()</code> function to import our <code>.csv</code> file with exactly the same results:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>,</span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"data/L1_data.csv"</span>,</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sep =</span> <span class="st">","</span>,</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>,</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">dec =</span> <span class="st">"."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In <a href="Data.html" class="quarto-xref"><span>Chapter 2</span></a>, we looked at a DSV file with a <code>.txt</code> extension that was separated by tabs. If we change the separator character argument to <code>\t</code> for tab, we can import this dataset using the same <code>read.table()</code> function:</p>
+<section id="tab-separated-file" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="tab-separated-file"><span class="header-section-number">6.7.1</span> Tab-separated file</h3>
+<p>In Task 3 in <a href="Data.html#sec-DSVLibreOffice" class="quarto-xref"><span>Section 2.5.2</span></a>, you downloaded and examined a DSV file with a <code>.txt</code> extension that was separated by tabs: <code>offlinedataLearners.txt</code> from <span class="citation" data-cites="schimkeFirstLanguageInfluence2018">Schimke et al. (<a href="references.html#ref-schimkeFirstLanguageInfluence2018" role="doc-biblioref">2018</a>)</span>.</p>
+<p>If we change the separator character argument to <code>\t</code> for tab, we can also import this dataset in <code>R</code> using the <code>read.table()</code> function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>OfflineLearnerData <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"data/offlinedataLearners.txt"</span>,</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>,</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">dec =</span> <span class="st">"."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>For the command above to work, you will first need to save the file <code>offlinedataLearners.txt</code> to the folder specified in the path. Otherwise, you will get an error message informing you that there is “No such file or directory” (see <a href="#sec-ImportingErrors" class="quarto-xref"><span>Section 6.6</span></a>).</p>
+</section>
+<section id="semi-colon-separated-file" class="level3" data-number="6.7.2">
+<h3 data-number="6.7.2" class="anchored" data-anchor-id="semi-colon-separated-file"><span class="header-section-number">6.7.2</span> Semi-colon-separated file</h3>
 <p><a href="#fig-BusterudEAData" class="quarto-xref">Figure&nbsp;<span>6.1</span></a> displays an extract of the dataset <code>AJT_raw_scores_L2.csv</code> from an experimental study by <span class="citation" data-cites="busterudVerbPlacementL32023">Busterud et al. (<a href="references.html#ref-busterudVerbPlacementL32023" role="doc-biblioref">2023</a>)</span>. Although this DSV file has a <code>.csv</code> extension, it is actually separated by semicolons. <a href="#fig-BusterudEAData" class="quarto-xref">Figure&nbsp;<span>6.1</span></a> shows that, in this dataset, the comma is used to show the decimal place.</p>
 <div id="fig-BusterudEAData" class="quarto-figure quarto-figure-center quarto-float anchored" alt="To do for Jan">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1043,7 +1055,8 @@ Figure&nbsp;6.1: Extract of data file <code>AJT_raw_scores_L2.csv</code> from <s
 </div>
 </div>
 </div>
-<p>Here, we can see that the data have been correctly imported as a table. The commas have been correctly converted to decimal points and the empty cells are now labelled <code>NA</code>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>Here, we can see that the data have been correctly imported as a table. The commas have been correctly converted to decimal points and the empty cells are now labelled <code>NA</code>.</p>
+</section>
 </section>
 <section id="sec-readr" class="level2" data-number="6.8">
 <h2 data-number="6.8" class="anchored" data-anchor-id="sec-readr"><span class="header-section-number">6.8</span> Using {readr} from the {tidyverse} to import tabular files</h2>
@@ -1060,10 +1073,10 @@ Figure&nbsp;6.1: Extract of data file <code>AJT_raw_scores_L2.csv</code> from <s
 </div>
 <section id="delimiter-separated-values-dsv-files" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="delimiter-separated-values-dsv-files">Delimiter-separated values (DSV) files</h3>
-<p>The {readr} package includes functions to import DSV files that are similar, but not identical to the base <code>R</code> functions explained above. The main difference is that the {readr} functions load data into an <code>R</code> object of type “tibble” rather than “data frame”. In practice, this will not make a difference for our work in future chapters. Hence, the following two commands can equally be used to import <code>Dabrowska_2018_L1_data.csv</code>:</p>
+<p>The {readr} package includes functions to import DSV files that are similar, but not identical to the base <code>R</code> functions explained above. The main difference is that the {readr} functions load data into an <code>R</code> object of type “tibble” rather than “data frame”. In practice, this will not make a difference for our work in future chapters. Hence, the following two commands can equally be used to import <code>L1_data.csv</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import .csv file using the base R function read.csv():</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>, </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/L1_data.csv"</span>, </span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>, </span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>)</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
@@ -1072,7 +1085,7 @@ Figure&nbsp;6.1: Extract of data file <code>AJT_raw_scores_L2.csv</code> from <s
 <pre><code>[1] "data.frame"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import .csv file using the {readr} function read_csv():</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>, </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/L1_data.csv"</span>, </span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col_names =</span> <span class="cn">TRUE</span>, </span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>)</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
@@ -1086,7 +1099,7 @@ Figure&nbsp;6.1: Extract of data file <code>AJT_raw_scores_L2.csv</code> from <s
 <ul>
 <li><p>If the column headers in your original data file contain spaces, these will be automatically replaced by dots (<code>.</code>) when you import data using base <code>R</code> functions. By contrast, with the {readr} functions, the spaces will, by default, be retained. As we will see later, this behaviour can represent both an advantage and disadvantage, depending on what you want to do.</p></li>
 <li><p>The {readr} functions are quicker and are therefore recommended if you are importing large datasets.</p></li>
-<li><p>The {readr} functions retains the</p></li>
+<li><p>In general, the behaviour of {readr} functions is more consistent across different operating systems and locale settings (e.g., the language in which your operating system is set).</p></li>
 </ul>
 <p>Note that, just like <code>read.csv()</code> was a special case of <code>read.table</code>, the {readr} function <code>read_csv()</code> is a special variant of the more general function <code>read_delim()</code> that can be used to import data from all kinds of DSV files. Check the help file to find out all the options using <code>?read_delim</code>.</p>
 <p>The help file informs us that the package includes a function specifically designed to import semi-colon separated file with the the comma as the decimal point: <code>read_csv2()</code>. It further states that “[t]his format is common in some European countries.” If you scroll down the help page, you will see that its usage is summarised in the following way:</p>
@@ -1121,12 +1134,12 @@ Figure&nbsp;6.1: Extract of data file <code>AJT_raw_scores_L2.csv</code> from <s
 </section>
 <section id="fixed-width-files" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="fixed-width-files">Fixed width files</h3>
-<p>Fixed width files (with file extensions such as <code>.gz</code>, .<code>bz2</code> or <code>.xz</code>) are a less common type of data source in the language sciences. In these text-based files, the values are separated not by a specific character such as the comma or the tab, but by a set amount of white/empty space other than a tab. Fixed width files can be loaded using the <a href="https://readr.tidyverse.org/reference/read_fwf.html"><code>read_fwf()</code></a> function from {readr}. Fields can be specified by their widths with <a href="https://readr.tidyverse.org/reference/read_fwf.html"><code>fwf_widths()</code></a> or by their positions with <a href="https://readr.tidyverse.org/reference/read_fwf.html"><code>fwf_positions()</code></a>. :::</p>
+<p>Fixed width files (with file extensions such as <code>.gz</code>, .<code>bz2</code> or <code>.xz</code>) are a less common type of data source in the language sciences. In these text-based files, the values are separated not by a specific character such as the comma or the tab, but by a set amount of white/empty space other than a tab. Fixed width files can be loaded using the <a href="https://readr.tidyverse.org/reference/read_fwf.html"><code>read_fwf()</code></a> function from {readr}. Fields can be specified by their widths with <a href="https://readr.tidyverse.org/reference/read_fwf.html"><code>fwf_widths()</code></a> or by their positions with <a href="https://readr.tidyverse.org/reference/read_fwf.html"><code>fwf_positions()</code></a>.</p>
 </section>
 </section>
 <section id="importing-files-from-spreadsheet-software" class="level2" data-number="6.9">
 <h2 data-number="6.9" class="anchored" data-anchor-id="importing-files-from-spreadsheet-software"><span class="header-section-number">6.9</span> Importing files from spreadsheet software</h2>
-<p>If your data are currently stored in a spreadsheet software (e.g., LibreOffice Calc, Google Sheets, or Microsoft Excel), you can export in to <code>.csv</code> or <code>.tsv</code>. However, if you do not wish to do this (e.g., because your colleague wishes to maintain the spreadsheet format that includes formatting elements such as bold or coloured cells), there are functions to import these file formats directly into <code>R</code>.</p>
+<p>If your data are currently stored in a spreadsheet software (e.g., LibreOffice Calc, Google Sheets, or Microsoft Excel), you can export them to <code>.csv</code> or <code>.tsv</code>. However, if you do not wish to do this (e.g., because your colleague wishes to maintain the spreadsheet format that includes formatting elements such as bold or coloured cells), there are functions to import these file formats directly into <code>R</code>.</p>
 <p>For <strong>LibreOffice Calc</strong>, you can install the {readODS} package and use its <code>read_ods()</code> function to import <code>.ods</code> files. Details about all the options can be found here <a href="https://www.rdocumentation.org/packages/readODS/versions/2.3.0" class="uri">https://www.rdocumentation.org/packages/readODS/versions/2.3.0</a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install from CRAN (safest option):</span></span>
@@ -1228,7 +1241,8 @@ Figure&nbsp;6.2: Dialogue box to consent to the {tidyverse} API Packages having 
 </section>
 <section id="importing-other-file-formats" class="level2" data-number="6.11">
 <h2 data-number="6.11" class="anchored" data-anchor-id="importing-other-file-formats"><span class="header-section-number">6.11</span> Importing other file formats</h2>
-<p>As you can imagine, there are many more <code>R</code> packages and functions that are available and allow you to import all kinds of other file formats including <code>.json</code>, <code>.html</code>, various database formats and files with complex structures (see, e.g., <a href="https://rc2e.com/inputandoutput" class="uri">https://rc2e.com/inputandoutput</a>). In this textbook, we will only deal with DSV files (<a href="Data.html#sec-DSV" class="quarto-xref"><span>Section 2.5.1</span></a>).</p>
+<p>In this textbook, we will only deal with DSV files (<a href="Data.html#sec-DSV" class="quarto-xref"><span>Section 2.5.1</span></a>) but, as you can imagine, there are many more <code>R</code> packages and functions that allow you to import all kinds of other file formats. These include <code>.xml</code>, <code>.json</code> and <code>.html</code> files, various database formats, and other files with complex structures (see, e.g., <a href="https://rc2e.com/inputandoutput" class="uri">https://rc2e.com/inputandoutput</a>).</p>
+<p>In addition, fellow linguists are constantly developing new packages to work with file formats that are specific to our discipline. In the spirit of Open Science (see <a href="OpenScholarship.html" class="quarto-xref"><span>Chapter 1</span></a>), many are making these packages available to the wider research community by releasing them under open licenses. For example, linguistics M.A.&nbsp;students Katja Wiesner and Nicolas Werner wrote an <code>R</code> package to easily import <code>.eaf</code> files generated by the annotation software ELAN into <code>R</code> as part of a seminar project supervised by Dr.&nbsp;Fahime (Fafa) Same at the University of Cologne (<a href="https://github.com/relan-package/rELAN/?tab=readme-ov-file" class="uri">https://github.com/relan-package/rELAN/?tab=readme-ov-file</a>).</p>
 </section>
 <section id="quick-and-dirty-aka-bad-ways-to-import-data-in-r" class="level2" data-number="6.12">
 <h2 data-number="6.12" class="anchored" data-anchor-id="quick-and-dirty-aka-bad-ways-to-import-data-in-r"><span class="header-section-number">6.12</span> Quick-and-dirty (aka bad!) ways to import data in <code>R</code></h2>
@@ -1242,7 +1256,7 @@ Figure&nbsp;6.2: Dialogue box to consent to the {tidyverse} API Packages having 
 </div>
 <p>They can then import their data file using a <strong>relative path</strong> from the working directory just like we did earlier.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you have to work with an <code>R</code> script that uses this method, you will need to amend the path designated as the working directory by <code>setwd()</code> to the corresponding path on your own computer. This might not sound like much of an issue, but as data scientist, <code>R</code> expert, and statistics professor Jenny <span class="citation" data-cites="bryanProjectorientedWorkflow2017">Bryan (<a href="references.html#ref-bryanProjectorientedWorkflow2017" role="doc-biblioref">2017</a>)</span> explains:</p>
 <blockquote class="blockquote">
@@ -1250,17 +1264,17 @@ Figure&nbsp;6.2: Dialogue box to consent to the {tidyverse} API Packages having 
 </blockquote>
 <p>In the language sciences, not everyone is aware of the severity of these issues. Hence, it is not uncommon for researchers to make their scripts even less reproducible by not setting a working directory at all and, instead, relying exclusively on <strong>absolute paths</strong> (<a href="DataManagement.html#sec-FoldersPaths" class="quarto-xref"><span>Section 3.3</span></a>). Hence, every time they want to import data (and, as we will see later on, export objects from <code>R</code>, too), they write out the full file path in the command like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"/Users/lefoll/Documents/UzK/RstatsTextbook/Dabrowska2019/data/L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Having to work with such a script is particularly laborious because it means that, if you inherit such a script from a colleague, you will have to manually change every single file path in the script to the corresponding file paths on your own computer. And, as <span class="citation" data-cites="bryanProjectorientedWorkflow2017">Bryan (<a href="references.html#ref-bryanProjectorientedWorkflow2017" role="doc-biblioref">2017</a>)</span> points out, this will also apply if you change anything in your own file structure! It should be clear that the potential for making errors in the process is far too important to even consider going down that route!</p>
 <p>However, should you have to use this method at some point for whatever reason, you can make use of <a href="DataManagement.html#sec-FoldersPaths" class="quarto-xref"><span>Section 3.3</span></a> which explained how to copy full file paths from a file Explorer or Finder window. Note that if there are spaces or other special characters other than <code>_</code> or <code>-</code> anywhere in your file path, your import command will fail (see <a href="DataManagement.html#sec-FileNaming" class="quarto-xref"><span>Section 3.2</span></a> on naming conventions for folders and files). The following command, for instance, will fail and return an error (see <a href="#fig-ImportErrorSpace" class="quarto-xref">Figure&nbsp;<span>6.3</span></a>) because the folder “Uni Work” contains a space.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/L1_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="fig-ImportErrorSpace" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Screenshot of the Console pane of RStudio showing the above command having been run and having returned an error message: Error in file(file, &quot;rt&quot;) : cannot open the connection In addition: Warning message: In file(file, &quot;rt&quot;) :   cannot open file '/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv': No such file or directory">
+<div id="fig-ImportErrorSpace" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Screenshot of the Console pane of RStudio showing the above command having been run and having returned an error message: Error in file(file, &quot;rt&quot;) : cannot open the connection In addition: Warning message: In file(file, &quot;rt&quot;) :   cannot open file '/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/L1_data.csv': No such file or directory">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ImportErrorSpace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/ImportErrorSpace.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6.3: Error message due to an error in the file path"><img src="images/ImportErrorSpace.png" class="img-fluid figure-img" alt="Screenshot of the Console pane of RStudio showing the above command having been run and having returned an error message: Error in file(file, &quot;rt&quot;) : cannot open the connection In addition: Warning message: In file(file, &quot;rt&quot;) :   cannot open file '/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv': No such file or directory" width="422"></a>
+<a href="images/ImportErrorSpace.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6.3: Error message due to an error in the file path"><img src="images/ImportErrorSpace.png" class="img-fluid figure-img" alt="Screenshot of the Console pane of RStudio showing the above command having been run and having returned an error message: Error in file(file, &quot;rt&quot;) : cannot open the connection In addition: Warning message: In file(file, &quot;rt&quot;) :   cannot open file '/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/L1_data.csv': No such file or directory" width="422"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ImportErrorSpace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;6.3: Error message due to an error in the file path
@@ -1302,6 +1316,9 @@ Dąbrowska, Ewa. 2019. Experience, aptitude, and individual differences in lingu
 <div id="ref-parsonsCommunitysourcedGlossaryOpen2022" class="csl-entry" role="listitem">
 Parsons, Sam, Flávio Azevedo, Mahmoud M. Elsherif, Samuel Guay, Owen N. Shahim, Gisela H. Govaart, Emma Norris, et al. 2022. A community-sourced glossary of <span class="nocase">open</span> <span class="nocase">scholarship</span> terms. <em>Nature Human Behaviour</em>. Nature 6(3). 312–318. <a href="https://doi.org/10.1038/s41562-021-01269-4">https://doi.org/10.1038/s41562-021-01269-4</a>.
 </div>
+<div id="ref-schimkeFirstLanguageInfluence2018" class="csl-entry" role="listitem">
+Schimke, Sarah, Israel de la Fuente, Barbara Hemforth &amp; Saveria Colonna. 2018. First language influence on second language offline and online ambiguous pronoun resolution. <em>Language Learning</em> 68(3). 744–779. <a href="https://doi.org/10.1111/lang.12293">https://doi.org/10.1111/lang.12293</a>.
+</div>
 </div>
 </section>
 </section>
@@ -1310,7 +1327,6 @@ Parsons, Sam, Flávio Azevedo, Mahmoud M. Elsherif, Samuel Guay, Owen N. Shahim,
 <ol>
 <li id="fn1"><p>“Digital Object Identifiers (DOI) are alpha-numeric strings that can be assigned to any entity, including: publications (including preprints), materials, datasets, and feature films - the use of DOIs is not restricted to just scholarly or academic material. DOIs “provides a system for persistent and actionable identification and interoperable exchange of managed information on digital networks.” (<a href="https://doi.org/hb.html%29">https://doi.org/hb.html)</a>. There are many different DOI registration agencies that operate DOIs, but the two that researchers would most likely encounter are Crossref and Datacite.” <span class="citation" data-cites="parsonsCommunitysourcedGlossaryOpen2022">(<a href="references.html#ref-parsonsCommunitysourcedGlossaryOpen2022" role="doc-biblioref">Parsons et al. 2022</a>)</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Note that, unlike the functions that we have used so far, the <code>View()</code> function begins with a capital letter. <code>R</code> is a case-sensitive programming language, which means that <code>view()</code> and <code>View()</code> are not the same thing!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>If you are wondering why some are labelled <code>NA</code> and some <code>&lt;NA&gt;</code>, that’s because cell F125 in this table contains a hyphen (<code>-</code>) rather than either a numeric value or nothing at all for a missing value. As a result, <code>R</code> is interpreting this variable (<code>L3.grade</code>) as a character string variable rather than a numeric variable. In string variables, <code>NA</code> is printed as <code>&lt;NA&gt;</code>. If we were to analyse this data further, we would need to convert this erroneous <code>-</code> to an <code>NA</code>. We can actually do that in the <code>read.table()</code> function by specifying that missing values are represented by both empty cells and cells containing only a hyphen using the argument <code>na.strings = c("", "-")</code>. <a href="https://doi.org/10.18710/JBMAPT">Download the data</a> and try it out if you’re curious!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -1766,7 +1782,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","descPosition":"bottom","loop":false});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

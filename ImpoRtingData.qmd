@@ -118,6 +118,8 @@ check_hint("Check the links listed in Appendix S4.", hint_title = "<br>🐭 Clic
  
 :::
 
+You may have noticed that the datasets were published in 2018 whereas the article [@DabrowskaExperienceAptitudeIndividual2019] was published in the following year. This is very common in academic publications as it can take many months or even years for an article or book to be published, by which time the author(s) may have already made the data available on a repository. This particular article was actually first published on the journal's website on 22 October 2018 as an "advanced online publication", but was not officially published until March 2019 as part of Volume 69, Issue S1 of the journal (see https://doi.org/10.1111/lang.12323).
+
 ## Saving and examining the data {#sec-SavingData}
 
 Click on the two links listed in Appendix S4 and download the two datasets. Note that the URL may take a few seconds to redirect and load. Save the two datasets in an appropriate place on your computer (see @sec-FoldersPaths), as we will continue to work with these two files in the following chapters.
@@ -147,7 +149,7 @@ wrong = "Are you sure?")
  
 :::
 
-The file `Dabrowska_2018_L1_data.csv` contains data about the study's L1 participants. It is a delimiter-separated values (DSV) file (see @sec-DSV). The first five lines of the file are printed below. Note that this is a very wide table as it contains many variables (you can scroll to the right to view all the columns).
+The file `L1_data.csv` contains data about the study's L1 participants. It is a delimiter-separated values (DSV) file (see @sec-DSV). The first five lines of the file are printed below. Note that this is a very wide table as it contains many variables (you can scroll to the right to view all the columns).
 
 ```         
 Participant,Age,Gender,Occupation,OccupGroup,OtherLgs,Education,EduYrs,ReadEng1,ReadEng2,ReadEng3,ReadEng,Active,ObjCl,ObjRel,Passive,Postmod,Q.has,Q.is,Locative,SubCl,SubRel,GrammarR,Grammar,VocabR,Vocab,CollocR,Colloc,Blocks,ART,LgAnalysis
@@ -160,7 +162,7 @@ Participant,Age,Gender,Occupation,OccupGroup,OtherLgs,Education,EduYrs,ReadEng1,
 ::: callout-tip
 #### Quiz time! {.unnumbered}
 
-7\) Which character is used to separate the values in the file `Dabrowska_2018_L1_data.csv`?
+7\) Which character is used to separate the values in the file `L1_data.csv`?
 
 ```{r echo=FALSE, results="asis"}
 check_question("comma",
@@ -245,7 +247,7 @@ Click on the "New Folder" icon in your Files pane to create a new subfolder call
 
 ## Importing data from a `.csv` file {#sec-ImportingDataCSV}
 
-We will begin by creating a new `R` script in which we will write the code necessary to import the data from @DabrowskaExperienceAptitudeIndividual2019's study in `R`. To do so, from the Files pane in RStudio, click on the analysis folder to open it and then click on the 'New Script' icon in the top-left corner of the Files pane and select 'R Script'. This will open a new, empty `R` script in your Source pane. It is best to always begin by saving a newly created file. Save this empty script with a computer- and human-friendly file name such as as `1_DataImport.R` (@sec-FileNaming). It should now appear in your analysis folder in the Files pane.
+We will begin by creating a new `R` script in which we will write the code necessary to import the data from @DabrowskaExperienceAptitudeIndividual2019's study in `R`. To do so, from the Files pane in RStudio, click on the analysis folder to open it and then click on the 'New Blank File' icon in the menu bar of the the Files pane and select 'R Script'. This will open a new, empty `R` script in your Source pane. It is best to always begin by saving a newly created file. Save this empty script with a computer- and human-friendly file name such as as `1_DataImport.R` (@sec-FileNaming). It should now appear in your analysis folder in the Files pane.
 
 ```{r include = FALSE}
 
@@ -263,21 +265,21 @@ read.csv(file, header = TRUE, sep = ",", quote = "\"",
 This line from the documentation informs us that this function's first argument is the path to the `file` from which we want to import the data. It also informs us that `file` is the only argument that does not have a default value (as it is not followed by an equal sign and a value). In this function, `file` is therefore the only argument that is compulsory. Hence, in theory, all we need to write to import the data is:
 
 ```{r eval=FALSE}
-L1.data <- read.csv(file = "data/Dabrowska_2018_L1_data.csv")
+L1.data <- read.csv(file = "data/L1_data.csv")
 ```
 
 In fact, we could shorten things even further as, unless otherwise specified, `R` will assume that the first value listed after a function corresponds to the function's first argument which, here, is `file`. In other words, this command and the one above are equivalent:
 
 ```{r eval=FALSE}
-L1.data <- read.csv("data/Dabrowska_2018_L1_data.csv")
+L1.data <- read.csv("data/L1_data.csv")
 ```
 
-The file path `"data/Dabrowska_2018_L1_data.csv"` informs `R` that the data is located in a subfolder of the project's working directory called `data` and that, within this `data` subfolder, the file that we want to import is called `Dabrowska_2018_L1_data.csv`. Note that the file extension must be specified (see @sec-FileExtensions). Note, also, the file path is separated with a single forward slash `/`. In `R`, this should work regardless of the operating system that you are using and, in order to be able to easily share your scripts with others, it is recommended that you use forward slashes even if you are running Windows (@sec-FoldersPaths).
+The file path `"data/L1_data.csv"` informs `R` that the data is located in a subfolder of the project's working directory called `data` and that, within this `data` subfolder, the file that we want to import is called `L1_data.csv`. Note that the file extension must be specified (see @sec-FileExtensions). Note, also, the file path is separated with a single forward slash `/`. In `R`, this should work regardless of the operating system that you are using and, in order to be able to easily share your scripts with others, it is recommended that you use forward slashes even if you are running Windows (@sec-FoldersPaths).
 
 Although the command above did the job, in practice, it is often safer to spell things out further to remind ourselves of some of the default settings of the function that we are using in case they need to be checked or changed at a later stage. In this example, we will therefore import the data with the following command:
 
 ```{r eval=FALSE}
-L1.data <- read.csv(file = "data/Dabrowska_2018_L1_data.csv",
+L1.data <- read.csv(file = "data/L1_data.csv",
                     header = TRUE,
                     sep = ",",
                     quote = "\"",
@@ -310,7 +312,7 @@ library(here)
 You can now use the `here()` function to build paths relative to this directory with the following syntax:
 
 ```{r}
-here("data", "Dabrowska_2018_L1_data.csv")
+here("data", "L1_data.csv")
 ```
 
 And you can embed this path in your import command like this:
@@ -319,13 +321,13 @@ And you can embed this path in your import command like this:
 
 library(here)
 
-L1.data <- read.csv(file = here("data", "Dabrowska_2018_L1_data.csv"))
+L1.data <- read.csv(file = here("data", "L1_data.csv"))
 ```
 
 Using {here} makes the paths that you include in your code far more robust. In other words, they are far less likely to fail and break your code when you share your scripts with your colleagues, or run them yourself from different directories or operating systems. For more reasons to use {here}, check out the blog post "[Why should I use the here package when I'm already using projects?](https://malco.io/articles/2018-11-05-why-should-i-use-the-here-package-when-i-m-already-using-projects)" by @barrettWhyShouldUse2018.
 :::
 
-## Importing errors and issues {#sec-ImportingErrors}
+## Importing errors and issues 🥺 {#sec-ImportingErrors}
 
 It is crucial that you check whether your data has genuinely been correctly imported. Here's a list of things to check (in that order):
 
@@ -390,7 +392,7 @@ check_question("L2.data",
                options = c("L2.data", "L1.data", "They have the same number of variables"), 
                type = "radio",
 button_label = "Check answer",
-random_answer_order = TRUE,
+random_answer_order = FALSE,
 right = "That's right!",
 wrong = "Are you sure?")
 check_hint("Remember that, in these two data frames, each colum represents a variable. Use the `View()` function to display the data frames and compare them.", hint_title = "<br>🐭 Click on the mouse for a hint.")
@@ -438,7 +440,7 @@ We begin with the highly versatile function `read.table()`. The `read.csv()` is 
 
 ```{r eval = FALSE}
 
-L1.data <- read.table(file = "data/Dabrowska_2018_L1_data.csv",
+L1.data <- read.table(file = "data/L1_data.csv",
                     header = TRUE,
                     sep = ",",
                     quote = "\"",
@@ -446,7 +448,11 @@ L1.data <- read.table(file = "data/Dabrowska_2018_L1_data.csv",
 
 ```
 
-In @sec-DataFormats, we looked at a DSV file with a `.txt` extension that was separated by tabs. If we change the separator character argument to `\t` for tab, we can import this dataset using the same `read.table()` function:
+### Tab-separated file
+
+In Task 3 in @sec-DSVLibreOffice, you downloaded and examined a DSV file with a `.txt` extension that was separated by tabs: `offlinedataLearners.txt` from @schimkeFirstLanguageInfluence2018.
+
+If we change the separator character argument to `\t` for tab, we can also import this dataset in `R` using the `read.table()` function:
 
 ```{r}
 
@@ -456,6 +462,10 @@ OfflineLearnerData <- read.table(file = "data/offlinedataLearners.txt",
                                         dec = ".")
 
 ```
+
+For the command above to work, you will first need to save the file `offlinedataLearners.txt` to the folder specified in the path. Otherwise, you will get an error message informing you that there is "No such file or directory" (see @sec-ImportingErrors).
+
+### Semi-colon-separated file
 
 @fig-BusterudEAData displays an extract of the dataset `AJT_raw_scores_L2.csv` from an experimental study by @busterudVerbPlacementL32023. Although this DSV file has a `.csv` extension, it is actually separated by semicolons. @fig-BusterudEAData shows that, in this dataset, the comma is used to show the decimal place.
 
@@ -491,9 +501,11 @@ AJT.raw.scores.L2 |>
 
 ```
 
-Here, we can see that the data have been correctly imported as a table. The commas have been correctly converted to decimal points and the empty cells are now labelled `NA`.[^importingdata-3]
+Here, we can see that the data have been correctly imported as a table. The commas have been correctly converted to decimal points and the empty cells are now labelled `NA`.
 
-[^importingdata-3]: If you are wondering why some are labelled `NA` and some `<NA>`, that's because cell F125 in this table contains a hyphen (`-`) rather than either a numeric value or nothing at all for a missing value. As a result, `R` is interpreting this variable (`L3.grade`) as a character string variable rather than a numeric variable. In string variables, `NA` is printed as `<NA>`. If we were to analyse this data further, we would need to convert this erroneous `-` to an `NA`. We can actually do that in the `read.table()` function by specifying that missing values are represented by both empty cells and cells containing only a hyphen using the argument `na.strings = c("", "-")`. [Download the data](https://doi.org/10.18710/JBMAPT) and try it out if you're curious!
+```{r include = FALSE}
+# [^importingdata-3]: If you are wondering why some are labelled `NA` and some `<NA>`, that's because cell F124 in this table contains a hyphen (`-`) rather than either a numeric value or nothing at all for a missing value. As a result, `R` is interpreting this variable (`L3.grade`) as a character string variable rather than a numeric variable. In string variables, `NA` is printed as `<NA>`. If we were to analyse this data further, we would need to convert this erroneous `-` to an `NA`. We can actually do that in the `read.table()` function by specifying that missing values are represented by both empty cells and cells containing only a hyphen using the argument `na.strings = c("", "-")`. [Download the data](https://doi.org/10.18710/JBMAPT) and try it out if you're curious!
+```
 
 ## Using {readr} from the {tidyverse} to import tabular files {#sec-readr}
 
@@ -514,19 +526,19 @@ library(readr)
 
 ### Delimiter-separated values (DSV) files {.unnumbered}
 
-The {readr} package includes functions to import DSV files that are similar, but not identical to the base `R` functions explained above. The main difference is that the {readr} functions load data into an `R` object of type "tibble" rather than "data frame". In practice, this will not make a difference for our work in future chapters. Hence, the following two commands can equally be used to import `Dabrowska_2018_L1_data.csv`:
+The {readr} package includes functions to import DSV files that are similar, but not identical to the base `R` functions explained above. The main difference is that the {readr} functions load data into an `R` object of type "tibble" rather than "data frame". In practice, this will not make a difference for our work in future chapters. Hence, the following two commands can equally be used to import `L1_data.csv`:
 
 ```{r eval=TRUE}
 
 # Import .csv file using the base R function read.csv():
-L1.data <- read.csv(file = "data/Dabrowska_2018_L1_data.csv", 
+L1.data <- read.csv(file = "data/L1_data.csv", 
                     header = TRUE, 
                     quote = "\"")
 
 class(L1.data)
 
 # Import .csv file using the {readr} function read_csv():
-L1.data <- read_csv(file = "data/Dabrowska_2018_L1_data.csv", 
+L1.data <- read_csv(file = "data/L1_data.csv", 
                     col_names = TRUE, 
                     quote = "\"")
 
@@ -541,7 +553,7 @@ There are a few more differences between the two functions that are worth noting
 
 -   The {readr} functions are quicker and are therefore recommended if you are importing large datasets.
 
--   The {readr} functions retains the
+-   In general, the behaviour of {readr} functions is more consistent across different operating systems and locale settings (e.g., the language in which your operating system is set).
 
 Note that, just like `read.csv()` was a special case of `read.table`, the {readr} function `read_csv()` is a special variant of the more general function `read_delim()` that can be used to import data from all kinds of DSV files. Check the help file to find out all the options using `?read_delim`.
 
@@ -584,11 +596,11 @@ Note that, whereas when we used the base `R` function `read.table()` the header 
 
 ### Fixed width files {.unnumbered}
 
-Fixed width files (with file extensions such as `.gz`, .`bz2` or `.xz`) are a less common type of data source in the language sciences. In these text-based files, the values are separated not by a specific character such as the comma or the tab, but by a set amount of white/empty space other than a tab. Fixed width files can be loaded using the [`read_fwf()`](https://readr.tidyverse.org/reference/read_fwf.html) function from {readr}. Fields can be specified by their widths with [`fwf_widths()`](https://readr.tidyverse.org/reference/read_fwf.html) or by their positions with [`fwf_positions()`](https://readr.tidyverse.org/reference/read_fwf.html). :::
+Fixed width files (with file extensions such as `.gz`, .`bz2` or `.xz`) are a less common type of data source in the language sciences. In these text-based files, the values are separated not by a specific character such as the comma or the tab, but by a set amount of white/empty space other than a tab. Fixed width files can be loaded using the [`read_fwf()`](https://readr.tidyverse.org/reference/read_fwf.html) function from {readr}. Fields can be specified by their widths with [`fwf_widths()`](https://readr.tidyverse.org/reference/read_fwf.html) or by their positions with [`fwf_positions()`](https://readr.tidyverse.org/reference/read_fwf.html).
 
 ## Importing files from spreadsheet software
 
-If your data are currently stored in a spreadsheet software (e.g., LibreOffice Calc, Google Sheets, or Microsoft Excel), you can export in to `.csv` or `.tsv`. However, if you do not wish to do this (e.g., because your colleague wishes to maintain the spreadsheet format that includes formatting elements such as bold or coloured cells), there are functions to import these file formats directly into `R`.
+If your data are currently stored in a spreadsheet software (e.g., LibreOffice Calc, Google Sheets, or Microsoft Excel), you can export them to `.csv` or `.tsv`. However, if you do not wish to do this (e.g., because your colleague wishes to maintain the spreadsheet format that includes formatting elements such as bold or coloured cells), there are functions to import these file formats directly into `R`.
 
 For **LibreOffice Calc**, you can install the {readODS} package and use its `read_ods()` function to import `.ods` files. Details about all the options can be found here <https://www.rdocumentation.org/packages/readODS/versions/2.3.0>.
 
@@ -698,7 +710,9 @@ MyStataData <- read_dta("MyStataDataFile.dta")
 
 ## Importing other file formats
 
-As you can imagine, there are many more `R` packages and functions that are available and allow you to import all kinds of other file formats including `.json`, `.html`, various database formats and files with complex structures (see, e.g., <https://rc2e.com/inputandoutput>). In this textbook, we will only deal with DSV files (@sec-DSV).
+In this textbook, we will only deal with DSV files (@sec-DSV) but, as you can imagine, there are many more `R` packages and functions that allow you to import all kinds of other file formats. These include `.xml`, `.json` and `.html` files, various database formats, and other files with complex structures (see, e.g., <https://rc2e.com/inputandoutput>).
+
+In addition, fellow linguists are constantly developing new packages to work with file formats that are specific to our discipline. In the spirit of Open Science (see @sec-OpenScholarship), many are making these packages available to the wider research community by releasing them under open licenses. For example, linguistics M.A. students Katja Wiesner and Nicolas Werner wrote an `R` package to easily import `.eaf` files generated by the annotation software ELAN into `R` as part of a seminar project supervised by Dr. Fahime (Fafa) Same at the University of Cologne (<https://github.com/relan-package/rELAN/?tab=readme-ov-file>).
 
 ## Quick-and-dirty (aka bad!) ways to import data in `R`
 
@@ -720,7 +734,7 @@ They can then import their data file using a **relative path** from the working 
 
 ```{r eval = FALSE}
 
-L1.data <- read.csv(file = "data/Dabrowska_2018_L1_data.csv")
+L1.data <- read.csv(file = "data/L1_data.csv")
 
 ```
 
@@ -732,7 +746,7 @@ In the language sciences, not everyone is aware of the severity of these issues.
 
 ```{r eval = FALSE}
 
-L1.data <- read.csv(file = "/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv")
+L1.data <- read.csv(file = "/Users/lefoll/Documents/UzK/RstatsTextbook/Dabrowska2019/data/L1_data.csv")
 
 ```
 
@@ -741,11 +755,11 @@ Having to work with such a script is particularly laborious because it means tha
 However, should you have to use this method at some point for whatever reason, you can make use of @sec-FoldersPaths which explained how to copy full file paths from a file Explorer or Finder window. Note that if there are spaces or other special characters other than `_` or `-` anywhere in your file path, your import command will fail (see @sec-FileNaming on naming conventions for folders and files). The following command, for instance, will fail and return an error (see @fig-ImportErrorSpace) because the folder "Uni Work" contains a space.
 
 ```{r eval = FALSE}
-L1.data <- read.csv(file = "/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv")
+L1.data <- read.csv(file = "/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/L1_data.csv")
 
 ```
 
-![Error message due to an error in the file path](images/ImportErrorSpace.png){#fig-ImportErrorSpace fig-alt="Screenshot of the Console pane of RStudio showing the above command having been run and having returned an error message: Error in file(file, \"rt\") : cannot open the connection In addition: Warning message: In file(file, \"rt\") :   cannot open file '/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/Dabrowska_2018_L1_data.csv': No such file or directory" width="422"}
+![Error message due to an error in the file path](images/ImportErrorSpace.png){#fig-ImportErrorSpace fig-alt="Screenshot of the Console pane of RStudio showing the above command having been run and having returned an error message: Error in file(file, \"rt\") : cannot open the connection In addition: Warning message: In file(file, \"rt\") :   cannot open file '/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/L1_data.csv': No such file or directory" width="422"}
 
 The only way to fix this issue is to remove the space in the name of the folder (in your File Finder or Navigator window) and then amend the file path in your `R` script accordingly.
 
@@ -758,7 +772,7 @@ RStudio's 'Import Text Data' dialogue box is similar to the one that we saw in L
 As soon as you click on the 'Import' button, the data is imported and opened using the `View()` function for you to check the sanity of the data.
 
 ```{r include=FALSE}
-#To do for Jan: Add several screenshots in this section showing explaining how to import the file Dabrowska_2018_L1_data.csv (from a folder called "data" as explained earlier in the chapter) using RStudio's GUI (i.e. from the Files pane). 
+#To do for Jan: Add several screenshots in this section showing explaining how to import the file L1_data.csv (from a folder called "data" as explained earlier in the chapter) using RStudio's GUI (i.e. from the Files pane). 
 ```
 
 This works a treat so what's not to like? Well, the first problem is that you are not in full control. You cannot select which import function is used; RStudio decides for you. You may have noticed that it chooses to use the {readr} import functions, rather than the base `R` ones. There are lots of good reasons to use the {readr} functions (see above), but it may not be what you wanted to do. When we do research, it is important for us to be in control of every step of the analysis process.
