@@ -24,7 +24,7 @@ This chapter first considers what data means in the context of language research
 -   Computer data formats and file extensions
 -   Sharing and accessing research data and materials
 -   Working with delimiter-separated values (DSV) files
--   The pitfalls of analysing data in spreadsheet programs such as Microsoft Excel, Numbers, or Google Sheets
+-   The pitfalls of spreadsheet programs such as Microsoft Excel, Numbers, and Google Sheets
 
 Along the way, you will get insights into an eye-tracking study involving cute Playmobil figures and a meta-science investigation that highlights the utmost importance of data literacy for research.
 
@@ -32,14 +32,38 @@ Along the way, you will get insights into an eye-tracking study involving cute P
 
 In this book, we are concerned with empirical research in the language sciences, in other words, with research that is based on the analysis of **data**. But what is data exactly? Data can be collected via surveys, measurements, or observations. To begin with, however, these collected datasets are "raw". Data only becomes **information** once we have analysed and interpreted the data in a meaningful way. Hence, just like uncooked pasta does not make a flavourful meal, we must learn to "cook" the raw data to obtain meaningful information.
 
-What kind of data are analysed in the language sciences? To get a rough idea of the range of data types analysed in the language sciences, let us take a look at the IRIS database. IRIS is a public, open repository where anyone can deposit the data, materials, instruments, code, and tools that they used "for research into languages, including first, second, and beyond, and signed language learning, multilingualism, language education, language use, and language processing" [@IRIS2011]. As such, it supports Open Science and Open Scholarship (see @sec-OpenScholarship).
+What kind of data are analysed in the language sciences? To get a rough idea of the range of data types analysed in the language sciences, let us take a look at the [IRIS database](https://iris-database.org).
+
+> IRIS is a collection of instruments, materials, stimuli, data, and data
+> coding and analysis tools used for research into languages, including
+> first, second, and beyond, and signed language learning,
+> multilingualism, language education, language use, and language
+> processing. Materials are freely accessible and searchable, easy to
+> upload (for contributions) and download (for use). [@IRIS2011]
+
+As such, IRIS supports Open Science and Open Scholarship (see @sec-OpenScholarship).
 
 ::: callout-caution
 #### Task 1
 
-Connect to the [IRIS website](https://iris-database.org/). Go to its [Search and Download](https://iris-database.org/search) page and scroll down to the filter option 'Data Type'. Browse through the different data types that are most commonly used in language-related research. For which kinds of studies could these different types of data have been collected?
+In this task and many future tasks, we will make use of the IRIS database.
+
+-   Connect to the [IRIS website](https://iris-database.org/) and navigate to its [Search and Download](https://iris-database.org/search) page.
+-   Scroll down to the filter option 'Data Type'.
+-   Click on 'Data Type' and browse through the different data types that are most commonly used in language-related research.
 
 ![Screenshot from the IRIS database search page (accessed on 17 April 2024)](images/IRISDataTypes.png){#fig-IRISDataTypes fig-alt="Data Type filter dropdown menu with the following visible categories: Oral production (168), Closed response format (157), Open response (105), Judgements (97), Written production (76), Reaction times (62), Qualitative (46)" width="250"}
+
+a\) For which kinds of studies could these different types of data have been collected? Think about both experimental and observational studies.
+
+b\) Which of these data types is most likely to be measured in milliseconds (ms)?
+
+```{r echo=FALSE, results="asis"}
+check_question(answer = c("Reaction times", "reaction times", "Reaction time", "Reaction Time", "Reaction Times", "reaction", "Reaction"), 
+button_label = "Check answer",
+right = "Yes, well done!",
+wrong = "No, check the list of data types on IRIS.")
+```
 :::
 
 ## Types of research data {#sec-ResearchData}
@@ -66,9 +90,9 @@ wrong = "Not quite. There are more reasons.")
 ```
 :::
 
-In research, we usually distinguish between **primary data**, which is the data that you collected yourself, and **secondary data**, which is data that was collected by others. Hence if you were to carry out a new study based on data that you found on IRIS, you would be conducting a secondary data analysis.
+Whilst there are many ways to ensure that as many factors as possible are controlled for, not all *can* be controlled for. What is crucial is that all aspects of the data collection process are well documented so that all factors, whether controlled or not, can be taken into account when analysing the data.
 
-Especially when conducting secondary data analyses, it is crucial that we have enough information about the data itself. This is **metadata**, i.e. data that describes other data. Metadata is crucial for finding, sharing, evaluating, and reusing datasets. Metadata can be generated automatically and stored within the data file. For example, unless this metadata was explicitly deleted or amended, Microsoft Word files typically contain metadata describing who created the file, when it was first created, and when the file was last modified. For some data and projects, it also makes sense to create separate metadata files that contain additional or more detailed metadata.
+In research, we usually distinguish between **primary data**, which is the data that you collected yourself, and **secondary data**, which is data that was collected by others. Hence if you were to carry out a new study based on data that you found on IRIS, you would be conducting a secondary data analysis. Especially when conducting secondary data analyses, it is crucial that we have enough information about the data itself, i.e. **metadata**. Metadata is crucial for finding, sharing, evaluating, and reusing datasets. Metadata can be generated automatically and stored within the data file. For example, unless this metadata was explicitly deleted or amended, Microsoft Word files typically contain metadata describing who created the file, when it was first created, and when the file was last modified. For some data and projects, it also makes sense to create separate metadata files that contain additional or more detailed information about the collected data.
 
 ## Data formats and file extensions {#sec-FileExtensions}
 
@@ -397,20 +421,24 @@ Note that with this method it *may* be possible to prevent Excel from automatica
 
 ## A word of warning about spreadsheet programs ⚠️ {#sec-ExcelWarning}
 
-You should be aware that opening DSV files in spreadsheet programs can corrupt the files! Once a file is corrupted, it is often not possible to retrieve the original data so this is very bad news, indeed. Such problems are particularly frequent when opening DSV files with Microsoft Excel and Google Sheets. This is because the default settings in these programs surreptitiously modify files upon opening. These 'auto-format' modifications include replacing certain values by dates (e.g., changing `3-4` to `March, 4th`) or numbers (e.g., changing `1.23E5` to `123000`)[^data-4], removing leading zeros (e.g., changing `001` to `1`), or misinterpreting certain characters (e.g., the value `-ism` will generate an error because the hyphen is interpreted as minus sign). Not only can these auto-format modifications lead to inaccurate data analysis, in the worst of cases, they can cause data loss. The problem is that, often, users do not realise what the program has done in the background. How bad can this be? Find out by completing the task below.
+You should be aware that opening DSV files in spreadsheet programs can corrupt the files! Once a file is corrupted, it is often not possible to retrieve the original data so this is very bad news, indeed. Such problems are particularly frequent when opening DSV files with Microsoft Excel and Google Sheets. This is because the default settings in these programs surreptitiously modify files upon opening.
+
+These 'auto-format' modifications include replacing certain values by dates (e.g., changing `3-4` to `March, 4th`) or numbers (e.g., changing `1.23E5` to `123000`)[^data-4], removing leading zeros (e.g., changing `001` to `1`), or misinterpreting certain characters (e.g., the value `-ism` will generate an error because the hyphen is interpreted as minus sign).
 
 [^data-4]: In scientific notation, "E" stands for "exponent", which refers to the number of times a number needs to be multiplied by 10. This notation is used as a shorthand way of writing very large or very small numbers. This is why "1.23E5" is interpreted by Excel as 1.23 multiplied by 10 to the power of 5, which is to say: 1.23 multiplied by 100,000. This operation shifts the decimal point five places to the right, resulting in the number 123000.
+
+Not only can these auto-format modifications lead to inaccurate data analysis but, in the worst of cases, they can even cause data loss. The crux of the problem is that often users do not realise what the program has done in the background. How bad can this be? Find out by completing the task below.
 
 ::: callout-caution
 #### Task 4
 
-In the field of genetics, researchers who use spreadsheets for their analyses regularly have their data so badly damaged that it affects the results of their publications. A report about this went viral in 2016, when @ziemannGeneNameErrors2016 published a study in which they reported that a fifth of genetics publications with supplementary `.xls` or `.xlsx` files with gene lists contained errors caused by Excel's auto-formatting behaviour.
+In this task, you will find out how genetics researchers who use spreadsheets for their analyses regularly have their data so badly damaged that it affects the results of their publication. Though we have no statistics on how spreadsheet errors affect the work of linguists, it is (unfortunately) very likely to be just as bad as in genetics.
 
-Click on the link below to read the open-access article "Gene name errors: Lessons not learnt" by @abeysooriyaGeneNameErrors2021 to find out whether the situation has improved since and answer the questions below:
+@ziemannGeneNameErrors2016 reported that a fifth of genetics publications with supplementary `.xls` or `.xlsx` files with gene lists contained errors caused by Excel's auto-formatting behaviour. The results of this study shocked the research community and a report about it went viral. Click on the link below to read the open-access article "Gene name errors: Lessons not learnt" by @abeysooriyaGeneNameErrors2021 to find out whether the situation has improved since 2016 and answer the questions below.
 
 > Abeysooriya, Mandhri, Megan Soria, Mary Sravya Kasu & Mark Ziemann. 2021. Gene name errors: Lessons not learned. PLOS Computational Biology. Public Library of Science 17(7). e1008984. <https://doi.org/10.1371/journal.pcbi.1008984>.
 
-a\) Has the proportion of genetics publications with Excel gene lists affected by these auto-formatting errors decreased since 2016?
+a\) Has the proportion of genetics publications with Excel gene lists affected by auto-formatting errors decreased since 2016?
 
 ```{r echo=FALSE, results="asis"}
 check_question("No, it has remained stable.", options = c("No, it has remained stable.", "No, it increased between 2016 and 2020.", "Yes, it decreased between 2016 and 2020."), 
@@ -423,7 +451,7 @@ wrong = "No. Take another look at Fig. 1C from the paper.")
 
  
 
-b\) Does using LibreOffice Calc also cause these same issues?
+b\) Does using LibreOffice Calc (see @sec-OpenSource) also cause these same issues?
 
 ```{r echo=FALSE, results="asis"}
 check_question("No, but whilst LibreOffice is better than Excel or Google Sheets, it is still less than ideal for data analysis.", options = c("No, but whilst LibreOffice is better than Excel or Google Sheets, it is still less than ideal for data analysis.", "Yes, LibreOffice is just as likely to cause such errors.", "No, if you cannot afford Excel, then LibreOffice Calc is an excellent open-source alternative."), type = "radio", 
