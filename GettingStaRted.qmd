@@ -71,13 +71,13 @@ check_question("R returns an error message because it interprets the word as an 
 2\) Try entering `13^2` in the Console. What does the `^` (caret) operator do?
 
 ```{r Caret-question, echo=FALSE, results="asis"}
-check_question("The ^ operator performs an exponentiation operation.", 
-               options = c("The ^ operator performs an exponentiation operation.", "The ^ operator is used to calculate the modulus of 13, with 2 as the base.", "The ^ operator is used to create a vector with 13 occurrences of the integer 2."), 
+check_question("The ^ operator performs an exponentiation operation, here 13 to the power of 2.", 
+               options = c("The ^ operator performs an exponentiation operation, here 13 to the power of 2.", "The ^ operator calculates the modulus of a number, here of 13 with 2 as the base.", "The ^ operator creates a vector, here with 13 occurrences of the integer 2."), 
                type = "radio",
                button_label = "Check answer", 
                q_id = 2,
                random_answer_order = TRUE,
-               right = "That's right. In this case, it raises 13 to the power of 2 so we get the square of 13, which is why the output is the same as for 13*13.",
+               right = "That's right. Raising 13 to the power of 2 gives us the square of 13. Which is why the output is the same as for 13*13!",
                wrong = "No. Compare the output of the operation 13^2 with 13*13. What do you notice?")
 ```
 
@@ -99,9 +99,11 @@ check_question("There is no difference.",
 
 ## Working with `R` objects
 
-So far, we have used the Console like a calculator. It's important to understand that, just like with a standard calculator, the output of all of our operations was not saved anywhere.
+So far, we have used the Console like a calculator. It's important to understand that, just like with a standard calculator, the output of all of our operations was not saved anywhere. If we want to store values, sequences of values, and the results of computations for later use, `R` allows us to store these as "`R` objects".
 
-`R` allows us to store values, sequences of values, and the results of computations in so-called "objects" for later use. We use the assignment operator (`<-`) to assign a value or sequence of values to an object name.
+### Creating objects
+
+We use the assignment operator (`<-`) to assign a value or sequence of values to an object name.
 
 Write out the following line to create an object called `my.favourite.number` that contains your own favourite number.
 
@@ -122,15 +124,19 @@ my.favourite.word <- "empathy"
 
 Your Environment pane should now contain two objects. You can print the content of a stored object by entering the object name in the Console and then pressing "Enter" (see @fig-ShowObjects).
 
-Tip: If you feeling lazy or simply want to avoid making a typo, you can type only the first few letters of an object name and then press the "Tab" key (`↹` or `⇥`). RStudio will then give you a drop-down menu with possible options. Select the one you want by clicking on it or pressing "Enter".
+[💡 Tip: If you're feeling lazy or simply want to avoid making a typo, you can type just the first few letters of an object name and then press the "Tab" key (`↹` or `⇥`). RStudio will then give you a drop-down menu with possible options. Select the one you want by clicking on it or pressing "Enter".]{.aside .content-visible when-format="html"}
 
 ![Calling up stored objects in the Console to view their content](images/ShowObjects.png){#fig-ShowObjects fig-alt="RStudio screenshot showing two stored objects printed in the console." width="450"}
+
+### Object types
 
 These two objects are of different types. We can use the `class()` function to find out which type of object an object is.
 
 ![Using the `class()` function](images/ShowObjectClass.png){#fig-ShowObjectClass fig-alt="RStudio screenshot showing the object types with the class() function from two stored objects." width="450"}
 
 Here, `my.favourite.number` is a numeric object, while `my.favourite.word` is a character object.
+
+### Naming objects
 
 Object naming conventions in `R` are fairly flexible. We can use dots (`.`), underscores (`_`) and capital letters to make our object names maximally informative and easy for us humans to read. However, spaces and other symbols are not allowed. All of these options work:
 
@@ -162,6 +168,8 @@ check_hint("Four of these object names are problematic and will return errors.",
 
 Object names should not contain spaces or symbols like `!`, nor should they contain hyphens as the hyphen is reserved for the mathematical operator "minus". Digits can be used anywhere except at the beginning of an object name. And whilst it is possible to have special characters such as accented letters like "è", it is not recommended that you use them for object names.
 
+### Overwriting and deleting objects
+
 Object names are unique. If you create a new object with an existing object name, it will overwrite the existing object with the new one. In other words, you will lose the values that you saved in the original object. Try it out by running this line and observing what happens in your Environment pane:
 
 ```{r}
@@ -173,18 +181,18 @@ Earlier on, you created an object called `word2` which contained the string "che
 The command to delete a single object from your environment is `remove()` or `rm()`. Hence, to permanently delete the object `MySecondWord`, you can use either of these commands:
 
 ```{r}
-#| eval: false
-
 remove(MySecondWord)
 rm(MySecondWord)
 
 ```
 
-## Writing and saving `.R` scripts
+## Working with `.R` scripts
 
-If we shut down RStudio right now, we will lose all of our work so far. This is because the objects that we have created are only saved in the environment of our current `R` session. Whilst this might sound reckless, it is actually a good thing: In the previous chapter, we set our Global Options settings in RStudio such that, whenever we restart RStudio, we begin with a clean slate, or a perfectly clean and tidy kitchen. We don't want any dirty dishes or stale ingredients lying around when we enter the kitchen! With this in mind, close RStudio now and open it again to start a new `R` session.
+If we shut down RStudio right now, we will lose all of our work so far. This is because the objects that we have created are only saved in the environment of our current `R` session. Whilst this might sound reckless, it is actually a good thing: In @sec-GlobalOptions we set our 'Global Options' settings in RStudio such that, whenever we restart RStudio, we begin with a clean slate, or a perfectly clean and tidy kitchen. We don't want any dirty dishes or stale ingredients lying around when we enter the kitchen! With this in mind, close RStudio now and open it again to start a new `R` session.
 
 You should now have an empty history in your Console pane and an empty Environment pane. Whilst nobody wants to start cooking in a messy kitchen, it's also true that, if we want to remember what we did in a previous cooking/baking session, we should write it down. The pages of our recipe book are `.R` scripts. In the following, we will see that writing scripts is much better than running everything from the Console. It allows us to save and rerun our entire analysis pipeline any time we want. It also ensures that our analyses are reproducible and saves us time as we don't have to rewrite our code every time. Crucially, if we made a mistake at any stage, we can go back and correct it and rerun the entire corrected script at the click of a button.
+
+### Creating a new `.R` script
 
 There are three ways to create a new `.R` script in RStudio. Pick the one that you like best:
 
@@ -192,9 +200,13 @@ There are three ways to create a new `.R` script in RStudio. Pick the one that y
 2.  Click on the icon with a white page and a green plus button in the top left corner of the tool bar.
 3.  Use the keyboard shortcut `Shift + Ctrl/Cmd + N`.
 
-Whichever option you chose, RStudio should have opened an empty file in a fourth pane. This is the “Source pane” and it should have appeared in the top-left corner of your RStudio window.
+Whichever option you chose, RStudio should have opened an empty file in a fourth pane (see @fig-NewScript). This is the “Source pane” and it should have appeared in the top-left corner of your RStudio window.
 
-We can now type our code in this empty `.R` script in the Source pane, just like we did in the Console. Type the following lines of code:
+![RStudio window showing a new, empty `.R` script that has yet to be saved](images/RStudioNewRScript.png){#fig-NewScript fig-alt="Screenshot showing a new, empty .R script that has yet to be saved in the top-right pane of RStudio" width="557"}
+
+### Running code from an `.R` script
+
+We can now type our code in this empty `.R` script in the Source pane, just like we did in the Console. Type the following lines of code in the script (see @fig-NewScript2):
 
 ```{r}
 #| eval: false
@@ -204,15 +216,17 @@ my.favourite.number <- 13
 my.favourite.word <- "empathy"
 ```
 
-You will have noticed that when you pressed "Enter" after every line, nothing happened: Nowhere can we see the result of `13*13`, nor have our two objects been saved to the environment as the Environment pane remains empty (see @fig-NewScript). Just like a recipe for a cake is not an actual, delicious cake, but simply a set of instructions, a script is only a text file that contains lines of code as instructions. For these instructions to be executed, we need to send them to the `R` Console where they will be interpreted as `R` code.
+You will have noticed that when you pressed "Enter" after every line, nothing happened: Nowhere can we see the result of `13*13`, nor have our two objects been saved to the environment as the Environment pane remains empty (see @fig-NewScript2). Just like a recipe for a cake is not an actual, delicious cake, but simply a set of instructions, a script is only a text file that contains lines of code as instructions. For these instructions to be executed, we need to send them to the `R` Console where they will be interpreted as `R` code.
 
-![Writing code in a script](images/NewScript.png){#fig-NewScript fig-alt="RStudio window showing new R script with the following lines of code: 13*13 my.favourite.number <- 13 my.favourite.word <- \"empathy\". The script is currently unsaved. The environment pane is empty and so is the console output."}
+![Writing code in an `.R` script](images/NewScript.png){#fig-NewScript2 fig-alt="RStudio window showing new R script with the following lines of code: 13*13 my.favourite.number <- 13 my.favourite.word <- \"empathy\". The script is currently unsaved. The environment pane is empty and so is the console output."}
 
-To send a line of code to the Console, or "run" a line of code, select the line that you want to run, or place your mouse cursor anywhere within that line and then click on the "Run" button (in the top-right corner of the pane, see @fig-NewScript) or use the keyboard shortcut `Ctrl/Cmd + Enter`.
+To send a line of code to the Console (also referred to as "running" a line of code), select the line that you want to excecute, or place your mouse cursor anywhere within that line and then click on the "Run" button (in the top-right corner of the pane, see @fig-NewScript) or use the keyboard shortcut `Ctrl/Cmd + Enter`.
 
-Run the three lines of code of your script using these two options and check that a) you are seeing the result of the mathematical operation in the Console output and b) two objects have been added to your environment.
+Try out these two options to run the three lines of code of your script and check that a) you are seeing the result of the mathematical operation in the Console output and b) two objects have been added to your environment.
 
-It is now very easy to rerun this script any time we want to redo this calculation and recreate these two `R` objects. However, our `.R` script is not yet saved! RStudio is warning us about this by highlighting the file name "Untitled1\*" in red (see @fig-NewScript). Just like with any unsaved computer file, if we were to shut RStudio down now, we would loose our work. So, let us save this `.R` script locally, that is on our own computer. To do so either:
+### Saving an `.R` script
+
+It is now very easy to rerun this script any time we want to redo this calculation and recreate these two `R` objects. However, our `.R` script is not yet saved! RStudio is warning us about this by highlighting the file name "Untitled1\*" in red (see @fig-NewScript). Just like with any unsaved computer file, if we were to shut RStudio down now, we would lose our work. So, let us save this `.R` script locally, that is on our own computer. To do so either:
 
 1.  Navigate to the top menu item "File" and then click on "Save",
 2.  Click on the save icon 💾, or
@@ -220,11 +234,11 @@ It is now very easy to rerun this script any time we want to redo this calculati
 
 Give your script a meaningful file name. Remember that file names should be both computer-readable and human-readable. If you navigate to the folder where you saved your `.R` script, you should see that its file extension is `.R`. You should also see that it is a tiny file because it contains nothing more than a few lines of text. If you double click on an `.R` file, RStudio should automatically open it. However, if you wanted, you could open `.R` files with any text-processing software, such as LibreOffice Writer or Microsoft Word.
 
-### Writing comments
+### Writing comments in scripts
 
 Just like in a recipe book, in addition to writing the actual instructions, we can also write some notes, for example to remind ourselves of why we did things in a particular way or for what occasion we created a special dish. In programming, notes are called "comments" and they are typically preceded by the `#` symbol.
 
-Thus, if a line starts with a `#` symbol, we say that it is "commented out". RStudio helpfully displays lines that are commented out in a different colour. These lines will not be interpreted as code even if you send them to the Console. Write the following lines in your script and try to run them.
+Thus, if a line starts with a `#` symbol, we say that it is "commented out". RStudio helpfully displays lines that are commented out in a different colour. These lines will not be interpreted as code even if you send them to the Console. Write the following lines in your script and then try to run them.
 
 ```{r}
 #13^13
@@ -235,7 +249,7 @@ Thus, if a line starts with a `#` symbol, we say that it is "commented out". RSt
 As you can see, nothing happens. You can also add comments next to a line of interpretable code. In this case, the code is interpreted up until the `#`. This can be helpful to make a note of what a line of code does, e.g.:
 
 ```{r}
-#| eval: false
+#| eval: true
 
 sqrt(169) # Here the sqrt() function will compute the square root of 169.
 
@@ -316,8 +330,16 @@ New.French.Word == "écogeste"
 New.French.Word != "trottinettiste"
 ```
 
+You will have noticed that the relational operator `==` tests whether two strings are the same and returns `TRUE` if that's the case. In contrast, `!=` tests whether two strings are different and will therefore return `FALSE` if they are not different.
+
 ::: callout-tip
 #### Quiz time!
+
+Above, we created the following `R` character string object:
+
+```{r}
+New.French.Word <- "écogeste"
+```
 
 7\) Why does this line of code return `FALSE` even though `New.French.Word` was assigned the character string "écogeste"?
 
@@ -342,7 +364,7 @@ check_question("Because \"écogeste\" and \"ecogeste\" are two different strings
 
  
 
-8\) Why does this line of code return `FALSE` even though `New.French.Word` was assigned the character string "écogeste"?
+8\) Why does this line of code return `FALSE`?
 
 ```{r}
 
@@ -365,7 +387,7 @@ check_question("Because this string includes an additional space character.",
 
  
 
-9\) Why does this line of code return `FALSE` even though `New.French.Word` was assigned the character string "écogeste"?
+9\) Why does this line of code return `FALSE`?
 
 ```{r}
 
@@ -381,14 +403,14 @@ check_question("Because R is case-sensitive.",
                button_label = "Check answer", 
                q_id = 9,
                random_answer_order = TRUE,
-               right = "Correct! Being case-sensitive means that lower-case letters and capital-case letters are interprted as two different sets of characters.",
+               right = "Correct! Being case-sensitive means that lower-case letters and upper-case letters are interpreted as two different sets of characters.",
                wrong = "No, that's not the reason.")
 
 ```
 
  
 
-10\) Why does this line of code return `FALSE` even though `New.French.Word` was assigned the character string "écogeste"?
+10\) Why does this line of code return `FALSE`?
 
 ```{r}
 
@@ -416,7 +438,7 @@ When `R` cannot interpret your code, the Console will display an error message i
 
 ![The process of fixing programming errors is called "debugging" and often involves an array of emotions (artwork by [\@allison_horst](https://allisonhorst.com/allison-horst)).](images/DebuggingMonsters.png){#fig-DebuggingMonster fig-alt="A cartoon of a fuzzy round monster face showing 10 different emotions experienced during the process of debugging code. The progression goes from (1) “I got this” - looking determined and optimistic; (2) “Huh. Really thought that was it.” - looking a bit baffled; (3) “...” - looking up at the ceiling in thought; (4) “Fine. Restarting.” - looking a bit annoyed; (5) “OH WTF.” Looking very frazzled and frustrated; (6) “Zombie meltdown.” - looking like a full meltdown; (7) (blank) - sleeping; (8) “A NEW HOPE!” - a happy looking monster with a lightbulb above; (9) “insert awesome theme song” - looking determined and typing away; (10) “I love coding” - arms raised in victory with a big smile, with confetti falling."}
 
-As you begin your journey learning to code in `R`, you are very likely to encounter one problem on a regular basis. So let's take a closer look at that error. Copy and paste this exact line of code and try to run it in your `R` Console:
+As you begin your journey of learning to code in `R`, you are very likely to encounter one problem on a regular basis. So let's take a closer look at that error. Copy and paste this exact line of code and try to run it in your `R` Console:
 
 ```{r}
 #| eval: false
@@ -430,7 +452,7 @@ Notice that, in this erroneous line of code, we have (intentionally) forgotten t
 
 There are two ways to fix this. The first method is to complete the line of code directly in the Console. In this case, this means adding the closing bracket "`)`" after the "`+`" and hitting "Enter". Now that the line has been completed, `R` is able to interpret it as an `R` command and will output the result of the operation.
 
-If you are running a line of code just once, from the Console, this first method is fine. As we have seen above, however, most of the time, you will write your code in a script rather than in the Console. So this first, on-the-fly, method is only recommendable for lines of code that you will genuinely only need once. These include commands to install packages, like `install.packages("janeaustenr")`, or to get consult documentation files, e.g., `help(janeaustenr)`.
+If you are running a line of code just once, from the Console, this first method is fine. As we have seen above, however, most of the time, you will write your code in a script rather than in the Console. So this first on-the-fly method is only recommendable for lines of code that you will genuinely only need once. These include commands to install packages, like `install.packages("janeaustenr")`, or to consult documentation files, e.g., `help(janeaustenr)`.
 
 Given that we will mostly be working in scripts, let's now generate this error from an `.R` script. To do so, copy and paste the erroneous line of code in your `.R` script and try to run it by either clicking on the "Run" icon or using the shortcut `Ctrl/Cmd + Enter`:
 
