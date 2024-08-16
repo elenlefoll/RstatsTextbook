@@ -1,0 +1,639 @@
+---
+engine: knitr
+bibliography: references.bib
+---
+
+# Variables and functions
+
+```{r include=FALSE}
+library(checkdown)
+library(here)
+library(tidyverse)
+
+L1.data <- read.csv(file = here("data", "L1_data.csv"))
+L2.data <- read.csv(file = here("data", "L2_data.csv"))
+```
+
+::: callout-warning
+### Prerequisites
+
+In this chapter and the following, all analyses are based on data from:
+
+> Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <https://doi.org/10.1111/lang.12323>.
+
+You will only be able to reproduce the analyses and answer the quiz questions from this chapter if you have successfully imported the two data sets from @DabrowskaExperienceAptitudeIndividual2019. To import the data, follow the instructions from @sec-RProject to @sec-ImportingDataCSV and complete Task 1.
+:::
+
+#### **Chapter overview** {.unnumbered}
+
+In this chapter, you will learn how to:
+
+-   Use base `R` functions to inspect tabular data
+-   Inspect and access individual variables
+-   Access individual data points
+-   Use simple base `R` functions to inspect variables
+-   Change the default arguments of functions
+-   Combine functions using two methods
+
+## Inspecting tabular data
+
+In @sec-ImportingErrors, we saw that we can use the `View()` function to display tabular data in a format that resembles that of a spreadsheet programme.
+
+This particular dataset is both long and wide so you will need to scroll in both directions to view all the data. RStudio also provides a filter option and a search tool (see @fig-ViewData1). Note that both can only be used for visual inspection. You cannot alter the dataset in any way using these tools.
+
+```{r eval=FALSE}
+View(L1.data)
+
+```
+
+![The L1.data object as visualised using the `View()` function in RStudio](images/ViewL1data.png){#fig-ViewData1 fig-alt="RStudio tab showing the first 22 rows and 7 columns of the L1.dataset. The filter and search buttons at the top of the tab are circled in red."}
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q1.**]{style="color:green;"} The `View()` function is more user-friendly than attempting to examine the full table in the Console. Try to display the full L2.dataset in the Console by using the command `L2.data` which is shorthand for `print(L2.data)`. What happens?
+
+```{r echo=FALSE, results="asis"}
+check_question("R only displays the first 32 rows and the columns are not aligned because the Console window is not wide enough.", 
+               options = c("R only displays the first 32 rows and the columns are not aligned because the Console window is not wide enough.", 
+               "R produces an error message because there are too many rows and the Console window is not long enough.", 
+               "The R Console prints the data in a randomly jumbled way.",
+               "The R Console prints out all the data, but not the column headers."), 
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right. The printed message \"[ reached 'max' / getOption(\"max.print\") -- omitted 45 rows ]\" is not an error, but merely a message informing us that not all rows could be printed.",
+wrong = "No, that's not what is happening. Try scrolling up within the Console window to better understand what is going on.")
+```
+
+ 
+:::
+
+In practice, it is often useful to printing subsets of a dataset in the Console to quickly check the sanity of the data. To do so, we can use the function `head()` that prints the first six rows of tabular data.
+
+```{r}
+head(L1.data)
+```
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q2.**]{style="color:green;"} Six is the default number of rows printed by the `head()` function. Have a look at the function's help file using the command `?head` to find out how to change this default setting. How would you get `R` to print the first 10 lines of `L2.data`?
+
+```{r echo=FALSE, results="asis"}
+check_question(c("head(L2.data, n = 10)", "head(L2.data, n = 10L)", "head(L2.data, 10)"),
+               options = c("head(L2.data, n = 10)", 
+                           "head(L2.data n = 10L)",
+                           "head(L2.data, n = 10L)",
+                           "head(L2.data, L = 10)",
+                           "head(L2.data, rows = 10)",
+                           "head(L2.data, 10)"), 
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right! In fact, three of the above options will work. Try them out to work out which ones they are!",
+wrong = "No, that won't display the first 10 rows of the dataset. Try it out for yourself!")
+```
+
+ 
+:::
+
+## Variables and `R` data types
+
+In tidy data formats (see \*\*), each row corresponds to one observation and each column to a variable. Each cell, therefore, corresponds to a single data point, which is the value of a specific variable (column) for a specific observation (row). As we will see in the following chapters, this data structure allows for efficient and intuitive data manipulation, analysis, and visualisation.
+
+The `names()` functions returns the names of all of the columns of a data frame. Given that the datasets from @DabrowskaExperienceAptitudeIndividual2019 are 'tidy', this means that `names(L1.data)` returns a list of all the variables in the L1 dataset.
+
+```{r}
+names(L1.data)
+```
+
+A useful way to get a quick and informative overview of the variables of a large dataset is to use the function `str`, which was mentioned in @sec-ImportingErrors, and which returns the "internal structure" of any `R` object. It is particular useful for large datasets with many variables.
+
+```{r}
+str(L1.data)
+```
+
+At the top of its output, the function `str(L1.data)` first informs us that `L1.data` is a **data frame** object, consisting of 90 observations (i.e. rows) and 31 variables (i.e. columns). Then, it returns a list of all of the variables included in this data frame. Each line starts with a `$` sign and corresponds to one variable. First, the name of the variable (e.g. `Occupation`) is printed, followed by the variable's `R` data type (e.g. `chr` for a character string variable), and then its values for the first few rows of the table (e.g. we can see that the first participant in this dataset was a "Student" and the second a "Student/Support Worker").
+
+Compare the outputs of the `str()` and `head()` functions in the Console with that of the `View()` function to understand the different ways in which the same dataset can be examined in RStudio.
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q3.**]{style="color:green;"} Use the `str()` function to examine the internal structure of the L2 dataset. How many variables are there in the L2 dataset?
+
+```{r echo=FALSE, results="asis"}
+check_question("45",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right, well done!",
+wrong = "No, check the first line of the output of `str(L2.data)`.")
+```
+
+ 
+
+[**Q4.**]{style="color:green;"} Which of these variables can be found in the L2 dataset, but not the L1 one?
+
+```{r echo=FALSE, results="asis"}
+check_question(c("NativeLg", "FirstExp", "Arrival", "EngWork"),
+               options = c("NativeLg", "FirstExp", "Arrival", "EngWork", "EduYrs", "OtherLgs"), 
+               type = "check",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right! And there are more variables that are specific to the L2 dataset but which are not listed here.",
+wrong = "Not quite. Compare the outputs of `names(L1.data)` and `names(L2.data)` again.")
+check_hint("Try using the `str()` or the `names()` functions to compare the two datasets.", hint_title = "😇 Hover for a hint", type = "onmouseover")
+
+```
+
+ 
+
+[**Q5.**]{style="color:green;"} Which type of `R` object is the variable `Arrival` stored as?
+
+```{r echo=FALSE, results="asis"}
+check_question("integer",
+               options = c("integer",
+                           "string character",
+                           "digit",
+                           "interest",
+                           "intelligence"), 
+               type = "check",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right! `int` is a subset of the numeric data type. It stands for 'integer' which is a whole number without a decimal place.",
+wrong = "No, that's not it.")
+check_hint("You can find the answer in the output of the command `str(L2.data)`", hint_title = "😇 Hover for a hint", type = "onmouseover")
+
+```
+
+ 
+
+[**Q6.**]{style="color:green;"} How old was the third participant listed in the L2 dataset when they first moved to an English-speaking country?
+
+```{r echo=FALSE, results="asis"}
+check_question("19", 
+button_label = "Check answer",
+right = "Yes, well done!",
+wrong = "No. Have a look at the third number printed after `$ Arrival` in the output of the command `str(L2.data)`")
+check_hint("You can find the answer in the output of the command `str(L2.data)`", hint_title = "😇 Hover for a hint", type = "onmouseover")
+```
+
+ 
+:::
+
+We can call up individual variables within a data frame using the `$` operator. This displays all of the participants' values for this one variable. As shown below, this works for any type of variable.
+
+```{r}
+L1.data$Gender
+
+L1.data$Age
+```
+
+Before doing any data analysis, it is crucial to carefully visually examine the data to spot any problems. Ask yourself:
+
+-   Do the values look plausible?
+-   Are there any missing values?
+
+Looking at the `Gender` and `Age` variables, we can see that all the L1 participants declared being either 'male' (`"M"`) or 'female' (`"F"`), that the youngest were 17 years old, and that no participant was improbably old. A single improbable value is likely to be the result of a data entry error, e.g. a participant or researcher entered `188` as an age, instead of `18`. If you spot lots of improbable or outright weird values (e.g. `C`, `I` and `PS` as age values!), something is likely to have gone wrong during the data import process (see @sec-ImportingErrors).
+
+Just like we can save individual numbers and words as `R` objects to our `R` environment, we can also save individual variables as individual `R` objects. As we saw in @sec-WorkingRObjects, in this case, the values of the variable are not printed in the Console, but rather saved to our `R` environment.
+
+```{r}
+L1.Occupation <- L1.data$Occupation
+```
+
+If we want to display the content of this variable, we must print our new `R` object by calling it up with its name, e.g. `L1.Occupation`. Try it out! As listing all of the all of the L1 participant's jobs makes for a very long list, below, we only display the first six values using the `head()` function.
+
+```{r}
+head(L1.Occupation)
+```
+
+## Accessing individual data points
+
+We can also access individual data points from a variable using the index operator, the square brackets (`[]`). For example, we can access the `Occupation` value for the fourth L1 participant by specifying that we only want the fourth element of the `R` object `L1.Occupation`.
+
+```{r}
+L1.Occupation[4]
+```
+
+We can also do this from the `L1.data` data frame object directly. To this end, we use a combination of the `$` and the `[]` operators.
+
+```{r}
+L1.data$Occupation[4]
+```
+
+We can access a continuous range of data points using the `:` operator.
+
+```{r}
+L1.data$Occupation[10:15]
+
+```
+
+Or, if they are not continuous, we can list the numbers of the values that we are interesting in using the combine function (`c()`) and commas separating each index value.
+
+```{r}
+L1.data$Occupation[c(11,13,29,90)]
+```
+
+It is also possible to access data points from a table by specifying both the number of the row and the number of the column of the relevant data point(s) using the following pattern:
+
+```         
+[row,column]
+```
+
+For example, given that we know that `Occupation` is stored in the fourth column of `L1.data`, we can find out the occupation of the L1 participant in the 60^th^ row of the dataset like this:
+
+```{r}
+L1.data[60,4]
+```
+
+All of these approaches can be combined. For example, here we access the values of the second, third, and fourth columns for the 11^th^, 13^th^, 29^th^, and 90^th^ L1 participants.
+
+```{r}
+L1.data[c(11,13,29,90),2:4]
+```
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+The following two quiz questions focus on the `NativeLg` variables from the L2 dataset (`L2.data`).
+
+[**Q7.**]{style="color:green;"} Use the index operators to find out the native language of the 26^th^ L2 participant.
+
+```{r echo=FALSE, results="asis"}
+check_question("Polish",
+               options = c("Cantonese", "Chinese", "German", "Italian", "Greek", "Lithuanian", "Mandarin", "Polish", "Russian", "Spanish"),
+button_label = "Check answer",
+right = "Brawo! 🎉",
+wrong = "That's incorrect. 😔 Use the command `L2.data$NativeLg[26]` to find out which it is.")
+```
+
+ 
+
+[**Q8.**]{style="color:green;"} Which command(s) can you use to display only the Gender, Occupation, Native language, and Age of the last participant listed in the L2 dataset?
+
+```{r echo=FALSE, results="asis"}
+check_question(c("L2.data[67,c(2,3,5,9)]", "L2.data[67,c(2:3,5,9)]", "L2.data[67 , c(2,3,5,9)]"),
+               options = c("L2.data[67,c(2,3,5,9)]", "L2.data[67 , c(2,3,5,9)]", "L2.data[67,c(2:3,5,9)]", "L2.data[67:c(2,3,5,9)]", "L2.data[-1:c(2,3,5,9)]", "L2.data[90,c(2:3,5,9)]"),
+button_label = "Check answer",
+type = "check",
+random_answer_order = TRUE,
+right = "Great job!",
+wrong = "Not quite. Try out these options to find out for yourself which ones work and which don't.")
+check_hint("Using `-1` as an index to access the last row is a neat trick in Python, but it sadly doesn't work in `R`.", hint_title = "😇 Hover for a hint", type = "onmouseover")
+
+```
+
+ 
+:::
+
+## Using built-in `R` functions
+
+We know from our examination of the L1 dataset from @DabrowskaExperienceAptitudeIndividual2019 that it includes 90 English native speaker participants. To find out their average age, we could add up all of their ages and divide the sum by 90.
+
+```{r}
+(21 + 38 + 55 + 26 + 55 + 58 + 31 + 58 + 42 + 59 + 32 + 27 + 60 + 51 + 32 + 29 + 41 + 57 + 60 + 18 + 41 + 60 + 21 + 25 + 26 + 60 + 57 + 60 + 52 + 25 + 23 + 42 + 59 + 30 + 21 + 21 + 60 + 51 + 62 + 65 + 19 + 65 + 29 + 38 + 37 + 42 + 20 + 32 + 29 + 29 + 27 + 28 + 29 + 25 + 33 + 25 + 25 + 25 + 52 + 25 + 53 + 22 + 65 + 60 + 61 + 65 + 65 + 61 + 30 + 30 + 32 + 30 + 39 + 29 + 55 + 18 + 32 + 31 + 20 + 38 + 44 + 18 + 17 + 17 + 17 + 17 + 17 + 17 + 17 + 17) / 90
+```
+
+Of course, we would much rather not write all of this out! Especially, as we are very likely to make errors in the process. Instead, we can use the base `R` function `sum()` to add up all of the L1 participant's ages and divide that by 90.
+
+```{r}
+sum(L1.data$Age) / 90
+```
+
+This already looks much better, but it's still less than ideal: What if we decided to exclude some participants (e.g., because they did not complete all of the experimental tasks)? Or decided to add data from more participants? In all of these cases, 90 will no longer be the correct denominator to calculate their average age! That's why it is better to work out the denominator by computing the total number of values in the variable of interest. To this end, we can use the `length()` function, which returns the number of values in any given vector.
+
+```{r}
+length(L1.data$Age)
+```
+
+We can then combine the `sum()` and the `length()` functions to calculate the participants' average age.
+
+```{r}
+sum(L1.data$Age) / length(L1.data$Age)
+```
+
+Base `R` includes lots of useful functions, especially to do statistics. Hence, it will come as no surprise to find that there is a built-in function to calculate mean average values. It is called `mean()` and is very simple to use.
+
+```{r}
+mean(L1.data$Age)
+```
+
+If you save the values of a variable to your `R` session environment, you do not need to use the name of the dataset and the `$` sign to calculate its mean. Instead, you can directly apply the `mean()` function to the stored `R` object.
+
+```{r}
+# Saving the values of the Age variable to a new R object called L1.Age:
+L1.Age <- L1.data$Age
+# Applying the mean() function to this new R object:
+mean(L1.Age)
+```
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q9.**]{style="color:green;"} How does the average age of the L2 participants in @DabrowskaExperienceAptitudeIndividual2019 compare to that of the L1 participants?
+
+```{r echo=FALSE, results="asis"}
+check_question("On average, the L2 participants are younger than the L1 participants.", 
+               options = c("On average, the L2 participants are younger than the L1 participants.", 
+               "On average, the L2 participants are older than the L1 participants.", 
+               "On average, the L2 participants are the same age than the L1 participants.",
+               "Age is not comparable across two different datasets."), 
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right!",
+wrong = "No, this is incorrect. Compare the results of the commands `mean(L2.data$Age)` and `mean(L1.data$Age)`.")
+```
+
+ 
+:::
+
+::: callout-caution
+#### Task 1
+
+For this task, you first need to check that you have saved the following two variables from the L1 dataset to your `R` environment.
+
+```{r}
+L1.Age <- L1.data$Age
+L1.Occupation <- L1.data$Occupation
+```
+
+1\) Below is a list of useful base `R` functions. Try them out with the variable `L1.Age`. What does each function do? Make a note by writing a comment next to each command (see @sec-Comments). The first one has been done for you.
+
+```{r eval = FALSE}
+mean(L1.Age) # The mean() function returns the mean average of a set of number.
+min()
+max()
+sort()
+length()
+mode()
+class()
+table()
+summary()
+
+```
+
+2\) `Age` is a numeric variable. What happens if you try these same functions with a character string variable? Find out by trying them out with the variable `L1.Occupation` which contains words rather than numbers.
+
+ 
+:::
+
+::: {.callout-note collapse="true"}
+#### Click here for the solutions to Task 1
+
+As you will have seen, often the clue is in the name of the function - but not always! 😉
+
+```{r eval = FALSE}
+mean(L1.Age) # The mean() function returns the mean average of a set of number.
+mean(L1.Occupation) # It does not make sense to calculate a mean average value of a set of words, therefore R returns an 'NA' (not applicable) and a warning in red explaining that the mean() function expects a numeric or logical argument.
+
+min(L1.Age) # For a numeric variable, min() returns the lowest numeric value.
+min(L1.Occupation) # For a string variable, min() returns the first value sorted alphabetically.
+
+max(L1.Age) # For a numeric variable, min() returns the highest numeric value.
+max(L1.Occupation) # For a string variable, max() returns the last value sorted alphabetically.
+
+sort(L1.Age) # For a numeric variable, sort() returns all of the values of the variable ordered from the smallest to the largest.
+sort(L1.Occupation) # For a string variable, sort() returns of all of the values of the variable in alphabetical order.
+
+length(L1.Age) # The function length() returns the number of values in the variable.
+length(L1.Occupation) # The function length() returns the number of values in the variable.
+
+mode(L1.Age) # The function mode() returns the R data type that the variable is stored as.
+mode(L1.Occupation) # The function mode() returns the R data type that the variable is stored as.
+
+class(L1.Age) # The function mode() returns the R object class that the variable is stored as.
+class(L1.Occupation) # The function mode() returns the R object class that the variable is stored as.
+
+table(L1.Age) # For a numeric variable, the function table() outputs a table that tallies the number of occurrences of each unique value in a set of values and sorts them in ascending order.
+table(L1.Occupation) # For a string variable, the function table() outputs a table that tallies the number of occurrences of each unique value in a set of values and sorts them alphabetically.
+
+summary(L1.Age) # For a numeric variable, the function summary() outputs six values that, together, summarise the set of values contained in this variable: the minimum and maximum values, the first and third quartiles (more on this in Chapter *), and the mean and median (more on this in Chapter *).
+summary(L1.Occupation) # For a string variable, the summary() function only outputs the length of the string vector, its object class and data mode. 
+```
+:::
+
+### Function arguments
+
+All of the functions that we have looked at this chapter so far work with just a single argument: either a vector of values (e.g. a variable from our dataset as in `mean(L1.data$Age)`) or an entire tabular dataset (e.g. `str(L1.data)`). When we looked at the `head()` function, we saw that, per default, it displays the first six rows but that we can change this by specifying a second argument in the function. In `R`, arguments within a function are always separated by a comma.
+
+```{r}
+head(L1.Age, n = 6)
+```
+
+The names of the argument can be specified but do not have to be if they are listed in the order specified in the documentation. You can check the 'Usage' section of a function's help file (e.g. using `help(head)` function or `?head`) to find out the order of the arguments. Run the following commands and compare their output:
+
+```{r eval = FALSE}
+head(x = L1.Age, n = 6)
+head(L1.Age, 6)
+head(n = 6, x = L1.Age)
+head(6, L1.Age)
+```
+
+Whilst the first three return exactly the same output, the third returns an error because the argument names are not specified and are not in the order specified in the function's help file. To avoid making errors and confusing your collaborators and/or future self, it's good practice to explicitly name all the arguments except the most obvious ones.
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+Look at the two lines of code and their outputs below.
+
+```{r}
+L1.data$Vocab
+round(L1.data$Vocab)
+```
+
+[**Q10.**]{style="color:green;"} Based on your observations, what does the `round()` function do?
+
+```{r echo=FALSE, results="asis"}
+check_question("The round() function rounds off numbers to the nearest whole number.", 
+               options = c("The round() function displays just the first two digits of any number.", 
+                           "The round() function rounds off numbers to the nearest whole number.",
+               "The round() function is designed to save screen space for smaller displays.", 
+               "The round() function displays fewer values for ease of reading."),
+               type = "radio",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right. The mean age for L2 participants is 32.72.",
+wrong = "Are you sure? Try out the `round()` function with other numbers to find out more.")
+```
+
+ 
+
+[**Q11.**]{style="color:green;"} Check out the 'Usage' section of the help file on the `round()` function to find out how to round the `Vocab` values in the L1 dataset to two decimal places. How can this be achieved?
+
+```{r echo=FALSE, results="asis"}
+check_question(c("round(L1.data$Vocab, 2)",
+                 "round(L1.data$Vocab, digits = 2)"),
+               options = c("round(L1.data$Vocab, 2)",
+                           "round(L1.data$Vocab, digits = 2)",
+                           "round(L1.data$Vocab: digits = 2)",
+                           "round(L1.data$Vocab, digits = -4)"), 
+               type = "check",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right.",
+wrong = "Not quite. Try out these commands to find out which ones work as expected.")
+check_hint("Two options are correct because, as long as the arguments are listed in the correct order, we do not have to specify the names of the arguments.", hint_title = "😇 Hover for a hint", type = "onmouseover")
+
+```
+
+ 
+:::
+
+## Combining functions
+
+Combining functions is where the real fun starts with programming! For example, if we want to compute participant's average age to two decimal places, we need to combine the `mean()` function and the `round()` function. We could achieve this in two steps.
+
+```{r}
+# Step 1:
+L1.mean.age <- mean(L1.Age)
+# Step 2:
+round(L1.mean.age, digits = 2)
+
+```
+
+In step 1, we compute the mean value and save it as an `R` object and, in step 2, we pass this object through the `round()` function with the argument `digits = 2`. There is nothing wrong with this method, but it often require lots of intermediary `R` objects, which can get rather tiresome.
+
+In the following, we will look at two further ways to combine functions in `R`: nesting and piping.
+
+### Nested functions
+
+The first method involves lots of brackets (also known as 'parentheses'). This is because in nested functions, one function is placed inside another function. The inner function is evaluated first, and its result is passed to the next outer function. Here's an example:
+
+```{r}
+round(mean(L1.Age))
+```
+
+In this example, the `mean()` function is nested inside the `round()` function. The `mean()` function calculates the mean of `L1.Age`, and the result is passed to the `round()` function, which rounds the result to the nearest integer.
+
+You can also pass additional arguments to any of the functions, but you must make sure that you place the arguments within the correct set of brackets.
+
+```{r}
+round(mean(L1.Age), digits = 2)
+```
+
+In this example, the argument `digits = 2` belongs to the outer function `round()`; hence it must be placed within the outer set of brackets.
+
+In theory, you can nest as many functions as you like, but things can get quite chaotic after more than a couple of functions. You need to make sure that you can trace back which arguments and which brackets belong to which function (see @fig-NestedFunctions).
+
+![A schematic representations of one function, two nested functions and three nested functions, each with two arguments](images/NestedFunctions.png){#fig-NestedFunctions fig-alt="The text reads like this: function(argument 1, argument 2) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c)."}
+
+::: callout-tip
+### Time to think!
+
+Consider the two sets of nested functions below. Without running them, can you tell which of the two lines of code will output the square root of L1 participant's average age to two decimal places?
+
+```{r eval = FALSE}
+sqrt(round(mean(L1.Age), digits = 2))
+round(sqrt(mean(L1.Age)), digits = 2)
+```
+
+The first line actually outputs `6.126989`, which has more than two decimal places! This is because `R` interprets the functions from the inside out: first, it calculates the mean value, then it rounds that off to two decimal places, then this outputs the square root of that value. The second line, in contrast, does the rounding operation as the last step. Note that, in these two lines of code, the brackets around the argument `digits = 2` are also located in different places. It is very easy to make bracketing errors when writing code and especially so when nesting functions (see @fig-NestedFunctions).
+:::
+
+### Piped Functions
+
+If you found all these brackets overwhelming: fear not! There is a second method for combining functions, which is more convenient and much easier to decipher. It involves the pipe operator, which in `R` is `|>`.[^7_variablesfunctions-1]
+
+[^7_variablesfunctions-1]: This is the **native R pipe** operator, which was introduced in May 2021 with `R` version 4.1.0. As a result, you will not find it in code written in earlier versions of `R`. Previously, piping required an additional `R` library, the {magrittr} library. The {magrittr} pipe looks like this: `%>%`. At first sight, they appear to work is in the same way, but there are some important differences. If you are familiar with the {magrittr} pipe and want to understand how it differs from the native R pipe, I recommend this excellent blog post by Isabella Velásquez: <https://ivelasq.rbind.io/blog/understanding-the-r-pipe/>.
+
+The `|>` operator passes the output of one function on to the first argument of the next function. This allows us to chain multiple functions together in a much more intuitive way.
+
+```{r}
+L1.Age |> 
+ mean() |> 
+ round()
+```
+
+In this example, the object `L1.Age` is passed on to the first argument of the `mean()` function. This calculates the mean of `L1.Age`. Next, this result is passed to the `round()` function, which rounds the mean value to the nearest integer.
+
+If we want to pass additional arguments to any function in the pipeline, we simply at it in the brackets corresponding to the function in question.
+
+```{r}
+L1.Age |> 
+ mean() |> 
+ round(digits = 2)
+```
+
+Like many of the relational operators we saw in @sec-RelationalOperators, the `R` pipe is a combination of two symbols, the computer pipe symbol `|` and the right angle bracket `>`. Don't worry if you're not sure where these two symbols are on your keyboard as RStudio has a handy shortcut for you: `Ctrl/Cmd + Shift + M`[^7_variablesfunctions-2] (see @fig-Pipes). I strongly recommend that you write this shortcut on a prominent post-it and learn it asap, as you will need it a lot when you are working in `R`!
+
+[^7_variablesfunctions-2]: If, in your version of RStudio, this shortcut produces `%>%` instead of `|>`, you have probably not activated the native `R` pipe option in your RStudio global options (see instructions in @sec-GlobalOptions).
+
+![Remix of Henri Matisse's "La Trahison des images" (1928-1929) with the native `R` pipe and its RStudio shortcut (based on an image from [Wikiart.org](https://www.wikiart.org/en/rene-magritte/the-treachery-of-images-this-is-not-a-pipe-1948)). This image is licensed under [CC-BY](https://creativecommons.org/licenses/by/4.0/)[^7_variablesfunctions-3].](images/NativeRPipe.png){#fig-Pipes}
+
+[^7_variablesfunctions-3]: I would appreciate you referencing this textbook or textbook chapter when reusing this image. Thank you!
+
+[^7_variablesfunctions-4]: I would appreciate you referencing this textbook or textbook chapter when reusing this image. Thank you!
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q12.**]{style="color:green;"} Using the `R` pipe operator, calculate the average mean age of the L2 participants and round off this value to two decimal places. What is the result?
+
+```{r echo=FALSE, results="asis"}
+check_question("32.72", 
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "Yes, well done!",
+wrong = "No, try again.")
+```
+
+ 
+
+[**Q13.**]{style="color:green;"} Unsurprisingly, in @DabrowskaExperienceAptitudeIndividual2019's study, English L1 participants, on average, scored higher in an English vocabulary test than L2 participants. Calculate the difference between L1 and L2 participants' mean `Vocab` test results and round off this means difference to two decimal places.
+
+```{r echo=FALSE, results="asis"}
+check_question("16.33",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's right. Very well done!",
+wrong = "That's not it. Check the code chunk below if you are unsure how to proceed.")
+check_hint("There are several ways to solve this puzzle. It does not have to involve the pipe operator. Don't hesitate to work in several steps by saving an intermediary result as an `R` object.", hint_title = "😇 Hover for a hint", type = "onmouseover")
+```
+
+ 
+:::
+
+::: {.callout-note collapse="true"}
+#### Click here for a detailed answer to Q13
+
+They are lots of ways to tackle question 15. Here is one approach:
+
+```{r}
+(mean(L1.data$Vocab) - mean(L2.data$Vocab)) |> 
+  round(digits = 2)
+```
+
+Note that this approach requires a set of brackets around the first subtraction operation, otherwise only the second mean value is rounded off to two decimal places. Compare the following lines of code:
+
+```{r}
+
+mean(L1.data$Vocab) - mean(L2.data$Vocab)
+
+(mean(L1.data$Vocab) - mean(L2.data$Vocab)) |> 
+  round(digits = 2)
+
+mean(L1.data$Vocab) - round(mean(L2.data$Vocab), digits = 2)
+
+```
+
+Another solution would be to store the difference in means as an `R` object and pass this object to the round() function.
+
+```{r}
+
+mean.diff.vocab <- mean(L1.data$Vocab) - mean(L2.data$Vocab)
+round(mean.diff.vocab, digits = 2)
+
+```
+
+Or, if you want to use the pipe:
+
+```{r}
+mean.diff.vocab <- mean(L1.data$Vocab) - mean(L2.data$Vocab)
+mean.diff.vocab |> 
+  round(digits = 2)
+
+```
+:::
