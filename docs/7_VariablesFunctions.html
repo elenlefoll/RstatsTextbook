@@ -253,7 +253,7 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#inspecting-tabular-data" id="toc-inspecting-tabular-data" class="nav-link active" data-scroll-target="#inspecting-tabular-data"><span class="header-section-number">7.1</span> Inspecting tabular data</a></li>
+  <li><a href="#inspecting-a-dataset" id="toc-inspecting-a-dataset" class="nav-link active" data-scroll-target="#inspecting-a-dataset"><span class="header-section-number">7.1</span> Inspecting a dataset</a></li>
   <li><a href="#variables-and-r-data-types" id="toc-variables-and-r-data-types" class="nav-link" data-scroll-target="#variables-and-r-data-types"><span class="header-section-number">7.2</span> Variables and <code>R</code> data types</a></li>
   <li><a href="#accessing-individual-data-points" id="toc-accessing-individual-data-points" class="nav-link" data-scroll-target="#accessing-individual-data-points"><span class="header-section-number">7.3</span> Accessing individual data points</a></li>
   <li><a href="#using-built-in-r-functions" id="toc-using-built-in-r-functions" class="nav-link" data-scroll-target="#using-built-in-r-functions"><span class="header-section-number">7.4</span> Using built-in <code>R</code> functions</a>
@@ -300,29 +300,29 @@ Prerequisites
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In this chapter and the following, all analyses are based on data from:</p>
+<p>In this chapter and the following chapters, all analyses are based on data from:</p>
 <blockquote class="blockquote">
 <p>Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <a href="https://doi.org/10.1111/lang.12323" class="uri">https://doi.org/10.1111/lang.12323</a>.</p>
 </blockquote>
-<p>You will only be able to reproduce the analyses and answer the quiz questions from this chapter if you have successfully imported the two data sets from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>. To import the data, follow the instructions from <a href="6_ImpoRtingData.html#sec-RProject" class="quarto-xref"><span>Section 6.3</span></a> to <a href="6_ImpoRtingData.html#sec-ImportingDataCSV" class="quarto-xref"><span>Section 6.5</span></a> and complete Task 1.</p>
+<p>You will only be able to reproduce the analyses and answer the quiz questions from this chapter if you have successfully imported the two datasets from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>. To import the datasets, follow the instructions from <a href="6_ImpoRtingData.html#sec-RProject" class="quarto-xref"><span>Section 6.3</span></a> to <a href="6_ImpoRtingData.html#sec-ImportingDataCSV" class="quarto-xref"><span>Section 6.5</span></a> and complete Task 1.</p>
 </div>
 </div>
 <section id="chapter-overview" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="chapter-overview"><strong>Chapter overview</strong></h4>
 <p>In this chapter, you will learn how to:</p>
 <ul>
-<li>Use base <code>R</code> functions to inspect tabular data</li>
-<li>Inspect and access individual variables</li>
-<li>Access individual data points</li>
-<li>Use simple base <code>R</code> functions to inspect variables</li>
-<li>Change the default arguments of functions</li>
+<li>Use base <code>R</code> functions to inspect a dataset</li>
+<li>Inspect and access individual variables from a dataset</li>
+<li>Access individual data points from a dataset</li>
+<li>Use simple base <code>R</code> functions to describe variables</li>
+<li>Look up and change the default arguments of functions</li>
 <li>Combine functions using two methods</li>
 </ul>
 </section>
-<section id="inspecting-tabular-data" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="inspecting-tabular-data"><span class="header-section-number">7.1</span> Inspecting tabular data</h2>
-<p>In <a href="6_ImpoRtingData.html#sec-ImportingErrors" class="quarto-xref"><span>Section 6.6</span></a>, we saw that we can use the <code>View()</code> function to display tabular data in a format that resembles that of a spreadsheet programme.</p>
-<p>This particular dataset is both long and wide so you will need to scroll in both directions to view all the data. RStudio also provides a filter option and a search tool (see <a href="#fig-ViewData1" class="quarto-xref">Figure&nbsp;<span>7.1</span></a>). Note that both can only be used for visual inspection. You cannot alter the dataset in any way using these tools.</p>
+<section id="inspecting-a-dataset" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="inspecting-a-dataset"><span class="header-section-number">7.1</span> Inspecting a dataset</h2>
+<p>In <a href="6_ImpoRtingData.html#sec-ImportingErrors" class="quarto-xref"><span>Section 6.6</span></a>, we saw that we can use the <code>View()</code> function to display tabular data in a format that resembles that of a spreadsheet programme (see <a href="#fig-ViewData1" class="quarto-xref">Figure&nbsp;<span>7.1</span></a>).</p>
+<p>The two datasets from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> are both long and wide so you will need to scroll in both directions to view all the data. RStudio also provides a filter option and a search tool (see <a href="#fig-ViewData1" class="quarto-xref">Figure&nbsp;<span>7.1</span></a>). Note that both of these tools can only be used to visually inspect the data. You cannot alter the dataset in any way using these tools (and that’s a good thing!).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -371,7 +371,7 @@ Quiz time!
 <p>&nbsp;</p>
 </div>
 </div>
-<p>In practice, it is often useful to printing subsets of a dataset in the Console to quickly check the sanity of the data. To do so, we can use the function <code>head()</code> that prints the first six rows of tabular data.</p>
+<p>In practice, it is often useful to printing subsets of a dataset in the Console to quickly check the sanity of the data. To do so, we can use the function <code>head()</code> that prints the first six rows of a tabular dataset.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -693,7 +693,7 @@ Quiz time!
 </section>
 <section id="variables-and-r-data-types" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="variables-and-r-data-types"><span class="header-section-number">7.2</span> Variables and <code>R</code> data types</h2>
-<p>In tidy data formats (see **), each row corresponds to one observation and each column to a variable. Each cell, therefore, corresponds to a single data point, which is the value of a specific variable (column) for a specific observation (row). As we will see in the following chapters, this data structure allows for efficient and intuitive data manipulation, analysis, and visualisation.</p>
+<p>In tidy data formats (see Chapter 8), each row corresponds to one observation and each column to a variable. Each cell, therefore, corresponds to a single data point, which is the value of a specific variable (column) for a specific observation (row). As we will see in the following chapters, this data structure allows for efficient and intuitive data manipulation, analysis, and visualisation.</p>
 <p>The <code>names()</code> functions returns the names of all of the columns of a data frame. Given that the datasets from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> are ‘tidy’, this means that <code>names(L1.data)</code> returns a list of all the variables in the L1 dataset.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1334,13 +1334,13 @@ Quiz time!
 </div>
 <p>In this example, the argument <code>digits = 2</code> belongs to the outer function <code>round()</code>; hence it must be placed within the outer set of brackets.</p>
 <p>In theory, you can nest as many functions as you like, but things can get quite chaotic after more than a couple of functions. You need to make sure that you can trace back which arguments and which brackets belong to which function (see <a href="#fig-NestedFunctions" class="quarto-xref">Figure&nbsp;<span>7.2</span></a>).</p>
-<div id="fig-NestedFunctions" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The text reads like this: function(argument 1, argument 2) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c).">
+<div id="fig-NestedFunctions" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The pseudo code reads like this a) function(argument 1, argument 2), b) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), c) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c).">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-NestedFunctions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/NestedFunctions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;7.2: A schematic representations of one function, two nested functions and three nested functions, each with two arguments"><img src="images/NestedFunctions.png" class="img-fluid figure-img" alt="The text reads like this: function(argument 1, argument 2) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c)."></a>
+<a href="images/NestedFunctions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;7.2: A schematic representations of a) one function with two arguments, b) two nested functions each with two arguments, and c) three nested functions each with two arguments"><img src="images/NestedFunctions.png" class="img-fluid figure-img" alt="The pseudo code reads like this a) function(argument 1, argument 2), b) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), c) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c)."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-NestedFunctions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.2: A schematic representations of one function, two nested functions and three nested functions, each with two arguments
+Figure&nbsp;7.2: A schematic representations of a) one function with two arguments, b) two nested functions each with two arguments, and c) three nested functions each with two arguments
 </figcaption>
 </figure>
 </div>
@@ -1354,18 +1354,20 @@ Time to think!
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Consider the two sets of nested functions below. Without running them, can you tell which of the two lines of code will output the square root of L1 participant’s average age to two decimal places?</p>
+<p>Consider the three lines of code below. Without running them, can you tell which of the three lines of code will output the square root of L1 participant’s average age to two decimal places?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">round</span>(<span class="fu">mean</span>(L1.Age), <span class="at">digits =</span> <span class="dv">2</span>))</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">mean</span>(L1.Age)), <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="er">)</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">mean</span>(L1.Age) <span class="at">digits =</span> <span class="dv">2</span>))</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="er">)</span> <span class="fu">sqrt</span>(<span class="fu">round</span>(<span class="fu">mean</span>(L1.Age), <span class="at">digits =</span> <span class="dv">2</span>))</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="er">)</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">mean</span>(L1.Age)), <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The first line actually outputs <code>6.126989</code>, which has more than two decimal places! This is because <code>R</code> interprets the functions from the inside out: first, it calculates the mean value, then it rounds that off to two decimal places, then this outputs the square root of that value. The second line, in contrast, does the rounding operation as the last step. Note that, in these two lines of code, the brackets around the argument <code>digits = 2</code> are also located in different places. It is very easy to make bracketing errors when writing code and especially so when nesting functions (see <a href="#fig-NestedFunctions" class="quarto-xref">Figure&nbsp;<span>7.2</span></a>).</p>
+<p>The first line will return an “unexpected symbol” error because it is missing a comma before the argument <code>digits = 2</code>. The second line actually outputs <code>6.126989</code>, which has more than two decimal places! This is because <code>R</code> interprets the functions from the inside out: first, it calculates the mean value, then it rounds that off to two decimal places, and only then does it compute the square root of that rounded off value. The third line, in contrast, does the rounding operation as the last step. Note that, in the two lines of code that do not produce an error, the brackets around the argument <code>digits = 2</code> are also located in different places.</p>
+<p>It is very easy to make bracketing errors when writing code and especially so when nesting functions (see <a href="#fig-NestedFunctions" class="quarto-xref">Figure&nbsp;<span>7.2</span></a>). Watch your commas and brackets (see also <a href="5_GettingStaRted.html#sec-Errors" class="quarto-xref"><span>Section 5.6</span></a>)!</p>
 </div>
 </div>
 </section>
 <section id="piped-functions" class="level3" data-number="7.5.2">
 <h3 data-number="7.5.2" class="anchored" data-anchor-id="piped-functions"><span class="header-section-number">7.5.2</span> Piped Functions</h3>
-<p>If you found all these brackets overwhelming: fear not! There is a second method for combining functions, which is more convenient and much easier to decipher. It involves the pipe operator, which in <code>R</code> is <code>|&gt;</code>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>If you found all these brackets overwhelming: fear not! There is a second method for combining functions in <code>R</code>, which is often more convenient and almost always easier to decipher. It involves the pipe operator, which in <code>R</code> is <code>|&gt;</code>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p>The <code>|&gt;</code> operator passes the output of one function on to the first argument of the next function. This allows us to chain multiple functions together in a much more intuitive way.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>L1.Age <span class="sc">|&gt;</span> </span>
@@ -1386,13 +1388,13 @@ Time to think!
 </div>
 </div>
 <p>Like many of the relational operators we saw in <a href="5_GettingStaRted.html#sec-RelationalOperators" class="quarto-xref"><span>Section 5.5</span></a>, the <code>R</code> pipe is a combination of two symbols, the computer pipe symbol <code>|</code> and the right angle bracket <code>&gt;</code>. Don’t worry if you’re not sure where these two symbols are on your keyboard as RStudio has a handy shortcut for you: <code>Ctrl/Cmd + Shift + M</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> (see <a href="#fig-Pipes" class="quarto-xref">Figure&nbsp;<span>7.3</span></a>). I strongly recommend that you write this shortcut on a prominent post-it and learn it asap, as you will need it a lot when you are working in <code>R</code>!</p>
-<div id="fig-Pipes" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-Pipes" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Collation of two images: One is a famous painting by René Magritte of a pipe with the caption &quot;Ceci n'est pas une pipe&quot; [This is not a pipe in French], and another, in the same style and colours, with the native R pipe operator and its keyboard shortcut with the caption &quot;Ceci n'est pas une pipe&quot; [This is a pipe in French].">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-Pipes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/NativeRPipe.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;7.3: Remix of Henri Matisse’s “La Trahison des images” (1928-1929) with the native R pipe and its RStudio shortcut (based on an image from Wikiart.org). This image is licensed under CC-BY."><img src="images/NativeRPipe.png" class="img-fluid figure-img"></a>
+<a href="images/NativeRPipe.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;7.3: Remix of René Magritte’s “La Trahison des images” (1928-1929) with the native R pipe and its RStudio shortcut (based on an image from Wikiart.org). This image is licensed under CC-BY."><img src="images/NativeRPipe.png" class="img-fluid figure-img" alt="Collation of two images: One is a famous painting by René Magritte of a pipe with the caption &quot;Ceci n'est pas une pipe&quot; [This is not a pipe in French], and another, in the same style and colours, with the native R pipe operator and its keyboard shortcut with the caption &quot;Ceci n'est pas une pipe&quot; [This is a pipe in French]."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Pipes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.3: Remix of Henri Matisse’s “La Trahison des images” (1928-1929) with the native <code>R</code> pipe and its RStudio shortcut (based on an image from <a href="https://www.wikiart.org/en/rene-magritte/the-treachery-of-images-this-is-not-a-pipe-1948">Wikiart.org</a>). This image is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.
+Figure&nbsp;7.3: Remix of René Magritte’s “La Trahison des images” (1928-1929) with the native <code>R</code> pipe and its RStudio shortcut (based on an image from <a href="https://www.wikiart.org/en/rene-magritte/the-treachery-of-images-this-is-not-a-pipe-1948">Wikiart.org</a>). This image is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.
 </figcaption>
 </figure>
 </div>
@@ -2105,7 +2107,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","loop":false,"closeEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","descPosition":"bottom","selector":".lightbox","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

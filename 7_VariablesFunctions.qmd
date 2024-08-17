@@ -1,6 +1,9 @@
 ---
 engine: knitr
 bibliography: references.bib
+format:
+  html:
+    df-print: default
 ---
 
 # Variables and functions
@@ -17,29 +20,29 @@ L2.data <- read.csv(file = here("data", "L2_data.csv"))
 ::: callout-warning
 ### Prerequisites
 
-In this chapter and the following, all analyses are based on data from:
+In this chapter and the following chapters, all analyses are based on data from:
 
 > Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <https://doi.org/10.1111/lang.12323>.
 
-You will only be able to reproduce the analyses and answer the quiz questions from this chapter if you have successfully imported the two data sets from @DabrowskaExperienceAptitudeIndividual2019. To import the data, follow the instructions from @sec-RProject to @sec-ImportingDataCSV and complete Task 1.
+You will only be able to reproduce the analyses and answer the quiz questions from this chapter if you have successfully imported the two datasets from @DabrowskaExperienceAptitudeIndividual2019. To import the datasets, follow the instructions from @sec-RProject to @sec-ImportingDataCSV and complete Task 1.
 :::
 
 #### **Chapter overview** {.unnumbered}
 
 In this chapter, you will learn how to:
 
--   Use base `R` functions to inspect tabular data
--   Inspect and access individual variables
--   Access individual data points
--   Use simple base `R` functions to inspect variables
--   Change the default arguments of functions
+-   Use base `R` functions to inspect a dataset
+-   Inspect and access individual variables from a dataset
+-   Access individual data points from a dataset
+-   Use simple base `R` functions to describe variables
+-   Look up and change the default arguments of functions
 -   Combine functions using two methods
 
-## Inspecting tabular data
+## Inspecting a dataset
 
-In @sec-ImportingErrors, we saw that we can use the `View()` function to display tabular data in a format that resembles that of a spreadsheet programme.
+In @sec-ImportingErrors, we saw that we can use the `View()` function to display tabular data in a format that resembles that of a spreadsheet programme (see @fig-ViewData1).
 
-This particular dataset is both long and wide so you will need to scroll in both directions to view all the data. RStudio also provides a filter option and a search tool (see @fig-ViewData1). Note that both can only be used for visual inspection. You cannot alter the dataset in any way using these tools.
+The two datasets from @DabrowskaExperienceAptitudeIndividual2019 are both long and wide so you will need to scroll in both directions to view all the data. RStudio also provides a filter option and a search tool (see @fig-ViewData1). Note that both of these tools can only be used to visually inspect the data. You cannot alter the dataset in any way using these tools (and that's a good thing!).
 
 ```{r eval=FALSE}
 View(L1.data)
@@ -69,7 +72,7 @@ wrong = "No, that's not what is happening. Try scrolling up within the Console w
  
 :::
 
-In practice, it is often useful to printing subsets of a dataset in the Console to quickly check the sanity of the data. To do so, we can use the function `head()` that prints the first six rows of tabular data.
+In practice, it is often useful to printing subsets of a dataset in the Console to quickly check the sanity of the data. To do so, we can use the function `head()` that prints the first six rows of a tabular dataset.
 
 ```{r}
 head(L1.data)
@@ -100,7 +103,7 @@ wrong = "No, that won't display the first 10 rows of the dataset. Try it out for
 
 ## Variables and `R` data types
 
-In tidy data formats (see \*\*), each row corresponds to one observation and each column to a variable. Each cell, therefore, corresponds to a single data point, which is the value of a specific variable (column) for a specific observation (row). As we will see in the following chapters, this data structure allows for efficient and intuitive data manipulation, analysis, and visualisation.
+In tidy data formats (see Chapter 8), each row corresponds to one observation and each column to a variable. Each cell, therefore, corresponds to a single data point, which is the value of a specific variable (column) for a specific observation (row). As we will see in the following chapters, this data structure allows for efficient and intuitive data manipulation, analysis, and visualisation.
 
 The `names()` functions returns the names of all of the columns of a data frame. Given that the datasets from @DabrowskaExperienceAptitudeIndividual2019 are 'tidy', this means that `names(L1.data)` returns a list of all the variables in the L1 dataset.
 
@@ -518,24 +521,28 @@ In this example, the argument `digits = 2` belongs to the outer function `round(
 
 In theory, you can nest as many functions as you like, but things can get quite chaotic after more than a couple of functions. You need to make sure that you can trace back which arguments and which brackets belong to which function (see @fig-NestedFunctions).
 
-![A schematic representations of one function, two nested functions and three nested functions, each with two arguments](images/NestedFunctions.png){#fig-NestedFunctions fig-alt="The text reads like this: function(argument 1, argument 2) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c)."}
+![A schematic representations of a) one function with two arguments, b) two nested functions each with two arguments, and c) three nested functions each with two arguments](images/NestedFunctions.png){#fig-NestedFunctions fig-alt="The pseudo code reads like this a) function(argument 1, argument 2), b) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), c) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c)."}
 
 ::: callout-tip
 ### Time to think!
 
-Consider the two sets of nested functions below. Without running them, can you tell which of the two lines of code will output the square root of L1 participant's average age to two decimal places?
+Consider the three lines of code below. Without running them, can you tell which of the three lines of code will output the square root of L1 participant's average age to two decimal places?
 
 ```{r eval = FALSE}
-sqrt(round(mean(L1.Age), digits = 2))
-round(sqrt(mean(L1.Age)), digits = 2)
+1) round(sqrt(mean(L1.Age) digits = 2))
+2) sqrt(round(mean(L1.Age), digits = 2))
+3) round(sqrt(mean(L1.Age)), digits = 2)
+
 ```
 
-The first line actually outputs `6.126989`, which has more than two decimal places! This is because `R` interprets the functions from the inside out: first, it calculates the mean value, then it rounds that off to two decimal places, then this outputs the square root of that value. The second line, in contrast, does the rounding operation as the last step. Note that, in these two lines of code, the brackets around the argument `digits = 2` are also located in different places. It is very easy to make bracketing errors when writing code and especially so when nesting functions (see @fig-NestedFunctions).
+The first line will return an "unexpected symbol" error because it is missing a comma before the argument `digits = 2`. The second line actually outputs `6.126989`, which has more than two decimal places! This is because `R` interprets the functions from the inside out: first, it calculates the mean value, then it rounds that off to two decimal places, and only then does it compute the square root of that rounded off value. The third line, in contrast, does the rounding operation as the last step. Note that, in the two lines of code that do not produce an error, the brackets around the argument `digits = 2` are also located in different places.
+
+It is very easy to make bracketing errors when writing code and especially so when nesting functions (see @fig-NestedFunctions). Watch your commas and brackets (see also @sec-Errors)!
 :::
 
 ### Piped Functions
 
-If you found all these brackets overwhelming: fear not! There is a second method for combining functions, which is more convenient and much easier to decipher. It involves the pipe operator, which in `R` is `|>`.[^7_variablesfunctions-1]
+If you found all these brackets overwhelming: fear not! There is a second method for combining functions in `R`, which is often more convenient and almost always easier to decipher. It involves the pipe operator, which in `R` is `|>`.[^7_variablesfunctions-1]
 
 [^7_variablesfunctions-1]: This is the **native R pipe** operator, which was introduced in May 2021 with `R` version 4.1.0. As a result, you will not find it in code written in earlier versions of `R`. Previously, piping required an additional `R` library, the {magrittr} library. The {magrittr} pipe looks like this: `%>%`. At first sight, they appear to work is in the same way, but there are some important differences. If you are familiar with the {magrittr} pipe and want to understand how it differs from the native R pipe, I recommend this excellent blog post by Isabella Velásquez: <https://ivelasq.rbind.io/blog/understanding-the-r-pipe/>.
 
@@ -561,7 +568,7 @@ Like many of the relational operators we saw in @sec-RelationalOperators, the `R
 
 [^7_variablesfunctions-2]: If, in your version of RStudio, this shortcut produces `%>%` instead of `|>`, you have probably not activated the native `R` pipe option in your RStudio global options (see instructions in @sec-GlobalOptions).
 
-![Remix of Henri Matisse's "La Trahison des images" (1928-1929) with the native `R` pipe and its RStudio shortcut (based on an image from [Wikiart.org](https://www.wikiart.org/en/rene-magritte/the-treachery-of-images-this-is-not-a-pipe-1948)). This image is licensed under [CC-BY](https://creativecommons.org/licenses/by/4.0/)[^7_variablesfunctions-3].](images/NativeRPipe.png){#fig-Pipes}
+![Remix of René Magritte's "La Trahison des images" (1928-1929) with the native `R` pipe and its RStudio shortcut (based on an image from [Wikiart.org](https://www.wikiart.org/en/rene-magritte/the-treachery-of-images-this-is-not-a-pipe-1948)). This image is licensed under [CC-BY](https://creativecommons.org/licenses/by/4.0/)[^7_variablesfunctions-3].](images/NativeRPipe.png){#fig-Pipes fig-alt="Collation of two images: One is a famous painting by René Magritte of a pipe with the caption \"Ceci n'est pas une pipe\" [This is not a pipe in French], and another, in the same style and colours, with the native R pipe operator and its keyboard shortcut with the caption \"Ceci n'est pas une pipe\" [This is a pipe in French]."}
 
 [^7_variablesfunctions-3]: I would appreciate you referencing this textbook or textbook chapter when reusing this image. Thank you!
 
