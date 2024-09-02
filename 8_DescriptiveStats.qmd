@@ -1,0 +1,1535 @@
+---
+engine: knitr
+bibliography: references.bib
+---
+
+# Desc`R`iptive statistics
+
+```{r include=FALSE}
+library(here)
+library(checkdown)
+library(patchwork)
+library(tidyverse)
+
+L1.data <- read.csv(file = here("data", "L1_data.csv"))
+L2.data <- read.csv(file = here("data", "L2_data.csv"))
+```
+
+::: callout-warning
+### Prerequisites
+
+In this chapter and the following chapters, all analyses are based on data from:
+
+> Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <https://doi.org/10.1111/lang.12323>.
+
+You will only be able to reproduce the analyses and answer the quiz questions from this chapter if you have successfully imported the two datasets from @DabrowskaExperienceAptitudeIndividual2019. To import the datasets, follow the instructions from @sec-RProject to @sec-ImportingDataCSV and complete Task 1.
+:::
+
+#### **Chapter overview** {.unnumbered}
+
+In this chapter, you will learn how to:
+
+-   Choose and interpret different measures of central tendency
+-   Calculate the mode, mean, median of a numeric variable in `R`
+-   Interpret histograms and density plots
+-   Recognise the characteristics of a normally distributed variable
+-   Interpret and calculate the interquartile range in `R`
+-   Interpret the distribution of a numeric variable summarised as a boxplot
+-   Interpret and calculate the standard deviation
+
+## Measures of central tendency {#sec-CentralTendency}
+
+In @sec-RFunctions, we calculated the **mean** average age of L1 and L2 participants. Averages are a very useful way to describe the central tendency of a numeric variable - both in science and everyday life. For example, it is useful for me to know if a particular bus journey lasts, on average, 12 minutes or 45 minutes. As it's an average value, I am not expecting it to last exactly 12 or 45 minutes, but the average duration is nonetheless helpful to plan my schedule.
+
+In science, we use **averages** to describe the central tendency of numeric variables that are too large for us to be able to examine every single data point. With very small datasets, averages are unnecessary. Imagine that a Breton[^8_univariatedescriptivestats_inprogress-1] language class in Fiji has five students. Their teacher hardly needs to calculate an average of the students' vocabulary test results to get an understanding of how her students are doing. She can simply examine all five results!
+
+[^8_univariatedescriptivestats_inprogress-1]: Breton is the Celtic language of Brittany (now in North-West France). With around 216,000 active speakers ([Wikipedia](https://en.wikipedia.org/wiki/Breton_language), 26/08/2024), Breton is classified as 'severely endangered' in the UNESCO's [Atlas of the World's Languages in Danger](https://en.wikipedia.org/wiki/Atlas_of_the_World%27s_Languages_in_Danger "Atlas of the World's Languages in Danger"). It would presumably be quite a feat to put together a class of five Breton learners in Fiji, an island country far removed from Brittany in the South Pacific Ocean with fewer than one million inhabitants ([Wikipedia](https://en.wikipedia.org/wiki/Fiji), 26/08/2024)!
+
+Not only are averages of very small datasets unnecessary they can, in fact, be misleading. Imagine that the five Breton learners got the following results (out of 100) on their vocabulary test:
+
+```{r, eval = FALSE}
+5, 82, 86, 89, 91
+```
+
+If we calculate the average result of the class, we get:
+
+```{r}
+mean(c(5, 82, 87, 89, 91))
+```
+
+This average grade does not describe very well how *any* of the students did: Four did much better than that, while one did considerably worse! The results of quantitative studies, however, typically involve much larger datasets so that averages *can* be a very useful way to describe central tendencies within the data. But it's important to understand that, depending on the data, different measures of central tendency make sense. Later on, we will also see that measures of central tendency do not suffice to describe numeric variables: **measures of variability** (@sec-Variability) and good **data visualisation** (Chapter 10) are also crucial.
+
+### Mean {#sec-Mean}
+
+The measure of central tendency that we have looked at so far is the mean. When people speak of averages, they typically *mean* mean values.
+
+In @sec-RFunctions, we saw that means are calculated by adding up all the values and dividing the sum by the total of values.
+
+```{r}
+sum((c(5, 82, 87, 89, 91))) / 5
+```
+
+Means are useful because they are commonly reported and widely understood. Their disadvantage is that they are very susceptible to **outliers** and **skew** (which far fewer people actually understand, see @sec-Distributions). As we saw in the example above, the fact that one 'outlier' learner did very poorly in her Breton vocabulary test led to a much lower average grade than we would expect considering that the other four test-takers did much better than the mean.
+
+Means are also frequently misinterpreted as "most likely value". This is rarely the case. For example, in this example, `r mean(c(5, 82, 87, 91, 91))` is not a score that any of the five students obtained!
+
+### Median {#sec-Median}
+
+Another way to report the central tendency of a set of numeric values like test results is to look for its "middle value". If we order our five Breton learners' test results from the lowest to the highest value, we can see that the middle value is `86`. This is the median.
+
+```{r, eval = FALSE}
+5, 82, 86, 89, 91
+```
+
+For datasets with an even number of values (e.g., 2, 4, 6, 8, etc.), we take the mean of the two middle values. Hence, in the following extended dataset with six Breton learners, the median test score is `86.5` because the two middle test results are `86` and `87` and `(86 + 87) / 2 = 86.5`.
+
+```{r, eval = FALSE}
+5, 82, 86, 87, 89, 91
+```
+
+By now, you will probably not be surprised to learn that there is an `R` function called `median()`, which allows us to easily calculate the median value of any set of numbers.
+
+```{r}
+median(c(5, 82, 86, 89, 91))
+
+median(c(5, 82, 86, 87, 89, 91))
+```
+
+Now, it's time to turn to real data!
+
+### Mode {#sec-Mode}
+
+The mean and median are measures of central tendency that only work with numeric variables. However, data in the language sciences frequently also includes categorical data (see @sec-Variables). In the data from @DabrowskaExperienceAptitudeIndividual2019, this includes variables such as `Gender` and `Occupation`. These are variables that we also need to describe. The only measure of central tendency that we have for **categorical variables** is the **mode**, which corresponds to the **most frequent value** in a dataset.
+
+The `table()` function outputs how often each unique value occurs in a variable.
+
+```{r}
+table(L1.data$Gender)
+```
+
+From this output, we can tell that the mode of the `Gender` variable in the L1 dataset is `F` for "female".
+
+When there are many different unique values (or **levels**), it makes sense to order them according to their frequency. To do so, we can pipe the output of the `table()` function into the `sort()` function. Note that, by default, `R` sorts by ascending order (`decreasing = FALSE`), but we can change this default to `TRUE`.
+
+```{r}
+table(L1.data$Occupation) |> 
+  sort(decreasing = TRUE)
+```
+
+We can see that, among the L1 participants, there were as many "Retired" participants as there were "Student" participants. Hence, we have two modes. In general, modal values rarely make good summaries of variables with many different possible values or levels. This is why the mode is not suitable for numeric variables unless there are only a few possible discrete numeric values (e.g., the values of a five or seven-point Likert scale).
+
+Cross-tabulations of more than one categorical variable (or numeric variable with just a few unique values) can easily be generated using the `table()` function. In the following, we cross-tabulate the additional languages that the L1 participants speak with their gender. This allows us to see that most male and female L1 participants did not speak another language other than English. Hence, for both the male and female subsets of L1 participants the mode of the variable `OtherLgs` is `None`.
+
+```{r}
+table(L1.data$OtherLgs, L1.data$Gender)
+```
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+In comparative studies, it is important to ensure that comparisons are fair and meaningful. For example, it would probably not be very meaningful to compare the linguistic knowledge of a group of undergraduate student learners of English with a group of retired native speakers. In this quiz, you will examine how similar the L1 and the L2 participants in @DabrowskaExperienceAptitudeIndividual2019 were in terms of age.
+
+[**Q1.**]{style="color:green;"} What was the mean age of the L1 participants in @DabrowskaExperienceAptitudeIndividual2019? Use the `round()` function to round off the mean value to two decimal places (see @sec-Piping for a reminder as to how to combine two functions).
+
+```{r echo=FALSE, results="asis"}
+check_question("37.54",
+button_label = "Check answer",
+right = "That's right, well done!",
+wrong = "No, try again (remember to round off the value to decimal places and use a decimal point not a comma).")
+check_hint("Combine the command `mean(L1.data$Age)` with the `round()` function", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+ 
+
+[**Q2.**]{style="color:green;"} On average, were the L1 participants in @DabrowskaExperienceAptitudeIndividual2019 older or younger than the L2 participants?
+
+```{r echo=FALSE, results="asis"}
+check_question("On average, the L1 participants were older.",
+               options = c("On average, the L1 participants were older.",
+                         "On average, the L2 participants were older.",
+                         "It depends whether you base the comparison on mean or median values.",
+                         "It's impossible to tell based on the available data."),
+               type = "radio",
+               random_answer_order = TRUE,
+               button_label = "Check answer",
+               right = "Correct!",
+               wrong = "No, that's incorrect.")
+```
+
+ 
+
+[**Q3.**]{style="color:green;"} Which of the following statements is true about the L1 and L2 participants in @DabrowskaExperienceAptitudeIndividual2019?
+
+```{r echo=FALSE, results="asis"}
+check_question("The difference between the average ages of the two groups is greater when comparing mean than median ages.",
+               options = c("The difference between the average ages of the two groups is greater when comparing mean than median ages.",
+                           "The difference between the average ages of the two groups is greater when comparing median than mean ages.",
+                           "The difference remains the same no matter what type of central tendency measure is used."),
+               type = "radio",
+               random_answer_order = TRUE,
+               button_label = "Check answer",
+               right = "That's right! The difference in median age is just one year, whereas it is almost five years when comparing the means.",
+               wrong = "Incorrect. Check again.")
+
+check_hint("You can work out the difference in average values using the minus operator, i.e. `mean(L1.data$Age) - mean(L2.data$Age)`. Then do the same thing with the medians.",
+           hint_title = "😇 Hover for a hint", 
+           type = "onmouseover")
+```
+
+ 
+
+[**Q4.**]{style="color:green;"} What were the modal ages of the L1 and L2 participants in @DabrowskaExperienceAptitudeIndividual2019?
+
+```{r echo=FALSE, results="asis"}
+check_question("17 (for L1 participants) and 28 (L2 participants)",
+               options = c("17 (for L1 participants) and 28 (L2 participants)",
+                           "29 (for L1 participants) and 28 (L2 participants)",
+                           "28 (for L1 participants) and 29 (L2 participants)",
+                           "32 (for L1 participants) and 31 (L2 participants)"),
+               type = "radio",
+               button_label = "Check answer",
+               right = "That's correct but, as you can see from these data, the mode is not a very meaningful measure of central tendency for numeric variables with so many possible values.",
+               wrong = "No, carefully examine the output of the `table()` function again.")
+
+check_hint("Use the `table()` function to examine each variable and find the most frequent age value in each dataset.", 
+           hint_title = "😇 Hover for a hint", 
+           type = "onmouseover")
+
+```
+
+ 
+:::
+
+## Distributions {#sec-Distributions}
+
+**Univariate descriptive statistics** (i.e. describing a single variable from a dataset) is about describing **distributions**. A distribution is a way to summarise how the values of a variable are spread out or dispersed. It tells us things like the variable's most frequent values, its range of values, and how the values are clustered or spread out. Examining the shapes and patterns of distributions can help us understand the typical values of the variables of our data, identify outliers, and make informed decisions about how to analyse and visualise our data.
+
+### Distributions of categorical variables
+
+Tables can be an effective way to examine the distribution of categorical variables. The `table()` function outputs the frequency of each level of a categorical variable. By default, the levels are ordered alphabetically.
+
+```{r}
+table(L1.data$OtherLgs)
+```
+
+We saw that we can use the `sort()` function to change this behaviour.
+
+```{r}
+table(L1.data$OtherLgs) |> 
+    sort(decreasing = TRUE)
+```
+
+The `proportions` function allows us to describe the frequency of each level of a categorical variable as a proportion of all data points. This is especially useful if we want to compare the distribution of a categorical variable across different (sub)datasets of different sizes.
+
+```{r}
+table(L1.data$OtherLgs) |> 
+  sort(decreasing = TRUE) |> 
+  proportions()
+```
+
+When computing proportions, `0` corresponds to 0% and `1` to 100%. If we want to obtain percentages, we therefore need to multiply these numbers by 100. We can therefore see that more than 90% of L1 participants reported not being competent in any language other than English, their native language.
+
+```{r}
+OtherLgs.prop <- 
+  table(L1.data$OtherLgs) |> 
+  sort(decreasing = TRUE) |> 
+  proportions()*100
+
+OtherLgs.prop
+```
+
+To round the values to two decimal places, we can apply the `round()` function to the `R` object that we created in the previous chunk (`OtherLgs.prop`).
+
+```{r}
+round(OtherLgs.prop, digits = 2)
+```
+
+In addition to using frequency tables, we can **visualise** data distributions graphically. **Bar plots** allow us to easily compare the distribution of categorical variables across different datasets and subsets of data. For example, in @fig-OtherLgsGender, we can see that the distribution of additional languages spoken by the L1 participants is very similar in both the female and the male subset of participants.
+
+```{r}
+#| echo: FALSE
+#| label: "fig-OtherLgsGender"
+#| fig-cap: "Additional languages spoken by L1 participants in Dąbrowska (2019)"
+
+library(scales)
+L1.data |> 
+  mutate(Gender = ifelse(Gender == "M", "Male", "Female")) |> 
+ggplot(aes(x = fct_infreq(OtherLgs), y =..count../sum(..count..))) +
+  geom_bar() +
+  facet_wrap(~ Gender) +
+  theme_bw() +
+  scale_y_continuous(labels = percent_format(),
+                     expand = c(0,0),
+                     limits = c(0,0.5)) +
+  scale_x_discrete(expand = c(0.18,0)) +
+  labs(title = "Other languages spoken by L1 participants", 
+       x = "", 
+       y = "")
+```
+
+In Chapter 10, you will learn how to make plots like @fig-OtherLgsGender in `R` using the {ggplot2} package.
+
+### Distributions of numeric variables
+
+In @DabrowskaExperienceAptitudeIndividual2019, on average, the L2 participants were younger than the L1 participants.
+
+```{r}
+mean(L1.data$Age) - mean(L2.data$Age)
+```
+
+The difference in mean age was more than four years. But are these two mean values good summaries of the central tendencies of participants' ages? To check, it is important that we examine the full distribution of participants' ages. We begin with the distribution of L2 participants' ages.
+
+We first use the `table()` function to tally L2 participants' ages.
+
+```{r}
+table(L2.data$Age)
+```
+
+As the above table contains a lot of different values, it's easier to visualise these numbers in the form of a **bar chart**. The mode (`28`) has been highlighted in black.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code to produce the plot below (note that you will learn how to create bar charts and other types of plots in Chapter 11)."
+#| fig-width: 8
+#| fig-height: 5
+
+barplot.mode <- 
+  
+  # Take the L2.data data frame and pipe it into the ggplot function:
+  L2.data |>
+
+  # Start a ggplot, mapping Age to the x-axis:
+  ggplot(mapping = aes(x = Age)) + 
+
+  # Add a bar plot layer, conditionally fill the bars; bars representing 28 years of age will have a different colour:
+  geom_bar(aes(fill = (Age == 28))) +    
+
+  # Manually control the colours of the bar fill: set the bar representing Age == 28 to "#0000EE", and remove the legend:
+  scale_fill_manual(values = c("TRUE" = "black"), guide = "none") +  
+  
+    # Apply ggplot2's classic theme:
+  theme_classic() +
+
+  # Ensure that there are tick marks for every single whole number and do not extend the limits of y-scale to avoid white space on the plot:
+  scale_y_continuous(name = "Number of L1 participants",
+                     breaks = scales::breaks_width(1), 
+                     expand = c(0, 0)) +
+
+  # Set the x-axis breaks and remove white space:
+  scale_x_continuous(breaks = scales::breaks_width(1),
+                     expand = c(0, 0)) +
+  
+  # Add label for mode:
+  annotate("text", 
+           x = 25, 
+           y = 5.8, 
+           label = "mode", 
+           colour = "black",
+           family = "mono") +
+  
+  # Add curved arrow for mode:
+  annotate(
+    geom = "curve",
+    x = 25,
+    y = 5.65, 
+    xend = 27.2,
+    yend = 5, 
+    curvature = 0.5,
+    arrow = arrow(length = unit(0.2, "cm")), 
+    colour = "black")
+
+barplot.mode
+```
+
+Thanks to this bar chart, it's much easier to see that the second most frequent ages after the mode of `28` are `22`, `31` and `39`. How do these ages compare to the median age?
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show `R` code to generate the plot below."
+#| fig-width: 8
+#| fig-height: 5
+
+barplot.mode.median <- 
+  barplot.mode +
+  geom_bar(aes(fill = ifelse(Age == 31, "31", ifelse(Age == 28, "28", "Other")))) +
+  scale_fill_manual(values = c("28" = "black", "31" = "darkred"), guide = "none") +
+  # Add label for median:
+  annotate("text", 
+           x = 30.5, 
+           y = 5.5, 
+           label = "median", 
+           colour = "darkred",
+           family = "mono") +
+  
+  # Add curved arrow for median:
+  annotate(
+    geom = "curve",
+    x = 30.4,
+    y = 5.35, 
+    xend = 30.4,
+    yend = 4.9, 
+    curvature = 0.6,
+    arrow = arrow(length = unit(0.2, "cm")), 
+    colour = "darkred")
+
+barplot.mode.median
+```
+
+We can compare the mode (`18`) and median (`31`) to the mean (`32.72`), which, on the following bar chart, is represented as a blue dashed line.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show `R` code to generate the plot below."
+#| fig-width: 8
+#| fig-height: 5
+
+barplot.mode.median +
+  geom_vline(aes(xintercept = mean(Age)), 
+             color = "#0000EE", 
+             linetype = "dashed",
+             linewidth = 0.8) +
+  
+  # Add label for mean:
+  annotate("text", 
+           x = 36, 
+           y = 5.3, 
+           label = "mean", 
+           colour = "#0000EE",
+           family = "mono") +
+  
+  # Add curved arrow for mean:
+  annotate(
+    geom = "curve",
+    x = 36,
+    y = 5.15, 
+    xend = 33.2,
+    yend = 4.4, 
+    curvature = -0.4,
+    arrow = arrow(length = unit(0.2, "cm")), 
+    colour = "#0000EE")
+
+```
+
+Next, we can reduce the number of bars by adding together the number of L2 participants aged `20`-`22`, `22`-`24`, `24`-`26`, etc. This is what we call a **histogram**. Histograms are used to visualise distributions and their bars are called **bins** because they "bin together" a number of values.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show `R` code to generate the plot below."
+#| fig-width: 8
+#| fig-height: 5
+
+age.histo <- 
+  L2.data |>
+  ggplot(mapping = aes(x = Age)) + 
+    geom_vline(aes(xintercept = mean(Age)), 
+             color = "#0000EE", 
+             linetype = "dashed",
+             linewidth = 0.8) +
+    geom_vline(aes(xintercept = 28), 
+             color = "black", 
+             linewidth = 0.8) +
+    geom_vline(aes(xintercept = 31), 
+             color = "darkred", 
+             linewidth = 0.8) +  
+  
+  # Add label for mode:
+  annotate("text", 
+           x = 24, 
+           y = 2.9, 
+           label = "mode", 
+           colour = "black",
+           family = "mono") +
+  
+  # Add curved arrow for mode:
+  annotate(
+    geom = "curve",
+    x = 24,
+    y = 2.6, 
+    xend = 27.2,
+    yend = 2, 
+    curvature = 0.5,
+    arrow = arrow(length = unit(0.2, "cm")), 
+    colour = "black") +
+  
+  # Add label for mean:
+  annotate("text", 
+           x = 36, 
+           y = 1.4, 
+           label = "mean", 
+           colour = "#0000EE",
+           family = "mono") +
+  
+  # Add curved arrow for mean:
+  annotate(
+    geom = "curve",
+    x = 36,
+    y = 1.1, 
+    xend = 33.2,
+    yend = 0.4, 
+    curvature = -0.4,
+    arrow = arrow(length = unit(0.2, "cm")), 
+    colour = "#0000EE") +
+  
+    # Add label for median:
+  annotate("text", 
+           x = 25, 
+           y = 1.4, 
+           label = "median", 
+           colour = "darkred",
+           family = "mono") +
+  
+  # Add curved arrow for median:
+  annotate(
+    geom = "curve",
+    x = 25,
+    y = 1.1, 
+    xend = 30.7,
+    yend = 0.4, 
+    curvature = 0.4,
+    arrow = arrow(length = unit(0.2, "cm")), 
+    colour = "darkred") +
+  
+  theme_classic() +
+  scale_y_continuous(name = "Number of L2 participants", 
+                     breaks = scales::breaks_width(1), 
+                     expand = c(0, 0)) +
+  scale_x_continuous(breaks = scales::breaks_width(2), 
+                     expand = c(0, 0))
+
+age.histo +
+    geom_histogram(position = "identity", 
+                 binwidth = 2,
+                 fill = "black",
+                 alpha = 0.4)
+```
+
+If we reduce the number of bins by having them cover three years instead of two, the histogram looks like this.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show `R` code to generate the plot below."
+#| fig-width: 8
+#| fig-height: 5
+
+age.histo +
+    geom_histogram(position = "identity", 
+                 binwidth = 3,
+                 fill = "black",
+                 alpha = 0.4) +
+    scale_x_continuous(breaks = scales::breaks_width(3), 
+                     expand = c(0, 0))
+```
+
+Alternatively, we can apply a density function to smooth over the bins of the histogram to generate a **density plot** of L2 participants' ages (see purple curve in @fig-L2AgeDensityPlot). Such smoothed curves allow for a better comparison of distribution shapes across different groups and datasets. Note that, in a density plot, the values on the *y*-axis are no longer counts, but rather **density probabilities**. We will not use any fancy formulae to work this out mathematically, but you should understand that the total area under the curve (in purple) will always equal to `1`, which corresponds to 100% probability. In this dataset, this is because there is a 100% probability that an L2 participant's age is between `20` and `62`.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show `R` code to generate the plot below."
+#| label: "fig-L2AgeDensityPlot"
+#| fig-cap: "Density plot showing the distribution of L2 participants' ages"
+#| fig-width: 8
+#| fig-height: 5
+
+# There is no in-built function in R to calculate the mode of a numeric vector but we can define one ourselves:
+get_mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+
+L2.data |>
+  ggplot(mapping = aes(x = Age)) + 
+  geom_histogram(aes(x = Age, y = after_stat(density)),
+                 binwidth = 3,
+                 fill = "black",
+                 alpha = 0.4) + 
+  geom_density(colour = "purple",
+               fill = "purple",
+               alpha = 0.2,
+               linewidth = 0.8) +
+  geom_vline(aes(xintercept = mean(Age)),
+             color = "#0000EE",
+             linetype = "dashed",
+             linewidth = 0.8) +
+  geom_vline(aes(xintercept = get_mode(Age)),
+             color = "black",
+             linewidth = 0.8) +
+  geom_vline(aes(xintercept = median(Age)),
+             color = "darkred",
+             linewidth = 0.8) +  
+  # Add label for mode:
+  annotate("text",
+           x = 25,
+           y = 0.029,
+           label = "mode",
+           colour = "black",
+           family = "mono") +
+
+  # Add curved arrow for mode:
+  annotate(
+    geom = "curve",
+    x = 25,
+    y = 0.028,
+    xend = 27.5,
+    yend = 0.025,
+    curvature = 0.6,
+    arrow = arrow(length = unit(0.2, "cm")),
+    colour = "black") +
+
+  # Add label for mean:
+  annotate("text",
+           x = 36,
+           y = 0.014,
+           label = "mean",
+           colour = "#0000EE",
+           family = "mono") +
+
+  # Add curved arrow for mean:
+  annotate(
+    geom = "curve",
+    x = 36,
+    y = 0.011,
+    xend = 33.2,
+    yend = 0.004,
+    curvature = -0.4,
+    arrow = arrow(length = unit(0.2, "cm")),
+    colour = "#0000EE") +
+  
+  # Add label for median:
+  annotate("text",
+           x = 25.5,
+           y = 0.01,
+           label = "median",
+           colour = "darkred",
+           family = "mono") +
+
+  # Add curved arrow for median:
+  annotate(
+    geom = "curve",
+    x = 25.5,
+    y = 0.008,
+    xend = 30.8,
+    yend = 0.004,
+    curvature = 0.4,
+    arrow = arrow(length = unit(0.2, "cm")),
+    colour = "darkred") +  
+
+  theme_classic() +
+  scale_y_continuous(name = "Density",
+                     breaks = scales::breaks_width(0.01),
+                     expand = c(0, 0)) +
+  scale_x_continuous(breaks = scales::breaks_width(3),
+                     expand = c(0, 0))
+
+```
+
+If we wanted to work out the probability of an L2 participant being between `42` and `62` years old, we would have to calculate the **area under the curve** between these two points on the *x*-axis. Even without doing any maths, you can see that this area is considerably smaller than between the ages of `22` and `42`. This means that, in this dataset, participants are considerably more likely to be between 22 and 42 than between 42 and 62 years old.[^8_univariatedescriptivestats_inprogress-2]
+
+[^8_univariatedescriptivestats_inprogress-2]: Of course, there is an `R` function to help you do the maths! The `edcf()` function allows us to calculate the area under the curve between the ages of 42 and 62.
+
+    ```{r}
+    ecdf(L2.data$Age)(62) - ecdf(L2.data$Age)(42)
+    ```
+
+    In other words, there is a 11.94 % probability of any L2 participant in this study being aged between 42 and 62 (corresponding to the light purple area in plot A). Compare this to the probability of a participant being between 22 and 42 years old.
+
+    ```{r}
+    ecdf(L2.data$Age)(42) - ecdf(L2.data$Age)(22)
+    ```
+
+    This is, indeed, a much higher probability (ca. 78 %), as depicted by the much larger area highlighted in plot B.
+
+    ```{r echo = FALSE, fig.width = 10}
+    DensityPlot <- ggplot(data = L2.data, aes(x = Age)) +
+      geom_density(fill = "purple", alpha = 0.5) +
+      theme_classic() +
+      theme(text = element_text(size=15)) +
+      scale_y_continuous(expand = c(0,0),
+                         limits = c(0,0.05)) +
+      scale_x_continuous(expand = c(0,0))
+
+    PlotA <- DensityPlot +
+      geom_vline(xintercept = c(42, 62), linetype = "dashed", color = "pink", linewidth = 1) +
+      annotate("rect", xmin = 42, xmax = 62, ymin = 0, ymax = Inf,     alpha = 0.5, fill = "white")
+
+    PlotB <- DensityPlot +
+      geom_vline(xintercept = c(22, 42), linetype = "dashed", color = "pink", linewidth = 1) +
+      annotate("rect", xmin = 22, xmax = 42, ymin = 0, ymax = Inf,     alpha = 0.5, fill = "white")
+
+    PlotA + PlotB +
+      plot_annotation(tag_levels = "A")
+    ```
+
+The density plot of L2 participants' ages features a characteristic bell-shaped curve, which indicates that the distribution resembles a normal distribution. However, it also features a long tail towards the older years. We are therefore dealing with a **skewed distribution**. Skewed distributions occur when one tail end of the bell is longer than the other. Here, the asymmetry is due to the fact that @DabrowskaExperienceAptitudeIndividual2019's L2 data includes quite a few participants who were older than 40 at the time of the study, whereas there were none who were younger than 20. As the tail is to the right of the plot, this is a **right skewed (or positive) distribution**.
+
+The **median** is usually better than the mean for describing the central tendency of a skewed distribution because it is less susceptible to the outlier(s) contained in the tail of a skewed distribution (see @sec-Median). @fig-L2AgeDensityPlot confirms that the median is a better approximation of L2 participants' ages than the mean.
+
+### Normal (or Gaussian) distributions {#sec-Normal}
+
+In a perfectly normally distributed variable, the mean and the median are exactly the same. They are both found at the centre of the distribution and the bell shape of the distribution is perfectly symmetrical. Perfectly normal distributions, however, are very rarely found in real life! Here is what the **normal distribution** of 1,000 participants' age might look like in real life (using numbers randomly generated from a perfectly normal distribution thanks to the `R` function `rnorm()`).
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show `R` code to generate the plot below."
+#| label: "fig-NormalDistribution"
+#| fig-cap: "A normal distribution of the age of a fictitious group of participants"
+
+# The {truncnorm} package contains density, probability, quantile and random number generation functions for the truncated normal distribution:
+#install.packages("truncnorm")
+library(truncnorm)
+
+set.seed(13)
+normal.age.sd8 <- round(rtruncnorm(mean = 35, sd = 8, n = 1000, a = 10, b = 100))
+#get_mode(normal.age.sd8) 
+
+ggplot(mapping = aes(x = normal.age.sd8)) + 
+    geom_vline(aes(xintercept = mean(normal.age.sd8)),
+             color = "#0000EE",
+             linetype = "dashed",
+             linewidth = 0.8) +
+    geom_vline(aes(xintercept = median(normal.age.sd8)),
+             color = "darkred",
+             #linetype = "dotted",
+             linewidth = 0.6) +
+    # geom_vline(aes(xintercept = get_mode(normal.age.sd8)),
+    #          color = "black",
+    #          linewidth = 0.8) +  
+  
+  # Add label for mean:
+  annotate("text",
+           x = 30.6,
+           y = 0.014,
+           label = "mean",
+           colour = "#0000EE",
+           family = "mono") +
+
+  # Add curved arrow for mean:
+  annotate(
+    geom = "curve",
+    x = 30.5,
+    y = 0.013,
+    xend = 34.7,
+    yend = 0.008,
+    curvature = 0.5,
+    arrow = arrow(length = unit(0.2, "cm")),
+    colour = "#0000EE") +  
+  
+  # Add label for median:
+  annotate("text",
+           x = 38,
+           y = 0.007,
+           label = "median",
+           colour = "darkred",
+           family = "mono") +
+
+  # Add curved arrow for median:
+  annotate(
+    geom = "curve",
+    x = 38,
+    y = 0.006,
+    xend = 35.2,
+    yend = 0.004,
+    curvature = -0.5,
+    arrow = arrow(length = unit(0.2, "cm")),
+    colour = "darkred") +
+  theme_classic() +
+  scale_y_continuous(name = "Density",
+                     breaks = scales::breaks_width(0.01),
+                     expand = c(0, 0)) +
+  scale_x_continuous(name = "Age",
+                     breaks = scales::breaks_width(2),
+                     expand = c(0, 0)) +
+  geom_histogram(aes(x = normal.age.sd8, y = after_stat(density)),
+                 binwidth = 2,
+                 fill = "black",
+                 alpha = 0.4) + 
+  geom_density(colour = "purple",
+               linewidth = 0.8,
+               fill = "purple",
+               alpha = 0.3)
+
+```
+
+In @fig-NormalDistribution, the mean (`r mean(normal.age.sd8)`) and the median (`r median(normal.age.sd8)`) are very close to each other. So close that, on the plot, the lines overlap. The density curve is an almost symmetrical bell shape. This means that the purple area under the curve to the left of the central tendency is pretty much the same as the area to the right of the line. In other words, there are as many people whose age is below the central tendency (50%) as there are people whose age is above the central tendency (50%). These are the characteristics of a normal distribution. Many statistical tests assume that variables are (approximately) normally distributed.
+
+### Non-normal (or non-parametric) distributions {#sec-NonNormal}
+
+We saw that the distribution of L2 participants' ages in @DabrowskaExperienceAptitudeIndividual2019 was close to a normal distribution but with a right skew towards older years. This meant that the mean age was higher than median age.
+
+Does the distribution of L1 participants' ages follow a similar shape? Are we dealing with a distribution that is normal, left or right skewed, or something entirely different?
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q5.**]{style="color:green;"} What is the mode of L1 participants' age?
+
+```{r echo=FALSE, results="asis"}
+check_question("17",
+button_label = "Check answer",
+right = "That's correct! Note, also, that the second most frequent age is 60.",
+wrong = "No, that's incorrect. Careful examine the output of the `table(L1.data$Age` command.`")
+check_hint("Use the `table()` function to find out what the most frequent age is in the L1 dataset.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+ 
+
+[**Q6.**]{style="color:green;"} Which of the following statements is true?
+
+```{r echo=FALSE, results="asis"}
+check_question("The difference between the mean and median age is greater in the L1 group than in the L2 group.",
+               options = c("The difference between mean and median age is smaller in the L1 group than in the L2 group.",
+                         "The mean and median age of the L1 group are almost the same.",
+                         "The difference between the mean and median age is greater in the L1 group than in the L2 group."),
+               random_answer_order = TRUE,
+               type = "check",
+               button_label = "Check answer",
+               right = "Correct!",
+               wrong = "No, that's incorrect. Note that only one statement is correct.")
+```
+
+ 
+
+[**Q7.**]{style="color:green;"} Which measure of central tendency best describes L1 participants' ages?
+
+```{r echo=FALSE, results="asis"}
+check_question("None of them.",
+               options = c("None of them.",
+                         "The mean.",
+                         "The median.",
+                         "The mode."),
+               random_answer_order = TRUE,
+               type = "radio",
+               button_label = "Check answer",
+               right = "Yes, none of these measures appear to describe the central tendency very well... Read on to find out why that's the case.",
+               wrong = "Humm... Are you sure? Read the next section to find out more.")
+```
+
+ 
+:::
+
+@fig-L1AgeDensityPlot shows the distribution of L1 participants' ages both as a histogram (in grey) and a density plot (in purple). Both of these visualisations make quite clear that this distribution of ages is not at all normal! It is **non-normal** or **non-parametric**. This is because it does *not* consist of one more or less symmetrical bell shape. Instead, we can see several small bell shapes.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show `R` code to generate the plot below."
+#| label: "fig-L1AgeDensityPlot"
+#| fig-cap: "Density plot showing the distribution of L1 participants' ages"
+#| fig-width: 8
+#| fig-height: 5
+
+L1.data |>
+  ggplot(mapping = aes(x = Age)) + 
+  geom_histogram(aes(x = Age, y = after_stat(density)),
+                 binwidth = 2,
+                 fill = "black",
+                 alpha = 0.4) + 
+  geom_density(colour = "purple",
+               fill = "purple",
+               alpha = 0.2,
+               linewidth = 0.8) +
+  geom_vline(aes(xintercept = mean(Age)),
+             color = "#0000EE",
+             linetype = "dashed",
+             linewidth = 0.8) +
+  geom_vline(aes(xintercept = get_mode(Age)),
+             color = "black",
+             linewidth = 0.8) +
+  geom_vline(aes(xintercept = median(Age)),
+             color = "darkred",
+             linewidth = 0.8) + 
+  
+  # Add label for mode:
+  annotate("text",
+           x = 20.5,
+           y = 0.064,
+           label = "mode",
+           colour = "black",
+           family = "mono") +
+
+  # Add curved arrow for mode:
+  annotate(
+    geom = "curve",
+    x = 20.5,
+    y = 0.062,
+    xend = 17.4,
+    yend = 0.057,
+    curvature = -0.4,
+    arrow = arrow(length = unit(0.2, "cm")),
+    colour = "black") +
+
+  # Add label for mean:
+  annotate("text",
+           x = 40,
+           y = 0.03,
+           label = "mean",
+           colour = "#0000EE",
+           family = "mono") +
+
+  # Add curved arrow for mean:
+  annotate(
+    geom = "curve",
+    x = 40,
+    y = 0.028,
+    xend = 37.8,
+    yend = 0.025,
+    curvature = -0.4,
+    arrow = arrow(length = unit(0.2, "cm")),
+    colour = "#0000EE") +
+  
+  # Add label for median:
+  annotate("text",
+           x = 28,
+           y = 0.01,
+           label = "median",
+           colour = "darkred",
+           family = "mono") +
+
+  # Add curved arrow for median:
+  annotate(
+    geom = "curve",
+    x = 28,
+    y = 0.008,
+    xend = 31.7,
+    yend = 0.004,
+    curvature = 0.4,
+    arrow = arrow(length = unit(0.2, "cm")),
+    colour = "darkred") +  
+
+  theme_classic() +
+  scale_y_continuous(name = "Density",
+                     breaks = scales::breaks_width(0.01),
+                     expand = c(0, 0)) +
+  scale_x_continuous(breaks = scales::breaks_width(2),
+                     expand = c(0, 0))
+
+```
+
+The histogram also shows that the most frequent age (the **mode**) corresponds to the lowest age in the dataset (`17`) and that both the **median** and **mean** are far removed from most participants' ages. This distribution of L1 participants' ages points to the limits of measures of central tendency. They are useful to describe approximately normally distributed variables, but are far less informative when it comes to other types of distributions.
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q8.**]{style="color:green;"} What can we reasonably deduce from the distribution of L1 participants' ages visualised in @fig-L1AgeDensityPlot?
+
+```{r echo=FALSE, results="asis"}
+check_question(c("It was easier to recruit adults in their 50s and 60s to participate in this study.",
+                 "It was easier to recruit teenagers to participate in this study."),
+               options = c("It was easier to recruit adults in their 50s and 60s to participate in this study.",
+                 "It was easier to recruit teenagers to participate in this study.",
+               "People in their 40s are most likely to be willing to participate in linguistic studies.",
+               "The researcher excluded 34 year-olds from this study.",
+               "For this study, the researcher specifically targeted 17 and 60 year-olds."),
+type = "check",
+random_answer_order = TRUE,
+button_label = "Check answer",
+right = "Yes, these are reasonable assumptions that we can make based on the available data.",
+wrong = "No, not quite.")
+check_hint("Two of the above statements are reasonable assumptions that we can make based on the available data.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+ 
+
+[**Q9.**]{style="color:green;"} What are the pros of reporting the median rather than the mean to describe the central tendency of a variable?
+
+```{r echo=FALSE, results="asis"}
+check_question(c("The median is less susceptible to skew.",
+                 "The median is less susceptible to outliers.",
+                 "As the middle value, the median is fairly easy to interpret."),
+               options = c("The median is less susceptible to skew.",
+                 "The median is less susceptible to outliers.",
+                 "The median is the most widely used measure of central tendency.",
+                 "As the middle value, the median is fairly easy to interpret.",
+                 "The median also works well with nominal variables.",
+                 "The median has the highest probability of being the true central value.",
+                 "The median is ideal for very small datasets."),
+type = "check",
+random_answer_order = TRUE,
+button_label = "Check answer",
+right = "That's right, well done!",
+wrong = "No, not quite.")
+check_hint("Three of the above statements are advantages of reporting median values.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+ 
+
+[**Q10.**]{style="color:green;"} What are the cons of reporting the median rather than the mean to describe the central tendency of a variable?
+
+```{r echo=FALSE, results="asis"}
+check_question(c("The median is often less meaningful with small sample sizes.",
+                 "The median does not take all values into account."),
+               options = c("The median is more susceptible to skew.",
+                 "The median is more susceptible to outliers.",
+                 "The median is often less meaningful with small sample sizes.",
+                 "The median does not take all values into account.",
+                 "The median can be misleading if it is not a value in the dataset.",
+                 "The median only works with odd numbers of values."),
+type = "check",
+random_answer_order = TRUE,
+button_label = "Check answer",
+right = "Great stuff! Now, it's time to move on to measures of variability.",
+wrong = "No, not quite.")
+check_hint("Two of the above statements are disadvantages of using the median.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+ 
+:::
+
+## Measures of variability {#sec-Variability}
+
+Measures of central tendency should never be reported alone. As we saw with L1 participants' age in @sec-NonNormal, measures of central tendency are not always very informative and can even be misleading. But, even when they are informative, they only tell us part of the story: the average value of a dataset, but not the **spread** or **variability** of the data. For example, a mean age of 25 might suggest a group of young adults, but without a measure of variability, we can't tell if the group is relatively homogeneous (e.g., all students in their twenties) or heterogeneous (e.g., with some participants in their teens and others in their thirties or older). Therefore, it is essential to report measures of central tendency in conjunction with measures of variability, such as the range, interquartile range, or standard deviation, to provide a more complete picture of the data.
+
+Consider the three distributions of ages presented in @fig-3NormalDistributions. As you can tell from their shapes, these are three normal distributions. They each have exactly the same mean and median of `35`; yet they evidently correspond to very different groups of people!
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show `R` code to generate the plot below."
+#| fig-height: 8
+#| label: "fig-3NormalDistributions"
+#| fig-cap: "Three normal distributions of ages with a mean/median of 35 years."
+
+# The {truncnorm} package contains density, probability, quantile and random number generation functions for the truncated normal distribution:
+#install.packages("truncnorm")
+library(truncnorm)
+
+set.seed(42)
+normal.age.A <- rtruncnorm(mean = 35, sd = 1, n = 10000, a = 10, b = 64)
+normal.age.B <- rtruncnorm(mean = 35, sd = 5, n = 10000, a = 10, b = 64)
+normal.age.C <- rtruncnorm(mean = 35, sd = 10, n = 10000, a = 10, b = 64)
+
+normal.density <- function(ages) {
+  ggplot(mapping = aes(x = ages)) + 
+      geom_vline(aes(xintercept = mean(ages)),
+               color = "#0000EE",
+               linetype = "dashed",
+               linewidth = 0.8) +
+    theme_classic() +
+    scale_y_continuous(name = "Density",
+                       #breaks = scales::breaks_width(0.01),
+                       expand = c(0, 0)) +
+    scale_x_continuous(name = "Age",
+                       breaks = scales::breaks_width(2),
+                       limits = c(10,66),
+                       expand = c(0, 0)) +
+    geom_histogram(aes(x = ages, y = after_stat(density)),
+                   binwidth = 1,
+                   fill = "black",
+                   alpha = 0.4) + 
+    geom_density(colour = "purple",
+                 linewidth = 0.8,
+                 fill = "purple",
+                 alpha = 0.3)
+}
+
+# Add captions A, B, C
+
+normal.density(normal.age.A) / normal.density(normal.age.B) / normal.density(normal.age.C) +
+    plot_annotation(tag_levels = 'A')
+
+```
+
+Whereas Group A only includes adults aged 32 to 39, the Group C includes children as young as 10 as well as adults well into their 50s and early 60s - even though they both have the same mean/median on 35. This is why both measures of central tendency *and* variability are important when describing numeric variables! Measures of variability help us to understand how far each data point is from the central tendency. Hence, for Group A in @fig-3NormalDistributions, we can say that all data points are pretty close to the mean/median of 35. In Group B, participants' ages are, on average, more 'spread out' to the left and right of the central tendency. And this is even more notable in Group C.
+
+### Range
+
+The most basic measure of variability is one that you will already be familiar with: range. It is easily calculated by subtracting the highest value of a variable from its lowest value. For example, in @DabrowskaExperienceAptitudeIndividual2019, the range of results obtained by the L1 participants in the English grammar comprehension test is:
+
+```{r}
+max(L1.data$GrammarR) - min(L1.data$GrammarR)
+```
+
+By contrast, the range of results in this same test among the L2 participants is:
+
+```{r}
+max(L2.data$GrammarR) - min(L2.data$GrammarR)
+```
+
+In practice, the range is usually reported by explicitly mentioning a variable's lowest and highest values as this is usually much more informative than the range itself. Here is how @DabrowskaExperienceAptitudeIndividual2019 reports the age of the participants in the published article:
+
+> The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from `r min(L1.data$Age)` to `r max(L1.data$Age)` years \[...\]. The nonnative participants ranged in age from `r min(L2.data$Age)` to `r max(L2.data$Age)` years \[...\] [@DabrowskaExperienceAptitudeIndividual2019: 6].
+
+::: callout-tip
+#### Task 1 {.unnumbered}
+
+Complete the description of the `GrammarR` variable in `L1.data` and `L2.data` below.
+
+Copy and paste the following paragraph into a text processor (e.g., LibreOffice Writer or Microsoft Word) and fill in the six blanks using figures that you calculated in `R`. If necessary, round off values to two decimal places.
+
+> On average, English native speakers performed only marginally better in the English grammatical comprehension test (median = \_\_\_\_\_\_) than English L2 learners (median = \_\_\_\_\_\_). However, L1 participants' grammatical comprehension test results ranged from \_\_\_\_\_\_to \_\_\_\_\_\_, whereas L2 participants' results ranged from \_\_\_\_\_\_to \_\_\_\_\_\_.  
+:::
+
+::: {.callout-note collapse="true"}
+#### Click here for the solution to Task 1
+
+Your paragraph should read as follows:
+
+> On average, English native speakers performed only marginally better in the English grammatical comprehension test (mean = `r median(L1.data$GrammarR)`) than English L2 learners (mean = `r median(L2.data$GrammarR)`). L1 participants' grammatical comprehension test results ranged from `r min(L1.data$GrammarR)` to `r max(L1.data$GrammarR)`. In this same test, L2 participants' results ranged `r min(L2.data$GrammarR)` to `r max(L2.data$GrammarR)`.
+
+The following lines of `R` code can be used to obtain these numbers.
+
+```{r}
+median(L1.data$GrammarR)
+median(L2.data$GrammarR)
+
+min(L1.data$GrammarR)
+max(L1.data$GrammarR)
+
+min(L2.data$GrammarR)
+max(L2.data$GrammarR)
+```
+:::
+
+### Interquartile range {#sec-IQR}
+
+We saw that the median is a measure of central tendency that represents the middle value. This means that 50% of the data falls below the median and 50% falls above the median. Going back to the test results of our six learners of Breton in Fiji, this means that half of the class scored below `86.5` and the other half above `86.5`.
+
+```{r}
+median(c(5, 82, 86, 87, 89, 91))
+```
+
+We can further subdivide the distribution into chunks of 25% of the data, or **quartiles**.
+
+-   The **first quartile (Q~1~)** is the value below which 25% of the data falls. In other words, the first quartile corresponds to a value that lies above one-quarter of the values in the data set.
+
+-   The **second quartile (Q~2~)** is the **median** and, as we know, half of the data (25% + 25% = 50%) are below this value, the other half are above.
+
+-   The **third quartile (Q~3~)** is the value below which 75% of the data falls. In other words, it is also the value above which the upper 25% of the data are.
+
+-   The **interquartile range (IQR)** is the range between the second and the third quartile: it therefore covers the middle 50% of the data. This is illustrated below with a growing number of imaginary Breton learners.
+
+![](images/quartiles.gif)
+
+The easiest way to examine a variable's IQR in `R` is to use the handy `summary()` function which, when applied to a numeric variable, returns a number of useful descriptive statistics including its first and third quartiles.[^8_univariatedescriptivestats_inprogress-3]
+
+[^8_univariatedescriptivestats_inprogress-3]: Quartiles can also be computed using the `quantile()` function, which takes two arguments: the variable and a value between 0 and 1 corresponding to our **quantile** of interest. We are interested in the **first** and **third quartiles**, therefore in the values below which lie one quarter (`0.25`) and three-quarters (`0.75`) of all the data.
+
+    To compute the first quantile (Q~1~), we therefore enter:
+
+    ```{r}
+    quantile(L1.data$GrammarR, 0.25)
+    ```
+
+    For the third quantile (Q~3~), we need:
+
+    ```{r}
+    quantile(L1.data$GrammarR, 0.75)
+    ```
+
+```{r}
+summary(L1.data$GrammarR)
+```
+
+From the output of the `summary()` function, we can easily calculate the IQR, which we know is equal to the range between the first and the third quantile.
+
+```{r}
+79 - 71.25
+```
+
+Alternatively, we can compute the IQR directly using the `IQR()` function.
+
+```{r}
+IQR(L1.data$GrammarR)
+```
+
+The reason that the `summary()` function is probably more useful than `IQR()` is that, like the full range, the interquantile range is not usually reported as the difference between Q~3~ and Q~1~. This is because it is more informative to consider the first quartile (Q~1~), the median (Q~2~), and the third quartile (Q~3~) together to grasp both the central tendency of a set of numbers and the amount of variability there is around this central tendency.
+
+In practice, quartiles are rarely reported as numbers. Instead, they are usually visualised as **boxplots**. Boxplots present a visual summary of a numeric variable's central tendency and variability around this central tendency. On a boxplot, the **box** represents the **IQR**. Its **dividing line** is the **median**. The **whiskers** and any **outlier points** represent the rest of the distribution. In other words, the lower whisker roughly covers the lower 25% of the data and the upper whisper the top 25% of the data. Boxplots are most often displayed vertically and are used to visually compare the main characteristics of distributions of numeric values across different groups (e.g., grammar comprehension across different language proficiency groups).
+
+![](images/boxplot_inProgress.gif)
+
+Remember that, in a perfectly normal distribution, the mean and median are equal. When a variable follows a normal distribution, its box is divided into two equal halves and the whiskers are of equal length (see @fig-NormalBoxplots). This symmetry comes from the fact that the values are equally distributed to the left and right of the median/mean. For the same reason, the bells of the normal distributions in @fig-3NormalDistributions were all (almost) symmetrical, although they had very different heights and widths.
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q11.**]{style="color:green;"} Examine the boxplots displayed in @fig-NormalBoxplots.
+
+```{r}
+#| code-summary: "Show `R` code to generate the plot below."
+#| label: "fig-NormalBoxplots"
+#| fig-height: 4
+#| echo: false
+#| fig-cap: "Three boxplots"
+
+normal.ages <- data.frame(Age = c(normal.age.A, normal.age.B, normal.age.C),
+                          Group = c(rep("Group 3", 1000), rep("Group 2", 1000), rep("Group 1", 1000)))
+
+ggplot(mapping = aes(y = Age, 
+                     x = Group), 
+       data = normal.ages) +
+  geom_boxplot(outliers = FALSE, 
+               fill = "purple",
+               alpha = 0.5) +
+  theme_bw() +
+  scale_y_continuous(breaks = seq(0, 70, 5)) +
+  labs(x = NULL)
+```
+
+Which of the following statements accurately describe the age distributions displayed in @fig-NormalBoxplots?
+
+```{r echo=FALSE, results="asis"}
+check_question(c("Ages in Group 1 are normally distributed.",
+                 "Ages in Group 2 are normally distributed.",
+                 "Ages in Group 3 are normally distributed.",
+                  "In all three groups, the median age is approximately the same.",
+                 "In all three groups, the mean age is approximately the same."),
+               options = c("Ages in Group 1 are normally distributed.",
+                           "Ages in Group 1 are not normally distributed.",
+                           "Ages in Group 2 are normally distributed.",
+                           "Ages in Group 2 are not normally distributed.",
+                           "Ages in Group 3 are normally distributed.",
+                           "In Group 3, all participants were born within 12 months of each other.",
+                           "On average, participants were older in Group 1 and younger in Group 3.",
+                           "In all three groups, the median age is approximately the same.",
+                           "In all three groups, the mean age is approximately the same.",
+                           "In all three groups, the IQR is approximately the same."),
+               type = "check",
+               button_label = "Check answer",
+               right = "That's right!",
+               wrong = "Incorrect.")
+check_hint("Remember that normal distributions are characterised by a symmetrical distribution of data points around the median.", hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+ 
+
+[**Q12.**]{style="color:green;"} The boxplots in @fig-NormalBoxplots are based on the same data as the three density plots in @fig-3NormalDistributions. Compare the two figures. Which distribution corresponds to which boxplot?
+
+```{r echo=FALSE, results="asis"}
+check_question(c("Distribution A is visualised in boxplot 3.",
+                           "Distribution C is visualised in boxplot 1."),
+               options = c("Distribution A is visualised in boxplot 3.",
+                           "Distribution C is visualised in boxplot 1.",
+                           "Distribution B is visualised in boxplot 1.",
+                           "Distribution C is visualised in boxplot 3.",
+                           "Distributions A, B and C are visualised in boxplot 2."),
+               type = "check",
+               random_answer_order = TRUE,
+               button_label = "Check answer",
+               right = "That's right, well done!",
+               wrong = "No, not quite.")
+check_hint("Two of the above statements are true.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+ 
+
+[**Q13.**]{style="color:green;"} Examine the following distribution of scores on the grammatical comprehension test administered as part of @DabrowskaExperienceAptitudeIndividual2019.
+
+```{r}
+#| label: "fig-L1GrammarRDensityPlot"
+#| fig-cap: "Density plot of participants' scores on the English comprehension grammar test"
+#| fig-width: 8
+#| fig-height: 5
+#| echo: false
+
+L1.data |>
+  ggplot(mapping = aes(x = GrammarR)) + 
+  geom_histogram(aes(x = GrammarR, y = after_stat(density)),
+                 binwidth = 1,
+                 fill = "black",
+                 alpha = 0.4) + 
+  geom_density(colour = "purple",
+               fill = "purple",
+               alpha = 0.2,
+               linewidth = 0.8) +
+  # geom_vline(aes(xintercept = mean(GrammarR)),
+  #            color = "#0000EE",
+  #            linetype = "dashed",
+  #            linewidth = 0.8) +
+  geom_vline(aes(xintercept = median(GrammarR)),
+             color = "darkred",
+             linewidth = 0.8) + 
+  # # Add label for mean:
+  # annotate("text",
+  #          x = 73,
+  #          y = 0.03,
+  #          label = "mean",
+  #          colour = "#0000EE",
+  #          family = "mono") +
+  # 
+  # # Add curved arrow for mean:
+  # annotate(
+  #   geom = "curve",
+  #   x = 73,
+  #   y = 0.026,
+  #   xend = 74.2,
+  #   yend = 0.02,
+  #   curvature = 0.4,
+  #   arrow = arrow(length = unit(0.2, "cm")),
+  #   colour = "#0000EE") +
+  
+  # Add label for median:
+  annotate("text",
+           x = 78.5,
+           y = 0.015,
+           label = "median",
+           colour = "darkred",
+           family = "mono") +
+
+  # Add curved arrow for median:
+  annotate(
+    geom = "curve",
+    x = 78.5,
+    y = 0.01,
+    xend = 76.2,
+    yend = 0.006,
+    curvature = -0.2,
+    arrow = arrow(length = unit(0.2, "cm")),
+    colour = "darkred") +  
+
+  theme_classic() +
+  scale_y_continuous(name = "Density",
+                     breaks = scales::breaks_width(0.02),
+                     expand = c(0, 0)) +
+  scale_x_continuous(breaks = scales::breaks_width(1),
+                     expand = c(0, 0)) +
+  labs(x = "GrammarR scores")
+```
+
+ 
+
+Are the scores visualised in @fig-L1GrammarRDensityPlot normally distributed?
+
+```{r echo=FALSE, results="asis"}
+check_question("No, they are far from normally distributed.",
+               options = c("No, they are far from normally distributed.",
+                           "Yes, they are normally distributed.",
+                           "It's impossible to tell from the plot alone.",
+                           "They are approximately normally distributed but with a slight positive skew."),
+               type = "radio",
+               random_answer_order = TRUE,
+               button_label = "Check answer",
+               right = "Correct!",
+               wrong = "Are you sure?")
+check_hint("Does the density curve ressemble a more or less symmetrical bell shape around the median?", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+ 
+
+[**Q14.**]{style="color:green;"} Compare the following outputs of the `summary()` function.
+
+```{r}
+summary(L1.data$GrammarR)
+summary(L2.data$GrammarR)
+```
+
+Based on the outputs of the `summary()` function, what does @fig-L1GrammarRDensityPlot display?
+
+```{r echo=FALSE, results="asis"}
+check_question("The distribution of GrammarR scores among L1 participants.",
+               options = c("The distribution of GrammarR scores among L1 participants.",
+                           "The distribution of GrammarR scores among L2 participants.",
+                          "The distribution of GrammarR scores among both L1 and L2 participants.",
+                           "None of the above."),
+               type = "radio",
+               button_label = "Check answer",
+               right = "Correct!",
+               wrong = "Are you sure?")
+```
+
+ 
+
+[**Q15.**]{style="color:green;"} Compare the following boxplots which summarise the distribution of scores on the grammatical comprehension test (`GrammarR`) administered as part of @DabrowskaExperienceAptitudeIndividual2019.
+
+```{r}
+#| label: "fig-GrammarRBoxplots"
+#| fig-cap: "Boxplots showing L1 and L2 participants' English grammar comprehension test scores"
+#| echo: false
+
+grammar.results <- data.frame(Scores = c(L1.data$GrammarR, L2.data$GrammarR),
+                                        Group = c(rep("L1 participants", length(L1.data$GrammarR)), rep("L2 participants", length(L2.data$GrammarR))))
+
+ggplot(mapping = aes(y = Scores, x = Group), 
+       data = grammar.results) +
+  geom_boxplot(alpha = 0.5, fill = "purple") +
+  #geom_jitter(alpha = 0.4, width = 0.1) +
+  scale_y_continuous(breaks = seq(0, 80, 5)) +
+  theme_bw() +
+  theme(element_text(size = 12)) +
+  labs(y = "GrammarR scores", x = "")
+
+```
+
+Why do the two boxplots look so different?
+
+```{r echo=FALSE, results="asis"}
+check_question(c("Because the range of scores was much larger among L2 participants than among L1 participants.", 
+                 "Because more than a quarter of L2 participants scored below 60, whereas only one L1 participant scored below 60.",
+                 "Because the IQR of scores was much larger among L2 participants than among L1 participants."),
+               options = c("Because the range of scores was much larger among L2 participants than among L1 participants.",
+                           "Because the IQR of scores was much larger among L2 participants than among L1 participants.",
+                           "Because more than a quarter of L2 participants scored below 60, whereas only one L1 participant scored below 60.",
+                           "Because proportionally more L2 participants scored below the L2 median score than L1 participants did below the L1 median.",
+                           "Because the median L2 score is much lower than the median L1 score.",
+                           "Because the two groups were not of equal size (there were more L1 than L2 participants)."),
+               random_answer_order = TRUE,
+               type = "check",
+               button_label = "Check answer",
+               right = "That's right, well done!",
+               wrong = "No, not quite.")
+check_hint("Remember that the box of a boxplot always covers the middle 50% of the data and that the median line always represents the middle value in the dataset. It is therefore impossible for proportionally more L2 participants to score below the L2 median score than L1 participants below the L1 median. This is because, in all distributions, 50% of the data points are below the median and 50% are above it.", hint_title = "🐭 Click on the mouse for a hint.")
+```
+:::
+
+### Standard deviation {#sec-SD}
+
+Standard deviation is perhaps the most common measure of variability. Whereas the interquartile range (IQR) is a measure of variability around the median, **standard deviation (SD)** measures variability around the mean. In other words, if you report a mean value as a measure of central tendency, you should report the standard deviation along side it. However, if you report the median, than it makes more sense to report the IQR in the form of a boxplot (see @sec-IQR).
+
+::: border
+In a nutshell, the standard deviation tells us how far away from the mean the data points are, on average.
+:::
+
+ Considering the test scores of our five Breton learners, we already know that the standard deviation is likely to be large because the mean (`r mean(c(5, 82, 86, 89, 91))`) is quite far away from all five data points.
+
+```{r eval = FALSE}
+5, 82, 86, 89, 91
+```
+
+To calculate how far exactly, we first measure how far each point is from the mean, e.g. for the first data point we calculate `5 - 70.6`, for the second `82 - 70.6`, etc.
+
+```{r}
+Breton.scores <- c(5, 82, 86, 89, 91)
+
+Breton.scores - mean(Breton.scores)
+```
+
+As you can see, some of the differences between the data points and the mean value are negative, whilst others are positive. For standard deviation, we are not interested in whether data points are above or below the mean, but rather in how far removed they are from the mean. To remove any negative sign, we therefore square all these distances. The squaring operation (`^2`) also has the effect making large differences even larger.
+
+```{r}
+(Breton.scores - mean(Breton.scores))^2
+```
+
+Remember that standard deviation is a measure of how different, on average, a set of numbers are from one another, with respect to the mean. We have just calculated the sum of the squared differences from the mean and we now need to calculate the average of these squared differences. To calculate the mean squared difference, we sum the differences and divide them by the number of data points.
+
+```{r}
+sum((Breton.scores - mean(Breton.scores))^2) / 5
+
+```
+
+This is the **variance**. The problem with the variance is that it is not in the original scale of our variable, but rather in squared units, i.e., here, in squared test scores, which is rather difficult to interpret! This is why we more commonly report the **standard deviation**, which is the square root of the variance (`sqrt()`).
+
+```{r}
+sqrt(sum((Breton.scores - mean(Breton.scores))^2) / 5)
+```
+
+This means that, on average, learners' test scores are 32 points away from the group mean of `r mean(Breton.scores)` points.
+
+Of course, there is a base `R` function to calculate the standard deviation. It is called `sd()`. However, if we use the `sd()` function to calculate the standard deviation of our five Breton learners' test scores, we get a slightly different result.
+
+```{r}
+sd(Breton.scores)
+```
+
+This is because, in practice, we almost always divide the sum of squares not by the total number of data points (*N* ), but by the total number minus one (*N*-1). This is the difference between the **population standard deviation** and the **sample standard deviation**. The population standard deviation is used when we have access to the entire population (e.g. all L2 English users worldwide!), which is rare in real-world scenarios. In most cases, we work with samples [e.g., as in @DabrowskaExperienceAptitudeIndividual2019, a sample of 67 L2 English users]. Dividing by *N*-1 gives us a more accurate estimate of the population's standard deviation based on our sample. It helps to reduce the bias in our estimate, making it a more reliable measure of variability around the mean.
+
+In `R`, the `sd()` function calculates the sample standard deviation.
+
+```{r}
+sqrt(sum((Breton.scores - mean(Breton.scores))^2) / 4)
+```
+
+With a normal distribution, the standard deviation informs us about the width of the bell around the central tendency. In @fig-3NormalDistributions we saw that three normal distributions, all with a median/mean of 35 could have very different bell shapes. This is because they have very different standard deviations around that central tendency.
+
+Distribution A is a normal distribution with a mean of 35 years (x̅ = 35) and a standard deviation of one year (sd = 1).
+
+```{r}
+#| fig-height: 3
+#| echo: false
+
+normal.density(normal.age.A)
+```
+
+Distribution B is a normal distribution with a mean of 35 years (x̅ = 35) and a standard deviation of 5 years (sd = 5).
+
+```{r}
+#| fig-height: 3
+#| echo: false
+
+normal.density(normal.age.B)
+```
+
+Distribution C is a normal distribution with a mean of 35 years (x̅ = 35) and a standard deviation of 10 years (sd = 1).
+
+```{r}
+#| fig-height: 3
+#| echo: false
+
+normal.density(normal.age.C)
+```
+
+The standard deviation provides a single metric of the variability around the mean. This means that knowing the mean and standard deviation of a numeric variable is not enough to tell whether a distribution is (approximately) normal or skewed. Like the range and the IQR, a large standard deviation value indicates greater variability within a variable, but tells us nothing more. For instance, comparing the following two SDs tells us that there is more variability around the mean in L2 participants' grammar comprehension test scores than in that of the L1 participants, but nothing more about the distribution of the test scores in either group.
+
+```{r}
+sd(L1.data$GrammarR) |>
+  round(digits = 2)
+
+sd(L2.data$GrammarR) |> 
+  round(digits = 2)
+```
+
+In this respect, boxplots are more informative (compare the above SDs with @fig-GrammarRBoxplots). To evaluate the full shape of a numeric variable's distribution, however, there is no alternative to plotting it as a histogram or density plot.
+
+In sum, remember that, when describing variables, it is important to report both an appropriate measure of central tendency *and* an appropriate measure of variability. In addition, it is good practice to visualise the full distribution of a variable's values in the form of a table, histogram, or density plot (see Chapter 11 on data visualisation). This is because any combination of a single measure of central tendency and a single measure of variability can correspond to an array of different distribution shapes.
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q16.**]{style="color:green;"} What is the standard deviation of L1 participants' age in @DabrowskaExperienceAptitudeIndividual2019? Calculate the sample standard deviation to two decimal places.
+
+```{r echo=FALSE, results="asis"}
+check_question("16.15",
+               button_label = "Check answer",
+               right = "✅",
+               wrong = "❌"
+)
+check_hint("You will need to combine the sd() and the round() funtions to answer this question.", hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+ 
+
+[**Q17.**]{style="color:green;"} Compare the standard deviation of the `Age` variable in the L1 and L2 datasets. What can you conclude on the basis of this comparison?
+
+```{r echo=FALSE, results="asis"}
+check_question("There is greater variability around the mean age in the L1 data than in the L2 data.",
+               options = c("Age is not normally distributed in both the L1 and the L2 data.",
+                           "There is greater variability around the mean age in the L1 data than in the L2 data.",
+                           "There is greater variability around the mean age in the L2 data than in the L1 data.",
+                           "L2 participants are more likely to be older than L1 participants.",
+                           "There is almost twice as much variability in L2 participants' ages than in L1's."),
+               type = "check",
+               button_label = "Check answer",
+               right = "That's right, well done!",
+               wrong = "No, that's incorrect."
+)
+check_hint("Only one of these statements can be deduced from the comparison of standard deviations.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+ 
+:::
+
+::: callout-note
+#### Further reading
+
+As a follow-up, I highly recommend reading this short and highly accessible article by Fahd @alhazmiVisualInterpretationStandard2020, who provides a wonderful visual guide to understanding standard deviation: <https://towardsdatascience.com/a-visual-interpretation-of-the-standard-deviation-30f4676c291c>.
+:::
+
+#### **Check your progress** {.unnumbered}
+
+You have successfully completed [`r checkdown::insert_score()` out of 13 quiz questions]{style="color:green;"} in this chapter.
+
+Are you confident that you can...?
+
+-   [ ] Use and interpret different measures of central tendency (@sec-CentralTendency)
+-   [ ] Calculate the mode, mean, median of a numeric variable in `R` (@sec-Mean - @sec-Median)
+-   [ ] Interpret histograms and density plots (@sec-Distributions)
+-   [ ] Recognise the characteristics of a normally distributed variable (@sec-Normal)
+-   [ ] Interpret and calculate the interquartile range in `R` (@sec-IQR)
+-   [ ] Interpret the distribution of a numeric variable summarised as a boxplot (@sec-IQR)
+-   [ ] Interpret and calculate the standard deviation (@sec-SD)
+
+In Chapter 10, you will learn how to make beautiful plots (including histograms and density plots) in `R` using `ggplot2`. But, first, we need to learn about data wrangling to prepare our data for data visualisation and comparative analyses across different variables and datasets. Are you ready? 🤓

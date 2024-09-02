@@ -6,7 +6,7 @@ format:
     df-print: default
 ---
 
-# Variables and functions
+# Va`R`iables and functions
 
 ```{r include=FALSE}
 library(checkdown)
@@ -38,7 +38,7 @@ In this chapter, you will learn how to:
 -   Look up and change the default arguments of functions
 -   Combine functions using two methods
 
-## Inspecting a dataset
+## Inspecting a dataset in `R`
 
 In @sec-ImportingErrors, we saw that we can use the `View()` function to display tabular data in a format that resembles that of a spreadsheet programme (see @fig-ViewData1).
 
@@ -101,15 +101,89 @@ wrong = "No, that won't display the first 10 rows of the dataset. Try it out for
  
 :::
 
-## Variables and `R` data types
+## Working with variables
 
-In tidy data formats (see Chapter 8), each row corresponds to one observation and each column to a variable. Each cell, therefore, corresponds to a single data point, which is the value of a specific variable (column) for a specific observation (row). As we will see in the following chapters, this data structure allows for efficient and intuitive data manipulation, analysis, and visualisation.
+### Types of variables {#sec-Variables}
+
+In statistics, we differentiate between **numeric** (or **quantitative**) and **categorical** (or **qualitative**) variables. Each variable type can be subdivided into different subtypes. It is very important to understand the differences between these types of data as we frequently have to use different statistics and visualisations depending on the type(s) of variable(s) that we are dealing with.
+
+Some **numeric variables** are **continuous**: they contain measured data that, at least theoretically, can have an infinite number of values within a range (e.g., time). In practice, however the number of possible values depends on the precision of the measurement (e.g., are we measuring time in years, as in the age of adults, or milliseconds, as in participants' reaction times in a linguistic experiment). **Numeric variables** for which only a defined set of values are possible are called **discrete** variables (e.g., number of occurrences of a word in a corpus). Most often, discrete numeric variables represent counts of something.
+
+[![](images/AHorst_NumericVariables.png){fig-alt="Cartoon comparison of continuous versus discrete data. On the left: \"Continuous - measured data, can have infinite values within possible range.\" Below is an illustration of a chick, with text \"I am 3.1\" tall, I weight 34.16 grams.\" On the right: \"Discrete - observations can only exist at limited values, often counts.\" Below is an illustration of an octopus with text \"I have 8 legs and 4 spots!\"" fig-align="center" width="509"}](https://allisonhorst.com)
+
+**Categorical variables** can be **nominal** or **ordinal**. Nominal variables contain unordered categorical values (e.g., participants' mother tongue or nationality), whereas ordinal variables have categorical values that can be ordered meaningfully (e.g., participants' proficiency in a specific language where the values *beginner, intermediate* and *advanced* or *A1*, *A2*, *B1*, *B2*, *C1* and *C2* have a meaningful order). However, the difference between each category (or level) is not necessarily equal. **Binary** variables are a special case of nominal variable which only has two mutually exclusive outcomes (e.g., *true* or *false* in a quiz question).
+
+[![](images/AHorst_CategoricalVariables.png){fig-alt="Visual representations of nominal, ordinal, and binary variables. Left: Nominal (ordered descriptions) with illustrations below of a turtle, snail, and butterfly. Center: Ordinal (ordered descriptions) with illustrations below of three bees - one looks unhappy (saying \"I am unhappy\"), one looks ok (saying \"I am OK\"), and one looks very happy (saying \"I am awesome!\"). Right: Binary (only 2 mutually exclusive outcomes), with below a T-rex saying \"I am extinct\" and a shark saying \"HA.\""}](https://allisonhorst.com/)
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q3.**]{style="color:green;"} Which type of variable is the variable `Occupation` in `L1.data`?
+
+```{r echo=FALSE, results="asis"}
+check_question("Nominal",
+               options = c("Nominal", 
+                           "Binary",
+                           "Continuous",
+                           "Discrete",
+                           "Other"),
+button_label = "Check answer",
+random_answer_order = TRUE,
+type = "radio",
+right = "Correct. These job categories cannot be meaningfully ordered.",
+wrong = "No, check the definitions above.")
+```
+
+ 
+
+[**Q4.**]{style="color:green;"} Which type of variable is the variable `Gender` in `L1.data`?
+
+```{r echo=FALSE, results="asis"}
+check_question("Binary",
+               options = c("Nominal", 
+                           "Binary",
+                           "Continuous",
+                           "Discrete",
+                           "Other"),
+button_label = "Check answer",
+random_answer_order = TRUE,
+type = "radio",
+right = "That's right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is binary because all of the participants either identified as female (F) or male (M).",
+wrong = "No, check the definitions above.")
+```
+
+ 
+
+[**Q5.**]{style="color:green;"} Which type of variable is the variable `VocabR` in `L1.data`?
+
+```{r echo=FALSE, results="asis"}
+check_question("Discrete",
+               options = c("Nominal", 
+                           "Binary",
+                           "Continuous",
+                           "Discrete",
+                           "Other"),
+button_label = "Check answer",
+random_answer_order = TRUE,
+type = "radio",
+right = "That's right. These are participants' score on a vocabularly test. The more items they got right, the more points they got.",
+wrong = "No, re-read the definitions above.")
+```
+
+ 
+:::
+
+### Inspecting variables in `R`
+
+In **tidy data** tabular formats (see Chapter 8), each row corresponds to one observation and each column to a variable. Each cell, therefore, corresponds to a single data point, which is the value of a specific variable (column) for a specific observation (row). As we will see in the following chapters, this data structure allows for efficient and intuitive data manipulation, analysis, and visualisation.
 
 The `names()` functions returns the names of all of the columns of a data frame. Given that the datasets from @DabrowskaExperienceAptitudeIndividual2019 are 'tidy', this means that `names(L1.data)` returns a list of all the variables in the L1 dataset.
 
 ```{r}
 names(L1.data)
 ```
+
+### `R` data types
 
 A useful way to get a quick and informative overview of the variables of a large dataset is to use the function `str`, which was mentioned in @sec-ImportingErrors, and which returns the "internal structure" of any `R` object. It is particular useful for large datasets with many variables.
 
@@ -124,7 +198,7 @@ Compare the outputs of the `str()` and `head()` functions in the Console with th
 ::: callout-tip
 #### Quiz time! {.unnumbered}
 
-[**Q3.**]{style="color:green;"} Use the `str()` function to examine the internal structure of the L2 dataset. How many variables are there in the L2 dataset?
+[**Q6.**]{style="color:green;"} Use the `str()` function to examine the internal structure of the L2 dataset. How many variables are there in the L2 dataset?
 
 ```{r echo=FALSE, results="asis"}
 check_question("45",
@@ -136,7 +210,7 @@ wrong = "No, check the first line of the output of `str(L2.data)`.")
 
  
 
-[**Q4.**]{style="color:green;"} Which of these variables can be found in the L2 dataset, but not the L1 one?
+[**Q7.**]{style="color:green;"} Which of these variables can be found in the L2 dataset, but not the L1 one?
 
 ```{r echo=FALSE, results="asis"}
 check_question(c("NativeLg", "FirstExp", "Arrival", "EngWork"),
@@ -152,13 +226,14 @@ check_hint("Try using the `str()` or the `names()` functions to compare the two 
 
  
 
-[**Q5.**]{style="color:green;"} Which type of `R` object is the variable `Arrival` stored as?
+[**Q8.**]{style="color:green;"} Which type of `R` object is the variable `Arrival` stored as?
 
 ```{r echo=FALSE, results="asis"}
 check_question("integer",
                options = c("integer",
                            "string character",
                            "digit",
+                           "index",
                            "interest",
                            "intelligence"), 
                type = "check",
@@ -172,7 +247,7 @@ check_hint("You can find the answer in the output of the command `str(L2.data)`"
 
  
 
-[**Q6.**]{style="color:green;"} How old was the third participant listed in the L2 dataset when they first moved to an English-speaking country?
+[**Q9.**]{style="color:green;"} How old was the third participant listed in the L2 dataset when they first moved to an English-speaking country?
 
 ```{r echo=FALSE, results="asis"}
 check_question("19", 
@@ -184,6 +259,8 @@ check_hint("You can find the answer in the output of the command `str(L2.data)`"
 
  
 :::
+
+### Accessing individual variables in `R`
 
 We can call up individual variables within a data frame using the `$` operator. This displays all of the participants' values for this one variable. As shown below, this works for any type of variable.
 
@@ -212,7 +289,7 @@ If we want to display the content of this variable, we must print our new `R` ob
 head(L1.Occupation)
 ```
 
-## Accessing individual data points
+## Accessing individual data points in `R`
 
 We can also access individual data points from a variable using the index operator, the square brackets (`[]`). For example, we can access the `Occupation` value for the fourth L1 participant by specifying that we only want the fourth element of the `R` object `L1.Occupation`.
 
@@ -262,7 +339,7 @@ L1.data[c(11,13,29,90),2:4]
 
 The following two quiz questions focus on the `NativeLg` variables from the L2 dataset (`L2.data`).
 
-[**Q7.**]{style="color:green;"} Use the index operators to find out the native language of the 26^th^ L2 participant.
+[**Q10.**]{style="color:green;"} Use the index operators to find out the native language of the 26^th^ L2 participant.
 
 ```{r echo=FALSE, results="asis"}
 check_question("Polish",
@@ -274,7 +351,7 @@ wrong = "That's incorrect. 😔 Use the command `L2.data$NativeLg[26]` to find o
 
  
 
-[**Q8.**]{style="color:green;"} Which command(s) can you use to display only the Gender, Occupation, Native language, and Age of the last participant listed in the L2 dataset?
+[**Q11.**]{style="color:green;"} Which command(s) can you use to display only the Gender, Occupation, Native language, and Age of the last participant listed in the L2 dataset?
 
 ```{r echo=FALSE, results="asis"}
 check_question(c("L2.data[67,c(2,3,5,9)]", "L2.data[67,c(2:3,5,9)]", "L2.data[67 , c(2,3,5,9)]"),
@@ -291,9 +368,9 @@ check_hint("Using `-1` as an index to access the last row is a neat trick in Pyt
  
 :::
 
-## Using built-in `R` functions
+## Using built-in `R` functions {#sec-RFunctions}
 
-We know from our examination of the L1 dataset from @DabrowskaExperienceAptitudeIndividual2019 that it includes 90 English native speaker participants. To find out their average age, we could add up all of their ages and divide the sum by 90.
+We know from our examination of the L1 dataset from @DabrowskaExperienceAptitudeIndividual2019 that it includes 90 English native speaker participants. To find out their mean average age, we could add up all of their ages and divide the sum by 90 (see @sec-CentralTendency for more ways to report the central tendency of a variable).
 
 ```{r}
 (21 + 38 + 55 + 26 + 55 + 58 + 31 + 58 + 42 + 59 + 32 + 27 + 60 + 51 + 32 + 29 + 41 + 57 + 60 + 18 + 41 + 60 + 21 + 25 + 26 + 60 + 57 + 60 + 52 + 25 + 23 + 42 + 59 + 30 + 21 + 21 + 60 + 51 + 62 + 65 + 19 + 65 + 29 + 38 + 37 + 42 + 20 + 32 + 29 + 29 + 27 + 28 + 29 + 25 + 33 + 25 + 25 + 25 + 52 + 25 + 53 + 22 + 65 + 60 + 61 + 65 + 65 + 61 + 30 + 30 + 32 + 30 + 39 + 29 + 55 + 18 + 32 + 31 + 20 + 38 + 44 + 18 + 17 + 17 + 17 + 17 + 17 + 17 + 17 + 17) / 90
@@ -305,7 +382,7 @@ Of course, we would much rather not write all of this out! Especially, as we are
 sum(L1.data$Age) / 90
 ```
 
-This already looks much better, but it's still less than ideal: What if we decided to exclude some participants (e.g., because they did not complete all of the experimental tasks)? Or decided to add data from more participants? In all of these cases, 90 will no longer be the correct denominator to calculate their average age! That's why it is better to work out the denominator by computing the total number of values in the variable of interest. To this end, we can use the `length()` function, which returns the number of values in any given vector.
+This already looks much better, but it's still less than ideal: What if we decided to exclude some participants (e.g., because they did not complete all of the experimental tasks)? Or decided to add data from more participants? In both these cases, 90 will no longer be the correct denominator to calculate their average age! That's why it is better to work out the denominator by computing the total number of values in the variable of interest. To this end, we can use the `length()` function, which returns the number of values in any given vector.
 
 ```{r}
 length(L1.data$Age)
@@ -328,6 +405,7 @@ If you save the values of a variable to your `R` session environment, you do not
 ```{r}
 # Saving the values of the Age variable to a new R object called L1.Age:
 L1.Age <- L1.data$Age
+
 # Applying the mean() function to this new R object:
 mean(L1.Age)
 ```
@@ -335,7 +413,7 @@ mean(L1.Age)
 ::: callout-tip
 #### Quiz time! {.unnumbered}
 
-[**Q9.**]{style="color:green;"} How does the average age of the L2 participants in @DabrowskaExperienceAptitudeIndividual2019 compare to that of the L1 participants?
+[**Q12.**]{style="color:green;"} How does the average age of the L2 participants in @DabrowskaExperienceAptitudeIndividual2019 compare to that of the L1 participants?
 
 ```{r echo=FALSE, results="asis"}
 check_question("On average, the L2 participants are younger than the L1 participants.", 
@@ -447,7 +525,7 @@ L1.data$Vocab
 round(L1.data$Vocab)
 ```
 
-[**Q10.**]{style="color:green;"} Based on your observations, what does the `round()` function do?
+[**Q13.**]{style="color:green;"} Based on your observations, what does the `round()` function do?
 
 ```{r echo=FALSE, results="asis"}
 check_question("The round() function rounds off numbers to the nearest whole number.", 
@@ -464,7 +542,7 @@ wrong = "Are you sure? Try out the `round()` function with other numbers to find
 
  
 
-[**Q11.**]{style="color:green;"} Check out the 'Usage' section of the help file on the `round()` function to find out how to round the `Vocab` values in the L1 dataset to two decimal places. How can this be achieved?
+[**Q14.**]{style="color:green;"} Check out the 'Usage' section of the help file on the `round()` function to find out how to round the `Vocab` values in the L1 dataset to two decimal places. How can this be achieved?
 
 ```{r echo=FALSE, results="asis"}
 check_question(c("round(L1.data$Vocab, 2)",
@@ -485,9 +563,9 @@ check_hint("Two options are correct because, as long as the arguments are listed
  
 :::
 
-## Combining functions
+## Combining functions in `R`
 
-Combining functions is where the real fun starts with programming! For example, if we want to compute participant's average age to two decimal places, we need to combine the `mean()` function and the `round()` function. We could achieve this in two steps.
+Combining functions is where the real fun starts with programming! In @sec-RFunctions, we already combined two functions using a mathematical operator (`/`). But what if we want to compute L1 participant's average age to two decimal places? To do this, we need to combine the `mean()` function and the `round()` function. We can do this in two steps.
 
 ```{r}
 # Step 1:
@@ -501,7 +579,7 @@ In step 1, we compute the mean value and save it as an `R` object and, in step 2
 
 In the following, we will look at two further ways to combine functions in `R`: nesting and piping.
 
-### Nested functions
+### Nested functions {#sec-Nesting}
 
 The first method involves lots of brackets (also known as 'parentheses'). This is because in nested functions, one function is placed inside another function. The inner function is evaluated first, and its result is passed to the next outer function. Here's an example:
 
@@ -542,7 +620,7 @@ The first line will return an "unexpected symbol" error because it is missing a 
 It is very easy to make bracketing errors when writing code and especially so when nesting functions (see @fig-NestedFunctions). Watch your commas and brackets (see also @sec-Errors)!
 :::
 
-### Piped Functions
+### Piped Functions {#sec-Piping}
 
 If you found all these brackets overwhelming: fear not! There is a second method for combining functions in `R`, which is often more convenient and almost always easier to decipher. It involves the pipe operator, which in `R` is `|>`.[^7_variablesfunctions-1]
 
@@ -579,7 +657,7 @@ Like many of the relational operators we saw in @sec-RelationalOperators, the `R
 ::: callout-tip
 #### Quiz time! {.unnumbered}
 
-[**Q12.**]{style="color:green;"} Using the `R` pipe operator, calculate the average mean age of the L2 participants and round off this value to two decimal places. What is the result?
+[**Q15.**]{style="color:green;"} Using the `R` pipe operator, calculate the average mean age of the L2 participants and round off this value to two decimal places. What is the result?
 
 ```{r echo=FALSE, results="asis"}
 check_question("32.72", 
@@ -591,7 +669,7 @@ wrong = "No, try again.")
 
  
 
-[**Q13.**]{style="color:green;"} Unsurprisingly, in @DabrowskaExperienceAptitudeIndividual2019's study, English L1 participants, on average, scored higher in an English vocabulary test than L2 participants. Calculate the difference between L1 and L2 participants' mean `Vocab` test results and round off this means difference to two decimal places.
+[**Q16.**]{style="color:green;"} Unsurprisingly, in @DabrowskaExperienceAptitudeIndividual2019's study, English L1 participants, on average, scored higher in an English vocabulary test than L2 participants. Calculate the difference between L1 and L2 participants' mean `Vocab` test results and round off this means difference to two decimal places.
 
 ```{r echo=FALSE, results="asis"}
 check_question("16.33",

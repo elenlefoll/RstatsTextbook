@@ -578,7 +578,9 @@ Fixed width files (with file extensions such as `.gz`, .`bz2` or `.xz`) are a le
 
 If your data are currently stored in a spreadsheet software (e.g., LibreOffice Calc, Google Sheets, or Microsoft Excel), you can export them to `.csv` or `.tsv`. However, if you do not wish to do this (e.g., because your colleague wishes to maintain the spreadsheet format that includes formatting elements such as bold or coloured cells), there are functions to import these file formats directly into `R`.
 
-For **LibreOffice Calc**, you can install the {readODS} package and use its `read_ods()` function to import `.ods` files. Details about all the options can be found here <https://www.rdocumentation.org/packages/readODS/versions/2.3.0>.
+### LibreOffice Calc
+
+For LibreOffice Calc (which you should have installed in @sec-OpenSource), you can install the {readODS} package and use its `read_ods()` function to import `.ods` files. Details about all the options can be found here <https://www.rdocumentation.org/packages/readODS/versions/2.3.0>.
 
 ```{r eval = FALSE}
 # Install from CRAN (safest option):
@@ -598,7 +600,9 @@ MyLibreOfficeData <- read_ods("data/MyLibreOfficeTable.ods",
 
 ```
 
-Various packages can be used to import **Microsoft Excel** file formats, but the simplest is {readxl}, which is part of the {tidyverse}. It allows users to import data in both `.xlsx` and the older `.xls` format. You can find out more about its various options here: <https://readxl.tidyverse.org/>.
+### Microsoft Excel
+
+Various packages can be used to import Microsoft Excel file formats, but the simplest is {readxl}, which is part of the {tidyverse}. It allows users to import data in both `.xlsx` and the older `.xls` format. You can find out more about its various options here: <https://readxl.tidyverse.org/>.
 
 ```{r eval = FALSE}
 # Install from CRAN (safest option):
@@ -618,7 +622,9 @@ MyExcelData <- read_excel("data/MyExcelSpreadsheet.xlsx",
 
 ```
 
-Finally, there are also several ways to import data from **Google Sheets**. The simplest is to export your tabular data as a `.csv`, `.tsv`, `.xslx`, or `.ods` file by selecting Google Sheet's menu option 'File' \> 'Download'. Then, you can simply import this downloaded file in `R` using the corresponding function as described above.
+### Google Sheets
+
+There are also several ways to import data from Google Sheets. The simplest is to export your tabular data as a `.csv`, `.tsv`, `.xslx`, or `.ods` file by selecting Google Sheet's menu option 'File' \> 'Download'. Then, you can simply import this downloaded file in `R` using the corresponding function as described above.
 
 However, if you want to directly import your data from Google Sheets and be able to dynamically update the analyses that you conduct in `R` even as the input data is amended on Google Sheets, you can use the {googlesheets4} package (which is part of the {tidyverse}):
 
@@ -647,6 +653,8 @@ MySheetsData <- read_sheet("1U6Cf_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY/edit#gi
 ```
 
 ![Dialogue box to consent to the {tidyverse} API Packages having access to your Google Drive to import directly from a Google Sheet. Read this carefully before clicking on 'Continue'.](images/GoogleSheetsTidyverseAccess.png){#fig-TidyverseAPI fig-alt="Sign in with Google. Tidyverse API Packages wants access to your Google Account. Select what Tidyverse API Packages can access • See, edit, create, and delete all your Google Sheets spreadsheets. Because you're using Sign in with Google, Tidyverse API Packages will be able to Associate you with your personal info on Google, See your primary Google Account email address. Make sure you trust Tidyverse API Packages. You may be sharing sensitive info with this site or app. Learn about how Tidyverse API Packages will handle your data by reviewing its privacy policies. You can always see or remove access in your Google Account. Learn about the risks. The two buttons at the bottom read: Cancel and Continue"}
+
+### Importing spreadsheet files with multiple sheets/tabs
 
 Note that, as spreadsheet software typically allow users to have several "sheets" or "tabs" within a file that each contains separate tables, the functions `read_excel()`, `read_ods()`, and `read_sheet` include an argument called `sheet` which allows you to specify which sheet should be imported. The default value is `1`, which simply means that the first one is imported. If your sheets have names, you can also use its name as the argument value, e.g.:
 
