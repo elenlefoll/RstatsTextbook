@@ -15,17 +15,7 @@ L1.data <- read.csv(file = here("data", "L1_data.csv"))
 L2.data <- read.csv(file = here("data", "L2_data.csv"))
 ```
 
-::: callout-warning
-### Prerequisites
-
-In this chapter and the following chapters, all analyses are based on data from:
-
-> Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <https://doi.org/10.1111/lang.12323>.
-
-You will only be able to reproduce the analyses and answer the quiz questions from this chapter if you have successfully imported the two datasets from @DabrowskaExperienceAptitudeIndividual2019. To import the datasets, follow the instructions from @sec-RProject to @sec-ImportingDataCSV and complete Task 1.
-:::
-
-#### **Chapter overview** {.unnumbered}
+### Chapter overview {.unnumbered}
 
 In this chapter, you will learn how to:
 
@@ -35,7 +25,17 @@ In this chapter, you will learn how to:
 -   Recognise the characteristics of a normally distributed variable
 -   Interpret and calculate the interquartile range in `R`
 -   Interpret the distribution of a numeric variable summarised as a boxplot
--   Interpret and calculate the standard deviation
+-   Interpret and calculate the standard deviation in `R`
+
+::: callout-warning
+### Prerequisites
+
+In this chapter and the following chapters, all analyses are based on data from:
+
+> Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <https://doi.org/10.1111/lang.12323>.
+
+You will only be able to reproduce the analyses and answer the quiz questions from this chapter if you have successfully imported the two datasets from @DabrowskaExperienceAptitudeIndividual2019. To import the datasets, follow the instructions from @sec-RProject to @sec-ImportingDataCSV and complete Task 1.
+:::
 
 ## Measures of central tendency {#sec-CentralTendency}
 
@@ -99,7 +99,7 @@ Now, it's time to turn to real data!
 
 ### Mode {#sec-Mode}
 
-The mean and median are measures of central tendency that only work with numeric variables. However, data in the language sciences frequently also includes categorical data (see @sec-Variables). In the data from @DabrowskaExperienceAptitudeIndividual2019, this includes variables such as `Gender` and `Occupation`. These are variables that we also need to describe. The only measure of central tendency that we have for **categorical variables** is the **mode**, which corresponds to the **most frequent value** in a dataset.
+The mean and median are measures of central tendency that only work with numeric variables. However, data in the language sciences frequently also includes categorical data (see @sec-Variables). In the data from @DabrowskaExperienceAptitudeIndividual2019, this includes variables such as `Gender`, `NativeLg`, `OtherLgs`, and `Occupation`. We also need to be able to describe these variables as part of our data analysis. For such **categorical variables**, the only available measure of central tendency is the **mode**, which corresponds to the **most frequent value** in a variable.
 
 The `table()` function outputs how often each unique value occurs in a variable.
 
@@ -107,18 +107,22 @@ The `table()` function outputs how often each unique value occurs in a variable.
 table(L1.data$Gender)
 ```
 
-From this output, we can tell that the mode of the `Gender` variable in the L1 dataset is `F` for "female".
+From this output, we can tell that the mode of the `Gender` variable in the L1 dataset is `F`, which stands for "female".
 
-When there are many different unique values (or **levels**), it makes sense to order them according to their frequency. To do so, we can pipe the output of the `table()` function into the `sort()` function. Note that, by default, `R` sorts by ascending order (`decreasing = FALSE`), but we can change this default to `TRUE`.
+When there are many different unique values (or **levels**), it makes sense to order them according to their frequency. To do so, we can pipe the output of the `table()` function into the `sort()` function. Note that, by default, `R` sorts by ascending order (`decreasing = FALSE`). We can change this default to `TRUE`.
 
 ```{r}
 table(L1.data$Occupation) |> 
   sort(decreasing = TRUE)
 ```
 
-We can see that, among the L1 participants, there were as many "Retired" participants as there were "Student" participants. Hence, we have two modes. In general, modal values rarely make good summaries of variables with many different possible values or levels. This is why the mode is not suitable for numeric variables unless there are only a few possible discrete numeric values (e.g., the values of a five or seven-point Likert scale).
+We can see that, among the L1 participants, there were as many "Retired" participants as there were "Student" participants.[^8_descriptivestats-2] Hence, we have two modes. In general, modal values rarely make good summaries of variables with many different possible values or levels. This is why the mode is not suitable for numeric variables, unless there are only a few possible discrete numeric values (e.g., the values of a five or seven-point **Likert scale**[^8_descriptivestats-3]).
 
-Cross-tabulations of more than one categorical variable (or numeric variable with just a few unique values) can easily be generated using the `table()` function. In the following, we cross-tabulate the additional languages that the L1 participants speak with their gender. This allows us to see that most male and female L1 participants did not speak another language other than English. Hence, for both the male and female subsets of L1 participants the mode of the variable `OtherLgs` is `None`.
+[^8_descriptivestats-2]: We also see that this data needs cleaning before we can do any serious data analysis. There are also a few typos (e.g., *Unemploed*) and synonyms (*School Crossing Guard* and *School Crossing Patrol*) that we will need to standardise. This process is part of **data wrangling** and we will cover how to do this in a **reproducible** way in `R` in the following chapter.
+
+[^8_descriptivestats-3]: A Likert scale is a type of rating scale used to measure attitudes, opinions, or feelings. It typically consists of a series of statements or questions with a range of possible responses, often on a scale from "strongly disagree" to "strongly agree". For example, in a study on language attitudes, participants might be asked to rate their agreement with the statement "I think it's important to speak standard English in formal situations" on a scale from "1 (strongly disagree)" to "5 (strongly agree)". The resulting variable will therefore consist of numbers ranging between 1 and 5. Note also that, strictly speaking, Likert scales are not numeric variables, but rather ordinal variables (see @sec-Variables). The numbers refer to different categories that describe an order of responses, rather than a quantity.
+
+Cross-tabulations of more than one categorical variable (or numeric variable with just a few unique values) can easily be generated using the `table()` function. In the following, we cross-tabulate the additional languages that the L1 participants speak with their gender. This allows us to see that most male and female L1 participants did not speak another language other than English. Hence, for both the male and female subsets of L1 participants the mode of the variable `OtherLgs` is "None".
 
 ```{r}
 table(L1.data$OtherLgs, L1.data$Gender)
@@ -239,10 +243,11 @@ OtherLgs.prop <-
 OtherLgs.prop
 ```
 
-To round the values to two decimal places, we can apply the `round()` function to the `R` object that we created in the previous chunk (`OtherLgs.prop`).
+To round the values to two decimal places, we can pipe the `R` object that we created in the previous chunk (`OtherLgs.prop`) into the `round()` function.
 
 ```{r}
-round(OtherLgs.prop, digits = 2)
+OtherLgs.prop |> 
+  round(digits = 2)
 ```
 
 In addition to using frequency tables, we can **visualise** data distributions graphically. **Bar plots** allow us to easily compare the distribution of categorical variables across different datasets and subsets of data. For example, in @fig-OtherLgsGender, we can see that the distribution of additional languages spoken by the L1 participants is very similar in both the female and the male subset of participants.
@@ -286,11 +291,11 @@ We first use the `table()` function to tally L2 participants' ages.
 table(L2.data$Age)
 ```
 
-As the above table contains a lot of different values, it's easier to visualise these numbers in the form of a **bar chart**. The mode (`28`) has been highlighted in black.
+As the above table contains a lot of different values, it's easier to visualise these numbers in the form of a **bar chart** (also called **bar plot**). The mode (`28`) has been highlighted in black.
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show the code to produce the plot below (note that you will learn how to create bar charts and other types of plots in Chapter 11)."
+#| code-summary: "Show the code to produce the plot below (note that we will learn how to create bar charts and other types of plots in Chapter 10)."
 #| fig-width: 8
 #| fig-height: 5
 
@@ -339,6 +344,7 @@ barplot.mode <-
     arrow = arrow(length = unit(0.2, "cm")), 
     colour = "black")
 
+# Print the plot
 barplot.mode
 ```
 
@@ -623,9 +629,9 @@ L2.data |>
 
 ```
 
-If we wanted to work out the probability of an L2 participant being between `42` and `62` years old, we would have to calculate the **area under the curve** between these two points on the *x*-axis. Even without doing any maths, you can see that this area is considerably smaller than between the ages of `22` and `42`. This means that, in this dataset, participants are considerably more likely to be between 22 and 42 than between 42 and 62 years old.[^8_descriptivestats-2]
+If we wanted to work out the probability of an L2 participant being between `42` and `62` years old, we would have to calculate the **area under the curve** between these two points on the *x*-axis. Even without doing any maths, you can see that this area is considerably smaller than between the ages of `22` and `42`. This means that, in this dataset, participants are considerably more likely to be between 22 and 42 than between 42 and 62 years old.[^8_descriptivestats-4]
 
-[^8_descriptivestats-2]: Of course, there is an `R` function to help you do the maths! The `edcf()` function allows us to calculate the area under the curve between the ages of 42 and 62.
+[^8_descriptivestats-4]: Of course, there is an `R` function to help you do the maths! The `edcf()` function allows us to calculate the area under the curve between the ages of 42 and 62.
 
     ```{r}
     ecdf(L2.data$Age)(62) - ecdf(L2.data$Age)(42)
@@ -640,6 +646,9 @@ If we wanted to work out the probability of an L2 participant being between `42`
     This is, indeed, a much higher probability (ca. 78 %), as depicted by the much larger area highlighted in plot B.
 
     ```{r echo = FALSE, fig.width = 10}
+      #| code-fold: true
+      #| code-summary: "Show `R` code to generate the plot below."
+      
     DensityPlot <- ggplot(data = L2.data, aes(x = Age)) +
       geom_density(fill = "purple", alpha = 0.5) +
       theme_classic() +
@@ -678,8 +687,8 @@ In a perfectly normally distributed variable, the mean and the median are exactl
 #install.packages("truncnorm")
 library(truncnorm)
 
-set.seed(13)
-normal.age.sd8 <- round(rtruncnorm(mean = 35, sd = 8, n = 1000, a = 10, b = 100))
+set.seed(42)
+normal.age.sd8 <- round(rtruncnorm(mean = 35, sd = 8, n = 10000, a = 10, b = 100))
 #get_mode(normal.age.sd8) 
 
 ggplot(mapping = aes(x = normal.age.sd8)) + 
@@ -1102,9 +1111,9 @@ We can further subdivide the distribution into chunks of 25% of the data, or **q
 
 ![](images/quartiles.gif)
 
-The easiest way to examine a variable's IQR in `R` is to use the handy `summary()` function which, when applied to a numeric variable, returns a number of useful descriptive statistics including its first and third quartiles.[^8_descriptivestats-3]
+The easiest way to examine a variable's IQR in `R` is to use the handy `summary()` function which, when applied to a numeric variable, returns a number of useful descriptive statistics including its first and third quartiles.[^8_descriptivestats-5]
 
-[^8_descriptivestats-3]: Quartiles can also be computed using the `quantile()` function, which takes two arguments: the variable and a value between 0 and 1 corresponding to our **quantile** of interest. We are interested in the **first** and **third quartiles**, therefore in the values below which lie one quarter (`0.25`) and three-quarters (`0.75`) of all the data.
+[^8_descriptivestats-5]: Quartiles can also be computed using the `quantile()` function, which takes two arguments: the variable and a value between 0 and 1 corresponding to our **quantile** of interest. We are interested in the **first** and **third quartiles**, therefore in the values below which lie one quarter (`0.25`) and three-quarters (`0.75`) of all the data.
 
     To compute the first quantile (Q~1~), we therefore enter:
 
@@ -1138,7 +1147,7 @@ The reason that the `summary()` function is probably more useful than `IQR()` is
 
 In practice, quartiles are rarely reported as numbers. Instead, they are usually visualised as **boxplots**. Boxplots present a visual summary of a numeric variable's central tendency and variability around this central tendency. On a boxplot, the **box** represents the **IQR**. Its **dividing line** is the **median**. The **whiskers** and any **outlier points** represent the rest of the distribution. In other words, the lower whisker roughly covers the lower 25% of the data and the upper whisper the top 25% of the data. Boxplots are most often displayed vertically and are used to visually compare the main characteristics of distributions of numeric values across different groups (e.g., grammar comprehension across different language proficiency groups).
 
-![](images/boxplot_inProgress.gif)
+![](images/boxplot.gif)
 
 Remember that, in a perfectly normal distribution, the mean and median are equal. When a variable follows a normal distribution, its box is divided into two equal halves and the whiskers are of equal length (see @fig-NormalBoxplots). This symmetry comes from the fact that the values are equally distributed to the left and right of the median/mean. For the same reason, the bells of the normal distributions in @fig-3NormalDistributions were all (almost) symmetrical, although they had very different heights and widths.
 
@@ -1518,7 +1527,7 @@ check_hint("Only one of these statements can be deduced from the comparison of s
 As a follow-up, I highly recommend reading this short and highly accessible article by Fahd @alhazmiVisualInterpretationStandard2020, who provides a wonderful visual guide to understanding standard deviation: <https://towardsdatascience.com/a-visual-interpretation-of-the-standard-deviation-30f4676c291c>.
 :::
 
-#### **Check your progress** {.unnumbered}
+### Check your progress {.unnumbered}
 
 You have successfully completed [`r checkdown::insert_score()` out of 13 quiz questions]{style="color:green;"} in this chapter.
 
