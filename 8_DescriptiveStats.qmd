@@ -19,11 +19,11 @@ L2.data <- read.csv(file = here("data", "L2_data.csv"))
 In this chapter, you will learn how to:
 
 -   Choose and interpret different measures of central tendency
--   Calculate the mode, mean, median of a numeric variable in `R`
+-   Calculate the mode, mean, and median of a numeric variable in `R`
 -   Interpret histograms and density plots
 -   Recognise the characteristics of a normally distributed variable
 -   Interpret and calculate the interquartile range in `R`
--   Interpret the distribution of a numeric variable summarised as a boxplot
+-   Interpret boxplots
 -   Interpret and calculate the standard deviation in `R`
 
 ::: callout-warning
@@ -855,8 +855,8 @@ L1.data |>
     geom = "curve",
     x = 20.5,
     y = 0.062,
-    xend = 17.4,
-    yend = 0.057,
+    xend = 18,
+    yend = 0.058,
     curvature = -0.4,
     arrow = arrow(length = unit(0.2, "cm")),
     colour = "black") +
@@ -1108,7 +1108,7 @@ We can further subdivide the distribution into chunks of 25% of the data, or **q
 
 -   The **interquartile range (IQR)** is the range between the second and the third quartile: it therefore covers the middle 50% of the data. This is illustrated below with a growing number of imaginary Breton learners.
 
-![The interquartile range in five different sets of values (CC-BY Elen Le Foll)](images/quartiles.gif){#fig-MakingIQR}
+![The interquartile range in five different sets of values ([CC-BY](https://creativecommons.org/licenses/by/4.0/) Elen Le Foll)](images/quartiles.gif){#fig-MakingIQR}
 
 The easiest way to examine a variable's IQR in `R` is to use the handy `summary()` function which, when applied to a numeric variable, returns a number of useful descriptive statistics including its first and third quartiles.[^8_descriptivestats-5]
 
@@ -1146,7 +1146,7 @@ The reason that the `summary()` function is probably more useful than `IQR()` is
 
 In practice, quartiles are rarely reported as numbers. Instead, they are usually visualised as **boxplots**. Boxplots present a visual summary of a numeric variable's central tendency and variability around this central tendency. On a boxplot, the **box** represents the **IQR**. Its **dividing line** is the **median**. The **whiskers** and any **outlier points** represent the rest of the distribution (see @fig-MakingBoxplot). In other words, the lower whisker roughly covers the lower 25% of the data and the upper whisper the top 25% of the data. Boxplots are most often displayed vertically and are used to visually compare the main characteristics of distributions of numeric values across different groups (e.g., grammar comprehension across different language proficiency groups).
 
-![The making of a boxplot (CC-BY Elen Le Foll)](images/boxplot.gif){#fig-MakingBoxplot}
+![The making of a boxplot ([CC-BY](https://creativecommons.org/licenses/by/4.0/) Elen Le Foll)](images/boxplot.gif){#fig-MakingBoxplot}
 
 Remember that, in a perfectly normal distribution, the mean and median are equal. When a variable follows a normal distribution, its box is divided into two equal halves and the whiskers are of equal length (see @fig-NormalBoxplots). This symmetry comes from the fact that the values are equally distributed to the left and right of the median/mean. For the same reason, the bells of the normal distributions in @fig-3NormalDistributions were all (almost) symmetrical, although they had very different heights and widths.
 
@@ -1308,9 +1308,9 @@ Are the scores visualised in @fig-L1GrammarRDensityPlot normally distributed?
 ```{r echo=FALSE, results="asis"}
 check_question("No, they are far from normally distributed.",
                options = c("No, they are far from normally distributed.",
-                           "Yes, they are normally distributed.",
+                           "Yes, they are approximately normally distributed.",
                            "It's impossible to tell from the plot alone.",
-                           "They are approximately normally distributed but with a slight positive skew."),
+                           "Yes, they are approximately normally distributed, but with a slight positive skew."),
                type = "radio",
                random_answer_order = TRUE,
                button_label = "Check answer",
@@ -1383,7 +1383,10 @@ check_question(c("Because the range of scores was much larger among L2 participa
                button_label = "Check answer",
                right = "That's right, well done!",
                wrong = "No, not quite.")
-check_hint("Remember that the box of a boxplot always covers the middle 50% of the data and that the median line always represents the middle value in the dataset. It is therefore impossible for proportionally more L2 participants to score below the L2 median score than L1 participants below the L1 median. This is because, in all distributions, 50% of the data points are below the median and 50% are above it.", hint_title = "🐭 Click on the mouse for a hint.")
+check_hint("Remember that, in a boxplot, the size of the box tells us nothing about the number of data points in the visualised variable. Rather, it tells us about the spread of the data points as compared to the median.", hint_title = "🐭 Click on the mouse for a hint.")
+check_hint("Remember that, in a boxplot, the box always covers the middle 50% of the data and that the median line always represents the middle value in the dataset. It is therefore impossible for proportionally more L2 participants to score below the L2 median score than L1 participants below the L1 median. This is because, in all distributions including non-parametric ones, 50% of the data points are below the median and 50% are above it.", 
+           hint_title = "🦉 Hover over the owl for a second hint.",
+           type = "onmouseover")
 ```
 :::
 
@@ -1422,13 +1425,13 @@ sum((Breton.scores - mean(Breton.scores))^2) / 5
 
 ```
 
-This is the **variance**. The problem with the variance is that it is not in the original scale of our variable, but rather in squared units, i.e., here, in squared test scores, which is rather difficult to interpret! This is why we more commonly report the **standard deviation**, which is the square root of the variance (`sqrt()`).
+This is the **variance**. The problem with the variance is that it is not in the original scale of our variable, but rather in squared units, i.e., here, in squared test scores, which is rather difficult to interpret! This is why we more commonly report the **standard deviation**, which is the square root of the variance. The square root function in `R` is `sqrt()`.
 
 ```{r}
 sqrt(sum((Breton.scores - mean(Breton.scores))^2) / 5)
 ```
 
-This means that, on average, learners' test scores are 32 points away from the group mean of `r mean(Breton.scores)` points.
+From the above result, we can deduce that, on average, learners' test scores are 32 points away from the group mean of `r mean(Breton.scores)` points.
 
 Of course, there is a base `R` function to calculate the standard deviation. It is called `sd()`. However, if we use the `sd()` function to calculate the standard deviation of our five Breton learners' test scores, we get a slightly different result.
 
@@ -1538,7 +1541,7 @@ check_hint("Only one of these statements can be deduced from the comparison of s
 As a follow-up, I highly recommend reading this short and highly accessible article by Fahd @alhazmiVisualInterpretationStandard2020, who provides a wonderful visual guide to understanding standard deviation: <https://towardsdatascience.com/a-visual-interpretation-of-the-standard-deviation-30f4676c291c>.
 :::
 
-### Check your progress {.unnumbered}
+### Check your progress 🌟 {.unnumbered}
 
 You have successfully completed [`r checkdown::insert_score()` out of 13 quiz questions]{style="color:green;"} in this chapter.
 
@@ -1547,9 +1550,9 @@ Are you confident that you can...?
 -   [ ] Use and interpret different measures of central tendency (@sec-CentralTendency)
 -   [ ] Calculate the mode, mean, median of a numeric variable in `R` (@sec-Mean - @sec-Median)
 -   [ ] Interpret histograms and density plots (@sec-Distributions)
--   [ ] Recognise the characteristics of a normally distributed variable (@sec-Normal)
+-   [ ] Recognise the characteristics of a normal distribution (@sec-Normal)
 -   [ ] Interpret and calculate the interquartile range in `R` (@sec-IQR)
--   [ ] Interpret the distribution of a numeric variable summarised as a boxplot (@sec-IQR)
+-   [ ] Interpret boxplots (@sec-IQR)
 -   [ ] Interpret and calculate the standard deviation (@sec-SD)
 
 In Chapter 10, we will cover the basics of **data visualisation** and learn how to create a range of informative and elegant plots (including histograms and density plots) using the popular `R` package `ggplot2`. But, first, we need to learn about **data wrangling** (Chapter 9) to prepare our data for data visualisation and multivariable analyses. Are you ready? 🤓
