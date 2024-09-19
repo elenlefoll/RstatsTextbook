@@ -108,7 +108,7 @@ table(L1.data$Gender)
 
 From this output, we can tell that the mode of the `Gender` variable in the L1 dataset is `F`, which stands for "female".
 
-When there are many different unique values (or **levels**), it makes sense to order them according to their frequency. To do so, we can pipe the output of the `table()` function into the `sort()` function. Note that, by default, `R` sorts by ascending order (`decreasing = FALSE`). We can change this default to `TRUE`.
+When there are many different unique values (or **levels**), it makes sense to order them according to their frequency. To do so, we can pipe the output of the `table()` function into the `sort()` function (piping was covered in @sec-Piping). Note that, by default, `R` sorts by ascending order (`decreasing = FALSE`). We can change this default to `TRUE`.
 
 ```{r}
 table(L1.data$Occupation) |> 
@@ -157,7 +157,8 @@ check_question("On average, the L1 participants were older.",
                random_answer_order = TRUE,
                button_label = "Check answer",
                right = "Correct!",
-               wrong = "No, that's incorrect.")
+               wrong = "No, that's incorrect. Check the hint if you're stuck.")
+check_hint("In some cases, comparing mean or median values *can* lead to different conclusions. But is it the case here? Compare the outputs of `mean(L1.data$Age)` and `mean(L2.data$Age)` and then `median(L1.data$Age)` and `median(L2.data$Age)` to see if the trend changes when comparing L1 and L2 participants' median ages as opposed to mean ages.", hint_title = "🐭 Click on the mouse for a hint.")
 ```
 
  
@@ -1108,7 +1109,7 @@ We can further subdivide the distribution into chunks of 25% of the data, or **q
 
 -   The **interquartile range (IQR)** is the range between the second and the third quartile: it therefore covers the middle 50% of the data. This is illustrated below with a growing number of imaginary Breton learners.
 
-![The interquartile range in five different sets of values ([CC-BY](https://creativecommons.org/licenses/by/4.0/) Elen Le Foll)](images/quartiles.gif){#fig-MakingIQR}
+![Animation showing the interquartile range of five different sets of values ([CC-BY](https://creativecommons.org/licenses/by/4.0/) Elen Le Foll)](images/quartiles.gif){#fig-MakingIQR}
 
 The easiest way to examine a variable's IQR in `R` is to use the handy `summary()` function which, when applied to a numeric variable, returns a number of useful descriptive statistics including its first and third quartiles.[^8_descriptivestats-5]
 
@@ -1146,7 +1147,7 @@ The reason that the `summary()` function is probably more useful than `IQR()` is
 
 In practice, quartiles are rarely reported as numbers. Instead, they are usually visualised as **boxplots**. Boxplots present a visual summary of a numeric variable's central tendency and variability around this central tendency. On a boxplot, the **box** represents the **IQR**. Its **dividing line** is the **median**. The **whiskers** and any **outlier points** represent the rest of the distribution (see @fig-MakingBoxplot). In other words, the lower whisker roughly covers the lower 25% of the data and the upper whisper the top 25% of the data. Boxplots are most often displayed vertically and are used to visually compare the main characteristics of distributions of numeric values across different groups (e.g., grammar comprehension across different language proficiency groups).
 
-![The making of a boxplot ([CC-BY](https://creativecommons.org/licenses/by/4.0/) Elen Le Foll)](images/boxplot.gif){#fig-MakingBoxplot}
+![Animation showing the making of a boxplot ([CC-BY](https://creativecommons.org/licenses/by/4.0/) Elen Le Foll)](images/boxplot.gif){#fig-MakingBoxplot}
 
 Remember that, in a perfectly normal distribution, the mean and median are equal. When a variable follows a normal distribution, its box is divided into two equal halves and the whiskers are of equal length (see @fig-NormalBoxplots). This symmetry comes from the fact that the values are equally distributed to the left and right of the median/mean. For the same reason, the bells of the normal distributions in @fig-3NormalDistributions were all (almost) symmetrical, although they had very different heights and widths.
 

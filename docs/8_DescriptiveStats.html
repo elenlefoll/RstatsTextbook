@@ -400,7 +400,7 @@ Prerequisites
 </div>
 </div>
 <p>From this output, we can tell that the mode of the <code>Gender</code> variable in the L1 dataset is <code>F</code>, which stands for “female”.</p>
-<p>When there are many different unique values (or <strong>levels</strong>), it makes sense to order them according to their frequency. To do so, we can pipe the output of the <code>table()</code> function into the <code>sort()</code> function. Note that, by default, <code>R</code> sorts by ascending order (<code>decreasing = FALSE</code>). We can change this default to <code>TRUE</code>.</p>
+<p>When there are many different unique values (or <strong>levels</strong>), it makes sense to order them according to their frequency. To do so, we can pipe the output of the <code>table()</code> function into the <code>sort()</code> function (piping was covered in <a href="7_VariablesFunctions.html#sec-Piping" class="quarto-xref"><span>Section 7.5.2</span></a>). Note that, by default, <code>R</code> sorts by ascending order (<code>decreasing = FALSE</code>). We can change this default to <code>TRUE</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(L1.data<span class="sc">$</span>Occupation) <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -498,11 +498,14 @@ Quiz time!
 <input type="submit" value="Check answer">
 <div id="result_53333"></div>
 </form>
-<script>function validate_form_53333() {var x, text; var x = document.forms['form_53333']['answer_53333'].value;if (x == 'On average, the L1 participants were older.'){text = 'Correct!';} else {text = 'No, that’s incorrect.';} document.getElementById('result_53333').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_53333() {var x, text; var x = document.forms['form_53333']['answer_53333'].value;if (x == 'On average, the L1 participants were older.'){text = 'Correct!';} else {text = 'No, that’s incorrect. Check the hint if you’re stuck.';} document.getElementById('result_53333').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_53029').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_53333').innerText == 'Correct!';text = res1 + res2;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_53333').innerText == 'Correct!';text = res1;element.innerHTML = text;
          return false;
          }}</script>
+<div id="hint_1458" onclick="return show_hint_1458()">🐭 Click on the mouse for a hint.</div>
+<div id="result_1458" onclick="return show_hint_1458()"></div>
+<script>function show_hint_1458(){var x = document.getElementById('result_1458').innerHTML; if(!x){document.getElementById('result_1458').innerHTML = 'In some cases, comparing mean or median values <em>can</em> lead to different conclusions. But is it the case here? Compare the outputs of <code>mean(L1.data$Age)</code> and <code>mean(L2.data$Age)</code> and then <code>median(L1.data$Age)</code> and <code>median(L2.data$Age)</code> to see if the trend changes when comparing median and as opposed to mean values.';} else {document.getElementById('result_1458').innerHTML = '';}}</script>
 <p>&nbsp;</p>
 <p><span style="color:green;"><strong>Q3.</strong></span> Which of the following statements is true about the L1 and L2 participants in <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>?</p>
 <form name="form_98543" onsubmit="return validate_form_98543()" method="post">
@@ -1550,10 +1553,10 @@ Click here for the solution to Task 1
 <div id="fig-MakingIQR" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-MakingIQR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/quartiles.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;8.6: The interquartile range in five different sets of values (CC-BY Elen Le Foll)"><img src="images/quartiles.gif" class="img-fluid figure-img"></a>
+<a href="images/quartiles.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;8.6: Animation showing the interquartile range of five different sets of values (CC-BY Elen Le Foll)"><img src="images/quartiles.gif" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-MakingIQR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8.6: The interquartile range in five different sets of values (<a href="https://creativecommons.org/licenses/by/4.0/">CC-BY</a> Elen Le Foll)
+Figure&nbsp;8.6: Animation showing the interquartile range of five different sets of values (<a href="https://creativecommons.org/licenses/by/4.0/">CC-BY</a> Elen Le Foll)
 </figcaption>
 </figure>
 </div>
@@ -1584,10 +1587,10 @@ Figure&nbsp;8.6: The interquartile range in five different sets of values (<a hr
 <div id="fig-MakingBoxplot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-MakingBoxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/boxplot.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;8.7: The making of a boxplot (CC-BY Elen Le Foll)"><img src="images/boxplot.gif" class="img-fluid figure-img"></a>
+<a href="images/boxplot.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;8.7: Animation showing the making of a boxplot (CC-BY Elen Le Foll)"><img src="images/boxplot.gif" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-MakingBoxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8.7: The making of a boxplot (<a href="https://creativecommons.org/licenses/by/4.0/">CC-BY</a> Elen Le Foll)
+Figure&nbsp;8.7: Animation showing the making of a boxplot (<a href="https://creativecommons.org/licenses/by/4.0/">CC-BY</a> Elen Le Foll)
 </figcaption>
 </figure>
 </div>
@@ -2684,7 +2687,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","loop":false});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
