@@ -120,7 +120,7 @@ Some **numeric variables** are **continuous**: they contain measured data that, 
 ::: callout-tip
 #### Quiz time! {.unnumbered}
 
-[**Q3.**]{style="color:green;"} Which type of variable is the variable `Occupation` in `L1.data`?
+[**Q3.**]{style="color:green;"} Which type of variable is stored in the `Occupation` column in `L1.data`?
 
 ```{r echo=FALSE}
 check_question("Nominal",
@@ -138,7 +138,7 @@ wrong = "No, check the definitions above.")
 
  
 
-[**Q4.**]{style="color:green;"} Which type of variable is the variable `Gender` in `L1.data`?
+[**Q4.**]{style="color:green;"} Which type of variable is stored in the `Gender` column in `L1.data`?
 
 ```{r echo=FALSE}
 check_question("Binary",
@@ -156,7 +156,7 @@ wrong = "No, check the definitions above.")
 
  
 
-[**Q5.**]{style="color:green;"} Which type of variable is the variable `VocabR` in `L1.data`?
+[**Q5.**]{style="color:green;"} Which type of variable is stored in the column `VocabR` in `L1.data`?
 
 ```{r echo=FALSE}
 check_question("Discrete",
@@ -179,28 +179,28 @@ wrong = "No, re-read the definitions above.")
 
 In **tidy data** tabular formats (see Chapter 8), each row corresponds to one observation and each column to a variable. Each cell, therefore, corresponds to a single data point, which is the value of a specific variable (column) for a specific observation (row). As we will see in the following chapters, this data structure allows for efficient and intuitive data manipulation, analysis, and visualisation.
 
-The `names()` functions returns the names of all of the columns of a data frame. Given that the datasets from @DabrowskaExperienceAptitudeIndividual2019 are 'tidy', this means that `names(L1.data)` returns a list of all the variables in the L1 dataset.
+The `names()` functions returns the names of all of the columns of a data frame. Given that the datasets from @DabrowskaExperienceAptitudeIndividual2019 are 'tidy', this means that `names(L1.data)` returns a list of all the column names in the L1 dataset.
 
 ```{r}
 names(L1.data)
 ```
 
-### `R` data types
+### `R` data types {#sec-DataTypes}
 
-A useful way to get a quick and informative overview of the variables of a large dataset is to use the function `str`, which was mentioned in @sec-ImportingErrors, and which returns the "internal structure" of any `R` object. It is particular useful for large datasets with many variables.
+A useful way to get a quick and informative overview of a large dataset is to use the function `str()`, which was mentioned in @sec-ImportingErrors. It returns the "internal structure" of any `R` object. It is particular useful for large tables with many columns
 
 ```{r}
 str(L1.data)
 ```
 
-At the top of its output, the function `str(L1.data)` first informs us that `L1.data` is a **data frame** object, consisting of 90 observations (i.e. rows) and 31 variables (i.e. columns). Then, it returns a list of all of the variables included in this data frame. Each line starts with a `$` sign and corresponds to one variable. First, the name of the variable (e.g. `Occupation`) is printed, followed by the variable's `R` data type (e.g. `chr` for a character string variable), and then its values for the first few rows of the table (e.g. we can see that the first participant in this dataset was a "Student" and the second a "Student/Support Worker").
+At the top of its output, the function `str(L1.data)` first informs us that `L1.data` is a **data frame** object, consisting of 90 observations (i.e. rows) and 31 variables (i.e. columns). Then, it returns a list of all of the variables included in this data frame. Each line starts with a `$` sign and corresponds to one column First, the name of the column (e.g. `Occupation`) is printed, followed by the column's `R` data type (e.g. `chr` for a character string vector), and then its values for the first few rows of the table (e.g. we can see that the first participant in this dataset was a "Student" and the second a "Student/Support Worker").
 
 Compare the outputs of the `str()` and `head()` functions in the Console with that of the `View()` function to understand the different ways in which the same dataset can be examined in RStudio.
 
 ::: callout-tip
 #### Quiz time! {.unnumbered}
 
-[**Q6.**]{style="color:green;"} Use the `str()` function to examine the internal structure of the L2 dataset. How many variables are there in the L2 dataset?
+[**Q6.**]{style="color:green;"} Use the `str()` function to examine the internal structure of the L2 dataset. How many columns are there in the L2 dataset?
 
 ```{r echo=FALSE}
 check_question("45",
@@ -212,7 +212,7 @@ wrong = "No, check the first line of the output of `str(L2.data)`.")
 
  
 
-[**Q7.**]{style="color:green;"} Which of these variables can be found in the L2 dataset, but not the L1 one?
+[**Q7.**]{style="color:green;"} Which of these columns can be found in the L2 dataset, but not the L1 one?
 
 ```{r echo=FALSE}
 check_question(c("NativeLg", "FirstExp", "Arrival", "EngWork"),
@@ -220,7 +220,7 @@ check_question(c("NativeLg", "FirstExp", "Arrival", "EngWork"),
                type = "check",
 button_label = "Check answer",
 random_answer_order = TRUE,
-right = "That's right! And there are more variables that are specific to the L2 dataset but which are not listed here.",
+right = "That's right! And there are more columns that are specific to the L2 dataset but which are not listed here.",
 wrong = "Not quite. Compare the outputs of `names(L1.data)` and `names(L2.data)` again.")
 check_hint("Try using the `str()` or the `names()` functions to compare the two datasets.", hint_title = "😇 Hover for a hint", type = "onmouseover")
 
@@ -260,11 +260,30 @@ check_hint("You can find the answer in the output of the command `str(L2.data)`"
 ```
 
  
+
+[**Q10.**]{style="color:green;"} In both datasets, the column `Participant` contains an anonymous participant ID. Why is the variable `Participant` stored as a string character in `L1.data`, but as an integer in `L2.data`?
+
+```{r echo=FALSE}
+check_question("Because some of the L1 participants' IDs contain letters as well as numbers.",
+               options = c("Because some of the L1 participants' IDs contain letters as well as numbers.",
+                           "Because there are more L1 participants than L2 participants.",
+                           "Because the L1 participants' ID only contain whole numbers with no decimal points.",
+                           "Because the L1 participants' ID are written out as words rather than digits."), 
+               type = "check",
+button_label = "Check answer",
+random_answer_order = TRUE,
+right = "That's correct.",
+wrong = "No, that's not it. Have you had a look at the full set of participant IDs in the L1 dataset?")
+check_hint("Print the full list of values in both columns using the commands `L1.data$Participant` and `L2.data$Participant` to work it out.", hint_title = "😇 Hover for a hint", type = "onmouseover")
+
+```
+
+ 
 :::
 
-### Accessing individual variables in `R`
+### Accessing individual columns in `R`
 
-We can call up individual variables within a data frame using the `$` operator. This displays all of the participants' values for this one variable. As shown below, this works for any type of variable.
+We can call up individual columns within a data frame using the `$` operator. This displays all of the participants' values for this one variable. As shown below, this works for any type of data.
 
 ```{r}
 L1.data$Gender
@@ -291,7 +310,7 @@ If we want to display the content of this variable, we must print our new `R` ob
 head(L1.Occupation)
 ```
 
-## Accessing individual data points in `R`
+## Accessing individual data points in `R` {#sec-SquareBrackets}
 
 We can also access individual data points from a variable using the index operator, the square brackets (`[]`). For example, we can access the `Occupation` value for the fourth L1 participant by specifying that we only want the fourth element of the `R` object `L1.Occupation`.
 
@@ -341,7 +360,7 @@ L1.data[c(11,13,29,90),2:4]
 
 The following two quiz questions focus on the `NativeLg` variables from the L2 dataset (`L2.data`).
 
-[**Q10.**]{style="color:green;"} Use the index operators to find out the native language of the 26^th^ L2 participant.
+[**Q11.**]{style="color:green;"} Use the index operators to find out the native language of the 26^th^ L2 participant.
 
 ```{r echo=FALSE}
 check_question("Polish",
@@ -353,7 +372,7 @@ wrong = "That's incorrect. 😔 Use the command `L2.data$NativeLg[26]` to find o
 
  
 
-[**Q11.**]{style="color:green;"} Which command(s) can you use to display only the Gender, Occupation, Native language, and Age of the last participant listed in the L2 dataset?
+[**Q12.**]{style="color:green;"} Which command(s) can you use to display only the Gender, Occupation, Native language, and Age of the last participant listed in the L2 dataset?
 
 ```{r echo=FALSE}
 check_question(c("L2.data[67,c(2,3,5,9)]", "L2.data[67,c(2:3,5,9)]", "L2.data[67 , c(2,3,5,9)]"),
@@ -415,7 +434,7 @@ mean(L1.Age)
 ::: callout-tip
 #### Quiz time! {.unnumbered}
 
-[**Q12.**]{style="color:green;"} How does the average age of the L2 participants in @DabrowskaExperienceAptitudeIndividual2019 compare to that of the L1 participants?
+[**Q13.**]{style="color:green;"} How does the average age of the L2 participants in @DabrowskaExperienceAptitudeIndividual2019 compare to that of the L1 participants?
 
 ```{r echo=FALSE}
 check_question("On average, the L2 participants are younger than the L1 participants.", 
@@ -527,7 +546,7 @@ L1.data$Vocab
 round(L1.data$Vocab)
 ```
 
-[**Q13.**]{style="color:green;"} Based on your observations, what does the `round()` function do?
+[**Q14.**]{style="color:green;"} Based on your observations, what does the `round()` function do?
 
 ```{r echo=FALSE}
 check_question("The round() function rounds off numbers to the nearest whole number.", 
@@ -544,7 +563,7 @@ wrong = "Are you sure? Try out the `round()` function with other numbers to find
 
  
 
-[**Q14.**]{style="color:green;"} Check out the 'Usage' section of the help file on the `round()` function to find out how to round the `Vocab` values in the L1 dataset to two decimal places. How can this be achieved?
+[**Q15.**]{style="color:green;"} Check out the 'Usage' section of the help file on the `round()` function to find out how to round the `Vocab` values in the L1 dataset to two decimal places. How can this be achieved?
 
 ```{r echo=FALSE}
 check_question(c("round(L1.data$Vocab, 2)",
@@ -659,7 +678,7 @@ Like many of the relational operators we saw in @sec-RelationalOperators, the `R
 ::: callout-tip
 #### Quiz time! {.unnumbered}
 
-[**Q15.**]{style="color:green;"} Using the `R` pipe operator, calculate the average mean age of the L2 participants and round off this value to two decimal places. What is the result?
+[**Q16.**]{style="color:green;"} Using the `R` pipe operator, calculate the average mean age of the L2 participants and round off this value to two decimal places. What is the result?
 
 ```{r echo=FALSE}
 check_question("32.72", 
@@ -671,7 +690,7 @@ wrong = "No, try again.")
 
  
 
-[**Q16.**]{style="color:green;"} Unsurprisingly, in @DabrowskaExperienceAptitudeIndividual2019's study, English L1 participants, on average, scored higher in an English vocabulary test than L2 participants. Calculate the difference between L1 and L2 participants' mean `Vocab` test results and round off this means difference to two decimal places.
+[**Q17.**]{style="color:green;"} Unsurprisingly, in @DabrowskaExperienceAptitudeIndividual2019's study, English L1 participants, on average, scored higher in an English vocabulary test than L2 participants. Calculate the difference between L1 and L2 participants' mean `Vocab` test results and round off this means difference to two decimal places.
 
 ```{r echo=FALSE}
 check_question("16.33",
