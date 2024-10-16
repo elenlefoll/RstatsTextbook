@@ -379,7 +379,7 @@ Now the `summary()` function provides a tally of male and female participants th
 summary(L2.data.cleaned$Gender)
 ```
 
-::: callout-tip
+::: callout-caution
 #### Task 2 {.unnumbered}
 
 This task focuses on the `OccupGroup` variable, which is found in both the L1 and L2 datasets.
@@ -697,7 +697,7 @@ An undeniable advantage of sticking to base `R` functions is that your code is m
 
 For some analyses, it may be useful to group together participants whose native languages come from the same family of languages. For example, French, Spanish and Italian L1 speakers, may be considered as a one group of participants whose native language is a Romance language.
 
-Use `mutate()` and `case_when()` to add a new variable to `L2.data` that corresponds to the L2 participant's native language family. Give this new variable an appropriate name. Use the following language family categories:
+Use `mutate()` and `case_when()` to add a new variable to `L2.data` that corresponds to the L2 participant's native language family. Call this new variable `NativeLgFamily`. Use the following language family categories:
 
 -   Baltic
 -   Chinese
@@ -746,6 +746,23 @@ check_hint("You can copy the code from the previous section to add a \"percent\"
 ```
 
  
+
+[**d.**]{style="color:green;"} If you check the output of `colnames(L2.data)` or `View(L2.data)`, you will see that the new variable that you created is now the last column in the table. Consult the help file of the {dplyr} function `relocate()` to work out how to place this column immediately after `NativeLg`.
+
+```{r echo=FALSE}
+check_question(c("L2.data <- L2.data |> relocate(NativeLgFamily, .after = NativeLg)"),
+               options = c("L2.data <- L2.data |> relocate(NativeLgFamily, .after = NativeLg)",
+                           "L2.data <- L2.data |> relocate(f, .after = NativeLg)", 
+                           "L2.data <- L2.data |> relocate(NativeLgFamily, after = NativeLg)",
+                           "L2.data <- L2.data |> relocate(NativeLgFamily, .before = NativeLg)",
+                           "L2.data <- L2.data |> relocate(NativeLgFamily, .after = NULL)"),
+               random_answer_order = TRUE,
+               button_label = "Check answer",
+               right = "✅  Nice work!",
+               wrong = "No, that's incorrect. If you're really stuck, have a look at the solution below.")
+```
+
+ 
 :::
 
 ::: {.callout-note collapse="true"}
@@ -753,7 +770,7 @@ check_hint("You can copy the code from the previous section to add a \"percent\"
 
 As always, there are several solutions to solving this task. Here is one solution based on what we have covered so far in this chapter.
 
-[**a.**]{style="color:green;"} Note that the following code will only work if you followed the instructions in the section above to create the `NativeLg.cleaned` variable as it relies on this variable to create the new `NativeLgFamily` variable. I chose `NativeLgFamily` as the new column name. You may well have chosen a different name (see naming guidelines in @sec-NamingObjects).
+[**a.**]{style="color:green;"} Note that the following code will only work if you followed the instructions in the section above to create the `NativeLg.cleaned` variable as it relies on this variable to create the new `NativeLgFamily` variable.
 
 ```{r}
 L2.data <- L2.data |> 
@@ -809,6 +826,25 @@ L2.data |>
          ) |> 
   arrange(desc(n))
 ```
+
+[**d.**]{style="color:green;"} At the time of writing, the help file of the `relocate()` function still featured examples using the {magrittr} pipe (`%>%`) rather than the native `R` pipe (`|>`) (see @sec-Piping), but the syntax remains the same. The first argument is the data which we are piping into the function, the second argument is the column that we want to move. Then, we need to specify where to with either the ".after" or the ".before" argument.
+
+```{r}
+L2.data <- L2.data |> 
+  relocate(NativeLgFamily, .after = NativeLg)
+```
+
+Note that the help file specifies that both ".after" and ".before" begin with a dot. If you leave the dot out, the function will not work as expected! Can you see what's happened here?
+
+```{r}
+L2.data |> 
+  relocate(NativeLgFamily, after = NativeLg) |> 
+  str()
+```
+
+The `relocate()` function has moved `NativeLgFamily` to the first column (the function's default position) and has also moved `NativeLg` to the second position, but it has renamed the column `after`.
+
+This is a reminder to *always* check whether your data wrangling operations have gone as planned. Just because you didn't get an error message doesn't mean that your code did what you wanted! ⚠️
 :::
 
 [^9_datawrangling-3]: Note that this a {tidyverse} approach to working out percentages, see @sec-Mode for a base `R` approach.
@@ -831,6 +867,13 @@ colnames(L1.data)
 
 ```{r}
 colnames(L2.data)
+```
+
+Note, also, that participants' total number of years in education is stored in the `EduYrs` column in `L1.data`, whereas the corresponding column in `L2.data` is called `EduTotal`. Hence, we first use the {dplyr} function `rename()` to rename `EduYrs` in `L1.data` as `EduTotal` before we merge the two tables.
+
+```{r}
+L1.data <- L1.data |> 
+  rename(EduTotal = EduYrs)
 ```
 
 The {dplyr} package boasts an array of useful functions to combine tables (see @fig-dplyrcheatsheet). For our purposes, `bind_rows()` appears to be the perfect function.[^9_datawrangling-4]
@@ -983,7 +1026,8 @@ L2.data <- L2.data |>
   mutate(Group = "L2")  
 
 L1.data <- L1.data |> 
-  mutate(Group = "L1")
+  mutate(Group = "L1") |> 
+  rename(EduTotal = EduYrs)
 
 combined.data <- bind_rows(L1.data, L2.data) |>
   mutate(across(where(is.character), str_to_title)) |>
@@ -1029,6 +1073,7 @@ summary(combined.data[,c(1:12)])
 ```{r echo=FALSE}
 check_question(c("Convert one variable to a character variable.",
                  "Add two new variables that each have all the same values.",
+                 "Change the name of one variable",
                  "Merge data from the two datasets into one.", 
                  "Convert the values of all character variables to title case.",
                  "Remove whitespace at the start and end of all values in all character variables.",
@@ -1041,7 +1086,7 @@ check_question(c("Convert one variable to a character variable.",
                button_label = "Check answer",
                right = "Perfect! 🎉",
                wrong = "No, not quite.")
-check_hint("The first three operations are 1) \"Convert one variable to a character variable.\", 2) \"Add two new variables that each have all the same values.\" and 3) \"Merge data from the two datasets into one\".", hint_title = "🐭 Click on the mouse for a hint.")
+check_hint("Use the up and down arrows to swap the order of any two labels in the list. \nThe first three operations are: \n1) Convert one variable to a character variable.\n2) Add two new variables that each have all the same values.\n3) Change the name of one variable.", hint_title = "🐭 Click on the mouse for a hint.")
 ```
 
  
@@ -1166,6 +1211,8 @@ write_csv(combined.data, file = here("data", "processed", "combined_L1_L2_data.c
 ```
 
 ## Check your progress 🌟 {.unnumbered}
+
+That was a lot of data wrangling, but we are now ready to proceed with some comparative analyses of L1 and L2 English speakers' language skills!
 
 Are you confident that you can...?
 
