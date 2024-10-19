@@ -166,14 +166,14 @@ check_question(c("fct_relevel(L1.Gender.fct, \"M\")",
                options = c("fct_relevel(L1.Gender.fct, \"M\")",
                            "fct_rev(L1.Gender.fct)",
                            "fct_recode(L1.Gender.fct, first = \"M\", second = \"F\")",
-                           "fct_reorder(L1.Gender.fct, c(\"M\", \"F\")))",
-                           "fct_lump(L1.Gender.fct)"),
+                           "fct_reorder(L1.Gender.fct, c(\"M\", \"F\"))",
+                           "fct_match(L1.Gender.fct, c(\"M\", \"F\"))"),
                random_answer_order = TRUE,
                type = "check",
                button_label = "Check answer",
                right = "Correct, well done!",
-               wrong = "Not quite. Note that three of these commands will yield the desired outcome!")
-check_hint("Try these commands out! When you print an entire factor variable in the Console, the order of the levels is displayed the bottom of the output. So if the output reads \"Levels: M F\", then the operation has been successful.", 
+               wrong = "No, not quite. Note that three of these commands will yield the desired outcome! Check out the functions' descriptions in the help files, as some of these function names may be misleading.")
+check_hint("Use the `?` function to access the help files of each function and then try the above commands out! When you print an entire factor variable in the Console, the order of the levels is displayed at the bottom of the output. If the last line of your output reads \"Levels: M F\", then the operation was successful.", 
            hint_title = "😇 Hover for a hint", 
            type = "onmouseover")
 
@@ -284,7 +284,7 @@ str(L2.data.fct)
 
 ```{r echo=FALSE}
 check_question("Because sometimes \"female\" was recorded as lower-case \"f\" rather than upper-case \"F\".",
-               options = c("Because the gender of six female participants was recorded as lower-case \"f\" rather than upper-case \"F\".",
+               options = c("Because sometimes \"female\" was recorded as lower-case \"f\" rather than upper-case \"F\".",
                            "Because these six participants were under 18 at the time of data collection.",
                            "Because these six participants identify as non-binary.",
                            "Because these six participants declined to answer the question about their gender."),
@@ -494,7 +494,7 @@ L1.data.cleaned |>
 ```
 :::
 
-So far, we have looked at rather simple data cleaning cases. Let's now turn to a slightly more complex one: In the L2 dataset, the variable `NativeLg` contains character string values that correspond to the L2 participants' native language. Using the base `R` function `unique()`, we can see that are a total of 22 unique values in this variable. However using `sort()` to order these 22 values alphabetically, we can easily see that there are, in fact, fewer unique native languages in this dataset due to different spellings and the inconsistent use of upper-case letters.
+So far, we have looked at rather simple data cleaning cases. Let's now turn to a slightly more complex one: In the L2 dataset, the variable `NativeLg` contains character string values that correspond to the L2 participants' native language. Using the base `R` function `unique()`, we can see that there are a total of 22 unique values in this variable. However using `sort()` to order these 22 values alphabetically, we can easily see that there are, in fact, fewer unique native languages in this dataset due to different spellings and the inconsistent use of upper-case letters.
 
 ```{r}
 L2.data$NativeLg |> 
@@ -689,7 +689,14 @@ L2.data |>
 
 ```
 
-An undeniable advantage of sticking to base `R` functions is that your code is more portable as it does not require the installation of any additional packages, keeping dependencies on external packages to the minimum. However, base `R` lacks the consistency of the tidyverse framework, which can make certain data transformation tasks considerably more tricky and code less readable (and therefore transparent) to yourself and others.
+An undeniable advantage of sticking to base `R` functions is that your code is more portable as it does not require the installation of any additional packages, keeping dependencies on external packages to the minimum. However, base `R` lacks the consistency of the tidyverse framework, which can make certain data transformation tasks considerably more tricky and code less readable (and therefore less transparent) to yourself and others.
+
+As we don't need two versions of the cleaned `NativLg` variable, we will now remove the `NativeLg.cleaned.base` column from `L2.data`. To do so, we use the `select()` function combined with the `-` operator to "unselect" the column we no longer need.
+
+```{r}
+L2.data <- L2.data |> 
+  select(- NativeLg.cleaned.base)
+```
 :::
 
 ::: callout-caution
@@ -766,7 +773,7 @@ check_question(c("L2.data <- L2.data |> relocate(NativeLgFamily, .after = Native
 :::
 
 ::: {.callout-note collapse="true"}
-#### Click here for the solution to Task 3
+#### Click here for solutions to Task 3
 
 As always, there are several solutions to solving this task. Here is one solution based on what we have covered so far in this chapter.
 
@@ -834,11 +841,22 @@ L2.data <- L2.data |>
   relocate(NativeLgFamily, .after = NativeLg)
 ```
 
+![Artwork explaining the `dplyr::relocate()` function by [\@allison_horst](https://allisonhorst.com/allison-horst).](images/AHorst_relocate.png){#fig-relocate fig-alt="Cartoon of fuzzy monsters moving columns around in fork lifts, while one supervises. Stylized text reads “dplyr::relocate() - move columns around! Default: move to FRONT , or move to .before or .after a specified column.”"}
+
 Note that the help file specifies that both ".after" and ".before" begin with a dot. If you leave the dot out, the function will not work as expected! Can you see what's happened here?
 
 ```{r}
+#| eval: false
 L2.data |> 
   relocate(NativeLgFamily, after = NativeLg) |> 
+  str()
+```
+
+```{r}
+#| echo: false
+L2.data |> 
+  relocate(NativeLgFamily, after = NativeLg) |> 
+  select(1:6) |> 
   str()
 ```
 
@@ -976,7 +994,7 @@ combined.data |>
 
 Run `View(combined.data)` to inspect the combined dataset and check in which other columns there are `NA` values.
 
-:::: callout-note
+:::: {.callout-note collapse="true"}
 #### What if my data is not yet in tidy format? 🤨
 
 Combining the two datasets from @DabrowskaExperienceAptitudeIndividual2019 was relatively easy because the data was already in tidy format. But, fear not: if you need to first convert your data to tidy format, the [{tidyr}](https://tidyr.tidyverse.org/) package has got you covered! 😎
@@ -1117,8 +1135,8 @@ check_hint("One way to answer find the answer to this question is to cross-tabul
 ```
 :::
 
-::: {.callout-note collapse="true"}
-#### Click here for the solution to Q5
+::: {.callout-tip collapse="true"}
+#### Click here for `R` code to answer [**Q5.**]{style="color:green;"}
 
 There are various ways to find the answer to Q5. Sticking to a function that we have looked at so far, you could cross-tabulate `Age` and `OccupGroup` using the `count()` function.
 
@@ -1212,6 +1230,8 @@ write_csv(combined.data, file = here("data", "processed", "combined_L1_L2_data.c
 
 ## Check your progress 🌟 {.unnumbered}
 
+You have successfully completed [`r checkdown::insert_score()` out of 15 quiz questions]{style="color:green;"} in this chapter.
+
 That was a lot of data wrangling, but we are now ready to proceed with some comparative analyses of L1 and L2 English speakers' language skills!
 
 Are you confident that you can...?
@@ -1227,4 +1247,4 @@ Are you confident that you can...?
 -   [ ] Use tidyverse functions to pre-process data in an readable and reproducible way
 -   [ ] Save `R` objects as `.rds` and `.csv` files on your computer.
 
-The following chapter stays in the tidyverse as we will learn how to use the popular tidyverse package {ggplot2} to visualise the pre-processed data from @DabrowskaExperienceAptitudeIndividual2019.
+The following chapter stays in the tidyverse as we will learn how to use the popular tidyverse package {ggplot2} to visualise the pre-processed data from @DabrowskaExperienceAptitudeIndividual2019. :::::::
