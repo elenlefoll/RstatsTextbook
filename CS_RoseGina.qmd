@@ -1,6 +1,6 @@
 ---
 author: "Rose Hörsting & Gina Reinhard"
-date: "2024-09-12"
+date: "2024-11-12"
 #date-modified: "2024-11-10"
 language: 
   #title-block-modified: "Last updated"
@@ -13,9 +13,9 @@ language:
 # Depending on which graphic backend RStudio uses (see Global Options > Graphics), we need to render the plots either with AGG or Cairo to ensure that the emojis are correctly rendered in the HTML export.
 
 #install.packages("ragg")
-knitr::opts_chunk$set(dev = "ragg_png", warning = FALSE, message = FALSE)
+#knitr::opts_chunk$set(dev = "ragg_png", warning = FALSE, message = FALSE)
 
-#knitr::opts_chunk$set(dev.args = list(png = list(type = "cairo")))
+knitr::opts_chunk$set(dev.args = list(png = list(type = "cairo")))
 ```
 
 ```{r checkdown, include=FALSE}
@@ -35,7 +35,7 @@ The authors made equal contributions to the chapter and are listed here in alpha
 
 ### Chapter overview {.unnumbered}
 
-This case-study chapter will guide you through the steps to reproduce the results of a published experimental linguistics study [@fricke2024semantic] using `R`.
+This case-study chapter will guide you through the steps to reproduce selected results from a published experimental linguistics study [@fricke2024semantic] using `R`.
 
 The chapter will walk you through how to:
 
@@ -50,23 +50,6 @@ The chapter will walk you through how to:
 We will work with the original raw data from:
 
 > Fricke, L., Grosz, P. G., & Scheffler, T. (2024). Semantic differences in visually similar face emojis. Language and Cognition, 1–15. <https://doi.org/10.1017/langcog.2024.12>
-
-::: callout-warning
-### Session set-up {#sec-session-set-up}
-
-To run the code of this chapter, you will need the following packages. Make sure that they are installed and loaded before starting.
-
-```{r load-libraries, message=FALSE}
-
-library(here)
-library(tidyverse)
-#install.packages("patchwork")
-library(patchwork)
-#install.packages("ragg")
-library(ragg)
-
-```
-:::
 
 ## Introducing the study 🙂 {#sec-introducing-the-study}
 
@@ -101,7 +84,7 @@ Four single-sentence narratives were created for each of the contexts (see @fig-
 >
 >     Alex is overjoyed. Which of the emojis matches the message better? 😄😁
 
-![Example of a test item in the experiment [from @fricke2024semantic: 6]](images/RoseGina_Fricke_test_items.png){#fig-testitems fig-align="center" width="500"}
+![Example of a test item in the experiment [from @fricke2024semantic: 6, CC-BY]](images/RoseGina_Fricke_test_items.png){#fig-testitems fig-align="center" width="500"}
 
 These short narratives were divided up into into four experimental lists of 12 items. Each list also contained 12 filler items, so that each participant saw 24 items. The participants were then asked to help choose the emoji that best matched the context. Each participant saw each emoji pair twice. It was measured how often participants chose the context-matching emoji versus the non-matching emoji.
 :::
@@ -154,7 +137,7 @@ check_hint("Based on the authors' hypothesis, differences corresponding to facia
 
 ![Attitude towards emojis by gender](images/RoseGina_Fricke_emoji_attitude.png){#fig-emojiattitude fig-align="center" width="550"}
 
-Barplots from Fricke, Grosz & Scheffler [-@fricke2024semantic: 9-10]
+Barplots from Fricke, Grosz & Scheffler [-@fricke2024semantic: 9-10, CC-BY]
 :::
 
 The plots in @fig-FrickeGenderBarplots show that women use emojis more often and have a more positive attitude towards emojis than men. We want to find out whether women also reported a higher level of emoji understanding than men. Our analysis will involve three steps:
@@ -166,6 +149,23 @@ The plots in @fig-FrickeGenderBarplots show that women use emojis more often and
 ### Impo`R`ting the data {#sec-importing-the-data}
 
 @fricke2024semantic have made their data and analysis code publicly available on the OSF repository (see @sec-OpenScience). You can access these materials at <https://osf.io/k2t9p/>. There, the data is stored in the file `raw_data.csv`. To follow the steps of this chapter, you will need to download this file.
+
+::: callout-warning
+### Session set-up {#sec-session-set-up}
+
+To run the code of this chapter, you will need the following packages. Make sure that they are installed and loaded before starting.
+
+```{r load-libraries, message=FALSE}
+
+library(here)
+library(tidyverse)
+#install.packages("patchwork")
+library(patchwork)
+#install.packages("ragg")
+library(ragg)
+
+```
+:::
 
 We import the authors' raw data using the `read.csv()` and `here()` functions. You will need to adjust the file path to match the folder structure of your computer (see @sec-ImportingDataCSV).
 
@@ -667,7 +667,7 @@ Brackets can be used to combine horizontal and vertical arrangements.
 
 In line with the research question of @fricke2024semantic, we want to compare the matching rates of emojis and contexts in the AU+ condition with the matching rates in the AU- condition. Our goal is therefore to create a plot that looks similar to @fig-AUFricke created by @fricke2024semantic.
 
-![Plot of individual emoji pairs that compares AU conditions [@fricke2024semantic: 11]](images/RoseGina_Fricke_AUplot.png){#fig-AUFricke width="700"}
+![Plot of individual emoji pairs that compares AU conditions [@fricke2024semantic: 11, CC-BY]](images/RoseGina_Fricke_AUplot.png){#fig-AUFricke width="700"}
 
 First, let us plan the layout of our combined plot with some placeholder names. Our combined plot will have two columns and three rows: In both `column1` and `column2`, three plots are stacked **vertically** on top of each other. These are the plots of the AU+ and the AU- condition, respectively. We then place these patchworks next to each other (**horizontally**) for comparison.
 
