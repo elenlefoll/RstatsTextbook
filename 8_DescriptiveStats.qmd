@@ -188,7 +188,7 @@ check_hint("You can work out the difference in average values using the minus op
 
 Data analysis typically begins with the description of individual variables from a dataset. This is referred to as **univariate descriptive statistics** and is all about describing the distribution of the variables. A **distribution** is a way to summarise how the values of a variable are dispersed. It tells us things like the variable's most frequent values, its range of values, and how the values are clustered or spread out. Examining the shapes and patterns of distributions can help us understand the typical values of the variables of our data, identify outliers, and make informed decisions about how to analyse and visualise our data.
 
-### Distributions of categorical variables
+### Distributions of categorical variables {#sec-DistCat}
 
 Tables can be an effective way to examine the distribution of categorical variables. The `table()` function outputs the frequency of each level of a categorical variable. By default, the levels are ordered alphabetically.
 
@@ -652,6 +652,7 @@ If we wanted to work out the probability of an L2 participant being between `42`
       geom_vline(xintercept = c(22, 42), linetype = "dashed", color = "pink", linewidth = 1) +
       annotate("rect", xmin = 22, xmax = 42, ymin = 0, ymax = Inf,     alpha = 0.5, fill = "white")
 
+    library(patchwork)
     PlotA + PlotB +
       plot_annotation(tag_levels = "A")
     ```
@@ -1355,16 +1356,19 @@ check_question("The distribution of GrammarR scores among L1 participants.",
 #| echo: false
 
 grammar.results <- data.frame(Scores = c(L1.data$GrammarR, L2.data$GrammarR),
-                                        Group = c(rep("L1 participants", length(L1.data$GrammarR)), rep("L2 participants", length(L2.data$GrammarR))))
+                                        Group = c(rep("L1 participants", length(L1.data$GrammarR)), rep("L2 participants", length(L2.data$GrammarR)))) 
 
-ggplot(mapping = aes(y = Scores, x = Group), 
+ggplot(mapping = aes(y = Scores, x = Group, fill = Group),
        data = grammar.results) +
-  geom_boxplot(alpha = 0.5, fill = "purple") +
-  #geom_jitter(alpha = 0.4, width = 0.1) +
+  geom_boxplot(alpha = 0.5) +
   scale_y_continuous(breaks = seq(0, 80, 5)) +
+  scale_fill_manual(values = c("purple", "pink")) +
+  labs(y = "GrammaR scores", 
+       x = "",
+       title = "Results of the English grammar comprehension test") +
   theme_bw() +
-  theme(element_text(size = 12)) +
-  labs(y = "GrammarR scores", x = "")
+  theme(element_text(size = 12),
+        legend.position = "none")
 
 ```
 

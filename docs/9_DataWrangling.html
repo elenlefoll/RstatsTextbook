@@ -241,12 +241,29 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
+ <span class="menu-text">Case studies</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./CS_RoseGina.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Explo<code>R</code>ing the results of an experimental study: The semantics of emojis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./A_FurtherResources.html" class="sidebar-item-text sidebar-link">
@@ -267,7 +284,7 @@ div.csl-indent {
   <ul>
   <li><a href="#chapter-overview" id="toc-chapter-overview" class="nav-link active" data-scroll-target="#chapter-overview">Chapter overview</a></li>
   <li><a href="#sec-tidyverse" id="toc-sec-tidyverse" class="nav-link" data-scroll-target="#sec-tidyverse"><span class="header-section-number">9.1</span> Welcome to the tidyverse! 🪐</a></li>
-  <li><a href="#base-r-vs.-tidyverse-functions" id="toc-base-r-vs.-tidyverse-functions" class="nav-link" data-scroll-target="#base-r-vs.-tidyverse-functions"><span class="header-section-number">9.2</span> Base <code>R</code> vs.&nbsp;tidyverse functions</a></li>
+  <li><a href="#sec-Conflicts" id="toc-sec-Conflicts" class="nav-link" data-scroll-target="#sec-Conflicts"><span class="header-section-number">9.2</span> Base <code>R</code> vs.&nbsp;tidyverse functions</a></li>
   <li><a href="#checking-data-sanity" id="toc-checking-data-sanity" class="nav-link" data-scroll-target="#checking-data-sanity"><span class="header-section-number">9.3</span> Checking data sanity</a>
   <ul class="collapse">
   <li><a href="#sec-CheckNumeric" id="toc-sec-CheckNumeric" class="nav-link" data-scroll-target="#sec-CheckNumeric"><span class="header-section-number">9.3.1</span> Numeric variables</a></li>
@@ -283,7 +300,7 @@ div.csl-indent {
   <li><a href="#using-stringr-functions" id="toc-using-stringr-functions" class="nav-link" data-scroll-target="#using-stringr-functions"><span class="header-section-number">9.5.1</span> Using {stringr} functions</a></li>
   <li><a href="#using-case_when" id="toc-using-case_when" class="nav-link" data-scroll-target="#using-case_when"><span class="header-section-number">9.6.4</span> Using <code>case_when()</code></a></li>
   </ul></li>
-  <li><a href="#combining-datasets" id="toc-combining-datasets" class="nav-link" data-scroll-target="#combining-datasets"><span class="header-section-number">9.7</span> Combining datasets</a></li>
+  <li><a href="#sec-CombiningDatasets" id="toc-sec-CombiningDatasets" class="nav-link" data-scroll-target="#sec-CombiningDatasets"><span class="header-section-number">9.7</span> Combining datasets</a></li>
   <li><a href="#a-pre-processing-pipeline" id="toc-a-pre-processing-pipeline" class="nav-link" data-scroll-target="#a-pre-processing-pipeline"><span class="header-section-number">9.8</span> A pre-processing pipeline</a></li>
   <li><a href="#saving-and-exporting-r-objects" id="toc-saving-and-exporting-r-objects" class="nav-link" data-scroll-target="#saving-and-exporting-r-objects"><span class="header-section-number">9.9</span> Saving and exporting <code>R</code> objects</a></li>
   <li><a href="#check-your-progress" id="toc-check-your-progress" class="nav-link" data-scroll-target="#check-your-progress">Check your progress 🌟</a></li>
@@ -314,10 +331,10 @@ div.csl-indent {
 
 <section id="chapter-overview" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="chapter-overview">Chapter overview</h3>
-<p>This chapter focuses on the tidyverse framework. You will learn how to:</p>
+<p>In this chapter, you will learn how to:</p>
 <ul>
 <li>Recognise whether a dataset is in a tidy data format</li>
-<li>Check the sanity of a dataset</li>
+<li>Check the sanity of an imported dataset</li>
 <li>Pre-process data in a reproducible way using tidyverse functions</li>
 <li>Convert character vectors representing categorical data to factors</li>
 <li>Add and replace columns in a table</li>
@@ -329,7 +346,7 @@ div.csl-indent {
 </section>
 <section id="sec-tidyverse" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="sec-tidyverse"><span class="header-section-number">9.1</span> Welcome to the tidyverse! 🪐</h2>
-<p>This chapter explains how to examine, clean, and manipulate data using functions from the <a href="https://www.tidyverse.org">{tidyverse}</a>: a collection of useful <code>R</code> packages increasingly used for all kinds of data analysis projects. Tidyverse functions are designed to work with <strong>tidy data</strong> (see <a href="#fig-tidydata" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>) and, as a result, they are often easier to combine.</p>
+<p>This chapter explains how to examine, clean, and manipulate data mostly using functions from the <a href="https://www.tidyverse.org">{tidyverse}</a>: a collection of useful <code>R</code> packages increasingly used for all kinds of data analysis projects. Tidyverse functions are designed to work with <strong>tidy data</strong> (see <a href="#fig-tidydata" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>) and, as a result, they are often easier to combine.</p>
 <div id="fig-tidydata" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Stylized text providing an overview of Tidy Data. The top reads “Tidy data is a standard way of mapping the meaning of a dataset to its structure. - Hadley Wickham.” On the left reads “In tidy data: each variable forms a column; each observation forms a row; each cell is a single measurement.” There is an example table on the lower right with columns ‘id’, ‘name’ and ‘color’ with observations for different cats, illustrating tidy data structure.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tidydata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -342,12 +359,12 @@ Figure&nbsp;9.1: Tidy data illustration from the <a href="https://www.openscapes
 </div>
 <p>Learning to manipulate data and conduct data analysis in <code>R</code> “the tidyverse-way” can help make your workflows more efficient.</p>
 <blockquote class="blockquote">
-<p>If you ensure that your data is tidy, you’ll spend less time fighting with the tools and more time working on your analysis. <span class="citation" data-cites="TidyMessyData"></span></p>
+<p>If you ensure that your data is tidy, you’ll spend less time fighting with the tools and more time working on your analysis. <span class="citation" data-cites="TidyMessyData">(<a href="99_references.html#ref-TidyMessyData" role="doc-biblioref">Wickham, Vaughan &amp; Girlich</a>)</span></p>
 </blockquote>
 </section>
-<section id="base-r-vs.-tidyverse-functions" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="base-r-vs.-tidyverse-functions"><span class="header-section-number">9.2</span> Base <code>R</code> vs.&nbsp;tidyverse functions</h2>
-<p>Novice <code>R</code> users may find it confusing that many operations can be performed using either a base <code>R</code> function or a tidyverse one. For example, in <a href="6_ImpoRtingData.html" class="quarto-xref"><span>Chapter 6</span></a>, we saw that both the base <code>R</code> function <code>read.csv()</code> and the tidyverse function <code>read_csv()</code> can be used to import CSV files. The functions have slightly different arguments and default values, which can lead to confusion, even though they are fundamentally designed to perform the same task. But don’t fret over this too much: it’s fine for you to use whichever function you find most convenient and intuitive and it’s also absolutely fine to combine base <code>R</code> and tidyverse functions.</p>
+<section id="sec-Conflicts" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="sec-Conflicts"><span class="header-section-number">9.2</span> Base <code>R</code> vs.&nbsp;tidyverse functions</h2>
+<p>Novice <code>R</code> users may find it confusing that many operations can be performed using either a base <code>R</code> function or a tidyverse one. For example, in <a href="6_ImpoRtingData.html" class="quarto-xref"><span>Chapter 6</span></a>, we saw that both the base <code>R</code> function <code>read.csv()</code> and the tidyverse function <code>read_csv()</code> can be used to import CSV files. The functions have slightly different arguments and default values, which can be annoying, even though they are fundamentally designed to perform the same task. But don’t fret over this too much: it’s fine for you to use whichever function you find most convenient and intuitive and it’s also absolutely fine to combine base <code>R</code> and tidyverse functions!</p>
 <p>You will no doubt have noticed that the functions <code>read.csv()</code> and <code>read_csv()</code> have very similar but not exactly identical names. This is helpful to differentiate between the two functions. Unfortunately, some function names are found in several packages, which can lead to confusion and errors! For example, you may have noticed that when you load the tidyverse library the first time in a project, a message similar to <a href="#fig-tidyverseConflicts" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> is printed in the Console.</p>
 <div id="fig-tidyverseConflicts" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Screenshot of R Console showing the output of the command library(tidyverse). The output lists all attached core tidyverse packages and their versions and then it lists &quot;Conflicts: tidyverse_conflicts() ── ✖ dplyr::filter() masks stats::filter() ✖ dplyr::lag()    masks stats::lag() ℹ Use the conflicted package to force all conflicts to become errors&quot;">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1568,8 +1585,8 @@ Figure&nbsp;9.9: Artwork explaining the <code>dplyr::relocate()</code> function 
 </div>
 </section>
 </section>
-<section id="combining-datasets" class="level2 page-columns page-full" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="combining-datasets"><span class="header-section-number">9.7</span> Combining datasets</h2>
+<section id="sec-CombiningDatasets" class="level2 page-columns page-full" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="sec-CombiningDatasets"><span class="header-section-number">9.7</span> Combining datasets</h2>
 <p>So far, we have analysed the L1 and L2 datasets individually. In the following chapters, however, we will conduct comparative analyses, comparing the performance of the L1 and L2 participants in the various language-related tests conduced as part of <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>. To this end, we need to create a combined table that includes the data of all participants from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>.</p>
 <p>Remember that both tables, <code>L1.data</code> and <code>L2.data</code>, are in a tidy data format. This means that:</p>
 <ul>
@@ -1613,7 +1630,7 @@ Figure&nbsp;9.9: Artwork explaining the <code>dplyr::relocate()</code> function 
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">EduTotal =</span> EduYrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The {dplyr} package boasts an array of useful functions to combine tables (see <a href="#fig-dplyrcheatsheet" class="quarto-xref">Figure&nbsp;<span>9.10</span></a>). For our purposes, <code>bind_rows()</code> appears to be the perfect function.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
-<div id="fig-dplyrcheatsheet" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Extract from dplyr cheatsheet showing all the &quot;join&quot; functions. Screenreader friendly version can be found here: https://rstudio.github.io/cheatsheets/html/data-transformation.html" data-out-width="80%">
+<div id="fig-dplyrcheatsheet" class="quarto-float quarto-figure quarto-figure-center anchored" data-out-width="80%" alt="Extract from dplyr cheatsheet showing all the &quot;join&quot; functions. Screenreader friendly version can be found here: https://rstudio.github.io/cheatsheets/html/data-transformation.html">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-dplyrcheatsheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/dplyr_cheatsheet_extract.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;9.10: Extract of the data transformation with {dplyr} cheatsheet (CC BY SA Posit Software, PBC)"><img src="images/dplyr_cheatsheet_extract.png" class="img-fluid figure-img" data-out-width="80%" alt="Extract from dplyr cheatsheet showing all the &quot;join&quot; functions. Screenreader friendly version can be found here: https://rstudio.github.io/cheatsheets/html/data-transformation.html"></a>
@@ -1709,7 +1726,7 @@ What if my data is not yet in tidy format? 🤨
 <div class="callout-body-container callout-body">
 <p>Combining the two datasets from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> was relatively easy because the data was already in tidy format. But, fear not: if you need to first convert your data to tidy format, the <a href="https://tidyr.tidyverse.org/">{tidyr}</a> package has got you covered! 😎</p>
 <p>The <code>pivot_longer()</code> and <code>pivot_wider()</code> functions allow you to easily convert tables from “long” to “wide” format and vice versa (see <a href="#fig-tidyrcheatsheet" class="quarto-xref">Figure&nbsp;<span>9.11</span></a>).</p>
-<div id="fig-tidyrcheatsheet" class="quarto-float quarto-figure quarto-figure-center anchored" alt="pivot_longer(data, cols, names_to = &quot;name&quot;, values_to = &quot;value&quot;, values_drop_na = FALSE) &quot;Lengthen&quot; data by collapsing several columns into two. Column names move to a new names_to column and values to a new values_to column. pivot_longer(table4a, cols = 2:3, names_to =&quot;year&quot;, values_to = &quot;cases&quot;) pivot_wider(data, names_from = &quot;name&quot;, values_from = &quot;value&quot;) The inverse of pivot_longer(). &quot;Widen&quot; data by expanding two columns into several. One column provides the new column names, the other the values. pivot_wider(table2, names_from = type, values_from = count)" data-out-width="60%">
+<div id="fig-tidyrcheatsheet" class="quarto-float quarto-figure quarto-figure-center anchored" data-out-width="60%" alt="pivot_longer(data, cols, names_to = &quot;name&quot;, values_to = &quot;value&quot;, values_drop_na = FALSE) &quot;Lengthen&quot; data by collapsing several columns into two. Column names move to a new names_to column and values to a new values_to column. pivot_longer(table4a, cols = 2:3, names_to =&quot;year&quot;, values_to = &quot;cases&quot;) pivot_wider(data, names_from = &quot;name&quot;, values_from = &quot;value&quot;) The inverse of pivot_longer(). &quot;Widen&quot; data by expanding two columns into several. One column provides the new column names, the other the values. pivot_wider(table2, names_from = type, values_from = count)">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tidyrcheatsheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/tidyr_cheatsheet_extract.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;9.11: Extract of the data tidying with tidyr cheatsheet (CC BY SA Posit Software, PBC)"><img src="images/tidyr_cheatsheet_extract.png" class="img-fluid figure-img" data-out-width="60%" alt="pivot_longer(data, cols, names_to = &quot;name&quot;, values_to = &quot;value&quot;, values_drop_na = FALSE) &quot;Lengthen&quot; data by collapsing several columns into two. Column names move to a new names_to column and values to a new values_to column. pivot_longer(table4a, cols = 2:3, names_to =&quot;year&quot;, values_to = &quot;cases&quot;) pivot_wider(data, names_from = &quot;name&quot;, values_from = &quot;value&quot;) The inverse of pivot_longer(). &quot;Widen&quot; data by expanding two columns into several. One column provides the new column names, the other the values. pivot_wider(table2, names_from = type, values_from = count)"></a>
@@ -1735,7 +1752,7 @@ Figure&nbsp;9.12: Hex sticker of the <a href="https://tidyr.tidyverse.org/">{tid
 </figcaption>
 </figure>
 </div>
-</div></div><div class="callout callout-style-default callout-warning callout-titled">
+</div></div><div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -2005,7 +2022,7 @@ Quiz time!
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click here for <code>R</code> code to answer <span style="color:green;"><strong>Q5.</strong></span>
+Click here for <code>R</code> code to answer {#sec-filter} <span style="color:green;"><strong>Q5.</strong></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2078,8 +2095,8 @@ Table&nbsp;9.1: Pros and cons of saving DSV and <code>R</code> data files.
 <div aria-describedby="tbl-saving-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 41%">
+<col style="width: 58%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2149,18 +2166,18 @@ Table&nbsp;9.1: Pros and cons of saving DSV and <code>R</code> data files.
 <li><label><input type="checkbox">Use tidyverse functions to pre-process data in an readable and reproducible way</label></li>
 <li><label><input type="checkbox">Save <code>R</code> objects as <code>.rds</code> and <code>.csv</code> files on your computer.</label></li>
 </ul>
-<p>The following chapter stays in the tidyverse as we will learn how to use the popular tidyverse package {ggplot2} to visualise the pre-processed data from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>. :::::::</p>
+<p>The following chapter stays in the tidyverse as we will learn how to use the popular tidyverse package {ggplot2} to visualise the pre-processed data from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-TidyMessyData" class="csl-entry" role="listitem">
-Tidy messy data. <a href="https://tidyr.tidyverse.org/">https://tidyr.tidyverse.org/</a>.
-</div>
 <div id="ref-DabrowskaExperienceAptitudeIndividual2019" class="csl-entry" role="listitem">
 Dąbrowska, Ewa. 2019. Experience, aptitude, and individual differences in linguistic attainment: A comparison of native and nonnative speakers. <em>Language Learning</em> 69(S1). 72–100. <a href="https://doi.org/10.1111/lang.12323">https://doi.org/10.1111/lang.12323</a>.
 </div>
 <div id="ref-horstOpenscapesTidyData2020" class="csl-entry" role="listitem">
 Horst, Allison &amp; Julie Lowndes. 2020. Openscapes - tidy data for efficiency, reproducibility, and collaboration. <a href="https://openscapes.org/blog/2020-10-12-tidy-data/">https://openscapes.org/blog/2020-10-12-tidy-data/</a>.
+</div>
+<div id="ref-TidyMessyData" class="csl-entry" role="listitem">
+Wickham, Hadley, Davis Vaughan &amp; Maximilian Girlich. Tidy messy data. <a href="https://tidyr.tidyverse.org/">https://tidyr.tidyverse.org/</a>.
 </div>
 </div>
 </section>
@@ -2778,7 +2795,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","loop":false});
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
