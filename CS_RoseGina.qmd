@@ -1,21 +1,28 @@
 ---
 author: "Rose Hörsting & Gina Reinhard"
 date: "2024-11-12"
-#date-modified: "2024-11-10"
+#date-modified: "2024-11-12"
+toc-title: "Case study: The semantics of emojis"
+include-after-body: abbrv_toc.html
 language: 
   #title-block-modified: "Last updated"
   title-block-author-single: "Authors"
+# filters: 
+#   - quarto
+#   - section-bibliographies
+#section-bibliographies:
+  #bibliography: RoseGina_references.bib
 ---
 
-# Explo`R`ing the results of an experimental study: The semantics of emojis
+# The semantics of emojis: Explo`R`ing the results of an experimental study {toc-text="Short title"}
 
 ```{r setup, include=FALSE}
 # Depending on which graphic backend RStudio uses (see Global Options > Graphics), we need to render the plots either with AGG or Cairo to ensure that the emojis are correctly rendered in the HTML export.
 
 #install.packages("ragg")
-#knitr::opts_chunk$set(dev = "ragg_png", warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(dev = "ragg_png", warning = FALSE, message = FALSE)
 
-knitr::opts_chunk$set(dev.args = list(png = list(type = "cairo")))
+#knitr::opts_chunk$set(dev.args = list(png = list(type = "cairo")))
 ```
 
 ```{r checkdown, include=FALSE}
@@ -53,7 +60,7 @@ We will work with the original raw data from:
 
 ## Introducing the study 🙂 {#sec-introducing-the-study}
 
-Face emojis are frequently used in text messages. They represent facial expressions and often make fundamental contributions to the subtext of a text message. A few studies have investigated the relationship between emojis and the emotions that they depict [@fugate2021implications, @maier2023emojis, @pfeifer2022all]. However, as emojis are a relatively recent phenomenon, there is still a lot to be discovered. In this chapter, we will look into a study by @fricke2024semantic.
+Face emojis are frequently used in text messages. They represent facial expressions and often make fundamental contributions to the subtext of a text message. A few studies have investigated the relationship between emojis and the emotions that they depict [@fugate2021implications; @maier2023emojis; @pfeifer2022all]. However, as emojis are a relatively recent phenomenon, there is still a lot to be discovered. In this chapter, we will look into a study by @fricke2024semantic.
 
 ### Deconstructing emojis into Action Units {#sec-deconstructing}
 
@@ -128,7 +135,7 @@ check_hint("Based on the authors' hypothesis, differences corresponding to facia
 <br>
 :::
 
-## Exploring the relationship between gender and emoji understanding {#sec-gender-understanding}
+## Exploring the relationship between gender and emoji understanding {#sec-gender-understanding toc-text="Exploring gender and emoji understanding"}
 
 @fricke2024semantic asked participants about their gender, their attitude towards emojis, how often they use emojis on WhatsApp and how well they think they understand emojis. The authors visualised the distribution of men and women for emoji use and emoji attitude as barplots.
 
@@ -537,7 +544,7 @@ plot_concern_surprise <- data_AU |>
   filter(context == "concern" | context == "surprise") |>
   ggplot(aes(x = context, y = percent, fill = match)) +
   geom_col() +
-  #scale_x_discrete(limits = c("concern", "surprise")) +
+  scale_x_discrete(limits = c("concern", "surprise")) +
   scale_y_continuous(expand = c(0,0)) +
   scale_fill_manual(values = c("#66C2A5", "#E78AC3")) +
   geom_text(aes(label = percent), position = position_stack(vjust = 0.5)) +
@@ -731,7 +738,7 @@ AU_plus_patch | AU_minus_patch
 
 ```
 
-@fig-AUpatch contains information on the matching rates of all emoji pairs with their contexts. It contains exactly the same information as @fig-AUFricke from @fricke2024semantic, but does not look exactly the same. Which look do you think is easiest to interpret?
+@fig-AUpatch contains information on the matching rates of all emoji pairs with their contexts. It contains the same information as @fig-AUFricke from @fricke2024semantic, but does not look exactly the same. Which look do you think is easiest to interpret?
 
 :::: {.callout-note title="Alternative ways of dealing with the legend" collapse="true"}
 You probably will have noticed that @fig-AUpatch contains two identical legends. This is the trade-off we take by using the `wrap_elements()` function: We have fixated the patchworks in their state with their legends, which means that the legends cannot be merged later. There are a couple of other options that will produce different outcomes, however, none is going to be perfect: Since we do not want to delete the legend completely, one option would be to keep the legends of all six plots, as in @fig-alllegends. Another option would be to keep the legend of one block and delete the other. However, as you can see in @fig-onelegend, this makes the bars take up the space of the legend, and the bars in one block become wider than in the other one.
@@ -834,4 +841,4 @@ In this chapter, we have created an informative figure that answers the experime
 
 Emojis, it turns out, contain lots of information, and there is a science behind them 🤓. While experimentally measuring why we prefer certain emojis over other ones represents a real challenge, @fricke2024semantic provides valuable insights into this fascinating area of study. As the authors shared their data and code, we were able to successfully reproduce their results, as well as create new informative figures on the basis of their data.
 
-## References {#sec-references .unnumbered}
+## References {.unnumbered}

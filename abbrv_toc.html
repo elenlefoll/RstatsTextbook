@@ -1,0 +1,18 @@
+<script>
+  function abbrv_toc() {
+    let toc = document.querySelectorAll('nav#TOC li>a');
+    toc.forEach(e => {
+      let id = e.id.substring(4);
+      let sec = document.getElementById(id);
+      let toc_text = sec.getAttribute('data-toc-text');
+      if(toc_text != null) {
+        let new_toc_text = e.querySelector('span').outerHTML + ' ' + toc_text;
+        e.innerHTML = new_toc_text;
+      }
+    })
+  };
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    abbrv_toc();
+  });
+</script>
