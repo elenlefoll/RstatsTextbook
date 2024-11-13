@@ -20,9 +20,9 @@ language:
 # Depending on which graphic backend RStudio uses (see Global Options > Graphics), we need to render the plots either with AGG or Cairo to ensure that the emojis are correctly rendered in the HTML export.
 
 #install.packages("ragg")
-knitr::opts_chunk$set(dev = "ragg_png", warning = FALSE, message = FALSE)
+#knitr::opts_chunk$set(dev = "ragg_png", warning = FALSE, message = FALSE)
 
-#knitr::opts_chunk$set(dev.args = list(png = list(type = "cairo")))
+knitr::opts_chunk$set(dev.args = list(png = list(type = "cairo")))
 ```
 
 ```{r checkdown, include=FALSE}
@@ -66,7 +66,7 @@ Face emojis are frequently used in text messages. They represent facial expressi
 
 @fricke2024semantic compared "visually similar face emojis" using an annotation system developed by @fugate2021implications. This system is based on the Facial Action Coding System (FACS) for human faces [@ekman1978facial]. @fricke2024semantic assigned numbers to human-like facial features such as *eyebrows arched* and *eyes wide*. These numbers are called Action Units, short AUs. As you can see in @fig-emojipairs, each emoji consists of several AUs.
 
-![Emoji pairs and their AU codes [from @fricke2024semantic: 5, CC-BY]](images/RoseGina_emoji_pairs.png){#fig-emojipairs fig-align="center" width="700"}
+![Emoji pairs and their AU codes [from @fricke2024semantic: 5, CC-BY]](images/CS_RoseGina_emoji_pairs.png){#fig-emojipairs fig-align="center" width="700"}
 
 @fricke2024semantic defined two different types of emoji pairs: In the **AU+ condition**, the pairs of emojis are similar, but are assigned a different set of AUs. The emoji pairs in the **AU- condition** are also similar, but their AUs are identical. AUs capture facial expressions by numbers and, as such, can assist linguists to accurately describe emojis. However, only expressions that can be consciously changed by humans receive number-labels: For example, the AU difference between 😃 and 😆 captures the fact that the former emoji has open eyes while the latter has closed eyes. Since humans can choose whether to open or close their eyes, this is an **AU+ pair**. If the subtle difference between emojis is not manipulable, as in 😄 and 😁, the emojis are described by identical numbers (**AU-**).
 
@@ -91,7 +91,7 @@ Four single-sentence narratives were created for each of the contexts (see @fig-
 >
 >     Alex is overjoyed. Which of the emojis matches the message better? 😄😁
 
-![Example of a test item in the experiment [from @fricke2024semantic: 6, CC-BY]](images/RoseGina_Fricke_test_items.png){#fig-testitems fig-align="center" width="500"}
+![Example of a test item in the experiment [from @fricke2024semantic: 6, CC-BY]](images/CS_RoseGina_Fricke_test_items.png){#fig-testitems fig-align="center" width="500"}
 
 These short narratives were divided up into into four experimental lists of 12 items. Each list also contained 12 filler items, so that each participant saw 24 items. The participants were then asked to help choose the emoji that best matched the context. Each participant saw each emoji pair twice. It was measured how often participants chose the context-matching emoji versus the non-matching emoji.
 :::
@@ -140,9 +140,9 @@ check_hint("Based on the authors' hypothesis, differences corresponding to facia
 @fricke2024semantic asked participants about their gender, their attitude towards emojis, how often they use emojis on WhatsApp and how well they think they understand emojis. The authors visualised the distribution of men and women for emoji use and emoji attitude as barplots.
 
 ::: {#fig-FrickeGenderBarplots layout-ncol="2"}
-![Emoji use by gender](images/RoseGina_Fricke_emoji_use.png){#fig-emojiuse fig-align="center" width="550"}
+![Emoji use by gender](images/CS_RoseGina_Fricke_emoji_use.png){#fig-emojiuse fig-align="center" width="550"}
 
-![Attitude towards emojis by gender](images/RoseGina_Fricke_emoji_attitude.png){#fig-emojiattitude fig-align="center" width="550"}
+![Attitude towards emojis by gender](images/CS_RoseGina_Fricke_emoji_attitude.png){#fig-emojiattitude fig-align="center" width="550"}
 
 Barplots from Fricke, Grosz & Scheffler [-@fricke2024semantic: 9-10, CC-BY]
 :::
@@ -479,7 +479,7 @@ wrong = "Not quite, try again.")
 
 The contexts *mild disappointment* and *moderate disappointment* have created some issues: In the `question` variable, both are described as *ist enttäuscht* ('is disappointed'). Except for their encoding in the `name` variable, these contexts appear to be identical. At this point, we have no choice but to look for additional disambiguating information in @fricke2024semantic's analysis script, which you can access at <https://osf.io/k8dtp>. The relevant information can be found in lines 522 and 523 (see @fig-script).
 
-![Screenshot from the authors' analysis script available at <https://osf.io/k8dtp>](images/RoseGina_disappointment_script_fricke.png){#fig-script fig-align="center" width="600"}
+![Screenshot from the authors' analysis script available at <https://osf.io/k8dtp>](images/CS_RoseGina_disappointment_script_fricke.png){#fig-script fig-align="center" width="600"}
 
 The emoji 🙁 (*mild disappointment*) is coded as `N-36` and ☹️ (*moderate disappointment*) as `N-37`. We use this information to assign these two contexts to our `context` variable.
 
@@ -533,7 +533,7 @@ data_AU <- df |>
 
 Using the `View()` function, we take a look at our data.
 
-![The first 14 columns of the data frame data_AU as visualised using the `View()` function in RStudio](images/RoseGina_context_percentages.png){#fig-data-percentages fig-align="center" width="400"}
+![The first 14 columns of the data frame data_AU as visualised using the `View()` function in RStudio](images/CS_RoseGina_context_percentages.png){#fig-data-percentages fig-align="center" width="400"}
 
 We plot the first emoji pair of the AU+ condition 😯 😲 with their respective contexts *concern* and *surprise.*
 
@@ -548,9 +548,9 @@ plot_concern_surprise <- data_AU |>
   scale_y_continuous(expand = c(0,0)) +
   scale_fill_manual(values = c("#66C2A5", "#E78AC3")) +
   geom_text(aes(label = percent), position = position_stack(vjust = 0.5)) +
-  labs(title = "😯 😲") +
+  labs(title = "😯 😲", x = "") +
   theme_classic() +
-  theme(plot.title = element_text(hjust = 0.5), 
+  theme(plot.title = element_text(hjust = 0.5, size = 20), 
         legend.title=element_blank())
 
 ```
@@ -565,16 +565,25 @@ The code above creates a barplot and stores it in `plot_concern_surprise`. Here'
 6.  Use the "expand" argument of the `scale_y_continuous()` function to remove the white space between the bars and the *x*-axis.
 7.  Adjust colours with values from "Set2" from the {RColorBrewer} package (see @sec-gender-understanding-vis).
 8.  Annotate the percentages of matching rates by adding them as text and placing them inside the plot, in the middle of the corresponding bars.
-9.  Add the corresponding emojis at the top of the plot.
+9.  Add the corresponding emojis at the top of the plot and remove the superfluous *x-*axis label "context".
 10. Add a theme, in this case `theme_classic()`.
-11. Plots are left-aligned by default. Since we want the emojis to be displayed on top of their corresponding context bars, we move the title to the center of the plot.
+11. Plots are left-aligned by default. Since we want the emojis to be displayed on top of their corresponding context bars, we move the title to the centre of the plot. To ensure that the emojis are easily interpretable, we also increase the font size to 20 points.
 12. Finally, we remove the title of the legend because the *match* and *no match* values are self-explanatory.
 
 Let's take a look at our plot. It's looking great, but we don't need just one plot, we need six: one for each emoji pair. We could write it all out for each emoji pair, but since the code is identical (except for the contexts and the emojis), it is much more efficient to define a **function** to do this.
 
 ```{r show-plot-concern-surprise}
+#| eval: false
 plot_concern_surprise
 ```
+
+```{r}
+#| eval: false
+#| echo: false
+ggsave(plot = plot_concern_surprise, here("images", "CS_RoseGina_plot_concern_surprise.png"), height = 1344, width = 1881, units = "px")
+```
+
+![](images/CS_RoseGina_plot_concern_surprise.png)
 
 ::: {.callout-note title="Defining our own functions"}
 Functions are reusable code snippets that perform specific tasks. So far, we have only used built-in `R` functions (see @sec-RFunctions) and functions from add-on packages such {dplyr} from the tidyverse (see @sec-tidyverse), but we have not defined our own functions.
@@ -607,9 +616,10 @@ plot_AU_matches <- function(contexts, emojis) {
     scale_y_continuous(expand = c(0,0)) +
     scale_fill_manual(values = c("#66C2A5", "#E78AC3")) +
     geom_text(aes(label = percent), position = position_stack(vjust = 0.5)) +
-    labs (x= "context", y = "percent", title = emojis) +
+    labs (x="", y = "percent", title = emojis) +
     theme_classic() +
-    theme(plot.title = element_text(hjust = 0.5), legend.title=element_blank())
+    theme(plot.title = element_text(hjust = 0.5, size = 20), 
+          legend.title=element_blank())
 }
 ```
 
@@ -635,9 +645,9 @@ As we want to display emojis within plots, we need to pay even more attention to
 If displaying emojis as part of plots in RStudio does not work for you, you will need to use the high-quality graphics library "AGG" ("Anti-Grain Geometry") or "Cairo" as your graphics backend in RStudio. To do this, head to the "Tools" drop-down menu and click on "Global Options". Then, go to the "Graphics" tab and select the "AGG" or "Cairo" option (see @fig-agg).
 
 ::: {#fig-emoji-tools layout-ncol="2"}
-![The emoji keyboard](images/RoseGina_emoji_keyboard.png){#fig-emoji-keyboard fig-align="center" width="270"}
+![The emoji keyboard](images/CS_RoseGina_emoji_keyboard.png){#fig-emoji-keyboard fig-align="center" width="270"}
 
-![Recommended graphics backend in RStudio](images/RoseGina_AGG.png){#fig-agg fig-align="center" width="300"}
+![Recommended graphics backend in RStudio](images/CS_RoseGina_AGG.png){#fig-agg fig-align="center" width="300"}
 
 Tools for inserting and displaying emojis in RStudio
 :::
@@ -670,11 +680,11 @@ By applying our newly created function `plot_AU_matches()` to all emoji pairs an
 
 Brackets can be used to combine horizontal and vertical arrangements.
 
-![Patchwork artwork by Allison Horst, <https://allisonhorst.com/r-packages-functions>](images/AHorst_patchwork.png){#fig-patchwork width="600"}
+![Patchwork artwork by [Allison Horst](https://allisonhorst.com/r-packages-functions) (CC-BY)](images/AHorst_patchwork.png){#fig-patchwork width="600"}
 
 In line with the research question of @fricke2024semantic, we want to compare the matching rates of emojis and contexts in the AU+ condition with the matching rates in the AU- condition. Our goal is therefore to create a plot that looks similar to @fig-AUFricke created by @fricke2024semantic.
 
-![Plot of individual emoji pairs that compares AU conditions [@fricke2024semantic: 11, CC-BY]](images/RoseGina_Fricke_AUplot.png){#fig-AUFricke width="700"}
+![Plot of individual emoji pairs that compares AU conditions [@fricke2024semantic: 11, CC-BY]](images/CS_RoseGina_Fricke_AUplot.png){#fig-AUFricke width="700"}
 
 First, let us plan the layout of our combined plot with some placeholder names. Our combined plot will have two columns and three rows: In both `column1` and `column2`, three plots are stacked **vertically** on top of each other. These are the plots of the AU+ and the AU- condition, respectively. We then place these patchworks next to each other (**horizontally**) for comparison.
 
@@ -730,13 +740,25 @@ AU_minus_patch <- wrap_elements(plot = AU_minus_patch) +
 Finally, we put both columns together to get our final plot.
 
 ```{r show-AU-combined-patch}
-#| label: fig-AUpatch
-#| fig-cap: "Plot combining all six plots into one figure"
 #| fig-height: 11
+#| eval: false
 
 AU_plus_patch | AU_minus_patch
 
 ```
+
+```{r}
+#| eval: false
+#| echo: false
+
+AUpatch_complete <- AU_plus_patch | AU_minus_patch
+
+ggsave(plot = AUpatch_complete, 
+       here("images", "CS_RoseGina_AUpatch_complete.png"), 
+       height = 3200, width = 2300, units = "px")
+```
+
+![Plot combining all six plots into one figure](images/CS_RoseGina_AUpatch_complete.png){#fig-AUpatch width="100%"}
 
 @fig-AUpatch contains information on the matching rates of all emoji pairs with their contexts. It contains the same information as @fig-AUFricke from @fricke2024semantic, but does not look exactly the same. Which look do you think is easiest to interpret?
 
@@ -744,9 +766,9 @@ AU_plus_patch | AU_minus_patch
 You probably will have noticed that @fig-AUpatch contains two identical legends. This is the trade-off we take by using the `wrap_elements()` function: We have fixated the patchworks in their state with their legends, which means that the legends cannot be merged later. There are a couple of other options that will produce different outcomes, however, none is going to be perfect: Since we do not want to delete the legend completely, one option would be to keep the legends of all six plots, as in @fig-alllegends. Another option would be to keep the legend of one block and delete the other. However, as you can see in @fig-onelegend, this makes the bars take up the space of the legend, and the bars in one block become wider than in the other one.
 
 ::: {#fig-AU-plot-options layout-ncol="2"}
-![The combined plot with six legends](images/RoseGina_AU_plot_six_legends.png){#fig-alllegends fig-align="center" width="550"}
+![The combined plot with six legends](images/CS_RoseGina_AU_plot_six_legends.png){#fig-alllegends fig-align="center" width="550"}
 
-![The combined plot with one legend](images/RoseGina_AU_plot_one_legend.png){#fig-onelegend fig-align="center" width="550"}
+![The combined plot with one legend](images/CS_RoseGina_AU_plot_one_legend.png){#fig-onelegend fig-align="center" width="550"}
 
 Options for the legend placement
 :::
@@ -842,3 +864,41 @@ In this chapter, we have created an informative figure that answers the experime
 Emojis, it turns out, contain lots of information, and there is a science behind them 🤓. While experimentally measuring why we prefer certain emojis over other ones represents a real challenge, @fricke2024semantic provides valuable insights into this fascinating area of study. As the authors shared their data and code, we were able to successfully reproduce their results, as well as create new informative figures on the basis of their data.
 
 ## References {.unnumbered}
+
+Fricke, Lea, Patrick G Grosz, and Tatjana Scheffler. 2024. Semantic Differences in Visually Similar Face Emojis. *Language and Cognition*. Cambridge University Press 1–15. <https://doi.org/10.1017/langcog.2024.12>.
+
+Fugate, Jennifer MB & Courtny L Franco. 2021. Implications for Emotion: Using Anatomically Based Facial Coding to Compare Emoji Faces Across Platforms. *Frontiers in Psychology*. Frontiers Media SA 12. 605928. <https://doi.org/10.3389/fpsyg.2021.605928>.
+
+Maier, Emar. 2023. Emojis as Pictures. *Ergo* 10. <https://doi.org/10.3998/ergo.4641>.
+
+Neuwirth, Erich. 2022. Package "RColorBrewer". *ColorBrewer Palettes* 991. <https://cran.r-project.org/web/packages/RColorBrewer/RColorBrewer.pdf>.
+
+Pedersen, Thomas Lin. 2024. *Patchwork: The Composer of Plots*. <https://patchwork.data-imaginist.com>.
+
+Pedersen, Thomas Lin & Maxim Shemanarev. 2024. *Ragg: Graphic Devices Based on AGG*. <https://ragg.r-lib.org>.
+
+Pfeifer, Valeria A, Emma L Armstrong & Vicky Tzuyin Lai. 2022. Do all facial emojis communicate emotion? The impact of facial emojis on perceived sender emotion and text processing. *Computers in Human Behavior*. Elsevier 126. 107016. <https://doi.org/10.1016/j.chb.2021.107016>.
+
+Scheffler, Tatjana & Ivan Nenchev. 2024. Affective, semantic, frequency, and descriptive norms for 107 face emojis. *Behavior Research Methods*. Springer 1–22. <https://doi.org/10.3758/s13428-024-02444-x>.
+
+Wickham, Hadley, Romain François & Lucy D’Agostino McGowan. 2024. *Emo: Easily Insert ’emoji’*. <https://github.com/hadley/emo>.
+
+### Packages used in this chapter {.unnumbered}
+
+```{r package-versions, echo=FALSE}
+sessionInfo()
+```
+
+### Package references {.unnumbered}
+
+```{r generateBibliography, results="asis", echo=FALSE}
+
+CS_RoseGina_packages.bib <- sapply(1:length(loadedNamespaces()), function(i) toBibtex(citation(loadedNamespaces()[i])))
+
+#knitr::write_bib(c(.packages(), "knitr"), "CS_RoseGina_packages.bib")
+
+require("knitcitations")
+cleanbib()
+options("citation_format" = "pandoc")
+read.bibtex(file = "CS_RoseGina_packages.bib")
+```
