@@ -1,0 +1,1061 @@
+---
+author: "Poppy Siahaan"
+date: "2024-11-15"
+toc-title: "Case study: 'Throw' verbs in Spanish"
+include-after-body: abbrv_toc.html
+---
+
+# 'Throw' verbs in Spanish: Rep`R`oducing the results of a corpus linguistics study
+
+```{r include=FALSE}
+library(checkdown)
+library(kableExtra)
+options(scipen = 999)
+```
+
+::: {.callout-note collapse="true"}
+#### **About the author of this chapter** {.unnumbered}
+
+**Poppy Siahaan** \[pɔpi siahaʔan\] is a lecturer at the Institute of Languages and Cultures of the Islamicate World at the University of Cologne. She has a keen interest in semantics, particularly metaphors, and studies the connections between language, culture, the body, and cognition, including speech-accompanying gestures. Recently, she has also been exploring the fascinating world of `R`.
+
+Poppy attended Elen Le Foll's seminar "More than counting words: Introduction to statistics and data visualisation in R" (University of Cologne, summer 2024) as a guest student. Elen supervised this textbook chapter project, provided extensive feedback, and contributed to the revisions necessary for publication in this textbook.
+:::
+
+#### **Chapter overview** {.unnumbered}
+
+This chapter will guide you through the steps to reproduce the results of a published corpus linguistics study [@vanhulleCategoryThrowVerbs2024] using `R`.
+
+The chapter will walk you through how to:
+
+-   Download the authors' original data [@vanhulleReplicationDataCategory2024] and load it in `R`
+-   Understand the structure of the data
+-   Wrangle the data to reproduce Tables 5 and 8 from @vanhulleCategoryThrowVerbs2024
+-   Calculate the normalized frequencies as reported in @vanhulleCategoryThrowVerbs2024
+-   Calculate the type/token ratios as reported in @vanhulleCategoryThrowVerbs2024
+-   Compare our results with those printed in @vanhulleCategoryThrowVerbs2024
+-   Visualize our results as line plots using {ggplot2} to facilitate the interpretation of the results
+
+## Introducing the study
+
+In this chapter, we attempt to reproduce the results of a corpus linguistics study by @vanhulleCategoryThrowVerbs2024, published as a book chapter in a volume edited by @pfadenhauerRomanceMotionVerbs2024. The study focuses on the development of five throw verbs in Peninsular Spanish: *echar*, *lanzar*, *disparar*, *tirar*, and *arrojar* [@vanhulleCategoryThrowVerbs2024]. These verbs have evolved into aspectual auxiliaries in inchoative constructions that convey the beginning of an event. @vanhulleCategoryThrowVerbs2024 use historical data to trace the evolution of these verbs, and contemporary data to analyse their usage in micro-constructions. Below are examples of the five throw verbs in inchoative constructions [all taken from @vanhulleCategoryThrowVerbs2024].
+
+1.  Los nuevos rebeldes ***se arrojaron** a atacar* al sistema de control social. (‘The new rebels *started (lit. ‘threw/launched themselves’) to attack* the system of social control.’)
+2.  El niño abrió los ojos y ***echó** a correr* de regreso a su casa. (‘The child opened his eyes and *started (lit. ‘threw’) to run* back to his house.’)
+3.  El grupo de investigación ***se lanzó** a analizar* otros parámetros. (‘The investigation group *started (lit. ‘launched itself’) to analyse* other parameters.’)
+4.  Decidí no ***tirarme** a llorar* y empecé a buscar algo que me ayudara.\* (‘I decided not to *start (lit. ‘throw myself’) to cry* and I started to look for something that would help me.’)
+5.  Y todos ***dispararon** a correr*, sin volver la cabeza atrás. (‘And everybody *started (lit. ‘shot’) to run*, without looking back.’)
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+Follow the study's DOI link and read the abstract to learn about the study's research focus.
+
+> Van Hulle, Sven & Renata Enghels. 2024. The category of throw verbs as productive source of the Spanish inchoative construction. In Katrin Pfadenhauer & Evelyn Wiesinger (eds.), Romance motion verbs in language change, 213–240. De Gruyter. <https://doi.org/10.1515/9783111248141-009>.
+
+[**Q1.**]{style="color:green;"} What is the main focus of this study?
+
+```{r echo=FALSE}
+check_question(c("The development of 'throw' verbs as aspectual auxiliaries."),
+               options = c("The relationship between inchoative constructions and nouns of motion.", "The development of 'throw' verbs as aspectual auxiliaries.", "The role of spatial expressions in the process of grammaticalization.", "Semantic differences between the five Spanish 'throw' verbs."),
+button_label = "Check answer",
+random_answer_order = TRUE,
+type = "check",
+right = "That's right!",
+wrong = "No, read the abstract again.")
+
+```
+
+[**Q2.**]{style="color:green;"} According to the study, what semantic features help explain the connection between 'throw' verbs and inchoative constructions?
+
+```{r echo=FALSE}
+check_question(c("The shift in meaning from the concrete to the abstract.", "The meaning of abruptness and the interruption of inertia."),
+               options = c("The shift in meaning from the concrete to the abstract.", "The ability of 'throw' verbs to convey accuracy and control.", "The meaning of abruptness and the interruption of inertia.", "The aspect of moving towards a specified destination."),
+button_label = "Check answer",
+random_answer_order = TRUE,
+type = "check",
+right = "That's right!",
+wrong = "Not quite. Read the abstract again.")
+check_hint("Two semantic features are mentioned in the abstract.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+:::
+
+In this chapter, we will use the authors' original data to reproduce Tables 5 and 8 [@vanhulleCategoryThrowVerbs2024: 227, 232], as well as visualising the data with a series of informative line plots to facilitate interpretation.
+
+## Retrieving the authors' original data {#sec-ThrowData toc-text="Retrieving the data"}
+
+In the spirit of Open Science (see @sec-OpenScience), @vanhulleCategoryThrowVerbs2024 have made their research data openly accessible on the Tromsø Repository of Language and Linguistics (TROLLing):
+
+> Van Hulle, Sven & Renata Enghels. 2024. Replication Data for: “The category of throw verbs as productive source of the Spanish inchoative construction.” DataverseNO. Version 1. <https://doi.org/10.18710/TR2PWJ>.
+
+Follow the link and read the description of the dataset. Next, scroll down the page where three different downloadable files are listed.
+
+-   `0_ReadME_Spanish_ThrowVerbs_Inchoatives_20230413.txt` This is a text "file which provides general information about the nature of the dataset and how the data was collected and annotated, and brief data-specific information for each file belonging to this dataset" [@vanhulleReplicationDataCategory2024].
+
+-   `Spanish_ThrowVerbs_Inchoatives_20230413.csv` This is a comma-separated file (see @sec-DSV) which "contains the input data for the analysis, including the variables 'AUX', 'Century', 'INF' and 'Class', for the throw verbs *arrojar, disparar, echar, lanzar* and *tirar*" [@vanhulleReplicationDataCategory2024].
+
+-   `Spanish_ThrowVerbs_Inchoatives_queries_20230413.txt` "This file specifies all corpus queries "that were used to download the samples per auxiliary from the Spanish Web corpus (esTenTen18), that was accessed via Sketch Engine, and from the Corpus Diacrónico del Español (CORDE)" [@vanhulleReplicationDataCategory2024].
+
+In corpus linguistics, it is often the case that corpora cannot be openly shared for copyright and/or data protection reasons. Instead, authors who strive to make their work transparent and reproducible can share details of the corpora that they analysed and of the specific corpus queries they used, so that the data that they share are only the results of the queries.
+
+As we are interested in the frequencies retrieved from the corpora, we download the CSV file `Spanish_ThrowVerbs_Inchoatives_20230413.csv`.
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q3.**]{style="color:green;"} Where did the data for @vanhulleReplicationDataCategory2024's study on the five Spanish 'throw' verbs come from?
+
+```{r echo=FALSE}
+check_question(c("For the contemporary data, from the European Spanish subcorpus of the Spanish Web Corpus (esTenTen18).", "For the historical data, from the Corpus Diacrónico del Español (CORDE)."),
+               options = c("For all occurrences of 'throw' verbs, from the European Spanish Web Corpus (esTenTen18).", "For the contemporary data, from the Spanish corpus of the Tromsø Repository of Language and Linguistics.", "For the historical data, from the Corpus Diacrónico del Español (CORDE).", "For the contemporary data, from the European Spanish subcorpus of the Spanish Web Corpus (esTenTen18)."),
+button_label = "Check answer",
+random_answer_order = TRUE,
+type = "check",
+right = "That's right!",
+wrong = "Not quite. Read the description of the dataset again.")
+check_hint("The data came from two different corpora.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+<br>
+
+[**Q4.**]{style="color:green;"} What does the term "false positive" refer to in the context of this study?
+
+```{r echo=FALSE}
+check_question(c("Tags that incorrectly label nouns as infinitives or misidentify inchoative constructions."),
+               options = c("Tokens that represent infinitives following 'a' with an incorrect auxiliary.", "Tokens that were correctly identified as inchoative constructions.", "Tags that incorrectly label nouns as infinitives or misidentify inchoative constructions.", "Tokens removed due to being irrelevant to the study's focus on 'throw' verbs."),
+button_label = "Check answer",
+random_answer_order = TRUE,
+type = "radio",
+right = "That's right!",
+wrong = "Not quite. Read the description of the dataset again.")
+
+
+```
+:::
+
+## Impo`R`ting the authors' original data {#sec-ImportingVanHulle toc-text="Impo`R`ting the data"}
+
+Before we can import the dataset, we need to load all the packages that we will need for this project. Note that you may need to install some of these packages first (see @sec-Packages for instructions).
+
+```{r, echo=TRUE}
+# Loading required packages for this project
+library(here)
+library(tidyverse)
+library(xfun)
+```
+
+Next, we import the dataset containing the number of occurrences of 'throw' verbs in the corpora analysed in @vanhulleCategoryThrowVerbs2024 (`Spanish_ThrowVerbs_Inchoatives_20230413.csv`) as a new object called `spanish.data`.
+
+```{r data-import, echo=TRUE}
+# Importing the Spanish verbs dataset
+spanish.data <- read.csv(file = here("data", "Spanish_ThrowVerbs_Inchoatives_20230413.csv"),
+                    header = TRUE,
+                    sep = "\t",
+                    quote = "\"",
+                    dec = ".")
+
+```
+
+We check the sanity of the imported data by visually examining the output of `View(spanish.data)` (@fig-screenShot).
+
+![Screenshot showing part of the dataset using the `View()` function.](images/Poppy_viewSpanishData.png){#fig-screenShot fig-alt="The figure displays a table with four columns labeled AUX, Century, INF, and Class, representing Auxiliary, Century, Infinitive, and Semantic Class, respectively. The data shows pairings of auxiliaries with infinitives and their corresponding semantic classes across different centuries. For example, the auxiliary lanzar is paired with the infinitive llevar under the semantic class 'Desplazamiento' (Movement), while echar is paired with dormir under 'Fisiología' (Physiology). The table contains 2,882 entries, with a preview of the first 15 rows shown here." width="413"}
+
+As you can see in @fig-screenShot, the dataset contains `r nrow(spanish.data)` rows (i.e., the number of occurrences of 'throw' verbs observed in the corpora) and `r ncol(spanish.data)` columns (i.e., variables describing these observations).
+
+The readme file delivered with the data (`0_ReadME_Spanish_ThrowVerbs_Inchoatives_20230413.txt`) describes the variables as follows:
+
+```         
+-----------------------------------------
+DATA-SPECIFIC INFORMATION FOR: Spanish_ThrowVerbs_Inchoatives_20230413.csv
+-----------------------------------------
+
+#   Variable    Explanation
+
+1   AUX         This column contains the inchoative auxiliary. [...]
+
+2   Century     This column contains the century to which the concrete example belongs. 
+
+3   INF         This column contains the infinitive observed in the filler slot of the inchoative construction. 
+
+4   Class       This column contains the semantical class to which the infinitive belongs, based on the classification of ADESSE. This lexical classification classifies Spanish verbs in semantic groups, which we adopted for the annotation (http://adesse.uvigo.es/data) (@ref García-Miguel & Albertuz 2005). [...]
+
+ 
+```
+
+To obtain a list of all the 'throw' verbs included in the dataset and their total frequencies, we use the familiar `count()` function from {dyplr} (see [Chapter 9](https://elenlefoll.github.io/RstatsTextbook/9_DataWrangling.html)).
+
+```{r}
+spanish.data |> 
+  count(AUX)
+```
+
+As you can see, there are five 'throw' verbs in the dataset: *echar*, *lanzar*, *tirar*, *arrojar*, and *disparar*. The most frequent one is *echar*.
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q5.**]{style="color:green;"} Which column in the dataset contains the general meaning of the verbs in the filler slot of the inchoative construction?
+
+```{r echo=FALSE}
+check_question(c("Class"),
+               options = c("AUX", "Century", "INF", "Class"),
+button_label = "Check answer",
+random_answer_order = TRUE,
+type = "radio",
+right = "That's right!",
+wrong = "No, you are looking for the column that contains semantic information about the inifinite verbs in these inchoative constructions.")
+
+```
+
+[**Q6.**]{style="color:green;"} Which of the following verbs is classified under the semantic category '*Desplazamiento*' ('movement')?
+
+```{r echo=FALSE}
+check_question(c("llevar"),
+               options = c("dormir", "atacar", "llevar", "hacer"),
+button_label = "Check answer",
+random_answer_order = TRUE,
+type = "check",
+right = "That's right!",
+wrong = "No, check the hint if you're unsure how to find the correct answer.")
+check_hint(
+  "Run the `sum()` command to calculate the number of occurrences of each verb within the `Class` \"Desplazamiento\", e.g., `sum(spanish.data$INF == \"dormir\" & spanish.data$Class == \"Desplazamiento\")`.",
+  hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+:::
+
+## Token (absolute) frequency
+
+According to Gries & Ellis [-@griesStatisticalMeasuresUsageBased2015: 232]:
+
+> "Token frequency counts how often a particular form appears in the input."
+
+In @vanhulleCategoryThrowVerbs2024, token frequency refers to the number of occurrences of combinations of 'throw' verbs and infinitives in inchoative constructions, as identified in the corpora queried for this study (see @sec-ThrowData).
+
+### Creating a table of token frequencies {#sec-TokenFreqTable}
+
+First of all, we want to find out how often each 'throw' verb was observed in each century. To do so, we use the `count()` function to output the number of corpus occurrences for all possible combinations of the `AUX` and `Century` variables. Then, we pipe this output into an `arrange()` command to order the rows of the table by the values of the `Century` and `AUX` columns (as shown in @tbl-Freq below), prioritising the order of the `Century` over the alphabetical order of the `AUX`. This ensures that the centuries are ordered correctly from the 13^th^ to the 21^st^ century, rather than being jumbled. We store this summary table as a new `R` object called `verbs.investigated`.
+
+```{r}
+verbs.investigated <- spanish.data |>
+  count(AUX, Century, sort = TRUE) |> 
+  arrange(Century, AUX)
+```
+
+@tbl-Freq contains 26 rows and three columns, `AUX`, `Century`, both from the original dataset, and `n` which contains the number of occurrences for each combination of the `Century`and `AUX` variables. For example, the verb *echar* occurs 32, 15, and 101 times in the corpus data from the 13^th^, 14^th^, and 15^th^ centuries respectively and so on.
+
+```{r frequency_per_century, echo=FALSE}
+#| label: tbl-Freq
+#| tbl-cap: Frequency of each Spanish 'throw' verb in each century
+
+verbs.investigated |> 
+  kable()
+```
+
+We will now attempt to reproduce "Table 4: General overview of the dataset" [@vanhulleCategoryThrowVerbs2024: 225], reprinted below as @tbl-absPaper.
+
+```{r pivot_wide_from_paper}
+#| echo: false
+#| label: tbl-absPaper
+#| tbl-cap: "Absolute token frequency of Spanish 'throw' verbs as reported in van Hulle & Enghels [-@vanhulleCategoryThrowVerbs2024: 225]"
+
+absolute.paper <- verbs.investigated |>
+  # Modifying specific columns with mutate()
+  # Defining change conditions with case_when()
+  mutate(n = case_when(
+    AUX == "tirar" & Century == 15 ~ 0,
+    AUX == "tirar" & Century == 18 ~ 0,
+    TRUE ~ n  # Keep the original value if no condition is met
+  ))
+
+absolute.paper.wide <- absolute.paper |> pivot_wider(names_from = Century, values_from = n) |> mutate(across(everything(), ~ replace_na(., 0))) |> arrange(AUX)
+
+# Select only numeric columns for summing
+numeric_columns <- select(absolute.paper.wide, where(is.numeric))
+
+# Calculate row sums for only the numeric columns
+row_sums <- rowSums(numeric_columns)
+
+# Add the row sums as a new column
+absolute.paper.bind <- cbind(absolute.paper.wide, Total = row_sums)
+
+# Calculate column sums for the numeric columns
+column_sums <- colSums(numeric_columns)
+
+# Add a placeholder for the non-numeric column (e.g., the verb name column)
+total_row <- c("Total", column_sums, sum(row_sums))
+
+# Add the column sums as a new row at the bottom of the table
+absolute.paper.table <- rbind(absolute.paper.bind, total_row)
+
+absolute.paper.table |> 
+  kable()
+```
+
+To reproduce this table on the basis of the data provided by the authors, we begin by reshaping the data frame `spanish.data` from **long format** to **wide format** using the `pivot_wider()` function (see @sec-CombiningDatasets). This function takes the arguments "names_from" to specify which column is to provide the names for the output columns, and "values_from" to determine which column is to supply the cell values.
+
+```{r }
+
+verbs.investigated |>
+  pivot_wider(names_from = Century, values_from = n) 
+
+```
+
+As you can see, this table includes a lot of `NA` values for the verbs for which zero occurrences were found in certain centuries. To replace missing values (`NA`) with a different value (here `0` to match @tbl-absPaper), we can use the tidyverse function `replace_na()` in combination with `mutate()`. By applying this operation `across(everything())`, we ensure that the modifications are performed on all columns. We pipe this output into the `arrange()` function to order the rows of the table by the alphabetical order of the `AUX`. This is important as we will later use `token.data` to calculate the type/token frequency (see @tbl-typeTokenData) for which we will merge `token.data` with the `types.wide`, which is also arranged by the alphabetical order of the `AUX`.
+
+```{r}
+token.data <- verbs.investigated |>
+  pivot_wider(names_from = Century, values_from = n) |> 
+  mutate(across(everything(), ~ replace_na(., 0))) |>
+  arrange(AUX) 
+
+token.data
+```
+
+We now want to add the total number of verb occurrences in each row and column of our table, as in [@vanhulleCategoryThrowVerbs2024, Table 4] (see also @tbl-absPaper). We begin by calculating the total number of occurrences of each verb in `token.data`. We therefore first select just the columns containing numeric values.
+
+```{r}
+numeric_columns <- token.data |> 
+  select(where(is.numeric))
+
+numeric_columns
+```
+
+It is important that we specify that we only add the values in columns representing numeric variables because if we ask `R` to do any mathematical operations with values of the `AUX` variable, we will get an error message indicating that it is impossible to add up character string values!
+
+```{r}
+#| eval: false
+#| echo: true
+
+sum(token.data$AUX)
+```
+
+```         
+Error in sum(token.data$AUX) : invalid 'type' (character) of argument
+```
+
+This is why we first created an `R` object that contains only the numeric variables of `token.data`: these are the columns that we will need to compute our sums. Next, we use the base `R` function `rowSums()` to calculate the total number of occurrences of each 'throw' verb across all corpus texts queried, from the 13^th^ to the 21^th^ century.
+
+```{r}
+row_sums <- rowSums(numeric_columns)
+```
+
+We have saved the output of the `rowSums()` function to a new object called `row_sums`. This object is a numeric vector containing just the row totals.
+
+```{r}
+row_sums
+```
+
+To check that these are in fact the correct totals, we can compare these row sums to the output of `table(spanish.data$AUX)` (see also @sec-ImportingVanHulle). As the numbers match, we can now use `mutate()` to add `row_sums` as a new column to `token.data`.
+
+```{r}
+token.data.rowSums <- token.data |> 
+  mutate(Total = row_sums)
+
+token.data.rowSums
+```
+
+Now, let's turn to the column totals. We can use `colSums()` to calculate the total number of 'throw' verb occurrences in each century.
+
+```{r}
+column_sums <- colSums(numeric_columns)
+
+column_sums
+```
+
+In the original paper, the row of totals is labelled "Total". Furthermore, we also have a value representing the total number of verbs included in the dataset. Hence, the last row will be constructed as follows using the combine function `c()`.
+
+```{r}
+total_row <- c("Total", column_sums, sum(row_sums))
+
+total_row
+```
+
+Again, we can check that we have not "lost" any verbs along the way by comparing the last value of `total_row` with the number of observations in our original long-format dataset.
+
+```{r}
+nrow(spanish.data)
+```
+
+Finally, we use `rbind()` to append the `total_row` vector to `token.data`, creating a complete table with both row and column totals (@tbl-absData).
+
+```{r pivot_wide_from_spanish_data}
+#| label: tbl-absData
+#| tbl-cap: Absolute token frequency of Spanish 'throw' verbs based on dataset
+token.table.totals <- rbind(token.data.rowSums, total_row)
+
+token.table.totals
+```
+
+If we now compare the values of the table in the published study (reproduced as @tbl-absPaper) with @tbl-absData based on the authors' archived data, we can see that the total number of 'throw' verbs is only `r sum(absolute.paper$n, na.rm=FALSE)`, suggesting that ten verb occurrences are somehow missing in the summary table printed in the published paper. In the data frame `spanish.data`, these missing data points correspond to occurrences of the verb *tirar*, specifically two tokens from the 15^th^ century and eight tokens from the 18^th^ century (@tbl-absData).
+
+Since @vanhulleCategoryThrowVerbs2024 focus their analyses on the other two verbs, *echar* and *lanzar*, this discrepancy is not particularly conspicuous. However, it suggests that the version of the dataset archived on TROLLing is not exactly the same as the one that the authors presumably used for the analyses presented in the 2024 paper.[^cs_poppy-1]
+
+[^cs_poppy-1]: We contacted the first and corresponding author of the paper. They responded and confirmed that these discrepancies were likely due to small changes that were made to the dataset that was ultimately used in the analyses published in @vanhulleCategoryThrowVerbs2024. These changes were deemed necessary when either additional occurrences of inchoative constructions were found in the corpora, or false positives (i.e. occurrences of 'throw' verbs that did not enter such constructions) were later identified in the dataset. The author did not provide us with the final dataset that was used in the reported analyses.
+
+### Visualising the absolute frequencies in a tabular format
+
+As Van Hulle & Enghels [@vanhulleCategoryThrowVerbs2024: 224] state,
+
+> "The searches in the databases of CORDE and esTenTen18 were exhaustive, but, for reasons of feasibility, only the first 500 relevant cases were included in the final dataset."
+
+That is, the corpus contains much more data than what the authors could feasibly investigate. For example, the verb *echar* appears 799 times in the 19^th^ century texts, 1,641 times in the 20^th^ texts, and 10,347 times in those from the 21^st^ century. However, in their final dataset @vanhulleCategoryThrowVerbs2024 included only 500 instances of *echar* in these centuries, as shown in @tbl-absPaper above.
+
+To generate a table that includes the absolute token frequency in the corpus, similar to the "absolute token frequency" subsection of Table 5 in Van Hulle & Enghels [@vanhulleCategoryThrowVerbs2024: 227], we need to modify the values of *echar* in the 19^th^, 20^th^, and 21^st^ centuries, and *lanzar* in the 21^st^ century in `verbs.investigated` that we previously created.
+
+We use the `mutate()` function to update specific columns and `case_when()` to define the conditions of the changes. For example, if the verb *echar* appears in the `AUX` variable and at the same time the value `19` is found in the `Century` variable, then the cell value should be changed to *799*, and so on. The formula `TRUE ~ n` ensures that the original value is retained if no condition is met. The modified table is assigned to a new data frame object, which we name `verbs.corpus`.
+
+Next, we generate a contingency table with the altered values for those verbs by applying the `pivot_wider()` function as in @tbl-absData above. The result is displayed in @tbl-absCorpus below.
+
+```{r table_corpus_total, echo=TRUE}
+#| label: tbl-absCorpus
+#| tbl-cap: Absolute token frequency of Spanish 'throw' verbs as observed in the corpus
+#| code-fold: true
+#| code-summary: "Show the `R` code to generate the table below."
+
+verbs.corpus <- verbs.investigated |>
+  # Modifying specific columns with mutate()
+  mutate(n = case_when(
+    AUX == "echar" & Century == 19 ~ 799,
+    AUX == "echar" & Century == 20 ~ 1641,
+    AUX == "echar" & Century == 21 ~ 10347,
+    AUX == "lanzar" & Century == 21 ~ 7625,
+    # Keep the original value if no condition is met
+    TRUE ~ n))
+
+# Generating a contingency table with the altered verb values using pivot_wider()
+verbs.corpus.wide <- verbs.corpus |>
+  pivot_wider(names_from = Century, values_from = n) |>
+  mutate(across(everything(), ~ replace_na(., 0))) |>
+  arrange(AUX)
+
+verbs.corpus.wide
+
+```
+
+The difference between the corpus data (@tbl-absCorpus) and the final dataset (@tbl-absData) is found only in *echar* in 19^th^, 20^th^, 21^st^, and in *lanzar* in 21^st^ centuries. Following @vanhulleCategoryThrowVerbs2024, we will use the frequency of Spanish 'throw' verbs (stored as a data frame named `verbs.corpus`) observed in the corpus (@tbl-absCorpus) to calculate the normalized frequency (see @tbl-normData below).
+
+## Normalized frequency
+
+A normalized frequency is an occurrence rate adjusted to a common base, such as per million words (pmw), to allow comparisons across datasets of different sizes.
+
+@vanhulleCategoryThrowVerbs2024 analyse Spanish corpora from different centuries, using the Corpus Diacrónico del Español (CORDE) for the 13^th^ to 20^th^ centuries and the esTenTen18 corpus for the 21^st^ century, accessed via the Sketch Engine platform. To compare frequencies from these varying-sized corpora, we need to normalize them to ensure that large frequencies are not simply due to the corpus being larger. Van Hulle & Enghels [@vanhulleCategoryThrowVerbs2024: 227, footnote 2] explain:
+
+> The normalised token frequencies are calculated dividing the absolute token frequency by these total amounts of words, multiplied by 1 million. This number then shows how many times each micro-construction occurs per 1 million words, per century.
+
+The formula for normalized frequency is as follows:
+
+$$
+normalized frequency = \frac{token frequency}{total words *1000000}
+$$
+
+### Visualising normalized frequencies in a tabular format
+
+We will now attempt to reproduce the “Normalized Token Frequency” sections of Tables 5 and 8 from the published paper using the authors' original data. For later comparison, the normalized frequencies as reported in Van Hulle & Enghels [@vanhulleCategoryThrowVerbs2024: 227, 232][^cs_poppy-2] are reproduced in this chapter as @tbl-normPaper.
+
+[^cs_poppy-2]: The normalized frequencies of *echar* and *lanzar* are found in Table 5 [@vanhulleCategoryThrowVerbs2024: 227], whilst those for *arrojar*, *disparar* and *tirar* are displayed in Table 8 [@vanhulleCategoryThrowVerbs2024: 232]. Note that in Tables 5 and 8 [@vanhulleCategoryThrowVerbs2024: 232] all values are rounded off to two decimal places except the normalized frequency of *disparar* in the 21^st^ which is reported as "0.0008".
+
+```{r dataframe}
+#| echo: false
+#| label: tbl-normPaper
+#| tbl-cap: "Normalized frequency (pmw) as reported in the published paper [@vanhulleCategoryThrowVerbs2024: Tables 5 and 8]"
+
+# Creating a data frame using the data.frame() function from base R
+normalized.new <- data.frame(
+  AUX = c("arrojar", "disparar", "echar", "lanzar", "tirar"),
+  `13` = c(NA, NA, 4.09, NA, NA),
+  `14` = c(NA, NA, 2.00, NA, NA),
+  `15` = c(NA, NA, 4.43, NA, NA),
+  `16` = c(0.40, NA, 3.07, NA, NA),
+  `17` = c(1.23, 0.08, 2.49, NA, NA),
+  `18` = c(1.11, NA, 2.76, NA, NA),
+  `19` = c(0.89, 0.02, 18.70, 1.31, NA),
+  `20` = c(0.19, 0.02, 27.96, 2.15, 0.12),
+  `21` = c("0.01", "0.0008", "2.91", "2.14", "0.02"), # Storing these numbers as characters ensures that we retain the four decimal places for only one number, as in the original publication
+  check.names = FALSE
+)
+
+# Replacing all "NA" values to "-"
+normalized.new[is.na(normalized.new)] <- "-"
+
+# Printing the result
+normalized.new |> 
+  kable(align = "r")
+```
+
+The sizes of the corpora for each century are provided in Van Hulle & Enghels [@vanhulleCategoryThrowVerbs2024: 227, footnote 12][^cs_poppy-3]. We create a table of word counts for each century (@tbl-corpusSizes) using the `tibble()` function from the tidyverse, by concatenating (using the `c()` function) the values of `Words` and `Century` and storing these as a new data frame named `corpus_sizes`.
+
+[^cs_poppy-3]: Note that we cannot copy the word counts directly from the paper, as the authors use the continental European format with the dot `(.)` as the thousand-separator and the comma `(,)` as a decimal point (e.g., 7.829.566 for the 13^th^ century). In `R`, however, the dot is interpreted as a decimal separator so entering `7.829.566` will generate an error:
+
+    ```{r eval=FALSE}
+    7.829.566
+    ```
+
+    ```         
+    unexpected numeric constant in "7.829.566"
+    ```
+
+```{r}
+corpus_sizes <- tibble(Century = c(13, 14, 15, 16, 17, 18, 19, 20, 21),
+                       Words = c(7829566, 7483952, 22796824, 49912675, 38083322, 14466748, 42726881, 58686214, 3554986755))
+```
+
+```{r corpus_sizes}
+#| label: tbl-corpusSizes
+#| tbl-cap: Total numbers of words in the corpora
+
+corpus_sizes
+```
+
+We will apply this formula to each verb for every century. First, we use the `left_join` function from {dplyr} to combine two data frames, i.e. `verbs.corpus`, which we used to create @tbl-absCorpus, and `corpus_sizes`, which we just created (@tbl-corpusSizes), based on the common `Century` column.
+
+```{r}
+left_join(verbs.corpus, corpus_sizes, by = "Century")
+```
+
+Next, we pipe the combined data frames into a `mutate()` function to add a new column named `normalized` and apply the formula `(n / Words) * 1000000` to normalize the frequency. In a second step, we round the result to two decimal places.
+
+```{r}
+#| source-line-numbers: "2:3"
+
+left_join(verbs.corpus, corpus_sizes, by = "Century") |>
+  mutate(normalized = (n / Words) * 1000000) |>
+  mutate(normalized = round(normalized,
+                            digits = 2))
+```
+
+Next, we remove the `n` and `Words` columns that we no longer need here by combining the minus operator `-` and the `select()` function to "unselect" these columns.
+
+```{r}
+#| source-line-numbers: "7:8"
+
+verb.normalized <- left_join(verbs.corpus,
+                           corpus_sizes,
+                           by = "Century") |>
+  mutate(normalized = (n / Words) * 1000000) |>
+  mutate(normalized = round(normalized,
+                          digits = 2)) |> 
+  select(-c(n, Words))
+
+verb.normalized
+```
+
+We reshape the data frame `verb.normalized` from **long format** to **wide format** by replicating the `pivot_wider()` function, which we used to create @tbl-absPaper and @tbl-absCorpus. The new column names will be taken from `Century`. The values in the new column will come from `normalized`. As earlier, we sort the rows of the data frame according to the alphabetical order of `AUX` using `arrange()`. We convert the output into a data frame format with the `as.data.frame()` command and assign the output to `normalized.wide`.
+
+```{r}
+normalized.wide <- verb.normalized |>
+  pivot_wider(names_from = Century, values_from = normalized) |>
+  arrange(AUX) |> 
+  as.data.frame()
+
+normalized.wide
+```
+
+Next, we use the `is.na()` function to find all missing values (`NA`) in the data frame `normalized.wide`. We replace all these `NA` values with a dash (`"-"`) using the `<-` operator.
+
+```{r}
+normalized.wide[is.na(normalized.wide)] <- "-"
+```
+
+The result can be seen in @tbl-normData.
+
+```{r verb_normalized, echo=TRUE}
+#| code-fold: true
+#| code-summary: "Show the `R` code to generate the wide table below."
+#| label: tbl-normData
+#| tbl-cap: Normalized frequency of Spanish 'throw' verbs (pmw) based on TROLLing data
+# Use left_join to merge the dataframes
+verb.normalized <- left_join(verbs.corpus,
+                             corpus_sizes,
+                             by = "Century") |>
+# Use mutate to create a new column with n divided by words
+  mutate(normalized = (n / Words) * 1000000) |>
+  mutate(normalized = round(normalized,
+                            digits = 2)) |> 
+# Remove raw frequencies (n) and corpus sizes (Words)
+  select(-c(n, Words))
+
+# Pivot to wide format and replace NAs with 0
+normalized.wide <- verb.normalized |>
+  pivot_wider(names_from = Century, values_from = normalized) |>
+  arrange(AUX) |> 
+  as.data.frame()
+
+# replace NA with "-"
+normalized.wide[is.na(normalized.wide)] <- "-"
+
+normalized.wide
+```
+
+At this stage, it is important to note some differences between @tbl-normData and @tbl-normPaper. @vanhulleCategoryThrowVerbs2024 provided normalized frequencies for the three verbs *arrojar*, *disparar* and *tirar* only from the 16^th^ until the 21^st^ centuries, with no data for the 13^th^ to 15^th^ centuries. However, @tbl-normData shows the normalized frequency of *tirar* at 0.09 for the 15^th^ century and 0.55 for the 18^th^ century, filling in some missing data found in the dataset (@tbl-absData). Additionally, there are slight differences in the normalized frequencies of *lanzar* for the 19^th^ and 20^th^ centuries, calculated as 1.29 and 2.13 based on TROLLing data and displayed in @tbl-normData, compared to 1.31 and 2.15 in reported by @vanhulleCategoryThrowVerbs2024 and displayed in @tbl-normPaper.
+
+Another point to note is the apparent discrepancy in the normalized frequency of the verb *disparar*. In @tbl-normPaper, it is reported in the original paper as 0.0008 for the 21^st^ century, while @tbl-normData displays it as 0.00. However, this difference is due to @tbl-normData using a two-digit format; when rounded to four digits, the value would indeed be 0.0008. Thus, this is not a true discrepancy.
+
+### Visualisation of the normalized frequencies as a line graph
+
+We now visualize how the usage of Spanish 'throw' verbs in inchoative constructions has evolved from the 13^th^ to the 21^st^ century. Although such a visualization is not provided in @vanhulleCategoryThrowVerbs2024, it is mentioned in the dataset description @vanhulleReplicationDataCategory2024, and it can facilitate the interpretation of the changes in normalized frequencies documented in @tbl-normData.
+
+For a diachronic study based on corpus data, it is reasonable to choose a connected scatterplot, which is essentially a combination of a scatterplot and a line plot. Using the {ggplot2} package, this entails combining a `geom_point()` layer on top of a `geom_line()` layer. The connected scatterplot provides a visualisation that helps to identify the usage of the five 'throw' verbs in inchoative constructions over time.
+
+@fig-normFreq is created using a `ggplot()` function that takes the data frame `verb.normalized` as its first argument and the aesthetics (`aes`) as its second argument. For the `aes` argument, we choose the `Century` column for the *x*-axis and the column `normalized` for the *y*-axis. Additionally, we specify two more optional aesthetics mappings in `aes`: "color" and "group". Both will be mapped onto the `AUX` variable, meaning that each verb will be displayed in a different color, and the line will be grouped by each verb over time. We also add a `scale_x_continuous()` layer ensures that the *x*-axis is labelled from the 13^th^ to 21^st^ century.
+
+```{r visualisation_normalized, echo=TRUE}
+#| label: "fig-normFreq"
+#| fig-cap: "Normalized frequency of Spanish 'throw' verbs over time"
+
+ggplot(verb.normalized, 
+       aes(x = Century, 
+           y = normalized, 
+           color = AUX, 
+           group = AUX)) +
+  geom_point() +  # Scatterplot points
+  geom_line() +   # Connect points with lines
+  scale_x_continuous(breaks = 13:21) + 
+  labs(title = "Normalized frequency of Spanish 'throw' verbs over time",
+       x = "Century",
+       y = "Normalized frequency (pmw)",
+       color = "Verbs") +
+  theme_minimal()
+
+```
+
+@fig-normFreq shows that the verb *echar* is the most frequently used verb as an inchoative auxiliary, appearing in the corpus since the 13^th^ century, while the other verbs only began to appear from the 15^th^ century (*tirar*), the 16^th^ century (*arrojar*), the 17^th^ century (*disparar*), and the 19^th^ century (*lanzar*). According to Van Hulle & Enghels [-@vanhulleCategoryThrowVerbs2024: 223], the verb *echar* "can be considered as the exemplary verb which opened the pathway for other 'throw' verbs towards the aspectual inchoative domain". They further state, \> "The relative token frequency increases remarkably in the 19th (n=18,70) and 20th (n=27,96) centuries, which can thus be defined as the time frames in which the micro-construction with echar was most frequently used. In the 21st century data, both micro-constructions appear with a comparable normalized token frequency in the corpus" (@vanhulleCategoryThrowVerbs2024).
+
+The normalized frequency graphic of Spanish 'throw' verbs in @fig-normFreq effectively illustrates the authors' statement, providing a clear visual representation of how these verbs have evolved in usage over time.
+
+## Type frequency
+
+Type frequency refers to the number of unique words that can appear in a specific position, or "slot," within a particular grammatical construction. In the context of an inchoative construction, a specific slot refers to the position within the construction where an infinitive verb can occur.
+
+For example, let’s look at the data in spanish.data (as shown in View(spanish.data) in the imported data, (see @fig-screenShot). Here, we see a list of verb usages, with each row representing a token, or instance, of a verb in a sentence or construction. There are 15 rows, each representing a token of a verb in specific sentences.
+
+If we focus on the verb ***lanzar***, we can count a total of 7 tokens, meaning that ***lanzar*** appears 7 times in @fig-screenShot (in the 1^st^, 3^rd^, 5^th^, 6^th^, 7^th^, 8^th^, and 15^th^ rows). However, among these tokens, ***lanzar*** pairs twice with ***hacer*** in an inchoative construction. Because ***hacer*** is repeated, this combination with ***lanzar*** is counted as only one type. Therefore, although we have 7 **tokens** (occurrences) of ***lanzar***, we have only 6 unique **types** (distinct pairings) involving ***lanzar*** in the inchoative slot.
+
+Van Hulle & Enghels [-@vanhulleCategoryThrowVerbs2024: 226] state that one may generally assume "that a higher type frequency indicates a higher degree of semantic productivity. As such, it is likely that a construction with a high number of different infinitives will accept even more types in the future". Thus, type frequency is an important measure of how productive and adaptable a pattern is.
+
+### Visualising type frequencies in a tabular format
+
+We will now attempt to reproduce the type frequencies of Spanish 'throw' verbs as displayed in the two subtables (both labelled "type frequency") of the original publication: one for *echar* and *lanzar* [@vanhulleCategoryThrowVerbs2024: Table 5] and the other for *arrojar*, *disparar* and *tirar* [@vanhulleCategoryThrowVerbs2024: Table 8]. The values from these two subtables are reproduced in this chapter as @tbl-typePaper.
+
+```{r type_in_paper}
+#| echo: false
+#| label: tbl-typePaper
+#| tbl-cap: Type frequency of Spanish 'throw' verbs based on the published paper
+
+# Creating a data frame using the data.frame() function from base R
+normalized.new <- data.frame(
+  AUX = c("arrojar", "disparar", "echar", "lanzar", "tirar"),
+  `13` = c(NA, NA, 8, NA, NA),
+  `14` = c(NA, NA, 3, NA, NA),
+  `15` = c(NA, NA, 15, NA, NA),
+  `16` = c(16, NA, 12, NA, NA),
+  `17` = c(34, 2, 12, NA, NA),
+  `18` = c(13, NA, 17, NA, NA),
+  `19` = c(32, 1, 19, 45, NA),
+  `20` = c(10, 1, 20, 95, 7),
+  `21` = c(27, 3, 20, 215, 46),
+  check.names = FALSE
+)
+
+# Replacing all "NA" values to "-"
+normalized.new[is.na(normalized.new)] <- "-"
+
+# Printing the result
+normalized.new |> 
+  kable()
+```
+
+Based on the object `spanish.data` (see @fig-screenShot), which we created from on the TROLLing dataset `Spanish_ThrowVerbs_Inchoatives_20230413.csv`, we can calculate the type frequency of each 'throw' verbs in inchoative construction (see @tbl-typeData). To achieve this, we first select the first three columns of `spanish.data`, i.e. `AUX`, `Century`, `INF`. The result is a long table with the three columns and 2,882 rows. We check the first six lines of the table using the `head()` function.
+
+```{r}
+type.token <- select(spanish.data, 1:3)
+head(type.token)
+```
+
+We then calculate the number of unique combinations among these variables using the `distinct()` function. We pipe the output into a `group_by()` function, which allows us to group all the corpus occurences according to `Century` and `AUX`. Then, using the `summarize()` function, we create a new column called `Types` with the number `(n)` of types corresponding to each combination of `Century` and `AUX`. We convert the output into a data frame format using `as.data.frame()` and assign it to a new `R` object called `verb.types`.
+
+```{r}
+verb.types <- type.token |> 
+  distinct(Century, AUX, INF) |> 
+  group_by(Century, AUX) |> 
+  summarize(Types = n()) |> 
+  as.data.frame()
+```
+
+We reshape the object `verb.types` from **long format** to **wide format** using the `pivot_wider()` function. The new column names will be taken from `Century`. The values in the new column will come from `Types`. We use `mutate(across(everything())` to modify all columns at once. The modification entails replacing all missing values `(NA)` with `0` using the `replace_na` function. Next, we sort the rows of the data frame in the alphabetical order of the `AUX` column using the `arrange()` function. We assign the output to `types.wide`.
+
+```{r}
+types.wide <- verb.types |>
+  pivot_wider(names_from = Century, values_from = Types) |>
+  mutate(across(everything(), ~ replace_na(., 0))) |>
+  arrange(AUX)
+```
+
+The result is displayed as @tbl-typeData.
+
+```{r typeData, echo=TRUE}
+#| label: tbl-typeData
+#| tbl-cap: Type frequency of Spanish 'throw' verbs based on data
+#| code-fold: true
+#| code-summary: "Show the `R` code to generate the table below."
+
+# Selecting the first three columns of spanish.data
+# Creating a type frequency table labelled as type.token
+type.token <- select(spanish.data, 1:3)
+
+# Calculating distinct combinations of Century, AUX, and INF using the distinct() function
+# Grouping data by Century and AUX using the group_by() function
+# Creating a new column Types with the summarize() function,
+# Returning the count (n) for each group
+
+verb.types <- type.token |> 
+  distinct(Century, AUX, INF) |> 
+  group_by(Century, AUX) |> 
+  summarize(Types = n())
+
+# Converting verb.types to a data frame using the as.data.frame() function
+verb.types <- as.data.frame(verb.types)
+
+# Using the pivot_wider() function to create a contigency table
+types.wide <- verb.types |>
+  pivot_wider(names_from = Century, values_from = Types) |>
+  mutate(across(everything(), ~ replace_na(., 0))) |>
+  arrange(AUX)
+
+# Printing the table in elegantly formatted HTML format
+types.wide
+```
+
+Here, too, we observe several discrepancies between @tbl-typeData and [@tbl-typePaper; a reproduction of @vanhulleCategoryThrowVerbs2024: 227]. The discrepancies involve the type frequencies of *echar* for the 19^th^ and 20^th^ centuries, reported as 19 and 20 in the original paper, and of *lanzar* for the 19^th^ century, originally reported as 45 (@tbl-typePaper). Other discrepancies include the type frequencies of the verb *tirar* in the 15^th^ and 18^th^ centuries, which are two and seven according to the TROLLing data, but both reported as zero in the published study (see also @tbl-absPaper).
+
+### Visualisation of the type frequency as a line graph
+
+Using the type frequency data that we calculated above (see @tbl-typeData), we can largely recycle the `ggplot()` code that we used to create @fig-normFreq.
+
+```{r productivity, echo = TRUE}
+#| code-fold: true
+#| label: "fig-typeFreq"
+#| fig-cap: "Type frequency of Spanish 'throw' verbs over time"
+#| code-summary: "Show the `R` code to generate the graph below."
+
+# Using the ggplot() function with the dataframe verb.types
+# The y-axis represents the type frequency
+ggplot(verb.types, 
+       aes(x = Century, 
+           y = Types, 
+           color = AUX, 
+           group = AUX)) +
+  geom_point() +  # Scatterplot points
+  geom_line() +   # Connect points with lines
+  scale_x_continuous(breaks = 13:21) + 
+  labs(title = "Productivity of Spanish 'throw' verbs over time",
+       x = "Century",
+       y = "Type frequency",
+       color = "Verbs") +
+  theme_minimal()
+
+```
+
+The connected scatterplot displayed in @fig-typeFreq provides a visualisation that helps identify the productivity of the five 'throw' verbs in inchoative constructions with respect to their type frequency.
+
+As Van Hulle & Enghels [-@vanhulleCategoryThrowVerbs2024: 226] state:
+
+> "In general, it is assumed that a higher type frequency indicates a higher degree of semantic productivity. As such, it is likely that a construction with a high number of different infinitives will accept even more types in the future. In this sense, type frequency constitutes an important parameter to measure the extending productivity of a construction".
+
+However, we should interpret this graphic carefully, keeping in mind that *absence of evidence is not evidence of absence*. Notably, there is almost no data for ***disparar***, which raises the question: in the real world, is this verb rarely used in an inchoative construction, or are there simply no examples in the corpus?
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q7.**]{style="color:green;"} Which line of code can you add in the `ggplot()` code above to change the color scheme of the line graph in @fig-typeFreq to a color-blind friendly one? Click on "Show the `R` code to generate the graph below." to see the code for @fig-typeFreq.
+
+```{r echo=FALSE, results="asis"}
+
+check_question("+ scale_color_viridis_d()",
+               options = c("+ scale_color_viridis_d()",
+                           "+ scale_color_blind()",
+                           "+ scale_color_viridis_c()",
+                           "+ scale_color_viridis_b()",
+                           "+ scale_color_continuous()"),
+               type = "radio",
+random_answer_order = TRUE,
+button_label = "Check answer",
+right = "Yes, well done!",
+wrong = "Not quite. Have you tried adding this line of code as a layer to the `ggplot()` object above?")
+check_hint("The scales from the {viridis} package contain colorblind-friendly color palettes. The letters at the end of the `scale_color_viridis_*()` functions correspond to the type of data to be mapped onto the color scale: \"b\" stands for \"binned\", \"c\" stands for \"continuous\", \"d\" stands for \"discrete\". Which is suitable for the variable `AUX` in this dataset?", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+
+
+```
+
+<br> [**Q8.**]{style="color:green;"} Alternatively, we could opt for a black-and-white solution like below. How can we adapt the `ggplot()` code from @fig-typeFreq to achieve this?
+
+```{r productivity-line, echo = TRUE}
+#| echo: false
+
+ggplot(verb.types, 
+       aes(x = Century, 
+           y = Types, 
+           linetype = AUX, 
+           group = AUX)) +
+  geom_point() +
+  geom_line() +  
+  scale_x_continuous(breaks = 13:21) + 
+  labs(title = "Productivity of Spanish 'throw' verbs over time",
+       x = "Century",
+       y = "Type frequency") +
+  theme_minimal()
+
+```
+
+```{r echo=FALSE, results="asis"}
+
+check_question("Change `aes(color = AUX)` to `aes(linetype = AUX)`",
+               options = c("Change `aes(color = AUX)` to `aes(linetype = AUX)`",
+                           "Change `geom_line()` to `geom_line(linetype = AUX)`",
+                           "Change `geom_line()` to `geom_dotted()`",
+                           "Change `aes(color = AUX)` to `aes(line = AUX)`"),
+                           
+button_label = "Check answer",
+random_answer_order = TRUE,
+type = "radio",
+right = "That's right, well done!",
+wrong = "No, this won't work. Try it out for yourself!")
+```
+:::
+
+## Type/token ratio (TTR)
+
+As stated by Van Hulle & Enghels [-@vanhulleCategoryThrowVerbs2024: 226], the "type/token ratio measures the realized productivity" of each verb. Furthermore,
+
+> since type frequency depends to some extent on token frequency (the more tokens, the more opportunities for different types to occur), the two must be put into some kind of relationship. The simplest measure suggested in the literature is the type/token ratio \[...\] [@stefanowitschCorpusbasedPerspectiveEntrenchment2017: 118]
+
+Type/token ratios (TTR) can range from zero and one. A TTR of zero indicates that there are no examples of the type in the given occurrences, while a TTR of one signifies that all types are unique to those given occurrences.
+
+$$
+TTR = \frac{types}{tokens}
+$$
+
+As type/token ratios depend on corpus size, Van Hulle & Enghels [-@vanhulleCategoryThrowVerbs2024: 227] explain that:
+
+> "To be representative, the measures of type/token and hapax/token ratio are calculated on a maximum of 500 tokens per auxiliary. Specifically, for *echar* in the 19^th^, 20^th^ and 21^st^ century and for *lanzar* in the 21^st^ century, token frequency is reduced to 500."
+
+### Visualising type/token ratios in a tabular format
+
+We will now attempt to reproduce the type/token ratio of Spanish throw verbs based on two subtables (both labelled "type/token ratio"): one for *echar* and *lanzar* [Table 5 from @vanhulleCategoryThrowVerbs2024: 227] and the other for *arrojar*, *disparar* and *tirar* [Table 8 from @vanhulleCategoryThrowVerbs2024: 232], which are reproduced in this chapter as @tbl-typeTokenPaper.
+
+```{r type_token_paper}
+#| echo: false
+#| label: tbl-typeTokenPaper
+#| tbl-cap: Type/token ratio of Spanish 'throw' verbs over time based on @vanhulleCategoryThrowVerbs2024
+
+TTR.paper <- data.frame(
+  AUX = c("arrojar", "disparar", "echar", "lanzar", "tirar"),
+  `13` = c(NA, NA, 0.25, NA, NA),
+  `14` = c(NA, NA, 0.2, NA, NA),
+  `15` = c(NA, NA, 0.15, NA, NA),
+  `16` = c(0.80, NA, 0.08, NA, NA),
+  `17` = c(0.72, 0.67, 0.13, NA, NA),
+  `18` = c(0.81, NA, 0.43, NA, NA),
+  `19` = c(0.84, 1, 0.04, 0.80, NA),
+  `20` = c(0.91, 1, 0.04, 0.75, 1),
+  `21` = c(0.96, 1, 0.04, 0.43, 0.57),
+  check.names = FALSE
+)
+
+TTR.paper[is.na(TTR.paper)] <- "-"
+
+TTR.paper |> 
+  kable()
+```
+
+To calculate type/token ratios, we first create two matching wide tables, one for the token frequencies, and another for the type frequencies. We can use the wide table labelled `token.data` from @tbl-absData, and the wide table labelled `types.wide` from @tbl-typeData as they are ordered in exactly the same way (you can check this by comparing their structures using the `str()` function).
+
+First, we create a new data frame using the `data.frame()` function. This data frame will take its first column from `token.data`, which contains the auxiliary verbs (`AUX`). We access this column using `token.data[, 1]`.[^cs_poppy-4]
+
+[^cs_poppy-4]: Remember that, in base `R`, the notation `[x, y]` allows us to specify rows and columns in a data frame, where `x` refers to the row and `y` refers to the column (see @sec-SquareBrackets). For example, `token.data[, 1]` means we are selecting all rows from the first column of `token.data`.
+
+Next, we calculate the type/token ratio. This is done by dividing the numeric values in `types.wide` (i.e., all columns except the first) by the corresponding values in `token.data`. To this end, we use the notation `types.wide[, -1] / token.data[, -1]`. The `[, -1]` indicates that we take all columns except the first one. We exclude the first column because it contains non-numeric values (the `AUX` column).
+
+Finally, we combine these components into our new data frame. We include the `AUX` column as the first column by selecting it with the command `token.data[, 1]`. To ensure that the column names remain unchanged, we set `check.names = FALSE` in the `data.frame()` function. This prevents `R` from altering the original column names, keeping them exactly as they are in `token.data`. We also `round()` the values of all numeric columns to just two decimals.
+
+```{r}
+data.frame(token.data[, 1], 
+           types.wide[, -1] / token.data[, -1],
+           check.names = FALSE) |> 
+    mutate(across(where(is.numeric), round, digits = 2))
+```
+
+Our table contains a lot `NaN` values. In these cells of the table, the number of tokens was zero and, as a consequence, the number of types was also zero. As it is mathematically impossible to divide zero by zero, `R` returns `NaN` values instead. To replace these `NaN` values to dashes (`"-"`) to match the formatting of the published tables, we use the base `R` function `is.na()`.
+
+```{r}
+type.token1 <- data.frame(token.data[, 1], 
+
+                          types.wide[, -1] / token.data[, -1],
+
+                          check.names = FALSE) |> 
+    mutate(across(where(is.numeric), round, digits = 2))
+
+type.token1[is.na(type.token1)] <- "-"
+
+```
+
+The result is saved as `type.token1` and is displayed below as @tbl-typeTokenData.
+
+```{r}
+#| label: tbl-typeTokenData
+#| tbl-cap: Type/token ratio of Spanish 'throw' verbs over time based on data
+#| echo: false
+
+type.token1
+
+```
+
+Comparing @tbl-typeTokenPaper and @tbl-typeTokenData, we find some minor discrepancies between the type/token ratios presented in the published paper and those calculated on the basis of the TROLLing data. The type/token ratio of the verb *tirar* in the 15^th^ and 18^th^ centuries, are reported as 0 and 0 in the published paper (see also @tbl-typeTokenPaper), but as 1 and 0.88 in @tbl-typeTokenData. These differences correspond to the discrepancies already identified when calculating the token frequencies (see @sec-TokenFreqTable).
+
+The other (very minor) discrepancies involve the type/token ratio of *lanzar* for the 20^th^ century, reported as 0.75 in @tbl-typeTokenPaper but as 0.76 in @tbl-typeTokenData and *echar* in the 18^th^ century, reported as 0.43 (see @tbl-typeTokenPaper), while @tbl-typeTokenData displays it as 0.42. These differences arise from the fact that @vanhulleCategoryThrowVerbs2024 presumably did not use `R` for their calculations. The type/token ratio of *echar* in the 18^th^ century is actually 0.4250, which is rounded as 0.43 by @vanhulleCategoryThrowVerbs2024, but as 0.42 by `R` (see @tbl-typeTokenData). This somewhat confusing rounding behaviour is explained in the help file of the `round()` function:
+
+> "Note that for rounding off a 5, the IEC 60559 standard (see also ‘IEEE 754’) is expected to be used, *‘go to the even digit’*. Therefore `round(0.5)` is `0` and `round(-1.5)` is `-2`. However, this is dependent on OS services and on representation error (since e.g. `0.15` is not represented exactly, the rounding rule applies to the represented number and not to the printed number, and so `round(0.15, 1)` could be either `0.1` or `0.2`)."
+
+### Visualising the type/token ratios as a line graph
+
+For the visualisation of the type/token ratios (@fig-typeTokenRatio), we create a new data frame. We start by merging the data frames `verbs.investigated` and `verb.types` using the `left_join()` function, ensuring that the `Century` and `AUX` variables are aligned. This results in a single data frame, which we save as `type_token`.
+
+```{r}
+type_token <- left_join(verbs.investigated, verb.types, 
+                        by = c("Century", "AUX"))
+```
+
+Next, we calculate the type/token ratios by adding a new column, `TypeTokenRatio`, to the `type_token` data frame using the `mutate()` function, which applies the type/token ratio formula to each row. Finally, we use the `arrange()` function to sort the data by `Century` and `AUX` organizing the results chronologically by `Century` and alphabetically by the verb type (`AUX`).
+
+```{r}
+type.token.ratio <- type_token  |> 
+  mutate(TypeTokenRatio = Types / n) |> 
+  arrange(Century, AUX)
+```
+
+The output is a table with 26 rows and five columns: `AUX`, `Century`, `n`, and `Types` and `TypeTokenRatio`. We can display the first six rows of the table using the `head()` function.
+
+```{r}
+head(type.token.ratio)
+```
+
+Now we can use the `type.token.ratio` data frame with the same `ggplot` code that we used to create @fig-normFreq and @fig-typeFreq, allowing us to visualize the type/token ratios of Spanish 'throw' verbs over time as @fig-typeTokenRatio.
+
+```{r type.token.visualisation, echo = TRUE}
+#| label: "fig-typeTokenRatio"
+#| fig-cap: "type/token ratio of Spanish 'throw' Verbs Over Time"
+#| code-fold: true
+#| code-summary: "Show the `R` code to generate the table below."
+
+ggplot(type.token.ratio, 
+       aes(x = Century, 
+           y = TypeTokenRatio, 
+           color = AUX, 
+           group = AUX)) +
+  geom_point() +  # Scatterplot points
+  geom_line() +   # Connect points with lines
+  scale_x_continuous(breaks = 13:21) + 
+  labs(title = "The productivity of Spanish 'throw' verbs over time",
+       x = "Century",
+       y = "type/token ratio",
+       color = "Verbs") +
+  theme_minimal()
+
+```
+
+According to @vanhulleCategoryThrowVerbs2024, the verb *lanzar* is considered the "most productive auxiliary" due to its high type/token ratio values, despite only appearing from the 19^th^ century onward, and because it "was able to incorporate a more varied set of infinitives" [@vanhulleCategoryThrowVerbs2024: 228]. In contrast, the type/token ratio for *echar* is comparably low. However, as Van Hulle & Enghels [-@vanhulleCategoryThrowVerbs2024: 228] state:
+
+> "\[...\] the type/token ratio for the micro-construction with *echar* is quite stable until it considerably drops from the 19^th^ century on (n=0.04). This means that, although speakers used the construction more frequently, this was mainly done with a limited group of infinitives \[...\]"
+
+Additionally, the verbs *disparar* and *tirar* have a type/token ratio of one for the 19^th^ and 21^st^ centuries, and the 15^th^ and 20^th^ centuries, respectively. This is due to the high hapax value, i.e., "the number of types that appear only once in a text or corpus" for the respective verbs [@vanhulleCategoryThrowVerbs2024: 226]. In the cases of *disparar* and *tirar*, each hapax refers to only one occurrence.
+
+The above plot (@fig-typeTokenRatio) shows more clearly that *arrojar*, not *lanzar*, is actually the most semantically productive verb. When compared with *echar*, as the authors of the published paper have done, *lanzar* does indeed appear more semantically productive. However, as @vanhulleCategoryThrowVerbs2024 note, “type/token ratio measures the realized productivity.” Based on this measure, *arrojar* is even more productive than *lanzar*, as this graphic (@fig-typeTokenRatio) clearly illustrates. @vanhulleCategoryThrowVerbs2024 do not provide such a visualization, but this chapter has shown that it can aid in interpreting the realized productivity measured by the type/token ratio.
+
+::: callout-tip
+#### Quiz time! {.unnumbered}
+
+[**Q9.**]{style="color:green;"} What issue arises when interpreting the productivity of Spanish 'throw' verbs over time on the basis of @fig-typeTokenRatio?
+
+```{r echo=FALSE}
+check_question(c("Some lines suggest a linear increase or decrease in productivity over several centuries when there were, in fact, zero occurrences of that verb in one of these centuries."),
+               options = c("Some lines suggest a linear increase or decrease in productivity over several centuries when there were, in fact, zero occurrences of that verb in one of these centuries.",
+                           "The graph incorrectly suggests a decrease in productivity for all verbs.", 
+                           "The graph incorrectly suggests that type/token ratios cannot go beyond 1.00.", 
+                           "The graph incorrectly suggests that there were zero occurrences of some verbs in earlier centuries.", 
+                           "The graph makes it difficult to compare the productivity of verbs across each century."),
+button_label = "Check answer",
+random_answer_order = TRUE,
+type = "radio",
+right = "That's right!",
+wrong = "No, that's not the case. Have you read the hint yet?")
+check_hint("Consider, for example, the productivity of *tirar* as plotted on the graph. What does the graph suggest the type/token ratio of *tirar* is for the 16^th^ and 17^th^ centuries? What is it in reality according to the tabular data?", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+
+
+```
+
+<br> [**Q10.**]{style="color:green;"} Based on the type/token ratios displayed in @fig-typeTokenRatio, which 'throw' verb appears to be the least productive one?
+
+```{r echo=FALSE}
+check_question(c("echar"),
+               options = c("arrojar", "disparar", "echar", "lanzar", "tirar"),
+button_label = "Check answer",
+random_answer_order = TRUE,
+type = "radio",
+right = "Yes, indeed.",
+wrong = "No. You may want to re-read the definition of type/token ratio above.")
+
+```
+
+<br> [**Q11.**]{style="color:green;"} Based on the type/token ratios displayed in @fig-typeTokenRatio, which 'throw' verb appears to be the most productive one since the 19^th^ century?
+
+```{r echo=FALSE}
+check_question(c("disparar"),
+               options = c("arrojar", "disparar", "echar", "lanzar", "tirar"),
+button_label = "Check answer",
+random_answer_order = TRUE,
+type = "radio",
+right = "Yes, but remember that the type/token ratios of *disparar* are based on extremely few occurrences! For the last three centuries, this auxilliary has a type/token ratio of one because only one occurrence was found per century, hence, by definition, the type/token ratio must be one. This does not reflect the productivity of the auxilliary verb in this construction; it merely reflects the fact that it only occurred once in this century.",
+wrong = "No, carefully read the question again.")
+
+```
+:::
+
+## Conclusion
+
+You have successfully completed [`r checkdown::insert_score()` out of 11 quiz questions]{style="color:green;"} in this chapter.
+
+This chapter attempted to reproduce the results of a corpus linguistics study that explores the evolution of five throw verbs in Peninsular Spanish (*echar*, *lanzar*, *disparar*, *tirar*, and *arrojar*) into aspectual auxiliaries in inchoative constructions that express the beginning of an event. The authors of the original study, @vanhulleCategoryThrowVerbs2024, used historical and contemporary data to analyse the development and usage of these verbs, making their research data openly accessible. As part of this chapter, we identified some discrepancies between the results we obtained on the basis of the authors' data [@vanhulleReplicationDataCategory2024] and those published in the 2024 study, indicating that the version of the dataset uploaded onto TROLLing does not exactly match the one used for the published results.
+
+We have also created some new data visualizations based on the authors' uploaded data, which uncover patterns in the evolution of Spanish inchoative constructions that might not be immediately apparent through the examination of the tabular results alone. These visualizations underscore the effectiveness of graphical representation as a tool for understanding linguistic shifts over time—an approach not employed in the original study.
+
+## References {.unnumbered}
+
+```{r results="asis", echo=FALSE}
+require("knitcitations")
+cleanbib()
+options("citation_format" = "pandoc")
+read.bibtex(file = "CS_Poppy_references.bib")
+```
+
+### Packages used in this chapter {.unnumbered}
+
+```{r package-versions, echo=FALSE}
+sessionInfo()
+```
+
+### Package references {.unnumbered}
+
+```{r generateBibliography, results="asis", echo=FALSE}
+
+#CS_Poppy_packages.bib <- sapply(1:length(loadedNamespaces()), function(i) toBibtex(citation(loadedNamespaces()[i])))
+
+#knitr::write_bib(c(.packages(), "knitr"), "CS_Poppy_packages.bib")
+
+require("knitcitations")
+cleanbib()
+options("citation_format" = "pandoc")
+read.bibtex(file = "CS_Poppy_packages.bib")
+```
