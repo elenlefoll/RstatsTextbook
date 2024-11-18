@@ -42,7 +42,7 @@ In this chapter, we attempt to reproduce the results of a corpus linguistics stu
 1.  Los nuevos rebeldes ***se arrojaron** a atacar* al sistema de control social. (‘The new rebels *started (lit. ‘threw/launched themselves’) to attack* the system of social control.’)
 2.  El niño abrió los ojos y ***echó** a correr* de regreso a su casa. (‘The child opened his eyes and *started (lit. ‘threw’) to run* back to his house.’)
 3.  El grupo de investigación ***se lanzó** a analizar* otros parámetros. (‘The investigation group *started (lit. ‘launched itself’) to analyse* other parameters.’)
-4.  Decidí no ***tirarme** a llorar* y empecé a buscar algo que me ayudara.\* (‘I decided not to *start (lit. ‘throw myself’) to cry* and I started to look for something that would help me.’)
+4.  Decidí no ***tirarme** a llorar* y empecé a buscar algo que me ayudara. (‘I decided not to *start (lit. ‘throw myself’) to cry* and I started to look for something that would help me.’)
 5.  Y todos ***dispararon** a correr*, sin volver la cabeza atrás. (‘And everybody *started (lit. ‘shot’) to run*, without looking back.’)
 
 ::: callout-tip
@@ -145,7 +145,7 @@ library(tidyverse)
 library(xfun)
 ```
 
-Next, we import the dataset containing the number of occurrences of 'throw' verbs in the corpora analysed in @vanhulleCategoryThrowVerbs2024 (`Spanish_ThrowVerbs_Inchoatives_20230413.csv`) as a new object called `spanish.data`.
+Next, we import the dataset containing the number of occurrences of 'throw' verbs in the corpora analysed in @vanhulleCategoryThrowVerbs2024 (`Spanish_ThrowVerbs_Inchoatives_20230413.csv`) as a new object called `spanish.data`. You will need to adjust the file path to match the folder structure of your computer (see @sec-ImportingDataCSV).
 
 ```{r data-import, echo=TRUE}
 # Importing the Spanish verbs dataset
@@ -235,7 +235,7 @@ In @vanhulleCategoryThrowVerbs2024, token frequency refers to the number of occu
 
 ### Creating a table of token frequencies {#sec-TokenFreqTable}
 
-First of all, we want to find out how often each 'throw' verb was observed in each century. To do so, we use the `count()` function to output the number of corpus occurrences for all possible combinations of the `AUX` and `Century` variables. Then, we pipe this output into an `arrange()` command to order the rows of the table by the values of the `Century` and `AUX` columns (as shown in @tbl-Freq below), prioritising the order of the `Century` over the alphabetical order of the `AUX`. This ensures that the centuries are ordered correctly from the 13^th^ to the 21^st^ century, rather than being jumbled. We store this summary table as a new `R` object called `verbs.investigated`.
+First of all, we want to find out how often each 'throw' verb was observed in each century. To do so, we use the `count()` function to output the number of corpus occurrences for all possible combinations of the `AUX` and `Century` variables. Then, we pipe this output into an `arrange()` command to order the rows of the table by the values of the `Century` and `AUX` columns (as shown in @tbl-Freq below), prioritising the order of the `Century` over the alphabetical order of the `AUX`. This ensures that the centuries are ordered correctly from the 13^th^ to the 21^st^ century, rather than being jumbled. We store this summary table (see @tbl-Freq) as a new `R` object called `verbs.investigated`.
 
 ```{r}
 verbs.investigated <- spanish.data |>
@@ -757,6 +757,13 @@ ggplot(verb.types,
 
 ```
 
+```{r}
+#| echo: false
+#| eval: false
+
+ggsave(here("CS_Poppy_TypeFreq.png"), height = 4, width = 8)
+```
+
 The connected scatterplot displayed in @fig-typeFreq provides a visualisation that helps identify the productivity of the five 'throw' verbs in inchoative constructions with respect to their type frequency.
 
 As Van Hulle & Enghels [-@vanhulleCategoryThrowVerbs2024: 226] state:
@@ -963,6 +970,13 @@ ggplot(type.token.ratio,
        color = "Verbs") +
   theme_minimal()
 
+```
+
+```{r}
+#| echo: false
+#| eval: false
+
+ggsave(here("CS_Poppy_TypeTokenRatio.png"), height = 4, width = 8)
 ```
 
 According to @vanhulleCategoryThrowVerbs2024, the verb *lanzar* is considered the "most productive auxiliary" due to its high type/token ratio values, despite only appearing from the 19^th^ century onward, and because it "was able to incorporate a more varied set of infinitives" [@vanhulleCategoryThrowVerbs2024: 228]. In contrast, the type/token ratio for *echar* is comparably low. However, as Van Hulle & Enghels [-@vanhulleCategoryThrowVerbs2024: 228] state:

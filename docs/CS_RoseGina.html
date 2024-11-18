@@ -1628,6 +1628,24 @@ Wickham, Hadley, Romain François &amp; Lucy D’Agostino McGowan. 2024. <em>Emo
 </section>
 
 </main> <!-- /main -->
+<script>
+  function abbrv_toc() {
+    let toc = document.querySelectorAll('nav#TOC li>a');
+    toc.forEach(e => {
+      let id = e.id.substring(4);
+      let sec = document.getElementById(id);
+      let toc_text = sec.getAttribute('data-toc-text');
+      if(toc_text != null) {
+        let new_toc_text = e.querySelector('span').outerHTML + ' ' + toc_text;
+        e.innerHTML = new_toc_text;
+      }
+    })
+  };
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    abbrv_toc();
+  });
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -2223,7 +2241,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","loop":false});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
