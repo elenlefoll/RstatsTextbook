@@ -429,11 +429,11 @@ check_question("Because this command asks whether New.French.Word is not equal t
 
 ## Dealing with errors 🤬 {#sec-Errors}
 
-When `R` cannot interpret your code, the Console will display an error message in red. A large part of learning to code is really about learning how to interpret these error messages and developing an intuition for the most common reasons why errors occur.
+If you try to run code that `R` cannot interpret, your Console will display an error message in red. A large part of learning to code is really about learning how to interpret these error messages, and making the most common errors often enough that you immediately know how to fix them. The process of fixing programming errors is called "debugging" and often involves an array of emotions (see @fig-DebuggingMonster).
 
-![The process of fixing programming errors is called "debugging" and often involves an array of emotions (artwork by [\@allison_horst](https://allisonhorst.com/allison-horst)).](images/DebuggingMonsters.png){#fig-DebuggingMonster fig-alt="A cartoon of a fuzzy round monster face showing 10 different emotions experienced during the process of debugging code. The progression goes from (1) “I got this” - looking determined and optimistic; (2) “Huh. Really thought that was it.” - looking a bit baffled; (3) “...” - looking up at the ceiling in thought; (4) “Fine. Restarting.” - looking a bit annoyed; (5) “OH WTF.” Looking very frazzled and frustrated; (6) “Zombie meltdown.” - looking like a full meltdown; (7) (blank) - sleeping; (8) “A NEW HOPE!” - a happy looking monster with a lightbulb above; (9) “insert awesome theme song” - looking determined and typing away; (10) “I love coding” - arms raised in victory with a big smile, with confetti falling."}
+![ The ten phases of debugging by [\@allison_horst](https://allisonhorst.com/allison-horst).](images/DebuggingMonsters.png){#fig-DebuggingMonster fig-alt="A cartoon of a fuzzy round monster face showing 10 different emotions experienced during the process of debugging code. The progression goes from (1) “I got this” - looking determined and optimistic; (2) “Huh. Really thought that was it.” - looking a bit baffled; (3) “...” - looking up at the ceiling in thought; (4) “Fine. Restarting.” - looking a bit annoyed; (5) “OH WTF.” Looking very frazzled and frustrated; (6) “Zombie meltdown.” - looking like a full meltdown; (7) (blank) - sleeping; (8) “A NEW HOPE!” - a happy looking monster with a lightbulb above; (9) “insert awesome theme song” - looking determined and typing away; (10) “I love coding” - arms raised in victory with a big smile, with confetti falling."}
 
-As you begin your journey of learning to code in `R`, you are very likely to encounter one problem on a regular basis. So let's take a closer look at that error. Copy and paste this exact line of code and try to run it in your `R` Console:
+In `R`, you are very likely to encounter one particular problem on a regular basis: we will call it the "plus-situation". Let's take a closer look at this error. Copy and paste this exact line of code in your `R` Console and hit "Enter" to run it.
 
 ```{r}
 #| eval: false
@@ -441,15 +441,15 @@ As you begin your journey of learning to code in `R`, you are very likely to enc
 sqrt(my.favourite.number
 ```
 
-Notice that, in this erroneous line of code, we have (intentionally) forgotten to include the final bracket. As a result, after you hit "Enter", the Console output shows a "`+`" instead of the result of the mathematical operation. The "`+`" indicates that the line is incomplete and therefore cannot be interpreted yet. `R` is therefore asking you to complete your line of code.
+Notice that, in this erroneous line of code, we have (intentionally) forgotten to include the final bracket. As a result, after you hit "Enter", the Console output shows a "`+`" instead of the result of the mathematical operation (see @fig-ConsoleIncompleteFunction). The "`+`" indicates that the line is incomplete and therefore cannot be interpreted yet. The "`+`" means that `R` is asking you to complete your line of code.
 
-![Incomplete function in console](images/ConsoleUncompleteFunction.png){#fig-ConsoleUncompleteFunction fig-alt="RStudio screenshot showing the console with an incomplete function and a red ellipse around the +-symbol." width="450"}
+![Incomplete function in console](images/ConsoleUncompleteFunction.png){#fig-ConsoleIncompleteFunction fig-alt="RStudio screenshot showing the console with an incomplete function and a red ellipse around the +-symbol." width="450"}
 
-There are two ways to fix this. The first method is to complete the line of code directly in the Console. In this case, this means adding the closing bracket "`)`" after the "`+`" and hitting "Enter". Now that the line has been completed, `R` is able to interpret it as an `R` command and will output the result of the operation.
+There are two ways to fix this. The first method is to complete the line of code directly in the Console. In this case, this means adding the closing bracket "`)`" after the "`+`" and hitting "Enter" again. Now that the line has been completed, `R` is able to interpret it as a valid `R` command and therefore outputs the expected result.
 
-If you are running a line of code just once, from the Console, this first method is fine. As we have seen above, however, most of the time, you will write your code in a script rather than in the Console. So this first on-the-fly method is only recommendable for lines of code that you will genuinely only need once. These include commands to install packages, like `install.packages("janeaustenr")`, or to consult documentation files, e.g., `help(janeaustenr)`.
+If you are running a line of code just once, from the Console, this first method is fine. As we have seen above, however, most of the time, you will write your code in a script rather than in the Console. So this first, on-the-fly method is only recommendable for lines of code that you will genuinely only need once. These include commands to install packages, like `install.packages("janeaustenr")`, or to consult documentation files, e.g., `help(janeaustenr)`.
 
-Given that we will mostly be working in scripts, let's now generate this error from an `.R` script. To do so, copy and paste the erroneous line of code in your `.R` script and try to run it by either clicking on the "Run" icon or using the shortcut `Ctrl/Cmd + Enter`:
+Given that we will mostly be working in scripts to ensure that our analyses are reproducible (see [Chapter 13](https://elenlefoll.github.io/RstatsTextbook/13_LiterateProgramming.html)), let's now generate this error from an `.R` script. To do so, copy and paste the erroneous line of code in your `.R` script and try to run it by either clicking on the "Run" icon or using the shortcut `Ctrl/Cmd + Enter`.
 
 ```{r}
 #| eval: false
@@ -458,7 +458,7 @@ sqrt(my.favourite.number
 
 ```
 
-Again, our incomplete line of code cannot be interpreted and the "`+`" symbol appears in the Console. Now, correct the error in your script by adding the missing "`)`" and try to run the command again:
+Again, our incomplete line of code cannot be interpreted and this generates a "plus-situation" appears in the Console. Now, correct the error in your script by adding the missing closing bracket and try to run the command again.
 
 ```{r}
 #| eval: false
@@ -467,11 +467,11 @@ sqrt(my.favourite.number)
 
 ```
 
-Even though we have corrected the problem, we now get an error! 🤯 At first sight, this does not make sense, but look carefully at what happened in the Console: The line of code that `R` tried to interpret is `sqrt(my.favourite.number + sqrt(my.favourite.number)`, i.e., the combination of the incomplete version of the command plus the complete one. This is obviously nonsense and `R` tells us so by outputting an error message!
+As shown in @fig-ConsoleError, even though we have corrected the problem, we now get an error! 🤯 At first sight, this does not make sense, but look carefully at what happened in the Console: The line of code that `R` tried to interpret (in blue) is `sqrt(my.favourite.number + sqrt(my.favourite.number)`, i.e., the combination of the incomplete version of the command *plus* the complete one. This is obviously nonsense and `R` tells us so by outputting an error message (see @fig-ConsoleError)!
 
 ![Error message in console](images/ConsoleError.png){#fig-ConsoleError fig-alt="RStudio screenshot showing the console with an error." width="450"}
 
-To be able to enter a new line of code, we must see the command prompt `>` in the Console. So, let's generate the error again and learn how to fix it with the second method. Add this erroneous line to your script again and run it:
+To run a new line of code, we must see the command prompt `>` in the Console. So, let's generate the error again and learn how to fix it with the second method. Add this erroneous line to your script again and run it:
 
 ```{r}
 #| eval: false
@@ -480,11 +480,13 @@ sqrt(my.favourite.number
 
 ```
 
-The `+` situation arises again, but we will now solve it using the second method. Head over to the Console and place your cursor next to the `+`. This time, instead of completing the line by adding a closing bracket, press "Esc" on your keyboard. This will cancel the incomplete line of code. Then, you can add the missing `)` in your script and rerun the newly completed line of code from the Source pane.
+The plus-situation arises again, but we will now solve it using the second method. Head over to the Console and place your cursor next to the `+`. This time, instead of completing the line by adding a closing bracket, press the Escape key ("Esc") on your keyboard. This will cancel the incomplete line of code. Then, you can add the missing `)` in your script and rerun the newly completed line of code from the Source pane.
 
-This second method is the one you should use when you are documenting your code in a script. If you don't make the changes immediately in your script, you will forget and you will run into this error again in the future. Think of it like a pastry chef who realises that they need to put a little more baking powder in a cake batter for the texture to be just right, but does not make a note of that change in their recipe book. Next time, the pastry chef will likely forget and not put the correct amount of baking powder. If it is one of their assistants who prepares the cake, they will not be able to know that the chef made that change!
+This second method is the one you should use when you are documenting your code in a script. If you don't make the changes immediately in your script, you will forget and you will run into this error again in the future. Think of it like a pastry chef who realises that they need to put a little more baking powder in a cake batter for the texture to be just right, but does not make a note of that change in their recipe book. It's quite likely that the chef will forget the next time they bake the cake. If it is one of their assistants who prepares the batter, they will will have no way of knowing that the chef made that change!
 
-Learning to make sense of error messages is a very important skill that, like all skills, takes practice. Most errors are very easy to fix if you keep your cool. In fact, 90% of errors are simply typos.
+Learning to make sense of error messages is a very important skill that, like all skills, takes practice. Most errors are very easy to fix, if you keep your cool. In fact, 90% of errors are simply typos[^5_gettingstarted-1], so really nothing worth stressing about!
+
+[^5_gettingstarted-1]: I must confess that I made this number up. I don't have any reliable number, but it's fair to say that it's a very large proportion!
 
 ::: callout-caution
 ### Task 1
@@ -533,12 +535,14 @@ good.luck <- موفق باشيد"
 ```
 :::
 
-![Debugging is an unavoidable part of writing code. If you're stuck and starting to feel fustrated, the best thing you can usually do is to take a short break (artwork by [\@allison_horst](https://allisonhorst.com/allison-horst)).](images/AHorst_ErrorMonster.png){#fig-ErrorMonster fig-alt="A frustrated little monster sits on the ground with his hat next to him, saying \"I just need a minute.\" Looking on empathetically is the R logo, with the word \"Error\" in many different styles behind it." width="450"}
+Debugging is an unavoidable part of writing code. If you're stuck and starting to feel frustrated, the best thing you can usually do is to take a short break!
+
+![ Time to take a break? (artwork by [\@allison_horst](https://allisonhorst.com/allison-horst)).](images/AHorst_ErrorMonster.png){fig-alt="A frustrated little monster sits on the ground with his hat next to him, saying \"I just need a minute.\" Looking on empathetically is the R logo, with the word \"Error\" in many different styles behind it." width="450"}
 
 ::: {.callout-note collapse="true"}
 #### Click here for the solutions to Task 1
 
-1.  The first error was `object 'my.favorite.number' not found`. This means that the object `my.favorite.number` is not stored in your environment. If you think it is, the problem is most likely due to a typo. Here, `my.favorite.number` uses American English spelling, whereas we used British English spelling when we created the object. To correct the error, you need to use exactly the same spelling as when you created the object.
+1.  The first error was `object 'my.favorite.number' not found`. This means that the object `my.favorite.number` is not stored in your environment. If you think it is, the problem is most likely due to a typo. Here, `my.favorite.number` uses American English spelling, whereas we used British English spelling (with a "u") when we created the object. To correct the error, you need to use exactly the same spelling as when you created the object.
 
 2.  The second error is also `object 'Negin' not found`. However, here we do not expect an object called `Negin` to be in the environment because what we are actually trying to do is create and save a new object called `Negin-Fav-Word`! The problem is that `R` interprets the hyphens in this object name as "minus" and therefore tries to find the object `Negin` in order to then subtract `Fav` and `Word` from it. To correct this error, you need to remove the hyphens or replace them by dots.
 
@@ -548,15 +552,15 @@ good.luck <- موفق باشيد"
 
 5.  The object `my.favourite..number` is not found because the name of the object saved in the environment does not have two consecutive dots. Note that the error does *not* come from the fact that this line begins with some white space and includes multiple space characters after the `=` sign. These added spaces make the line more difficult for us humans to read, but `R` simply ignores them. Hence, to fix this error, what you need to do is remove one of the consecutive dots in the object name.
 
-It is also worth noting that, once you've removed the extra dot, this line of code replaces the value originally stored in `ömers_favourite_number` with the value stored in `my.favourite.number`. If you check your environment pane, you will see that the command has changed `ömers_favourite_number` to `13` - with no warning! In other words, here, the equal sign `=` behaves in the same way as the assignment operator `<-`.
+    It is also worth noting that, once you've removed the extra dot, this line of code replaces the value originally stored in `ömers_favourite_number` with the value stored in `my.favourite.number`. If you check your environment pane, you will see that the command has changed `ömers_favourite_number` to `13` with no warning!! In other words, here, the equal sign `=` behaves in the same way as the assignment operator `<-`.
 
-6.  If you tried to run this line, you will have noticed that it does not actually generate an error. However, you may have noticed that the assignment operator is in the opposite direction. This means that `my.favourite.number` is multiplied by two and that this number is then assigned to a new object called `half.my.fav.number`. With this in mind, you will likely want to amend the line for the outcome to make mathematical sense (or rename the object).
+6.  If you tried to run this line, you will have noticed that it does not actually generate an error. However, you may have noticed that the assignment operator is in the opposite direction (`->` instead of `<-`). This means that `my.favourite.number` times two is assigned to a new object called `half.my.fav.number`. Having observed this, you will hopefully want to either amend the line for it to make mathematical sense (`my.favourite.number/2 -> half.my.fav.number`) or change the name of the new object for it to be meaningful (`my.favourite.number*2 -> twice.my.fav.number`).
 
-7.  Running this line will have caused you to run into a `+` situation in the console. As explained earlier in @sec-Errors, to get out of it, you should first take your mouse cursor to the Console pane and then press the escape key on your keyboard to cancel this erroneous line. Whilst there is no error message to help you understand where the problem is coming from, you may find that RStudio helpfully displays a red cross icon to the left of the line; hovering over it displays a multi-line message. The first line is the relevant one: `unexpected token 's.favourite.number <- 5`. This tells us that apostrophes are forbidden in object names. Remove the `'` and the error will be fixed.
+7.  Running this line will have caused you to run into a `+` situation in the console. As explained in @sec-Errors, to get out of it, first take your mouse cursor to the Console pane and press the Escape key on your keyboard to cancel the erroneous line. Whilst there is no error message to help you understand where the problem is coming from, you should see that RStudio helpfully displays a red cross icon to the left of the line; hovering over it displays a multi-line message. The first line is the relevant one: `unexpected token 's.favourite.number <- 5`. This tells us that apostrophes are forbidden in object names. Remove the `'` and the error will be fixed.
 
 8.  This line also causes a `+` situation. In this case, it is due to a missing quotation mark. To fix this error, first cancel the incomplete line of code by escaping it. Then, add the missing double quotation mark in your script and rerun the completed line.
 
-9.  The message `Error: unexpected symbol in "2FavNumbers"` is due to the fact that object names cannot start with a number. Change the object name to something like `TwoFavNumbers` or `Fav2Numbers` to fix the error.
+9.  The message `Error: unexpected symbol in "2FavNumbers"` is due to the fact that object names cannot start with a number. Change the object name to something like `TwoFavNumbers` or `Fav2Numbers` to fix this error.
 
-10. Here, too, the error message reads `unexpected symbol`. However, it is important to remember that the unexpected symbol is not within the character string, but rather within the command to assign the string to the object name `good.luck`. Hence, the problem is not that this string is in Persian, but rather that one of the quotation marks is missing. You can fix the error by ensuring that the phrase is enclosed in quotation marks.
+10. Here, too, the error message reads: `unexpected symbol`. However, it is important to remember that the unexpected symbol is not within the character string, but rather has to do with the code syntax used to assign the Persian string to `good.luck`. In other words, the problem has nothing to do with the fact that the string is in Persian, but rather that one of the quotation marks is missing. You can fix the error by ensuring that the phrase is enclosed in quotation marks.
 :::
