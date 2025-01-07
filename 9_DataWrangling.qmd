@@ -27,7 +27,7 @@ This chapter explains how to examine, clean, and manipulate data mostly using fu
 
 Learning to manipulate data and conduct data analysis in `R` "the tidyverse-way" can help make your workflows more efficient.
 
-> If you ensure that your data is tidy, you’ll spend less time fighting with the tools and more time working on your analysis. [@TidyMessyData]
+> If you ensure that your data is tidy, you'll spend less time fighting with the tools and more time working on your analysis. [@TidyMessyData]
 
 ## Base `R` vs. tidyverse functions {#sec-Conflicts}
 
@@ -69,7 +69,7 @@ Before beginning any data analysis, it is important to always check the sanity o
 
 In this chapter and the following chapters, all examples, tasks, and quiz questions are based on data from:
 
-> Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <https://doi.org/10.1111/lang.12323>.
+> Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72--100. <https://doi.org/10.1111/lang.12323>.
 
 You will only be able to reproduce the analyses and answer the quiz questions from this chapter if you have successfully imported the two datasets from @DabrowskaExperienceAptitudeIndividual2019. To import the datasets, follow the instructions from @sec-RProject to @sec-ImportingDataCSV and complete Task 1.
 :::
@@ -139,7 +139,7 @@ The tidyverse package [{forcats}](https://forcats.tidyverse.org/) has a lot of v
 ::: callout-tip
 #### Quiz time! {.unnumbered}
 
-[**Q1.**]{style="color:green;"} Type `?fct_` in an `R` script or directly in the Console and then press the tab key (↹ or ⇥ on your keyboard). A list of all loaded functions that start with `fct_` should pop up. Which of these is *not* listed?
+[**Q9.1**]{style="color:green;"} Type `?fct_` in an `R` script or directly in the Console and then press the tab key (↹ or ⇥ on your keyboard). A list of all loaded functions that start with `fct_` should pop up. Which of these is *not* listed?
 
 ```{r echo=FALSE}
 check_question("fct_mutate",
@@ -157,7 +157,7 @@ check_question("fct_mutate",
 
  
 
-[**Q2.**]{style="color:green;"} In the factor object `L1.Gender.fct` (which we created above), the first level is "F" because it comes first in the alphabet. Which of these commands will make "M" the first level instead? Check out the help files of the following [{forcats}](https://forcats.tidyverse.org/) functions to understand what they do and try them out.
+[**Q9.2**]{style="color:green;"} In the factor object `L1.Gender.fct` (which we created above), the first level is "F" because it comes first in the alphabet. Which of these commands will make "M" the first level instead? Check out the help files of the following [{forcats}](https://forcats.tidyverse.org/) functions to understand what they do and try them out.
 
 ```{r echo=FALSE}
 check_question(c("fct_relevel(L1.Gender.fct, \"M\")",
@@ -238,7 +238,7 @@ summary(L1.data.fct[,c(1:12)])
 ```
 
 ::: callout-caution
-#### Task 1 {.unnumbered}
+#### Task 9.1 {.unnumbered}
 
 In this task, you will do some data wrangling on the L2 dataset from @DabrowskaExperienceAptitudeIndividual2019.
 
@@ -380,7 +380,7 @@ summary(L2.data.cleaned$Gender)
 ```
 
 ::: callout-caution
-#### Task 2 {.unnumbered}
+#### Task 9.2 {.unnumbered}
 
 This task focuses on the `OccupGroup` variable, which is found in both the L1 and L2 datasets.
 
@@ -700,7 +700,7 @@ L2.data <- L2.data |>
 :::
 
 ::: callout-caution
-#### Task 3
+#### Task 9.3
 
 For some analyses, it may be useful to group together participants whose native languages come from the same family of languages. For example, French, Spanish and Italian L1 speakers, may be considered as a one group of participants whose native language is a Romance language.
 
@@ -773,7 +773,7 @@ check_question(c("L2.data <- L2.data |> relocate(NativeLgFamily, .after = Native
 :::
 
 ::: {.callout-note collapse="true"}
-#### Click here for solutions to Task 3
+#### Click here for solutions to Task 9.3
 
 As always, there are several solutions to solving this task. Here is one solution based on what we have covered so far in this chapter.
 
@@ -994,7 +994,7 @@ combined.data |>
 
 Run `View(combined.data)` to inspect the combined dataset and check in which other columns there are `NA` values.
 
-:::: {.callout-note collapse="true"}
+::: {.callout-note collapse="true"}
 #### What if my data is not yet in tidy format? 🤨
 
 Combining the two datasets from @DabrowskaExperienceAptitudeIndividual2019 was relatively easy because the data was already in tidy format. But, fear not: if you need to first convert your data to tidy format, the [{tidyr}](https://tidyr.tidyverse.org/) package has got you covered! 😎
@@ -1008,7 +1008,7 @@ The `pivot_longer()` and `pivot_wider()` functions allow you to easily convert t
 :::
 
 Remember to carefully check the output of any data manipulation that you do *before* moving on to doing any analyses! To this end, the `View()` function is particularly helpful.
-::::
+:::
 
 ::: callout-important
 ### Using AI tools for coding ⚠️
@@ -1086,7 +1086,7 @@ summary(combined.data[,c(1:12)])
 ::: callout-tip
 #### Quiz time! {.unnumbered}
 
-[**Q3.**]{style="color:green;"} The following operations describe the steps performed by the data wrangling code chunk above. In which order are the operations performed?
+[**Q9.3**]{style="color:green;"} The following operations describe the steps performed by the data wrangling code chunk above. In which order are the operations performed?
 
 ```{r echo=FALSE}
 check_question(c("Convert one variable to a character variable.",
@@ -1109,7 +1109,7 @@ check_hint("Use the up and down arrows to swap the order of any two labels in th
 
  
 
-[**Q4.**]{style="color:green;"} In the combined dataset, how many participants have a clerical occupation?
+[**Q9.4**]{style="color:green;"} In the combined dataset, how many participants have a clerical occupation?
 
 ```{r echo=FALSE}
 check_question(c("32", "thirty-two", "thirty two"),
@@ -1122,7 +1122,7 @@ check_hint("Have you tried using the `summary()` function to look into the `Occu
 
  
 
-[**Q5.**]{style="color:green;"} Of the participants who have a clerical occupation, how many were over 50 years old at the time of the data collection?
+[**Q9.5**]{style="color:green;"} Of the participants who have a clerical occupation, how many were over 50 years old at the time of the data collection?
 
 ```{r echo=FALSE}
 check_question(c("6"),
@@ -1136,7 +1136,7 @@ check_hint("One way to answer find the answer to this question is to cross-tabul
 :::
 
 ::: {.callout-tip collapse="true"}
-#### Click here for `R` code to answer {#sec-filter} [**Q5.**]{style="color:green;"}
+#### Click here for `R` code to answer {#sec-filter} [**Q9.5**]{style="color:green;"}
 
 There are various ways to find the answer to Q5. Sticking to a function that we have looked at so far, you could cross-tabulate `Age` and `OccupGroup` using the `count()` function.
 
@@ -1177,12 +1177,12 @@ combined.data |>
 
 As a final step, we want to save the `R` object `combined.data` to a local file on our computer so that, when we continue our analyses in a new `R` session, we can immediately start working with the wrangled dataset. We can either save the wrangled dataset as an `R` object (`.rds`) or export it as a DSV file (e.g. `.csv`, see @sec-DSV). The pros and cons of the two solutions are summarised in @tbl-saving.
 
-| DSV files (e.g., `.csv`, `.tsv`, `.tab`) | `R` data files (`.rds`) |
-|:---|:---|
-| ✅ Highly portable (i.e., can be opened in all standard spreadsheet software and text editors). | ❌ Specific to `R` and cannot be opened in standard spreadsheet software or text editors. |
-| ❌ Inefficient for very large datasets. | ✅ Efficient memory usage for more compact data storage and faster loading times in `R`. |
-| ✅ Universal, language-independent format and therefore suitable for long-term archiving. | ❌ No guarantee that older `.rds` files will be compatible with newer versions of `R` and therefore unsuitable for long-term archiving. |
-| ❌ Loss of metadata. | ✅ Preserve `R` data structures (e.g., factor variables remain stored as factors). |
+| DSV files (e.g., `.csv`, `.tsv`, `.tab`)                                                        | `R` data files (`.rds`)                                                                                                                 |
+|:------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------|
+| ✅ Highly portable (i.e., can be opened in all standard spreadsheet software and text editors). | ❌ Specific to `R` and cannot be opened in standard spreadsheet software or text editors.                                               |
+| ❌ Inefficient for very large datasets.                                                         | ✅ Efficient memory usage for more compact data storage and faster loading times in `R`.                                                |
+| ✅ Universal, language-independent format and therefore suitable for long-term archiving.       | ❌ No guarantee that older `.rds` files will be compatible with newer versions of `R` and therefore unsuitable for long-term archiving. |
+| ❌ Loss of metadata.                                                                            | ✅ Preserve `R` data structures (e.g., factor variables remain stored as factors).                                                      |
 
 : Pros and cons of saving DSV and `R` data files. {#tbl-saving}
 
@@ -1230,7 +1230,7 @@ write_csv(combined.data, file = here("data", "processed", "combined_L1_L2_data.c
 
 ## Check your progress 🌟 {.unnumbered}
 
-You have successfully completed [`r checkdown::insert_score()` out of 15 quiz questions]{style="color:green;"} in this chapter.
+You have successfully completed [`r checkdown::insert_score()` out of 5 quiz questions]{style="color:green;"} in this chapter.
 
 That was a lot of data wrangling, but we are now ready to proceed with some comparative analyses of L1 and L2 English speakers' language skills!
 
