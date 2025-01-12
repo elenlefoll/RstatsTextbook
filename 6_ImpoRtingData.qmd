@@ -23,7 +23,7 @@ This chapter will take you through the process of:
 
 In future chapters, we will continue to work with this data. We will learn how to "clean it up" for data analysis, before we begin to explore it using descriptive statistics and data visualisations.
 
-## Accessing data from a published study
+## Accessing data from a published study {#sec-AccessingData}
 
 As we saw in @sec-OpenScience, it is good practice to share both the data and materials associated with research studies so that others can reproduce and replicate the research.
 
@@ -35,7 +35,7 @@ In the following chapters, we will focus on data associated with the following s
 
 Follow the DOI[^6_importingdata-1] link above and read the abstract to find out what the study was about. You do not need to have institutional or paid access to the full paper to read the abstract.
 
-[^6_importingdata-1]: "Digital Object Identifiers (DOI) are alpha-numeric strings that can be assigned to any entity, including: publications (including preprints), materials, datasets, and feature films - the use of DOIs is not restricted to just scholarly or academic material. DOIs "provides a system for persistent and actionable identification and interoperable exchange of managed information on digital networks." ([https://doi.org/hb.html)](https://doi.org/hb.html%29). There are many different DOI registration agencies that operate DOIs, but the two that researchers would most likely encounter are Crossref and Datacite." [@parsonsCommunitysourcedGlossaryOpen2022]
+[^6_importingdata-1]: "Digital Object Identifiers (DOI) are alpha-numeric strings that can be assigned to any entity, including: publications (including preprints), materials, datasets, and feature films - the use of DOIs is not restricted to just scholarly or academic material. DOIs"provides a system for persistent and actionable identification and interoperable exchange of managed information on digital networks." ([https://doi.org/hb.html)](https://doi.org/hb.html%29). There are many different DOI registration agencies that operate DOIs, but the two that researchers would most likely encounter are Crossref and Datacite." [@parsonsCommunitysourcedGlossaryOpen2022]
 
 ::: callout-tip
 #### Quiz time! {.unnumbered}
@@ -408,7 +408,7 @@ wrong = "No, that's not the reason.")
 ```
 :::
 
-## Importing tabular data in other formats
+## Importing tabular data in other formats {#sec-ImportingTabularData}
 
 We have seen how to load data from a `.csv` file into `R` by creating an `R` data frame object that contains the data extracted from a `.csv` file. But, as we saw in @sec-DataFormats, not all datasets are stored as `.csv` files. Fear not: there are many import functions in `R`, with which you can import pretty much all kinds of data formats! This section introduces a few of the most useful ones for research in the language sciences.
 
@@ -574,7 +574,7 @@ Note that, whereas when we used the base `R` function `read.table()` the header 
 
 Fixed width files (with file extensions such as `.gz`, .`bz2` or `.xz`) are a less common type of data source in the language sciences. In these text-based files, the values are separated not by a specific character such as the comma or the tab, but by a set amount of white/empty space other than a tab. Fixed width files can be loaded using the [`read_fwf()`](https://readr.tidyverse.org/reference/read_fwf.html) function from {readr}. Fields can be specified by their widths with [`fwf_widths()`](https://readr.tidyverse.org/reference/read_fwf.html) or by their positions with [`fwf_positions()`](https://readr.tidyverse.org/reference/read_fwf.html).
 
-## Importing files from spreadsheet software
+## Importing files from spreadsheet software {#sec-SpreadsheetSoftware}
 
 If your data are currently stored in a spreadsheet software (e.g., LibreOffice Calc, Google Sheets, or Microsoft Excel), you can export them to `.csv` or `.tsv`. However, if you do not wish to do this (e.g., because your colleague wishes to maintain the spreadsheet format that includes formatting elements such as bold or coloured cells), there are functions to import these file formats directly into `R`.
 
@@ -654,7 +654,7 @@ MySheetsData <- read_sheet("1U6Cf_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY/edit#gi
 
 ![Dialogue box to consent to the {tidyverse} API Packages having access to your Google Drive to import directly from a Google Sheet. Read this carefully before clicking on 'Continue'.](images/GoogleSheetsTidyverseAccess.png){#fig-TidyverseAPI fig-alt="Sign in with Google. Tidyverse API Packages wants access to your Google Account. Select what Tidyverse API Packages can access • See, edit, create, and delete all your Google Sheets spreadsheets. Because you're using Sign in with Google, Tidyverse API Packages will be able to Associate you with your personal info on Google, See your primary Google Account email address. Make sure you trust Tidyverse API Packages. You may be sharing sensitive info with this site or app. Learn about how Tidyverse API Packages will handle your data by reviewing its privacy policies. You can always see or remove access in your Google Account. Learn about the risks. The two buttons at the bottom read: Cancel and Continue"}
 
-### Importing spreadsheet files with multiple sheets/tabs
+### Importing spreadsheet files with multiple sheets/tabs {#sec-MultipleSheets}
 
 Note that, as spreadsheet software typically allow users to have several "sheets" or "tabs" within a file that each contains separate tables, the functions `read_excel()`, `read_ods()`, and `read_sheet` include an argument called `sheet` which allows you to specify which sheet should be imported. The default value is `1`, which simply means that the first one is imported. If your sheets have names, you can also use its name as the argument value, e.g.:
 
@@ -667,7 +667,7 @@ MyExcelData <- read_excel("data/MyExcelSpreadsheet.xlsx",
 
 ```
 
-## Importing data files from SPSS, SAS and Stata
+## Importing data files from SPSS, SAS and Stata {#sec-SPPS}
 
 If you've recently switched from working in SPSS, SAS, or Stata (or are collaborating with someone who uses these programmes), it might be useful to know that you can also import the data files created by programmes directly into `R` using the {haven} package. Details of all the options can be found here: <https://haven.tidyverse.org/>.
 
@@ -692,7 +692,7 @@ MyStataData <- read_dta("MyStataDataFile.dta")
 
 ```
 
-## Importing other file formats
+## Importing other file formats {#sec-OtherFileFormats}
 
 In this textbook, we will only deal with DSV files (@sec-DSV) but, as you can imagine, there are many more `R` packages and functions that allow you to import all kinds of other file formats. These include `.xml`, `.json` and `.html` files, various database formats, and other files with complex structures (see, e.g., <https://rc2e.com/inputandoutput>).
 
@@ -765,4 +765,20 @@ Second, your data import settings are not saved in an `.R` script as the command
 
 Whilst there is no way of remedying the first issue, the second can easily be fixed. After you have successfully imported your data from RStudio's Files pane, you can (and should!) immediately copy the import commands from the Console into your `.R` script. In this way, the next time you want to re-run your analysis, you can begin by running these import commands directly from your `.R` script rather than by via RStudio's Files pane.
 
-If you are running into errors due to incorrect file paths, it can be useful to try to import your data using RStudio's GUI to see where you are going wrong by comparing your own attempts with the import commands that RStudio generated.
+If you are running into errors due to incorrect file paths, it can be useful to try to import your data using RStudio's GUI to see where you are going wrong by comparing your own attempts with the import commands that RStudio generated. :::
+
+### Check your progress 🌟 {.unnumbered}
+
+You have successfully completed [`r checkdown::insert_score()` out of 7 quiz questions]{style="color:green;"} in this chapter.
+
+Are you confident that you can...?
+
+-   [ ] Access, save, and examine data from published studies (@sec-AccessingData) - (@sec-SavingData)
+-   [ ] Use projects in RStudio (@sec-RProject)
+-   [ ] Import data from .csv files (@sec-ImportingDataCSV)
+-   [ ] Check weather your data is correctly imported (@sec-ImportingErrors)
+-   [ ] Import tabular data in other formats (@sec-ImportingTabularData)
+-   [ ] Use the {readr} package to import tabular files (@sec-readr)
+-   [ ] Import files with single and multiple tabs from spreadsheet software (@sec-SpreadsheetSoftware) - (@sec-MultipleSheets)
+-   [ ] Import data files from SPSS, SAS and Stata (@sec-SPPS)
+-   [ ] Import other file formats (@sec-OtherFileFormats)
