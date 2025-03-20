@@ -41,7 +41,7 @@ First, the error message reproduced in @fig-tidyverseConflicts confirms that loa
 
 To force `R` to use a function from a specific package, we can use the `package::function()` syntax. Hence, to force `R` to use the base `R` {stats} `filter()` function rather than the tidyverse one, we would use `stats::filter()`. On the contrary, if we want to be absolutely certain that the tidyverse one is used, we can use `dplyr::filter()`.
 
-![A galaxy of tidyverse-related hex stickers (artwork by [\@allison_horst](https://allisonhorst.com/allison-horst)).](images/AHorst_tidyverse.png){#fig-tidyverse fig-alt="Hex stickers flying in space. The stickers all represent tidyverse packages including stringr, tidyr, readr, tibble, and dyplr." width="300"}
+![A galaxy of tidyverse-related hex stickers (artwork by [\@allison_horst](https://allisonhorst.com/allison-horst)).](images/AHorst_tidyverse.png){#fig-tidyverse fig-alt="Hexagonal stickers flying in space. The stickers all represent tidyverse packages including stringr, tidyr, readr, tibble, and dyplr." width="300"}
 
 In this chapter, we will explore functions from {[dplyr](https://dplyr.tidyverse.org/)}, {[stringr](https://stringr.tidyverse.org/)}, and {[tidyr](https://tidyr.tidyverse.org/)}. The popular {[ggplot2](https://ggplot2.tidyverse.org/)} tidyverse library for data visualisation following the "Grammar of Graphics" approach will be introduced in Chapter 10. Make sure that you have loaded the tidyverse packages before proceeding with the rest of this chapter.
 
@@ -133,7 +133,7 @@ summary(L1.Gender.fct)
 The tidyverse package [{forcats}](https://forcats.tidyverse.org/) has a lot of very useful functions to manipulate factors. They all start with `fct_`.
 
 ::: column-margin
-![Hex sticker of the [{forcats}](https://forcats.tidyverse.org/) package](images/hex_forcats.png){#fig-hexdplyr width="100" alt-text="The forcats hex sticker logo"}
+![Hex sticker of the [{forcats}](https://forcats.tidyverse.org/) package](images/hex_forcats.png){#fig-hexdplyr width="100" alt-text="The forcats hexagonal logo features four lazy black cats in a cardboard box."}
 :::
 
 ::: callout-tip
@@ -452,7 +452,7 @@ check_hint("The function can be found in the \"Manage Lengths\" section of the [
 #| results: "hide"
 
 L1.data.cleaned <- L1.data.fct |> 
-  mutate(OccupGroup = str_trim(OccupGroup)) # Apply the str_trim() function to the OccupGroup variable
+  mutate(OccupGroup = str_trim(OccupGroup))
 
 L1.data.cleaned |> 
   count(OccupGroup)
@@ -945,7 +945,7 @@ L2.data <- L2.data |>
   mutate(Group = "L2")
 ```
 
-**Step 3:** We use `bind_rows()` as above to combine the two datasets that now both include the extra `Group` column.[^9_datawrangling-5].
+**Step 3:** We use `bind_rows()` as above to combine the two datasets that now both include the extra `Group` column.[^9_datawrangling-5]
 
 [^9_datawrangling-5]: Alternatively, you may have gathered from the cheatsheet (@fig-dplyrcheatsheet) that the `bind_rows()` function has an optional ".id" argument that can be used to create an additional column to disambiguate between the two combined datasets. In this case, we do not need to add a `Group` column to both datasets prior to combining them.
 
@@ -1136,7 +1136,7 @@ check_hint("One way to answer find the answer to this question is to cross-tabul
 :::
 
 ::: {.callout-tip collapse="true"}
-#### Click here for `R` code to answer {#sec-filter} [**Q9.5**]{style="color:green;"}
+#### Click here to see the `R` code necessary to answer [**Q9.5**]{style="color:green;"} {#sec-filter}
 
 There are various ways to find the answer to Q5. Sticking to a function that we have looked at so far, you could cross-tabulate `Age` and `OccupGroup` using the `count()` function.
 
@@ -1177,17 +1177,12 @@ combined.data |>
 
 As a final step, we want to save the `R` object `combined.data` to a local file on our computer so that, when we continue our analyses in a new `R` session, we can immediately start working with the wrangled dataset. We can either save the wrangled dataset as an `R` object (`.rds`) or export it as a DSV file (e.g. `.csv`, see @sec-DSV). The pros and cons of the two solutions are summarised in @tbl-saving.
 
-+-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-| DSV files (e.g., `.csv`, `.tsv`, `.tab`)                                                        | `R` data files (`.rds`)                                                                                                                 |
-+:================================================================================================+:========================================================================================================================================+
-| ✅ Highly portable (i.e., can be opened in all standard spreadsheet software and text editors). | ❌ Specific to `R` and cannot be opened in standard spreadsheet software or text editors.                                               |
-+-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-| ❌ Inefficient for very large datasets.                                                         | ✅ Efficient memory usage for more compact data storage and faster loading times in `R`.                                                |
-+-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-| ✅ Universal, language-independent format and therefore suitable for long-term archiving.       | ❌ No guarantee that older `.rds` files will be compatible with newer versions of `R` and therefore unsuitable for long-term archiving. |
-+-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-| ❌ Loss of metadata.                                                                            | ✅ Preserve `R` data structures (e.g., factor variables remain stored as factors).                                                      |
-+-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| DSV files (e.g., `.csv`, `.tsv`, `.tab`) | `R` data files (`.rds`) |
+|:---|:---|
+| ✅ Highly portable (i.e., can be opened in all standard spreadsheet software and text editors). | ❌ Specific to `R` and cannot be opened in standard spreadsheet software or text editors. |
+| ❌ Inefficient for very large datasets. | ✅ Efficient memory usage for more compact data storage and faster loading times in `R`. |
+| ✅ Universal, language-independent format and therefore suitable for long-term archiving. | ❌ No guarantee that older `.rds` files will be compatible with newer versions of `R` and therefore unsuitable for long-term archiving. |
+| ❌ Loss of metadata. | ✅ Preserve `R` data structures (e.g., factor variables remain stored as factors). |
 
 : Pros and cons of saving DSV and `R` data files. {#tbl-saving}
 
