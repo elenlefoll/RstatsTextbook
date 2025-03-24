@@ -742,7 +742,7 @@ But, first, let's think about **why** we visualise data. Data visualisation is a
 
 ![Using the {ggplot2} package for data exploration (artwork by [\@allison_horst](https://allisonhorst.com/))](images/AHorst_ggplot2_explore.png){fig-alt="A group of fuzzy round monsters with binoculars, backpacks and guide books looking up a graphs flying around with wings (like birders, but with exploratory data visualizations). Stylized text reads “ggplot2: visual data exploration.”"}
 
-Depending on the type of data that we want to visualise and why, we can choose different types of plots. In the following, we will first look at how we can plot **categorical variables** and **discrete numeric variables**, before we move on to visualising **continuous numeric variables** and combinations of different types of variables (see @sec-types-of-variables).
+Depending on the type of data that we want to visualise and why, we can choose different types of plots. In the following, we will first look at how we can plot **categorical variables** and **discrete numeric variables**, before we move on to visualising **continuous numeric variables** and combinations of different types of variables (see @sec-Variables).
 
 ### Bar plots
 
@@ -778,7 +778,7 @@ Dabrowska.data |>
   theme_minimal(base_size = 16)
 ```
 
-To create @fig-\*\*, we first reordered the factor levels of the `NativeLg` variable using two functions from the {forcats} package (see @sec-forcats): `fct_infreq()` is first used to order the factors according to their frequency (by default, they are sorted alphabetically), and then `fct_rev()` is used to reverse that order. The latter step is needed because the `coord_flip()` functions reverses everything. You can check the order of a factor's level using the function `levels()`. Note that, if two levels have the same number of occurrences, they are ordered alphabetically (as seen in @fig-\*\*).
+To create @fig-\*\*, we first reordered the factor levels of the `NativeLg` variable using two functions from the {forcats} package (see @sec-Factors): `fct_infreq()` is first used to order the factors according to their frequency (by default, they are sorted alphabetically), and then `fct_rev()` is used to reverse that order. The latter step is needed because the `coord_flip()` functions reverses everything. You can check the order of a factor's level using the function `levels()`. Note that, if two levels have the same number of occurrences, they are ordered alphabetically (as seen in @fig-\*\*).
 
 ```{r}
 levels(Dabrowska.data$NativeLg)
@@ -1645,7 +1645,7 @@ The {ggplot2} library offers many more `geom_` functions for you to explore. Her
 
 ##### Dot plots
 
-In a dot plot, each data point (corresponding, here, to a single participant) is represented by a single dot. The size of each dot corresponds to the chosen **bin width**. This makes dot plots a combination of a boxplot (see @sec-boxplots) and a histogram (see @sec-histograms).
+In a dot plot, each data point (corresponding, here, to a single participant) is represented by a single dot. The size of each dot corresponds to the chosen **bin width**. This makes dot plots a combination of a boxplot (see @sec-IQR) and a histogram (see @sec-histograms).
 
 :::::: columns
 ::: {.column width="49%"}
@@ -1994,7 +1994,7 @@ The {ggplot2} library does not include an in-built function to create word cloud
 library(ggwordcloud)
 ```
 
-We will use the `geom_text_wordcloud()` function to create a word cloud representing L2 participants' native languages. To this end, we first need to create a table that tallies how often each native language was mentioned. We also include a column for the language family (see Task 9.3 in @sec-using-case_when).
+We will use the `geom_text_wordcloud()` function to create a word cloud representing L2 participants' native languages. To this end, we first need to create a table that tallies how often each native language was mentioned. We also include a column for the language family (see Task 9.3 in @sec-casewhen).
 
 ```{r}
 NativeLg_freq <- Dabrowska.data |> 
@@ -2132,7 +2132,11 @@ ggplot(aes(x = Age,
 
 ### Combining `geoms_` and `aes` {#sec-CombiningGeoms}
 
-Part of the magic of the Grammar of Graphics is that we can easily combine **different geometries** and **aesthetics** to create highly informative graphs. For example, we can combine `geom_boxplot()` with `geom_point()` to see both the characteristics of the distributions of grammar test scores among L1 and L2 participants, as well as exact score of each individual participant. By default, the `geom_boxplot()` function plots dots for any outliers. Since we are now also plotting *all* the data points using the `geom_point()` function, we need to switch off this option, otherwise the outliers will be plotted twice.
+Part of the magic of the Grammar of Graphics is that we can easily combine **different geometries** and **aesthetics** to create highly informative graphs. If you just read about the `geom_text()` function (see above), then you have already seen how this can work.
+
+@Fig-\*\* is another, simpler example: we combine `geom_boxplot()` with `geom_point()` to see both the characteristics of the distributions of grammar test scores among L1 and L2 participants, as well as exact score of each individual participant.
+
+By default, the `geom_boxplot()` function plots dots for any outliers. Since we are now also plotting *all* the data points using the `geom_point()` function, we need to switch off this option, otherwise the outliers will be plotted twice.
 
 ```{r}
 #| fig-height: 4
@@ -2189,9 +2193,9 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-@fig-\*\* allows us to see that the lowest grammar comprehension test scores among L1 participants come from male participants, whereas the lowest scores in the L2 group come from female participants. Can you think of why this might be? 🤔 Make a note of your hypothesis as you will have a chance to explore further in @sec-InteractivePlots.
+@fig-\*\* allows us to see that the lowest grammar comprehension test scores among L1 participants come from male participants, whereas the lowest scores in the L2 group come from female participants. Can you think of why this might be? 🤔 Make a note of your hypothesis as you will have a chance to explore it further in @sec-InteractivePlots.
 
-We can, in theory, visualise even more of our data by adding a **shape** `aesthetics` to the `geom_jitter()` (see @fig-\*\*). However, increased plot complexity does not necessarily result in more meaningful or effective statistical graphics. How effective is @fig-\*\*, in your opinion?
+We can, in theory, visualise even more of our data by adding a **shape** `aesthetics` to the `geom_jitter()` (see @fig-\*\*). However, increased plot complexity does not necessarily result in more meaningful or effective statistical graphics. How effective is @fig-\*\* in your opinion?
 
 ```{r}
 #| fig-height: 5
@@ -2216,7 +2220,7 @@ Dabrowska.data |>
 
 As the saying goes, less is often more. In other words, simpler plots are often more effective than complex ones. With {ggplot2} and its many extensions, the possibilities are almost endless, but that doesn't mean that simple bar charts, histograms, and scatter plots should be abandoned! When designing effective data visualisation to communicate your research, think carefully about your **audience** and the **message** that you want to convey.
 
-## Interactive plots {#sec-InteractivePlots}
+### Interactive plots {#sec-InteractivePlots}
 
 In @sec-CombiningGeoms, we saw that we can combine **geometries** and **aesthetics**, but that there are some limits as to what is meaningful and effective. In particular, it is difficult to visualise categorical variables with many different levels on a static graph.
 
@@ -2226,7 +2230,7 @@ The good news is that now that you know how to create a plot using {ggplot2}, yo
 ![Hex sticker of the [{plotly}](https://plotly-r.com) package](images/hex_plotly.png){width="100"}
 :::
 
-The [{plotly}](https://plotly-r.com) package provides access to a popular javascript visualisation toolkit with an `R` interface. You will first need to install the package and load it.
+The [{plotly}](https://plotly-r.com) package provides access to a popular javascript visualisation toolkit within `R`. You will first need to install the package and load it.
 
 ```{r}
 #| eval: false
@@ -2239,7 +2243,7 @@ library(plotly)
 library(plotly)
 ```
 
-Then, all you need to do is create and save a `ggplot` object, and call that object with the `ggplotly()` function. In RStudio, your interactive plot will be displayed in the Viewer pane. Hover your mouse over the data points of @fig-\*\* to explore the data interactively. You will see that the variable mapped onto the `label` aesthetics (`OccupGroup`) appears when you hover the mouse over any single data point.
+Then, all you need to do is create and save a `ggplot` object, and call that object with the `ggplotly()` function. In RStudio, your interactive plot will be displayed in the Viewer pane. Hover your mouse over the data points of @fig-\*\* to explore the data interactively. You will see that, in addition to the variables mapped onto the plot itself, the variable mapped onto the `label` aesthetics (`OccupGroup`) also appears when you hover the mouse over any single data point.
 
 ```{r}
 #| eval: false
@@ -2294,7 +2298,7 @@ p$x$data[1] <- lapply(p$x$data[1], FUN = function(x){
 p
 ```
 
-If you want to display more than one additional variable on hover, you can do using the `text` mapping. Here you can customise which variables are displayed and how.
+If you want to display more than one additional variable on hover, you can do using the `text` mapping. Here you can customise which variables are displayed and how. As the interactive plot is coded in HTML, you need to use the "</br>" tag to add a new line.
 
 ```{r}
 #| eval: false
@@ -2353,11 +2357,11 @@ p$x$data[1] <- lapply(p$x$data[1], FUN = function(x){
 p
 ```
 
-## Exporting plots
+## Exporting plots 🚀
 
 You may want to share the plots that you have created in `R` with others or insert them in a research paper or presentation. {ggplot2} provides a convenient way to export plots in various formats using the `ggsave()` function. You can specify the file name, format, and other options such as the width, height, and resolution of the image.
 
-If you run the `ggsave()` function without specifying which plot should be saved, it will save the last plot that was displayed. The image file type is determined by the extension of the file name that you provide, e.g., a file name ending in `.png` will export your graph to a PNG file. You can specify its dimensions in centimetres (`cm`), millimetres (`mm`), inches (`in`), and pixel (`px`).
+If you run the `ggsave()` function without specifying which plot should be saved, it will save the last plot that was displayed. The image file type is determined by the extension of the file name that you provide, e.g., a file name ending in `.png` will export your graph to a PNG file. You can specify its dimensions in centimetres (`cm`), millimetres (`mm`), inches (`in`), and pixel (`px`). Working out appropriate dimensions can be tricky and typically requires a bit of experimenting until you get it right.
 
 ```{r}
 #| eval: false
@@ -2376,7 +2380,7 @@ ggsave("BlocksDensityPlot.png",
        units = "cm")
 ```
 
-By default, plots will be exported to the project's working directory. You can save it elsewhere by specifying a different file path (see @sec-Paths). For example, this function will save the last plot displayed as an SVG file in the project's subfolder "figures". Note that, if the subfolder to which you want to save your graph does not yet exist, `R` will return an error. So make sure that the subfolder exists at the path that you specified before attempting to save anything in it!
+By default, plots will be exported to the project's working directory. You can save it elsewhere by specifying a different file path (see @sec-FoldersPaths). For example, this function will save the last plot displayed as an SVG file in the project's subfolder "figures". Note that, if the subfolder to which you want to save your graph does not yet exist, `R` will return an error. So make sure that the subfolder exists at the path that you specified before attempting to save anything in it!
 
 ```{r}
 #| eval: false
@@ -2389,11 +2393,9 @@ ggsave("figures/BlocksDensityPlot.svg",
 
 ### Check your progress 🌟 {.unnumbered}
 
-Well done! You have successfully completed this chapter on data visualisation using the Grammar of Graphics approach. You answered [`r checkdown::insert_score()` out of \*16\*\* questions]{style="color:green;"} correctly.
+Well done! You have successfully completed this chapter on data visualisation using the Grammar of Graphics approach. You answered [`r checkdown::insert_score()` out of \*20\*\* questions]{style="color:green;"} correctly.
 
-Are you confident that you can...?
-
--   [ ] \*\*TO BE COMPLETED\*\*
+<!--# Are you confident that you can...? @Vishar: Please write this section with the usual checkboxes and cross-references. -->
 
 ::: callout-note
 ### Going further: Plotting your way to success 📈 {.unnumbered collapse="TRUE"}
