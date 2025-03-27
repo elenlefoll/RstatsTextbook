@@ -73,7 +73,7 @@ The **data** layer and the **aesthetics** layer are compulsory as you cannot bui
 
 As explained in the documentation, the `ggplot()` function[^10_dataviz-1] has two compulsory arguments. First, we must select the **data** that we want to visualise. Second, we must specify which variable(s) from the data should be mapped onto which visual property or **aesthetics** (short: `aes`) of the plot.
 
-[^10_dataviz-1]: Note that the library is called "ggplot2", but its main function is called "ggplot".
+[^10_dataviz-1]: Note that, while the library is called {ggplot2}, its main function is called `ggplot()`.
 
 > |                  |                 |
 > |------------------|-----------------|
@@ -290,6 +290,7 @@ To explore potential gender differences in occupational groups across both L1 an
 
 ```{r}
 #| source-line-numbers: "4"
+#| fig-height: 6
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup)) +
@@ -305,6 +306,7 @@ Dabrowska.data |>
 
 ```{r}
 #| source-line-numbers: "3"
+#| fig-height: 6
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, 
@@ -323,6 +325,7 @@ One way to do this is to use `scale_fill_manual()` to manually pick our own colo
 #| fig-cap: "A facetted bar plot with hand-picked colours"
 #| label: "fig-PurpleBarplot"
 #| source-line-numbers: "3,8"
+#| fig-height: 6
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, 
@@ -341,6 +344,7 @@ In some cases, colour is used as the *only* way of identifying subgroups in the 
 ```{r}
 #| fig-cap: "A bar plot with the default {ggplot2} colours"
 #| label: "fig-ColourBarplot"
+#| source-line-numbers: "3,5"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, 
@@ -399,14 +403,19 @@ Dabrowska.data |>
                        pattern = Gender)) +
   geom_bar_pattern(pattern_density = 0.01,  # adjust for better visibility
                    pattern_fill = "transparent",  # keeps pattern visible
-                   pattern_colour = "grey") +  # pattern lines color
+                   pattern_colour = "white") +  # pattern lines color
   facet_wrap(~ Group) +
   labs(x = "Occupational group",
        y = "Participants") +
   scale_fill_manual(values = c("purple", "#34027d")) +
   scale_pattern_manual(values = c("stripe", "crosshatch")) # specify types of patterns
+```
 
-# Note: If you get the error message "Error in seq.default(from, to, by) : invalid '(to - from)/by'" when trying to run this chunk of code, this is because your Plots pane in RStudio is not large enough to accommodate the plot. Increase its size and it should work (see also https://stackoverflow.com/questions/73960726/error-in-seq-defaultfrom-to-by-invalid-to-from-by-ggpattern).
+```{r}
+#| code-fold: true
+#| code-summary: "What to do if you get the error message: seq.default(from, to, by) : invalid"
+
+# If you get the error message "Error in seq.default(from, to, by) : invalid '(to - from)/by'" when trying to run this chunk of code, this is because your Plots pane in RStudio is not large enough to accommodate the plot. Increase its size and it should work (see also https://stackoverflow.com/questions/73960726/error-in-seq-defaultfrom-to-by-invalid-to-from-by-ggpattern).
 ```
 
 Finally, it is important to remember that colour blindness is by no means the only type of visual impairment you should consider when creating visualisations. Wordlwide, far more people are affected by **blindness** and **low vision**. Chapter 13 explains how to add **alternative texts** (alt text) to plots and images. Many people with visual impairments rely on screen readers that use these alternative texts to provide audio descriptions of images and plots. These alternative texts can also improve the user experience when there are internet connection issues and images do not load properly or quickly enough.
@@ -415,7 +424,7 @@ Finally, it is important to remember that colour blindness is by no means the on
 Some academic publishers still require grey-scale plots, in which case you will want to use the **scale** layer `scale_fill_grey()`. Alternatively, the colour palettes of the {viridis} package (see information box on colour blindness) render well in grey, too. The {viridis} function for a discrete colour scale (as needed for a categorical variable such as `Gender`) can be called up using the `scale_fill_viridis_d()` function. With the "option" argument, you can switch between eight different viridis palettes ("magma", "inferno", "plasma", "cividis", "rocket", "turbo").
 
 ::: panel-tabset
-##### `scale_fill_grey()`
+###### scale_fill_grey()
 
 ```{r}
 #| source-line-numbers: "7"
@@ -430,7 +439,7 @@ Dabrowska.data |>
   scale_fill_grey()
 ```
 
-##### `scale_fill_viridis_d`
+###### scale_fill_viridis_d
 
 ```{r}
 #| source-line-numbers: "7"
@@ -445,7 +454,7 @@ Dabrowska.data |>
   scale_fill_viridis_d(option = "viridis")
 ```
 
-##### `scale_fill_viridis_d`
+###### scale_fill_viridis_d
 
 ```{r}
 #| source-line-numbers: "7"
@@ -547,20 +556,6 @@ Dabrowska.data |>
        y = "Participants") +
   paletteer::scale_fill_paletteer_d("tayloRswift::speakNow")
 ```
-
-##### suffrager::london
-
-```{r}
-#| source-line-numbers: "6"
-#| fig-height: 4
-
-Dabrowska.data |> 
-  ggplot(mapping = aes(x = OccupGroup, fill = OccupGroup)) +
-  geom_bar() +
-  labs(x = "Occupational group",
-       y = "Participants") +
-  paletteer::scale_fill_paletteer_d("suffrager::london")
-```
 :::
 
 ### Themes {#sec-themes}
@@ -568,7 +563,7 @@ Dabrowska.data |>
 The {ggplot2} framework also allows for the addition of an optional `theme()` **layer** to further customise the look of plots. The default {ggplot2} theme is `theme_grey()`. Here are some of the pre-built themes that come with the {ggplot2} library for you to compare. As with colour palettes, you can install additional libraries that will give you access to literally hundreds of ready-made themes for you to explore.
 
 ::: panel-tabset
-##### `theme_bw()`
+##### theme_bw()
 
 ```{r}
 #| source-line-numbers: "6"
@@ -582,7 +577,7 @@ ggplot(data = Dabrowska.data,
   theme_bw()
 ```
 
-##### `theme_dark()`
+##### theme_dark()
 
 ```{r}
 #| source-line-numbers: "6"
@@ -596,7 +591,7 @@ ggplot(data = Dabrowska.data,
   theme_dark()
 ```
 
-##### `theme_light()`
+##### theme_light()
 
 ```{r}
 #| source-line-numbers: "6"
@@ -610,7 +605,7 @@ ggplot(data = Dabrowska.data,
   theme_light()
 ```
 
-##### `theme_minimal()`
+##### theme_minimal()
 
 ```{r}
 #| source-line-numbers: "6"
@@ -624,7 +619,7 @@ ggplot(data = Dabrowska.data,
   theme_minimal()
 ```
 
-##### `theme_void()`
+##### theme_void()
 
 ```{r}
 #| source-line-numbers: "6"
@@ -691,7 +686,7 @@ Dabrowska.data |>
   scale_fill_viridis_d() +
   coord_flip() +
   theme_minimal() +
-  theme(axis.text = element_text(size = 12))
+  theme(axis.text = element_text(size = 14))
 ```
 
 The vast majority of statistical graphs use the Cartesian coordinate system. Pie charts and other circular plots, however, use the **polar coordinate system** (`coord_polar`), whereby quantities are mapped onto angles rather distances. In general, humans are much better at judging lengths than angles or areas [@clevelandGraphicalPerceptionVisual1987], which is why circular graphs such as pie charts are typically *not* recommended forms of good data visualisations [see, e.g., @fewPiesDessert]. That said, they *can* be produced using the {ggplot2} library by adding the **coordinate** layer `coord_polar("y")` and modifying a few parameters.
@@ -861,7 +856,7 @@ check_question(c("The bar plot because humans are better at distinguishing small
                  "The bar plot because the labels are immediately next to the corresponding bars."),
                options = c("The bar plot because humans dislike round objects and prefer objects with sharp angles.",
                            "The bar plot because humans are better at distinguishing small differences in lengths than in angles.",
-                           "The pie chart because most humans learn to read clocks early on in life.",
+                           "The pie chart as most humans learn to read clocks early on in life.",
                            "The bar plot because the labels are immediately next to the corresponding bars.",
                            "The pie chart because the colours are easier to distinguish when they are close to each other."),
                type = "check",
@@ -1658,9 +1653,8 @@ In a dot plot, each data point (corresponding, here, to a single participant) is
 ```{r}
 #| eval: false
 
-Dabrowska.data |>
-  ggplot(mapping = aes(y = Grammar, 
-                       x = Group)) +
+ggplot(data = Dabrowska.data,
+       mapping = aes(y = Grammar, x = Group)) +
     geom_dotplot(binaxis = "y", 
                  stackdir = "center",
                  binwidth = 3) +
@@ -1677,6 +1671,8 @@ Dabrowska.data |>
 ::: {.column width="49%"}
 ```{r}
 #| echo: false
+#| fig-height: 7
+#| fig-width: 5
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -1702,8 +1698,8 @@ The help file of the `geom_violin()` function describes violin plots as follows:
 ```{r}
 #| eval: false
 
-Dabrowska.data |>
-  ggplot(mapping = aes(y = Grammar, 
+ggplot(data = Dabrowska.data,
+       mapping = aes(y = Grammar, 
                        x = Group)) +
     geom_violin() +
     labs(y = "Grammar comprehension scores",
@@ -1720,6 +1716,7 @@ Dabrowska.data |>
 ::: {.column width="49%"}
 ```{r}
 #| echo: false
+#| fig-height: 7
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -1738,6 +1735,7 @@ By themselves, **violin plots** are rather abstract representations of variable 
 ::: {.column width="49%"}
 ```{r}
 #| eval: false
+#| fig-height: 7
 
 Dabrowska.data |> 
   ggplot(mapping = aes(y = Grammar, 
@@ -1951,17 +1949,19 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-[**Q10.18**]{style="color:green;"} Having removed the outlier point from the scatter plot, now add a regression line to visualise the correlation between the two variables. Which of the following statements best describes the relationship between L2 participants' grammar comprehension test scores and the number of years they had been living in the UK when the test was conducted?
+[**Q10.18**]{style="color:green;"} Having removed the outlier point from the scatter plot, now add a regression line to visualise the correlation between the two variables. Which of the following options best fits the gap in the sentence below?
+
+> In this group of L2 speakers, there is █ █ █ █ █ █ █ █ █ █ correlation between participants' grammar test scores and their length of residence in the UK.
 
 ```{r echo=FALSE}
-check_question("There is a positive correlation between participants' grammar test scores and their length of residence in the UK.",
-               options = c("There is a positive correlation between participants' grammar test scores and their length of residence in the UK.",
-                           "There is a negative correlation between participants' grammar test scores and their length of residence in the UK.",
-                           "There is no correlation between participants' grammar test scores and their length of residence in the UK.",
-                           "There is a perfect correlation between participants' grammar test scores and their length of residence in the UK."),
+check_question("a positive correlation",
+               options = c("a positive",
+                           "a negative",
+                           "no",
+                           "a perfect"),
                random_answer_order = TRUE,
-               type = "radio",
                button_label = "Check answer",
+               type = "radio",
                right = "✅",
                wrong = "❌")
 check_hint("To answer this question, you should ask yourself: Does the regression line draw an upward or a downward slope? How steep is the slope? And how close are the points to the line?).", 
@@ -2352,15 +2352,17 @@ myplot2 <- Dabrowska.data |>
        y = "Grammar comprehension test score") +
   theme_bw()
 
+ggplotly(myplot2)
+
 # Need to modify the plotly object and make outlier points have opacity equal to 0
-p <- plotly_build(myplot)
-
-p$x$data[1] <- lapply(p$x$data[1], FUN = function(x){
-  x$marker = list(opacity = 0)
-  return(x)
-})
-
-p
+# p <- plotly_build(myplot2)
+# 
+# p$x$data[1] <- lapply(p$x$data[1], FUN = function(x){
+#   x$marker = list(opacity = 0)
+#   return(x)
+# })
+# 
+# p
 ```
 
 ## Exporting plots 🚀
@@ -2371,6 +2373,7 @@ If you run the `ggsave()` function without specifying which plot should be saved
 
 ```{r}
 #| eval: false
+#| source-line-numbers: "9-12"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = Blocks,
@@ -2404,7 +2407,7 @@ Well done! You have successfully completed this chapter on data visualisation us
 <!--# Are you confident that you can...? @Vishar: Please write this section with the usual checkboxes and cross-references. -->
 
 ::: callout-note
-### Going further: Plotting your way to success 📈 {.unnumbered collapse="TRUE"}
+### Going further: Plotting your way to success 🗺️ {.unnumbered collapse="TRUE"}
 
 If you have completed this chapter, you can now produce some of the most widely used graphs in the language sciences: Congratulations!
 
