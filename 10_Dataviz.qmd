@@ -32,7 +32,7 @@ In this chapter, you will learn how to:
 -   Create and interpret facetted plots to explore the relationship between three or more variables at once.
 -   Create interactive plots for data exploration.
 
-![Building a data masterpiece with {ggplot2} (artwork by [\@allison_horst](https://allisonhorst.com/))](images/AHorst_ggplot2.png){fig-alt="A fuzzy monster in a beret and scarf, critiquing their own column graph on a canvas in front of them while other assistant monsters (also in berets) carry over boxes full of elements that can be used to customize a graph (like themes and geometric shapes). In the background is a wall with framed data visualizations. Stylized text reads: ggplot2: build a data masterpiece."}
+![Building a data masterpiece with {ggplot2} (artwork by [\@allison_horst](https://allisonhorst.com/))](images/AHorst_ggplot2.png){#fig-DataArtists fig-alt="A fuzzy monster in a beret and scarf, critiquing their own column graph on a canvas in front of them while other assistant monsters (also in berets) carry over boxes full of elements that can be used to customize a graph (like themes and geometric shapes). In the background is a wall with framed data visualizations. Stylized text reads: ggplot2: build a data masterpiece."}
 
 ### Set-up and data import {.unnumbered}
 
@@ -229,10 +229,11 @@ Dabrowska.data |>
 :::
 ::::::
 
-You should have realised that the outputs are exactly the same. Piping the dataset into the `ggplot()` function, however, allows us to easily wrangle the data that we want to visualise 'on the fly', without transforming the data object itself. For example, we can use the tidyverse `filter()` function (see @sec-filter) to examine the distribution of occupational groups among L2 participants only (see @fig-\*\*).
+You should have realised that the outputs are exactly the same. Piping the dataset into the `ggplot()` function, however, allows us to easily wrangle the data that we want to visualise 'on the fly', without transforming the data object itself. For example, we can use the tidyverse `filter()` function (see @sec-filter) to examine the distribution of occupational groups among L2 participants only (see @fig-BarOccupGroupL2).
 
 ```{r}
 #| source-line-numbers: "2,7"
+#| label: "fig-BarOccupGroupL2"
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -243,10 +244,11 @@ Dabrowska.data |>
        title = "Occupational groups of L2 participants")
 ```
 
-We can also combine several `filter()` conditions using the `&` (AND) and `|` (OR) operators. For example, we may want to visualise the distribution of the occupational groups of participants who are L2 speakers or English *and* whose first language is Polish (see @fig-\*\*).
+We can also combine several `filter()` conditions using the `&` (AND) and `|` (OR) operators. For example, we may want to visualise the distribution of the occupational groups of participants who are L2 speakers of English *and* whose first language is Polish (see @fig-BarOccupGroupL2Polish).
 
 ```{r}
 #| source-line-numbers: "2,7"
+#| label: "fig-BarOccupGroupL2Polish"
 
 Dabrowska.data |> 
   filter(Group == "L2" & NativeLg == "Polish") |> 
@@ -254,15 +256,16 @@ Dabrowska.data |>
   geom_bar() +
   labs(x = "Occupational group",
        y = "Number of participants",
-       title = "Occupational groups of Polish L1 participants")
+       title = "Occupational groups of Polish L2 participants")
 ```
 
 ### Facets {#sec-facets}
 
-If we want to compare two subsets of the data, we can add a **facet layer** to subdivide the plot into several plots each representing a subset of the data. In the following, we use the `facet_wrap()` function to subdivide our bar plot by the `Group` variable (`~ Group`). This allows us to easily compare the distribution of occupations across L1 and the L2 participants (see @fig-\*\*).
+If we want to compare two subsets of the data, we can add a **facet layer** to subdivide the plot into several plots each representing a subset of the data. In the following, we use the `facet_wrap()` function to subdivide our bar plot by the `Group` variable (`~ Group`). This allows us to easily compare the distribution of occupations across L1 and the L2 participants (see @fig-BarOccupGroupFacet).
 
 ```{r}
 #| source-line-numbers: "4"
+#| label: "fig-BarOccupGroupFacet"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup)) +
@@ -273,10 +276,11 @@ Dabrowska.data |>
        title = "Occupational groups of participants")
 ```
 
-To compare the distributions of occupations of the male and female L2 participants, we can combine a `filter()` operation to select only the L2 participants, with a `facet_wrap()` layer (see @fig-\*\*).
+To compare the distributions of occupations of the male and female L2 participants, we can combine a `filter()` operation to select only the L2 participants, with a `facet_wrap()` layer (see @fig-BarOccupGroupL2Facet).
 
 ```{r}
 #| source-line-numbers: "2,5"
+#| label: "fig-BarOccupGroupL2Facet"
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -288,11 +292,12 @@ Dabrowska.data |>
        title = "Occupational groups of L2 participants")
 ```
 
-To explore potential gender differences in occupational groups across both L1 and L2 groups, we can combine the two variables within the `facet_wrap()` function (see @fig-\*\*).
+To explore potential gender differences in occupational groups across both L1 and L2 groups, we can combine the two variables within the `facet_wrap()` function (see @fig-TwoFacetsBarplot).
 
 ```{r}
 #| source-line-numbers: "4"
 #| fig-height: 6
+#| label: "fig-TwoFacetsBarplot"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup)) +
@@ -304,11 +309,12 @@ Dabrowska.data |>
 
 ### Scales {#sec-scales}
 
-**Scale** layers allow us to map data values to the visual values of an aesthetic. For example, to make our facetted plot in @fig-\*\* <!--# @Vishar: plot above --> easier to read, we could add some colour using a **fill** aesthetic to fill each bar with a colour that corresponds to the participants' gender. To do so, we map each unique value of the variable `Gender` ("F" and "M") onto a colour that is then used to fill the corresponding bars of our bar plot. Adding the **fill** aesthetic automatically generates a legend (see fig-\*\*).
+**Scale** layers allow us to map data values to the visual values of an aesthetic. For example, to make our facetted plot in @fig-TwoFacetsBarplot easier to read, we could add some colour using a **fill** aesthetic to fill each bar with a colour that corresponds to the participants' gender. To do so, we map each unique value of the variable `Gender` ("F" and "M") onto a colour that is then used to fill the corresponding bars of our bar plot. Adding the **fill** aesthetic automatically generates a legend (see @fig-ColourBarplot).
 
 ```{r}
 #| source-line-numbers: "3"
 #| fig-height: 6
+#| label: "fig-ColourBarplot"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, 
@@ -319,7 +325,7 @@ Dabrowska.data |>
        y = "Participants")
 ```
 
-As we did not specify any **fill** colours for @fig-\*\*, {ggplot2} used default colours taken from the {scales} package of the tidyverse environment. This is because, in the Grammar of Graphics, colour palettes are governed by **scales**. To specify a different set of colours, we therefore need to specify a **scale layer**.
+As we did not specify any **fill** colours for @fig-ColourBarplot, {ggplot2} used default colours taken from the {scales} package of the tidyverse environment. This is because, in the Grammar of Graphics, colour palettes are governed by **scales**. To specify a different set of colours, we therefore need to specify a **scale layer**.
 
 One way to do this is to use `scale_fill_manual()` to manually pick our own colours, either using [`R` colour codes](https://r-charts.com/colors/) (such as `purple`) or [hexadecimal colour codes](https://www.w3schools.com/colors/colors_picker.asp) (such as `#34027d`). Note that both types of colour codes must be enclosed in quotation marks.
 
@@ -341,11 +347,11 @@ Dabrowska.data |>
 
 Although it makes the plot easier to interpret, the colour aesthetic (here `fill`) is not strictly necessary to understand the data represented in @fig-PurpleBarplot. After all, the two `gender` subgroups are already distinguished by the `facet_wrap()` layer. That's not necessarily a bad thing, but you must consider whether such redundant elements facilitate the interpretation of the data visualised or not.
 
-In some cases, colour is used as the *only* way of identifying subgroups in the data, for example in a **stacked bar plot** (see @fig-ColourBarplot). In such cases, it is important to consider how the plot will be perceived by different people (see note on colour blindness below).
+In some cases, colour is used as the *only* way of identifying subgroups in the data, for example in a **stacked bar plot** (see @fig-ColourStackedBarplot). In such cases, it is important to consider how the plot will be perceived by different people (see note on colour blindness below).
 
 ```{r}
 #| fig-cap: "A bar plot with the default {ggplot2} colours"
-#| label: "fig-ColourBarplot"
+#| label: "fig-ColourStackedBarplot"
 #| source-line-numbers: "3,5"
 
 Dabrowska.data |> 
@@ -373,7 +379,7 @@ colorBlindness::displayAllColors(scales::hue_pal()(6))
 
 ```
 
-Using the {colorBlindness} package, we can immediately see that the default {scales} discrete palette that {ggplot2} used in @fig-ColourBarplot is not accessible to colour blind people (deuteranope and protanope), nor is it distinguishable when printed in grey-scale (desaturate). In contrast, our hand-picked colours from @fig-\*\* fare much better.
+Using the {colorBlindness} package, we can immediately see that the default {scales} discrete palette that {ggplot2} used in @fig-ColourBarplot is not accessible to colour blind people (deuteranope and protanope), nor is it distinguishable when printed in grey-scale (desaturate). In contrast, our hand-picked colours from @fig-PurpleBarplot fare much better.
 
 ```{r}
 #| fig-height: 3
@@ -395,6 +401,7 @@ Choosing an appropriate palette is not the only way to make your visualisations 
 #| code-fold: true
 #| code-summary: "Show {ggplot2} code to generate @fig-**"
 #| fig-height: 5
+#| label: "fig-PatternBarplot"
 
 #install.packages("ggpattern")
 library(ggpattern)
@@ -431,6 +438,7 @@ Some academic publishers still require grey-scale plots, in which case you will 
 ```{r}
 #| source-line-numbers: "7"
 #| fig-height: 4
+#| label: "fig-GreyBarplot"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, fill = Gender)) +
@@ -446,6 +454,7 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "7"
 #| fig-height: 4
+#| label: "fig-ViridisBarplot"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, fill = Gender)) +
@@ -461,6 +470,7 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "7"
 #| fig-height: 4
+#| label: "fig-ViridisTurboBarplot"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, fill = Gender)) +
@@ -480,6 +490,7 @@ If you like colours, check out the {paletteer} package [@hvitfeldtPaletteerCompr
 ```{r}
 #| source-line-numbers: "6"
 #| fig-height: 4
+#| label: "fig-BeyonceBarplot"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, fill = OccupGroup)) +
@@ -494,6 +505,7 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "6"
 #| fig-height: 4
+#| label: "fig-BridgetRileyBarplot"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, fill = OccupGroup)) +
@@ -508,6 +520,7 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "6"
 #| fig-height: 4
+#| label: "fig-JanelleBarplot"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, fill = OccupGroup)) +
@@ -522,6 +535,7 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "6"
 #| fig-height: 4
+#| label: "fig-FridaKahloBarplot"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, fill = OccupGroup)) +
@@ -536,6 +550,7 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "6"
 #| fig-height: 4
+#| label: "fig-KissBarplot"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, fill = OccupGroup)) +
@@ -550,6 +565,7 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "6"
 #| fig-height: 4
+#| label: "fig-SpeakNowBarplot"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, fill = OccupGroup)) +
@@ -673,6 +689,7 @@ For example, if we want to display the full names of the four occupational group
 #| source-line-numbers: "2-6,13"
 #| fig-width: 9
 #| fig-height: 3.5
+#| label: "fig-FlippedBarplot"
 
 Dabrowska.data |> 
   mutate(OccupGroup = fct_recode(OccupGroup,
@@ -696,6 +713,7 @@ The vast majority of statistical graphs use the Cartesian coordinate system. Pie
 ```{r}
 #| source-line-numbers: "8-13"
 #| fig-height: 4
+#| label: "fig-OccupGroupPieChart"
 
 Dabrowska.data |> 
   mutate(OccupGroup = fct_recode(OccupGroup,
@@ -743,7 +761,7 @@ But, first, let's think about **why** we visualise data. Data visualisation is a
 :::
 ::::::
 
-![Using the {ggplot2} package for data exploration (artwork by [\@allison_horst](https://allisonhorst.com/))](images/AHorst_ggplot2_explore.png){fig-alt="A group of fuzzy round monsters with binoculars, backpacks and guide books looking up a graphs flying around with wings (like birders, but with exploratory data visualizations). Stylized text reads “ggplot2: visual data exploration.”"}
+![Using the {ggplot2} package for data exploration (artwork by [\@allison_horst](https://allisonhorst.com/))](images/AHorst_ggplot2_explore.png){#fig-ExplorerMonster fig-alt="A group of fuzzy round monsters with binoculars, backpacks and guide books looking up a graphs flying around with wings (like birders, but with exploratory data visualizations). Stylized text reads “ggplot2: visual data exploration.”"}
 
 Depending on the type of data that we want to visualise and why, we can choose different types of plots. In the following, we will first look at how we can plot **categorical variables** and **discrete numeric variables**, before we move on to visualising **continuous numeric variables** and combinations of different types of variables (see @sec-Variables).
 
@@ -754,7 +772,7 @@ As we saw in @Sec-Syntax, bar plots (also called **bar charts**) are a great way
 ::: callout-caution
 #### Task 10.1
 
-Study @fig-\*\* and think about which {ggplot2} functions were used to generate it. 🤔
+Study @fig-NativeLanguagesBarplot and think about which {ggplot2} functions were used to generate it. 🤔
 
 Then, click on the "Show `R` code" button to compare your intuitions with the actual code. Note that there may well be more than one solution: So do try out your version and see if spot any differences!
 :::
@@ -763,6 +781,7 @@ Then, click on the "Show `R` code" button to compare your intuitions with the ac
 #| code-fold: true
 #| code-summary: "Show `R` code."
 #| fig-width: 9
+#| label: "fig-NativeLanguagesBarplot"
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -781,7 +800,7 @@ Dabrowska.data |>
   theme_minimal(base_size = 16)
 ```
 
-To create @fig-\*\*, we first reordered the factor levels of the `NativeLg` variable using two functions from the {forcats} package (see @sec-Factors): `fct_infreq()` is first used to order the factors according to their frequency (by default, they are sorted alphabetically), and then `fct_rev()` is used to reverse that order. The latter step is needed because the `coord_flip()` functions reverses everything. You can check the order of a factor's level using the function `levels()`. Note that, if two levels have the same number of occurrences, they are ordered alphabetically (as seen in @fig-\*\*).
+To create @fig-NativeLanguagesBarplot, we first reordered the factor levels of the `NativeLg` variable using two functions from the {forcats} package (see @sec-Factors): `fct_infreq()` is first used to order the factors according to their frequency (by default, they are sorted alphabetically), and then `fct_rev()` is used to reverse that order. The latter step is needed because the `coord_flip()` functions reverses everything. You can check the order of a factor's level using the function `levels()`. Note that, if two levels have the same number of occurrences, they are ordered alphabetically (as seen in @fig-NativeLanguagesBarplot).
 
 ```{r}
 levels(Dabrowska.data$NativeLg)
@@ -805,6 +824,7 @@ levels(fct_rev(fct_infreq(Dabrowska.data$NativeLg)))
 ```{r}
 #| code-fold: true
 #| code-summary: "Show `R` code for the bar plot"
+#| label: "fig-Barplot"
 
 Dabrowska.data |> 
   mutate(OccupGroup = fct_recode(OccupGroup,
@@ -836,6 +856,7 @@ Dabrowska.data |>
 ```{r}
 #| code-fold: true
 #| code-summary: "Show `R` code for the pie chart"
+#| label: "fig-PieChart"
 
 Dabrowska.data |> 
   mutate(OccupGroup = fct_recode(OccupGroup,
@@ -864,7 +885,7 @@ check_question(c("The bar plot because humans are better at distinguishing small
                type = "check",
                button_label = "Check answer",
                random_answer_order = TRUE,
-               right = "Correct! Bar charts are better suited than pie charts because humans are much better at estimating lengths than angles (see @sec-coordinates).",
+               right = "Correct! Bar charts are better suited than pie charts because humans are much better at estimating lengths than angles (see @sec-coordinates), and the labels are immediately next to the corresponding bars here.",
                wrong = "No, try again.")
 check_hint("Check out @sec-coordinates.", 
            hint_title = "🦉 Hover over the owl for a first hint.",
@@ -940,7 +961,7 @@ Dabrowska.data |>
   theme(legend.position = "none")
 ```
 
-[**c.**]{style="color:green;"} Create a pie chart that shows the distribution of occupational groups among male participants (as shown in @fig-\*\*). Which line of code is essential to create a pie chart using {ggplot2}?
+[**c.**]{style="color:green;"} Create a pie chart that shows the distribution of occupational groups among male participants (as shown in @fig-OccupGroupPieChart). Which line of code is essential to create a pie chart using {ggplot2}?
 
 ```{r}
 #| echo: false
@@ -973,7 +994,7 @@ Dabrowska.data |>
     theme_void()
 ```
 
-[**d.**]{style="color:green;"} Transform the pie chart that you just created in [Q10.5]{style="color:green;"} to make it look like @fig-\*\*. To achieve this, wrangle the data *before* piping it into the `data` argument of the `ggplot()` function. Which {tidyverse} function can you use to rename the labels?
+[**d.**]{style="color:green;"} Transform the pie chart that you just created in [c.]{style="color:green;"} to make it look like @fig-\*\*. To achieve this, wrangle the data *before* piping it into the `data` argument of the `ggplot()` function. Which {tidyverse} function can you use to rename the labels?
 
 ```{r}
 #| echo: false
@@ -1361,7 +1382,7 @@ Density plots are particularly useful to examine distribution shapes visually. L
 ::: callout-caution
 #### Task 10.4
 
-[**a.**]{style="color:green;"} Which line of code needs to be added to the code used to generate @fig-GrammarDensity to produce a two-panel density plot like @fig-\*\*?
+[**a.**]{style="color:green;"} Which line of code needs to be added to the code used to generate @fig-GrammarDensity to produce a two-panel density plot like @fig-GrammarTwoPanelDensity?
 
 ```{r echo=FALSE}
 check_question("facet_wrap(~ Group)",
@@ -1380,6 +1401,7 @@ check_question("facet_wrap(~ Group)",
 ```{r}
 #| code-fold: true
 #| code-summary: "Show sample code to help you answer Q10.12."
+#| label: "fig-GrammarTwoPanelDensity"
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = Grammar)) +
@@ -1454,9 +1476,11 @@ The help file of each `geom_` function provides a list of the aesthetics argumen
 >
 > Learn more about setting these aesthetics in `vignette("ggplot2-specs")`. \[...\]
 
-@fig-\*\* is an example of a density plot with some highly customised aesthetics. It goes without saying that, just because you *can* customise many aesthetic aspects of a `geom_` layer, it doesn't necessarily mean that it's a good idea to do so! 🙃
+@fig-SillyDensityPlot is an example of a density plot with some highly customised aesthetics. It goes without saying that, just because you *can* customise many aesthetic aspects of a `geom_` layer, it doesn't necessarily mean that it's a good idea to do so! 🙃
 
 ```{r}
+#| label: "fig-SillyDensityPlot"
+
 Dabrowska.data |> 
   ggplot(mapping = aes(x = Blocks)) +
     geom_density(colour = "purple",
@@ -1468,9 +1492,12 @@ Dabrowska.data |>
     labs(x = "Non-verbal IQ (Blocks) test results")
 ```
 
-It can, however, be very useful to help identify different elements within a complex plot as in @fig-\*\*.
+It can, however, be very useful to help identify different elements within a complex plot as in @fig-UsefulDensityPlot.
 
 ```{r}
+
+#| label: "fig-UsefulDensityPlot"
+
 mean.blocks <- Dabrowska.data |>
   group_by(Group) |>
   summarise(mean = mean(Blocks))
@@ -1492,18 +1519,19 @@ Dabrowska.data |>
   labs(x = "Non-verbal IQ test (Blocks) test results")
 ```
 
-Note that, to create @fig-\*\*, we first calculated the mean Blocks scores for both L1 and L2 participants and stored these values in a new object called `mean.blocks`. These values are then called within the `geom_vline()` function, which draws vertical lines. In other words, in addition to setting `aes()` mappings within the `ggplot()` function, we can also add additional data mappings within a specific `geom_` function. It's no exaggeration to say that, with {ggplot2}, pretty much anything is possible!
+Note that, to create @fig-UsefulDensityPlot, we first calculated the mean Blocks scores for both L1 and L2 participants and stored these values in a new object called `mean.blocks`. These values are then called within the `geom_vline()` function, which draws vertical lines. In other words, in addition to setting `aes()` mappings within the `ggplot()` function, we can also add additional data mappings within a specific `geom_` function. It's no exaggeration to say that, with {ggplot2}, pretty much anything is possible!
 :::
 
 ### Boxplots
 
 In @sec-IQR, we saw that **boxplots** are a great way to visualise both the central tendency (median) of a numeric variable and the spread around this central tendency (IQR). There is an in-built function to create boxplots in {ggplot2}. No prizes will be awarded for guessing that the necessary `geom_` function is called... `geom_density()`! 😆
 
-Whilst it's possible to plot just a single boxplot, that rarely makes sense. In fact, the `x`-axis in @fig-\*\* is entirely nonsensical! The distribution of `Grammar` scores across the entire dataset is much better visualised as a histogram or density plot (see @sec-Density) than as a single boxplot.
+Whilst it's possible to plot just a single boxplot, that rarely makes sense. In fact, the `x`-axis in @fig-GrammarBoxPlot is entirely nonsensical! The distribution of `Grammar` scores across the entire dataset is much better visualised as a histogram or density plot (see @sec-Density) than as a single boxplot.
 
 ```{r}
 #| fig-height: 3
 #| fig-width: 4
+#| label: "fig-GrammarBoxPlot"
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar)) +
@@ -1513,11 +1541,12 @@ Dabrowska.data |>
 
 ```
 
-If, however, we want to compare the `Grammar` scores of two or more different groups of participants, a boxplot makes a lot more sense (see @fig-\*\*). To achieve this, we add a second argument within the `aes()` function, which maps the values of the `Group` variable (which are either "L1" or "L2") to the plot's `x`-axis.
+If, however, we want to compare the `Grammar` scores of two or more different groups of participants, a boxplot makes a lot more sense (see @fig-GrammarBoxPlotGroup). To achieve this, we add a second argument within the `aes()` function, which maps the values of the `Group` variable (which are either "L1" or "L2") to the plot's `x`-axis.
 
 ```{r}
 #| fig-height: 3
 #| fig-width: 5
+#| label: "fig-GrammarBoxPlotGroup"
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -1527,14 +1556,14 @@ Dabrowska.data |>
   labs(y = "Grammar scores")
 ```
 
-The meaning conveyed by @fig-\*\* is clear: there is hardly any difference between the average (median) grammar comprehension test scores of L1 and L2 participants in @DabrowskaExperienceAptitudeIndividual2019's dataset. Indeed, we can see that the thicker, middle lines within each boxplot are almost at the same level. However, the two boxplots have very different shapes and overall lengths: the scores of the 50% of L2 participants who scored below the median are much more spread out than those of the L1 participants who obtained below-average scores. This makes intuitive sense: native English speakers living in the UK who volunteer for such a study are likely to all have a fairly high to very high understanding of English grammar. By contrast, the L2 speakers are much more varied: some are highly proficient in English, while others are not. This range of proficiency could due to all sorts of reasons.
+The meaning conveyed by @fig-GrammarBoxPlotGroup is clear: there is hardly any difference between the average (median) grammar comprehension test scores of L1 and L2 participants in @DabrowskaExperienceAptitudeIndividual2019's dataset. Indeed, we can see that the thicker, middle lines within each boxplot are almost at the same level. However, the two boxplots have very different shapes and overall lengths: the scores of the 50% of L2 participants who scored below the median are much more spread out than those of the L1 participants who obtained below-average scores. This makes intuitive sense: native English speakers living in the UK who volunteer for such a study are likely to all have a fairly high to very high understanding of English grammar. By contrast, the L2 speakers are much more varied: some are highly proficient in English, while others are not. This range of proficiency could due to all sorts of reasons.
 
 What are some of the possible reasons that you can think of? 🤔 Make a note of them as we will explore these hypotheses further in @sec-Scatterplots.
 
 ::: callout-tip
 #### Quiz time! {.unnumbered}
 
-[**Q10.3**]{style="color:green;"} Create a boxplot to compare how participants in different occupational groups (`OccupGroup`) performed on the English grammar test. Which part of the code used to produce @fig-\*\* <!--# @Vishar this should be the boxplot just above] do you need to modify to achieve this? -->
+[**Q10.3**]{style="color:green;"} Create a boxplot to compare how participants in different occupational groups (`OccupGroup`) performed on the English grammar test. Which part of the code used to produce @fig-GrammarBoxPlotGroup <!--# @Vishar this should be the boxplot just above] do you need to modify to achieve this? -->
 
 ```{r echo=FALSE}
 check_question("x = Group",
@@ -1565,10 +1594,11 @@ Dabrowska.data |>
   labs(y = "Grammar scores")
 ```
 
-[**Q10.4**]{style="color:green;"} The code below was used to create @fig-\*\*, except that the arguments of the `aes()` function have been deleted. Which data mappings were specified inside the `aes()` function to produce @fig-\*\*?
+[**Q10.4**]{style="color:green;"} The code below was used to create @fig-OccupGroupBoxPlot, except that the arguments of the `aes()` function have been deleted. Which data mappings were specified inside the `aes()` function to produce @fig-OccupGroupBoxPlot?
 
 ```{r}
 #| eval: false
+#| label: "fig-OccupGroupBoxPlot"
 
 Dabrowska.data |>
   mutate(Group = fct_recode(Group,
@@ -1722,6 +1752,7 @@ ggplot(data = Dabrowska.data,
 ```{r}
 #| echo: false
 #| fig-height: 7
+#| label: "fig-GrammarViolinPlot"
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -1734,7 +1765,7 @@ Dabrowska.data |>
 :::
 ::::::
 
-By themselves, **violin plots** are rather abstract representations of variable distributions (see @fig-\*\* <!--# @Vishar, this should be the plot above -->. However, in combination with **boxplots**, they can be an effective way to visualise and compare data distributions. Note that, here, the order of the layers is important because, if we first draw the boxplots and then the violin plots, the violin plots will mask the boxplots completely.
+By themselves, **violin plots** are rather abstract representations of variable distributions (see @fig-GrammarViolinPlot). However, in combination with **boxplots**, they can be an effective way to visualise and compare data distributions. Note that, here, the order of the layers is important because, if we first draw the boxplots and then the violin plots, the violin plots will mask the boxplots completely.
 
 :::::: columns
 ::: {.column width="49%"}
@@ -1806,7 +1837,7 @@ Dabrowska.data |>
 
 At first glance, it would seem that our data does not support our initial hypothesis: among the L2 participants, there is no obvious trend suggesting that those who scored lowest on the grammar test were the ones who spent fewer years in formal education.-
 
-In @fig-\*\*, we add a regression line (in blue) per panel to our facetted scatter plot using the `geom_smooth(method = "lm")` function. This allows us to visualise the **correlation** between participants' grammar scores and the number of years they spent in formal education. Regression lines in scatter plots are interpreted as follows:
+In @fig-GrammarScatterPlot, we add a regression line (in blue) per panel to our facetted scatter plot using the `geom_smooth(method = "lm")` function. This allows us to visualise the **correlation** between participants' grammar scores and the number of years they spent in formal education. Regression lines in scatter plots are interpreted as follows:
 
 -   If the regression line goes up, there is a **positive correlation** between the two numeric variables. ↗️
 -   If the line goes down, there is a **negative correlation**. ↘️
@@ -1815,6 +1846,8 @@ In @fig-\*\*, we add a regression line (in blue) per panel to our facetted scatt
 -   Be aware that even very strong correlations do not necessarily imply (direct) causation. ❌
 
 ```{r}
+#| label: "fig-GrammarScatterPlot"
+
 Dabrowska.data |> 
   ggplot(mapping = aes(x = EduTotal, 
                        y = Grammar)) +
@@ -1828,7 +1861,7 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-The regression lines added by the `geom_smooth(method = "lm")` function are **lines of best fit**: the better the fit, the closer the points are to the line. If few points are on or close to the line, it means that the regression line is not a good approximation of the relationship between the two variables. This is clearly the case in @fig-\*\* - especially in the L2 panel (more on this in @sec-Correlations). Our data visualisation therefore do not support our hypothesis that, in the @DabrowskaExperienceAptitudeIndividual2019 data, grammar scores are more strongly associated with the level of formal education among the L2 speakers than among the L1 speakers. If anything, our data shows the opposite pattern! Our line of fit is both closer to the data points and steeper in the L1 panel than in the L2 panel.
+The regression lines added by the `geom_smooth(method = "lm")` function are **lines of best fit**: the better the fit, the closer the points are to the line. If few points are on or close to the line, it means that the regression line is not a good approximation of the relationship between the two variables. This is clearly the case in @fig-GrammarScatterPlot - especially in the L2 panel (more on this in @sec-Correlations). Our data visualisation therefore do not support our hypothesis that, in the @DabrowskaExperienceAptitudeIndividual2019 data, grammar scores are more strongly associated with the level of formal education among the L2 speakers than among the L1 speakers. If anything, our data shows the opposite pattern! Our line of fit is both closer to the data points and steeper in the L1 panel than in the L2 panel.
 
 So far, all of our data visualisations have only displayed the characteristics of the collected data. In other words, they display **descriptive statistics** (see Chapter 8) that do not allow us to make inferences about other participants who were not tested as part of @DabrowskaExperienceAptitudeIndividual2019's study. Tests of statistical significance, including of correlations, are introduced in the following chapter.
 
@@ -1861,7 +1894,7 @@ check_hint("You'll find the answer in [Section 10.*](https://elenlefoll.github.i
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show sample code to answer Q10.16."
+#| code-summary: "Show sample code to answer Q10.5."
 #| eval: false
 
 Dabrowska.data |> 
@@ -1908,7 +1941,7 @@ check_hint("To answer this question, you need to filter the data to only retain 
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show sample code to answer **."
+#| code-summary: "Show sample code to answer Q10.7."
 #| eval: false
 
 Dabrowska.data |> 
@@ -1938,7 +1971,7 @@ check_hint("To answer this question, it's worth revising relational operators (s
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show sample code to answer Q10.17."
+#| code-summary: "Show sample code to answer Q10.8."
 #| eval: false
 
 Dabrowska.data |> 
@@ -1975,7 +2008,7 @@ check_hint("To answer this question, you should ask yourself: Does the regressio
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show sample code to answer Q10.18."
+#| code-summary: "Show sample code to answer Q10.9."
 #| eval: false
 
 Dabrowska.data |> 
@@ -2040,13 +2073,14 @@ Word clouds are widely used in the media and corporate world, but they are much 
 :::: {.callout-note collapse="true"}
 #### Going further: Using `geom_text()`
 
-We have seen that, on a scatter plot, each point represents an observation, in our case, a participant. For instance, in @fig-\*\*, each point represents an L2 participant and displays their age and grammar comprehension test score. In addition, we can colour the points according to their native language family.
+We have seen that, on a scatter plot, each point represents an observation, in our case, a participant. For instance, in @fig-ColourScatterPlot, each point represents an L2 participant and displays their age and grammar comprehension test score. In addition, we can colour the points according to their native language family.
 
 ```{r}
 #| code-fold: true
 #| code-summary: "See `R` code."
 #| fig-height: 4
 #| fig-width: 8
+#| label: "fig-ColourScatterPlot"
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -2068,6 +2102,7 @@ Instead of plotting points on the scatter plot, we can plot text. Thus, instead 
 #| fig-height: 4
 #| fig-width: 8
 #| source-line-numbers: "6-7"
+#| label: "fig-TextScatterPlot"
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -2083,7 +2118,7 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-Clearly, there are too many L2 participants for fig-\*\* <!--# @Vishar, plot above --> to be legible. For now, we will therefore focus on female L2 participants only. Moreover, we can see that there is dense cluster of L2 participants who are young and scored very high on the grammar comprehension test. In this exploratative analysis, we will therefore focus on female participants who obtained fewer than 90 points on the test.
+Clearly, there are too many L2 participants for @fig-TextScatterPlot to be legible. For now, we will therefore focus on female L2 participants only. Moreover, we can see that there is dense cluster of L2 participants who are young and scored very high on the grammar comprehension test. In this exploratative analysis, we will therefore focus on female participants who obtained fewer than 90 points on the test.
 
 ```{r}
 #| code-fold: true
@@ -2091,6 +2126,7 @@ Clearly, there are too many L2 participants for fig-\*\* <!--# @Vishar, plot abo
 #| fig-height: 4
 #| fig-width: 8
 #| source-line-numbers: "3,13"
+#| label: "fig-TextScatterPlot2"
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -2108,7 +2144,7 @@ ggplot(aes(x = Age,
   theme_bw()
 ```
 
-Note that we had to expand the limits of the *x*-axis in order for labels of the youngest and oldest participants to be displayed in full on fig-\*\*. Still, there are a few labels that overlap nonetheless. If this bothers you, you'll be pleased to hear that there is a handy {ggplot2} extension called {[ggrepel](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html)}, which was designed to avoid text labels overlapping.
+Note that we had to expand the limits of the *x*-axis in order for labels of the youngest and oldest participants to be displayed in full on @fig-TextScatterPlot2. Still, there are a few labels that overlap nonetheless. If this bothers you, you'll be pleased to hear that there is a handy {ggplot2} extension called {[ggrepel](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html)}, which was designed to avoid text labels overlapping.
 
 ::: column-margin
 ![Hex sticker of the {[ggrepel](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html)} package featuring a red pin attaching a label](images/hex_ggrepel.svg){width="95"}
@@ -2120,6 +2156,7 @@ Note that we had to expand the limits of the *x*-axis in order for labels of the
 #| source-line-numbers: "2,11"
 #| fig-height: 4
 #| fig-width: 8
+#| label: "fig-TextScatterPlot3"
 
 #install.packages("ggrepel")
 library(ggrepel)
@@ -2143,15 +2180,16 @@ ggplot(aes(x = Age,
 
 ### Complex plots {#sec-CombiningGeoms}
 
-Part of the magic of the Grammar of Graphics is that we can easily **combine** **different geometries** and **aesthetics** to create highly informative graphs. If you just read about the `geom_text()` function (see @fig-\*\* <!--# @Vishar, please link to the last plot in the geom_text() callout box above -->), then you have already seen how this can work.
+Part of the magic of the Grammar of Graphics is that we can easily **combine** **different geometries** and **aesthetics** to create highly informative graphs. If you just read about the `geom_text()` function (see @fig-TextScatterPlot3), then you have already seen how this can work.
 
-@Fig-\*\* is another example. In this plot, we combine `geom_boxplot()` with `geom_point()` to see both the defining characteristics of the distributions of grammar test scores among L1 and L2 participants, as well as the exact score of each individual participant.
+@Fig-GrammarPointBoxplot is another example. In this plot, we combine `geom_boxplot()` with `geom_point()` to see both the defining characteristics of the distributions of grammar test scores among L1 and L2 participants, as well as the exact score of each individual participant.
 
 By default, the `geom_boxplot()` function plots dots for any outliers. Since we are now also plotting *all* the data points using the `geom_point()` function, we need to switch off this option, otherwise the outliers will be plotted twice.
 
 ```{r}
 #| fig-height: 4
 #| fig-width: 4
+#| label: "fig-GrammarPointBoxplot"
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -2170,6 +2208,7 @@ When there are too many points overlapping, even adding some transparency to the
 #| fig-height: 4
 #| fig-width: 4
 #| source-line-numbers: "5-7"
+#| label: "fig-JitteredGrammar"
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -2189,6 +2228,7 @@ We can also map the colour of the jittered points to another categorical variabl
 #| fig-height: 4
 #| fig-width: 5
 #| source-line-numbers: "4"
+#| label: "fig-JitteredGrammarGender"
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -2204,14 +2244,15 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-@fig-\*\* allows us to see that the lowest grammar comprehension test scores among L1 participants come from male participants, whereas the lowest scores in the L2 group come from female participants. Can you think of why this might be? 🤔 Make a note of your hypothesis as you will have a chance to explore it further in @sec-InteractivePlots.
+@fig-JitteredGrammarGender allows us to see that the lowest grammar comprehension test scores among L1 participants come from male participants, whereas the lowest scores in the L2 group come from female participants. Can you think of why this might be? 🤔 Make a note of your hypothesis as you will have a chance to explore it further in @sec-InteractivePlots.
 
-We can, in theory, visualise even more of our data by adding a **shape** `aesthetics` to the `geom_jitter()` (see @fig-\*\*). However, increased plot complexity does not necessarily result in more meaningful or effective statistical graphics. How effective is @fig-\*\* in your opinion?
+We can, in theory, visualise even more of our data by adding a **shape** `aesthetics` to the `geom_jitter()` (see @fig-JitteredGrammarGender). However, increased plot complexity does not necessarily result in more meaningful or effective statistical graphics. How effective is @fig-JitteredGrammarComplex in your opinion?
 
 ```{r}
 #| fig-height: 5
 #| fig-width: 5
 #| source-line-numbers: "7"
+#| label: "fig-JitteredGrammarComplex"
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -2254,11 +2295,12 @@ library(plotly)
 library(plotly)
 ```
 
-Then, all you need to do is create and save a `ggplot` object, and call that object with the `ggplotly()` function. In RStudio, your interactive plot will be displayed in the Viewer pane. Hover your mouse over the data points of @fig-\*\* to explore the data interactively. You will see that, in addition to the variables mapped onto the plot itself, the variable mapped onto the `label` aesthetics (`OccupGroup`) also appears when you hover the mouse over any single data point.
+Then, all you need to do is create and save a `ggplot` object, and call that object with the `ggplotly()` function. In RStudio, your interactive plot will be displayed in the Viewer pane. Hover your mouse over the data points of @fig-InteractivePlot to explore the data interactively. You will see that, in addition to the variables mapped onto the plot itself, the variable mapped onto the `label` aesthetics (`OccupGroup`) also appears when you hover the mouse over any single data point.
 
 ```{r}
 #| eval: false
 #| source-line-numbers: "1,15"
+#| label: "fig-InteractivePlot"
 
 myplot <- Dabrowska.data |> 
   ggplot(mapping = aes(y = Grammar, 
