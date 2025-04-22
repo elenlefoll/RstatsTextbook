@@ -17,7 +17,7 @@ One of the advantages of working in `R` is that it allows us to create highly cu
 ![Hex sticker of the [{ggplot2}](https://ggplot2.tidyverse.org/) package](images/hex_ggplot2.png){#fig-hexggplot2 width="100" fig-alt="The hexagonal logo of the ggplot2 package features a graph with dots that are connected by a line."}
 :::
 
-This chapter is divided into two parts: the first explains the [**syntax**](@sec-syntax) of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] and how the {ggplot2} package works, while the second part focuses on the [**semantics**](@sect-semantics) of statistical graphics and provides an introduction to the many different types of data visualisations that can be created using the package.
+This chapter is divided into two parts: the first explains the [**syntax**](https://elenlefoll.github.io/RstatsTextbook/10_Dataviz.html#sec-syntax) of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] and how the {ggplot2} package works, while the second part focuses on the [**semantics**](https://elenlefoll.github.io/RstatsTextbook/10_Dataviz.html#sec-semantics) of statistical graphics and provides an introduction to the many different types of data visualisations that can be created using the package.
 
 ### Chapter overview {.unnumbered}
 
@@ -37,16 +37,16 @@ In this chapter, you will learn how to:
 ::: callout-warning
 ### Prerequisites
 
-This chapter assumes that you are familiar with the concepts of descriptive statistics explained in Chapter 8, and the use of the data wrangling functions introduced in Chapter 9.
+This chapter assumes that you are familiar with the concepts of descriptive statistics explained in @sec-DescRiptiveStats, and the use of the data wrangling functions introduced in @sec-DataWrangling.
 
 All examples, tasks, and quiz questions are based on data from:
 
 > Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72--100. <https://doi.org/10.1111/lang.12323>.
 
-Our starting point for this chapter is the wrangled combined dataset that we created and saved in Chapter @sec-DataWrangling. Follow the instructions in this chapter to create this `R` object or download `combined_L1_L2_data.rds` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/blob/main/data/processed/combined_L1_L2_data.rds){.uri}.
+Our starting point for this chapter is the wrangled combined dataset that we created and saved in @sec-DataWrangling. Follow the instructions in this chapter to create this `R` object or download `combined_L1_L2_data.rds` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/blob/main/data/processed/combined_L1_L2_data.rds){.uri}.
 :::
 
-Before we begin, we must load the `combined_L1_L2_data.rds` file that we created and saved in Chapter @sec-DataWrangling. This file contains the data of all the L1 and L2 participants of @DabrowskaExperienceAptitudeIndividual2019. The categorical variables are stored as factors and obvious data entry inconsistencies and typos have been corrected (see Chapter @sec-DataWrangling).
+Before we begin, we must load the `combined_L1_L2_data.rds` file that we created and saved in @sec-DataWrangling. This file contains the data of all the L1 and L2 participants of @DabrowskaExperienceAptitudeIndividual2019. The categorical variables are stored as factors and obvious data entry inconsistencies and typos have been corrected (see @sec-DataWrangling).
 
 ```{r}
 library(here)
@@ -425,7 +425,7 @@ Dabrowska.data |>
 # If you get the error message "Error in seq.default(from, to, by) : invalid '(to - from)/by'" when trying to run this chunk of code, this is because your Plots pane in RStudio is not large enough to accommodate the plot. Increase its size and it should work (see also https://stackoverflow.com/questions/73960726/error-in-seq-defaultfrom-to-by-invalid-to-from-by-ggpattern).
 ```
 
-Finally, it is important to remember that colour blindness is by no means the only type of visual impairment you should consider when creating visualisations. Wordlwide, far more people are affected by **blindness** and **low vision**. Chapter 13 explains how to add **alternative texts** (alt text) to plots and images. Many people with visual impairments rely on screen readers that use these alternative texts to provide audio descriptions of images and plots. These alternative texts can also improve the user experience when there are internet connection issues and images do not load properly or quickly enough.
+Finally, it is important to remember that colour blindness is by no means the only type of visual impairment you should consider when creating visualisations. Wordlwide, far more people are affected by **blindness** and **low vision**. @sec-LiteRateProgramming explains how to add **alternative texts** (alt text) to plots and images. Many people with visual impairments rely on screen readers that use these alternative texts to provide audio descriptions of images and plots. These alternative texts can also improve the user experience when there are internet connection issues and images do not load properly or quickly enough.
 :::
 
 Some academic publishers still require grey-scale plots, in which case you will want to use the **scale** layer `scale_fill_grey()`. Alternatively, the colour palettes of the {viridis} package (see information box on colour blindness) render well in grey, too. The {viridis} function for a discrete colour scale (as needed for a categorical variable such as `Gender`) can be called up using the `scale_fill_viridis_d()` function. With the "option" argument, you can switch between eight different viridis palettes ("magma", "inferno", "plasma", "cividis", "rocket", "turbo").
@@ -739,9 +739,9 @@ But, first, let's think about **why** we visualise data. Data visualisation is a
 
 -   To explore your data
 -   To detect data processing errors and outliers
--   To check assumptions of statistical tests or models (see Chapters 11 and 12)
+-   To check assumptions of statistical tests or models (see @sec-InfeRentialStats and @sec-LineaRregression)
 -   To examine variation across different subsets of the data
--   To better interpret the results of statistical analyses (see Chapter 12)
+-   To better interpret the results of statistical analyses (see @sec-LineaRregression)
 :::
 
 ::: {.column width="10%"}
@@ -1858,7 +1858,7 @@ Dabrowska.data |>
 
 The regression lines added by the `geom_smooth(method = "lm")` function are **lines of best fit**: the better the fit, the closer the points are to the line. If few points are on or close to the line, it means that the regression line is not a good approximation of the relationship between the two variables. This is clearly the case in @fig-GrammarScatterPlot - especially in the L2 panel (more on this in @sec-Correlations). Our data visualisation therefore do not support our hypothesis that, in the @DabrowskaExperienceAptitudeIndividual2019 data, grammar scores are more strongly associated with the level of formal education among the L2 speakers than among the L1 speakers. If anything, our data shows the opposite pattern! Our line of fit is both closer to the data points and steeper in the L1 panel than in the L2 panel.
 
-So far, all of our data visualisations have only displayed the characteristics of the collected data. In other words, they display **descriptive statistics** (see Chapter 8) that do not allow us to make inferences about other participants who were not tested as part of @DabrowskaExperienceAptitudeIndividual2019's study. Tests of statistical significance, including of correlations, are introduced in the following chapter.
+So far, all of our data visualisations have only displayed the characteristics of the collected data. In other words, they display **descriptive statistics** (see @sec-DescRiptiveStats) that do not allow us to make inferences about other participants who were not tested as part of @DabrowskaExperienceAptitudeIndividual2019's study. Tests of statistical significance, including of correlations, are introduced in the following chapter.
 
 ::: callout-tip
 #### Quiz time!
@@ -2444,9 +2444,14 @@ ggsave("figures/BlocksDensityPlot.svg",
 
 ### Check your progress 🌟 {.unnumbered}
 
-Well done! You have successfully completed this chapter on data visualisation using the Grammar of Graphics approach. You answered [`r checkdown::insert_score()` out of \*20\*\* questions]{style="color:green;"} correctly.
+Well done! You have successfully completed this chapter on data visualisation using the Grammar of Graphics approach. You answered [`r checkdown::insert_score()` out of 9 questions]{style="color:green;"} correctly.
 
-<!--# Are you confident that you can...? @Vishar: Please write this section with the usual checkboxes and cross-references. -->
+Are you confident that you can...?
+
+-   [ ] Use the syntax of graphics (data, aesthetics, geometries, facet, scales, coordinates, and theme layers) to create and customise your graphs
+-   [ ] Create and interpret bar plots, histograms, density plots, violin plots, boxplots, scatter plots and facetted plots
+-   [ ] Creat and interpret word clouds, complex plots, and interactive plots
+-   [ ] Export and share your plots in various formats
 
 ::: callout-note
 ### Going further: Plotting your way to success 🗺️ {.unnumbered collapse="TRUE"}
