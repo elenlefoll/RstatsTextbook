@@ -1,6 +1,8 @@
 ---
 engine: knitr
 bibliography: references.bib
+html:
+  code-link: true
 ---
 
 # The Gramma`R` of Graphics {#sec-DataViz}
@@ -17,7 +19,7 @@ One of the advantages of working in `R` is that it allows us to create highly cu
 ![Hex sticker of the [{ggplot2}](https://ggplot2.tidyverse.org/) package](images/hex_ggplot2.png){#fig-hexggplot2 width="100" fig-alt="The hexagonal logo of the ggplot2 package features a graph with dots that are connected by a line."}
 :::
 
-This chapter is divided into two parts: the first explains the [**syntax**](@sec-syntax) of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] and how the {ggplot2} package works, while the second part focuses on the [**semantics**](@sect-semantics) of statistical graphics and provides an introduction to the many different types of data visualisations that can be created using the package.
+This chapter is divided into two parts: the first explains the [**syntax**](@Sec-Syntax) of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] and how the {ggplot2} package works, while the second part focuses on the [**semantics**](@sec-Semantics) of statistical graphics and provides an introduction to the many different types of data visualisations that can be created using the package.
 
 ### Chapter overview {.unnumbered}
 
@@ -41,7 +43,7 @@ This chapter assumes that you are familiar with the concepts of descriptive stat
 
 All examples, tasks, and quiz questions are based on data from:
 
-> Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72--100. <https://doi.org/10.1111/lang.12323>.
+> Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72-100. <https://doi.org/10.1111/lang.12323>.
 
 Our starting point for this chapter is the wrangled combined dataset that we created and saved in Chapter @sec-DataWrangling. Follow the instructions in this chapter to create this `R` object or download `combined_L1_L2_data.rds` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/blob/main/data/processed/combined_L1_L2_data.rds){.uri}.
 :::
@@ -61,7 +63,7 @@ library(checkdown)
 
 Check that your data is correctly imported by examining the output of `View(Dabrowska.data)` and `str(Dabrowska.data)`. Once you are satisfied that that's the case, we ready to get creative! 🎨
 
-## The syntax of graphics {#sec-syntax}
+## The syntax of graphics {#sec-Syntax}
 
 The syntax of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] is made up of **layers** (@fig-layers), which allow us to create highly effective and efficient data visualisations, while giving us lots of flexibility and control.
 
@@ -180,7 +182,7 @@ check_hint("Check out the function's help file to find out more about its possib
 :::
 
 ::: {.callout-note collapse="true"}
-#### What is alt-text and why is it important?
+#### What is alt-text and why is it important? {sec-Alt-text}
 
 **Alt-text**, or alternative text, is a concise description of an image used to make its informational content accessible to people with visual impairments. Using a screenreader programme, blind and visually impaired individuals can have the alt-text associated with an image read out to them.
 
@@ -193,7 +195,7 @@ A good alt-text aims to convey the main message and insights of the graph, allow
 
 Instead of using the **data** argument of the `ggplot()` function as we did above, we can **pipe** the data into the function's first argument (see @sec-Piping). Compare these two methods and their outputs.
 
-::: columns
+:::::: columns
 ::: {.column width="48%"}
 **Using the data argument of `ggplot()`**
 
@@ -225,7 +227,7 @@ Dabrowska.data |>
        y = "Number of participants")
 ```
 :::
-:::
+::::::
 
 You should have realised that the outputs are exactly the same. Piping the dataset into the `ggplot()` function, however, allows us to easily wrangle the data that we want to visualise 'on the fly', without transforming the data object itself. For example, we can use the tidyverse `filter()` function (see @sec-filter) to examine the distribution of occupational groups among L2 participants only (see @fig-\*\*).
 
@@ -418,7 +420,7 @@ Dabrowska.data |>
 # If you get the error message "Error in seq.default(from, to, by) : invalid '(to - from)/by'" when trying to run this chunk of code, this is because your Plots pane in RStudio is not large enough to accommodate the plot. Increase its size and it should work (see also https://stackoverflow.com/questions/73960726/error-in-seq-defaultfrom-to-by-invalid-to-from-by-ggpattern).
 ```
 
-Finally, it is important to remember that colour blindness is by no means the only type of visual impairment you should consider when creating visualisations. Wordlwide, far more people are affected by **blindness** and **low vision**. Chapter 13 explains how to add **alternative texts** (alt text) to plots and images. Many people with visual impairments rely on screen readers that use these alternative texts to provide audio descriptions of images and plots. These alternative texts can also improve the user experience when there are internet connection issues and images do not load properly or quickly enough.
+Finally, it is important to remember that colour blindness is by no means the only type of visual impairment you should consider when creating visualisations. Wordlwide, far more people are affected by **blindness** and **low vision**. Chapter 13 explains how to add **alternative texts** (alt-text) to plots and images. Many people with visual impairments rely on screen readers that use these alternative texts to provide audio descriptions of images and plots. These alternative texts can also improve the user experience when there are internet connection issues and images do not load properly or quickly enough.
 :::
 
 Some academic publishers still require grey-scale plots, in which case you will want to use the **scale** layer `scale_fill_grey()`. Alternatively, the colour palettes of the {viridis} package (see information box on colour blindness) render well in grey, too. The {viridis} function for a discrete colour scale (as needed for a categorical variable such as `Gender`) can be called up using the `scale_fill_viridis_d()` function. With the "option" argument, you can switch between eight different viridis palettes ("magma", "inferno", "plasma", "cividis", "rocket", "turbo").
@@ -709,13 +711,13 @@ Dabrowska.data |>
   theme_void()
 ```
 
-## The semantics of graphics {#sec-semantics}
+## The semantics of graphics {#sec-Semantics}
 
 So far, we have seen how the syntax of the Grammar of Graphics can be used to build statistical graphs layer by layer. We now turn to the **semantics** of graphics. As linguists are well placed to know, semantics is the study of **meaning**. In the Grammar of Graphics, the semantics of graphics is defined as "the meanings of the representative symbols and arrangements we use to display information" [@wilkinsonGrammarGraphics2005: 20]. In what follows, we will see how thinking about the semantics of graphics can help us to think about how the different components of a graph interact to convey insightful visual information from raw data. This will help us to make informed choices when choosing the geometries, scales, facets, and themes of our data visualisations.
 
 But, first, let's think about **why** we visualise data. Data visualisation is about more than just communicating the results of our analyses to **others** at the publication stage. In fact, good data visualisation can help **us** make informed decisions throughout the research process from the data wrangling stage to the evaluation of complex statistical models. Here are some reasons for visualising data. Can you think of others? 🤔
 
-::: columns
+:::::: columns
 ::: {.column width="40%"}
 **For yourself**
 
@@ -739,7 +741,7 @@ But, first, let's think about **why** we visualise data. Data visualisation is a
 -   To attract the reader's attention
 -   To allow the reader to reach their own conclusions
 :::
-:::
+::::::
 
 ![Using the {ggplot2} package for data exploration (artwork by [\@allison_horst](https://allisonhorst.com/))](images/AHorst_ggplot2_explore.png){fig-alt="A group of fuzzy round monsters with binoculars, backpacks and guide books looking up a graphs flying around with wings (like birders, but with exploratory data visualizations). Stylized text reads “ggplot2: visual data exploration.”"}
 
@@ -747,7 +749,7 @@ Depending on the type of data that we want to visualise and why, we can choose d
 
 ### Bar plots
 
-As we saw in @sec-syntax, bar plots (also called **bar charts**) are a great way to visualise **categorical variables**. We also saw that, when using horizontal writing systems, it is often easier to interpret a bar plot if its coordinates are flipped so that longer labels can be read more readily.
+As we saw in @Sec-Syntax, bar plots (also called **bar charts**) are a great way to visualise **categorical variables**. We also saw that, when using horizontal writing systems, it is often easier to interpret a bar plot if its coordinates are flipped so that longer labels can be read more readily.
 
 ::: callout-caution
 #### Task 10.1
@@ -791,12 +793,12 @@ levels(fct_rev(fct_infreq(Dabrowska.data$NativeLg)))
 
 <!--# @Vishar: What do you think of the idea of including the same barplot as above, but translated in Farsi or Arabic and with all the labels on the right? Good idea? Bad idea? I'd be interested to hear your thoughts. -->
 
-::: callout-tip
+::::::: callout-tip
 #### Quiz time! {.unnumbered}
 
 [**Q10.2**]{style="color:green;"} Compare the two plots below. Which one makes it easier to see which occupational group has the fewest participants and why?
 
-::: columns
+:::::: columns
 ::: {.column width="45%"}
 **Bar plot**
 
@@ -849,7 +851,7 @@ Dabrowska.data |>
     theme_void(base_size = 20) # This increases the font size.
 ```
 :::
-:::
+::::::
 
 ```{r echo=FALSE}
 check_question(c("The bar plot because humans are better at distinguishing small differences in lengths than in angles.",
@@ -871,7 +873,7 @@ check_hint("Two reasons are correct.",
            hint_title = "🐭 Click on the mouse for a second hint.")
 
 ```
-:::
+:::::::
 
 ::: callout-caution
 #### Task 10.2
@@ -1098,7 +1100,7 @@ ggplot(data = Dabrowska.data,
 ```
 :::
 
-::: callout-caution
+::::::::::: callout-caution
 #### Task 10.3
 
 [**a.**]{style="color:green;"} How many different scores did participants obtain on the English grammar test (as stored in the `Grammar` variable).
@@ -1218,7 +1220,7 @@ ggplot(data = Dabrowska.data,
   theme_minimal()
 ```
 
-::: columns
+:::::: columns
 ::: {.column width="48%"}
 **Script A**
 
@@ -1257,9 +1259,9 @@ ggplot(data = Dabrowska.data,
   theme(legend.position = "none")
 ```
 :::
-:::
+::::::
 
-::: columns
+:::::: columns
 ::: {.column width="48%"}
 **Script C**
 
@@ -1332,8 +1334,8 @@ ggplot(data = Dabrowska.data,
   theme_bw() +
   theme(legend.position = "none")
 ```
-:::
-:::
+::::::
+:::::::::::
 
 ### Density plots {#sec-Density}
 
@@ -1463,7 +1465,7 @@ Dabrowska.data |>
                 fill = "pink",
                 alpha = 0.8,
                 ) +
-    labs(x = "Non-verbal IQ test (Blocks) results")
+    labs(x = "Non-verbal IQ (Blocks) test results")
 ```
 
 It can, however, be very useful to help identify different elements within a complex plot as in @fig-\*\*.
@@ -1477,14 +1479,17 @@ Dabrowska.data |>
   ggplot(mapping = aes(x = Blocks, 
                        fill = Group,
                        colour = Group)) + 
-  geom_density(alpha = 0.5, 
+  geom_density(alpha = 0.6, 
                position = "identity") +
   geom_vline(data = mean.blocks, 
              aes(xintercept = mean, 
                  colour = Group), 
              linetype = "dashed",
              linewidth = 0.8) +
-  theme_bw()
+  scale_colour_viridis_d(option = "turbo") +
+  scale_fill_viridis_d(option = "turbo") +
+  theme_minimal() +
+  labs(x = "Non-verbal IQ test (Blocks) test results")
 ```
 
 Note that, to create @fig-\*\*, we first calculated the mean Blocks scores for both L1 and L2 participants and stored these values in a new object called `mean.blocks`. These values are then called within the `geom_vline()` function, which draws vertical lines. In other words, in addition to setting `aes()` mappings within the `ggplot()` function, we can also add additional data mappings within a specific `geom_` function. It's no exaggeration to say that, with {ggplot2}, pretty much anything is possible!
@@ -1639,7 +1644,7 @@ check_hint("This boxplot requires a total of four data mappings.",
  
 :::
 
-::: {.callout-note collapse="true"}
+::::::::::::::: {.callout-note collapse="true"}
 #### Going further: Dot plots and violin plots
 
 The {ggplot2} library offers many more `geom_` functions for you to explore. Here are two more types of graphs that are currently only rarely used in the language sciences, but which can be very effective ways to visualise the distribution of a numeric variable across different levels of a categorical variable.
@@ -1648,7 +1653,7 @@ The {ggplot2} library offers many more `geom_` functions for you to explore. Her
 
 In a dot plot, each data point (corresponding, here, to a single participant) is represented by a single dot. The size of each dot corresponds to the chosen **bin width**. This makes dot plots a combination of a boxplot (see @sec-IQR) and a histogram (see @sec-histograms).
 
-::: columns
+:::::: columns
 ::: {.column width="49%"}
 ```{r}
 #| eval: false
@@ -1685,7 +1690,7 @@ Dabrowska.data |>
     theme_bw(base_size = 18)
 ```
 :::
-:::
+::::::
 
 ##### Violin plots
 
@@ -1693,7 +1698,7 @@ The help file of the `geom_violin()` function describes violin plots as follows:
 
 > A violin plot is a compact display of a continuous distribution. It is a blend of [`geom_boxplot()`](http://127.0.0.1:19143/help/library/ggplot2/help/geom_boxplot) and [`geom_density()`](http://127.0.0.1:19143/help/library/ggplot2/help/geom_density): a violin plot is a mirrored density plot displayed in the same way as a boxplot.
 
-::: columns
+:::::: columns
 ::: {.column width="49%"}
 ```{r}
 #| eval: false
@@ -1727,11 +1732,11 @@ Dabrowska.data |>
     theme_bw(base_size = 18)
 ```
 :::
-:::
+::::::
 
 By themselves, **violin plots** are rather abstract representations of variable distributions (see @fig-\*\* <!--# @Vishar, this should be the plot above -->. However, in combination with **boxplots**, they can be an effective way to visualise and compare data distributions. Note that, here, the order of the layers is important because, if we first draw the boxplots and then the violin plots, the violin plots will mask the boxplots completely.
 
-::: columns
+:::::: columns
 ::: {.column width="49%"}
 ```{r}
 #| eval: false
@@ -1774,8 +1779,8 @@ Dabrowska.data |>
     theme_bw(base_size = 18)
 ```
 :::
-:::
-:::
+::::::
+:::::::::::::::
 
 ### Scatter plots {#sec-Scatterplots}
 
@@ -2032,7 +2037,7 @@ Word clouds are widely used in the media and corporate world, but they are much 
 -   Longer words appear larger simply due to their length.
 -   The human eye is not good at discerning small differences in font sizes.
 
-::: {.callout-note collapse="true"}
+:::: {.callout-note collapse="true"}
 #### Going further: Using `geom_text()`
 
 We have seen that, on a scatter plot, each point represents an observation, in our case, a participant. For instance, in @fig-\*\*, each point represents an L2 participant and displays their age and grammar comprehension test score. In addition, we can colour the points according to their native language family.
@@ -2134,7 +2139,7 @@ ggplot(aes(x = Age,
        caption = "(Subgroup analysis of female L2 participants with grammar scores below 90.)") +
   theme_bw()
 ```
-:::
+::::
 
 ### Complex plots {#sec-CombiningGeoms}
 
