@@ -2496,38 +2496,41 @@ Figure&nbsp;10.34
 </div>
 </div>
 </div>
-<p>It can, however, be very useful to help identify different elements within a complex plot as in <span class="quarto-unresolved-ref">?fig-UsefulDensityPlot</span>.</p>
+<p>It can, however, be very useful to help identify different elements within a complex plot as in <a href="#fig-UsefulDensityPlot" class="quarto-xref">Figure&nbsp;<span>10.35</span></a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb73" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "fig-UsefulDensityPlot"</span></span>
-<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>mean.blocks <span class="ot">&lt;-</span> Dabrowska.data <span class="sc">|&gt;</span></span>
-<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Group) <span class="sc">|&gt;</span></span>
-<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Blocks))</span>
-<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span></span>
-<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Blocks, </span>
-<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fill =</span> Group,</span>
-<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> Group)) <span class="sc">+</span> </span>
-<span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, </span>
-<span id="cb73-12"><a href="#cb73-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb73-13"><a href="#cb73-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">data =</span> mean.blocks, </span>
-<span id="cb73-14"><a href="#cb73-14" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">xintercept =</span> mean, </span>
-<span id="cb73-15"><a href="#cb73-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> Group), </span>
-<span id="cb73-16"><a href="#cb73-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
-<span id="cb73-17"><a href="#cb73-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb73-18"><a href="#cb73-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">option =</span> <span class="st">"turbo"</span>) <span class="sc">+</span></span>
-<span id="cb73-19"><a href="#cb73-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"turbo"</span>) <span class="sc">+</span></span>
-<span id="cb73-20"><a href="#cb73-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb73-21"><a href="#cb73-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Non-verbal IQ test (Blocks) test results"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>mean.blocks <span class="ot">&lt;-</span> Dabrowska.data <span class="sc">|&gt;</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Group) <span class="sc">|&gt;</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Blocks))</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span></span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Blocks, </span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fill =</span> Group,</span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> Group)) <span class="sc">+</span> </span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, </span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">data =</span> mean.blocks, </span>
+<span id="cb73-12"><a href="#cb73-12" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">xintercept =</span> mean, </span>
+<span id="cb73-13"><a href="#cb73-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> Group), </span>
+<span id="cb73-14"><a href="#cb73-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb73-15"><a href="#cb73-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb73-16"><a href="#cb73-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">option =</span> <span class="st">"turbo"</span>) <span class="sc">+</span></span>
+<span id="cb73-17"><a href="#cb73-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"turbo"</span>) <span class="sc">+</span></span>
+<span id="cb73-18"><a href="#cb73-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb73-19"><a href="#cb73-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Non-verbal IQ test (Blocks) test results"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="10_Dataviz_files/figure-html/unnamed-chunk-81-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-55"><img src="10_Dataviz_files/figure-html/unnamed-chunk-81-1.png" class="img-fluid figure-img" width="576"></a></p>
+<div id="fig-UsefulDensityPlot" class="quarto-float quarto-figure quarto-figure-center anchored" width="576">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-UsefulDensityPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="10_Dataviz_files/figure-html/fig-UsefulDensityPlot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-55" title="Figure&nbsp;10.35: "><img src="10_Dataviz_files/figure-html/fig-UsefulDensityPlot-1.png" id="fig-UsefulDensityPlot" class="img-fluid figure-img" width="576"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-UsefulDensityPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.35
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Note that, to create <span class="quarto-unresolved-ref">?fig-UsefulDensityPlot</span>, we first calculated the mean Blocks scores for both L1 and L2 participants and stored these values in a new object called <code>mean.blocks</code>. These values are then called within the <code>geom_vline()</code> function, which draws vertical lines. In other words, in addition to setting <code>aes()</code> mappings within the <code>ggplot()</code> function, we can also add additional data mappings within a specific <code>geom_</code> function. It’s no exaggeration to say that, with {ggplot2}, pretty much anything is possible!</p>
+<p>Note that, to create <a href="#fig-UsefulDensityPlot" class="quarto-xref">Figure&nbsp;<span>10.35</span></a>, we first calculated the mean Blocks scores for both L1 and L2 participants and stored these values in a new object called <code>mean.blocks</code>. These values are then called within the <code>geom_vline()</code> function, which draws vertical lines. In other words, in addition to setting <code>aes()</code> mappings within the <code>ggplot()</code> function, we can also add additional data mappings within a specific <code>geom_</code> function. It’s no exaggeration to say that, with {ggplot2}, pretty much anything is possible!</p>
 </div>
 </div>
 </div>
@@ -2535,7 +2538,7 @@ Figure&nbsp;10.34
 <section id="boxplots" class="level3" data-number="10.2.4">
 <h3 data-number="10.2.4" class="anchored" data-anchor-id="boxplots"><span class="header-section-number">10.2.4</span> Boxplots</h3>
 <p>In <a href="8_DescriptiveStats.html#sec-IQR" class="quarto-xref"><span>Section 8.3.2</span></a>, we saw that <strong>boxplots</strong> are a great way to visualise both the central tendency (median) of a numeric variable and the spread around this central tendency (IQR). There is an in-built function to create boxplots in {ggplot2}. No prizes will be awarded for guessing that the necessary <code>geom_</code> function is called… <code>geom_density()</code>! 😆</p>
-<p>Whilst it’s possible to plot just a single boxplot, that rarely makes sense. In fact, the <code>x</code>-axis in <a href="#fig-GrammarBoxPlot" class="quarto-xref">Figure&nbsp;<span>10.35</span></a> is entirely nonsensical! The distribution of <code>Grammar</code> scores across the entire dataset is much better visualised as a histogram or density plot (see <a href="#sec-Density" class="quarto-xref"><span>Section 10.2.3</span></a>) than as a single boxplot.</p>
+<p>Whilst it’s possible to plot just a single boxplot, that rarely makes sense. In fact, the <code>x</code>-axis in <a href="#fig-GrammarBoxPlot" class="quarto-xref">Figure&nbsp;<span>10.36</span></a> is entirely nonsensical! The distribution of <code>Grammar</code> scores across the entire dataset is much better visualised as a histogram or density plot (see <a href="#sec-Density" class="quarto-xref"><span>Section 10.2.3</span></a>) than as a single boxplot.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb74" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span></span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> Grammar)) <span class="sc">+</span></span>
@@ -2546,16 +2549,16 @@ Figure&nbsp;10.34
 <div id="fig-GrammarBoxPlot" class="quarto-float quarto-figure quarto-figure-center anchored" width="384">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-GrammarBoxPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="10_Dataviz_files/figure-html/fig-GrammarBoxPlot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-56" title="Figure&nbsp;10.35: "><img src="10_Dataviz_files/figure-html/fig-GrammarBoxPlot-1.png" id="fig-GrammarBoxPlot" class="img-fluid figure-img" width="384"></a>
+<a href="10_Dataviz_files/figure-html/fig-GrammarBoxPlot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-56" title="Figure&nbsp;10.36: "><img src="10_Dataviz_files/figure-html/fig-GrammarBoxPlot-1.png" id="fig-GrammarBoxPlot" class="img-fluid figure-img" width="384"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-GrammarBoxPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.35
+Figure&nbsp;10.36
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>If, however, we want to compare the <code>Grammar</code> scores of two or more different groups of participants, a boxplot makes a lot more sense (see <a href="#fig-GrammarBoxPlotGroup" class="quarto-xref">Figure&nbsp;<span>10.36</span></a>). To achieve this, we add a second argument within the <code>aes()</code> function, which maps the values of the <code>Group</code> variable (which are either “L1” or “L2”) to the plot’s <code>x</code>-axis.</p>
+<p>If, however, we want to compare the <code>Grammar</code> scores of two or more different groups of participants, a boxplot makes a lot more sense (see <a href="#fig-GrammarBoxPlotGroup" class="quarto-xref">Figure&nbsp;<span>10.37</span></a>). To achieve this, we add a second argument within the <code>aes()</code> function, which maps the values of the <code>Group</code> variable (which are either “L1” or “L2”) to the plot’s <code>x</code>-axis.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb75" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span></span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> Grammar, </span>
@@ -2567,16 +2570,16 @@ Figure&nbsp;10.35
 <div id="fig-GrammarBoxPlotGroup" class="quarto-float quarto-figure quarto-figure-center anchored" width="480">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-GrammarBoxPlotGroup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="10_Dataviz_files/figure-html/fig-GrammarBoxPlotGroup-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-57" title="Figure&nbsp;10.36: "><img src="10_Dataviz_files/figure-html/fig-GrammarBoxPlotGroup-1.png" id="fig-GrammarBoxPlotGroup" class="img-fluid figure-img" width="480"></a>
+<a href="10_Dataviz_files/figure-html/fig-GrammarBoxPlotGroup-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-57" title="Figure&nbsp;10.37: "><img src="10_Dataviz_files/figure-html/fig-GrammarBoxPlotGroup-1.png" id="fig-GrammarBoxPlotGroup" class="img-fluid figure-img" width="480"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-GrammarBoxPlotGroup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.36
+Figure&nbsp;10.37
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The meaning conveyed by <a href="#fig-GrammarBoxPlotGroup" class="quarto-xref">Figure&nbsp;<span>10.36</span></a> is clear: there is hardly any difference between the average (median) grammar comprehension test scores of L1 and L2 participants in <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>’s dataset. Indeed, we can see that the thicker, middle lines within each boxplot are almost at the same level. However, the two boxplots have very different shapes and overall lengths: the scores of the 50% of L2 participants who scored below the median are much more spread out than those of the L1 participants who obtained below-average scores. This makes intuitive sense: native English speakers living in the UK who volunteer for such a study are likely to all have a fairly high to very high understanding of English grammar. By contrast, the L2 speakers are much more varied: some are highly proficient in English, while others are not. This range of proficiency could due to all sorts of reasons.</p>
+<p>The meaning conveyed by <a href="#fig-GrammarBoxPlotGroup" class="quarto-xref">Figure&nbsp;<span>10.37</span></a> is clear: there is hardly any difference between the average (median) grammar comprehension test scores of L1 and L2 participants in <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>’s dataset. Indeed, we can see that the thicker, middle lines within each boxplot are almost at the same level. However, the two boxplots have very different shapes and overall lengths: the scores of the 50% of L2 participants who scored below the median are much more spread out than those of the L1 participants who obtained below-average scores. This makes intuitive sense: native English speakers living in the UK who volunteer for such a study are likely to all have a fairly high to very high understanding of English grammar. By contrast, the L2 speakers are much more varied: some are highly proficient in English, while others are not. This range of proficiency could due to all sorts of reasons.</p>
 <p>What are some of the possible reasons that you can think of? 🤔 Make a note of them as we will explore these hypotheses further in <a href="#sec-Scatterplots" class="quarto-xref"><span>Section 10.2.5</span></a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -2588,7 +2591,7 @@ Quiz time!
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span style="color:green;"><strong>Q10.3</strong></span> Create a boxplot to compare how participants in different occupational groups (<code>OccupGroup</code>) performed on the English grammar test. Which part of the code used to produce <a href="#fig-GrammarBoxPlotGroup" class="quarto-xref">Figure&nbsp;<span>10.36</span></a> <!--# @Vishar this should be the boxplot just above] do you need to modify to achieve this? --></p>
+<p><span style="color:green;"><strong>Q10.3</strong></span> Create a boxplot to compare how participants in different occupational groups (<code>OccupGroup</code>) performed on the English grammar test. Which part of the code used to produce <a href="#fig-GrammarBoxPlotGroup" class="quarto-xref">Figure&nbsp;<span>10.37</span></a> <!--# @Vishar this should be the boxplot just above] do you need to modify to achieve this? --></p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_3836" onsubmit="return validate_form_3836()" method="post">
@@ -2782,7 +2785,7 @@ Going further: Dot plots and violin plots
 </div>
 </div>
 </div>
-<p>By themselves, <strong>violin plots</strong> are rather abstract representations of variable distributions (see <span class="quarto-unresolved-ref">?fig-GrammarViolinPlot</span>). However, in combination with <strong>boxplots</strong>, they can be an effective way to visualise and compare data distributions. Note that, here, the order of the layers is important because, if we first draw the boxplots and then the violin plots, the violin plots will mask the boxplots completely.</p>
+<p>By themselves, <strong>violin plots</strong> are rather abstract representations of variable distributions. However, in combination with <strong>boxplots</strong>, they can be an effective way to visualise and compare data distributions. Note that, here, the order of the layers is important because, if we first draw the boxplots and then the violin plots, the violin plots will mask the boxplots completely.</p>
 <div class="columns">
 <div class="column" style="width:49%;">
 <div class="cell">
@@ -2845,7 +2848,7 @@ Going further: Dot plots and violin plots
 </div>
 </div>
 <p>At first glance, it would seem that our data does not support our initial hypothesis: among the L2 participants, there is no obvious trend suggesting that those who scored lowest on the grammar test were the ones who spent fewer years in formal education.-</p>
-<p>In <a href="#fig-GrammarScatterPlot" class="quarto-xref">Figure&nbsp;<span>10.37</span></a>, we add a regression line (in blue) per panel to our facetted scatter plot using the <code>geom_smooth(method = "lm")</code> function. This allows us to visualise the <strong>correlation</strong> between participants’ grammar scores and the number of years they spent in formal education. Regression lines in scatter plots are interpreted as follows:</p>
+<p>In <a href="#fig-GrammarScatterPlot" class="quarto-xref">Figure&nbsp;<span>10.38</span></a>, we add a regression line (in blue) per panel to our facetted scatter plot using the <code>geom_smooth(method = "lm")</code> function. This allows us to visualise the <strong>correlation</strong> between participants’ grammar scores and the number of years they spent in formal education. Regression lines in scatter plots are interpreted as follows:</p>
 <ul>
 <li>If the regression line goes up, there is a <strong>positive correlation</strong> between the two numeric variables. ↗️</li>
 <li>If the line goes down, there is a <strong>negative correlation</strong>. ↘️</li>
@@ -2869,16 +2872,16 @@ Going further: Dot plots and violin plots
 <div id="fig-GrammarScatterPlot" class="quarto-float quarto-figure quarto-figure-center anchored" width="576">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-GrammarScatterPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="10_Dataviz_files/figure-html/fig-GrammarScatterPlot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-63" title="Figure&nbsp;10.37: "><img src="10_Dataviz_files/figure-html/fig-GrammarScatterPlot-1.png" id="fig-GrammarScatterPlot" class="img-fluid figure-img" width="576"></a>
+<a href="10_Dataviz_files/figure-html/fig-GrammarScatterPlot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-63" title="Figure&nbsp;10.38: "><img src="10_Dataviz_files/figure-html/fig-GrammarScatterPlot-1.png" id="fig-GrammarScatterPlot" class="img-fluid figure-img" width="576"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-GrammarScatterPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.37
+Figure&nbsp;10.38
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The regression lines added by the <code>geom_smooth(method = "lm")</code> function are <strong>lines of best fit</strong>: the better the fit, the closer the points are to the line. If few points are on or close to the line, it means that the regression line is not a good approximation of the relationship between the two variables. This is clearly the case in <a href="#fig-GrammarScatterPlot" class="quarto-xref">Figure&nbsp;<span>10.37</span></a> - especially in the L2 panel (more on this in <span class="quarto-unresolved-ref">?sec-Correlations</span>). Our data visualisation therefore do not support our hypothesis that, in the <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> data, grammar scores are more strongly associated with the level of formal education among the L2 speakers than among the L1 speakers. If anything, our data shows the opposite pattern! Our line of fit is both closer to the data points and steeper in the L1 panel than in the L2 panel.</p>
+<p>The regression lines added by the <code>geom_smooth(method = "lm")</code> function are <strong>lines of best fit</strong>: the better the fit, the closer the points are to the line. If few points are on or close to the line, it means that the regression line is not a good approximation of the relationship between the two variables. This is clearly the case in <a href="#fig-GrammarScatterPlot" class="quarto-xref">Figure&nbsp;<span>10.38</span></a> - especially in the L2 panel (more on this in <span class="quarto-unresolved-ref">?sec-Correlations</span>). Our data visualisation therefore do not support our hypothesis that, in the <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> data, grammar scores are more strongly associated with the level of formal education among the L2 speakers than among the L1 speakers. If anything, our data shows the opposite pattern! Our line of fit is both closer to the data points and steeper in the L1 panel than in the L2 panel.</p>
 <p>So far, all of our data visualisations have only displayed the characteristics of the collected data. In other words, they display <strong>descriptive statistics</strong> (see <a href="8_DescriptiveStats.html" class="quarto-xref"><span>Chapter 8</span></a>) that do not allow us to make inferences about other participants who were not tested as part of <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>’s study. Tests of statistical significance, including of correlations, are introduced in the following chapter.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -3118,10 +3121,10 @@ Quiz time!
 <div id="fig-hexggwordcloud" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The hexagonal logo of the ggwordcloud package which features a cartoonish white cloud on a sky-blue blackground.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-hexggwordcloud-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/hex_ggwordcloud.png" class="lightbox" data-gallery="quarto-lightbox-gallery-64" title="Figure&nbsp;10.38: Hex sticker of the {ggwordcloud} package"><img src="images/hex_ggwordcloud.png" class="img-fluid figure-img" alt="The hexagonal logo of the ggwordcloud package which features a cartoonish white cloud on a sky-blue blackground." width="100"></a>
+<a href="images/hex_ggwordcloud.png" class="lightbox" data-gallery="quarto-lightbox-gallery-64" title="Figure&nbsp;10.39: Hex sticker of the {ggwordcloud} package"><img src="images/hex_ggwordcloud.png" class="img-fluid figure-img" alt="The hexagonal logo of the ggwordcloud package which features a cartoonish white cloud on a sky-blue blackground." width="100"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hexggwordcloud-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.38: Hex sticker of the <a href="https://lepennec.github.io/ggwordcloud/">{ggwordcloud}</a> package
+Figure&nbsp;10.39: Hex sticker of the <a href="https://lepennec.github.io/ggwordcloud/">{ggwordcloud}</a> package
 </figcaption>
 </figure>
 </div>
@@ -3185,7 +3188,7 @@ Going further: Using <code>geom_text()</code>
 </div>
 <div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>We have seen that, on a scatter plot, each point represents an observation, in our case, a participant. For instance, in <a href="#fig-ColourScatterPlot" class="quarto-xref">Figure&nbsp;<span>10.39</span></a>, each point represents an L2 participant and displays their age and grammar comprehension test score. In addition, we can colour the points according to their native language family.</p>
+<p>We have seen that, on a scatter plot, each point represents an observation, in our case, a participant. For instance, in <a href="#fig-ColourScatterPlot" class="quarto-xref">Figure&nbsp;<span>10.40</span></a>, each point represents an L2 participant and displays their age and grammar comprehension test score. In addition, we can colour the points according to their native language family.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>See <code>R</code> code.</summary>
@@ -3204,10 +3207,10 @@ Going further: Using <code>geom_text()</code>
 <div id="fig-ColourScatterPlot" class="quarto-float quarto-figure quarto-figure-center anchored" width="768">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ColourScatterPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="10_Dataviz_files/figure-html/fig-ColourScatterPlot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-66" title="Figure&nbsp;10.39: "><img src="10_Dataviz_files/figure-html/fig-ColourScatterPlot-1.png" id="fig-ColourScatterPlot" class="img-fluid figure-img" width="768"></a>
+<a href="10_Dataviz_files/figure-html/fig-ColourScatterPlot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-66" title="Figure&nbsp;10.40: "><img src="10_Dataviz_files/figure-html/fig-ColourScatterPlot-1.png" id="fig-ColourScatterPlot" class="img-fluid figure-img" width="768"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-ColourScatterPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.39
+Figure&nbsp;10.40
 </figcaption>
 </figure>
 </div>
@@ -3234,16 +3237,16 @@ Figure&nbsp;10.39
 <div id="fig-TextScatterPlot" class="quarto-float quarto-figure quarto-figure-center anchored" width="768">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-TextScatterPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="10_Dataviz_files/figure-html/fig-TextScatterPlot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-67" title="Figure&nbsp;10.40: "><img src="10_Dataviz_files/figure-html/fig-TextScatterPlot-1.png" id="fig-TextScatterPlot" class="img-fluid figure-img" width="768"></a>
+<a href="10_Dataviz_files/figure-html/fig-TextScatterPlot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-67" title="Figure&nbsp;10.41: "><img src="10_Dataviz_files/figure-html/fig-TextScatterPlot-1.png" id="fig-TextScatterPlot" class="img-fluid figure-img" width="768"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-TextScatterPlot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.40
+Figure&nbsp;10.41
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Clearly, there are too many L2 participants for <a href="#fig-TextScatterPlot" class="quarto-xref">Figure&nbsp;<span>10.40</span></a> to be legible. For now, we will therefore focus on female L2 participants only. Moreover, we can see that there is dense cluster of L2 participants who are young and scored very high on the grammar comprehension test. In this exploratative analysis, we will therefore focus on female participants who obtained fewer than 90 points on the test.</p>
+<p>Clearly, there are too many L2 participants for <a href="#fig-TextScatterPlot" class="quarto-xref">Figure&nbsp;<span>10.41</span></a> to be legible. For now, we will therefore focus on female L2 participants only. Moreover, we can see that there is dense cluster of L2 participants who are young and scored very high on the grammar comprehension test. In this exploratative analysis, we will therefore focus on female participants who obtained fewer than 90 points on the test.</p>
 <div class="cell" data-source-line-numbers="3,13">
 <details class="code-fold">
 <summary>See <code>R</code> code.</summary>
@@ -3266,16 +3269,16 @@ Figure&nbsp;10.40
 <div id="fig-TextScatterPlot2" class="quarto-float quarto-figure quarto-figure-center anchored" width="768">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-TextScatterPlot2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="10_Dataviz_files/figure-html/fig-TextScatterPlot2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-68" title="Figure&nbsp;10.41: "><img src="10_Dataviz_files/figure-html/fig-TextScatterPlot2-1.png" id="fig-TextScatterPlot2" class="img-fluid figure-img" width="768"></a>
+<a href="10_Dataviz_files/figure-html/fig-TextScatterPlot2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-68" title="Figure&nbsp;10.42: "><img src="10_Dataviz_files/figure-html/fig-TextScatterPlot2-1.png" id="fig-TextScatterPlot2" class="img-fluid figure-img" width="768"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-TextScatterPlot2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.41
+Figure&nbsp;10.42
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Note that we had to expand the limits of the <em>x</em>-axis in order for labels of the youngest and oldest participants to be displayed in full on <a href="#fig-TextScatterPlot2" class="quarto-xref">Figure&nbsp;<span>10.41</span></a>. Still, there are a few labels that overlap nonetheless. If this bothers you, you’ll be pleased to hear that there is a handy {ggplot2} extension called {<a href="https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html">ggrepel</a>}, which was designed to avoid text labels overlapping.</p>
+<p>Note that we had to expand the limits of the <em>x</em>-axis in order for labels of the youngest and oldest participants to be displayed in full on <a href="#fig-TextScatterPlot2" class="quarto-xref">Figure&nbsp;<span>10.42</span></a>. Still, there are a few labels that overlap nonetheless. If this bothers you, you’ll be pleased to hear that there is a handy {ggplot2} extension called {<a href="https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html">ggrepel</a>}, which was designed to avoid text labels overlapping.</p>
 
 <div class="cell" data-source-line-numbers="2,11">
 <details class="code-fold">
@@ -3302,10 +3305,10 @@ Figure&nbsp;10.41
 <div id="fig-TextScatterPlot3" class="quarto-float quarto-figure quarto-figure-center anchored" width="768">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-TextScatterPlot3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="10_Dataviz_files/figure-html/fig-TextScatterPlot3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-70" title="Figure&nbsp;10.42: "><img src="10_Dataviz_files/figure-html/fig-TextScatterPlot3-1.png" id="fig-TextScatterPlot3" class="img-fluid figure-img" width="768"></a>
+<a href="10_Dataviz_files/figure-html/fig-TextScatterPlot3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-70" title="Figure&nbsp;10.43: "><img src="10_Dataviz_files/figure-html/fig-TextScatterPlot3-1.png" id="fig-TextScatterPlot3" class="img-fluid figure-img" width="768"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-TextScatterPlot3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.42
+Figure&nbsp;10.43
 </figcaption>
 </figure>
 </div>
@@ -3324,8 +3327,8 @@ Figure&nbsp;10.42
 </div></div></section>
 <section id="sec-CombiningGeoms" class="level3" data-number="10.2.7">
 <h3 data-number="10.2.7" class="anchored" data-anchor-id="sec-CombiningGeoms"><span class="header-section-number">10.2.7</span> Complex plots</h3>
-<p>Part of the magic of the Grammar of Graphics is that we can easily <strong>combine</strong> <strong>different geometries</strong> and <strong>aesthetics</strong> to create highly informative graphs. If you just read about the <code>geom_text()</code> function (see <a href="#fig-TextScatterPlot3" class="quarto-xref">Figure&nbsp;<span>10.42</span></a>), then you have already seen how this can work.</p>
-<p><a href="#fig-GrammarPointBoxplot" class="quarto-xref">Figure&nbsp;<span>10.43</span></a> is another example. In this plot, we combine <code>geom_boxplot()</code> with <code>geom_point()</code> to see both the defining characteristics of the distributions of grammar test scores among L1 and L2 participants, as well as the exact score of each individual participant.</p>
+<p>Part of the magic of the Grammar of Graphics is that we can easily <strong>combine</strong> <strong>different geometries</strong> and <strong>aesthetics</strong> to create highly informative graphs. If you just read about the <code>geom_text()</code> function (see <a href="#fig-TextScatterPlot3" class="quarto-xref">Figure&nbsp;<span>10.43</span></a>), then you have already seen how this can work.</p>
+<p><a href="#fig-GrammarPointBoxplot" class="quarto-xref">Figure&nbsp;<span>10.44</span></a> is another example. In this plot, we combine <code>geom_boxplot()</code> with <code>geom_point()</code> to see both the defining characteristics of the distributions of grammar test scores among L1 and L2 participants, as well as the exact score of each individual participant.</p>
 <p>By default, the <code>geom_boxplot()</code> function plots dots for any outliers. Since we are now also plotting <em>all</em> the data points using the <code>geom_point()</code> function, we need to switch off this option, otherwise the outliers will be plotted twice.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb95" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span></span>
@@ -3341,10 +3344,10 @@ Figure&nbsp;10.42
 <div id="fig-GrammarPointBoxplot" class="quarto-float quarto-figure quarto-figure-center anchored" width="50%">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-GrammarPointBoxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="10_Dataviz_files/figure-html/fig-GrammarPointBoxplot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-71" title="Figure&nbsp;10.43: "><img src="10_Dataviz_files/figure-html/fig-GrammarPointBoxplot-1.png" id="fig-GrammarPointBoxplot" class="img-fluid figure-img" style="width:50.0%"></a>
+<a href="10_Dataviz_files/figure-html/fig-GrammarPointBoxplot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-71" title="Figure&nbsp;10.44: "><img src="10_Dataviz_files/figure-html/fig-GrammarPointBoxplot-1.png" id="fig-GrammarPointBoxplot" class="img-fluid figure-img" style="width:50.0%"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-GrammarPointBoxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.43
+Figure&nbsp;10.44
 </figcaption>
 </figure>
 </div>
@@ -3366,10 +3369,10 @@ Figure&nbsp;10.43
 <div id="fig-JitteredGrammar" class="quarto-float quarto-figure quarto-figure-center anchored" width="50%">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-JitteredGrammar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="10_Dataviz_files/figure-html/fig-JitteredGrammar-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-72" title="Figure&nbsp;10.44: "><img src="10_Dataviz_files/figure-html/fig-JitteredGrammar-1.png" id="fig-JitteredGrammar" class="img-fluid figure-img" style="width:50.0%"></a>
+<a href="10_Dataviz_files/figure-html/fig-JitteredGrammar-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-72" title="Figure&nbsp;10.45: "><img src="10_Dataviz_files/figure-html/fig-JitteredGrammar-1.png" id="fig-JitteredGrammar" class="img-fluid figure-img" style="width:50.0%"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-JitteredGrammar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.44
+Figure&nbsp;10.45
 </figcaption>
 </figure>
 </div>
@@ -3393,17 +3396,17 @@ Figure&nbsp;10.44
 <div id="fig-JitteredGrammarGender" class="quarto-float quarto-figure quarto-figure-center anchored" width="60%">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-JitteredGrammarGender-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="10_Dataviz_files/figure-html/fig-JitteredGrammarGender-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-73" title="Figure&nbsp;10.45: "><img src="10_Dataviz_files/figure-html/fig-JitteredGrammarGender-1.png" id="fig-JitteredGrammarGender" class="img-fluid figure-img" style="width:60.0%"></a>
+<a href="10_Dataviz_files/figure-html/fig-JitteredGrammarGender-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-73" title="Figure&nbsp;10.46: "><img src="10_Dataviz_files/figure-html/fig-JitteredGrammarGender-1.png" id="fig-JitteredGrammarGender" class="img-fluid figure-img" style="width:60.0%"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-JitteredGrammarGender-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.45
+Figure&nbsp;10.46
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-JitteredGrammarGender" class="quarto-xref">Figure&nbsp;<span>10.45</span></a> allows us to see that the lowest grammar comprehension test scores among L1 participants come from male participants, whereas the lowest scores in the L2 group come from female participants. Can you think of why this might be? 🤔 Make a note of your hypothesis as you will have a chance to explore it further in <a href="#sec-InteractivePlots" class="quarto-xref"><span>Section 10.2.8</span></a>.</p>
-<p>We can, in theory, visualise even more of our data by adding a <strong>shape</strong> <code>aesthetics</code> to the <code>geom_jitter()</code> (see <a href="#fig-JitteredGrammarGender" class="quarto-xref">Figure&nbsp;<span>10.45</span></a>). However, increased plot complexity does not necessarily result in more meaningful or effective statistical graphics. How effective is <a href="#fig-JitteredGrammarComplex" class="quarto-xref">Figure&nbsp;<span>10.46</span></a> in your opinion?</p>
+<p><a href="#fig-JitteredGrammarGender" class="quarto-xref">Figure&nbsp;<span>10.46</span></a> allows us to see that the lowest grammar comprehension test scores among L1 participants come from male participants, whereas the lowest scores in the L2 group come from female participants. Can you think of why this might be? 🤔 Make a note of your hypothesis as you will have a chance to explore it further in <a href="#sec-InteractivePlots" class="quarto-xref"><span>Section 10.2.8</span></a>.</p>
+<p>We can, in theory, visualise even more of our data by adding a <strong>shape</strong> <code>aesthetics</code> to the <code>geom_jitter()</code> (see <a href="#fig-JitteredGrammarGender" class="quarto-xref">Figure&nbsp;<span>10.46</span></a>). However, increased plot complexity does not necessarily result in more meaningful or effective statistical graphics. How effective is <a href="#fig-JitteredGrammarComplex" class="quarto-xref">Figure&nbsp;<span>10.47</span></a> in your opinion?</p>
 <div class="cell" data-source-line-numbers="7">
 <div class="sourceCode cell-code" id="cb98" data-source-line-numbers="7" data-code-line-numbers="7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span></span>
 <span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> Grammar, </span>
@@ -3423,10 +3426,10 @@ Figure&nbsp;10.45
 <div id="fig-JitteredGrammarComplex" class="quarto-float quarto-figure quarto-figure-center anchored" width="70%">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-JitteredGrammarComplex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="10_Dataviz_files/figure-html/fig-JitteredGrammarComplex-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-74" title="Figure&nbsp;10.46: "><img src="10_Dataviz_files/figure-html/fig-JitteredGrammarComplex-1.png" id="fig-JitteredGrammarComplex" class="img-fluid figure-img" style="width:70.0%"></a>
+<a href="10_Dataviz_files/figure-html/fig-JitteredGrammarComplex-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-74" title="Figure&nbsp;10.47: "><img src="10_Dataviz_files/figure-html/fig-JitteredGrammarComplex-1.png" id="fig-JitteredGrammarComplex" class="img-fluid figure-img" style="width:70.0%"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-JitteredGrammarComplex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.46
+Figure&nbsp;10.47
 </figcaption>
 </figure>
 </div>
