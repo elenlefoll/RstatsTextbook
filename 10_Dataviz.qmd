@@ -364,7 +364,7 @@ Dabrowska.data |>
   scale_fill_manual(values = c("purple", "#34027d"))
 ```
 
-::: {.callout-note collapse="true"}
+:::: {.callout-note collapse="true"}
 #### A note on colours and colour blindness 🌈
 
 Colour blindness is a condition that results in a decreased ability to see colours and perceive differences in colour. There are different types of colour blindness but, in general, it is best to avoid red-green contrasts. To ensure that your data visualisations are accessible to as many people as possible, you may want to use the [{colorBlindness}](https://cran.r-project.org/web/packages/colorBlindness/vignettes/colorBlindness.html) package [@ouColorBlindnessSafeColor2021] to simulate the appearance of a set of colours for people with different forms of colour blindness.
@@ -396,7 +396,6 @@ colorBlindness::displayAllColors(viridis::viridis(6))
 ```
 
 Choosing an appropriate palette is not the only way to make your visualisations accessible to colour-blind readers. Another way is to provide redundant mappings to other aesthetics such size, line type, shape, or pattern (see @fig-PatternBarplot).
-:::
 
 ```{r}
 #| code-fold: true
@@ -421,16 +420,14 @@ Dabrowska.data |>
   scale_pattern_manual(values = c("stripe", "crosshatch")) # specify types of patterns
 ```
 
-::: {.callout-note collapse="true"}
-```{r}
-#| code-fold: true
-#| code-summary: "What to do if you get the error message: seq.default(from, to, by) : invalid"
+::: {.callout-warning collapse="true"}
+#### "What to do if you get the error message: seq.default(from, to, by) : invalid" {.unnumbered}
 
-# If you get the error message "Error in seq.default(from, to, by) : invalid '(to - from)/by'" when trying to run this chunk of code, this is because your Plots pane in RStudio is not large enough to accommodate the plot. Increase its size and it should work (see also https://stackoverflow.com/questions/73960726/error-in-seq-defaultfrom-to-by-invalid-to-from-by-ggpattern).
-```
+If you get the error message "Error in seq.default(from, to, by) : invalid '(to - from)/by'" when trying to run this chunk of code, this is because your Plots pane in RStudio is not large enough to accommodate the plot. Increase its size and it should work (see also <https://stackoverflow.com/questions/73960726/error-in-seq-defaultfrom-to-by-invalid-to-from-by-ggpattern>).
+:::
 
 Finally, it is important to remember that colour blindness is by no means the only type of visual impairment you should consider when creating visualisations. Wordlwide, far more people are affected by **blindness** and **low vision**. @sec-LiteRateProgramming explains how to add **alternative texts** (alt-text) to plots and images. Many people with visual impairments rely on screen readers that use these alternative texts to provide audio descriptions of images and plots. These alternative texts can also improve the user experience when there are internet connection issues and images do not load properly or quickly enough.
-:::
+::::
 
 Some academic publishers still require grey-scale plots, in which case you will want to use the **scale** layer `scale_fill_grey()`. Alternatively, the colour palettes of the {viridis} package (see information box on colour blindness) render well in grey, too. The {viridis} function for a discrete colour scale (as needed for a categorical variable such as `Gender`) can be called up using the `scale_fill_viridis_d()` function. With the "option" argument, you can switch between eight different viridis palettes ("magma", "inferno", "plasma", "cividis", "rocket", "turbo").
 
@@ -765,7 +762,9 @@ But, first, let's think about **why** we visualise data. Data visualisation is a
 
 ![Using the {ggplot2} package for data exploration (artwork by [\@allison_horst](https://allisonhorst.com/))](images/AHorst_ggplot2_explore.png){#fig-ExplorerMonster fig-alt="A group of fuzzy round monsters with binoculars, backpacks and guide books looking up a graphs flying around with wings (like birders, but with exploratory data visualizations). Stylized text reads “ggplot2: visual data exploration.”"}
 
-Depending on the type of data that we want to visualise and why, we can choose different types of plots. In the following, we will first look at how we can plot **categorical variables** and **discrete numeric variables**, before we move on to visualising **continuous numeric variables** and combinations of different types of variables (see @sec-Variables).
+Depending on the type of data that we want to visualise and why, we can choose different types of plots. A great resource to choose a graphic that is suitable for your data is [the `R` Graph Gallery](https://r-graph-gallery.com/).
+
+In the following, we will first look at how we can plot **categorical variables** and **discrete numeric variables**, before we move on to visualising **continuous numeric variables** and combinations of different types of variables (see @sec-Variables).
 
 ### Bar plots
 
@@ -1564,7 +1563,7 @@ What are some of the possible reasons that you can think of? 🤔 Make a note of
 ::: callout-tip
 #### Quiz time! {.unnumbered}
 
-[**Q10.3**]{style="color:green;"} Create a boxplot to compare how participants in different occupational groups (`OccupGroup`) performed on the English grammar test. Which part of the code used to produce @fig-GrammarBoxPlotGroup <!--# @Vishar this should be the boxplot just above] do you need to modify to achieve this? -->
+[**Q10.3**]{style="color:green;"} Create a boxplot to compare how participants in different occupational groups (`OccupGroup`) performed on the English grammar test. Which part of the code used to produce @fig-GrammarBoxPlotGroup do you need to modify to achieve this?
 
 ```{r echo=FALSE}
 check_question("x = Group",
@@ -1599,7 +1598,7 @@ Dabrowska.data |>
 
 ```{r}
 #| eval: false
-#| label: "fig-OccupGroupBoxPlot"
+#| label: fig-OccupGroupBoxPlot
 
 Dabrowska.data |>
   mutate(Group = fct_recode(Group,
@@ -2307,7 +2306,7 @@ library(plotly)
 Then, all you need to do is create and save a `ggplot` object, and call that object with the `ggplotly()` function. In RStudio, your interactive plot will be displayed in the Viewer pane. Hover your mouse over the data points of @fig-InteractivePlot to explore the data interactively. You will see that, in addition to the variables mapped onto the plot itself, the variable mapped onto the `label` aesthetics (`OccupGroup`) also appears when you hover the mouse over any single data point.
 
 ```{r}
-#| label: "fig-InteractivePlot"
+#| label: fig-InteractivePlot
 #| eval: false
 #| source-line-numbers: "1,15"
 
