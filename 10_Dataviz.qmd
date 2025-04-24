@@ -67,7 +67,7 @@ Check that your data is correctly imported by examining the output of `View(Dabr
 
 The syntax of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] is made up of **layers** (@fig-layers), which allow us to create highly effective and efficient data visualisations, while giving us lots of flexibility and control.
 
-![The syntax of the Grammar of Graphics as visualised in the [QCBS R Workshop Series](https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html) (CC-BY-NC-SA).](images/gglayers.png){#fig-layers width="559"}
+![The syntax of the Grammar of Graphics as visualised in the [QCBS R Workshop Series](https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html) (CC-BY-NC-SA).](images/gglayers.png){#fig-layers width="559" fig-alt="A layered diagram illustrating the key elements of data visualization: Data, Aesthetics, Geometries, Facets, Statistics, Coordinates, and Theme, each shown as a layer with a distinct colour."}
 
 The **data** layer and the **aesthetics** layer are compulsory as you cannot build a graph that does not map *some* data onto *some* visual aspect (= aesthetic) of a graph. The remaining layers are optional, but some are very important. In the following, we will explain how the **geometries**, **facet**, **scales**, **coordinates**, and **theme** layers are used to build and customise graphs using the {ggplot2} library in `R`.
 
@@ -96,6 +96,7 @@ For example, to create a bar plot visualising the distribution of participants' 
 ```{r}
 #| fig-cap: "Attempt to plot the distribution of participants' occupational groups in Dąbrowska (2019)"
 #| label: "fig-EmptyBarplot"
+#| fig-alt: "An empty plot with the x-axis labeled OccupGroup and four group labels: C, I, M, and PS. No data is shown."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup))
@@ -111,6 +112,7 @@ The reason we are not seeing any data is that we have not yet specified with whi
 ```{r}
 #| fig-cap: "Distribution of participants' occupational groups (C = clerical position, I = inactive (i.e., unemployed, retired, or homemakers), M = manual jobs, PS = professional-level job or studying for a degree)"
 #| label: "fig-barplot1"
+#| fig-alt: "A bar plot showing the number of various occupational groups. The x-axis is labeled as OccupGroup and represents different occupation categories: C, I, M, and PS, with PS having the highest count of them all. The y-axis represents the number of individuals in each group and is labeled as count."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup)) +
@@ -143,6 +145,7 @@ If we want to change these axis labels, we can do so by adding a `labs()` **laye
 ```{r}
 #| fig-cap: "Distribution of participants' occupational groups (C = clerical position, I = inactive (i.e., unemployed, retired, or homemakers), M = manual jobs, PS = professional-level job or studying for a degree)"
 #| label: "fig-BarOccupGroup"
+#| fig-alt: "This is the same bar plot as above. The only difference is that the x-axis is labeled as Occupational group and the y-axis is labeled as Number of participants."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup)) +
@@ -182,7 +185,7 @@ check_hint("Check out the function's help file to find out more about its possib
 :::
 
 ::: {.callout-note collapse="true"}
-#### What is alt-text and why is it important? {sec-Alt-text}
+#### What is alt-text and why is it important? {#sec-AltText}
 
 **Alt-text**, or alternative text, is a concise description of an image used to make its informational content accessible to people with visual impairments. Using a screenreader programme, blind and visually impaired individuals can have the alt-text associated with an image read out to them.
 
@@ -201,6 +204,7 @@ Instead of using the **data** argument of the `ggplot()` function as we did abov
 
 ```{r}
 #| source-line-numbers: "1"
+#| fig-alt: "This is the same bar plot as above."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup))      +
@@ -219,6 +223,7 @@ ggplot(data = Dabrowska.data,
 
 ```{r}
 #| source-line-numbers: "1"
+#| fig-alt: "This is the same bar plot as above."
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup)) +
@@ -234,6 +239,7 @@ You should have realised that the outputs are exactly the same. Piping the datas
 ```{r}
 #| source-line-numbers: "2,7"
 #| label: "fig-BarOccupGroupL2"
+#| fig-alt: "Bar plot with the title of Occupational groups of L2 participants showing the distribution of L2 participants' occupational group. The x-axis is labeled as Occupational group with PS having the highest count, and the y-axis is labeled as Number of participants."
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -249,6 +255,7 @@ We can also combine several `filter()` conditions using the `&` (AND) and `|` (O
 ```{r}
 #| source-line-numbers: "2,7"
 #| label: "fig-BarOccupGroupL2Polish"
+#| fig-alt: "Bar plot showing the number of Polish L2 participants across occupational groups C, I, M, and PS, with M having the highest count. The x-axis and the y-axis are labeled as the plot above. The title of the plot is Occupational groups of Polish L2 participants."
 
 Dabrowska.data |> 
   filter(Group == "L2" & NativeLg == "Polish") |> 
@@ -266,6 +273,7 @@ If we want to compare two subsets of the data, we can add a **facet layer** to s
 ```{r}
 #| source-line-numbers: "4"
 #| label: "fig-BarOccupGroupFacet"
+#| fig-alt: "Bar plot titled Occupational groups of participants showing the number of participants in four occupational groups for two categories, L1 and L2. The plot is divided into two panels: in the L1 group, the number of participants is roughly equal across all occupations, ranging from about 20 to 25. In the L2 group, PS has the highest number of participants at over 30, followed by M and C, while I has the fewest participants."
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup)) +
@@ -281,6 +289,7 @@ To compare the distributions of occupations of the male and female L2 participan
 ```{r}
 #| source-line-numbers: "2,5"
 #| label: "fig-BarOccupGroupL2Facet"
+#| fig-alt: "Bar plot titled Occupational groups of L2 participants showing the number of female and male participants across four occupational groups. The plot is divided into two panels: F and M. In both the highest number belongs to the group PS."
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -298,6 +307,7 @@ To explore potential gender differences in occupational groups across both L1 an
 #| source-line-numbers: "4"
 #| fig-height: 6
 #| label: "fig-TwoFacetsBarplot"
+#| fig-alt: "Bar plot showing the number of participants across four occupational groups, split by language group (L1 and L2) and gender (F and M). The plot has four panels. L1 Female participant counts are relatively even across groups, with the highest in PS. In L2 Female panel a large number of participants are in the PS group, in L1 Male panel all occupational groups have similar participant counts, and in L2 Male panel PS and M have the highest counts."
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup)) +
@@ -315,6 +325,7 @@ Dabrowska.data |>
 #| source-line-numbers: "3"
 #| fig-height: 6
 #| label: "fig-ColourBarplot"
+#| fig-alt: "This is the same plot as above. The only difference is that the bars in the two F panels are in the colour light red, and the bars in the two M panels are in the colour blue. There is a legend titled Gender on the right side of the plot that shows which colour shows which category."
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, 
@@ -334,6 +345,7 @@ One way to do this is to use `scale_fill_manual()` to manually pick our own colo
 #| label: "fig-PurpleBarplot"
 #| source-line-numbers: "3,8"
 #| fig-height: 6
+#| fig-alt: "This is the same plot as above. The only difference is that the bars in the two F panels are in the colour light purple, and the bars in the two M panels are in the dark purple."
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, 
@@ -350,9 +362,10 @@ Although it makes the plot easier to interpret, the colour aesthetic (here `fill
 In some cases, colour is used as the *only* way of identifying subgroups in the data, for example in a **stacked bar plot** (see @fig-ColourStackedBarplot). In such cases, it is important to consider how the plot will be perceived by different people (see note on colour blindness below).
 
 ```{r}
-#| fig-cap: "A bar plot with the default {ggplot2} colours"
+#| fig-cap: "A stacked bar plot with hand-picked colours"
 #| label: "fig-ColourStackedBarplot"
 #| source-line-numbers: "3,5"
+#| fig-alt: "Bar plot showing the number of participants across four occupational groups, split by two language groups (L1 and L2). Each bar in this plot contains two colours: light purple representing female participants and dark purple representing male ones. There is a legend titled Gender on the right side of the plot."
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, 
@@ -399,9 +412,10 @@ Choosing an appropriate palette is not the only way to make your visualisations 
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show {ggplot2} code to generate plot."
+#| code-summary: "Show {ggplot2} code to generate @fig-PatternBarplot"
 #| fig-height: 5
 #| label: "fig-PatternBarplot"
+#| fig-alt: "This is the same plot as above. The only difference is that the two different shades of purple representing female and male participants are marked with a distinct pattern as well."
 
 #install.packages("ggpattern")
 library(ggpattern)
@@ -464,7 +478,7 @@ Dabrowska.data |>
   scale_fill_viridis_d(option = "viridis")
 ```
 
-###### scale_fill_viridis_d
+###### scale_fill_viridis_d(option = "turbo")
 
 ```{r}
 #| source-line-numbers: "7"
@@ -682,7 +696,7 @@ ggplot(data = Dabrowska.data,
 
 By default, the coordinate system that is used in `ggplot` objects is the **Cartesian coordinate system**, which has a horizontal axis (*x*) and a vertical axis (*y*) that are perpendicular to each other. To change this default Cartesian coordinate system, we need to add a **coordinate layer**.
 
-For example, if we want to display the full names of the four occupational groups used in @DabrowskaExperienceAptitudeIndividual2019, we can change the labels of the categories using `mutate()` and `fct_recode()` *before* pipping the data into `ggplot()` (see @sec-ggplotData) and then flip the *x* and *y* axes using the coordinate layer `coord_flip()`. As shown in @fig-\*\*, this makes long labels much easier to read.
+For example, if we want to display the full names of the four occupational groups used in @DabrowskaExperienceAptitudeIndividual2019, we can change the labels of the categories using `mutate()` and `fct_recode()` *before* pipping the data into `ggplot()` (see @sec-ggplotData) and then flip the *x* and *y* axes using the coordinate layer `coord_flip()`. As shown in @fig-FlippedBarplot, this makes long labels much easier to read.
 
 ```{r}
 #| source-line-numbers: "2-6,13"
@@ -995,7 +1009,7 @@ Dabrowska.data |>
     theme_void()
 ```
 
-[**d.**]{style="color:green;"} Transform the pie chart that you just created in [c.]{style="color:green;"} to make it look like @fig-\*\*. To achieve this, wrangle the data *before* piping it into the `data` argument of the `ggplot()` function. Which {tidyverse} function can you use to rename the labels?
+[**d.**]{style="color:green;"} Transform the pie chart that you just created in [c.]{style="color:green;"} to make it look like @fig-PieChartRecode. To achieve this, wrangle the data *before* piping it into the `data` argument of the `ggplot()` function. Which {tidyverse} function can you use to rename the labels?
 
 ```{r}
 #| echo: false
@@ -1020,6 +1034,7 @@ check_question("fct_recode()",
 #| source-line-numbers: "1-6,13"
 #| fig-width: 4
 #| fig-height: 2
+#| label: "fig-PieChartRecode"
 
 Dabrowska.data |> 
   mutate(`OccupGroup` = fct_recode(OccupGroup,
@@ -1594,11 +1609,12 @@ Dabrowska.data |>
   labs(y = "Grammar scores")
 ```
 
-[**Q10.4**]{style="color:green;"} The code below was used to create @fig-OccupGroupBoxPlot, except that the arguments of the `aes()` function have been deleted. Which data mappings were specified inside the `aes()` function to produce @fig-OccupGroupBoxPlot?
+[**Q10.4**]{style="color:green;"} The code below was used to create @fig-OccupBoxPlot, except that the arguments of the `aes()` function have been deleted. Which data mappings were specified inside the `aes()` function to produce @fig-OccupBoxPlot?
 
 ```{r}
 #| eval: false
-#| label: fig-OccupGroupBoxPlot
+#| label: "fig-OccupBoxPlot"
+
 
 Dabrowska.data |>
   mutate(Group = fct_recode(Group,
