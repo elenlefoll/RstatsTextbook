@@ -57,15 +57,15 @@ library(checkdown)
 
 The basic idea of literate programming is that we combine text, code, and code outputs (i.e. tables, statistics, and plots) within a single document that can be exported into different formats for sharing and publishing.
 
-Literate programming can be implemented in different authoring formats. Up until very recently, the most common format for `R` projects was **R Markdown**. For `Python` projects, **Jupyter Notebooks** remains the standard to date. In this chapter, we will focus on **Quarto**, a relatively new [open-source](https://en.wikipedia.org/wiki/Free_and_open-source "Free and open-source") scientific and technical authoring and publishing system that has the advantage of supporting many different programming languages, meaning that chunks of code in `R`, `Python`, `Julia`, and other languages can be combined into one document, making complex project management and collaboration much easier. Quarto allows us to easily export (or **render**) our documents to HTML, PDF, Word, and many more formats (see Fig.\*\* below).
+Literate programming can be implemented in different authoring formats. Up until very recently, the most common format for `R` projects was **R Markdown**. For `Python` projects, **Jupyter Notebooks** remains the standard to date. In this chapter, we will focus on **Quarto**, a relatively new [open-source](https://en.wikipedia.org/wiki/Free_and_open-source "Free and open-source") scientific and technical authoring and publishing system that has the advantage of supporting many different programming languages, meaning that chunks of code in `R`, `Python`, `Julia`, and other languages can be combined into one document, making complex project management and collaboration much easier. Quarto allows us to easily export (or **render**) our documents to HTML, PDF, Word, and many more formats (see @fig-QuartoFormats below).
 
-![A schematic representation of how Quarto can understand multi-language input and produce multi-format outputs (Artwork by [Allison Horst](https://allisonhorst.com/cetinkaya-rundel-lowndes-quarto-keynote) from the ["Hello, Quarto" keynote](https://mine.quarto.pub/hello-quarto/#/hello-quarto-title) by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022).](images/AHorst_Quarto.png){fig-alt="A schematic representing the multi-language input (e.g. Python, R, Observable, Julia) and multi-format output (e.g. PDF, html, Word documents, and more) versatility of Quarto."}
+![A schematic representation of how Quarto can understand multi-language input and produce multi-format outputs (Artwork by [Allison Horst](https://allisonhorst.com/cetinkaya-rundel-lowndes-quarto-keynote) from the ["Hello, Quarto" keynote](https://mine.quarto.pub/hello-quarto/#/hello-quarto-title) by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022).](images/AHorst_Quarto.png){#fig-QuartoFormats fig-alt="A schematic representing the multi-language input (e.g. Python, R, Observable, Julia) and multi-format output (e.g. PDF, html, Word documents, and more) versatility of Quarto."}
 
 Literate programming is particularly useful for **scientific research** and **data science**. Did you know that this entire textbook was written in Quarto? I chose this format because it allows for the seamless combination of explanations with nicely formatted `R` code chunks and code outputs (i.e., all of the textbook's tables, data visualisations, quiz questions, etc.) with consistent section and figure numbering, cross-references, links, bibliographic references, and much more. By the end of this chapter, you'll be ready to start writing your own term paper, dissertation, thesis, journal article, or book in Quarto.
 
-## Reproducible research
+## Reproducible research {#sec-Reproducibility}
 
-Not only is using Quarto (or any other literate programming format, see @sec-LitProgramming) very convenient for the author(s), it also helps us make our research more **reproducible**. Unfortunately, the terms *reproducible*, *replicable* and *repeatable* are often confused and, not helping matters, some definitions in the literature contradict each other. In this textbook, we will adopt the terminology of [The Turing Way](https://book.the-turing-way.org/). We thus define **reproducibility** as the ability of an independent researcher or team to *obtain the same results* as in a published study *using the same data and methods* that were used in the original study (see Fig. \*\*).
+Not only is using Quarto (or any other literate programming format, see @sec-LitProgramming) very convenient for the author(s), it also helps us make our research more **reproducible**. Unfortunately, the terms *reproducible*, *replicable* and *repeatable* are often confused and, not helping matters, some definitions in the literature contradict each other. In this textbook, we will adopt the terminology of [The Turing Way](https://book.the-turing-way.org/). We thus define **reproducibility** as the ability of an independent researcher or team to *obtain the same results* as in a published study *using the same data and methods* that were used in the original study (see @fig-reproducibility-terminology).
 
 ::: column-margin
 ![](images/hex_TuringWay.jpg){#fig-HexTuringWay width="100" alt-text="The Turing Way hexagonal logo features a large arrow forward representing the research process."}
@@ -182,8 +182,8 @@ We will be writing Quarto documents from the RStudio IDE[^13_literateprogramming
 
 2.  Once the download is completed (which may take several minutes), double-click on the installer file that you downloaded and click your way through the installation process.
 
-3.  In RStudio, open a new Quarto document by selecting *File \> New File \> Quarto Document...* in the top menu, or clicking on the "new document" button. A dialogue menu will appear (Fig \*\*). Leave everything as is and simply click on "Create" at the bottom.\
-    ![](images/Quarto_new.png){width="401"}
+3.  In RStudio, open a new Quarto document by selecting *File \> New File \> Quarto Document...* in the top menu, or clicking on the "new document" button. A dialogue menu will appear (@fig-QuartoNew). Leave everything as is and simply click on "Create" at the bottom.\
+    ![](images/Quarto_new.png){#fig-QuartoNew width="401"}
 
 4.  RStudio has now opened a new, untitled Quarto file (`.qmd`). Change the title of the document (which is not the same as its filename!) and add the following three lines in the document header (the **YALM**) by copying and pasting the following lines at the top of the document (see Fig. \*\*).[^13_literateprogramming-4]
 
@@ -196,37 +196,37 @@ We will be writing Quarto documents from the RStudio IDE[^13_literateprogramming
     ---
     ```
 
-5.  To check your Quarto installation, render your document by either selecting *File \> Render Document* in the main menu, or clicking on "Render" button in the Quarto menu bar (see fig. \*\*). You will first be prompted to give your `.qmd` file a name (e.g., `LearningQuarto.qmd`) and save it. Once you have saved it, your `.qmd` file will automatically be rendered to HTML (Quarto's default rendering format).
+5.  To check your Quarto installation, render your document by either selecting *File \> Render Document* in the main menu, or clicking on "Render" button in the Quarto menu bar (see @fig-QuartoRender). You will first be prompted to give your `.qmd` file a name (e.g., `LearningQuarto.qmd`) and save it. Once you have saved it, your `.qmd` file will automatically be rendered to HTML (Quarto's default rendering format).
 
-6.  Navigate to the folder where you saved your `.qmd` file to find the rendered HTML file. It will have the same filename as your Quarto document but with the file extension `.html` (e.g., `LearningQuarto.html`). If you double-click on the file, it will open up in your default web browser (e.g., Firefox, Google Chrome, Safari). You should see that the HTML file features the title of your document, your name as the author, and today's date (see Fig. \*\*).
+6.  Navigate to the folder where you saved your `.qmd` file to find the rendered HTML file. It will have the same filename as your Quarto document but with the file extension `.html` (e.g., `LearningQuarto.html`). If you double-click on the file, it will open up in your default web browser (e.g., Firefox, Google Chrome, Safari). You should see that the HTML file features the title of your document, your name as the author, and today's date (see @fig-QuartoHTML).
 
 [^13_literateprogramming-4]: Note that, in the YALM, character strings such as the title and your name must be enclosed in quotation marks. The date is not enclosed in quotation marks because it is a dynamic variable that will be adjusted to your computer's system date so that, every time you render the document, the date will be updated.
 
 ::: {layout-ncol="2"}
-![The `.qmd` file as opened in RStudio](images/LearningQuarto_qmd.png)
+![The `.qmd` file as opened in RStudio](images/LearningQuarto_qmd.png){#fig-QuartoRender}
 
-![The `.html` file as opened in a web browser](images/LearningQuarto_html.png)
+![The `.html` file as opened in a web browser](images/LearningQuarto_html.png){#fig-QuartoHTML}
 :::
 
 For now, the document is empty. In the next sections, you will learn how to add text, code, and code outputs to your Quarto document.
 
 ### RStudio's visual editor
 
-You may have noticed that RStudio proposes two different modes in which Quarto documents can be edited: **Source** and **Visual** (see Fig. \*\*).
+You may have noticed that RStudio proposes two different modes in which Quarto documents can be edited: **Source** and **Visual** (see @fig-QuartoModes).
 
-![](images/Quarto_Source-Visual.png)
+![](images/Quarto_Source-Visual.png){#fig-QuartoModes}
 
-The Visual mode offers a [WYSIWYM](https://en.wikipedia.org/wiki/WYSIWYM) authoring experience. This means that you can use the Quarto editing toolbar (see Fig. \*\*) for formatting and that you'll immediately see the effect of your formatting on screen. For example, to format a word in italics, you can click on the corresponding button in the toolbar or use the keyboard shortcut (⌘I) - just like you would in text-processing software. In the background, however, RStudio automatically converts your formatted text to Markdown in the underlying source code of your `.qmd` file. Markdown is a **plain-text format**. In Markdown, words in italics are enclosed in asterisks like this: `*italics*`.
+The Visual mode offers a [WYSIWYM](https://en.wikipedia.org/wiki/WYSIWYM) authoring experience. This means that you can use the Quarto editing toolbar (see @fig-QuartoModes) for formatting and that you'll immediately see the effect of your formatting on screen. For example, to format a word in italics, you can click on the corresponding button in the toolbar or use the keyboard shortcut (⌘I) - just like you would in text-processing software. In the background, however, RStudio automatically converts your formatted text to Markdown in the underlying source code of your `.qmd` file. Markdown is a **plain-text format**. In Markdown, words in italics are enclosed in asterisks like this: `*italics*`.
 
 You can toggle back and forth between these two modes by clicking on **Source** and **Visual** in the editor toolbar (or using the keyboard shortcut ⌘⇧ F4).
 
-::: callout-tip
+::: callout-caution
 #### Task 13.1 {.unnumbered}
 
 In this task, you will learn to use RStudio's Visual model to format text in a Quarto document.
 
 -   In a new line beginning after the final `---` of the YALM header, paste the introduction text below.
--   Using the Quarto editing toolbar, format the text so that, in the Visual mode, it looks like the text displayed in Fig. \*\*.
+-   Using the Quarto editing toolbar, format the text so that, in the Visual mode, it looks like the text displayed in @fig-QuartoIntro.
 -   Render the document and compare how it is formatted in the HTML version.
 
 ```{markdown}
@@ -243,27 +243,27 @@ Ninety native speakers (42 male and 48 female) and 67 nonnative speakers of Engl
 The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from 17 to 65 years (M = 38, SD = 16). Twenty-two percent of the participants held manual jobs, 24% held clerical positions, and 28% had professional-level jobs or were studying for a degree; the remaining 26% were occupationally inactive (i.e., unemployed, retired, or homemakers). In terms of education, participants’ backgrounds ranged from no formal qualifications to Ph.D., with corresponding differences in the number of years spent in full-time education (from 10 to 21; M = 14, SD = 2). Six participants reported a working knowledge of another language; the rest described themselves as monolinguals.
 ```
 
-![](images/LearningQuarto_intro.png)
+![](images/LearningQuarto_intro.png){#fig-QuartoIntro}
 :::
 
 ::: {.callout-note collapse="true"}
 #### Click here for the solution to Task 13.1
 
-In the Visual mode (see Fig. \*\* a), you will need to click on the "Normal" drop-down menu (see Fig. \*\* b) to change the formatting of the word *Introduction* to the "Header 1" style.
+In the Visual mode (see @fig-QuartoVisual a), you will need to click on the "Normal" drop-down menu (see @fig-QuartoVisual b) to change the formatting of the word *Introduction* to the "Header 1" style.
 
-To format the long citation, choose the "Blockquote" option from the the "Format" drop-down menu (see Fig. \*\* c).
+To format the long citation, choose the "Blockquote" option from the the "Format" drop-down menu (see @fig-QuartoVisual c).
 
-![](images/Quarto_visual.png){width="442"}
+![](images/Quarto_visual.png){#fig-QuartoVisual width="442"}
 :::
 
 ## Markdown text {#sec-Markdown}
 
-As you discovered in Task 6.1, writing and formatting text in RStudio's Visual editor is very similar to writing in a word-processing software such as LibreOffice Writer or Microsoft Word. In the background, however, RStudio converts all formatting to **Markdown**.
+As you discovered in Task 13.1, writing and formatting text in RStudio's Visual editor is very similar to writing in a word-processing software such as LibreOffice Writer or Microsoft Word. In the background, however, RStudio converts all formatting to **Markdown**.
 
 To make writing in Quarto more convenient and less error-prone, you can switch on a **spell-checker** within RStudio. To do so, go to *Tools \> Global Options... \> Spelling*.
 
 ::: callout-tip
-#### Quiz {.unnumbered}
+#### Quiz time! {.unnumbered}
 
 Switch to the **Source mode** to view the text that you formatted in the Visual editor in Task 13.1 in Markdown format.
 
@@ -315,7 +315,7 @@ check_question("Every line begins with > followed by a space",
 button_label = "Check answer",
 random_answer_order = TRUE,
 right = "That's right!",
-wrong = "Hummm, are you sure? Go back to the Visual editor and format a word in bold there then switch back to the Source mode to see what happens.")
+wrong = "Hummm, are you sure? Go back to the Source code of your Quarto format and check out the formatting of a block quote.")
 ```
 
  
@@ -376,12 +376,12 @@ The numbers are incremented automatically in the output.
 
 The best way to get the hang of Markdown is simply to try things out. You will also find a handy cheatsheet under *Help \> Markdown Quick Reference*. Remember that you can always go back to the **Visual** mode to format your text, if that's easier for you. When it comes to debugging any Quarto syntax errors, however, it's usually easier to catch these in plain text, so you'll typically want to use the **Source** mode to do so.
 
-## Code chunks
+## Code chunks {#sec-Chunks}
 
 To run code inside a Quarto document, you need to insert a code chunk. There are three ways to do so:
 
 1.  Using the keyboard shortcut Cmd + Option + I / Ctrl + Alt + I
-2.  Clicking on the green “Insert chunk” button icon in the editor toolbar
+2.  Clicking on the green "Insert chunk" button icon in the editor toolbar
 3.  Manually typing the chunk delimiters ```` ```{r} ```` and ```` ``` ````
 
 It is definitely worth learning the keyboard shortcut as it will save you a lot of time in the long run!
@@ -427,7 +427,7 @@ Chunk options are placed at the top of the corresponding chunk following `#|`, a
 :::
 
 ::: callout-tip
-#### Quiz {.unnumbered}
+#### Quiz time! {.unnumbered}
 
 In your Quarto document, add a label to your first `R` chunk and render your document to HTML.
 
@@ -440,7 +440,7 @@ library(tidyverse)
 ```
 ````
 
-a\) What is the output of the `setup` chunk in your rendered `.html` document?
+Q13.8 What is the output of the `setup` chunk in your rendered `.html` document?
 
 ```{r echo=FALSE}
 check_question("Two messages, one per loaded library.",
@@ -459,7 +459,7 @@ check_hint("Remember that a conflict message is *not* an error message, it merel
 
  
 
-b\) Which code chunk option can you use to remove the two messages from the rendered version of your Quarto document, whilst still ensuring that the `setup` chunk is displayed and executed (so that the libraries can be used in future code chunks)?
+Q13.9 Which code chunk option can you use to remove the two messages from the rendered version of your Quarto document, whilst still ensuring that the `setup` chunk is displayed and executed (so that the libraries can be used in future code chunks)?
 
 ```{r echo=FALSE}
 check_question("|# message: false",
@@ -480,7 +480,7 @@ check_hint("Code chunk options are applied to the entire chunk so, in this case,
 
  
 
-c\) Which code chunk option can you use to remove both the `setup` chunk and its outputs from the rendered version of your Quarto document, whilst still ensuring that the libraries are loaded so that their functions can be used further down in the document?
+Q13.10 Which code chunk option can you use to remove both the `setup` chunk and its outputs from the rendered version of your Quarto document, whilst still ensuring that the libraries are loaded so that their functions can be used further down in the document?
 
 ```{r echo=FALSE}
 check_question("|# include: false",
@@ -510,7 +510,7 @@ So far, we have seen how we can insert and format text in Quarto and how we can 
 
 This chapter assumes that you are familiar with the following research article (also used in Chapters 6-12):
 
-> Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <https://doi.org/10.1111/lang.12323>.
+> Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72--100. <https://doi.org/10.1111/lang.12323>.
 
 Our starting point for this chapter are the author's **original datasets**, which are linked in the article's Appendix S4.
 
@@ -621,8 +621,8 @@ When rendered, the paragraph will read:
 
 > `{r} nrow(L1.data)` native speakers (`{r} L1.males` male and `{r} L1.females` female) and `{r} nrow(L2.data)` nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.
 
-::: callout-tip
-#### Task 13.4 {.unnumbered}
+::: callout-caution
+#### Task 13.2 {.unnumbered}
 
 In your Quarto document, add a code chunk called `L2-gender` in which you compute the values necessary to complete the missing descriptive statistics in the sentence above. When rendered, your sentence should read:
 
@@ -632,7 +632,7 @@ In your Quarto document, add a code chunk called `L2-gender` in which you comput
 :::
 
 ::: {.callout-note collapse="true"}
-#### Click here for the solution to Task 13.4
+#### Click here for the solution to Task 13.2
 
 To save the number of male L2 participants as an `R` object, we can follow the same procedure as above.
 
@@ -726,7 +726,7 @@ The L1 participants were all born and raised in the United Kingdom and were sele
 
 The rendered document will read:
 
-> The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from `{{r}} min(L1.data$Age)` to `{{r}} max(L1.data$Age)` years (*M* = `{{r}} mean(L1.data$Age)`, *SD* = `{{r}} sd(L1.data$Age)`).
+> The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from `{r} min(L1.data$Age)` to `{r} max(L1.data$Age)` years (*M* = `{r} mean(L1.data$Age)`, *SD* = `{r} sd(L1.data$Age)`).
 
 Whilst these values are correct, in practice, we want to round them off to the nearest integer. To this end, we can use wrap the `round()` function around the `mean()` and `max()` function (see @sec-Nesting).
 
@@ -736,7 +736,7 @@ The L1 participants were all born and raised in the United Kingdom and were sele
 
 The rendered document will read:
 
-> The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from `{{r}} min(L1.data$Age)` to `{{r}} max(L1.data$Age)` years (*M* = `{{r}} round(mean(L1.data$Age))`, *SD* = `{{r}} round(sd(L1.data$Age))`).
+> The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from `{r} min(L1.data$Age)` to `{r} max(L1.data$Age)` years (*M* = `{r} round(mean(L1.data$Age))`, *SD* = `{r} round(sd(L1.data$Age))`).
 
 ::: {.callout-note collapse="true"}
 ### More complex in-line computations
@@ -788,7 +788,7 @@ The values saved to the local environment as `R` objects can then be inserted in
 
 🧑‍💻 Add this section to your Quarto document and render it to HTML. Compare the values in your rendered document with the original ones from the published study.
 
-> Twenty-two percent of the participants held manual jobs, 24% held clerical positions, and 28% had professional-level jobs or were studying for a degree; the remaining 26% were occupationally inactive (i.e., unemployed, retired, or homemakers). In terms of education, participants’ backgrounds ranged from no formal qualifications to Ph.D., with corresponding differences in the number of years spent in full-time education (from 10 to 21; M = 14, SD = 2). Six participants reported a working knowledge of another language; the rest described themselves as monolinguals [@DabrowskaExperienceAptitudeIndividual2019: 6].
+> Twenty-two percent of the participants held manual jobs, 24% held clerical positions, and 28% had professional-level jobs or were studying for a degree; the remaining 26% were occupationally inactive (i.e., unemployed, retired, or homemakers). In terms of education, participants' backgrounds ranged from no formal qualifications to Ph.D., with corresponding differences in the number of years spent in full-time education (from 10 to 21; M = 14, SD = 2). Six participants reported a working knowledge of another language; the rest described themselves as monolinguals [@DabrowskaExperienceAptitudeIndividual2019: 6].
 
 Q13. Compare the rendered version of your document with the original descriptive statistics reported in Dąbrowska [@DabrowskaExperienceAptitudeIndividual2019: 6]. Could you successfully **reproduce** these descriptive statistics? Which values are different?
 
@@ -895,9 +895,9 @@ In Quarto documents, figures can either be embedded (e.g., as a `.png` or `.jpeg
 
 ### Images {#sec-QuartoImages}
 
-To embed an image from an external file, you can use the "Insert" menu in RStudio's **Visual** editor and select "Figure / Image" (see Fig. \*\*). This will open up a menu where you can select the image that you want to insert, as well as add **alt-text** (see @sec-Alt-text) and a **caption**. The easiest way to adjust the size of an embedded image is to click on the image and then adjust the **size** of the image with the blue circle in the bottom-right corner of the image (see Fig. \*\*).
+To embed an image from an external file, you can use the "Insert" menu in RStudio's **Visual** editor and select "Figure / Image" (see @fig-InsertingImage). This will open up a menu where you can select the image that you want to insert, as well as add **alt-text** (see @sec-Alt-text) and a **caption**. The easiest way to adjust the size of an embedded image is to click on the image and then adjust the **size** of the image with the blue circle in the bottom-right corner of the image (see @fig-InsertingImage).
 
-![](images/Quarto_Insert_image.png){fig-alt="Cartoon drawing of a pipe with three entry points for \"data\" and the output producing a research paper with text, a table, and a plot. Sections of the pipe are labelled: data cleaning, overview, figures, modelling, and text." width="480"}
+![](images/Quarto_Insert_image.png){#fig-InsertingImage fig-alt="Cartoon drawing of a pipe with three entry points for \"data\" and the output producing a research paper with text, a table, and a plot. Sections of the pipe are labelled: data cleaning, overview, figures, modelling, and text." width="480"}
 
 Below is the source code for @fig-RealisticPipeline. This embedded image includes a a caption (that, itself, includes a link), an alt-text, and a custom width in pixel. Note that, in the source code, special characters such as quotation marks need to be escaped using a backslash `\`.
 
@@ -992,11 +992,11 @@ ggplotly(L2.scatter2)
 
 ```
 
-## References
+## References {#sec-References}
 
-An important aspect of academic writing is the inclusion of in-text bibliographic references (**citations**) and a well-formatted list of references (the **bibliography**). RStudio's Visual editor makes inserting bibliographic references extremely simple. To insert a reference, simply click on "Insert" and then select "Citation" or use the keyboard shortcut ⌘⇧ F8. This opens up a menu (see Fig. \*\*) giving you the option to search for the source that you'd like to cite on your own computer (e.g., in your own Zotero database, if you use Zotero) or on the web via the [Crossref](https://www.crossref.org/) database or directly using a [DOI](https://forrt.org/glossary/english/doi/).
+An important aspect of academic writing is the inclusion of in-text bibliographic references (**citations**) and a well-formatted list of references (the **bibliography**). RStudio's Visual editor makes inserting bibliographic references extremely simple. To insert a reference, simply click on "Insert" and then select "Citation" or use the keyboard shortcut ⌘⇧ F8. This opens up a menu (see @fig-QuartoCitation) giving you the option to search for the source that you'd like to cite on your own computer (e.g., in your own Zotero database, if you use Zotero) or on the web via the [Crossref](https://www.crossref.org/) database or directly using a [DOI](https://forrt.org/glossary/english/doi/).
 
-![Search menu for bibliographic reference](images/Quarto_citation.png)
+![Search menu for bibliographic reference](images/Quarto_citation.png){#fig-QuartoCitation}
 
 Alternatively, if you start typing `@` in the Visual editor, a quick reference menu will appear. Either way, any references that you add will be displayed as `@` followed by a **reference identifier**. For example, in the source code of this Quarto document, every reference to @DabrowskaExperienceAptitudeIndividual2019 is indicated as `@DabrowskaExperienceAptitudeIndividual2019`.
 
@@ -1050,9 +1050,9 @@ With this modified YALM, when the document is rendered, a bibliography will auto
 
 > ### References {.unnumbered}
 >
-> Dąbrowska, Ewa. 2019. “Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers.” *Language Learning* 69 (S1): 72–100. <https://doi.org/10.1111/lang.12323>.
+> Dąbrowska, Ewa. 2019. "Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers." *Language Learning* 69 (S1): 72--100. <https://doi.org/10.1111/lang.12323>.
 >
-> Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. *R for Data Science: Import, Tidy, Transform, Visualize, and Model Data*. 2nd ed. O’Reilly. <https://r4ds.hadley.nz/>.
+> Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. *R for Data Science: Import, Tidy, Transform, Visualize, and Model Data*. 2nd ed. O'Reilly. <https://r4ds.hadley.nz/>.
 
 By default, Quarto will use the [Chicago Manual of Style](https://chicagomanualofstyle.org/) author-date citation format (as above). However, you can point to a different **citation stylesheet** in the form of a `.csl` (Citation Style Language) file in the YALM header. This allows us to determine exactly how our bibliography and in-text citations should be formatted. Many institutions, publishers, and journals have their own (sometimes annoyingly specific!) requirements. Luckily, the research community has put together a large repository of citation stylesheets for you to choose from: <https://www.zotero.org/styles>. You can download any of these stylesheets (as a `.csl` file), place the file in your project folder, and then link it to your Quarto document by adding a `cls` key to your YALM.
 
@@ -1071,16 +1071,16 @@ For example, if you wanted to submit your paper to the [International Journal of
 
 > ### References {.unnumbered}
 >
-> Dąbrowska, E. (2019). Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. *Language Learning*, *69*(S1), 72–100. <https://doi.org/10.1111/lang.12323>.
+> Dąbrowska, E. (2019). Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. *Language Learning*, *69*(S1), 72--100. <https://doi.org/10.1111/lang.12323>.
 >
-> Wickham, H., Çetinkaya-Rundel, M., & Grolemund, G. (2023). *R for data science: Import, tidy, transform, visualize, and model data* (2nd ed.). O’Reilly. Retrieved from <https://r4ds.hadley.nz/>.
+> Wickham, H., Çetinkaya-Rundel, M., & Grolemund, G. (2023). *R for data science: Import, tidy, transform, visualize, and model data* (2nd ed.). O'Reilly. Retrieved from <https://r4ds.hadley.nz/>.
 
 ::: callout-tip
-#### Task 13.\*\* {.unnumbered}
+#### Task 13.3 {.unnumbered}
 
 Using any of the methods described above, add an in-text bibliographic reference to the following article in your Quarto document:
 
-> In’nami, Yo, Atsushi Mizumoto, Luke Plonsky & Rie Koizumi. 2022. Promoting computationally reproducible research in applied linguistics: Recommended practices and considerations. Research Methods in Applied Linguistics 1(3). 100030. https://doi.org/10.1016/j.rmal.2022.100030.
+> In'nami, Yo, Atsushi Mizumoto, Luke Plonsky & Rie Koizumi. 2022. Promoting computationally reproducible research in applied linguistics: Recommended practices and considerations. Research Methods in Applied Linguistics 1(3). 100030. https://doi.org/10.1016/j.rmal.2022.100030.
 
 Specifically, we want to cite this passage from page 100030:
 
@@ -1122,7 +1122,7 @@ wrong = "No, not quite. Citation styles can look very similar, but the devil is 
 ```
 :::
 
-:::: callout-tip
+::: callout-tip
 #### Literature management {.unnumbered}
 
 One of the major challenges of doing research is actually managing the large number of references that you need to consult, read, and cite in your projects. The good news is that **reference management software** are there to help you overcome this challenge. Whether you are working on a term paper, your Master's dissertation, your PhD thesis, or a post-doctoral project, it is *always* worth investing the time to learn to use a reference manager!
@@ -1134,7 +1134,7 @@ One of the major challenges of doing research is actually managing the large num
 :::
 
 What's more, Zotero can be integrated in RStudio, making it very easy to include BibTeX-formatted references in your Quarto documents. Find out more in the [RStudio documentation](https://rstudio.github.io/visual-markdown-editing/citations.html).
-::::
+:::
 
 ## Computing environment {#sec-Packages}
 
@@ -1213,7 +1213,7 @@ format: docx
 To share your work with **LibreOffice** and **OpenOffice** users, use the `format: odt` option, which will generate an **OpenDocument** - an open standard file format that can be opened in any text-processing software.
 
 ::: callout-caution
-#### Task 13.\*\*
+#### Task 13.4
 
 If you completed Task 8.1 (@sec-Range), you copied-and-pasted a paragraph with gaps into LibreOffice Write or Microsoft Word and then manually inserted descriptive statistics that you had calculated in `R`. This method of copying-and-pasting across different programmes is very error-prone! What if you accidentally paste the wrong number in the wrong place? And what if there is an update to the dataset or you make some changes to the data cleaning procedure? You'd had to manually change all the numbers again. This is time-consuming and, more worryingly, very likely to result in errors!
 
@@ -1224,8 +1224,8 @@ Now that you know about **literate programming** in Quarto, rewrite the followin
  
 :::
 
-:::: {.callout-note collapse="true"}
-#### Click here for the solution to Task 13.\*\*
+::: {.callout-note collapse="true"}
+#### Click here for the solution to Task 13.4
 
 Below is Quarto document with the inline code chunks and its rendered `.odt` version as opened in LibreOffice Writer.
 
@@ -1234,7 +1234,7 @@ Below is Quarto document with the inline code chunks and its rendered `.odt` ver
 
 ![Rendered document as opened in LibreOffice Writer](images/LibreOffice_TaskSolution.png)
 :::
-::::
+:::
 
 ### PDF
 
@@ -1267,11 +1267,11 @@ format:
 
 In research, it's quite common that you will be working on a project that will be submitted as a paper or thesis (e.g., in PDF format) *and* that you'll also want to **present** in class, to your research group, or at a conference. You can easily turn your Quarto document into **presentation slides**, too! There are currently three presentation formats to choose from:
 
-|  |  |  |
-|----|----|----|
-| [Revealjs](/docs/reference/formats/presentations/revealjs.qmd) | Revealjs is an open-source HTML presentation framework. | `format: revealjs` |
-| [PowerPoint](/docs/reference/formats/presentations/pptx.qmd) | PowerPoint is Microsoft Office's presentation editing software. | `format: pptx` |
-| [Beamer](/docs/reference/formats/presentations/beamer.qmd) | Beamer is a LaTeX class for producing presentations and slides in PDF format. | `format: beamer` |
+|                                                                |                                                                               |                    |
+|----------------------------------------------------------------|-------------------------------------------------------------------------------|--------------------|
+| [Revealjs](/docs/reference/formats/presentations/revealjs.qmd) | Revealjs is an open-source HTML presentation framework.                       | `format: revealjs` |
+| [PowerPoint](/docs/reference/formats/presentations/pptx.qmd)   | PowerPoint is Microsoft Office's presentation editing software.               | `format: pptx`     |
+| [Beamer](/docs/reference/formats/presentations/beamer.qmd)     | Beamer is a LaTeX class for producing presentations and slides in PDF format. | `format: beamer`   |
 
 ## Conclusion
 
