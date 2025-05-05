@@ -505,7 +505,7 @@ div.csl-indent {
   </ul></li>
   <li><a href="#sec-References" id="toc-sec-References" class="nav-link" data-scroll-target="#sec-References"><span class="header-section-number">13.9</span> References</a></li>
   <li><a href="#sec-Packages" id="toc-sec-Packages" class="nav-link" data-scroll-target="#sec-Packages"><span class="header-section-number">13.10</span> Computing environment</a></li>
-  <li><a href="#publishing-formats" id="toc-publishing-formats" class="nav-link" data-scroll-target="#publishing-formats"><span class="header-section-number">13.11</span> Publishing formats</a>
+  <li><a href="#sec-PublishingFormats" id="toc-sec-PublishingFormats" class="nav-link" data-scroll-target="#sec-PublishingFormats"><span class="header-section-number">13.11</span> Publishing formats</a>
   <ul class="collapse">
   <li><a href="#text-processing-formats" id="toc-text-processing-formats" class="nav-link" data-scroll-target="#text-processing-formats"><span class="header-section-number">13.11.1</span> Text-processing formats</a></li>
   <li><a href="#pdf" id="toc-pdf" class="nav-link" data-scroll-target="#pdf"><span class="header-section-number">13.11.2</span> PDF</a></li>
@@ -557,32 +557,20 @@ Warning
 </div>
 <section id="chapter-overview" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="chapter-overview">Chapter overview</h3>
-<p>So far, we have seen how we can export the outputs of our analyses conducted in <code>R</code>, both in the form of tables (<a href="9_DataWrangling.html#sec-ExportingRObjects" class="quarto-xref"><span>Section 9.9</span></a>) and graphics (<a href="10_Dataviz.html#sec-ExploringPlots" class="quarto-xref"><span>Section 10.3</span></a>). However, in most situations, we want to communicate our research with the form of a publication that combines both text and analysis outputs. This is where literate programming comes into play!</p>
-<p>In this chapter, you will learn about:</p>
-<ul>
-<li>the concept of literate programming</li>
-<li>why reproducibility matters and how to aim for reproducible research</li>
-<li>using Quarto for writing research reports, theses, and papers and</li>
-<li>sharing and publishing your research in different formats including:
-<ul>
-<li><code>.html</code></li>
-<li><code>.pdf</code></li>
-<li><code>.odt</code></li>
-<li><code>.docx</code></li>
-</ul></li>
-</ul>
+<p>So far, we have seen how we can export the outputs of our analyses conducted in <code>R</code>, both in the form of tables (<a href="9_DataWrangling.html#sec-ExportingRObjects" class="quarto-xref"><span>Section 9.9</span></a>) and graphics (<a href="10_Dataviz.html#sec-ExploringPlots" class="quarto-xref"><span>Section 10.3</span></a>). However, in most situations, we want to communicate our research with the form of a document that combines both text and analysis outputs. This is where <strong>literate programming</strong> comes into play!</p>
+<p>In this chapter, you will learn about: - the concept of literate programming - why reproducibility matters and how to aim for reproducible research - using Quarto for writing research reports, theses, and papers and - sharing and publishing your research in different formats including: - <code>.html</code> - <code>.pdf</code> - <code>.odt</code> - <code>.docx</code></p>
 </section>
 <section id="sec-LitProgramming" class="level2" data-number="13.1">
 <h2 data-number="13.1" class="anchored" data-anchor-id="sec-LitProgramming"><span class="header-section-number">13.1</span> Literate programming</h2>
 <p>The basic idea of literate programming is that we combine text, code, and code outputs (i.e.&nbsp;tables, statistics, and plots) within a single document that can be exported into different formats for sharing and publishing.</p>
-<p>Literate programming can be implemented in different authoring formats. Up until very recently, the most common format for <code>R</code> projects was <strong>R Markdown</strong>. For <code>Python</code> projects, <strong>Jupyter Notebooks</strong> remains the standard to date. In this chapter, we will focus on <strong>Quarto</strong>, a relatively new <a href="https://en.wikipedia.org/wiki/Free_and_open-source" title="Free and open-source">open-source</a> scientific and technical authoring and publishing system that has the advantage of supporting many different programming languages, meaning that chunks of code in <code>R</code>, <code>Python</code>, <code>Julia</code>, and other languages can be combined into one document, making complex project management and collaboration much easier. Quarto allows us to easily export (or <strong>render</strong>) our documents to HTML, PDF, Word, and many more formats (see <a href="#fig-QuartoFormats" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> below).</p>
+<p>Literate programming can be implemented in different authoring formats. Up until very recently, the most common format for <code>R</code> projects was <strong>R Markdown</strong>. For <code>Python</code> projects, <strong>Jupyter Notebooks</strong> remains the standard to date. In this chapter, we will focus on <strong>Quarto</strong>, a relatively new <a href="https://en.wikipedia.org/wiki/Free_and_open-source" title="Free and open-source">open-source</a> scientific and technical authoring and publishing system that has the advantage of supporting many different programming languages. This means that chunks of code in <code>R</code>, <code>Python</code>, <code>Julia</code>, and other languages can be combined into one document, making project management and collaboration much easier. Quarto allows us to easily export (or <strong>render</strong>) our documents to HTML, PDF, Word, and many more formats (see <a href="#fig-QuartoFormats" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> and <a href="#sec-PublishingFormats" class="quarto-xref"><span>Section 13.11</span></a>).</p>
 <div id="fig-QuartoFormats" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A schematic representing the multi-language input (e.g. Python, R, Observable, Julia) and multi-format output (e.g. PDF, html, Word documents, and more) versatility of Quarto.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-QuartoFormats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/AHorst_Quarto.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;13.1: A schematic representation of how Quarto can understand multi-language input and produce multi-format outputs (Artwork by Allison Horst from the “Hello, Quarto” keynote by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022)."><img src="images/AHorst_Quarto.png" class="img-fluid figure-img" alt="A schematic representing the multi-language input (e.g. Python, R, Observable, Julia) and multi-format output (e.g. PDF, html, Word documents, and more) versatility of Quarto."></a>
+<a href="images/AHorst_Quarto.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;13.1: A schematic representation of how Quarto can understand multi-language input and produce multi-format outputs (Artwork by Allison Horst from the “Hello, Quarto” keynote by Julia Lowndes and Mine Çetinkaya-Rundel, presented at the RStudio Conference 2022)."><img src="images/AHorst_Quarto.png" class="img-fluid figure-img" alt="A schematic representing the multi-language input (e.g. Python, R, Observable, Julia) and multi-format output (e.g. PDF, html, Word documents, and more) versatility of Quarto."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-QuartoFormats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.1: A schematic representation of how Quarto can understand multi-language input and produce multi-format outputs (Artwork by <a href="https://allisonhorst.com/cetinkaya-rundel-lowndes-quarto-keynote">Allison Horst</a> from the <a href="https://mine.quarto.pub/hello-quarto/#/hello-quarto-title">“Hello, Quarto” keynote</a> by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022).
+Figure&nbsp;13.1: A schematic representation of how Quarto can understand multi-language input and produce multi-format outputs (Artwork by <a href="https://allisonhorst.com/cetinkaya-rundel-lowndes-quarto-keynote">Allison Horst</a> from the <a href="https://mine.quarto.pub/hello-quarto/#/hello-quarto-title">“Hello, Quarto” keynote</a> by Julia Lowndes and Mine Çetinkaya-Rundel, presented at the RStudio Conference 2022).
 </figcaption>
 </figure>
 </div>
@@ -1586,7 +1574,7 @@ More complex in-line computations
 <span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">OtherLgs =</span> <span class="st">"Additional language"</span>, </span>
 <span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="st">"N"</span>)</span>
 <span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="tbl-L1-languages" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[80,20]" data-tbl-cap-location="top">
+<div id="tbl-L1-languages" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="top" data-tbl-colwidths="[80,20]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-L1-languages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;13.1: Example of a {gt} table
@@ -2097,7 +2085,7 @@ Going further
 <section id="sec-QuartoImages" class="level3" data-number="13.8.1">
 <h3 data-number="13.8.1" class="anchored" data-anchor-id="sec-QuartoImages"><span class="header-section-number">13.8.1</span> Images</h3>
 <p>To embed an image from an external file, you can use the “Insert” menu in RStudio’s <strong>Visual</strong> editor and select “Figure / Image” (see <a href="#fig-InsertingImage" class="quarto-xref">Figure&nbsp;<span>13.9</span></a>). This will open up a menu where you can select the image that you want to insert, as well as add <strong>alt-text</strong> (see <span class="quarto-unresolved-ref">?sec-AltText</span>) and a <strong>caption</strong>. The easiest way to adjust the size of an embedded image is to click on the image and then adjust the <strong>size</strong> of the image with the blue circle in the bottom-right corner of the image (see <a href="#fig-InsertingImage" class="quarto-xref">Figure&nbsp;<span>13.9</span></a>).</p>
-<div id="fig-InsertingImage" class="quarto-float quarto-figure quarto-figure-center anchored" width="480" alt="Cartoon drawing of a pipe with three entry points for &quot;data&quot; and the output producing a research paper with text, a table, and a plot. Sections of the pipe are labelled: data cleaning, overview, figures, modelling, and text.">
+<div id="fig-InsertingImage" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Cartoon drawing of a pipe with three entry points for &quot;data&quot; and the output producing a research paper with text, a table, and a plot. Sections of the pipe are labelled: data cleaning, overview, figures, modelling, and text." width="480">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-InsertingImage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/Quarto_Insert_image.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13.9: "><img src="images/Quarto_Insert_image.png" id="fig-InsertingImage" class="img-fluid figure-img" alt="Cartoon drawing of a pipe with three entry points for &quot;data&quot; and the output producing a research paper with text, a table, and a plot. Sections of the pipe are labelled: data cleaning, overview, figures, modelling, and text." width="480"></a>
@@ -2638,8 +2626,8 @@ Going further 📚
 </div>
 </div>
 </section>
-<section id="publishing-formats" class="level2" data-number="13.11">
-<h2 data-number="13.11" class="anchored" data-anchor-id="publishing-formats"><span class="header-section-number">13.11</span> Publishing formats</h2>
+<section id="sec-PublishingFormats" class="level2" data-number="13.11">
+<h2 data-number="13.11" class="anchored" data-anchor-id="sec-PublishingFormats"><span class="header-section-number">13.11</span> Publishing formats</h2>
 <p>So far, we have only tried rendering our Quarto document to <strong>HTML</strong>, which is the default publishing format for Quarto documents. HTML has many advantages and is great for publishing online, but the beauty of Quarto is that you can publish in many other formats, too.</p>
 <div id="fig-Penguin" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A schematic showing many qmd files, going through Quarto, to generate an HTML, PDF, or Word document or more. The Quarto logo is depicted as a baseball a penguin is spinning.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2773,12 +2761,12 @@ Click here for the solution to Task 13.4
 <p>Well done! You have successfully completed this chapter on literate programming using Quarto. You have answered <span style="color:green;"><span id="checkdown_final_score">0</span> out of 10 questions</span> correctly.</p>
 <p>Are you confident that you can…?</p>
 <ul class="task-list">
-<li><label><input type="checkbox">Explain the concepts of literate programming and reproducible research to a friend/colleague</label></li>
+<li><label><input type="checkbox">Explain the concepts of literate programming and reproducible research to a friend or colleague</label></li>
 <li><label><input type="checkbox">Write and format text (bold, first-level heading, italics, etc.) in a Quarto document</label></li>
 <li><label><input type="checkbox">Insert code chunks in a Quarto document and make use of inline code</label></li>
 <li><label><input type="checkbox">Insert tables in a Quarto document</label></li>
 <li><label><input type="checkbox">Embed images and plots in a Quarto document</label></li>
-<li><label><input type="checkbox">Render (i.e.&nbsp;export) your <code>.qmd</code> document to HTML, Microsoft Word, and PDF.</label></li>
+<li><label><input type="checkbox">Render (i.e.&nbsp;export) your <code>.qmd</code> document to HTML, Microsoft Word, and PDF</label></li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
