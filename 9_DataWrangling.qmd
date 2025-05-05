@@ -51,7 +51,7 @@ In this chapter, we will explore functions from {[dplyr](https://dplyr.tidyverse
 library(tidyverse)
 ```
 
-## Checking data sanity
+## Checking data sanity {#sec-Sanity}
 
 ```{r include=FALSE}
 library(here)
@@ -180,7 +180,7 @@ check_hint("Use the `?` function to access the help files of each function and t
 ```
 :::
 
-## Pre-processing data
+## Pre-processing data {#sec-Preprocessing}
 
 ### Using `mutate()` to add and replace columns {#sec-mutate}
 
@@ -311,7 +311,7 @@ summary(L2.data.fct$Gender)
 To ensure that our analyses are reproducible from the beginning to the end, it is crucial that we document *all* of our corrections in a script. This ensures that if we need to go back on any data pre-processing decision that we made or if we need to make any additional corrections, we can do so without having to re-do our entire analyses. In addition, it means that our corrections and other data pre-processing steps are transparent and can be inspected and challenged by our peers.
 :::
 
-### Using {stringr} functions
+### Using {stringr} functions {#sec-stringR}
 
 To convert all of the lower-case "f" in the `Gender` variable to upper-case "F", we can combine the `mutate()` with the `str_to_upper()` function. This ensures that all values in the new `Gender.corrected` column are in capital letters.
 
@@ -994,7 +994,7 @@ combined.data |>
 
 Run `View(combined.data)` to inspect the combined dataset and check in which other columns there are `NA` values.
 
-:::: {.callout-note collapse="true"}
+::: {.callout-note collapse="true"}
 #### What if my data is not yet in tidy format? 🤨
 
 Combining the two datasets from @DabrowskaExperienceAptitudeIndividual2019 was relatively easy because the data was already in tidy format. But, fear not: if you need to first convert your data to tidy format, the [{tidyr}](https://tidyr.tidyverse.org/) package has got you covered! 😎
@@ -1008,7 +1008,7 @@ The `pivot_longer()` and `pivot_wider()` functions allow you to easily convert t
 :::
 
 Remember to carefully check the output of any data manipulation that you do *before* moving on to doing any analyses! To this end, the `View()` function is particularly helpful.
-::::
+:::
 
 ::: callout-important
 ### Using AI tools for coding ⚠️
@@ -1177,12 +1177,12 @@ combined.data |>
 
 As a final step, we want to save the `R` object `combined.data` to a local file on our computer so that, when we continue our analyses in a new `R` session, we can immediately start working with the wrangled dataset. We can either save the wrangled dataset as an `R` object (`.rds`) or export it as a DSV file (e.g. `.csv`, see @sec-DSV). The pros and cons of the two solutions are summarised in @tbl-saving.
 
-| DSV files (e.g., `.csv`, `.tsv`, `.tab`) | `R` data files (`.rds`) |
-|:---|:---|
-| ✅ Highly portable (i.e., can be opened in all standard spreadsheet software and text editors). | ❌ Specific to `R` and cannot be opened in standard spreadsheet software or text editors. |
-| ❌ Inefficient for very large datasets. | ✅ Efficient memory usage for more compact data storage and faster loading times in `R`. |
-| ✅ Universal, language-independent format and therefore suitable for long-term archiving. | ❌ No guarantee that older `.rds` files will be compatible with newer versions of `R` and therefore unsuitable for long-term archiving. |
-| ❌ Loss of metadata. | ✅ Preserve `R` data structures (e.g., factor variables remain stored as factors). |
+| DSV files (e.g., `.csv`, `.tsv`, `.tab`)                                                        | `R` data files (`.rds`)                                                                                                                 |
+|:------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------|
+| ✅ Highly portable (i.e., can be opened in all standard spreadsheet software and text editors). | ❌ Specific to `R` and cannot be opened in standard spreadsheet software or text editors.                                               |
+| ❌ Inefficient for very large datasets.                                                         | ✅ Efficient memory usage for more compact data storage and faster loading times in `R`.                                                |
+| ✅ Universal, language-independent format and therefore suitable for long-term archiving.       | ❌ No guarantee that older `.rds` files will be compatible with newer versions of `R` and therefore unsuitable for long-term archiving. |
+| ❌ Loss of metadata.                                                                            | ✅ Preserve `R` data structures (e.g., factor variables remain stored as factors).                                                      |
 
 : Pros and cons of saving DSV and `R` data files. {#tbl-saving}
 
@@ -1236,15 +1236,15 @@ That was a lot of data wrangling, but we are now ready to proceed with some comp
 
 Are you confident that you can...?
 
--   [ ] Define tidy data
--   [ ] Check the sanity of a dataset
--   [ ] Convert character vectors representing categorical data to factors
--   [ ] Add and replace columns in a table
--   [ ] Transform several columns at once
--   [ ] Use {stringr} functions to manipulate text values
+-   [ ] Define tidy data (@sec-tidyverse)
+-   [ ] Check the sanity of a dataset (@sec-Sanity)
+-   [ ] Convert character vectors representing categorical data to factors (@sec-Factors)
+-   [ ] Add and replace columns in a table (@sec-mutate)
+-   [ ] Transform several columns at once (@sec-across)
+-   [ ] Use {stringr} functions to manipulate text values (@sec-stringR)
 -   [ ] Interpret `R` package cheatsheets
 -   [ ] Gain insights from the help file of `R` functions
--   [ ] Use tidyverse functions to pre-process data in an readable and reproducible way
--   [ ] Save `R` objects as `.rds` and `.csv` files on your computer.
+-   [ ] Use tidyverse functions to pre-process data in an readable and reproducible way (@sec-Preprocessing) and (@sec-filter)
+-   [ ] Save `R` objects as `.rds` and `.csv` files on your computer (@sec-ExportingRObjects)
 
 The [following chapter](@sec-DataViz) stays in the tidyverse as we will learn how to use the popular tidyverse package {ggplot2} to visualise the pre-processed data from @DabrowskaExperienceAptitudeIndividual2019.
