@@ -1,23 +1,8 @@
 ---
-engine: knitr
 bibliography: 
   - references.bib
   - grateful-refs.bib
-toc: true
-format:
-  html:
-    theme:
-      light: cosmo
-      dark: darkly
-    css: style.css
-    code-line-numbers: false
-    code-overflow: wrap
-    code-tools: false
-    code-link: false
-    link-external-newwindow: true
-    number-sections: true
-    footnotes-hover: true
-
+#format:
 #  pdf:
  #   toc: true
   #  colorlinks: true
@@ -68,7 +53,7 @@ Literate programming is particularly useful for **scientific research** and **da
 Not only is using Quarto (or any other literate programming format, see @sec-LitProgramming) very convenient for the author(s), it also helps us make our research more **reproducible**. Unfortunately, the terms *reproducible*, *replicable* and *repeatable* are often confused and, not helping matters, some definitions in the literature contradict each other. In this textbook, we will adopt the terminology of [The Turing Way](https://book.the-turing-way.org/). We thus define **reproducibility** as the ability of an independent researcher or team to *obtain the same results* as in a published study *using the same data and methods* that were used in the original study (see @fig-reproducibility-terminology).
 
 ::: column-margin
-![](images/hex_TuringWay.jpg){#fig-HexTuringWay width="100" alt-text="The Turing Way hexagonal logo features a large arrow forward representing the research process."}
+![](images/hex_TuringWay.jpg){width="100" alt-text="The Turing Way hexagonal logo features a large arrow forward representing the research process."}
 :::
 
 This is in contrast to **replicability**, where the same methods, but different data is used; and **robustness**, where the same data, but different methods are used. Finally, if a finding can be reliably observed across different datasets with different methods, then we can say that the finding is **generalisable**.
@@ -186,13 +171,11 @@ We will be writing Quarto documents from the RStudio IDE[^13_literateprogramming
 
 ![](images/Quarto_new.png){#fig-QuartoNew width="401"}
 
-4.  RStudio has now opened a new, untitled Quarto file (`.qmd`). Change the title of the document (which is not the same as its filename!) and add the following three lines in the document header (the **YALM**) by copying and pasting the following lines at the top of the document (see Fig. \*\*).[^13_literateprogramming-4]
+4.  RStudio has now opened a new, untitled Quarto file (`.qmd`). Change the title of the document (which is not the same as its filename!) and add the following three lines in the **document header** by copying and pasting the following lines at the top of the document.[^13_literateprogramming-4] Quarto document headers are written in **YAML** which, I kid you not, stands for *Yet Another Markup Language*.
 
-[^13_literateprogramming-4]: Note that, in the YALM, character strings such as the title and your name must be enclosed in quotation marks. The date is not enclosed in quotation marks because it is a dynamic variable that will be adjusted to your computer's system date so that, every time you render the document, the date will be updated.
+[^13_literateprogramming-4]: Note that, in YAML syntax, character strings such as the document title and your name must be enclosed in quotation marks. By contrast, the date is not enclosed in quotation marks because it is a dynamic variable that will be adjusted to your computer's system date so that, every time you render the document, the date will be updated.
 
-<!--#  @Elen: Did you forget to insert an image here? -->
-
-```{{yaml}}
+```{yaml}
 ---
 title: "Learning Quarto"
 subtitle: "by reproducing the descriptive statistics of Dąbrowska's (2019) study"
@@ -228,7 +211,7 @@ You can toggle back and forth between these two modes by clicking on **Source** 
 
 In this task, you will learn to use RStudio's Visual model to format text in a Quarto document.
 
--   In a new line beginning after the final `---` of the YALM header, paste the introduction text below.
+-   In a new line beginning after the final `---` of the YAML header, paste the introduction text below.
 -   Using the Quarto editing toolbar, format the text so that, in the Visual mode, it looks like the text displayed in @fig-QuartoIntro.
 -   Render the document and compare how it is formatted in the HTML version.
 
@@ -975,7 +958,7 @@ If you are sharing your research analyses and results in HTML format, you can em
 #| message: false
 #| warning: false
 #| code-fold: true
-#| code-summary: "Show `R` code to generate interactive plot below."
+#| code-summary: "Show `R` code to generate the interactive plot below."
 
 library(plotly)
 
@@ -1037,10 +1020,10 @@ When you insert your first reference in a Quarto document, RStudio will automati
 }
 ```
 
-In order to connect this `bibliography.bib` file with our Quarto document, we need to add a `bibliography` key to our **YALM header**. If our `references.bib` file is located in the same folder as our Quarto document (which is what RStudio does by default), we can simply add the following line to our YALM:
+In order to connect this `bibliography.bib` file with our Quarto document, we need to add a `bibliography` key to our **YAML header**. If our `references.bib` file is located in the same folder as our Quarto document (which is what RStudio does by default), we can simply add the following line to our document header:
 
-```         
----
+```{yaml}
+--- 
 title: "Learning Quarto"
 subtitle: "by reproducing the descriptive statistics of Dąbrowska's (2019) study"
 author: "Elen Le Foll"
@@ -1049,7 +1032,7 @@ bibliography: references.bib
 ---
 ```
 
-With this modified YALM, when the document is rendered, a bibliography will automatically be added to the end of the document. This means that, if you have citations in your document, it is a good idea to include a header section `# References` at the end of the document.
+With this modified YAML header, when the document is rendered, a bibliography will automatically be added to the end of the document. This means that, if you have citations in your document, it is a good idea to include a header section `# References` at the end of the document.
 
 > ### References {.unnumbered}
 >
@@ -1057,9 +1040,9 @@ With this modified YALM, when the document is rendered, a bibliography will auto
 >
 > Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. *R for Data Science: Import, Tidy, Transform, Visualize, and Model Data*. 2nd ed. O'Reilly. <https://r4ds.hadley.nz/>.
 
-By default, Quarto will use the [Chicago Manual of Style](https://chicagomanualofstyle.org/) author-date citation format (as above). However, you can point to a different **citation stylesheet** in the form of a `.csl` (Citation Style Language) file in the YALM header. This allows us to determine exactly how our bibliography and in-text citations should be formatted. Many institutions, publishers, and journals have their own (sometimes annoyingly specific!) requirements. Luckily, the research community has put together a large repository of citation stylesheets for you to choose from: <https://www.zotero.org/styles>. You can download any of these stylesheets (as a `.csl` file), place the file in your project folder, and then link it to your Quarto document by adding a `cls` key to your YALM.
+By default, Quarto will use the [Chicago Manual of Style](https://chicagomanualofstyle.org/) author-date citation format (as above). However, you can point to a different **citation stylesheet** in the form of a `.csl` (Citation Style Language) file in the YAML header. This allows us to determine exactly how our bibliography and in-text citations should be formatted. Many institutions, publishers, and journals have their own (sometimes annoyingly specific!) requirements. Luckily, the research community has put together a large repository of citation stylesheets for you to choose from: <https://www.zotero.org/styles>. You can download any of these stylesheets (as a `.csl` file), place the file in your project folder, and then link it to your Quarto document by adding a `cls` key to your header.
 
-```         
+```{yaml}
 ---
 title: "Learning Quarto"
 subtitle: "by reproducing the descriptive statistics of Dąbrowska's (2019) study"
@@ -1070,7 +1053,7 @@ csl: international-journal-of-learner-corpus-research.csl
 ---
 ```
 
-For example, if you wanted to submit your paper to the [International Journal of Learner Corpus Research](https://benjamins.com/catalog/ijlcr), you could find the [corresponding CLS stylesheet](https://www.zotero.org/styles/international-journal-of-learner-corpus-research) in the [Zotero styles database](https://www.zotero.org/styles), save it in your project folder, and link to it in your YALM as above. When rendered, your document's bibliography would then read:
+For example, if you wanted to submit your paper to the [International Journal of Learner Corpus Research](https://benjamins.com/catalog/ijlcr), you could find the [corresponding CLS stylesheet](https://www.zotero.org/styles/international-journal-of-learner-corpus-research) in the [Zotero styles database](https://www.zotero.org/styles), save it in your project folder, and link to it in your YAML header as above. When rendered, your document's bibliography would then read:
 
 > ### References {.unnumbered}
 >
@@ -1108,7 +1091,7 @@ check_hint("You'll find detailed information on the formatting of in-text citati
 
 Go to the [Zotero style repository](https://www.zotero.org/styles) and download the `.csl` citation stylesheet to format references according to the American Psychological Association (APA) 7^th^ edition. Link this stylesheet to your Quarto document and render to HTML.
 
-[**b.**]{style="color:green;"} How are the authors' names listed in the bibliography formatted in APA7?
+[**b.**]{style="color:green;"} Now that your document includes references formatted in APA7, how are the authors' names listed in your bibliography?
 
 ```{r echo=FALSE}
 check_question("In’nami, Y., Mizumoto, A., Plonsky, L., & Koizumi, R.",
@@ -1148,9 +1131,9 @@ In addition to referencing academic papers, it is also very important that we re
 
 The easiest way to "give credit where credit is due" to `R` package developers is to use the [{grateful}](https://pakillo.github.io/grateful/) package. Its `cite_packages()` function will scan your project for all the `R` packages that are used and generate a BibTeX file called `grateful-refs.bib` that contains the package references.
 
-You will first need to add a reference to the BibTeX file generated by {grateful} in your YAML header. This means that your Quarto document will now have two bibliography files, which is fine as long as you use the following YALM syntax to reference them both.
+You will first need to add a reference to the BibTeX file generated by {grateful} in your YAML header. This means that your Quarto document will now have two bibliography files, which is fine as long as you use the following YAML syntax to reference them both.
 
-```         
+```{yaml}
 ---
 bibliography: 
   - references.bib
@@ -1210,9 +1193,9 @@ So far, we have only tried rendering our Quarto document to **HTML**, which is t
 
 ### Text-processing formats
 
-For example, if your supervisor or colleague would like a **Microsoft Word** document, this is no problem. All you need to do is add the following line to your **YALM header** and then render your document again. This is will generate a `.docx` file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.
+For example, if your supervisor or colleague would like a **Microsoft Word** document, this is no problem. All you need to do is add the following line to your **YAML header** and then render your document again. This is will generate a `.docx` file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.
 
-```         
+```{yaml}
 ---
 format: docx
 ---
@@ -1235,7 +1218,7 @@ Now that you know about **literate programming** in Quarto, rewrite the followin
 :::: {.callout-note collapse="true"}
 #### Click here for the solution to Task 13.4
 
-Below is Quarto document with the inline code chunks and its rendered `.odt` version as opened in LibreOffice Writer.
+Below is a screenshot of a Quarto document with the inline code chunks and its rendered `.odt` version as opened in LibreOffice Writer.
 
 ::: {layout-ncol="2"}
 ![Quarto source code](images/Quarto_TaskSolution.png){fig-alt="The paragraph with inline code in Quarto reads: On average, English native speakers performed only marginally better in the English grammatical comprehension test (median = `r median(L1.data$GrammarR)`) than English L2 learners (median = `r median(L2.data$GrammarR)`). L1 participants' grammatical comprehension test results ranged from `r min(L1.data$GrammarR)` to `r max(L1.data$GrammarR)`. In this same test, L2 participants' results ranged `r min(L2.data$GrammarR)` to `r max(L2.data$GrammarR)`."}
@@ -1252,17 +1235,17 @@ It is also possible to render Quarto documents to **PDF**; however, this require
 quarto install tinytex
 ```
 
-This is likely to take several minutes but you will only need to do it once. Afterwards, you can add the following line to your Quarto YALM header and you're ready to render to PDF!
+This is likely to take several minutes but you will only need to do it once. Afterwards, you can add the following line to your Quarto YAML header and you're ready to render to PDF!
 
-```         
+```{yaml}
 ---
 format: pdf
 ---
 ```
 
-Quarto's different publishing formats have different options. For example, if you want your PDF document have numbered sections and to include a table of content (TOC), you can add the following lines to your YALM header:
+Quarto's different publishing formats have different options. For example, if you want your PDF document have numbered sections and to include a table of content (TOC), you can add the following lines to your YAML header:
 
-```         
+```{yaml}
 ---
 format:  
   pdf:
@@ -1281,20 +1264,24 @@ In research, it's quite common that you will be working on a project that will b
 | [PowerPoint](https://quarto.org/docs/presentations/powerpoint.html) | PowerPoint is Microsoft Office's presentation editing software. | `format: pptx` |
 | [Beamer](https://quarto.org/docs/presentations/beamer.html) | Beamer is a LaTeX class for producing presentations and slides in PDF format. | `format: beamer` |
 
+<!--# @Vishar: Could you please find a way to ensure that the word "Powerpoint" is not split across two lines in the rendered version? -->
+
 ## Conclusion
 
 In this chapter, we've only just scratched the surface of what's possible in Quarto. The Quarto documentation is very detailed and well worth exploring to find out what else you can do in Quarto from books to blogs and interactive dashboards: <https://quarto.org/docs/guide/>.
 
 ### Check your progress 🌟 {.unnumbered}
 
-Well done! You have successfully completed this chapter on Literate programming using Quarto. You have answered [`r checkdown::insert_score()` out of 10 questions]{style="color:green;"} correctly.
+Well done! You have successfully completed this chapter on literate programming using Quarto. You have answered [`r checkdown::insert_score()` out of 10 questions]{style="color:green;"} correctly.
 
 Are you confident that you can...?
 
--   [ ] Define concepts of literate programming and reproducible research
--   [ ] Install Quarto, open a new Quarto document in RStudio and write and format text in Quarto (bold, first-level heading, italics, etc.)
--   [ ] Insert a code chunk in a Quarto document and use inline codes
--   [ ] Construct a table in a Quarto document and embed images and plots
+-   [ ] Explain the concepts of literate programming and reproducible research to a friend/colleague
+-   [ ] Write and format text (bold, first-level heading, italics, etc.) in a Quarto document
+-   [ ] Insert code chunks in a Quarto document and make use of inline code
+-   [ ] Insert tables in a Quarto document
+-   [ ] Embed images and plots in a Quarto document
+-   [ ] Render (i.e. export) your `.qmd` document to HTML, Microsoft Word, and PDF.
 
 ::: callout-note
 #### Going further with Quarto 🚀
