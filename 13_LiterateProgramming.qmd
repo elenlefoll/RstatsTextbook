@@ -23,7 +23,19 @@ Alternative titles could be "Rep`R`oducibility and writing in Quarto", "Rep`R`od
 
 So far, we have seen how we can export the outputs of our analyses conducted in `R`, both in the form of tables (@sec-ExportingRObjects) and graphics (@sec-ExploringPlots). However, in most situations, we want to communicate our research with the form of a document that combines both text and analysis outputs. This is where **literate programming** comes into play!
 
-In this chapter, you will learn about: - the concept of literate programming - why reproducibility matters and how to aim for reproducible research - using Quarto for writing research reports, theses, and papers and - sharing and publishing your research in different formats including: - `.html` - `.pdf` - `.odt` - `.docx`
+In this chapter, you will learn about:
+
+-   the concept of literate programming
+-   why reproducibility matters and how to aim for reproducible research
+-   using Quarto for writing research reports, theses, and papers and
+-   sharing and publishing your research in different formats including:
+    -   `.html`
+
+    -   `.pdf`
+
+    -   `.odt`
+
+    -   `.docx`
 
 ```{r include=FALSE}
 library(checkdown)
@@ -302,7 +314,7 @@ wrong = "Hummm, are you sure? Go back to the Source code of your Quarto format a
 ```{r echo=FALSE}
 check_question("underlined",
                options = c("in italics", 
-                           "as a leve heading", 
+                           "as a subsection heading", 
                            "as R code", 
                            "underlined",
                            "in light blue"), 
@@ -310,7 +322,7 @@ check_question("underlined",
 button_label = "Check answer",
 random_answer_order = TRUE,
 right = "That's right! 🎉",
-wrong = "Hummm, are you sure? Have you tried inserting _mystery_ in the Source code of your Quarto format and then switching to the Visual editor to see what happens?")
+wrong = "Hummm, are you sure? Have you tried inserting `_mystery_` in the Source code of your Quarto format and then switching to the Visual editor to see what happens?")
 ```
 
  
@@ -429,7 +441,7 @@ check_question("Two messages, one per loaded library.",
                type = "check",
 button_label = "Check answer",
 right = "That's right! What you are seeing are messages that the {here} and the {tidyverse} libraries output when they are correctly loaded. To find out more about conflicts, see Section 9.2.",
-wrong = "No, that's incorrect. If you are getting the fourth error message, this means that your document could not be rendered because one of the two packages has not been installed yet (or else you have misspelt the name of the package?). If you are getting the last error message, this means that there is a problem with your Quarto document, which means that it cannot be rendered. Read the rest of the error message to understand where the problem lies. It is very likely to be a small syntax error or a typo.") 
+wrong = "No, that's incorrect. If you are getting the fourth error message, this means that your document could not be rendered because one of the two packages has not been installed yet (or else you have misspelt the name of the package?). If you are getting the last error message, this means that there is a problem with your Quarto document, which means that it cannot be rendered. Read the rest of the error message to understand where the problem lies. It is very likely to be a small syntax error or typo.") 
 check_hint("Remember that a conflict message is *not* an error message, it merely informs us about potential conflicts when two different packages have functions with the same name (see Section 9.2).", 
            hint_title = "<br>🐭 Click on the mouse for a hint.")
 ```
@@ -718,7 +730,7 @@ The rendered document will read:
 ::: {.callout-note collapse="true"}
 ### More complex in-line computations
 
-For more complex computations, it is much better to compute the values in a dedicated code chunk. This also allows you to add **code annotation** whihc is important to ensure that other researchers (and your future self!) understands the reasoning behind the code.
+For more complex computations, it is much better to compute the values in a dedicated code chunk. This also allows you to add **code annotation** which is important to ensure that other researchers (and your future self!) understands the reasoning behind the code.
 
 For example, the following chunk containing annotated code can be used to reproduce the descriptive statistics concerning L1 participants' professional occupations and foreign language skills.
 
@@ -770,7 +782,7 @@ The values saved to the local environment as `R` objects can then be inserted in
 [**Q13.11**]{style="color:green;"} Compare the rendered version of your document with the original descriptive statistics reported in Dąbrowska [@DabrowskaExperienceAptitudeIndividual2019: 6]. Could you successfully **reproduce** these descriptive statistics? Which values are different?
 
 ```{r echo=FALSE}
-check_question("None of the them.",
+check_question("None of them.",
                  options = c("None of them.",
                  "The values expressed in percentages.",
                  "The standard deviations.",
@@ -872,7 +884,7 @@ In Quarto documents, figures can either be embedded (e.g., as a `.png` or `.jpeg
 
 ### Images {#sec-QuartoImages}
 
-To embed an image from an external file, you can use the "Insert" menu in RStudio's **Visual** editor and select "Figure / Image" (see @fig-InsertingImage). This will open up a menu where you can select the image that you want to insert, as well as add **alt-text** (see @sec-Alt) and a **caption**. The easiest way to adjust the size of an embedded image is to click on the image and then adjust the **size** of the image with the blue circle in the bottom-right corner of the image (see @fig-InsertingImage).
+To embed an image from an external file, you can use the "Insert" menu in RStudio's **Visual** editor and select "Figure / Image" (see @fig-InsertingImage). This will open up a menu where you can select the image that you want to insert, as well as add **alt-text** (see @sec-StatsLabs) and a **caption**. The easiest way to adjust the size of an embedded image is to click on the image and then adjust the **size** of the image with the blue circle in the bottom-right corner of the image (see @fig-InsertingImage).
 
 ![Adjusting the size of an image in Quarto](images/Quarto_Insert_image.png){#fig-InsertingImage fig-alt="Cartoon drawing of a pipe with three entry points for \"data\" and the output producing a research paper with text, a table, and a plot. Sections of the pipe are labelled: data cleaning, overview, figures, modelling, and text." width="480"}
 
@@ -1265,7 +1277,15 @@ In this chapter, we've only just scratched the surface of what's possible in Qua
 
 Well done! You have successfully completed this chapter on literate programming using Quarto. You have answered [`r checkdown::insert_score()` out of 10 questions]{style="color:green;"} correctly.
 
-Are you confident that you can...? - \[ \] Explain the concepts of literate programming and reproducible research to a friend or colleague (@sec-LiteRateProgramming) - \[ \] Write and format text (bold, first-level heading, italics, etc.) in a Quarto document (@sec-Markdown) - \[ \] Insert a code chunk in a Quarto document and use inline codes (@sec-Chunks) - \[ \] Insert code chunks in a Quarto document and make use of inline code (@sec-Inline) - \[ \] Insert tables in a Quarto document (@sec-QuartoTables) - \[ \] Embed images and plots in a Quarto document (@sec-QuartoFigures) - \[ \] Render (i.e. export) your `.qmd` document to HTML, Microsoft Word, and PDF (@sec-PublishingFormats)
+Are you confident that you can...?
+
+-   [ ] Explain the concepts of literate programming and reproducible research to a friend or colleague (@sec-LiteRateProgramming)
+-   [ ] Write and format text (bold, first-level heading, italics, etc.) in a Quarto document (@sec-Markdown)
+-   [ ] Insert a code chunk in a Quarto document and use inline codes (@sec-Chunks)
+-   [ ] Insert code chunks in a Quarto document and make use of inline code (@sec-Inline)
+-   [ ] Insert tables in a Quarto document (@sec-QuartoTables)
+-   [ ] Embed images and plots in a Quarto document (@sec-QuartoFigures)
+-   [ ] Render (i.e. export) your `.qmd` document to HTML, Microsoft Word, and PDF (@sec-PublishingFormats)
 
 ::: callout-note
 #### Going further with Quarto 🚀

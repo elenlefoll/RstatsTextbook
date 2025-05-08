@@ -489,14 +489,14 @@ div.csl-indent {
   <li><a href="#chapter-overview" id="toc-chapter-overview" class="nav-link active" data-scroll-target="#chapter-overview">Chapter overview</a></li>
   <li><a href="#sec-LitProgramming" id="toc-sec-LitProgramming" class="nav-link" data-scroll-target="#sec-LitProgramming"><span class="header-section-number">13.1</span> Literate programming</a></li>
   <li><a href="#sec-Reproducibility" id="toc-sec-Reproducibility" class="nav-link" data-scroll-target="#sec-Reproducibility"><span class="header-section-number">13.2</span> Reproducible research</a></li>
-  <li><a href="#getting-started-with-quarto" id="toc-getting-started-with-quarto" class="nav-link" data-scroll-target="#getting-started-with-quarto"><span class="header-section-number">13.3</span> Getting started with Quarto</a>
+  <li><a href="#sec-StartQuarto" id="toc-sec-StartQuarto" class="nav-link" data-scroll-target="#sec-StartQuarto"><span class="header-section-number">13.3</span> Getting started with Quarto</a>
   <ul class="collapse">
   <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation"><span class="header-section-number">13.3.1</span> Installation</a></li>
   <li><a href="#rstudios-visual-editor" id="toc-rstudios-visual-editor" class="nav-link" data-scroll-target="#rstudios-visual-editor"><span class="header-section-number">13.3.2</span> RStudio’s visual editor</a></li>
   </ul></li>
   <li><a href="#sec-Markdown" id="toc-sec-Markdown" class="nav-link" data-scroll-target="#sec-Markdown"><span class="header-section-number">13.4</span> Markdown text</a></li>
   <li><a href="#sec-Chunks" id="toc-sec-Chunks" class="nav-link" data-scroll-target="#sec-Chunks"><span class="header-section-number">13.5</span> Code chunks</a></li>
-  <li><a href="#inline-code" id="toc-inline-code" class="nav-link" data-scroll-target="#inline-code"><span class="header-section-number">13.6</span> Inline code</a></li>
+  <li><a href="#sec-Inline" id="toc-sec-Inline" class="nav-link" data-scroll-target="#sec-Inline"><span class="header-section-number">13.6</span> Inline code</a></li>
   <li><a href="#sec-QuartoTables" id="toc-sec-QuartoTables" class="nav-link" data-scroll-target="#sec-QuartoTables"><span class="header-section-number">13.7</span> Tables</a></li>
   <li><a href="#sec-QuartoFigures" id="toc-sec-QuartoFigures" class="nav-link" data-scroll-target="#sec-QuartoFigures"><span class="header-section-number">13.8</span> Figures</a>
   <ul class="collapse">
@@ -558,7 +558,19 @@ Warning
 <section id="chapter-overview" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="chapter-overview">Chapter overview</h3>
 <p>So far, we have seen how we can export the outputs of our analyses conducted in <code>R</code>, both in the form of tables (<a href="9_DataWrangling.html#sec-ExportingRObjects" class="quarto-xref"><span>Section 9.9</span></a>) and graphics (<a href="10_Dataviz.html#sec-ExploringPlots" class="quarto-xref"><span>Section 10.3</span></a>). However, in most situations, we want to communicate our research with the form of a document that combines both text and analysis outputs. This is where <strong>literate programming</strong> comes into play!</p>
-<p>In this chapter, you will learn about: - the concept of literate programming - why reproducibility matters and how to aim for reproducible research - using Quarto for writing research reports, theses, and papers and - sharing and publishing your research in different formats including: - <code>.html</code> - <code>.pdf</code> - <code>.odt</code> - <code>.docx</code></p>
+<p>In this chapter, you will learn about:</p>
+<ul>
+<li>the concept of literate programming</li>
+<li>why reproducibility matters and how to aim for reproducible research</li>
+<li>using Quarto for writing research reports, theses, and papers and</li>
+<li>sharing and publishing your research in different formats including:
+<ul>
+<li><p><code>.html</code></p></li>
+<li><p><code>.pdf</code></p></li>
+<li><p><code>.odt</code></p></li>
+<li><p><code>.docx</code></p></li>
+</ul></li>
+</ul>
 </section>
 <section id="sec-LitProgramming" class="level2" data-number="13.1">
 <h2 data-number="13.1" class="anchored" data-anchor-id="sec-LitProgramming"><span class="header-section-number">13.1</span> Literate programming</h2>
@@ -593,7 +605,7 @@ Figure&nbsp;13.2: Defining <em>reproducibility</em> and related terms (CC-BY 4.0
 </figcaption>
 </figure>
 </div>
-<p>Given this definition, reproducibility might seem like a low bar to pass. You might be thinking: Shouldn’t it be obvious that we’ll get the same results if we repeat a study using exactly the same data and method? Well, yes, it should be. But it very often isn’t! For a start, to be able to even attempt to reproduce the results of a study, the underlying data must be available. Linguists sharing their raw data as Ewa Dąbrowska did as part of her 2019 paper <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">(<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">Dąbrowska 2019</a>)</span> remains the exception rather than the norm <span class="citation" data-cites="bochynskaReproducibleResearchPractices2023a">(see <a href="99_references.html#ref-bochynskaReproducibleResearchPractices2023a" role="doc-biblioref">Bochynska et al. 2023</a>)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Second, the open data must be in an accessible format and must be published with enough documentation to be understandable to an independent researcher. Third, the author(s) of the original study need to have very diligently documented all their data wrangling and analyses steps. The best way to do this is undoubtedly to use code that does not require closed-source software (e.g., a researcher without a license for SPSS or Stata will not be able to run SPSS or Stata scripts, see <a href="1_OpenScholarship.html#sec-OpenSource" class="quarto-xref"><span>Section 1.2</span></a>). This open code must be shared in an accessible format, too. Fourth, independent researchers need to be able to run these scripts. To this end, it is important that they know exactly which tools were used. Thus, if the analyses were conducted in <code>R</code>, they need to know which <code>R</code> version and which packages and package versions were used (@sec-Packages). They also need to know in which order the scripts were run and, finally, the scripts must run on their own computers without any errors. So now, reproducibility doesn’t sound quite so easy, right? Luckily, if we apply the principles of literate programming in <strong>Quarto</strong>, we can go a long way towards ensuring that our research is reproducible.</p>
+<p>Given this definition, reproducibility might seem like a low bar to pass. You might be thinking: Shouldn’t it be obvious that we’ll get the same results if we repeat a study using exactly the same data and method? Well, yes, it should be. But it very often isn’t! For a start, to be able to even attempt to reproduce the results of a study, the underlying data must be available. Linguists sharing their raw data as Ewa Dąbrowska did as part of her 2019 paper <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">(<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">Dąbrowska 2019</a>)</span> remains the exception rather than the norm <span class="citation" data-cites="bochynskaReproducibleResearchPractices2023a">(see <a href="99_references.html#ref-bochynskaReproducibleResearchPractices2023a" role="doc-biblioref">Bochynska et al. 2023</a>)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Second, the open data must be in an accessible format and must be published with enough documentation to be understandable to an independent researcher. Third, the author(s) of the original study need to have very diligently documented all their data wrangling and analyses steps. The best way to do this is undoubtedly to use code that does not require closed-source software (e.g., a researcher without a license for SPSS or Stata will not be able to run SPSS or Stata scripts, see <a href="1_OpenScholarship.html#sec-OpenSource" class="quarto-xref"><span>Section 1.2</span></a>). This open code must be shared in an accessible format, too. Fourth, independent researchers need to be able to run these scripts. To this end, it is important that they know exactly which tools were used. Thus, if the analyses were conducted in <code>R</code>, they need to know which <code>R</code> version and which packages and package versions were used (<a href="#sec-Packages" class="quarto-xref"><span>Section 13.10</span></a>). They also need to know in which order the scripts were run and, finally, the scripts must run on their own computers without any errors. So now, reproducibility doesn’t sound quite so easy, right? Luckily, if we apply the principles of literate programming in <strong>Quarto</strong>, we can go a long way towards ensuring that our research is reproducible.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -733,8 +745,8 @@ Quiz time!
 </div>
 </div>
 </section>
-<section id="getting-started-with-quarto" class="level2 page-columns page-full" data-number="13.3">
-<h2 data-number="13.3" class="anchored" data-anchor-id="getting-started-with-quarto"><span class="header-section-number">13.3</span> Getting started with Quarto</h2>
+<section id="sec-StartQuarto" class="level2 page-columns page-full" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="sec-StartQuarto"><span class="header-section-number">13.3</span> Getting started with Quarto</h2>
 <p>Quarto documents are designed to:</p>
 <ol type="1">
 <li><p>Help you <strong>collaborate</strong> with other researchers (including your future self!) who are interested in both reproducing your results and understanding how you reached them (i.e.&nbsp;the code).</p></li>
@@ -998,8 +1010,8 @@ Quiz time!
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_38638" onsubmit="return validate_form_38638()" method="post">
-<input type="radio" name="answer_38638" id="answer_38638_1" value="as a leve heading">
-<label>as a leve heading</label>
+<input type="radio" name="answer_38638" id="answer_38638_1" value="as a subsection heading">
+<label>as a subsection heading</label>
 <br>
 <input type="radio" name="answer_38638" id="answer_38638_2" value="in italics">
 <label>in italics</label>
@@ -1016,9 +1028,9 @@ Quiz time!
 <input type="submit" value="Check answer">
 <div id="result_38638"></div>
 </form>
-<script>function validate_form_38638() {var x, text; var x = document.forms['form_38638']['answer_38638'].value;if (x == 'underlined'){text = 'That’s right! 🎉';} else {text = 'Hummm, are you sure? Have you tried inserting <em>mystery</em> in the Source code of your Quarto format and then switching to the Visual editor to see what happens?';} document.getElementById('result_38638').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_38638() {var x, text; var x = document.forms['form_38638']['answer_38638'].value;if (x == 'underlined'){text = 'That’s right! 🎉';} else {text = 'Hummm, are you sure? Have you tried inserting <code>_mystery_</code> in the Source code of your Quarto format and then switching to the Visual editor to see what happens?';} document.getElementById('result_38638').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_68990').innerText == 'That’s right!'; res2 = document.getElementById('result_23663').innerText == 'That’s right!'; res3 = document.getElementById('result_49000').innerText == 'That’s right!'; res4 = document.getElementById('result_38638').innerText == 'That’s right! 🎉';text = res1 + res2 + res3 + res4;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_38638').innerText == 'That’s right! 🎉';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1148,9 +1160,9 @@ Quiz time!
 <input type="submit" value="Check answer">
 <div id="result_67418"></div>
 </form>
-<script>function validate_form_67418() {var text; var x1 = document.getElementById('answer_67418_1'); var x2 = document.getElementById('answer_67418_2'); var x3 = document.getElementById('answer_67418_3'); var x4 = document.getElementById('answer_67418_4'); var x5 = document.getElementById('answer_67418_5'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == false&x5.checked == false){text = 'That’s right! What you are seeing are messages that the {here} and the {tidyverse} libraries output when they are correctly loaded. To find out more about conflicts, see Section 9.2.';} else {text = 'No, that’s incorrect. If you are getting the fourth error message, this means that your document could not be rendered because one of the two packages has not been installed yet (or else you have misspelt the name of the package?). If you are getting the last error message, this means that there is a problem with your Quarto document, which means that it cannot be rendered. Read the rest of the error message to understand where the problem lies. It is very likely to be a small syntax error or a typo.';} document.getElementById('result_67418').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_67418() {var text; var x1 = document.getElementById('answer_67418_1'); var x2 = document.getElementById('answer_67418_2'); var x3 = document.getElementById('answer_67418_3'); var x4 = document.getElementById('answer_67418_4'); var x5 = document.getElementById('answer_67418_5'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == false&x5.checked == false){text = 'That’s right! What you are seeing are messages that the {here} and the {tidyverse} libraries output when they are correctly loaded. To find out more about conflicts, see Section 9.2.';} else {text = 'No, that’s incorrect. If you are getting the fourth error message, this means that your document could not be rendered because one of the two packages has not been installed yet (or else you have misspelt the name of the package?). If you are getting the last error message, this means that there is a problem with your Quarto document, which means that it cannot be rendered. Read the rest of the error message to understand where the problem lies. It is very likely to be a small syntax error or typo.';} document.getElementById('result_67418').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_68990').innerText == 'That’s right!'; res2 = document.getElementById('result_23663').innerText == 'That’s right!'; res3 = document.getElementById('result_49000').innerText == 'That’s right!'; res4 = document.getElementById('result_38638').innerText == 'That’s right! 🎉'; res5 = document.getElementById('result_67418').innerText == 'That’s right! What you are seeing are messages that the {here} and the {tidyverse} libraries output when they are correctly loaded. To find out more about conflicts, see Section 9.2.';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_38638').innerText == 'That’s right! 🎉'; res2 = document.getElementById('result_67418').innerText == 'That’s right! What you are seeing are messages that the {here} and the {tidyverse} libraries output when they are correctly loaded. To find out more about conflicts, see Section 9.2.';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1234,8 +1246,8 @@ Quiz time!
 </div>
 </div>
 </section>
-<section id="inline-code" class="level2" data-number="13.6">
-<h2 data-number="13.6" class="anchored" data-anchor-id="inline-code"><span class="header-section-number">13.6</span> Inline code</h2>
+<section id="sec-Inline" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="sec-Inline"><span class="header-section-number">13.6</span> Inline code</h2>
 <p>So far, we have seen how we can insert and format text in Quarto and how we can add code chunks with various options. But, to make the most of literate programming, we want to combine the two.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1438,7 +1450,7 @@ More complex in-line computations
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>For more complex computations, it is much better to compute the values in a dedicated code chunk. This also allows you to add <strong>code annotation</strong> whihc is important to ensure that other researchers (and your future self!) understands the reasoning behind the code.</p>
+<p>For more complex computations, it is much better to compute the values in a dedicated code chunk. This also allows you to add <strong>code annotation</strong> which is important to ensure that other researchers (and your future self!) understands the reasoning behind the code.</p>
 <p>For example, the following chunk containing annotated code can be used to reproduce the descriptive statistics concerning L1 participants’ professional occupations and foreign language skills.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
@@ -1499,9 +1511,9 @@ More complex in-line computations
 <input type="submit" value="Check answer">
 <div id="result_76713"></div>
 </form>
-<script>function validate_form_76713() {var text; var x1 = document.getElementById('answer_76713_1'); var x2 = document.getElementById('answer_76713_2'); var x3 = document.getElementById('answer_76713_3'); var x4 = document.getElementById('answer_76713_4'); if (x1.checked == false&x2.checked == false&x3.checked == false&x4.checked == false){text = '✅';} else {text = 'That’s strange… All the values should be actually be exactly the same.';} document.getElementById('result_76713').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_76713() {var text; var x1 = document.getElementById('answer_76713_1'); var x2 = document.getElementById('answer_76713_2'); var x3 = document.getElementById('answer_76713_3'); var x4 = document.getElementById('answer_76713_4'); if (x1.checked == true&x2.checked == false&x3.checked == false&x4.checked == false){text = '✅';} else {text = 'That’s strange… All the values should be actually be exactly the same.';} document.getElementById('result_76713').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11;res1 = document.getElementById('result_89564').innerText == 'That’s right! The other options are short definitions of the terms ‘abstract bias’, ‘research integrity’, ‘red teams’, ‘validity’, and ‘publish or perish’, taken from the FORRT glossary. Can you tell which is which? Check your intuition here: https://forrt.org/glossary/english/.'; res2 = document.getElementById('result_38708').innerText == 'That’s right and there are many more potential sources of uncertainty throughout the research cycle.'; res3 = document.getElementById('result_92612').innerText == 'That’s right and that’s when authoring formats such as R Markdown and Quarto come in very handy as they allow us to combine all of these things!'; res4 = document.getElementById('result_68990').innerText == 'That’s right!'; res5 = document.getElementById('result_23663').innerText == 'That’s right!'; res6 = document.getElementById('result_49000').innerText == 'That’s right!'; res7 = document.getElementById('result_38638').innerText == 'That’s right! 🎉'; res8 = document.getElementById('result_67418').innerText == 'That’s right! What you are seeing are messages that the {here} and the {tidyverse} libraries output when they are correctly loaded. To find out more about conflicts, see Section 9.2.'; res9 = document.getElementById('result_82177').innerText == 'That’s right, well done!'; res10 = document.getElementById('result_1239').innerText == 'That’s right, well done!'; res11 = document.getElementById('result_76713').innerText == '✅';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_38638').innerText == 'That’s right! 🎉'; res2 = document.getElementById('result_67418').innerText == 'That’s right! What you are seeing are messages that the {here} and the {tidyverse} libraries output when they are correctly loaded. To find out more about conflicts, see Section 9.2.'; res3 = document.getElementById('result_76713').innerText == '✅';text = res1 + res2 + res3;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1574,7 +1586,7 @@ More complex in-line computations
 <span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">OtherLgs =</span> <span class="st">"Additional language"</span>, </span>
 <span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="st">"N"</span>)</span>
 <span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="tbl-L1-languages" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="top" data-tbl-colwidths="[80,20]">
+<div id="tbl-L1-languages" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[80,20]" data-tbl-cap-location="top">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-L1-languages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;13.1: Example of a {gt} table
@@ -2084,8 +2096,8 @@ Going further
 <p>In Quarto documents, figures can either be embedded (e.g., as a <code>.png</code> or <code>.jpeg</code> image file) or generated as a result of a code chunk.</p>
 <section id="sec-QuartoImages" class="level3" data-number="13.8.1">
 <h3 data-number="13.8.1" class="anchored" data-anchor-id="sec-QuartoImages"><span class="header-section-number">13.8.1</span> Images</h3>
-<p>To embed an image from an external file, you can use the “Insert” menu in RStudio’s <strong>Visual</strong> editor and select “Figure / Image” (see <a href="#fig-InsertingImage" class="quarto-xref">Figure&nbsp;<span>13.9</span></a>). This will open up a menu where you can select the image that you want to insert, as well as add <strong>alt-text</strong> (see <span class="quarto-unresolved-ref">?sec-AltText</span>) and a <strong>caption</strong>. The easiest way to adjust the size of an embedded image is to click on the image and then adjust the <strong>size</strong> of the image with the blue circle in the bottom-right corner of the image (see <a href="#fig-InsertingImage" class="quarto-xref">Figure&nbsp;<span>13.9</span></a>).</p>
-<div id="fig-InsertingImage" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Cartoon drawing of a pipe with three entry points for &quot;data&quot; and the output producing a research paper with text, a table, and a plot. Sections of the pipe are labelled: data cleaning, overview, figures, modelling, and text." width="480">
+<p>To embed an image from an external file, you can use the “Insert” menu in RStudio’s <strong>Visual</strong> editor and select “Figure / Image” (see <a href="#fig-InsertingImage" class="quarto-xref">Figure&nbsp;<span>13.9</span></a>). This will open up a menu where you can select the image that you want to insert, as well as add <strong>alt-text</strong> (see <a href="10_Dataviz.html#sec-StatsLabs" class="quarto-xref"><span>Section 10.1.5</span></a>) and a <strong>caption</strong>. The easiest way to adjust the size of an embedded image is to click on the image and then adjust the <strong>size</strong> of the image with the blue circle in the bottom-right corner of the image (see <a href="#fig-InsertingImage" class="quarto-xref">Figure&nbsp;<span>13.9</span></a>).</p>
+<div id="fig-InsertingImage" class="quarto-float quarto-figure quarto-figure-center anchored" width="480" alt="Cartoon drawing of a pipe with three entry points for &quot;data&quot; and the output producing a research paper with text, a table, and a plot. Sections of the pipe are labelled: data cleaning, overview, figures, modelling, and text.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-InsertingImage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/Quarto_Insert_image.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13.9: "><img src="images/Quarto_Insert_image.png" id="fig-InsertingImage" class="img-fluid figure-img" alt="Cartoon drawing of a pipe with three entry points for &quot;data&quot; and the output producing a research paper with text, a table, and a plot. Sections of the pipe are labelled: data cleaning, overview, figures, modelling, and text." width="480"></a>
@@ -2761,12 +2773,13 @@ Click here for the solution to Task 13.4
 <p>Well done! You have successfully completed this chapter on literate programming using Quarto. You have answered <span style="color:green;"><span id="checkdown_final_score">0</span> out of 10 questions</span> correctly.</p>
 <p>Are you confident that you can…?</p>
 <ul class="task-list">
-<li><label><input type="checkbox">Explain the concepts of literate programming and reproducible research to a friend or colleague</label></li>
-<li><label><input type="checkbox">Write and format text (bold, first-level heading, italics, etc.) in a Quarto document</label></li>
-<li><label><input type="checkbox">Insert code chunks in a Quarto document and make use of inline code</label></li>
-<li><label><input type="checkbox">Insert tables in a Quarto document</label></li>
-<li><label><input type="checkbox">Embed images and plots in a Quarto document</label></li>
-<li><label><input type="checkbox">Render (i.e.&nbsp;export) your <code>.qmd</code> document to HTML, Microsoft Word, and PDF</label></li>
+<li><label><input type="checkbox">Explain the concepts of literate programming and reproducible research to a friend or colleague (<a href="#sec-LiteRateProgramming" class="quarto-xref"><span>Chapter 13</span></a>)</label></li>
+<li><label><input type="checkbox">Write and format text (bold, first-level heading, italics, etc.) in a Quarto document (<a href="#sec-Markdown" class="quarto-xref"><span>Section 13.4</span></a>)</label></li>
+<li><label><input type="checkbox">Insert a code chunk in a Quarto document and use inline codes (<a href="#sec-Chunks" class="quarto-xref"><span>Section 13.5</span></a>)</label></li>
+<li><label><input type="checkbox">Insert code chunks in a Quarto document and make use of inline code (<a href="#sec-Inline" class="quarto-xref"><span>Section 13.6</span></a>)</label></li>
+<li><label><input type="checkbox">Insert tables in a Quarto document (<a href="#sec-QuartoTables" class="quarto-xref"><span>Section 13.7</span></a>)</label></li>
+<li><label><input type="checkbox">Embed images and plots in a Quarto document (<a href="#sec-QuartoFigures" class="quarto-xref"><span>Section 13.8</span></a>)</label></li>
+<li><label><input type="checkbox">Render (i.e.&nbsp;export) your <code>.qmd</code> document to HTML, Microsoft Word, and PDF (<a href="#sec-PublishingFormats" class="quarto-xref"><span>Section 13.11</span></a>)</label></li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
