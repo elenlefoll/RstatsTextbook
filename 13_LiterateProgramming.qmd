@@ -205,9 +205,9 @@ You may have noticed that *RStudio* proposes two different modes in which Quarto
 
 ![Source and Visual mode in RStudio](images/Quarto_Source-Visual.png){#fig-QuartoModes}
 
-The Visual mode offers a [WYSIWYM](https://en.wikipedia.org/wiki/WYSIWYM) authoring experience. This means that you can use the Quarto editing toolbar (see @fig-QuartoModes) for formatting and that you'll immediately see the effect of your formatting on screen. For example, to format a word in italics, you can click on the corresponding button in the toolbar or use the keyboard shortcut (⌘I) - just like you would in text-processing software. In the background, however, *RStudio* automatically converts your formatted text to Markdown in the underlying source code of your `.qmd` file. Markdown is a **plain-text format**. In Markdown, words in italics are enclosed in asterisks like this: `*italics*`.
+The Visual mode offers a [WYSIWYM](https://en.wikipedia.org/wiki/WYSIWYM) authoring experience. This means that you can use the Quarto editing toolbar (see @fig-QuartoModes) for formatting and that you'll immediately see the effect of your formatting on screen. For example, to format a word in italics, you can click on the corresponding button in the toolbar or use the keyboard shortcut (⌘/Ctrl + I) - just like you would in text-processing software. In the background, however, *RStudio* automatically converts your formatted text to Markdown in the underlying source code of your `.qmd` file. Markdown is a **plain-text format**. In Markdown, words in italics are enclosed in asterisks like this: `*italics*`.
 
-You can toggle back and forth between these two modes by clicking on **Source** and **Visual** in the editor toolbar (or using the keyboard shortcut ⌘⇧ F4).
+You can toggle back and forth between these two modes by clicking on **Source** and **Visual** in the editor toolbar (or using the keyboard shortcut ⌘/Ctrl ⇧ F4).
 
 ::: callout-caution
 #### Task 13.1 {.unnumbered}
@@ -309,20 +309,20 @@ wrong = "Hummm, are you sure? Go back to the Source code of your Quarto format a
 
  
 
-[**Q13.7**]{style="color:green;"} How will the word `_mystery_` be formatted in Markdown?
+[**Q13.7**]{style="color:green;"} How will the word `~~mystery~~` be formatted in Markdown?
 
 ```{r echo=FALSE}
-check_question("underlined",
+check_question("crossed-out",
                options = c("in italics", 
                            "as a subsection heading", 
-                           "as R code", 
-                           "underlined",
-                           "in light blue"), 
+                           "as computer code", 
+                           "crossed-out",
+                           "in grey"), 
                type = "radio",
 button_label = "Check answer",
 random_answer_order = TRUE,
 right = "That's right! 🎉",
-wrong = "Hummm, are you sure? Have you tried inserting `_mystery_` in the Source code of your Quarto format and then switching to the Visual editor to see what happens?")
+wrong = "Hummm, are you sure? Have you tried inserting `~~mystery~~` in the Source code of your Quarto format and then switching to the Visual editor to see what happens?")
 ```
 
  
@@ -353,7 +353,7 @@ The numbers are incremented automatically in the output.
 
 [linked phrase](http://example.com)
 
-![optional caption text](quarto.png){fig-alt="Quarto logo and the word quarto spelled in small case letters"}
+![The Quarto logo](https://elenlefoll.github.io/RstatsTextbook/images/hex_Quarto.png){fig-alt="Quarto hex logo and the word quarto spelled in small case letters"}
 
 ## Tables
 
@@ -388,8 +388,8 @@ library(tidyverse)
 
 As you are working on your code within a Quarto document, you can either run:
 
--   each individual line of code using the keyboard shortcut ⌘⏎ or
--   the entire code chunk either by clicking the "Run"![](https://d33wubrfki0l68.cloudfront.net/18153fb9953057ee5cff086122bd26f9cee8fe93/3aba9/images/notebook-run-chunk.png)icon or using the shortcut ⇧⌘⏎.
+-   each individual line of code using the keyboard shortcut ⌘/Ctrl ⏎ or
+-   the entire code chunk either by clicking the "Run"![](https://d33wubrfki0l68.cloudfront.net/18153fb9953057ee5cff086122bd26f9cee8fe93/3aba9/images/notebook-run-chunk.png)icon or using the shortcut ⇧ ⌘/Ctrl ⏎.
 
 *RStudio* will execute the code and display the results either within your document (below each chunk) or in the Console, depending on your *RStudio* settings.[^13_literateprogramming-5]
 
@@ -451,12 +451,12 @@ check_hint("Remember that a conflict message is *not* an error message, it merel
 [**Q13.9**]{style="color:green;"} Which code chunk option can you use to remove the two messages from the rendered version of your Quarto document, whilst still ensuring that the `setup` chunk is displayed and executed (so that the libraries can be used in future code chunks)?
 
 ```{r echo=FALSE}
-check_question("|# message: false",
-               options = c("|# message: false", 
-                           "|# message: true", 
-                           "|# messages: false", 
-                           "|# eval: true",
-                           "|# echo: false"), 
+check_question("#| message: false",
+               options = c("#| message: false", 
+                           "#| message: true", 
+                           "#| messages: false", 
+                           "#| eval: true",
+                           "#| echo: false"), 
                type = "radio",
 button_label = "Check answer",
 random_answer_order = TRUE,
@@ -472,12 +472,12 @@ check_hint("Code chunk options are applied to the entire chunk, so in this case,
 [**Q13.10**]{style="color:green;"} Which code chunk option can you use to remove both the `setup` chunk and its outputs from the rendered version of your Quarto document, whilst still ensuring that the libraries are loaded so that their functions can be used further down in the document?
 
 ```{r echo=FALSE}
-check_question("|# include: false",
-               options = c("|# include: false", 
-                           "|# display: false", 
-                           "|# echo: false", 
-                           "|# eval: false",
-                           "|# echo: true"), 
+check_question("#| include: false",
+               options = c("#| include: false", 
+                           "#| display: false", 
+                           "#| echo: false", 
+                           "#| eval: false",
+                           "#| echo: true"), 
                type = "radio",
 button_label = "Check answer",
 random_answer_order = TRUE,
@@ -520,7 +520,6 @@ In your Quarto document, insert the following `R` chunk to load the Dąbrowska (
 
 library(here)
 library(tidyverse)
-library(xfun)
 ```
 
 ```{{r}}
@@ -679,14 +678,27 @@ Once they are saved to the local environment, the values can be inserted inline 
 ```
 :::
 
-If we want to start our paragraph with 90 written in as a word rather than in digits, we can use the `numbers_to_words function()` function from the {xfun} package. First, you'll need to install the {xfun} package and then add a line to the `setup` chunk to load it.
+If we want to start our paragraph with 90 written in as a word rather than in digits, we can use the `numbers_to_words function()` function from the {xfun} package. First, you'll need to install the {xfun} package and then add a line to your `setup` chunk to load it.[^13_literateprogramming-7]
+
+[^13_literateprogramming-7]: To make your Quarto document even more reproducible, consider replacing your `set-up` chunk with the following function that will automatically check if a package needs to be installed before it is loaded.
+
+    ```{{r}}
+    #| label: improved-setup
+    # List of packages necessary in this Quarto document:
+    packages <- c("here", "tidyverse", "xfun")
+
+    # Function to install the packages that are not yet installed:
+    installed_packages <- packages %in%               rownames(installed.packages()) 
+    if (any(installed_packages == FALSE)) { install.packages(packages[!installed_packages]) }
+
+    # Function to load the packages without printing any messages:
+    invisible(lapply(packages, library, character.only = TRUE))
+    ```
+
+    Alternatively, consider using {renv} or {rix} for your project (see @sec-Packages).
 
 ```` markdown
 ```{{r}}
-#| label: setup
-
-library(here)
-library(tidyverse)
 library(xfun)
 ```
 ````
@@ -888,7 +900,7 @@ To embed an image from an external file, you can use the "Insert" menu in *RStud
 
 ![Adjusting the size of an image in Quarto](images/Quarto_Insert_image.png){#fig-InsertingImage fig-alt="Cartoon drawing of a pipe with three entry points for \"data\" and the output producing a research paper with text, a table, and a plot. Sections of the pipe are labelled: data cleaning, overview, figures, modelling, and text." width="480"}
 
-Below is the source code for @fig-RealisticPipeline. This embedded image includes a a caption (that, itself, includes a link), an alt-text, and a custom width in pixel. Note that, in the source code, special characters such as quotation marks need to be escaped using a backslash `\`.
+Below is the source code for @fig-RealisticPipeline. The code includes the **relative path** to the image file (see @sec-FoldersPaths) relative to the **project directory** (see @sec-RProject). In the example below, the image file `BERD_pipeline-real.jpg` is located in a subfolder called `images`.
 
 ``` markdown
 ![A more realistic research pipeline [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/) @seiboldBERDCourseMake2023](images/BERD_pipeline-real.jpg){#fig-RealisticPipeline fig-alt="Cartoon drawing of a complex set of pipes with various entry points for \"data\" and a single output: a research paper with text, a table, and a plot. Sections of the pipe are coloured according to the processes that they correspond to. These include data cleaning, overview, figures, modelling, and text." width="480"}
@@ -896,9 +908,9 @@ Below is the source code for @fig-RealisticPipeline. This embedded image include
 
 ![A more realistic research pipeline [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/) @seiboldBERDCourseMake2023](images/BERD_pipeline-real.jpg){#fig-RealisticPipeline fig-alt="Cartoon drawing of a complex set of pipes with various entry points for \"data\" and a single output: a research paper with text, a table, and a plot. Sections of the pipe are coloured according to the processes that they correspond to. These include data cleaning, overview, figures, modelling, and text." width="480"}
 
-Note that tags beginning with `#fig-` can be used to cross-reference images by replacing the `#` with `@`. Hence, `@fig-RealisticPipeline` in Markdown is rendered as @fig-RealisticPipeline.
+This example embedded image includes a caption (that, itself, includes a link), an alt-text (see @sec-StatsLabs), and a custom width in pixel. Note that, in the source code, special characters such as quotation marks need to be escaped using a backslash `\`. Tags beginning with `#fig-` can be used to cross-reference images by replacing the `#` with `@`. Hence, in this chapter, `@fig-RealisticPipeline` in Markdown is rendered as @fig-RealisticPipeline.
 
-Figures can be arranged in many ways. Below we use the `:::` div syntax to display two images side-by-side. This syntax also allows for subcaptions as shown in @fig-Pipelines.
+Figures can be arranged in many ways. The example below uses the `:::` div syntax to display two images side-by-side. This syntax also allows for subcaptions as shown in @fig-Pipelines.
 
 ``` markdown
 ::: {#fig-Pipelines layout-ncol="2"}
@@ -921,7 +933,7 @@ Research workflows as pipelines [CC-BY 4.0](https://creativecommons.org/licenses
 ::: callout-note
 #### Going further
 
-To find out more about arranging figures, check out the Quarto guide: <https://quarto.org/docs/authoring/figures.html>.
+To find out more about inserting and arranging figures, check out the detailed Quarto guide: <https://quarto.org/docs/authoring/figures.html>.
 :::
 
 ### Plots {#sec-QuartoPlots}
@@ -983,7 +995,7 @@ ggplotly(L2.scatter2)
 
 ## References {#sec-References}
 
-An important aspect of academic writing is the inclusion of in-text bibliographic references (**citations**) and a well-formatted list of references (the **bibliography**). *RStudio*'s Visual editor makes inserting bibliographic references extremely simple. To insert a reference, simply click on "Insert" and then select "Citation" or use the keyboard shortcut ⌘⇧ F8. This opens up a menu (see @fig-QuartoCitation) giving you the option to search for the source that you'd like to cite on your own computer (e.g., in your own Zotero database, if you use Zotero) or on the web via the [Crossref](https://www.crossref.org/) database or directly using a [DOI](https://forrt.org/glossary/english/doi/).
+An important aspect of academic writing is the inclusion of in-text bibliographic references (**citations**) and a well-formatted list of references (the **bibliography**). *RStudio*'s Visual editor makes inserting bibliographic references extremely simple. To insert a reference, simply click on "Insert" and then select "Citation" or use the keyboard shortcut ⌘/Ctrl ⇧ F8. This opens up a menu (see @fig-QuartoCitation) giving you the option to search for the source that you'd like to cite on your own computer (e.g., in your own Zotero database, if you use Zotero) or on the web via the [Crossref](https://www.crossref.org/) database or directly using a [DOI](https://forrt.org/glossary/english/doi/).
 
 ![Search menu for bibliographic reference](images/Quarto_citation.png){#fig-QuartoCitation}
 
@@ -1262,7 +1274,7 @@ format:
 In research, it's quite common that you will be working on a project that will be submitted as a paper or thesis (e.g., in PDF format) *and* that you'll also want to **present** in class, to your research group, or at a conference. You can easily turn your Quarto document into **presentation slides**, too! There are currently three presentation formats to choose from:
 
 |  |  |  |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | [Revealjs](https://quarto.org/docs/presentations/revealjs/) | Revealjs is an open-source HTML presentation framework. | `format: revealjs` |
 | [PowerPoint](https://quarto.org/docs/presentations/powerpoint.html) | PowerPoint is Microsoft Office's presentation editing software. | `format: pptx` |
 | [Beamer](https://quarto.org/docs/presentations/beamer.html) | Beamer is a LaTeX class for producing presentations and slides in PDF format. | `format: beamer` |
