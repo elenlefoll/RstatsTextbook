@@ -164,7 +164,7 @@ Quarto documents are designed to:
 
 We will be writing Quarto documents from the *RStudio* IDE[^13_literateprogramming-3]; however, Quarto itself requires a separate installation. To **install** Quarto:
 
-[^13_literateprogramming-3]: You can, of course, write Quarto documents using other IDEs (Integrated Developer Environments) such as VS Code, Jupyter, or Neovim, or even a plain-text editor (if you're feeling brave!).
+[^13_literateprogramming-3]: You can, of course, write Quarto documents using any other IDE (Integrated Developer Environment, see @sec-IDE) that supports Quarto such as VS Code, Jupyter, or Neovim.
 
 1.  Go to <https://quarto.org/docs/get-started/> and download the latest Quarto version that is compatible for your operating system.
 
@@ -520,6 +520,7 @@ In your Quarto document, insert the following `R` chunk to load the Dąbrowska (
 
 library(here)
 library(tidyverse)
+library(xfun)
 ```
 
 ```{{r}}
@@ -680,7 +681,7 @@ Once they are saved to the local environment, the values can be inserted inline 
 
 If we want to start our paragraph with 90 written in as a word rather than in digits, we can use the `numbers_to_words function()` function from the {xfun} package. First, you'll need to install the {xfun} package and then add a line to your `setup` chunk to load it.[^13_literateprogramming-7]
 
-[^13_literateprogramming-7]: To make your Quarto document even more reproducible, consider replacing your `set-up` chunk with the following function that will automatically check if a package needs to be installed before it is loaded.
+[^13_literateprogramming-7]: To make your Quarto document even more reproducible, you can replace your `setup` chunk with the following function that will automatically check if a package needs to be installed before it is loaded:
 
     ```{{r}}
     #| label: improved-setup
@@ -871,6 +872,7 @@ However, this output is not particularly nicely formatted. There are several `R`
 #| tbl-colwidths: [80,20]
 #| echo: fenced
 
+#install.packages("gt")
 library(gt)
 
 L1.data |> 
@@ -882,7 +884,7 @@ L1.data |>
     n = "N")
 ```
 
-In addition, Quarto also has a range of **chunk options** to customise the display of tables, including `tbl-cap` for the addition of a table caption and `tbl-cap-location` to choose its location. In the above chunk, the table's label begins with `tbl-`. This allows for in-text cross-referencing to the table with the insertion of `@tbl-L1-languages`, which is rendered as the linked cross-reference: @tbl-L1-languages.
+In addition, Quarto also has a range of **chunk options** to customise the display of tables, including `tbl-cap` for the addition of a table caption and `tbl-cap-location` to determine where the caption is placed. In the above chunk, the table's `label` chunk option begins with `tbl-`. This allows for in-text cross-referencing to the table with the insertion of `@tbl-L1-languages` in this Quarto document, which is rendered as the following linked cross-reference: @tbl-L1-languages.
 
 ::: callout-note
 #### Going further
@@ -900,7 +902,7 @@ To embed an image from an external file, you can use the "Insert" menu in *RStud
 
 ![Adjusting the size of an image in Quarto](images/Quarto_Insert_image.png){#fig-InsertingImage fig-alt="Cartoon drawing of a pipe with three entry points for \"data\" and the output producing a research paper with text, a table, and a plot. Sections of the pipe are labelled: data cleaning, overview, figures, modelling, and text." width="480"}
 
-Below is the source code for @fig-RealisticPipeline. The code includes the **relative path** to the image file (see @sec-FoldersPaths) relative to the **project directory** (see @sec-RProject). In the example below, the image file `BERD_pipeline-real.jpg` is located in a subfolder called `images`.
+Below is the source code for @fig-RealisticPipeline in Markdown. The code includes the **relative path** to the image file (see @sec-FoldersPaths) relative to the **project directory** (see @sec-RProject). In the example below, the image file `BERD_pipeline-real.jpg` is located in a subfolder called `images`.
 
 ``` markdown
 ![A more realistic research pipeline [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/) @seiboldBERDCourseMake2023](images/BERD_pipeline-real.jpg){#fig-RealisticPipeline fig-alt="Cartoon drawing of a complex set of pipes with various entry points for \"data\" and a single output: a research paper with text, a table, and a plot. Sections of the pipe are coloured according to the processes that they correspond to. These include data cleaning, overview, figures, modelling, and text." width="480"}
@@ -975,6 +977,7 @@ If you are sharing your research analyses and results in HTML format, you can em
 #| code-fold: true
 #| code-summary: "Show `R` code to generate the interactive plot below."
 
+#install.packages("plotly")
 library(plotly)
 
 L2.scatter2 <- L2.data |> 
@@ -1083,18 +1086,18 @@ Using any of the methods described above, add an in-text bibliographic reference
 
 > In'nami, Yo, Atsushi Mizumoto, Luke Plonsky & Rie Koizumi. 2022. Promoting computationally reproducible research in applied linguistics: Recommended practices and considerations. Research Methods in Applied Linguistics 1(3). 100030. https://doi.org/10.1016/j.rmal.2022.100030.
 
-Specifically, we want to cite this passage from page 100030:
+Specifically, we want to cite this passage from page 8:
 
 > As implementing these steps may seem daunting, we recommend that researchers engage in reproducible research incrementally. That may be one small step for a researcher, but it will represent a giant leap for the field of applied linguistics when consolidated and accumulated in the long run.
 
 [**a.**]{style="color:green;"} Which in-text citation cites this specific page?
 
 ```{r echo=FALSE}
-check_question("[@innamiPromotingComputationallyReproducible2022, p. 100030]",
-               options = c("[@innamiPromotingComputationallyReproducible2022, p. 100030]",
-                           "[@innamiPromotingComputationallyReproducible2022], p. 100030]",
-                           "@innamiPromotingComputationallyReproducible2022: 100030",
-                           "(@innamiPromotingComputationallyReproducible2022, p. 100030)"),
+check_question("[@innami2022, p. 8]",
+               options = c("[@innami2022, p. 8]",
+                           "[@innami2022], p. 8]",
+                           "@innami2022: 8",
+                           "(@innami2022, p. 8)"),
 button_label = "Check answer",
 random_answer_order = TRUE,
 type = "radio",
@@ -1216,6 +1219,20 @@ format: docx
 ---
 ```
 
+Note, however, that dynamic code outputs (such as the interactive {plotly} plot displayed in @fig-scatterplot-plotly) cannot meaningfully be rendered to static formats such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors. To avoid `R` attempting to render these code chunks to formats other than HTML, you can enclose them in the following div block:
+
+```` markdown
+::: {.content-hidden unless-format="html"}
+
+```{{r}}
+#| label: fig-scatterplot-plotly
+
+ggplotly(L2.scatter2)
+```
+
+:::
+````
+
 To share your work with **LibreOffice** and **OpenOffice** users, use the `format: odt` option, which will generate an **OpenDocument** - an open standard file format that can be opened in any text-processing software.
 
 ::: callout-caution
@@ -1244,7 +1261,7 @@ Below is a screenshot of a Quarto document with the inline code chunks and its r
 
 ### PDF
 
-It is also possible to render Quarto documents to **PDF**; however, this requires you to have a working [LaTeX](https://en.wikipedia.org/wiki/LaTeX) distribution on your computer. If you already have a recent LaTeX installation, you shouldn't need to do anything else to generate PDF documents. Quarto developers recommend that you use the [TinyTeX](https://yihui.org/tinytex/) distribution. To install (or update) TinyTeX, go to the Terminal pane in RStudio and run the following command:
+It is also possible to render Quarto documents to **PDF**; however, this requires you to have a working [LaTeX](https://en.wikipedia.org/wiki/LaTeX) distribution on your computer. If you already have a recent LaTeX installation, you shouldn't need to do anything else to generate PDF documents. Quarto developers recommend that you use the [**TinyTeX**](https://yihui.org/tinytex/) distribution. To **install** (or update) TinyTeX, go to the Terminal pane in RStudio and run the following command:
 
 ``` {.txt filename="Terminal"}
 quarto install tinytex
@@ -1274,7 +1291,7 @@ format:
 In research, it's quite common that you will be working on a project that will be submitted as a paper or thesis (e.g., in PDF format) *and* that you'll also want to **present** in class, to your research group, or at a conference. You can easily turn your Quarto document into **presentation slides**, too! There are currently three presentation formats to choose from:
 
 |  |  |  |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | [Revealjs](https://quarto.org/docs/presentations/revealjs/) | Revealjs is an open-source HTML presentation framework. | `format: revealjs` |
 | [PowerPoint](https://quarto.org/docs/presentations/powerpoint.html) | PowerPoint is Microsoft Office's presentation editing software. | `format: pptx` |
 | [Beamer](https://quarto.org/docs/presentations/beamer.html) | Beamer is a LaTeX class for producing presentations and slides in PDF format. | `format: beamer` |
