@@ -270,7 +270,7 @@ wrong = "No")
 
 ```{r}
 #| code-fold: true
-#| code-summary: "🐭 Click on the mouse to view `R` code to help you answer question **c.**"
+#| code-summary: "🐭 Click on the mouse to view `R` code to help you answer **c.**"
 #| echo: true
 #| results: "hide"
 
@@ -308,7 +308,7 @@ summary(L2.data.fct$Gender)
 ```
 
 ::: callout-important
-To ensure that our analyses are reproducible from the beginning to the end, it is crucial that we document *all* of our corrections in a script. This ensures that if we need to go back on any data pre-processing decision that we made or if we need to make any additional corrections, we can do so without having to re-do our entire analyses. In addition, it means that our corrections and other data pre-processing steps are transparent and can be inspected and challenged by our peers.
+To ensure that our analyses are **reproducible** (see @sec-Reproducibility) from the beginning to the end, it is crucial that we document *all* of our corrections in a script. This ensures that if we need to go back on any data pre-processing decision that we made or if we need to make any additional corrections, we can do so without having to re-do our entire analyses. In addition, it means that our corrections and other data pre-processing steps are transparent and can be inspected and challenged by our peers.
 :::
 
 ### Using {stringr} functions {#sec-stringR}
@@ -415,7 +415,7 @@ wrong = "No, that's not the reason. Have you noticed that, in the output of the 
 
 ```{r collapse=TRUE}
 #| code-fold: true
-#| code-summary: "🐭 Click on the mouse to view `R` code to help you answer question **a.**"
+#| code-summary: "🐭 Click on the mouse to help you answer **a.**"
 #| echo: true
 
 summary(L1.data.fct$OccupGroup)
@@ -655,20 +655,20 @@ As you can see, only the first six rows of the table are printed above. Run the 
 This chapter focuses on {tidyverse} functions, however all of the above data wrangling and cleaning operations can equally be achieved using base `R` functions. For example, the `mutate()` code chunk above could be replaced by the following lines of base `R` code.
 
 ```{r}
-#| code-line-numbers: true
-
-L2.data$NativeLg.cleaned.base <- gsub("([a-zA-Z]+).*", "\\1", L2.data$NativeLg)
-L2.data$NativeLg.cleaned.base <- tools::toTitleCase(L2.data$NativeLg.cleaned.base)
-L2.data$NativeLg.cleaned.base[L2.data$NativeLg.cleaned.base == "Mandarine"] <- "Mandarin"
-L2.data$NativeLg.cleaned.base[L2.data$NativeLg.cleaned.base %in% c("Lithunanina", "Lituanian")] <- "Lithuanian"
+L2.data$NativeLg.cleaned.base <- gsub("([a-zA-Z]+).*", "\\1", L2.data$NativeLg) # <1>
+L2.data$NativeLg.cleaned.base <- tools::toTitleCase(L2.data$NativeLg.cleaned.base) # <2>
+L2.data$NativeLg.cleaned.base[L2.data$NativeLg.cleaned.base == "Mandarine"] <- "Mandarin" # <3>
+L2.data$NativeLg.cleaned.base[L2.data$NativeLg.cleaned.base %in% c("Lithunanina", "Lituanian")] <- "Lithuanian" # <4>
 
 ```
 
--   With the first line, we extract the first string of letters before any space or slash in `NativeLg` and save this to a new variable called `NativeLg.cleaned.base`.
+1.  With the first line, we extract the first string of letters before any space or slash in `NativeLg` and save this to a new variable called `NativeLg.cleaned.base`.
 
--   The second line converts all the values of the new variable to title case using a base `R` function from the {tools} package. The {tools} package comes with `R` so you don't need to install it separately but, if you haven't loaded it earlier in your `R` session, you need to call the function with the prefix `tools::` so that `R` knows where to find the `toTitleCase()` function.
+2.  This line converts all the values of the new variable to title case using a base `R` function from the {tools} package. The {tools} package comes with `R` so you don't need to install it separately but, if you haven't loaded it earlier in your `R` session, you need to call the function with the prefix `tools::` so that `R` knows where to find the `toTitleCase()` function.
 
--   The third line corrects a typo with a direct replacement, whilst the fourth replaces two typos with a single correction.
+3.  The third line corrects a typo with a direct replacement.
+
+4.  This line replaces two typos with a single correction.
 
 If we now compare the variable created with the tidyverse code (`NativeLg.cleaned`) vs. the one created using base R functions only (`NativeLg.cleaned.base`), we can see that they are exactly the same.
 
@@ -813,7 +813,17 @@ L2.data |>
   count(NativeLgFamily)
 ```
 
-[**c.**]{style="color:green;"} We can add a column to show the distribution in percentages by adding a new "percent" column to the `count()` table using `mutate()`.[^9_datawrangling-3] The steps are the following:
+[**c.**]{style="color:green;"} We can add a column to show the distribution in percentages by adding a new "percent" column to the `count()` table using `mutate()`:
+
+```{r}
+L2.data |> # <1>
+  count(NativeLgFamily) |> # <2>
+  mutate(percent = n / sum(n), # <3>
+         percent = percent*100, # <4>
+         percent = round(percent, digits = 0) # <5>
+         ) |> 
+  arrange(desc(n)) # <6>
+```
 
 1.  We start with the dataset that contains the new `NativeLgFamily` variable.
 2.  We pipe it into the `count()` function. As shown above, this function produces a frequency table with counts stored in the variable `n`.
@@ -822,17 +832,7 @@ L2.data |>
 5.  We round the percentages to two decimal places.
 6.  We reorder the table so that the most represented group is at the top. To do so, we pipe our table into the `dplyr::arrange()`. By default, `arrange()` orders values in ascending order (from smallest to largest); hence, we add the `desc()` function to sort the table in descending order of frequency.
 
-```{r}
-#| code-line-numbers: true
-
-L2.data |> 
-  count(NativeLgFamily) |> 
-  mutate(percent = n / sum(n),
-         percent = percent*100, 
-         percent = round(percent, digits = 0)
-         ) |> 
-  arrange(desc(n))
-```
+🪐 Note that this a {tidyverse} approach to working out percentages, see @sec-Mode for a base `R` approach.
 
 [**d.**]{style="color:green;"} At the time of writing, the help file of the `relocate()` function still featured examples using the {magrittr} pipe (`%>%`) rather than the native `R` pipe (`|>`) (see @sec-Piping), but the syntax remains the same. The first argument is the data which we are piping into the function, the second argument is the column that we want to move. Then, we need to specify where to with either the ".after" or the ".before" argument.
 
@@ -865,8 +865,6 @@ The `relocate()` function has moved `NativeLgFamily` to the first column (the fu
 This is a reminder to *always* check whether your data wrangling operations have gone as planned. Just because you didn't get an error message doesn't mean that your code did what you wanted! ⚠️
 :::
 
-[^9_datawrangling-3]: Note that this a {tidyverse} approach to working out percentages, see @sec-Mode for a base `R` approach.
-
 ## Combining datasets {#sec-CombiningDatasets}
 
 So far, we have analysed the L1 and L2 datasets individually. In the following chapters, however, we will conduct comparative analyses, comparing the performance of the L1 and L2 participants in the various language-related tests conduced as part of @DabrowskaExperienceAptitudeIndividual2019. To this end, we need to create a combined table that includes the data of all participants from @DabrowskaExperienceAptitudeIndividual2019.
@@ -894,9 +892,9 @@ L1.data <- L1.data |>
   rename(EduTotal = EduYrs)
 ```
 
-The {dplyr} package boasts an array of useful functions to combine tables (see @fig-dplyrcheatsheet). For our purposes, `bind_rows()` appears to be the perfect function.[^9_datawrangling-4]
+The {dplyr} package boasts an array of useful functions to combine tables (see @fig-dplyrcheatsheet). For our purposes, `bind_rows()` appears to be the perfect function.[^9_datawrangling-3]
 
-[^9_datawrangling-4]: We could also use the `full_join()` function since we want to retain all rows and all columns from both datasets.
+[^9_datawrangling-3]: We could also use the `full_join()` function since we want to retain all rows and all columns from both datasets.
 
 ![Extract of the [data transformation with {dplyr} cheatsheet](https://rstudio.github.io/cheatsheets/data-transformation.pdf) (CC BY SA Posit Software, PBC)](images/dplyr_cheatsheet_extract.png){#fig-dplyrcheatsheet fig-alt="Extract from dplyr cheatsheet showing all the \"join\" functions. Screenreader friendly version can be found here: https://rstudio.github.io/cheatsheets/html/data-transformation.html" out-width="80%"}
 
@@ -945,9 +943,9 @@ L2.data <- L2.data |>
   mutate(Group = "L2")
 ```
 
-**Step 3:** We use `bind_rows()` as above to combine the two datasets that now both include the extra `Group` column.[^9_datawrangling-5]
+**Step 3:** We use `bind_rows()` as above to combine the two datasets that now both include the extra `Group` column.[^9_datawrangling-4]
 
-[^9_datawrangling-5]: Alternatively, you may have gathered from the cheatsheet (@fig-dplyrcheatsheet) that the `bind_rows()` function has an optional ".id" argument that can be used to create an additional column to disambiguate between the two combined datasets. In this case, we do not need to add a `Group` column to both datasets prior to combining them.
+[^9_datawrangling-4]: Alternatively, you may have gathered from the cheatsheet (@fig-dplyrcheatsheet) that the `bind_rows()` function has an optional ".id" argument that can be used to create an additional column to disambiguate between the two combined datasets. In this case, we do not need to add a `Group` column to both datasets prior to combining them.
 
     ```{r}
     combined.data <- bind_rows(L1 = L1.data, 
@@ -1218,9 +1216,9 @@ saveRDS(combined.data, file = here("data", "processed", "combined_L1_L2_data.rds
 
 ```
 
-If you want to share your wrangled dataset with a colleague who does not (yet? 😉) use `R`, you can use the tidyverse function `write_csv()`.[^9_datawrangling-6] Your colleague will be able to open this file in any standard spreadsheet programme or text editor (but do warn them about the dangers of opening `.csv` file in spreadsheets, see @sec-ExcelWarning!).
+If you want to share your wrangled dataset with a colleague who does not (yet? 😉) use `R`, you can use the tidyverse function `write_csv()`.[^9_datawrangling-5] Your colleague will be able to open this file in any standard spreadsheet programme or text editor (but do warn them about the dangers of opening `.csv` file in spreadsheets, see @sec-ExcelWarning!).
 
-[^9_datawrangling-6]: As usual, there is a base `R` alternative: `write.csv()` will work just as well but, for larger datasets, it is considerably slower than `write_csv()`. For finer differences, check out the functions' respective help files.
+[^9_datawrangling-5]: As usual, there is a base `R` alternative: `write.csv()` will work just as well but, for larger datasets, it is considerably slower than `write_csv()`. For finer differences, check out the functions' respective help files.
 
 ```{r}
 
