@@ -1193,7 +1193,7 @@ For an accessible introduction to stabilising your computing environment, I reco
 
 You may have noticed that, in addition to creating an `.html` file, rendering your Quarto document has also generated a folder containing any necessary data, images, stylesheets or other files required to display the HTML version of your document. This is because Quarto keeps external resources separate from the main HTML file by default. While this is advantageous for large documents and complex projects, it does mean that your HTML document can only be viewed if both the `.html` file and its associated folder are shared.
 
-If you want to share a single, self-contained `.html` file with someone else or upload it somewhere, you will need to embed all the necessary files directly inside your HTML file. This is achieved by adding the following option to your Quarto document's YAML header:
+If you want to share a **single, self-contained** `.html` file with someone else or upload it somewhere, you will need to **embed** all the necessary files directly inside your HTML file. This is achieved by adding the following option to your Quarto document's YAML header:
 
 ```{yaml}
 ---
@@ -1203,7 +1203,7 @@ format:
 ---
 ```
 
-With this setting, Quarto will package all necessary resources inside the HTML file, giving you a self-contained document that is easy to share and archive as it can be viewed in any web browser (e.g., Firefox, Google Chrome, Safari).
+With this setting, Quarto will package all the necessary resources inside the HTML file, resulting in a self-contained document that is easy to share and archive as it can be viewed in any web browser (e.g., Firefox, Google Chrome, Safari).
 
 ## Other publishing formats {#sec-PublishingFormats}
 
@@ -1221,7 +1221,7 @@ format: docx
 ---
 ```
 
-By default, the quality of the images and graphs in rendered `.docx` versions is low to keep the file size small. You can improve the quality of the rendered images by specifying the image definition in the YAML option. Make sure that you indent each line correctly as shown below; otherwise, you will get an error when you try to render your document:
+By default, the quality of the images and graphs in rendered `.docx` versions is low to keep the file size small. You can improve the quality of the rendered images by specifying the **image definition** in the YAML option. Make sure that you indent each line correctly as shown below; otherwise, you will get an error when you try to render your document:
 
 ```{yaml}
 ---
@@ -1230,20 +1230,6 @@ format:
     fig-dpi: 300
 ---
 ```
-
-Note that dynamic code outputs (such as the interactive {plotly} plot displayed in @fig-scatterplot-plotly) cannot meaningfully be rendered to static formats such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors. To avoid `R` attempting to render these code chunks to formats other than HTML, you can enclose them in the following div block:
-
-```` markdown
-::: {.content-hidden unless-format="html"}
-
-```{{r}}
-#| label: fig-scatterplot-plotly
-
-ggplotly(L2.scatter2)
-```
-
-:::
-````
 
 To share your work with **LibreOffice**, **OnlyOffice**, and **OpenOffice** users, use the `format: odt` option, which will generate an **OpenDocument** - an open standard file format that can be opened in any text-processing software.
 
@@ -1298,6 +1284,20 @@ format:
 ---    
 ```
 
+::: callout-note
+#### Excluding code chunks in specific formats
+Dynamic code outputs, such as the **interactive** {plotly} graph displayed in @fig-scatterplot-plotly, cannot meaningfully be rendered to static formats such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors. To avoid `R` attempting to render these code chunks to formats other than HTML, you can enclose them in the following `div` block:
+
+```` markdown
+::: {.content-hidden unless-format="html"}
+```{{r}}
+#| label: fig-scatterplot-plotly
+ggplotly(L2.scatter2)
+```
+:::
+````
+:::
+
 ### Slides
 
 In research, it's quite common that you will be working on a project that will be submitted as a paper or thesis (e.g., in PDF format) *and* that you'll also want to **present** in class, to your research group, or at a conference. You can easily turn your Quarto document into **presentation slides**, too! There are currently three presentation formats to choose from:
@@ -1305,10 +1305,20 @@ In research, it's quite common that you will be working on a project that will b
 |  |  |  |
 |----|----|----|
 | [Revealjs](https://quarto.org/docs/presentations/revealjs/) | Revealjs is an open-source HTML presentation framework. | `format: revealjs` |
-| [PowerPoint](https://quarto.org/docs/presentations/powerpoint.html) | PowerPoint is Microsoft Office's presentation editing software. | `format: pptx` |
+| [Power-Point](https://quarto.org/docs/presentations/powerpoint.html) | PowerPoint is Microsoft Office's presentation editing software. | `format: pptx` |
 | [Beamer](https://quarto.org/docs/presentations/beamer.html) | Beamer is a LaTeX class for producing presentations and slides in PDF format. | `format: beamer` |
 
-<!--# @Vishar: Could you please find a way to ensure that the word "Powerpoint" is not split across two lines in the rendered version? -->
+I recommend using **Revealjs** and the best way to get a sense of what is possible is to explore this [demo](https://quarto.org/docs/presentations/revealjs/demo/){target="_blank"} presentation from the [Quarto Guide](https://quarto.org/docs/presentations/revealjs/):
+
+<div>
+
+```{=html}
+<iframe width="600" height="400" class="slide-deck" src="https://quarto.org/docs/presentations/revealjs/demo/"></iframe>
+```
+
+</div>
+
+If you prefer to view the demo in a standalone browser, you can do that [here](https://quarto.org/docs/presentations/revealjs/demo/){target="_blank"}. Check out the [source code](https://github.com/quarto-dev/quarto-web/blob/main/docs/presentations/revealjs/demo/index.qmd) to see how the slides were created.
 
 ## Conclusion
 
