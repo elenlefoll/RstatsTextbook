@@ -880,7 +880,7 @@ The Quarto guide provides further information about formatting tables: <https://
 
 ## Figures {#sec-QuartoFigures}
 
-In Quarto documents, figures can either be embedded (e.g., as a `.png` or `.jpeg` image file) or generated as a result of a code chunk.
+In Quarto documents, figures can either be inserted from image files (e.g., `.png` or `.jpeg` files, see @sec-FileExtensions) or generated as a result of a code chunk.
 
 ### Images {#sec-QuartoImages}
 
@@ -1189,15 +1189,31 @@ The {renv} library keeps track of the exact package versions that your project d
 For an accessible introduction to stabilising your computing environment, I recommend reading: <https://berd-nfdi.github.io/BERD-reproducible-research-course/3-3-stabilize.html> and <https://the-turing-way.netlify.app/reproducible-research/renv.html>.
 :::
 
-## Publishing formats {#sec-PublishingFormats}
+## Sharing HTML documents {#sec-EmbedResources}
 
-So far, we have only tried rendering our Quarto document to **HTML**, which is the default publishing format for Quarto documents. HTML has many advantages and is great for publishing online, but the beauty of Quarto is that you can publish in many other formats, too.
+You may have noticed that, in addition to creating an `.html` file, rendering your Quarto document has also generated a folder containing any necessary data, images, stylesheets or other files required to display the HTML version of your document. This is because Quarto keeps external resources separate from the main HTML file by default. While this is advantageous for large documents and complex projects, it does mean that your HTML document can only be viewed if both the `.html` file and its associated folder are shared.
+
+If you want to share a single, self-contained `.html` file with someone else or upload it somewhere, you will need to embed all the necessary files directly inside your HTML file. This is achieved by adding the following option to your Quarto document's YAML header:
+
+```{yaml}
+---
+format:
+  html:
+    embed-resources: true
+---
+```
+
+With this setting, Quarto will package all necessary resources inside the HTML file, giving you a self-contained document that is easy to share and archive as it can be viewed in any web browser (e.g., Firefox, Google Chrome, Safari).
+
+## Other publishing formats {#sec-PublishingFormats}
+
+So far, we have only tried rendering our Quarto document to **HTML**, which is the default publishing format for Quarto documents. HTML has many advantages and is great for publishing online, but the beauty of Quarto is that you can share and publish your research in many other formats, too.
 
 ![Artwork CC-BY 4.0 Allison Horst from the ["Hello, Quarto" keynote](https://mine.quarto.pub/hello-quarto/) by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022.](images/AHorst_many-qmd-to-output.png){#fig-Penguin fig-alt="A schematic showing many qmd files, going through Quarto, to generate an HTML, PDF, or Word document or more. The Quarto logo is depicted as a baseball a penguin is spinning." width="467"}
 
-### Text-processing formats
+### MS Word, LibreOffice & co.
 
-For example, if your supervisor or colleague would like a **Microsoft Word** document, this is no problem. All you need to do is add the following line to your **YAML header** and then render your document again. This is will generate a `.docx` file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.
+Your supervisor or colleague may request a **Microsoft Word** document and, thankfully, this is no problem. All you need to do is add the following line to your **YAML header** and then render your document again. This is will generate a `.docx` file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.
 
 ```{yaml}
 ---
@@ -1205,7 +1221,17 @@ format: docx
 ---
 ```
 
-Note, however, that dynamic code outputs (such as the interactive {plotly} plot displayed in @fig-scatterplot-plotly) cannot meaningfully be rendered to static formats such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors. To avoid `R` attempting to render these code chunks to formats other than HTML, you can enclose them in the following div block:
+By default, the quality of the images and graphs in rendered `.docx` versions is low to keep the file size small. You can improve the quality of the rendered images by specifying the image definition in the YAML option. Make sure that you indent each line correctly as shown below; otherwise, you will get an error when you try to render your document:
+
+```{yaml}
+---
+format: 
+  docx:
+    fig-dpi: 300
+---
+```
+
+Note that dynamic code outputs (such as the interactive {plotly} plot displayed in @fig-scatterplot-plotly) cannot meaningfully be rendered to static formats such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors. To avoid `R` attempting to render these code chunks to formats other than HTML, you can enclose them in the following div block:
 
 ```` markdown
 ::: {.content-hidden unless-format="html"}
@@ -1219,12 +1245,12 @@ ggplotly(L2.scatter2)
 :::
 ````
 
-To share your work with **LibreOffice** and **OpenOffice** users, use the `format: odt` option, which will generate an **OpenDocument** - an open standard file format that can be opened in any text-processing software.
+To share your work with **LibreOffice**, **OnlyOffice**, and **OpenOffice** users, use the `format: odt` option, which will generate an **OpenDocument** - an open standard file format that can be opened in any text-processing software.
 
 ::: callout-caution
 #### [**Task 13.4**]{style="color:green;"}
 
-If you completed [**Task 8.1**]{style="color:green;"} (@sec-Range), you copied-and-pasted a paragraph with gaps into LibreOffice Writer or Microsoft Word and then manually inserted descriptive statistics that you had calculated in `R`. This method of copying-and-pasting across different programmes is very error-prone! What if you accidentally paste the wrong number in the wrong place? And what if there is an update to the dataset or you make some changes to the data cleaning procedure? You'd had to manually change all the numbers again. This is time-consuming and, more worryingly, very likely to result in errors!
+If you completed [**Task 8.1**]{style="color:green;"} (@sec-Range), you copied-and-pasted a paragraph with gaps into LibreOffice Writer or Microsoft Word and then manually inserted descriptive statistics that you had calculated in `R`. This method of copying-and-pasting across different programmes is very error-prone! What if you accidentally paste the wrong number in the wrong place? And what if there is an update to the dataset or you make some changes to the data cleaning procedure? You'd have to manually change all the numbers again! 🤯 This is time-consuming and, more worryingly, very likely to result in errors!
 
 Now that you know about **literate programming** in Quarto, rewrite the following paragraph describing the `GrammarR` variable in `L1.data` and `L2.data` in Quarto. Use **in-text code chunks** to fill the gaps and then render your paragraph to `.docx` or `.odt` format to check the results.
 
@@ -1295,7 +1321,9 @@ In this chapter, we've only just scratched the surface of what's possible in Qua
 
 ➡️ Quarto has many functionalities that are particularly attractive to those of us involved in higher education teaching and academic research. Watch [Quarto for Academics](https://www.youtube.com/embed/EbAAmrB0luA?si=AwJ3szmUKECHfwuS) (20 minutes) by Mine Çetinkaya-Rundel to find out more.
 
-➡️ Finally, the latest edition of "R for Data Science" also has a great chapter on communicating the results of data science projects using Quarto: <https://r4ds.hadley.nz/communicate>.
+➡️ Thinking of writing an entire M.A./PhD thesis or book in Quarto? Cameron Patrick wrote his PhD thesis in Quarto and has helpfully put together some great tips so that his "pain and suffering can help reduce yours". Well worth reading if you're thinking of rendering a complex (set of) Quarto document(s) to PDF: <https://cameronpatrick.com/post/2023/07/quarto-thesis-formatting/>.
+
+➡️ Last but not least, the latest edition of "R for Data Science" also has a great chapter on communicating the results of data science projects using Quarto: <https://r4ds.hadley.nz/communicate>.
 :::
 
 ### Check your progress 🌟 {.unnumbered}
