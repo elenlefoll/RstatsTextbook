@@ -377,6 +377,24 @@ Dabrowska.data |>
   scale_fill_manual(values = c("purple", "#34027d"))
 ```
 
+**Scale** layers can be used to control the axes of your plots. Play around with the "expand" and "limits" arguments of the `scale_y_continuous()` function to understand how they work.
+
+```{r}
+#| fig-cap: "A bar plot with a y-axis that starts at zero."
+#| label: "fig-PurpleBarplot0"
+#| source-line-numbers: "9,10"
+#| fig-height: 6
+#| fig-alt: "This is the same facetted bar plot as above except that now the plot area start exactly at zero."
+
+Dabrowska.data |> 
+  ggplot(mapping = aes(x = OccupGroup)) +
+  geom_bar() +
+  labs(x = "Occupational group",
+       y = "Participants") +
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0,60))  
+```
+
 :::: {.callout-note collapse="true"}
 #### A note on colours and colour blindness 🌈
 
@@ -424,12 +442,14 @@ Dabrowska.data |>
   ggplot(mapping = aes(x = OccupGroup, 
                        fill = Gender,
                        pattern = Gender)) +
-  geom_bar_pattern(pattern_density = 0.01,  # adjust for better visibility
+  geom_bar_pattern(pattern_density = 0.001,  # adjust for better visibility
                    pattern_fill = "transparent",  # keeps pattern visible
                    pattern_colour = "white") +  # pattern lines color
   facet_wrap(~ Group) +
   labs(x = "Occupational group",
        y = "Participants") +
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0,35)) +
   scale_fill_manual(values = c("purple", "#34027d")) +
   scale_pattern_manual(values = c("stripe", "crosshatch")) # specify types of patterns
 ```
@@ -449,7 +469,7 @@ Some academic publishers still require grey-scale plots, in which case you will 
 ###### scale_fill_grey()
 
 ```{r}
-#| source-line-numbers: "7"
+#| source-line-numbers: "9"
 #| fig-height: 4
 #| label: "fig-GreyBarplot"
 
@@ -459,13 +479,15 @@ Dabrowska.data |>
   facet_wrap(~ Group) +
   labs(x = "Occupational group",
        y = "Participants") +
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0,35)) +
   scale_fill_grey()
 ```
 
 ###### scale_fill_viridis_d
 
 ```{r}
-#| source-line-numbers: "7"
+#| source-line-numbers: "9"
 #| fig-height: 4
 #| label: "fig-ViridisBarplot"
 
@@ -475,13 +497,15 @@ Dabrowska.data |>
   facet_wrap(~ Group) +
   labs(x = "Occupational group",
        y = "Participants") +
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0,35)) +
   scale_fill_viridis_d(option = "viridis")
 ```
 
 ###### scale_fill_viridis_d(option = "turbo")
 
 ```{r}
-#| source-line-numbers: "7"
+#| source-line-numbers: "9"
 #| fig-height: 4
 #| label: "fig-ViridisTurboBarplot"
 
@@ -491,6 +515,8 @@ Dabrowska.data |>
   facet_wrap(~ Group) +
   labs(x = "Occupational group",
        y = "Participants") +
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0,35)) +
   scale_fill_viridis_d(option = "turbo")
 ```
 :::
@@ -501,7 +527,7 @@ If you like colours, check out the {paletteer} package [@hvitfeldtPaletteerCompr
 ##### beyonce::X11
 
 ```{r}
-#| source-line-numbers: "6"
+#| source-line-numbers: "8"
 #| fig-height: 4
 #| label: "fig-BeyonceBarplot"
 
@@ -510,13 +536,15 @@ Dabrowska.data |>
   geom_bar() +
   labs(x = "Occupational group",
        y = "Participants") +
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0,35)) +
   paletteer::scale_fill_paletteer_d("beyonce::X11")
 ```
 
 ##### BridgetRiley
 
 ```{r}
-#| source-line-numbers: "6"
+#| source-line-numbers: "8"
 #| fig-height: 4
 #| label: "fig-BridgetRileyBarplot"
 
@@ -525,13 +553,15 @@ Dabrowska.data |>
   geom_bar() +
   labs(x = "Occupational group",
        y = "Participants") +
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0,35)) +
   paletteer::scale_fill_paletteer_d("lisa::BridgetRiley", direction = -1)
 ```
 
 ##### janelle
 
 ```{r}
-#| source-line-numbers: "6"
+#| source-line-numbers: "8"
 #| fig-height: 4
 #| label: "fig-JanelleBarplot"
 
@@ -540,13 +570,15 @@ Dabrowska.data |>
   geom_bar() +
   labs(x = "Occupational group",
        y = "Participants") +
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0,35)) +
   paletteer::scale_fill_paletteer_d("rockthemes::janelle")
 ```
 
 ##### FridaKahlo
 
 ```{r}
-#| source-line-numbers: "6"
+#| source-line-numbers: "8"
 #| fig-height: 4
 #| label: "fig-FridaKahloBarplot"
 
@@ -555,13 +587,15 @@ Dabrowska.data |>
   geom_bar() +
   labs(x = "Occupational group",
        y = "Participants") +
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0,35)) +
   paletteer::scale_fill_paletteer_d("lisa::FridaKahlo", direction = -1)
 ```
 
 ##### kiss
 
 ```{r}
-#| source-line-numbers: "6"
+#| source-line-numbers: "8"
 #| fig-height: 4
 #| label: "fig-KissBarplot"
 
@@ -570,13 +604,15 @@ Dabrowska.data |>
   geom_bar() +
   labs(x = "Occupational group",
        y = "Participants") +
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0,35)) +
     paletteer::scale_fill_paletteer_d("ltc::kiss")
 ```
 
 ##### speakNow
 
 ```{r}
-#| source-line-numbers: "6"
+#| source-line-numbers: "8"
 #| fig-height: 4
 #| label: "fig-SpeakNowBarplot"
 
@@ -585,6 +621,8 @@ Dabrowska.data |>
   geom_bar() +
   labs(x = "Occupational group",
        y = "Participants") +
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0,35)) +
   paletteer::scale_fill_paletteer_d("tayloRswift::speakNow")
 ```
 :::
@@ -2315,7 +2353,6 @@ library(plotly)
 
 ```{r}
 #| echo: false
-
 library(plotly)
 ```
 
@@ -2455,8 +2492,10 @@ Dabrowska.data |>
                        fill = Group)) +
   geom_density(alpha = 0.7) +
   scale_fill_viridis_d() +
+  scale_x_continuous(expand = c(0,0),
+                     limits = c(0,30)) +
   labs(x = "Non-verbal IQ (Blocks test)") +
-  theme_bw()
+  theme_minimal()
 
 ggsave("BlocksDensityPlot.png",
        width = 10,
@@ -2491,5 +2530,5 @@ Are you confident that you can...?
 
 If you have completed this chapter, you can now produce some of the most widely used graphs in the language sciences: Congratulations!
 
-Bar plots, boxplots, scatter plots, density plots and histograms may well be all that you need for now. But you should know that the possibilities with `R`, the {ggplot2} library, and its many extensions are pretty much limitless: The [`R` Graph Gallery](https://r-graph-gallery.com/) lists some 50 different types of charts with over 400 examples with code! Another great resource is [The R Graphics Cookbook](https://r-graphics.org) by Winston Chang. To go beyond the basics and to find out more information about the theoretical underpinnings of the {ggplot2} package, I recommend [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org). There are also great `R` packages to produce more specialised types of graphs frequently used in linguistics such as vowel charts and dialectal maps (see Appendix A).
+Bar plots, boxplots, scatter plots, density plots and histograms may well be all that you need for now. But you should know that the possibilities with `R`, the {ggplot2} library, and its many extensions are pretty much limitless: The [`R` Graph Gallery](https://r-graph-gallery.com/) lists some 50 different types of charts with over 400 examples with code! Another great resource is [The R Graphics Cookbook](https://r-graphics.org) by Winston Chang. To go beyond the basics and to find out more information about the theoretical underpinnings of the {ggplot2} package, I recommend [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org). There are also great `R` packages to produce more specialised types of graphs frequently used in linguistics such as [vowel charts](https://joeystanley.com/blog/making-vowel-plots-in-r-part-1/) and [dialectal maps](https://doi.org/10.1017/jlg.2024.11) (see Appendix A).
 :::

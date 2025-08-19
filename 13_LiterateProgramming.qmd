@@ -1205,13 +1205,25 @@ format:
 
 With this setting, Quarto will package all the necessary resources inside the HTML file, resulting in a self-contained document that is easy to share and archive as it can be viewed in any web browser (e.g., Firefox, Google Chrome, Safari).
 
+If you intend to share a longer Quarto document, it may be a good idea to number the headings and sub-headings (`number-sections`) and to include a table of content (`toc`). You can do this by adding the following two lines to the `format` section of your YAML header:
+
+```{yaml}
+---
+format:
+  html:
+    embed-resources: true
+    number-sections: true
+    toc: true
+---
+```
+
 ## Other publishing formats {#sec-PublishingFormats}
 
 So far, we have only tried rendering our Quarto document to **HTML**, which is the default publishing format for Quarto documents. HTML has many advantages and is great for publishing online, but the beauty of Quarto is that you can share and publish your research in many other formats, too.
 
 ![Artwork CC-BY 4.0 Allison Horst from the ["Hello, Quarto" keynote](https://mine.quarto.pub/hello-quarto/) by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022.](images/AHorst_many-qmd-to-output.png){#fig-Penguin fig-alt="A schematic showing many qmd files, going through Quarto, to generate an HTML, PDF, or Word document or more. The Quarto logo is depicted as a baseball a penguin is spinning." width="467"}
 
-### MS Word, LibreOffice & co.
+### Word, LibreOffice & co.
 
 Your supervisor or colleague may request a **Microsoft Word** document and, thankfully, this is no problem. All you need to do is add the following line to your **YAML header** and then render your document again. This is will generate a `.docx` file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.
 
@@ -1257,33 +1269,6 @@ Below is a screenshot of a Quarto document with the inline code chunks and its r
 :::
 ::::
 
-### PDF
-
-It is also possible to render Quarto documents to **PDF**; however, this requires you to have a working [LaTeX](https://en.wikipedia.org/wiki/LaTeX) distribution on your computer. If you already have a recent LaTeX installation, you shouldn't need to do anything else to generate PDF documents. Quarto developers recommend that you use the [TinyTeX](https://yihui.org/tinytex/) distribution. To **install** (or update) TinyTeX, go to the Terminal pane in RStudio and run the following command:
-
-``` {.txt filename="Terminal"}
-quarto install tinytex
-```
-
-This is likely to take several minutes but you will only need to do it once. Afterwards, you can add the following line to your Quarto YAML header and you're ready to render to PDF!
-
-```{yaml}
----
-format: pdf
----
-```
-
-Quarto's different publishing formats have different options. For example, if you want your PDF document have numbered sections and to include a table of content (TOC), you can add the following lines to your YAML header:
-
-```{yaml}
----
-format:  
-  pdf:
-    number-sections: true
-    toc: true
----    
-```
-
 ::: callout-note
 #### Excluding code chunks in specific formats
 Dynamic code outputs, such as the **interactive** {plotly} graph displayed in @fig-scatterplot-plotly, cannot meaningfully be rendered to static formats such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors. To avoid `R` attempting to render these code chunks to formats other than HTML, you can enclose them in the following `div` block:
@@ -1297,6 +1282,37 @@ ggplotly(L2.scatter2)
 :::
 ````
 :::
+
+### PDF
+
+It is also possible to render Quarto documents to **PDF**; however, this requires you to have [LaTeX](https://en.wikipedia.org/wiki/LaTeX) installed on your computer. If you don't already have your favourite LaTex distribution, Quarto developers recommend that you use the [TinyTeX](https://yihui.org/tinytex/) distribution to render to PDF. To **install** (or update) TinyTeX, go to the Terminal pane in RStudio and run the following command:
+
+``` {.txt filename="Terminal"}
+quarto install tinytex
+```
+
+This is likely to take a few minutes but you will only need to do it once. Afterwards, you can add the following line to your Quarto YAML header and you're ready to render to PDF!
+
+```{yaml}
+---
+format: pdf
+---
+```
+
+HTML being the default format, some options available for HTML are not -- at least by default -- available in other publishing formats. Many of the basic options, however, work across different formats. 
+
+The YAML header options below can be used to include a table of content with numbered sections at the start of the PDF version of your document. It also includes two options that are specific to the PDF format: the first will print a list of figures (`lof`) and the second a list of tables (`lot`).
+
+```{yaml}
+---
+format:  
+  pdf:
+    number-sections: true
+    toc: true
+    lof: true
+    lot: true
+---    
+```
 
 ### Slides
 
