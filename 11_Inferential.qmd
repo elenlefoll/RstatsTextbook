@@ -293,7 +293,7 @@ Unfortunately, **confidence intervals (CI)** are a bit of a misnomer, which freq
 In other words, our confidence interval does *not* tell us how confident we can be about estimated value, but rather how confident we can be about our statistical method.
 :::
 
-::: {.callout-caution collapse="true"}
+::: {.callout-tip collapse="true"}
 #### Quiz Time! {.unnumbered}
 
 Consider the following research question:
@@ -391,7 +391,7 @@ When used correctly, the *p*‑value is a very useful metric that can help us to
 
 [^11_inferential_inprogress_vk-4]: Again, it is important to note that this is by no means the *only* way to interpret *p*-values. As with many things in statistics, how you interpret *p*-values depends on the statistical philosophy that you subscribes to. This approach described in this textbook corresponds the statistical hypothesis testing approach developed by Neyman & Pearson ([1933](https://lakens.github.io/statistical_inferences/references.html#ref-neyman_problem_1933)). "In a Neyman-Pearson framework, the goal of statistical tests is to guide the behavior of researchers with respect to these two hypotheses. Based on the results of a statistical test, and without ever knowing whether the hypothesis is true or not, researchers choose to tentatively act as if the null hypothesis or the alternative hypothesis is true." [@lakensImprovingYourStatistical2022: Section 1.1]
 
-[^11_inferential_inprogress_vk-5]: It is worth noting that, just because 0.05 is (currently) the most widely used threshold, doesn't mean that you have to use 0.05, too. If you are not comfortable accepting a 5% risk (which, statistically speaking, will happen one in 20 times, after all), you can define a lower threshold, e.g., 0.01, corresponding to a 1% risk. However, depending on how large your observed effect is and how much data you have, you may find that, with a lower significance‑level, you fail to reject the null hypothesis even when there is a true effect in the population so it's a difficult balance to strike. To find out more, I recommend reading about **statistical power**, e.g. in @lakensImprovingYourStatistical2022: Chapter 2.
+[^11_inferential_inprogress_vk-5]: It is worth noting that, just because 0.05 is (currently) the most widely used threshold, doesn't mean that you have to use 0.05, too. If you are not comfortable accepting a 5% risk (which, statistically speaking, will happen one in 20 times, after all), you can define a lower threshold, e.g., 0.01, corresponding to a 1% risk. However, depending on how large your observed effect is and how much data you have, you may find that, with a lower significance‑level, you fail to reject the null hypothesis even when there is a true effect in the population so it's a difficult balance to strike. To find out more, I recommend reading about **statistical power**, e.g. in Lakens [-@lakensImprovingYourStatistical2022: Chapter 2].
 
 In the NHST framework, when the calculated *p*‑value is *smaller* than our chosen significance level (α), we reject the null hypothesis in favour of the alternative hypothesis and say that the result is **statistically significant**. When the *p*‑value is larger than α, we fail to reject the null hypothesis and say that the result is not statistically significant. However, the latter does not *prove* that the null hypothesis is true. It only tells us that the data that we have do not provide enough evidence against the null hypothesis. Note that, following this school of statistics, the actual *p*-value is irrelevant: it is either *below* or *above* the α-level threshold. We do not compare *p*-values and it does not make sense to claim that one result is more or less statistically significant than the other.
 
@@ -499,7 +499,7 @@ cohens_d(Blocks ~ Gender,
 
 As you can see, this increases the size of the interval and hence makes it harder to obtain a statistically significant result. This is because lowering the α-level means that we are less willing to risk reporting a false positive result, i.e. reporting a difference based on our data where no real difference exists.
 
-::: {.callout-caution collapse="true"}
+::: {.callout-tip collapse="true"}
 #### Quiz time! {.unnumbered}
 
 Compute three Cohen's *d* values to capture the magnitude of the difference between L1 and L2 speakers:
@@ -890,13 +890,13 @@ check_question("about 1%",
 
 A crucial aspect that we have glossed over so far in this chapter is that the results of statistical tests, such as *t*-tests and correlation tests, can only be considered accurate if the test's underlying assumptions are met.
 
-### Randomisation
+### Randomisation {#sec-Randomisation}
 
 The only assumption that we have mentioned so far is that of **random sampling** (\@sec-Sampling). In practice, this assumption is rarely met in the language sciences. For instance, the L1 and L2 participants recruited for @DabrowskaExperienceAptitudeIndividual2019 were not randomly drawn from the entire adult UK population. Dąbrowska [-@DabrowskaExperienceAptitudeIndividual2019: 5-6] reports that the participants "were recruited through personal contacts, church and social clubs, and advertisements in local newspapers". Such transparency over the sampling procedure is crucial to interpreting the results of a study.
 
 > When the assumption of random sampling is not met, inferences to the population become difficult. In this case, researchers should describe the sample and population in sufficient detail to justify that the sample was at least representative of the intended population ([Wilkinson and APA Task Force on Statistical Inference, 1999](https://doi.org/10.1037/0003-066X.54.8.594)). If such a justification is not made, readers are left to their own interpretation as to the generalizability of the results. [@nimonStatisticalAssumptionsSubstantive2012: 1]
 
-### Independence
+### Independence {#sec-Independence}
 
 Another crucial assumption for both tests covered in this chapter is that the data points be independent of each other. We assumed that this is the case with the @DabrowskaExperienceAptitudeIndividual2019 data because it only has one observation per participant (although interdependencies may occur at other levels, e.g., when several participants come from the same school, work place, or neighbourhood). If, however, we had multiple observations per participant because they completed the tests twice, say once in the morning and once in the evening, and then entered both the morning and the evening data into a single statistical test, our data would violate the assumption of independence and the results of the test would be inaccurate. When our data violates the assumption of independence, we cannot use statistical tests like *t*-tests. Instead, we must turn to statistical methods that allow us to model these interdependencies in the data. In the language sciences, this is most commonly achieved using **mixed-effects models** (see Chapter 14).
 
@@ -935,7 +935,7 @@ The output of the `wilcox.test()` function tells us that there is a 2.6% chance 
 
 The Wilcoxon test does not make any assumptions about the distributions of the population data, which means that it can be used for all kinds of continuous variables including word frequencies. However, there is a drawback: it is usually less powerful than the standard *t*-test. Using it, we are more likely to report a false negative (i.e., to fail to report a real difference in two means), which is why a transformation may be wiser [for more about transformations, see @WinterStatisticsLinguistsIntroduction2019: Ch. 5].
 
-### Linearity and outliers
+### Linearity and outliers {#sec-Linearity}
 
 All statistical significance tests are sensitive to outliers. Hence, it is important to identify any outliers (e.g., by plotting your data as part of preliminary data exploration) and to carefully consider the extent to which they may influence the results of your analysis.
 
@@ -1122,9 +1122,9 @@ Clearly, if we had only used correlation statistics to describe the relationship
 For an in-depth explanation of non-parametric correlation coefficients (Spearman's ρ and Kendall's τ) and statistical significance tests with examples from the language sciences, I recommend reading @LevshinaHowlinguisticsData2015: Chapter 6.
 :::
 
-### Variance {#sec-Variance}
+### Homogeneity of variance {#sec-Homoscedasticity}
 
-Strictly speaking, when conducting a *t*-test, the variances of the samples should be homogeneous. This is referred to as the assumption of **homogeneity of variance**. A related assumption is made in correlation tests and linear regression and is called the assumption of **homoscedasticity**. In brief, these assumptions mean that the variances of the groups entered in the tests or models should be roughly the same.
+Strictly speaking, when conducting a *t*-test, the variances of the samples should be homogeneous. This is referred to as the assumption of homogeneity of variance. A related assumption is made in correlation tests and linear regression and is called the assumption of **homoscedasticity**. In brief, these assumptions mean that the variances of the groups entered in the tests or models should be roughly the same.
 
 Again, these assumptions are best examined visually. For example, we can generate a boxplot to check that the variance of the two groups that we want to compare with a *t*-test are roughly equal (see @fig-GrammarBoxplot).
 
@@ -1203,10 +1203,10 @@ Are you confident that you can...?
 -   [ ] Explain what statistical significance and *p*-values mean (@sec-PValues)
 -   [ ] Calculate Cohen’s *d* using `R` (@sec-EffectSize)
 -   [ ] Calculate, test, and interpret correlations using `R` (@sec-Correlations)
--   [ ] Check that the main underlying assumptions of statistical tests are met (@sec-Assumptions):
-    -   [ ] Randomisation
-    -   [ ] Independence
-    -   [ ] Normality
-    -   [ ] Linearity, and
-    -   [ ] Variance.
+-   Check that the main underlying assumptions of statistical tests (@sec-Assumptions) are met:
+    -   [ ] randomisation (@sec-Randomisation)
+    -   [ ] independence (@sec-Independence)
+    -   [ ] normality (@sec-Normality)
+    -   [ ] linearity (@sec-Linearity)
+    -   [ ] homoscedasticity (@sec-Homoscedasticity).
 
