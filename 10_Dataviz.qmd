@@ -45,7 +45,7 @@ All examples, tasks, and quiz questions are based on data from:
 
 > Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72-100. <https://doi.org/10.1111/lang.12323>.
 
-Our starting point for this chapter is the wrangled combined dataset that we created and saved in @sec-DataWrangling. Follow the instructions in this chapter to create this `R` object or download `combined_L1_L2_data.rds` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/blob/main/data/processed/combined_L1_L2_data.rds){.uri}.
+Our starting point for this chapter is the wrangled combined dataset that we created and saved in @sec-DataWrangling. Follow the instructions in @sec-filter to create this `R` object or download `combined_L1_L2_data.rds` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/blob/main/data/processed/combined_L1_L2_data.rds){.uri}.
 :::
 
 Before we begin, we must load the `combined_L1_L2_data.rds` file that we created and saved in @sec-DataWrangling. This file contains the data of all the L1 and L2 participants of @DabrowskaExperienceAptitudeIndividual2019. The categorical variables are stored as factors and obvious data entry inconsistencies and typos have been corrected (see @sec-DataWrangling).
@@ -537,7 +537,7 @@ Dabrowska.data |>
   labs(x = "Occupational group",
        y = "Participants") +
   scale_y_continuous(expand = c(0,0),
-                     limits = c(0,35)) +
+                     limits = c(0,60)) +
   paletteer::scale_fill_paletteer_d("beyonce::X11")
 ```
 
@@ -554,7 +554,7 @@ Dabrowska.data |>
   labs(x = "Occupational group",
        y = "Participants") +
   scale_y_continuous(expand = c(0,0),
-                     limits = c(0,35)) +
+                     limits = c(0,60)) + 
   paletteer::scale_fill_paletteer_d("lisa::BridgetRiley", direction = -1)
 ```
 
@@ -571,7 +571,7 @@ Dabrowska.data |>
   labs(x = "Occupational group",
        y = "Participants") +
   scale_y_continuous(expand = c(0,0),
-                     limits = c(0,35)) +
+                     limits = c(0,60)) +
   paletteer::scale_fill_paletteer_d("rockthemes::janelle")
 ```
 
@@ -588,7 +588,7 @@ Dabrowska.data |>
   labs(x = "Occupational group",
        y = "Participants") +
   scale_y_continuous(expand = c(0,0),
-                     limits = c(0,35)) +
+                     limits = c(0,60)) +
   paletteer::scale_fill_paletteer_d("lisa::FridaKahlo", direction = -1)
 ```
 
@@ -605,8 +605,8 @@ Dabrowska.data |>
   labs(x = "Occupational group",
        y = "Participants") +
   scale_y_continuous(expand = c(0,0),
-                     limits = c(0,35)) +
-    paletteer::scale_fill_paletteer_d("ltc::kiss")
+                     limits = c(0,60)) +
+  paletteer::scale_fill_paletteer_d("ltc::kiss")
 ```
 
 ##### speakNow
@@ -622,7 +622,7 @@ Dabrowska.data |>
   labs(x = "Occupational group",
        y = "Participants") +
   scale_y_continuous(expand = c(0,0),
-                     limits = c(0,35)) +
+                     limits = c(0,60)) +
   paletteer::scale_fill_paletteer_d("tayloRswift::speakNow")
 ```
 :::
@@ -709,7 +709,7 @@ Pretty much all aspects of plot themes can be customised. To demonstrate this, @
 #| fig-cap: "Illustration of some of the customisation options of `ggplot` objects"
 #| label: fig-SillyTheme
 #| code-fold: true
-#| code-summary: "See {ggplot2} code used to generate this plot."
+#| code-summary: "See {ggplot2} code to generate plot."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup, fill = Gender)) +
@@ -792,7 +792,7 @@ But, first, let's think about **why** we visualise data. Data visualisation is a
 
 -   To explore your data
 -   To detect data processing errors and outliers
--   To check assumptions of statistical tests or models (see @sec-InfeRentialStats and @sec-LineaRregression)
+-   To check assumptions of statistical tests or models (see @sec-Inferential and @sec-LineaRregression)
 -   To examine variation across different subsets of the data
 -   To better interpret the results of statistical analyses (see @sec-LineaRregression)
 :::
@@ -862,8 +862,6 @@ levels(fct_infreq(Dabrowska.data$NativeLg))
 
 levels(fct_rev(fct_infreq(Dabrowska.data$NativeLg)))
 ```
-
-<!--# @Vishar: What do you think of the idea of including the same barplot as above, but translated in Farsi or Arabic and with all the labels on the right? Good idea? Bad idea? I'd be interested to hear your thoughts. -->
 
 ::::::: callout-tip
 #### Quiz time! {.unnumbered}
@@ -938,9 +936,9 @@ check_question(c("The bar plot because humans are better at distinguishing small
                type = "check",
                button_label = "Check answer",
                random_answer_order = TRUE,
-               right = "Correct! Bar charts are better suited than pie charts because humans are much better at estimating lengths than angles (see @sec-coordinates), and the labels are immediately next to the corresponding bars here.",
+               right = "Correct! Bar charts are better suited than pie charts because humans are much better at estimating lengths than angles (see Section 10.1.10), and the labels are immediately next to the corresponding bars here.",
                wrong = "No, try again.")
-check_hint("Check out @sec-coordinates.", 
+check_hint("Check out Section 10.1.10.", 
            hint_title = "🦉 Hover over the owl for a first hint.",
            type = "onmouseover")
 check_hint("Two reasons are correct.", 
@@ -1062,7 +1060,7 @@ check_question("fct_recode()",
                random_answer_order = TRUE,
                button_label = "Check answer",
                right = "Absolutely!",
-               wrong = "No, that won't do the trick. Re-read @sec-ggplotData for a quick recap.")
+               wrong = "No, that won't do the trick. Re-read Section 10.1.6 for a quick recap.")
 
 ```
 
@@ -1479,7 +1477,7 @@ check_question("Blocks",
                type = "radio",
                button_label = "Check answer",
                right = "That's right. Even though the distribution of Blocks scores is not perfectly symmetrical, it is less skewed than that of the other three variables.",
-               wrong = "No, check @sec-Normal to find out more about normal and non-normal distributions.")
+               wrong = "No, check [Chapter 8](https://elenlefoll.github.io/RstatsTextbook/8_DescriptiveStats.html#sec-Normal) to find out more about normal and non-normal distributions.")
 
 ```
 
@@ -1499,12 +1497,12 @@ Dabrowska.data |>
 ```
 :::
 
-::: {.callout-note collapse="true"}
+::: {.callout-note collapse="false"}
 #### Going further: Setting properties within geoms
 
-You can change attributes of a layer by specifying them as arguments within a specific `geom_` function.
+You can also change the **attributes** of any geometry layer by specifying them as **arguments** within their `geom_` function.
 
-The help file of each `geom_` function provides a list of the aesthetics arguments that each function has (see below). Aesthetics that must be provided for a function to work are marked in bold, whilst the others are optional. Here, the required arguments are taken directly from the `aes` values specified for the entire plot and therefore need not be specified again within the `geom_density()` function. If we do not specify any of the optional aesthetics of the `geom_` functions, sensible default values will be used. For instance, the line colour of density plots will be black, unless otherwise specified with the argument "colour".
+The help file of each `geom_` function provides a list of the **aesthetics** arguments that each function has (see below for relevant extract). If we do not specify any of the optional aesthetics of the `geom_` functions, sensible default values will be used. For instance, the line colour of density plots will be black, unless otherwise specified with the argument "colour".
 
 ```{r}
 #| eval: false
@@ -1512,9 +1510,7 @@ The help file of each `geom_` function provides a list of the aesthetics argumen
 ?geom_density
 ```
 
-> \[...\]
->
-> **Aesthetics**
+> \[...\] **Aesthetics**
 >
 > `geom_density()` understands the following aesthetics (required aesthetics are in bold):
 >
@@ -1530,31 +1526,39 @@ The help file of each `geom_` function provides a list of the aesthetics argumen
 >
 > Learn more about setting these aesthetics in `vignette("ggplot2-specs")`. \[...\]
 
-@fig-SillyDensityPlot is an example of a density plot with some highly customised aesthetics. It goes without saying that, just because you *can* customise many aesthetic aspects of a `geom_` layer, it doesn't necessarily mean that it's a good idea to do so! 🙃
+@fig-SillyDensityPlot is an example of a density plot with some highly customised aesthetics. It goes without saying that, just because you *can* customise many aspects of a `geom_` layer, it doesn't necessarily mean that it's a good idea to do so! 🙃
 
 ```{r}
 #| label: "fig-SillyDensityPlot"
+#| code-fold: true
+#| code-summary: "Show code to generate plot below."
 
 Dabrowska.data |> 
+  filter(Group == "L2") |> 
   ggplot(mapping = aes(x = Blocks)) +
-    geom_density(colour = "purple",
-                linewidth = 1.5,
-                linetype = "dotdash",
-                fill = "pink",
-                alpha = 0.8,
-                ) +
-    labs(x = "Non-verbal IQ (Blocks) test results")
+    geom_density(colour = "purple", # Sets the colour of the outline of the density plot
+                linewidth = 5, # Sets the width of the outline
+                linetype = "dotdash", # Sets the line type of the outline
+                fill = "pink", # Sets the colour of the area under the density plot
+                alpha = 0.6 # Sets the transparency level of the fill colour (with 0 being fully transparent and 1 being completely opaque)
+    ) +
+    labs(x = "Blocks test results",
+         title = "L2 participants' non-verbal IQ scores")
 ```
 
-It can, however, be very useful to help identify different elements within a complex plot as in @fig-UsefulDensityPlot.
+It can, however, be very useful to help identify different elements within a complex plot as in @fig-UsefulDensityPlot. 
 
 ```{r}
 #| label: "fig-UsefulDensityPlot"
+#| code-fold: true
+#| code-summary: "Show code to generate plot below."
 
+# We first create an R object that contains the mean Block scores for both L1 and L2 participants.
 mean.blocks <- Dabrowska.data |>
   group_by(Group) |>
   summarise(mean = mean(Blocks))
 
+# Next we plot density plots and also add a geom_vline layer to plot the mean values as vertical lines. We use the linetype argument to make the lines dotted.
 Dabrowska.data |>
   ggplot(mapping = aes(x = Blocks, 
                        fill = Group,
@@ -1566,13 +1570,16 @@ Dabrowska.data |>
                  colour = Group), 
              linetype = "dashed",
              linewidth = 0.8) +
-  scale_colour_viridis_d(option = "turbo") +
-  scale_fill_viridis_d(option = "turbo") +
+  scale_colour_viridis_d(guide = NULL) +
+  scale_fill_viridis_d() +
   theme_minimal() +
-  labs(x = "Non-verbal IQ test (Blocks) test results")
+  labs(x = "Non-verbal IQ test (Blocks) test scores",
+       fill = NULL,
+       title = "On average, non-native English speakers have higher IQ scores\nthan native speakers.",
+       caption = "The dotted lines represent the means of each group.")
 ```
 
-Note that, to create @fig-UsefulDensityPlot, we first calculated the mean Blocks scores for both L1 and L2 participants and stored these values in a new object called `mean.blocks`. These values are then called within the `geom_vline()` function, which draws vertical lines. In other words, in addition to setting `aes()` mappings within the `ggplot()` function, we can also add additional data mappings within a specific `geom_` function. It's no exaggeration to say that, with {ggplot2}, pretty much anything is possible!
+To create @fig-UsefulDensityPlot, we first calculated the mean Blocks scores for both L1 and L2 participants and stored these values in a new object called `mean.blocks` (see code link above). These values are then called within the `geom_vline()` function, which draws vertical lines. In other words, in addition to setting `aes()` mappings within the main `ggplot()` function at the start of our plot code, we can also add **additional data mappings** within a specific `geom_` function. With all these options, it's no exaggeration to say that, if you really set your mind to, pretty much anything is possible with {ggplot2}! 🙃
 :::
 
 ### Boxplots
@@ -1652,7 +1659,6 @@ Dabrowska.data |>
 ```{r}
 #| eval: false
 #| label: "fig-OccupBoxPlot"
-
 
 Dabrowska.data |>
   mutate(Group = fct_recode(Group,
@@ -1743,12 +1749,12 @@ In a dot plot, each data point (corresponding, here, to a single participant) is
 #| eval: false
 
 ggplot(data = Dabrowska.data,
-    mapping = aes(y = Grammar, 
+    mapping = aes(y = Colloc, 
                      x = Group)) +
     geom_dotplot(binaxis = "y", 
               stackdir = "center",
               binwidth = 3) +
-    labs(y = "Grammar comprehension scores",
+    labs(y = "Scores on English collocation test",
          x = NULL) +
     theme_bw()
 ```
@@ -1764,13 +1770,13 @@ ggplot(data = Dabrowska.data,
 #| fig-asp: 1.2
 
 Dabrowska.data |>
-  ggplot(mapping = aes(y = Grammar, 
+  ggplot(mapping = aes(y = Colloc, 
                        x = Group)) +
     geom_dotplot(binaxis = "y", 
                  stackdir = "center",
                  dotsize = 0.6,
                  binwidth = 3) +
-    labs(y = "Grammar comprehension scores",
+    labs(y = "Scores on English collocation test",
          x = NULL) +
     theme_bw(base_size = 18)
 ```
@@ -1789,10 +1795,10 @@ The help file of the `geom_violin()` function describes violin plots as follows:
 #| eval: false
 
 ggplot(data = Dabrowska.data,
-       mapping = aes(y = Grammar, 
+       mapping = aes(y = Colloc, 
                        x = Group)) +
     geom_violin() +
-    labs(y = "Grammar comprehension scores",
+    labs(y = "Scores on English collocation test",
          x = NULL) +
     theme_bw()
 
@@ -1809,10 +1815,10 @@ ggplot(data = Dabrowska.data,
 #| fig-asp: 1.2
 
 Dabrowska.data |>
-  ggplot(mapping = aes(y = Grammar, 
+  ggplot(mapping = aes(y = Colloc, 
                        x = Group)) +
     geom_violin() +
-    labs(y = "Grammar comprehension scores",
+    labs(y = "Scores on English collocation test",
          x = NULL) +
     theme_bw(base_size = 18)
 ```
@@ -1827,7 +1833,7 @@ By themselves, **violin plots** are rather abstract representations of variable 
 #| eval: false
 
 Dabrowska.data |> 
-  ggplot(mapping = aes(y = Grammar, 
+  ggplot(mapping = aes(y = Colloc, 
                        x = Group)) +
     geom_violin(width = 1, 
                 colour = "grey", 
@@ -1835,7 +1841,7 @@ Dabrowska.data |>
     geom_boxplot(width = 0.08, 
                  alpha = 0.2, 
                  outliers = FALSE) +
-    labs(y = "Grammar comprehension scores",
+    labs(y = "Scores on English collocation test",
          x = NULL) +
     theme_bw()
 ```
@@ -1851,7 +1857,7 @@ Dabrowska.data |>
 #| fig-asp: 1.2
 
 Dabrowska.data |> 
-  ggplot(mapping = aes(y = Grammar, 
+  ggplot(mapping = aes(y = Blocks, 
                        x = Group)) +
     geom_violin(width = 1, 
                 colour = "grey", 
@@ -1859,7 +1865,7 @@ Dabrowska.data |>
     geom_boxplot(width = 0.08, 
                  alpha = 0.2, 
                  outliers = FALSE) +
-    labs(y = "Grammar comprehension scores",
+    labs(y = "Scores on English collocation test",
          x = NULL) +
     theme_bw(base_size = 18)
 ```
@@ -1893,16 +1899,11 @@ Dabrowska.data |>
 
 At first glance, it would seem that our data does not support our initial hypothesis: among the L2 participants, there is no obvious trend suggesting that those who scored lowest on the grammar test were the ones who spent fewer years in formal education.-
 
-In @fig-GrammarScatterPlot, we add a regression line (in blue) per panel to our facetted scatter plot using the `geom_smooth(method = "lm")` function. This allows us to visualise the **correlation** between participants' grammar scores and the number of years they spent in formal education. Regression lines in scatter plots are interpreted as follows:
-
--   If the regression line goes up, there is a **positive correlation** between the two numeric variables. ↗️
--   If the line goes down, there is a **negative correlation**. ↘️
--   The steeper the line, the stronger the correlation. 💪
--   If the line is flat (or nearly flat), there is no (linear) correlation between the two variables. ➡️
--   Be aware that even very strong correlations do not necessarily imply (direct) causation. ❌
+In @fig-GrammarScatterPlot, we add a regression line (in blue) per panel to our facetted scatter plot using the `geom_smooth(method = "lm")` function. This allows us to visualise the **correlation** between participants' grammar scores and the number of years they spent in formal education. 
 
 ```{r}
 #| label: "fig-GrammarScatterPlot"
+#| source-line-numbers: "6-7"
 #| fig-asp: 0.8
 
 Dabrowska.data |> 
@@ -1918,9 +1919,17 @@ Dabrowska.data |>
   theme_bw()
 ```
 
+Regression lines in scatter plots are interpreted as follows:
+
+-   If the regression line goes up, there is a **positive correlation** between the two numeric variables. ↗️
+-   If the line goes down, there is a **negative correlation**. ↘️
+-   The steeper the line, the stronger the correlation. 💪
+-   If the line is flat (or nearly flat), there is no (linear) correlation between the two variables. ➡️
+-   Be aware that even very strong correlations do not necessarily imply (direct) causation. ❌
+
 The regression lines added by the `geom_smooth(method = "lm")` function are **lines of best fit**: the better the fit, the closer the points are to the line. If few points are on or close to the line, it means that the regression line is not a good approximation of the relationship between the two variables. This is clearly the case in @fig-GrammarScatterPlot - especially in the L2 panel (more on this in @sec-Correlations). Our data visualisation therefore do not support our hypothesis that, in the @DabrowskaExperienceAptitudeIndividual2019 data, grammar scores are more strongly associated with the level of formal education among the L2 speakers than among the L1 speakers. If anything, our data shows the opposite pattern! Our line of fit is both closer to the data points and steeper in the L1 panel than in the L2 panel.
 
-So far, all of our data visualisations have only displayed the characteristics of the collected data. In other words, they display **descriptive statistics** (see @sec-DescRiptiveStats) that do not allow us to make inferences about other participants who were not tested as part of @DabrowskaExperienceAptitudeIndividual2019's study. Tests of statistical significance, including of correlations, are introduced in the following chapter.
+So far, all of our data visualisations have only displayed the characteristics of the collected data. In other words, they display **descriptive statistics** (see @sec-DescRiptiveStats) that do not allow us to make inferences about other participants who were not tested as part of @DabrowskaExperienceAptitudeIndividual2019's study. Tests of statistical significance, including of correlations, are introduced in @sec-Inferential.
 
 ::: callout-tip
 #### Quiz time!
@@ -2524,6 +2533,8 @@ Are you confident that you can...?
 -   [ ] Create and interpret bar plots, histograms, density plots, boxplots, scatter plots, and word clouds (@sec-Semantics)
 -   [ ] Create and interpret complex plots and interactive plots for data exploration (@sec-CombiningGeoms) and (@sec-InteractivePlots)
 -   [ ] Export and share your plots in various formats (@sec-ExploringPlots)
+
+If so, you are ready to move out on inferential statistics in @sec-Inferential!
 
 ::: callout-note
 ### Going further: Plotting your way to success 🗺️ {.unnumbered collapse="TRUE"}
