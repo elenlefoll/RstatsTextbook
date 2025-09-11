@@ -7,6 +7,12 @@ html:
 
 # Infe`R`ential statistics {#sec-Inferential}
 
+::: callout-warning
+## Warning
+
+As with the rest of this textbook (see [Preface](https://elenlefoll.github.io/RstatsTextbook/)), this chapter is very much **work in progress**. All feedback is very welcome.
+:::
+
 ```{r}
 #| include: false
 library(checkdown)
@@ -418,7 +424,7 @@ The problem with *p*-values is that they are a composite metric that is dependen
 
 Note that the size (or magnitude) of the observed effect is only *one* of three factors that influence the *p*-value! It is therefore incorrect to claim that an effect (e.g., a difference in means) is particularly large based on a particularly small *p*-value. It is equally incorrect to claim that a *p*-value that falls below the chosen signifiance level points is a (statistically) relevant result. To evaluate the *relevance* of a result, we need contextual information that goes far beyond the results of a single statistical test. In statistics, "significance" and "significant" are terms that have nothing to do with either the relevance or importance of results.
 
-## Effect sizes and statistical significance {#sec-EffectSize}
+## Effect sizes and confidence intervals {#sec-EffectSize}
 
 In @sec-ttest, we saw that the larger the absolute value of the *t*-statistic, the greater the difference between the group means. At the same time, the more variability there is in the data, the lower the absolute value of the *t*-statistic. This makes the ***t-*****statistic** a measure of effect size. However, it is an **unstandardised measure**, which means that t-statistic values cannot be compared across different studies.
 
@@ -452,7 +458,7 @@ However, Cohen [-@cohenStatisticalPowerAnalysis1988: 25] himself cautioned that:
 
 Hence, it is important that linguists and education researchers base their interpretation of standardised effect sizes on prior research relevant to their field of research (see, e.g., @plonskyHowBigBig2014 for L2 research).
 
-The output of the `cohens_d()` function above also includes a 95% confidence interval (CI) around Cohen's *d*. It turns out that there is a direct relationship between the confidence interval around an effect size and the statistical significance of a null hypothesis significance test: if an effect is statistically significant in a two-sided[^11_inferential-6] independent *t*-test with an significance (α) level of 0.05, the 95% CI for the mean difference between the two groups will *not* include zero. The *t*-test that we conducted on the results of the Blocks test across the L1 and L2 groups produced a *p*-value of 0.00001956 which is less than 0.05 and was therefore statistically significant at the α-level of 0.05. But we didn't really need to check the *p*-value because we can see that the effect is statistically significant at the α-level of 0.05 by looking at the 95% CI around Cohen's *d*: the lower bound is `-1.02` and the upper bound `-0.37`, which means that the CI does not include zero.
+The output of the `cohens_d()` function above also includes a 95% confidence interval (CI) around Cohen's *d*. It turns out that there is a direct relationship between the confidence interval around an effect size and the statistical significance of a null hypothesis significance test: if an effect is statistically significant in a two-sided[^11_inferential-6] independent *t*-test with an significance (α) level of 0.05, the 95% CI for the mean difference between the two groups will *not* include zero. The *t*-test that we conducted on the results of the Blocks test across the L1 and L2 groups produced a *p*-value of 0.00001956 which is less than 0.05 and was therefore statistically significant at the α-level of 0.05. But we didn't really need to check the *p*-value because we can see that the effect is statistically significant at the α-level of 0.05 by looking at the 95% CI around Cohen's *d*: the lower bound is `-1.02` and the upper bound `-0.37`. In other words, the CI does not straddle zero.
 
 [^11_inferential-6]: All of the statistical tests performed in this chapter are two-sided. For a discussion of one-sided vs. two-sided tests, see @lakensImprovingYourStatistical2022: Section 5.10).
 
@@ -629,7 +635,7 @@ check_hint("Four of these statements are correct.",
 ```
 :::
 
-## Correlations and significance testing {#sec-Correlations}
+## Correlation tests {#sec-Correlations}
 
 So far, we have looked at just one type of statistical significance test, the *t*-test, which we used to compare two mean values. This kind of *t*-test is used to test the association between a numeric variable (e.g., test scores ranging from 0 to 100) and a binary categorical variable (e.g., L1 vs. L2 status).
 
@@ -735,7 +741,7 @@ The output of the `cor.test()` function also includes a *t*-statistic (`t`), the
 
 Going back to the output of the `cor.test()` function above, we have a **correlation coefficient** of `0.36` is positive, which means that we are looking at a positive correlation. We already knew this from the direction of the regression line in the L1 panel of @fig-YearEducationPlot. The question is now: is `0.36` a *weak*, *medium* or *strong* positive correlation? Again, it depends... For some research questions in the language sciences, `0.36` may be considered a medium-sized correlation because humans are very strange animals but, for others, it may be considered a small correlation... As always, numbers alone do not suffice to draw conclusions: we need contextual information about our domain of research.
 
-The output of the `cor.test()` function also returned a 95% confidence interval around the correlation coefficient: `[0.16, 0.53]`. It does not include zero which is why our *p*-value was \< 0.05. That said, the lower bound of the interval corresponds to a very small correlation, suggesting that the correlation in the full L1 population may be considerably smaller than what we observed in our data (or quite a bit larger as demonstrated by the upper bound). In other words, there is quite a bit of uncertainty around the strength of this correlation coefficient because there is a lot variability in the data and we do not have a particularly large sample size.
+The output of the `cor.test()` function also returned a 95% confidence interval around the correlation coefficient: `[0.16, 0.53]`. It does not straddle zero which is why our *p*-value was \< 0.05. That said, the lower bound of the interval corresponds to a very small correlation, suggesting that the correlation in the full L1 population may be considerably smaller than what we observed in our data (or quite a bit larger as demonstrated by the upper bound). In other words, there is quite a bit of uncertainty around the strength of this correlation coefficient because there is a lot variability in the data and we do not have a particularly large sample size.
 
 How about L2 speakers? From the L2 panel of @fig-YearEducationPlot, we can see that the `Grammar` scores of L2 participants are, on average, much further away from the regression line than in the L1 panel, suggesting that it summarises the data far less well. Indeed, when we run the correlation test on the L2 data, we not only find that the correlation coefficient is much smaller (`0.13`), the 95% confidence interval around this coefficient \[`-0.11, 0.36`\] includes zero:
 
@@ -1185,15 +1191,82 @@ cor.test(~ Vocab + EduTotal,
 
 It returns a correlation coefficient τ of `0.28` and a *p*-value of \< 0.05, which allows us to reject the null hypothesis of no association between `Vocab` and `EduTotal` scores among L1 English speakers.
 
-## In search of the eternal truth...
+## Multiple testing problem {#sec-pHacking}
 
-Inferential statistics, even if used correctly, when all test assumptions are met, tell us nothing about the validity or reliability of our results. Fancy statistics cannot fix inaccurate measurements or inconsistent annotations! In her study, Ewa Dąbrowska largely relied on tests that had been tested for validity and reliability in previous studies, which is why we trust that these test instruments mostly *do* measure what they claim to measure (**validity**) and that the results that they produce are consistent across participants (**reliability**). However, if this is not the case, we need to be extremely careful about the claims that we are making based on such data!
+In @sec-PValues we saw that conducting a statistical test with an α-level of 0.05 means that we accept a 5% risk of falsely rejecting the null hypothesis when it is actually true. Falsely rejecting the null hypothesis leads to a **false positive** result, also referred to as making a **Type I error**. It is crucial to understand that if we perform multiple tests on the same data, we dramatically increase the risk of reporting such false positive results. This is known as the multiple testing or multiple comparisons problem.
 
-Recall how we observed that, for both L1 and L2 participants, there was a positive correlation between the number years they were in formal education and their English grammar comprehension test scores: the longer they were in formal education, the higher their test scores. Even if we show that this correlation is statistically significant at a conventional level of significance, this result could well be an artefact of our measuring instrument: perhaps the participants who spent less time in formal education simply have less practice completing academic-style tests. Maybe, as a result, they did not fully understand the instructions or were unable to complete the test within the given time. Not being good at completing this test, however, may not be reflective of how well they can actually understand complex grammatical structures in English because understanding language typically doesn't happen in artificial test contexts!
+Imagine that we want to test 20 independent null hypotheses on a single dataset using α = 0.05 as our significance threshold. Even if all null hypotheses are actually true, the probability of obtaining at least one significant result, i.e. at least one *p*-value \<  0.05, by chance is equal to 64%.
+
+```{r}
+1 - (1 - 0.05)^20
+```
+
+Thus, having conducted 20 independent tests, we have a 64% chance of finding at least one statistically significant result purely by chance! As the number of tests increases, this probability approaches certainty [see also @BaayenAnalyzinglinguisticdata2008: 106-107]. With a 100 tests, we are at 99%:
+
+```{r}
+1 - (1 - 0.05)^100
+```
+
+To avoid reporting false positive results, it is therefore recommended that we correct our α-level to account for the number of tests performed on the data. The simplest (but also most conservative) approach to do so is called the **Bonferroni correction**. It consists in adjusting our chosen α-level by dividing it by the number of tests that are conducting on the data. Hence, if we want to use 0.05 as our significance level and conduct 20 independent tests on the same data, we divide 0.05 by 20:
+
+```{r}
+0.05 / 20
+```
+
+This means that we would now only report the outcome of statistical test as "statistically significant" if its *p*-value is \< 0.0025.
+
+Other correction methods for multiple testing exist. **Holm's** method, for example, is a popular, slightly less conservative alternative to the Bonferroni correction. The base `R` function `p.adjust()` can be used to automatically adjust *p*-values using different methods including Bonferroni's and Holm's.
+
+Here are the seven *p*-values that we obtained from the seven independent statistical tests that we performed on the @DabrowskaExperienceAptitudeIndividual2019 data as part of this chapter:
+
+```{r}
+p_values <- c(1.956e-05, 0.000007032, 0.5525, 0.0005581, 0.2782, 0.026, 0.0003992)
+```
+
+At our chosen α-level of 0.05, five of these *p*-values were statistically significant, leading us to reject the corresponding five null hypotheses. However, if we apply Holm's correction using `p.adjust()`, we find that we can only reject four of these null hypotheses.
+
+```{r}
+p_values.adjusted <- p.adjust(p_values, method = "holm")
+
+# The adjusted p-values in scientific notation:
+p_values.adjusted
+
+# The adjusted p-values in standard notation:
+format(p_values.adjusted, scientific = FALSE)
+
+# Which adjusted p-values are below 0.05, indicating that we can reject the corresponding null hypothesis:
+p_values.adjusted < 0.05
+```
+
+It is crucial to understand that every *p*-value represents a probabilistic finding, not a definitive statement about reality. A *p*-value of 0.03 does *not* mean there is a 97% chance that the alternative hypothesis is true. Instead, it indicates that, if the null hypothesis were true, we would observe data at least as extreme as our sample only 3% of the time. Given the probabilistic nature of statistical inference and the multiple testing problem, **replication** of findings across independent studies is essential for building scientific knowledge (see @sec-Reproducibility). No single study, regardless of its sample size or *p*-value, can ever provide us with definitive evidence.
+
+Because of the multiple testing problem, only reporting statistically significant results and failing to report the number of tests conducted to find them is considered a Questionable Research Practice (QRP). It is one way to [*p*-hack](https://forrt.org/glossary/english/p_hacking/) results. A great resource for definitions and links to further literature related to conducting research is the [FORRT Glossary](https://forrt.org/glossary) — a community-sourced glossary of Open Scholarship terms [@parsonsCommunitysourcedGlossaryOpen2022]. Below is the FORRT Glossary's entry for QRPs.
+
+> #### Questionable Research Practices or Questionable Reporting Practices (QRPs) {.unnumbered}
+>
+> **Also available in:** [Arabic](https://forrt.org/glossary/arabic/questionable_research_practices_or_questionable_reporting_practices/) \| [German](https://forrt.org/glossary/german/questionable_research_practices_or_questionable_reporting_practices/) \|
+>
+> **Definition:** A range of activities that intentionally or unintentionally distort data in favour of a researcher's own hypotheses - or omissions in reporting such practices - including; selective inclusion of data, hypothesising after the results are known (HARKing), and *p*-hacking. Popularized by John et al. (2012).
+>
+> **Related terms:** Creative use of outliers, Fabrication, [File-drawer](https://forrt.org/glossary/english/publication_bias/), [Garden of forking paths](https://forrt.org/glossary/english/garden_of_forking_paths/), [HARKing](https://forrt.org/glossary/english/harking/), Nonpublication of data, [*p*-hacking](https://forrt.org/glossary/english/p_hacking/), *p*-value fishing, Partial publication of data, Post-hoc storytelling, [Preregistration](https://forrt.org/glossary/english/preregistration/), [Questionable Measurement Practices (QMP)](https://forrt.org/glossary/english/questionable_measurement_practices/), [Researcher degrees of freedom](https://forrt.org/glossary/english/researcher_degrees_of_freedom/), [Reverse *p*-hacking](https://forrt.org/glossary/english/reverse_p_hacking/), [Salami slicing](https://forrt.org/glossary/english/salami_slicing/)
+>
+> **Reference:** Banks et al. (2016); Fiedler and Schwartz (2016); Hardwicke et al. (2014); John et al. (2012); Neuroskeptic (2012); Sijtsma (2016); Simonsohn et al. (2011)
+>
+> **Drafted and Reviewed by:** Mahmoud Elsherif, Tamara Kalandadze, William Ngiam, Sam Parsons, Mariella Paul, Eike Mark Rinke, Timo Roettger, Flávio Azevedo
+
+::: callout-note
+### In search of the truth... {.unnumbered}
+
+Inferential statistics, even if used correctly, when all test assumptions are met and *p*-values corrected for multiple comparisons, tell us nothing about the validity or reliability of our results. Fancy statistics cannot fix inaccurate measurements or inconsistent annotations! In her study, Ewa Dąbrowska largely relied on tests that had been tested for **validity** and **reliability** in previous studies, which is why we trust that these test instruments mostly *do* measure what they claim to measure (which makes them valid) and that the results that they produce are consistent across participants (which makes them reliable). However, if this is not the case, we need to be extremely careful about the claims that we are making based on such data!
+
+Recall how we observed that, for both L1 and L2 participants, there was a positive correlation between the number years they were in formal education and their English grammar comprehension test scores: the longer they were in formal education, the higher their test scores. Even if we show that, post-adjustment for multiple testing, this correlation is statistically significant at a conventional level of significance, this result could well be an artefact of our measuring instrument: perhaps the participants who spent less time in formal education simply have less practice completing academic-style tests. Maybe, as a result, they did not fully understand the instructions or were unable to complete the test within the given time. Not being good at completing this test, however, may not be reflective of how well they can actually understand complex grammatical structures in English because understanding language typically doesn't happen in artificial test contexts!
+:::
 
 ## What's next?
 
 This chapter has given you the keys to understanding the basics of inferential statistics following the frequentist null hypothesis significance testing (NHST) framework. We looked at how we can use *t*-tests and correlation tests to infer information about a population based on a random sample from the population. We introduced *p*-values, standardised effect sizes, and confidence intervals. These are complex concepts that, if you think you've immediately understood them, I'm afraid you probably haven't. Frequentist inferential statistics can be very powerful and useful, but it isn't intuitive. In practice, you will need to read and re-read this chapter and other resources (see recommended readings) to really get to grips with these concepts.
+
+In the following chapter, we will move from single statistical tests to multiple linear regression models. We will first see how *t*-tests and correlation tests can be understood and computed as simple linear regression models before exploring the potential of multiple linear regression models. The latter allow us to quantify and test the effects of several variables in a single model. Linear regression naturally handles multiple predictors simultaneously, thus removing the need for *p*-value adjustments and providing more nuanced insights into the contributions of each variable and their potential interactions.
 
 ::: callout-tip
 ### Recommended readings 📚 {.unnumbered}
@@ -1202,7 +1275,7 @@ This chapter has given you the keys to understanding the basics of inferential s
 
 -   Jané, Matthew B., Qinyu Xiao, Siu Kit Yeung, Flavio Azevedo, Mattan S. Ben-Shachar, Aaron R Caldwell, Denis Cousineau, et al. 2024. **Guide to effect sizes and confidence intervals**. An Open Educational Resource: <https://doi.org/10.17605/OSF.IO/D8C4G>.
 
--   Lakens, Daniël. 2022. **Improving Your Statistical Inferences**. https://doi.org/10.5281/ZENODO.6409077. An Open Educational Resource: <https://lakens.github.io/statistical_inferences/>
+-   Lakens, Daniël. 2022. **Improving Your Statistical Inferences**. <https://doi.org/10.5281/ZENODO.6409077>. An Open Educational Resource: <https://lakens.github.io/statistical_inferences/>
 :::
 
 ### Check your progress 🌟 {.unnumbered}
@@ -1217,6 +1290,7 @@ Are you confident that you can...?
 -   [ ] Explain what statistical significance and *p*-values mean (@sec-PValues)
 -   [ ] Calculate Cohen's *d* using `R` (@sec-EffectSize)
 -   [ ] Calculate, test, and interpret correlations using `R` (@sec-Correlations)
+-   [ ] Correct *p*-values for multiple comparisons and explain why this is important (@sec-pHacking)
 -   Check that the main underlying assumptions of statistical tests are met:
     -   [ ] randomisation (@sec-Randomisation)
     -   [ ] independence (@sec-Independence)

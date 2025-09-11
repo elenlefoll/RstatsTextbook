@@ -489,8 +489,8 @@ div.csl-indent {
   </ul></li>
   <li><a href="#sec-ttest" id="toc-sec-ttest" class="nav-link" data-scroll-target="#sec-ttest"><span class="header-section-number">11.2</span> Using <em>t</em>-tests to compare two groups</a></li>
   <li><a href="#sec-PValues" id="toc-sec-PValues" class="nav-link" data-scroll-target="#sec-PValues"><span class="header-section-number">11.3</span> Statistical significance and <em>p</em>-values</a></li>
-  <li><a href="#sec-EffectSize" id="toc-sec-EffectSize" class="nav-link" data-scroll-target="#sec-EffectSize"><span class="header-section-number">11.4</span> Effect sizes and statistical significance</a></li>
-  <li><a href="#sec-Correlations" id="toc-sec-Correlations" class="nav-link" data-scroll-target="#sec-Correlations"><span class="header-section-number">11.5</span> Correlations and significance testing</a></li>
+  <li><a href="#sec-EffectSize" id="toc-sec-EffectSize" class="nav-link" data-scroll-target="#sec-EffectSize"><span class="header-section-number">11.4</span> Effect sizes and confidence intervals</a></li>
+  <li><a href="#sec-Correlations" id="toc-sec-Correlations" class="nav-link" data-scroll-target="#sec-Correlations"><span class="header-section-number">11.5</span> Correlation tests</a></li>
   <li><a href="#sec-Assumptions" id="toc-sec-Assumptions" class="nav-link" data-scroll-target="#sec-Assumptions"><span class="header-section-number">11.6</span> Assumptions of statistical tests</a>
   <ul class="collapse">
   <li><a href="#sec-Randomisation" id="toc-sec-Randomisation" class="nav-link" data-scroll-target="#sec-Randomisation"><span class="header-section-number">11.6.1</span> Randomisation</a></li>
@@ -499,7 +499,7 @@ div.csl-indent {
   <li><a href="#sec-Linearity" id="toc-sec-Linearity" class="nav-link" data-scroll-target="#sec-Linearity"><span class="header-section-number">11.6.4</span> Linearity and outliers</a></li>
   <li><a href="#sec-Homoscedasticity" id="toc-sec-Homoscedasticity" class="nav-link" data-scroll-target="#sec-Homoscedasticity"><span class="header-section-number">11.6.5</span> Homogeneity of variance</a></li>
   </ul></li>
-  <li><a href="#in-search-of-the-eternal-truth" id="toc-in-search-of-the-eternal-truth" class="nav-link" data-scroll-target="#in-search-of-the-eternal-truth"><span class="header-section-number">11.7</span> In search of the eternal truth…</a></li>
+  <li><a href="#sec-pHacking" id="toc-sec-pHacking" class="nav-link" data-scroll-target="#sec-pHacking"><span class="header-section-number">11.7</span> Multiple testing problem</a></li>
   <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next"><span class="header-section-number">11.8</span> What’s next?</a>
   <ul class="collapse">
   <li><a href="#check-your-progress" id="toc-check-your-progress" class="nav-link" data-scroll-target="#check-your-progress">Check your progress 🌟</a></li>
@@ -530,6 +530,19 @@ div.csl-indent {
 </header>
 
 
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As with the rest of this textbook (see <a href="https://elenlefoll.github.io/RstatsTextbook/">Preface</a>), this chapter is very much <strong>work in progress</strong>. All feedback is very welcome.</p>
+</div>
+</div>
 <section id="chapter-overview" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="chapter-overview">Chapter overview</h3>
 <p>This chapter provides an introduction to:</p>
@@ -671,7 +684,7 @@ Sampling methods
 <p>Though by no means the only framework available to us, the most common approach to answering such questions is <strong>null hypothesis significance testing (NHST)</strong> within the framework of <strong>frequentist</strong> statistical philosophy. What’s <em>philosophy</em> got to with statistics, you may ask? It turns out that, contrary to popular belief, statistics is anything but an exact science. By definition, statistical inference involves making <em>inferences</em> about the unknown. Therefore, there are different ways to approach these questions.</p>
 <p>A promising alternative framework that is gaining traction in many disciplines — including in the language sciences — is <strong>Bayesian statistics</strong> (see Appendix A for recommended readings). In this textbook, however, we will focus on the basic principles of statistical inference within the <strong>frequentist framework</strong> — not because it is easier than Bayesian statistics, but rather because it remains the most widely used framework to date. Hence, even if you decide not to use frequentist statistics for your own research, you will certainly need to understand its principles in order to correctly interpret the results of published studies.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -680,7 +693,7 @@ Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span style="color:green;"><strong>Q11.1</strong></span> Which of the following statements best describes random sampling?</p>
 <div class="cell">
@@ -890,7 +903,7 @@ Common misconception
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -899,7 +912,7 @@ Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Consider the following research question:</p>
 <ul>
@@ -1069,7 +1082,7 @@ Figure&nbsp;11.2: Don’t let your <em>p</em>-values sing solo! (artwork by <a h
 <p>Note that the size (or magnitude) of the observed effect is only <em>one</em> of three factors that influence the <em>p</em>-value! It is therefore incorrect to claim that an effect (e.g., a difference in means) is particularly large based on a particularly small <em>p</em>-value. It is equally incorrect to claim that a <em>p</em>-value that falls below the chosen signifiance level points is a (statistically) relevant result. To evaluate the <em>relevance</em> of a result, we need contextual information that goes far beyond the results of a single statistical test. In statistics, “significance” and “significant” are terms that have nothing to do with either the relevance or importance of results.</p>
 </section>
 <section id="sec-EffectSize" class="level2 page-columns page-full" data-number="11.4">
-<h2 data-number="11.4" class="anchored" data-anchor-id="sec-EffectSize"><span class="header-section-number">11.4</span> Effect sizes and statistical significance</h2>
+<h2 data-number="11.4" class="anchored" data-anchor-id="sec-EffectSize"><span class="header-section-number">11.4</span> Effect sizes and confidence intervals</h2>
 <p>In <a href="#sec-ttest" class="quarto-xref"><span>Section 11.2</span></a>, we saw that the larger the absolute value of the <em>t</em>-statistic, the greater the difference between the group means. At the same time, the more variability there is in the data, the lower the absolute value of the <em>t</em>-statistic. This makes the <strong><em>t-</em>statistic</strong> a measure of effect size. However, it is an <strong>unstandardised measure</strong>, which means that t-statistic values cannot be compared across different studies.</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
@@ -1111,7 +1124,7 @@ Figure&nbsp;11.3: Hex sticker of the <a href="https://easystats.github.io/effect
 <p>The terms “small,” “medium,” and “large” are relative, not only to each other, but to the area of behavioral science or even more particularly to the specific content and research method being employed in any given investigation […].</p>
 </blockquote>
 <p>Hence, it is important that linguists and education researchers base their interpretation of standardised effect sizes on prior research relevant to their field of research (see, e.g., <span class="citation" data-cites="plonskyHowBigBig2014">Plonsky &amp; Oswald (<a href="99_references.html#ref-plonskyHowBigBig2014" role="doc-biblioref">2014</a>)</span> for L2 research).</p>
-<p>The output of the <code>cohens_d()</code> function above also includes a 95% confidence interval (CI) around Cohen’s&nbsp;<em>d</em>. It turns out that there is a direct relationship between the confidence interval around an effect size and the statistical significance of a null hypothesis significance test: if an effect is statistically significant in a two-sided<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> independent <em>t</em>-test with an significance (α) level of 0.05, the 95% CI for the mean difference between the two groups will <em>not</em> include zero. The <em>t</em>-test that we conducted on the results of the Blocks test across the L1 and L2 groups produced a <em>p</em>-value of 0.00001956 which is less than 0.05 and was therefore statistically significant at the α-level of 0.05. But we didn’t really need to check the <em>p</em>-value because we can see that the effect is statistically significant at the α-level of 0.05 by looking at the 95% CI around Cohen’s <em>d</em>: the lower bound is <code>-1.02</code> and the upper bound <code>-0.37</code>, which means that the CI does not include zero.</p>
+<p>The output of the <code>cohens_d()</code> function above also includes a 95% confidence interval (CI) around Cohen’s&nbsp;<em>d</em>. It turns out that there is a direct relationship between the confidence interval around an effect size and the statistical significance of a null hypothesis significance test: if an effect is statistically significant in a two-sided<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> independent <em>t</em>-test with an significance (α) level of 0.05, the 95% CI for the mean difference between the two groups will <em>not</em> include zero. The <em>t</em>-test that we conducted on the results of the Blocks test across the L1 and L2 groups produced a <em>p</em>-value of 0.00001956 which is less than 0.05 and was therefore statistically significant at the α-level of 0.05. But we didn’t really need to check the <em>p</em>-value because we can see that the effect is statistically significant at the α-level of 0.05 by looking at the 95% CI around Cohen’s <em>d</em>: the lower bound is <code>-1.02</code> and the upper bound <code>-0.37</code>. In other words, the CI does not straddle zero.</p>
 <p>Now, let’s consider a new research question and a new null hypothesis:</p>
 <ul>
 <li><strong>H<sub>0</sub></strong>: On average, the results of the non-verbal IQ (Blocks) test are not dependent on the gender of the test-takers.</li>
@@ -1176,7 +1189,7 @@ mean in group F mean in group M
 </div>
 <p>As you can see, this increases the size of the interval and hence makes it harder to obtain a statistically significant result. This is because lowering the α-level means that we are less willing to risk reporting a false positive result, i.e.&nbsp;reporting a difference based on our data where no real difference exists.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1185,7 +1198,7 @@ Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Compute three Cohen’s <em>d</em> values to capture the magnitude of the difference between L1 and L2 speakers:</p>
 <ol type="1">
@@ -1365,7 +1378,7 @@ F M
 </div>
 </section>
 <section id="sec-Correlations" class="level2" data-number="11.5">
-<h2 data-number="11.5" class="anchored" data-anchor-id="sec-Correlations"><span class="header-section-number">11.5</span> Correlations and significance testing</h2>
+<h2 data-number="11.5" class="anchored" data-anchor-id="sec-Correlations"><span class="header-section-number">11.5</span> Correlation tests</h2>
 <p>So far, we have looked at just one type of statistical significance test, the <em>t</em>-test, which we used to compare two mean values. This kind of <em>t</em>-test is used to test the association between a numeric variable (e.g., test scores ranging from 0 to 100) and a binary categorical variable (e.g., L1 vs.&nbsp;L2 status).</p>
 <p>In this section, we return to correlations — a concept that we encountered in <a href="10_Dataviz.html#sec-Scatterplots" class="quarto-xref"><span>Section 10.2.5</span></a> when we generated and interpreted scatter plots. Recall that correlations capture the strength of the association between two numeric variables (e.g., age and grammar test scores).</p>
 <p>At the beginning of the chapter, we summarised the following observations based on our descriptive analyses of the <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> data:</p>
@@ -1480,7 +1493,7 @@ sample estimates:
 </ul></li>
 </ul>
 <p>Going back to the output of the <code>cor.test()</code> function above, we have a <strong>correlation coefficient</strong> of <code>0.36</code> is positive, which means that we are looking at a positive correlation. We already knew this from the direction of the regression line in the L1 panel of <a href="#fig-YearEducationPlot" class="quarto-xref">Figure&nbsp;<span>11.4</span></a>. The question is now: is <code>0.36</code> a <em>weak</em>, <em>medium</em> or <em>strong</em> positive correlation? Again, it depends… For some research questions in the language sciences, <code>0.36</code> may be considered a medium-sized correlation because humans are very strange animals but, for others, it may be considered a small correlation… As always, numbers alone do not suffice to draw conclusions: we need contextual information about our domain of research.</p>
-<p>The output of the <code>cor.test()</code> function also returned a 95% confidence interval around the correlation coefficient: <code>[0.16, 0.53]</code>. It does not include zero which is why our <em>p</em>-value was &lt;&nbsp;0.05. That said, the lower bound of the interval corresponds to a very small correlation, suggesting that the correlation in the full L1 population may be considerably smaller than what we observed in our data (or quite a bit larger as demonstrated by the upper bound). In other words, there is quite a bit of uncertainty around the strength of this correlation coefficient because there is a lot variability in the data and we do not have a particularly large sample size.</p>
+<p>The output of the <code>cor.test()</code> function also returned a 95% confidence interval around the correlation coefficient: <code>[0.16, 0.53]</code>. It does not straddle zero which is why our <em>p</em>-value was &lt;&nbsp;0.05. That said, the lower bound of the interval corresponds to a very small correlation, suggesting that the correlation in the full L1 population may be considerably smaller than what we observed in our data (or quite a bit larger as demonstrated by the upper bound). In other words, there is quite a bit of uncertainty around the strength of this correlation coefficient because there is a lot variability in the data and we do not have a particularly large sample size.</p>
 <p>How about L2 speakers? From the L2 panel of <a href="#fig-YearEducationPlot" class="quarto-xref">Figure&nbsp;<span>11.4</span></a>, we can see that the <code>Grammar</code> scores of L2 participants are, on average, much further away from the regression line than in the L1 panel, suggesting that it summarises the data far less well. Indeed, when we run the correlation test on the L2 data, we not only find that the correlation coefficient is much smaller (<code>0.13</code>), the 95% confidence interval around this coefficient [<code>-0.11, 0.36</code>] includes zero:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="sc">~</span> EduTotal <span class="sc">+</span> Grammar,</span>
@@ -1528,7 +1541,7 @@ Figure&nbsp;11.5: Relationship between years in formal education and English gra
 </div>
 <p>The interpretation of the grey bands is as follows: if it’s possible to draw a straight line that stays within the grey band, it is very likely that there is <em>no</em> statistically significant correlation between the two numeric variables displayed on the plot.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1537,7 +1550,7 @@ Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Generate a facetted scatter plot (similar to <a href="#fig-YearEducationPlot" class="quarto-xref">Figure&nbsp;<span>11.4</span></a>) visualising the correlation between age (<code>Age</code>) and English receptive vocabulary test scores (<code>Vocab</code>) for L1 and L2 participants in two separate panels. Add a grey band visualising 95% confidence intervals around the regression lines.</p>
 <p><span style="color:green;"><strong>Q11.10</strong></span> Looking at your plot only, which of these statements can you confidently say is/are true?</p>
@@ -1887,7 +1900,7 @@ Figure&nbsp;11.8: Four plots showing the relationship between pairs of variables
 <p>From <a href="#fig-4PairPlot" class="quarto-xref">Figure&nbsp;<span>11.8</span></a>, we can immediately see that the relationship between the two variables in Pair 2 is <strong>non-linear</strong>, which makes the yellow linear regression line nonsensical. The data visualisations for Pairs 3 and 4 illustrate how a single <strong>outlier</strong> can either create an illusion of a correlation that does not exist (Pair 4) or overestimate one that does exists but is probably considerably weaker than Pearson’s r would lead to us believe (Pair 3).</p>
 <p>The assumption of linearity is relevant to many widely used statistical methods – notably linear regression models (see <a href="12_LinearRegression.html" class="quarto-xref"><span>Chapter 12</span></a>) – which rely on Pearson’s correlation coefficients. In practice, researchers usually assume linearity unless there is a strong theoretical reason to expect a non‑linear pattern (Cohen et al. 2003). However, this assumption should always be checked. The most straightforward way to do this is to visualise the data.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1896,7 +1909,7 @@ Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span style="color:green;"><strong>Optional task</strong></span> 🦖</p>
 <p>Inspired by the Anscombe Quartet, <span class="citation" data-cites="matejkaSameStatsDifferent2017">Matejka &amp; Fitzmaurice (<a href="99_references.html#ref-matejkaSameStatsDifferent2017" role="doc-biblioref">2017</a>)</span> created a set of 12 pairs of variables that have the same descriptive statistics as the data that produce a scatter plot representing a tyrannosaurus<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> (see <a href="#fig-DinoPLot" class="quarto-xref">Figure&nbsp;<span>11.9</span></a>).</p>
@@ -2071,14 +2084,86 @@ sample estimates:
 <p>It returns a correlation coefficient τ of <code>0.28</code> and a <em>p</em>-value of &lt;&nbsp;0.05, which allows us to reject the null hypothesis of no association between <code>Vocab</code> and <code>EduTotal</code> scores among L1 English speakers.</p>
 </section>
 </section>
-<section id="in-search-of-the-eternal-truth" class="level2" data-number="11.7">
-<h2 data-number="11.7" class="anchored" data-anchor-id="in-search-of-the-eternal-truth"><span class="header-section-number">11.7</span> In search of the eternal truth…</h2>
-<p>Inferential statistics, even if used correctly, when all test assumptions are met, tell us nothing about the validity or reliability of our results. Fancy statistics cannot fix inaccurate measurements or inconsistent annotations! In her study, Ewa Dąbrowska largely relied on tests that had been tested for validity and reliability in previous studies, which is why we trust that these test instruments mostly <em>do</em> measure what they claim to measure (<strong>validity</strong>) and that the results that they produce are consistent across participants (<strong>reliability</strong>). However, if this is not the case, we need to be extremely careful about the claims that we are making based on such data!</p>
-<p>Recall how we observed that, for both L1 and L2 participants, there was a positive correlation between the number years they were in formal education and their English grammar comprehension test scores: the longer they were in formal education, the higher their test scores. Even if we show that this correlation is statistically significant at a conventional level of significance, this result could well be an artefact of our measuring instrument: perhaps the participants who spent less time in formal education simply have less practice completing academic-style tests. Maybe, as a result, they did not fully understand the instructions or were unable to complete the test within the given time. Not being good at completing this test, however, may not be reflective of how well they can actually understand complex grammatical structures in English because understanding language typically doesn’t happen in artificial test contexts!</p>
+<section id="sec-pHacking" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="sec-pHacking"><span class="header-section-number">11.7</span> Multiple testing problem</h2>
+<p>In <a href="#sec-PValues" class="quarto-xref"><span>Section 11.3</span></a> we saw that conducting a statistical test with an α-level of 0.05 means that we accept a 5% risk of falsely rejecting the null hypothesis when it is actually true. Falsely rejecting the null hypothesis leads to a <strong>false positive</strong> result, also referred to as making a <strong>Type I error</strong>. It is crucial to understand that if we perform multiple tests on the same data, we dramatically increase the risk of reporting such false positive results. This is known as the multiple testing or multiple comparisons problem.</p>
+<p>Imagine that we want to test 20 independent null hypotheses on a single dataset using α&nbsp;=&nbsp;0.05 as our significance threshold. Even if all null hypotheses are actually true, the probability of obtaining at least one significant result, i.e.&nbsp;at least one <em>p</em>-value &lt;&nbsp; 0.05, by chance is equal to 64%.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span>)<span class="sc">^</span><span class="dv">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] 0.6415141</code></pre>
+</div>
+</div>
+<p>Thus, having conducted 20 independent tests, we have a 64% chance of finding at least one statistically significant result purely by chance! As the number of tests increases, this probability approaches certainty <span class="citation" data-cites="BaayenAnalyzinglinguisticdata2008">(see also <a href="99_references.html#ref-BaayenAnalyzinglinguisticdata2008" role="doc-biblioref">Baayen 2008</a>: 106-107)</span>. With a 100 tests, we are at 99%:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span>)<span class="sc">^</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] 0.9940795</code></pre>
+</div>
+</div>
+<p>To avoid reporting false positive results, it is therefore recommended that we correct our α-level to account for the number of tests performed on the data. The simplest (but also most conservative) approach to do so is called the <strong>Bonferroni correction</strong>. It consists in adjusting our chosen α-level by dividing it by the number of tests that are conducting on the data. Hence, if we want to use 0.05 as our significance level and conduct 20 independent tests on the same data, we divide 0.05 by 20:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.05</span> <span class="sc">/</span> <span class="dv">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] 0.0025</code></pre>
+</div>
+</div>
+<p>This means that we would now only report the outcome of statistical test as “statistically significant” if its <em>p</em>-value is&nbsp;&lt;&nbsp;0.0025.</p>
+<p>Other correction methods for multiple testing exist. <strong>Holm’s</strong> method, for example, is a popular, slightly less conservative alternative to the Bonferroni correction. The base <code>R</code> function <code>p.adjust()</code> can be used to automatically adjust <em>p</em>-values using different methods including Bonferroni’s and Holm’s.</p>
+<p>Here are the seven <em>p</em>-values that we obtained from the seven independent statistical tests that we performed on the <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> data as part of this chapter:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>p_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.956e-05</span>, <span class="fl">0.000007032</span>, <span class="fl">0.5525</span>, <span class="fl">0.0005581</span>, <span class="fl">0.2782</span>, <span class="fl">0.026</span>, <span class="fl">0.0003992</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>At our chosen α-level of 0.05, five of these <em>p</em>-values were statistically significant, leading us to reject the corresponding five null hypotheses. However, if we apply Holm’s correction using <code>p.adjust()</code>, we find that we can only reject four of these null hypotheses.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>p_values.adjusted <span class="ot">&lt;-</span> <span class="fu">p.adjust</span>(p_values, <span class="at">method =</span> <span class="st">"holm"</span>)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The adjusted p-values in scientific notation:</span></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>p_values.adjusted</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] 1.1736e-04 4.9224e-05 5.5640e-01 2.2324e-03 5.5640e-01 7.8000e-02 1.9960e-03</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb72" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The adjusted p-values in standard notation:</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(p_values.adjusted, <span class="at">scientific =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1] "0.000117360" "0.000049224" "0.556400000" "0.002232400" "0.556400000"
+[6] "0.078000000" "0.001996000"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Which adjusted p-values are below 0.05, indicating that we can reject the corresponding null hypothesis:</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>p_values.adjusted <span class="sc">&lt;</span> <span class="fl">0.05</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>[1]  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE</code></pre>
+</div>
+</div>
+<p>It is crucial to understand that every <em>p</em>-value represents a probabilistic finding, not a definitive statement about reality. A <em>p</em>-value of 0.03 does <em>not</em> mean there is a 97% chance that the alternative hypothesis is true. Instead, it indicates that, if the null hypothesis were true, we would observe data at least as extreme as our sample only 3% of the time. Given the probabilistic nature of statistical inference and the multiple testing problem, <strong>replication</strong> of findings across independent studies is essential for building scientific knowledge (see <a href="13_LiterateProgramming.html#sec-Reproducibility" class="quarto-xref"><span>Section 13.2</span></a>). No single study, regardless of its sample size or <em>p</em>-value, can ever provide us with definitive evidence.</p>
+<p>Because of the multiple testing problem, only reporting statistically significant results and failing to report the number of tests conducted to find them is considered a Questionable Research Practice (QRP). It is one way to <a href="https://forrt.org/glossary/english/p_hacking/"><em>p</em>-hack</a> results. A great resource for definitions and links to further literature related to conducting research is the <a href="https://forrt.org/glossary">FORRT Glossary</a> — a community-sourced glossary of Open Scholarship terms <span class="citation" data-cites="parsonsCommunitysourcedGlossaryOpen2022">(<a href="99_references.html#ref-parsonsCommunitysourcedGlossaryOpen2022" role="doc-biblioref">Parsons et al. 2022</a>)</span>. Below is the FORRT Glossary’s entry for QRPs.</p>
+<blockquote class="blockquote">
+<h4 id="questionable-research-practices-or-questionable-reporting-practices-qrps" class="unnumbered anchored">Questionable Research Practices or Questionable Reporting Practices (QRPs)</h4>
+<p><strong>Also available in:</strong> <a href="https://forrt.org/glossary/arabic/questionable_research_practices_or_questionable_reporting_practices/">Arabic</a> | <a href="https://forrt.org/glossary/german/questionable_research_practices_or_questionable_reporting_practices/">German</a> |</p>
+<p><strong>Definition:</strong> A range of activities that intentionally or unintentionally distort data in favour of a researcher’s own hypotheses - or omissions in reporting such practices - including; selective inclusion of data, hypothesising after the results are known (HARKing), and <em>p</em>-hacking. Popularized by John et al.&nbsp;(2012).</p>
+<p><strong>Related terms:</strong> Creative use of outliers, Fabrication, <a href="https://forrt.org/glossary/english/publication_bias/">File-drawer</a>, <a href="https://forrt.org/glossary/english/garden_of_forking_paths/">Garden of forking paths</a>, <a href="https://forrt.org/glossary/english/harking/">HARKing</a>, Nonpublication of data, <a href="https://forrt.org/glossary/english/p_hacking/"><em>p</em>-hacking</a>, <em>p</em>-value fishing, Partial publication of data, Post-hoc storytelling, <a href="https://forrt.org/glossary/english/preregistration/">Preregistration</a>, <a href="https://forrt.org/glossary/english/questionable_measurement_practices/">Questionable Measurement Practices (QMP)</a>, <a href="https://forrt.org/glossary/english/researcher_degrees_of_freedom/">Researcher degrees of freedom</a>, <a href="https://forrt.org/glossary/english/reverse_p_hacking/">Reverse <em>p</em>-hacking</a>, <a href="https://forrt.org/glossary/english/salami_slicing/">Salami slicing</a></p>
+<p><strong>Reference:</strong> Banks et al.&nbsp;(2016); Fiedler and Schwartz (2016); Hardwicke et al.&nbsp;(2014); John et al.&nbsp;(2012); Neuroskeptic (2012); Sijtsma (2016); Simonsohn et al.&nbsp;(2011)</p>
+<p><strong>Drafted and Reviewed by:</strong> Mahmoud Elsherif, Tamara Kalandadze, William Ngiam, Sam Parsons, Mariella Paul, Eike Mark Rinke, Timo Roettger, Flávio Azevedo</p>
+</blockquote>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+In search of the truth…
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Inferential statistics, even if used correctly, when all test assumptions are met and <em>p</em>-values corrected for multiple comparisons, tell us nothing about the validity or reliability of our results. Fancy statistics cannot fix inaccurate measurements or inconsistent annotations! In her study, Ewa Dąbrowska largely relied on tests that had been tested for <strong>validity</strong> and <strong>reliability</strong> in previous studies, which is why we trust that these test instruments mostly <em>do</em> measure what they claim to measure (which makes them valid) and that the results that they produce are consistent across participants (which makes them reliable). However, if this is not the case, we need to be extremely careful about the claims that we are making based on such data!</p>
+<p>Recall how we observed that, for both L1 and L2 participants, there was a positive correlation between the number years they were in formal education and their English grammar comprehension test scores: the longer they were in formal education, the higher their test scores. Even if we show that, post-adjustment for multiple testing, this correlation is statistically significant at a conventional level of significance, this result could well be an artefact of our measuring instrument: perhaps the participants who spent less time in formal education simply have less practice completing academic-style tests. Maybe, as a result, they did not fully understand the instructions or were unable to complete the test within the given time. Not being good at completing this test, however, may not be reflective of how well they can actually understand complex grammatical structures in English because understanding language typically doesn’t happen in artificial test contexts!</p>
+</div>
+</div>
 </section>
 <section id="whats-next" class="level2" data-number="11.8">
 <h2 data-number="11.8" class="anchored" data-anchor-id="whats-next"><span class="header-section-number">11.8</span> What’s next?</h2>
 <p>This chapter has given you the keys to understanding the basics of inferential statistics following the frequentist null hypothesis significance testing (NHST) framework. We looked at how we can use <em>t</em>-tests and correlation tests to infer information about a population based on a random sample from the population. We introduced <em>p</em>-values, standardised effect sizes, and confidence intervals. These are complex concepts that, if you think you’ve immediately understood them, I’m afraid you probably haven’t. Frequentist inferential statistics can be very powerful and useful, but it isn’t intuitive. In practice, you will need to read and re-read this chapter and other resources (see recommended readings) to really get to grips with these concepts.</p>
+<p>In the following chapter, we will move from single statistical tests to multiple linear regression models. We will first see how <em>t</em>-tests and correlation tests can be understood and computed as simple linear regression models before exploring the potential of multiple linear regression models. The latter allow us to quantify and test the effects of several variables in a single model. Linear regression naturally handles multiple predictors simultaneously, thus removing the need for <em>p</em>-value adjustments and providing more nuanced insights into the contributions of each variable and their potential interactions.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2092,7 +2177,7 @@ Recommended readings 📚
 <ul>
 <li><p>Çetinkaya-Rundel, Mine &amp; Johanna Hardin. 2021. <strong>Foundations of inference</strong>. In <em>Introduction to Modern Statistics 2<sup>e</sup></em>. Open Access online book: <a href="https://openintro-ims.netlify.app/foundations-of-inference" class="uri">https://openintro-ims.netlify.app/foundations-of-inference</a></p></li>
 <li><p>Jané, Matthew B., Qinyu Xiao, Siu Kit Yeung, Flavio Azevedo, Mattan S. Ben-Shachar, Aaron R Caldwell, Denis Cousineau, et al.&nbsp;2024. <strong>Guide to effect sizes and confidence intervals</strong>. An Open Educational Resource: <a href="https://doi.org/10.17605/OSF.IO/D8C4G" class="uri">https://doi.org/10.17605/OSF.IO/D8C4G</a>.</p></li>
-<li><p>Lakens, Daniël. 2022. <strong>Improving Your Statistical Inferences</strong>. https://doi.org/10.5281/ZENODO.6409077. An Open Educational Resource: <a href="https://lakens.github.io/statistical_inferences/" class="uri">https://lakens.github.io/statistical_inferences/</a></p></li>
+<li><p>Lakens, Daniël. 2022. <strong>Improving Your Statistical Inferences</strong>. <a href="https://doi.org/10.5281/ZENODO.6409077" class="uri">https://doi.org/10.5281/ZENODO.6409077</a>. An Open Educational Resource: <a href="https://lakens.github.io/statistical_inferences/" class="uri">https://lakens.github.io/statistical_inferences/</a></p></li>
 </ul>
 </div>
 </div>
@@ -2107,6 +2192,7 @@ Recommended readings 📚
 <li><label><input type="checkbox">Explain what statistical significance and <em>p</em>-values mean (<a href="#sec-PValues" class="quarto-xref"><span>Section 11.3</span></a>)</label></li>
 <li><label><input type="checkbox">Calculate Cohen’s <em>d</em> using <code>R</code> (<a href="#sec-EffectSize" class="quarto-xref"><span>Section 11.4</span></a>)</label></li>
 <li><label><input type="checkbox">Calculate, test, and interpret correlations using <code>R</code> (<a href="#sec-Correlations" class="quarto-xref"><span>Section 11.5</span></a>)</label></li>
+<li><label><input type="checkbox">Correct <em>p</em>-values for multiple comparisons and explain why this is important (<a href="#sec-pHacking" class="quarto-xref"><span>Section 11.7</span></a>)</label></li>
 <li>Check that the main underlying assumptions of statistical tests are met:
 <ul class="task-list">
 <li><label><input type="checkbox">randomisation (<a href="#sec-Randomisation" class="quarto-xref"><span>Section 11.6.1</span></a>)</label></li>
@@ -2119,6 +2205,9 @@ Recommended readings 📚
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-BaayenAnalyzinglinguisticdata2008" class="csl-entry" role="listitem">
+Baayen, R. Harald. 2008. <em>Analyzing linguistic data: A practical introduction to statistics using r</em>. Cambridge University Press.
+</div>
 <div id="ref-ben-shachar2020" class="csl-entry" role="listitem">
 Ben-Shachar, Mattan, Daniel Lüdecke &amp; Dominique Makowski. 2020. Effectsize: Estimation of effect size indices and standardized parameters. <em>Journal of Open Source Software</em> 5(56). 2815. <a href="https://doi.org/10.21105/joss.02815">https://doi.org/10.21105/joss.02815</a>.
 </div>
@@ -2139,6 +2228,9 @@ Matejka, Justin &amp; George Fitzmaurice. 2017. Same stats, different graphs: Ge
 </div>
 <div id="ref-nimonStatisticalAssumptionsSubstantive2012" class="csl-entry" role="listitem">
 Nimon, Kim F. 2012. Statistical assumptions of substantive analyses across the general linear model: A mini-review. <em>Frontiers in Psychology</em> 3. <a href="https://doi.org/10.3389/fpsyg.2012.00322">https://doi.org/10.3389/fpsyg.2012.00322</a>.
+</div>
+<div id="ref-parsonsCommunitysourcedGlossaryOpen2022" class="csl-entry" role="listitem">
+Parsons, Sam, Flávio Azevedo, Mahmoud M. Elsherif, Samuel Guay, Owen N. Shahim, Gisela H. Govaart, Emma Norris, et al. 2022. A community-sourced glossary of <span class="nocase">open</span> <span class="nocase">scholarship</span> terms. <em>Nature Human Behaviour</em>. Nature 6(3). 312–318. <a href="https://doi.org/10.1038/s41562-021-01269-4">https://doi.org/10.1038/s41562-021-01269-4</a>.
 </div>
 <div id="ref-plonskyHowBigBig2014" class="csl-entry" role="listitem">
 Plonsky, Luke &amp; Frederick L. Oswald. 2014. How big is <span>“big”</span>? Interpreting effect sizes in L2 research. <em>Language Learning</em> 64(4). 878–912. <a href="https://doi.org/10.1111/lang.12079">https://doi.org/10.1111/lang.12079</a>.
