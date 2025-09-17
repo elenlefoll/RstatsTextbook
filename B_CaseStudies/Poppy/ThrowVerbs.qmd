@@ -2,7 +2,6 @@
 author: "Poppy Siahaan"
 date: "2024-11-15"
 toc-title: "Case study: 'Throw' verbs in Spanish"
-include-after-body: abbrv_toc.html
 ---
 
 # 'Throw' verbs in Spanish: Rep`R`oducing the results of a corpus linguistics study
@@ -134,13 +133,14 @@ wrong = "Not quite. Read the description of the dataset again.")
 ```
 :::
 
-## Importing the authors' original data {#sec-ImportingVanHulle toc-text="Impo`R`ting the data"}
+## Impo`R`ting the authors' original data {#sec-ImportingVanHulle}
 
 Before we can import the dataset, we need to load all the packages that we will need for this project. Note that you may need to install some of these packages first (see @sec-Packages for instructions).
 
 ```{r, echo=TRUE}
 # Loading required packages for this project
 library(here)
+here::i_am("B_CaseStudies/Poppy/ThrowVerbs.qmd")
 library(tidyverse)
 library(xfun)
 ```
@@ -149,17 +149,16 @@ Next, we import the dataset containing the number of occurrences of 'throw' verb
 
 ```{r data-import, echo=TRUE}
 # Importing the Spanish verbs dataset
-spanish.data <- read.csv(file = here("data", "Spanish_ThrowVerbs_Inchoatives_20230413.csv"),
+spanish.data <- read.csv(file = here("B_CaseStudies", "Poppy", "data", "Spanish_ThrowVerbs_Inchoatives_20230413.csv"),
                     header = TRUE,
                     sep = "\t",
                     quote = "\"",
                     dec = ".")
-
 ```
 
 We check the sanity of the imported data by visually examining the output of `View(spanish.data)` (@fig-screenShot).
 
-![Screenshot showing part of the dataset using the `View()` function.](images/Poppy_viewSpanishData.png){#fig-screenShot fig-alt="The figure displays a table with four columns labeled AUX, Century, INF, and Class, representing Auxiliary, Century, Infinitive, and Semantic Class, respectively. The data shows pairings of auxiliaries with infinitives and their corresponding semantic classes across different centuries. For example, the auxiliary lanzar is paired with the infinitive llevar under the semantic class 'Desplazamiento' (Movement), while echar is paired with dormir under 'Fisiología' (Physiology). The table contains 2,882 entries, with a preview of the first 15 rows shown here." width="413"}
+![Screenshot showing part of the dataset using the `View()` function.](images/viewSpanishData.png){#fig-screenShot fig-alt="The figure displays a table with four columns labeled AUX, Century, INF, and Class, representing Auxiliary, Century, Infinitive, and Semantic Class, respectively. The data shows pairings of auxiliaries with infinitives and their corresponding semantic classes across different centuries. For example, the auxiliary lanzar is paired with the infinitive llevar under the semantic class 'Desplazamiento' (Movement), while echar is paired with dormir under 'Fisiología' (Physiology). The table contains 2,882 entries, with a preview of the first 15 rows shown here." width="401"}
 
 As you can see in @fig-screenShot, the dataset contains `r nrow(spanish.data)` rows (i.e., the number of occurrences of 'throw' verbs observed in the corpora) and `r ncol(spanish.data)` columns (i.e., variables describing these observations).
 
@@ -390,9 +389,9 @@ token.table.totals
 
 If we now compare the values of the table in the published study (reproduced as @tbl-absPaper) with @tbl-absData based on the authors' archived data, we can see that the total number of 'throw' verbs is only `r sum(absolute.paper$n, na.rm=FALSE)`, suggesting that ten verb occurrences are somehow missing in the summary table printed in the published paper. In the data frame `spanish.data`, these missing data points correspond to occurrences of the verb *tirar*, specifically two tokens from the 15^th^ century and eight tokens from the 18^th^ century (@tbl-absData).
 
-Since @vanhulleCategoryThrowVerbs2024 focus their analyses on the other two verbs, *echar* and *lanzar*, this discrepancy is not particularly conspicuous. However, it suggests that the version of the dataset archived on TROLLing is not exactly the same as the one that the authors presumably used for the analyses presented in the 2024 paper.[^cs_poppy-1]
+Since @vanhulleCategoryThrowVerbs2024 focus their analyses on the other two verbs, *echar* and *lanzar*, this discrepancy is not particularly conspicuous. However, it suggests that the version of the dataset archived on TROLLing is not exactly the same as the one that the authors presumably used for the analyses presented in the 2024 paper.[^throwverbs-1]
 
-[^cs_poppy-1]: We contacted the first and corresponding author of the paper. They responded and confirmed that these discrepancies were likely due to small changes that were made to the dataset that was ultimately used in the analyses published in @vanhulleCategoryThrowVerbs2024. These changes were deemed necessary when either additional occurrences of inchoative constructions were found in the corpora, or false positives (i.e. occurrences of 'throw' verbs that did not enter such constructions) were later identified in the dataset. The author did not provide us with the final dataset that was used in the reported analyses.
+[^throwverbs-1]: We contacted the first and corresponding author of the paper. They responded and confirmed that these discrepancies were likely due to small changes that were made to the dataset that was ultimately used in the analyses published in @vanhulleCategoryThrowVerbs2024. These changes were deemed necessary when either additional occurrences of inchoative constructions were found in the corpora, or false positives (i.e. occurrences of 'throw' verbs that did not enter such constructions) were later identified in the dataset. The author did not provide us with the final dataset that was used in the reported analyses.
 
 ### Visualising the absolute frequencies in a tabular format
 
@@ -452,9 +451,9 @@ $$
 
 ### Visualising normalized frequencies in a tabular format
 
-We will now attempt to reproduce the “Normalized Token Frequency” sections of Tables 5 and 8 from the published paper using the authors' original data. For later comparison, the normalized frequencies as reported in Van Hulle & Enghels [@vanhulleCategoryThrowVerbs2024: 227, 232][^cs_poppy-2] are reproduced in this chapter as @tbl-normPaper.
+We will now attempt to reproduce the “Normalized Token Frequency” sections of Tables 5 and 8 from the published paper using the authors' original data. For later comparison, the normalized frequencies as reported in Van Hulle & Enghels [@vanhulleCategoryThrowVerbs2024: 227, 232][^throwverbs-2] are reproduced in this chapter as @tbl-normPaper.
 
-[^cs_poppy-2]: The normalized frequencies of *echar* and *lanzar* are found in Table 5 [@vanhulleCategoryThrowVerbs2024: 227], whilst those for *arrojar*, *disparar* and *tirar* are displayed in Table 8 [@vanhulleCategoryThrowVerbs2024: 232]. Note that in Tables 5 and 8 [@vanhulleCategoryThrowVerbs2024: 232] all values are rounded off to two decimal places except the normalized frequency of *disparar* in the 21^st^ which is reported as "0.0008".
+[^throwverbs-2]: The normalized frequencies of *echar* and *lanzar* are found in Table 5 [@vanhulleCategoryThrowVerbs2024: 227], whilst those for *arrojar*, *disparar* and *tirar* are displayed in Table 8 [@vanhulleCategoryThrowVerbs2024: 232]. Note that in Tables 5 and 8 [@vanhulleCategoryThrowVerbs2024: 232] all values are rounded off to two decimal places except the normalized frequency of *disparar* in the 21^st^ which is reported as "0.0008".
 
 ```{r dataframe}
 #| echo: false
@@ -484,9 +483,9 @@ normalized.new |>
   kable(align = "r")
 ```
 
-The sizes of the corpora for each century are provided in Van Hulle & Enghels [@vanhulleCategoryThrowVerbs2024: 227, footnote 12][^cs_poppy-3]. We create a table of word counts for each century (@tbl-corpusSizes) using the `tibble()` function from the tidyverse, by concatenating (using the `c()` function) the values of `Words` and `Century` and storing these as a new data frame named `corpus_sizes`.
+The sizes of the corpora for each century are provided in Van Hulle & Enghels [@vanhulleCategoryThrowVerbs2024: 227, footnote 12][^throwverbs-3]. We create a table of word counts for each century (@tbl-corpusSizes) using the `tibble()` function from the tidyverse, by concatenating (using the `c()` function) the values of `Words` and `Century` and storing these as a new data frame named `corpus_sizes`.
 
-[^cs_poppy-3]: Note that we cannot copy the word counts directly from the paper, as the authors use the continental European format with the dot `(.)` as the thousand-separator and the comma `(,)` as a decimal point (e.g., 7.829.566 for the 13^th^ century). In `R`, however, the dot is interpreted as a decimal separator so entering `7.829.566` will generate an error:
+[^throwverbs-3]: Note that we cannot copy the word counts directly from the paper, as the authors use the continental European format with the dot `(.)` as the thousand-separator and the comma `(,)` as a decimal point (e.g., 7.829.566 for the 13^th^ century). In `R`, however, the dot is interpreted as a decimal separator so entering `7.829.566` will generate an error:
 
     ```{r eval=FALSE}
     7.829.566
@@ -879,9 +878,9 @@ TTR.paper |>
 
 To calculate type/token ratios, we first create two matching wide tables, one for the token frequencies, and another for the type frequencies. We can use the wide table labelled `token.data` from @tbl-absData, and the wide table labelled `types.wide` from @tbl-typeData as they are ordered in exactly the same way (you can check this by comparing their structures using the `str()` function).
 
-First, we create a new data frame using the `data.frame()` function. This data frame will take its first column from `token.data`, which contains the auxiliary verbs (`AUX`). We access this column using `token.data[, 1]`.[^cs_poppy-4]
+First, we create a new data frame using the `data.frame()` function. This data frame will take its first column from `token.data`, which contains the auxiliary verbs (`AUX`). We access this column using `token.data[, 1]`.[^throwverbs-4]
 
-[^cs_poppy-4]: Remember that, in base `R`, the notation `[x, y]` allows us to specify rows and columns in a data frame, where `x` refers to the row and `y` refers to the column (see @sec-SquareBrackets). For example, `token.data[, 1]` means we are selecting all rows from the first column of `token.data`.
+[^throwverbs-4]: Remember that, in base `R`, the notation `[x, y]` allows us to specify rows and columns in a data frame, where `x` refers to the row and `y` refers to the column (see @sec-SquareBrackets). For example, `token.data[, 1]` means we are selecting all rows from the first column of `token.data`.
 
 Next, we calculate the type/token ratio. This is done by dividing the numeric values in `types.wide` (i.e., all columns except the first) by the corresponding values in `token.data`. To this end, we use the notation `types.wide[, -1] / token.data[, -1]`. The `[, -1]` indicates that we take all columns except the first one. We exclude the first column because it contains non-numeric values (the `AUX` column).
 
@@ -1053,7 +1052,7 @@ This is a case study chapter of the web version of the textbook "Data Analysis f
 Please cite the current version of this chapter as:
 
 > ::: {style="color: black"}
-> Siahaan, Poppy. 2024. 'Throw' verbs in Spanish: RepRoducing the results of a corpus linguistics study. In Elen Le Foll (Ed.), *Data Analysis for the Language Sciences: A very gentle introduction to statistics and data visualisation in R*. Open Educational Resource. <https://elenlefoll.github.io/RstatsTextbook/> (accessed DATE).
+> Siahaan, Poppy. 2024. 'Throw' verbs in Spanish: Reproducing the results of a corpus linguistics study. In Elen Le Foll (Ed.), *Data Analysis for the Language Sciences: A very gentle introduction to statistics and data visualisation in R*. Open Educational Resource. <https://elenlefoll.github.io/RstatsTextbook/> (accessed DATE).
 > :::
 :::
 

@@ -18,7 +18,6 @@ As with the rest of this textbook (see [Preface](https://elenlefoll.github.io/Rs
 library(checkdown)
 library(effectsize)
 library(datasauRus)
-library(gt)
 ```
 
 ### Chapter overview {.unnumbered}
@@ -43,7 +42,7 @@ As with previous chapters, all the examples, tasks, and quiz questions from this
 
 > Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <https://doi.org/10.1111/lang.12323>.
 
-Our starting point for this chapter is the wrangled combined dataset, `combined_L1_L2_data.rds`, that we created and saved in @sec-DataWrangling. Follow the instructions in @sec-filter to create this `R` object or download `combined_L1_L2_data.rds` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/blob/main/data/processed/combined_L1_L2_data.rds){.uri}.
+Our starting point for this chapter is the wrangled combined dataset, `combined_L1_L2_data.rds`, that we created and saved in @sec-DataWrangling. Follow the instructions in @sec-filter to create this `R` object or download `combined_L1_L2_data.rds` from [the textbook's repository](https://github.com/elenlefoll/RstatsTextbook/blob/main/data/processed/combined_L1_L2_data.rds){.uri}.
 
 To begin, load the `combined_L1_L2_data.rds` file that we created in @sec-DataWrangling. This file contains the full data of all the L1 and L2 participants of @DabrowskaExperienceAptitudeIndividual2019. The categorical variables are stored as factors and obvious data entry inconsistencies and typos have been corrected (see @sec-DataWrangling).
 
@@ -665,7 +664,7 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-How strong are the correlations visualised by the blue regression lines on @fig-YearEducationPlot? And are they statistically significantly different from a zero correlation (i.e. no correlation) at the alpha-level of 0.05? We can answer both these questions using the `cor.test()` function. Note that, for a correlation, the two numeric variables whose correlation we want to estimate come after the tilde (`~`). They are combined with the plus operator (`+`):
+How strong are the correlations visualised by the blue regression lines on @fig-YearEducationPlot? And are they statistically significantly different from a zero correlation (i.e. no correlation) at the α-level of 0.05? We can answer both these questions using the `cor.test()` function. Note that, for a correlation, the two numeric variables whose correlation we want to estimate come after the tilde (`~`). They are combined with the plus operator (`+`):
 
 ```{r}
 cor.test(~ EduTotal + Grammar,
@@ -752,7 +751,7 @@ cor.test(~ EduTotal + Grammar,
 
 Along with a *p*-value of \> 0.05, this suggests that we do not have enough evidence to reject the null hypothesis of no correlation between years in formal education and English grammar comprehension in the L2 population.
 
-Confidence intervals around correlation coefficients can be difficult to interpret as numbers. The good news is that they can easily be visualised using the {ggplot2} library. In @sec-Scatterplots, we used the argument `se = FALSE` inside the `geom_smooth()` function. If, instead, we set it to `TRUE`, 95% confidence intervals will be displayed as grey bands around the regression lines. To change the alpha-level, you will need to change the default value of the `level` argument.
+Confidence intervals around correlation coefficients can be difficult to interpret as numbers. The good news is that they can easily be visualised using the {ggplot2} library. In @sec-Scatterplots, we used the argument `se = FALSE` inside the `geom_smooth()` function. If, instead, we set it to `TRUE`, 95% confidence intervals will be displayed as grey bands around the regression lines. To change the α-level, you will need to change the default value of the `level` argument.
 
 ```{r}
 #| message: false
@@ -916,7 +915,7 @@ The only assumption that we have mentioned so far is that of **random sampling**
 
 ### Independence {#sec-Independence}
 
-Another crucial assumption for both tests covered in this chapter is that the data points be independent of each other. We assumed that this is the case with the @DabrowskaExperienceAptitudeIndividual2019 data because it only has one observation per participant (although interdependencies may occur at other levels, e.g., when several participants come from the same school, work place, or neighbourhood). If, however, we had multiple observations per participant because they completed the tests twice, say once in the morning and once in the evening, and then entered both the morning and the evening data into a single statistical test, our data would violate the assumption of independence and the results of the test would be inaccurate. When our data violates the assumption of independence, we cannot use statistical tests like *t*-tests. Instead, we must turn to statistical methods that allow us to model these interdependencies in the data. In the language sciences, this is most commonly achieved using **mixed-effects models** (see Chapter 14).
+Another crucial assumption for both tests covered in this chapter is that the data points be independent of each other. We assumed that this is the case with the @DabrowskaExperienceAptitudeIndividual2019 data because it only has one observation per participant (although interdependencies may occur at other levels, e.g., when several participants come from the same school, work place, or neighbourhood). If, however, we had multiple observations per participant because they completed the tests twice, say once in the morning and once in the evening, and then entered both the morning and the evening data into a single statistical test, our data would violate the assumption of independence and the results of the test would be inaccurate. When our data violates the assumption of independence, we cannot use statistical tests like *t*-tests. Instead, we must turn to statistical methods that allow us to model these interdependencies in the data. In the language sciences, this is most commonly achieved using **mixed-effects models** [see, e.g., @griesStatisticsLinguisticsPractical2021: Ch. 6, @LevshinaHowlinguisticsData2015: Ch. 8, @WinterStatisticsLinguistsIntroduction2019: Ch. 14-15].
 
 ### Normality {#sec-Normality}
 
@@ -949,7 +948,7 @@ wilcox.test(Grammar ~ Group,
             data = Dabrowska.data)
 ```
 
-The output of the `wilcox.test()` function tells us that there is a 2.6% chance of obtaining our observed difference in **median** `Grammar` scores in an L1 and L2 sample of this size or an even larger difference under the assumption of the null hypothesis (of no difference across the two groups). Hence, if we had previously defined our alpha-level as 0.05, we reject the null hypothesis. If, however, we had chosen a stricter alpha-level of 0.01, we fail to reject the null hypothesis.
+The output of the `wilcox.test()` function tells us that there is a 2.6% chance of obtaining our observed difference in **median** `Grammar` scores in an L1 and L2 sample of this size or an even larger difference under the assumption of the null hypothesis (of no difference across the two groups). Hence, if we had previously defined our α-level as 0.05, we reject the null hypothesis. If, however, we had chosen a stricter α-level of 0.01, we fail to reject the null hypothesis.
 
 The Wilcoxon test does not make any assumptions about the distributions of the population data, which means that it can be used for all kinds of continuous variables including word frequencies. However, there is a drawback: it is usually less powerful than the standard *t*-test. Using it, we are more likely to report a false negative (i.e., to fail to report a real difference in two means), which is why a transformation may be wiser [for more about transformations, see @WinterStatisticsLinguistsIntroduction2019: Chapter 5].
 
@@ -1044,6 +1043,61 @@ From @fig-4PairPlot, we can immediately see that the relationship between the tw
 
 The assumption of linearity is relevant to many widely used statistical methods -- notably linear regression models (see @sec-LineaRregression) -- which rely on Pearson's correlation coefficients. In practice, researchers usually assume linearity unless there is a strong theoretical reason to expect a non‑linear pattern (Cohen et al. 2003). However, this assumption should always be checked. The most straightforward way to do this is to visualise the data.
 
+::: callout-note
+### Non-parametric correlations {.unnumbered}
+
+For an in-depth explanation of non-parametric correlation coefficients (Spearman's ρ and Kendall's τ) and statistical significance tests with examples from the language sciences, I recommend reading Levshina [-@LevshinaHowlinguisticsData2015: Chapter 6].
+:::
+
+### Homogeneity of variance {#sec-Homoscedasticity}
+
+Strictly speaking, when conducting a *t*-test, the variances of the samples should be constant, or homogeneous. This is referred to as the assumption of homogeneity of variance. A related assumption is made in correlation tests and linear regression and is called the assumption of **homoscedasticity**. In brief, these assumptions mean that the variances of the groups entered in the tests or models should be roughly the same.
+
+Again, these assumptions are best examined visually. For example, we can generate a boxplot to check that the variance of the two groups that we want to compare with a *t*-test are roughly equal (see @fig-GrammarBoxplot).
+
+```{r}
+#| code-fold: true
+#| code-summary: "See code to generate plot."
+#| label: "fig-GrammarBoxplot"
+#| fig-cap: "Comparison of grammar scores between L1 and L2 groups"
+#| fig-alt: "A box plot comparing grammar scores between two groups, L1 and L2. The L1 group shows a narrow range of high scores clustered near 100, with one outlier around 50. The L2 group displays a wider range of scores."
+
+ggplot(Dabrowska.data,
+       aes(x = Group, y = Grammar)) +
+  geom_boxplot() +
+  theme_bw()
+```
+
+As we already saw in @sec-Normality, the Grammar scores of the L2 group are not normally distributed; hence, we can also see from @fig-GrammarBoxplot that there is much more variance in the L2 data than there is in the L1. In other words, we have heterogeneity of variance. One way to deal with this is to conduct a non-parametric test instead: Wilcox's test does not have assume homogeneity of variance. However, if your data meets the criterion of normality and only fails to meet that homogeneity of variance, you can still conduct a parametric *t*-test because the standard `t.test()` function in `R` includes Welch's adjustment corrects for unequal variances (Field et al. 2012: 373).
+
+To check the assumption of homoscedasticity for a correlation, we can visualise the variance (or variability) around the correlation (the linear regression line) with the help of a scatter plot. In @fig-VocabEduPlot, we can see that this variance is much larger for low `Vocab` scores than for medium to high scores.
+
+```{r}
+#| code-fold: true
+#| code-summary: "See code to generate plot."
+#| label: "fig-VocabEduPlot"
+#| fig-cap: "The relationship between vocabulary and total education years"
+#| fig-alt: "A scatter plot showing the relationship between vocabulary on the x-axis and total education years on the y-axis. Each black dot represents a data point, and a blue line indicates a positive correlation."
+
+Dabrowska.data |> 
+  filter(Group == "L1") |> 
+  ggplot(aes(x = Vocab, y = EduTotal)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              se = FALSE) +
+  theme_bw()
+```
+
+In other words, this data does not meet the assumption of homoscedasticity. In this case, we should therefore use a non-pamametric correlation statistic, such as Spearman's ρ ('rho') and Kendall's τ ('tau'). As we are looking at a relatively small dataset here (only L1 speakers) and some speakers performed equally well on either the `Colloc` or the `Vocab` test (in other words, we have some ties in the ranks), Kendall's τ is recommended:
+
+```{r}
+cor.test(~ Vocab + EduTotal,
+         data = L1.data,
+         method = "kendall")
+```
+
+It returns a correlation coefficient τ of `0.28` and a *p*-value of \< 0.05, which allows us to reject the null hypothesis of no association between `Vocab` and `EduTotal` scores among L1 English speakers.
+
 ::: {.callout-caution collapse="true"}
 #### Your turn! {.unnumbered}
 
@@ -1136,61 +1190,6 @@ Clearly, if we had only used correlation statistics to describe the relationship
 ![Hex sticker of the [{datasauRus}](https://jumpingrivers.github.io/datasauRus/) package](images/hex_datasauRus.png){#fig-hexdatasauRus width="100" fig-alt="The hexagonal logo of the datasauRus package features a scatter plot in which the dots look like a dinosaur."}
 :::
 
-::: callout-note
-### Non-parametric correlations {.unnumbered}
-
-For an in-depth explanation of non-parametric correlation coefficients (Spearman's ρ and Kendall's τ) and statistical significance tests with examples from the language sciences, I recommend reading Levshina [-@LevshinaHowlinguisticsData2015: Chapter 6].
-:::
-
-### Homogeneity of variance {#sec-Homoscedasticity}
-
-Strictly speaking, when conducting a *t*-test, the variances of the samples should be homogeneous. This is referred to as the assumption of homogeneity of variance. A related assumption is made in correlation tests and linear regression and is called the assumption of **homoscedasticity**. In brief, these assumptions mean that the variances of the groups entered in the tests or models should be roughly the same.
-
-Again, these assumptions are best examined visually. For example, we can generate a boxplot to check that the variance of the two groups that we want to compare with a *t*-test are roughly equal (see @fig-GrammarBoxplot).
-
-```{r}
-#| code-fold: true
-#| code-summary: "See code to generate plot."
-#| label: "fig-GrammarBoxplot"
-#| fig-cap: "Comparison of grammar scores between L1 and L2 groups"
-#| fig-alt: "A box plot comparing grammar scores between two groups, L1 and L2. The L1 group shows a narrow range of high scores clustered near 100, with one outlier around 50. The L2 group displays a wider range of scores."
-
-ggplot(Dabrowska.data,
-       aes(x = Group, y = Grammar)) +
-  geom_boxplot() +
-  theme_bw()
-```
-
-As we already saw in @sec-Normality, the Grammar scores of the L2 group are not normally distributed; hence, we can also see from @fig-GrammarBoxplot that there is much more variance in the L2 data than there is in the L1. In other words, we have heterogeneity of variance. One way to deal with this is to conduct a non-parametric test instead: Wilcox's test does not have assume homogeneity of variance. However, if your data meets the criterion of normality and only fails to meet that homogeneity of variance, you can still conduct a parametric *t*-test because the standard `t.test()` function in `R` includes Welch's adjustment corrects for unequal variances (Field et al. 2012: 373).
-
-To check the assumption of homoscedasticity for a correlation, we can visualise the variance (or variability) around the correlation (the linear regression line) with the help of a scatter plot. In @fig-VocabEduPlot, we can see that this variance is much larger for low `Vocab` scores than for medium to high scores.
-
-```{r}
-#| code-fold: true
-#| code-summary: "See code to generate plot."
-#| label: "fig-VocabEduPlot"
-#| fig-cap: "The relationship between vocabulary and total education years"
-#| fig-alt: "A scatter plot showing the relationship between vocabulary on the x-axis and total education years on the y-axis. Each black dot represents a data point, and a blue line indicates a positive correlation."
-
-Dabrowska.data |> 
-  filter(Group == "L1") |> 
-  ggplot(aes(x = Vocab, y = EduTotal)) +
-  geom_point() +
-  geom_smooth(method = "lm",
-              se = FALSE) +
-  theme_bw()
-```
-
-In other words, this data does not meet the assumption of homoscedasticity. In this case, we should therefore use a non-pamametric correlation statistic, such as Spearman's ρ ('rho') and Kendall's τ ('tau'). As we are looking at a relatively small dataset here (only L1 speakers) and some speakers performed equally well on either the `Colloc` or the `Vocab` test (in other words, we have some ties in the ranks), Kendall's τ is recommended:
-
-```{r}
-cor.test(~ Vocab + EduTotal,
-         data = L1.data,
-         method = "kendall")
-```
-
-It returns a correlation coefficient τ of `0.28` and a *p*-value of \< 0.05, which allows us to reject the null hypothesis of no association between `Vocab` and `EduTotal` scores among L1 English speakers.
-
 ## Multiple testing problem {#sec-pHacking}
 
 In @sec-PValues we saw that conducting a statistical test with an α-level of 0.05 means that we accept a 5% risk of falsely rejecting the null hypothesis when it is actually true. Falsely rejecting the null hypothesis leads to a **false positive** result, also referred to as making a **Type I error**. It is crucial to understand that if we perform multiple tests on the same data, we dramatically increase the risk of reporting such false positive results. This is known as the multiple testing or multiple comparisons problem.
@@ -1266,7 +1265,7 @@ Recall how we observed that, for both L1 and L2 participants, there was a positi
 
 This chapter has given you the keys to understanding the basics of inferential statistics following the frequentist null hypothesis significance testing (NHST) framework. We looked at how we can use *t*-tests and correlation tests to infer information about a population based on a random sample from the population. We introduced *p*-values, standardised effect sizes, and confidence intervals. These are complex concepts that, if you think you've immediately understood them, I'm afraid you probably haven't. Frequentist inferential statistics can be very powerful and useful, but it isn't intuitive. In practice, you will need to read and re-read this chapter and other resources (see recommended readings) to really get to grips with these concepts.
 
-In the following chapter, we will move from single statistical tests to multiple linear regression models. We will first see how *t*-tests and correlation tests can be understood and computed as simple linear regression models before exploring the potential of multiple linear regression models. The latter allow us to quantify and test the effects of several variables in a single model. Linear regression naturally handles multiple predictors simultaneously, thus removing the need for *p*-value adjustments and providing more nuanced insights into the contributions of each variable and their potential interactions.
+In the following two chapters, we will move from single statistical tests to multiple linear regression models. In @sec-SLR will first see how *t*-tests and correlation tests can be understood and computed as simple linear regression models before exploring the potential of multiple linear regression models in @sec-MLR. The latter allow us to quantify and test the effects of several variables in a single model. Multiple linear regression naturally handles multiple predictors simultaneously, thus removing the need for *p*-value adjustments and providing more nuanced insights into the contributions of each variable and their potential interactions.
 
 ::: callout-tip
 ### Recommended readings 📚 {.unnumbered}

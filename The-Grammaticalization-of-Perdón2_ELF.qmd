@@ -1,0 +1,477 @@
+---
+title: "Exploring the Grammaticalization of 'Perdón' in Spanish Varieties"
+author: "Fatemeh Modir Dehghan"
+affiliation: "University of Cologne"
+date: "2025-07-30"
+execute:
+  echo: true
+  warning: false
+  message: false
+bibliography: final.bib
+---
+
+```{r echo=FALSE}
+library(checkdown)
+```
+
+::: {.callout-note collapse="true"}
+## About the Author
+
+Dela (Fatemeh) Modir Dehghan is a Master’s student in linguistics at the University of Cologne in Germany. Originally from Iran, she completed her Bachelor’s degree in 2023 in English linguistics and translation In Alborz University.She is particularly interested in corpus-based explorations of language and aims to investigate how language changes over time using real-world data. She submitted an earlier version of this chapter as a term paper for Dr. Le Foll's M.A. seminar on *Statistics and Data Visualisation in* `R`.
+:::
+
+This chapter will guide you through the steps to **reproduce** the results of a published corpus linguistics study [@Jansegers2024] using `R`. It will walk you through how to:
+
+-   Download and load the original dataset provided by @Jansegers2024 into `R`
+-   Understand the structure and the linguistic variables of the dataset (Spanish variety, offense type, and apology form)
+-   Wrangle the data to categorize *perdón*, *disculpa*, and *lo siento* by pragmatic function
+-   Analyze the use of *perdón* as a discourse marker in Mexican and Peninsular Spanish
+-   Reproduce the key descriptive statistics and test results (e.g., chi-square analysis) reported in @Jansegers2024.
+-   Compare the reproduced values (e.g., frequency counts, significance tests) with those reported in the original study
+-   Visualize trends across varieties and offense types using `{ggplot2}` to support the interpretation of the findings.
+
+Whether you are new to `R` or seeking to sharpen your analytical skills, this chapter provides a guided, reproducible introduction to data-driven linguistic analysis using Spanish apology markers as a case study.
+
+# Introducing the Study {#sec-Intro}
+
+In this chapter, we reproduce the results of a corpus linguistics study [@Jansegers2024], which investigates the grammaticalization of the Spanish apology marker *perdón* in two regional varieties: Mexican and Peninsular Spanish. Grammaticalization refers to the historical process by which lexical items such as verbs or nouns evolve into grammatical or discourse-related elements [@Hopper2003; @Heine2002]. In this case, the verb *perdonar* (‘to pardon’) has undergone semantic and functional shifts, becoming the discourse marker *perdón*, particularly in the context of low-imposition offenses.
+
+The original study [@Jansegers2024] analyzes corpus data to explore how apology markers (*perdón*, *lo siento*, *disculpa*) vary according to factors such as offense type, speaker responsibility, and Spanish variety. Their methodology draws on frameworks from grammaticalization theory [@Hopper2003] and politeness theory [@Brown1987].
+
+Our goal is to reproduce the analyses of @Jansegers2024 using the same dataset and statistical procedures, and visualizations in `R`. This will allow us to compare our outputs to those reported in the original study and assess the consistency of results across offense types and regional varieties.
+
+This reproduction focuses on the following research question:
+
+-   Does *perdón* function differently in Mexican and Peninsular Spanish?
+
+# Retrieving the Authors’ Original Data {#sec-retrieving}
+
+We begin by retrieving the original dataset used in the study by @Jansegers2024. The researchers compiled corpus data from two distinct varieties of Spanish:
+
+-   **Mexican Spanish**
+-   **Peninsular Spanish**
+
+These datasets are made up of real-life language interactions, including transcripts of conversations, online discussions, and formal writing. Each part of the corpus has been carefully annotated to highlight apology phrases like *perdón*, *disculpa*, and *lo siento* showing how they are used in different contexts.
+
+In their open-access publication in *Languages,* the authors have included the following Data Availability Statement [@Jansegers2024: 19]:
+
+> **Data Availability Statement**\
+> The research data of this study is available in TROLLing. Jansegers, Marlies; Melis, Chantal; Arrington Báez, Jennie Elenor, 2023, Replication Data for: Diverging grammaticalization patterns across Spanish varieties: the case of perdón in Mexican and Peninsular Spanish, <https://doi.org/10.18710/IEXVVN> (accessed on 1 December 2023), DataverseNO.
+
+To obtain the dataset, follow these straightforward steps:
+
+-   **Follow the link to the data repository:\
+    **<https://doi.org/10.18710/IEXVVN>
+-   **Locate the dataset:**\
+    Locate the dataset file named `Data_perdon_20231221.csv`.
+-   **Download the dataset:**\
+    Save the CSV file (`Data_perdon_20231221.csv`) to your local project directory.
+
+# Preprocessing The Data {#sec-dataprocessing}
+
+To get started, you'll want to load (and if necessary, first install) the `R` libraries that we will need for this reproduction project.
+
+```{r}
+library(here) # Useful for file path management.
+library(ggmosaic) # Visualizes relationships in data through mosaic plots in {ggplot2}.
+library(kableExtra) # To display nice-looking tables.
+library(skimr) # Provides summaries of dataset variables for quick insights into distributions and missing data.
+library(tidyverse) # A collection of core data science packages, including {ggplot2} and {dplyr} for data visualisation, data wrangling, and data import.
+```
+
+Once the necessary packages are loaded, we can **read in the dataset** and check its contents. Note that the dataset is **semi-colon separated**.
+
+```{r}
+# Import the dataset
+data <- read.csv(here("CS_Dela", "Data_perdon_20231221.csv"), sep = ";")
+
+# Display the first few rows
+head(data)
+```
+
+-   The dataset is stored as a **CSV file**, so we use `read.csv()`.
+-   `sep = ";"` ensures the correct **delimiter** is used (European-style CSVs).
+-   `head(data)` helps us **quickly preview** the dataset.
+
+Now that we have imported the data , it's crucial to understand the **structure of the dataset** to ensure all variables are correctly formatted.
+
+```{r}
+# Check the structure of the dataset
+str(data)
+```
+
+In this step, we need to check for missing values before we start the analysis.
+
+```{r}
+# Check for missing values
+sum(is.na(data))
+```
+
+To further understand the dataset, let’s generate summary descriptive statistics.
+
+```{r}
+# Get an overview of the dataset
+skim(data)
+```
+
+::: callout-tip
+#### 📝 Quiz Time! {.unnumbered}
+
+\[**Q1**\] When importing the dataset, why do we specify `sep = ";"` in `read.csv()`?
+
+```{r echo=FALSE}
+check_question(
+  c("Because the CSV uses semicolons as the separator character"),
+  options = c(
+    "Because the CSV uses semicolons as the separator character",
+    "To automatically remove rows with missing values",
+    "To indicate that this dataset uses semicolons instead of decimal points",
+    "To convert columns contain texts into factors",
+    "To speed up the import of large datasets like this one"
+  ),
+  type = "radio",
+  random_answer_order = FALSE,
+  button_label = "Check answer",
+  right = "Well done! European-style CSVs often separate fields with semi-colons instead of commas.",
+  wrong = "Not quite. `sep = ';'` ensures fields are properly separated when commas aren't used."
+)
+check_hint("💡 Hint: Different countries use different default separators for CSV files.", hint_title = "🐭 Click for a hint!")
+
+```
+
+\[**Q2**\] What is the purpose of using `skim(data)` after importing the dataset?
+
+```{r echo=FALSE}
+check_question(
+  c("To quickly summarize variable types, missing values, and distributions"),  
+  options = c(
+    "To quickly summarize variable types, missing values, and distributions",
+    "To delete redundant columns automatically",
+    "To detect and replace missing values with averages",
+    "To visualize the data with {ggplot2}"
+  ),
+  type = "radio",
+  random_answer_order = FALSE,
+  button_label = "Check answer",
+  right = "Exactly! `skimr::skim()` gives you a compact, detailed overview of your dataset’s structure and health.",
+  wrong = "Not quite. `skim()` is used for summarizing, not for cleaning or plotting."
+)
+check_hint("💡 Hint: `skim()` offers summaries for variable types, missingness, and distribution quickly.", hint_title = "🐭 Click for a hint!")
+```
+:::
+
+## Reviewing the Variables {#sec-review}
+
+The dataset consists primarily of **categorical variables**, each of which represents a set of predefined categories. Understanding these variables and the levels that they can take is essential before beginning analysis:
+
+-   **`variety`**: Refers to the regional variety of Spanish in which the apology occurs.
+    -   Levels: `MX` (Mexican) and `SP` (Peninsular)
+-   **`corpus`**: Indicates the specific corpus or sub-corpus from which the example was drawn.
+    -   Levels: `PRESEEA`, `CSCM`, `CHBC`, `CME`, `Ameresco`, `CORMA`, `VALESCO`, `C-ORAL-ROM`, and `CORLEC`.
+-   **`form`**: The type of apology marker used in the utterance.
+    -   Levels: `perdón`, `disculpar`, `perdonar`, and `lo siento`
+-   **`offense_type`**: Categorizes the nature or source of the offense prompting the apology.
+    -   Levels: `inappropriate_behavior`, `criticism_disagreement`, `obligation`, `damage_belongings`,  etc.(14 specific types)
+-   **`face_affected`**: Describes whose face (i.e., social identity or image) is being addressed or repaired by the apology.
+    -   Levels: `positive`, `negative`
+-   **`face_orientation`**: Refers to whether the apology is oriented toward preserving the speaker’s own face or that of another.
+    -   Levels: `speaker`, `hearer`
+
+Since many of our variables are categorical (`variety`, `form`, `offense_type`, etc.), we convert them to **factors** for better analysis.
+
+```{r}
+data_filtered <- data |>
+  mutate(across(c(form, variety, offense_type, face_affected, face_orientation), factor))
+
+```
+
+Now that our dataset is well-structured, we can move forward to descriptive statistics and visualization @sec-DelaPloting.
+
+# Plotting the Results {#sec-DelaPloting}
+
+First, we take a look at frequency of the the different forms of apology markers across both Spanish varieties.
+
+```{r}
+# Count frequency of apology markers
+apology_counts <- data |>
+  count(variety, form) |>
+  arrange(desc(n))
+
+apology_counts |> 
+  kable()
+```
+
+To better visualize the contrast, we also include a grouped bar chart, which is added here to facilitate interpretation:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show figure code"
+#| label: fig-DelaPlot
+#| fig-cap: " Frequency of Apology Markers"
+
+ggplot(apology_counts, aes(x = form, 
+                           y = n, 
+                           fill = variety)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Frequency of Apology Markers by Spanish Variety",
+    x = "Apology Marker",
+    y = "Count",
+    fill = "Variety"
+  ) +
+  theme_minimal()
+```
+
+This chart confirms the trends reported by [@Jansegers2024]: *perdón* is the most frequent marker, especially in Mexican Spanish, while Peninsular Spanish shows a broader mix of forms. These findings align with politeness theory [@Brown1987], which explains cultural variation in face strategies, and grammaticalization frameworks [@Hopper2003; @Heine2002], which describe how frequent lexical items become discourse markers.
+
+While @fig-DelaPlot earlier provided an overall frequency comparison of apology markers across Spanish varieties, mosaic plots allow for a more detailed visualization. To visualize how apology marker usage differs by Spanish variety, we use `geom_mosaic()` from the {ggmosaic} package. This plot shows the distribution of the different apology forms across Mexican and Peninsular Spanish, with bar widths reflecting the relative frequencies within each variety.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show figure code"
+#| label: fig-DelaMosaic
+#| fig-cap: "Mosaic Plot: Apology Marker Distribution by Variety"
+
+ggplot(data_filtered) +
+  geom_mosaic(aes(x = product(variety), 
+                  fill = form, 
+                  weight = 1)) +
+  labs(
+    title = "Mosaic Plot: Apology Marker Distribution by Variety",
+    x = "Spanish Variety",
+    y = "Proportion of Apology Markers",
+    fill = "Apology Marker"
+  ) +
+  theme_minimal()
+```
+
+::: callout-tip
+#### 📝 Quiz Time! {.unnumbered}
+
+\[**Q3**\] What does the height (length) of the bars represent in @fig-DelaMosaic?
+
+```{r echo=FALSE}
+check_question(
+  c("The relative frequency of each apology marker within each Spanish variety"),  
+  options = c(
+    "The number of apology marker types across the two Spanish varieties",
+    "The relative frequency of each apology marker within each Spanish variety",
+    "The number of face-orientation contexts in both Mexican and Peninsular Spanish",
+    "The number of corpus observations in each Spanish variety"
+  ),
+  type = "radio",
+  random_answer_order = FALSE,  
+  button_label = "Check answer",
+  right = "Well done!",
+  wrong = "Not quite. Mosaic plots display group size on the x-axis. On the y-axis, they display within-group proportions."
+)
+check_hint("💡 Hint: Mosaic plots visualize both group size and category distribution. Think of x-axis = total group size.", hint_title = "
+🐭 Click for a hint!")
+```
+:::
+
+# Reproducing the Apology Tables
+
+In this section, we reproduce the main descriptive statistics from @Jansegers2024 regarding the distribution of explicit apology markers across Spanish varieties and face orientations.
+
+We begin by reconstructing the contingency table comparing Mexican and Peninsular Spanish in @tbl-DelaVariety. We then break down the use of each form in relation to face-orientation contexts for both Mexican (@tbl-DelaMexico) and Peninsular (@tbl-DelaSpain) speakers. Frequencies and row-wise percentages are included to match the original analysis.
+
+#### Shared Methodology
+
+All tables were generated using the following functions:
+
+-   **`count()`** to obtain for raw frequencies per combination of characteristics.
+-   **`proportions()` × 100** for percentages within each group.
+-   **`paste0()`** to combine counts and percentages.
+-   **`pivot_wider()`** to reshape for display comparable to the original publication.
+    -   `names_from = form` uses the unique apology forms to create new columns.
+    -   `values_from = n_pct` fills those columns with the combined "count (percent)" strings.
+
+We only varied the grouping/filtering depending on the table’s focus.
+
+### Apology Forms by Variety {#sec-tab2}
+
+To begin, we count the number of each apology form in Mexican and Peninsular Spanish, and then calculate row-wise percentages using `group_by()` and `proportions()` to show relative frequency across varieties.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show table code"
+#| label: tbl-DelaVariety
+#| tbl-cap: "Apology Marker Distribution by Variety"
+
+apology_table <- data |>
+  count(variety, form) |>
+  group_by(variety) |>
+  mutate(percentage = round(proportions(n) * 100, 0)) |>
+  mutate(n_pct = paste0(n, " (", percentage, "%)")) |>
+  select(variety, form, n_pct) |>
+  pivot_wider(names_from = variety, values_from = n_pct)
+
+apology_table |> 
+  kable()
+```
+
+@tbl-DelaVariety is a reproduction of Table 2 from @Jansegers2024. The results show a clear preference for *perdón* in Mexico, while *perdonar* is more common in Spain. This contrast reflects broader regional differences in formality and apology strategies.
+
+The percentages didn’t exactly match the original article due to **rounding** **difference**. While `49 / 363` equals `13.49%`, R’s `round()` function rounds it **down to 13%**, whereas the original paper rounds it **up to 14%**.
+This minor discrepancy affects only one cell in the table and does not impact the overall distribution pattern.
+
+### Running the Chi-Square Test {#sec-chi-square-test}
+
+Building on the findings summarised in @tbl-DelaVariety, we now test whether the observed differences in apology form usage between Mexican and Peninsular Spanish are statistically significant at an alpha level of 0.05. In line with the original study [@Jansegers2024], we applied a Chi-square test to test this.
+
+```{r}
+# contingency table from the same counts
+apology_matrix <- table(data$variety, data$form)
+
+# Run the Chi-square test
+chisq.test(apology_matrix)
+
+```
+
+The Chi-Square test confirms a significant link between Spanish variety and apology marker use (χ² = 192.35, df = 3, *p* \< .001), matching the results in @Jansegers2024.
+
+### Apology Forms by Face Orientation (Mexico) {#sec-tab3}
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show table code"
+#| label: tbl-DelaMexico
+#| tbl-cap: "Apology Forms by Face Orientation (Mexico), Table 3"
+
+mexico_forms <- data |>
+  filter(variety == "MX") |>
+  mutate(face_group = case_when(
+    face_orientation == "speaker" ~ "Positive face S",
+    face_orientation == "hearer" & face_affected == "negative" ~ "Negative face H",
+    face_orientation == "hearer" & face_affected == "positive" ~ "Positive face H"
+  )) |>
+  count(face_group, form) |>
+  group_by(face_group) |>
+  mutate(pct = round(100 * n / sum(n))) |>
+  mutate(n_pct = paste0(n, " (", pct, "%)")) |>
+  select(face_group, form, n_pct) |>
+  pivot_wider(names_from = form, values_from = n_pct)
+
+mexico_forms |> 
+  kable()
+
+```
+
+To produce Table 3 from @Jansegers2024, we extended the procedure used to generate @tbl-DelaVariety by introducing a new composite variable, `face_group`, which merges `face_orientation` and `face_affected` into three analytically meaningful categories:
+
+-   **Positive face S** (speaker’s face affected),
+-   **Negative face H** (hearer’s negative face),
+-   **Positive face H** (hearer’s positive face).
+
+These reflects the speaker vs. hearer face-threat distinctions used by @Jansegers2024. Our output confirms the study’s finding that *perdón* is strongly favored when the speaker’s own face is at stake.All percentages and frequencies match those in the original study exactly, without rounding differences. This confirms the success of our coding and face-group classification in the Mexican corpus.
+
+### Apology Forms by Face Orientation (Spain) {#sec-tab4}
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show table code"
+#| label: tbl-DelaSpain
+#| tbl-cap: "Apology Forms by Face Orientation (Spain), Table 4"
+
+spain_forms <- data |>
+  filter(variety == "SP") |>
+  mutate(face_group = case_when(
+    face_orientation == "speaker" ~ "Positive face S",
+    face_orientation == "hearer" & face_affected == "negative" ~ "Negative face H",
+    face_orientation == "hearer" & face_affected == "positive" ~ "Positive face H"
+  )) |>
+  count(face_group, form) |>
+  group_by(face_group) |>
+  mutate(pct = round(100 * n / sum(n))) |>
+  mutate(n_pct = paste0(n, " (", pct, "%)")) |>
+  select(face_group, form, n_pct) |>
+  pivot_wider(names_from = form, values_from = n_pct)
+
+spain_forms |> 
+  kable()
+```
+
+We recreated Table 4 from the original study by grouping the Peninsular Spanish data by face orientation and face affected. The results match the original pattern: *perdonar* is common in hearer-oriented contexts, while *perdón* appears more in speaker-oriented ones. @Jansegers2024. The small discrepancies observed such as 36% instead of 37% for perdón under Negative face H, or 17% instead of 16% under Positive face H are limited to 1 percentage point and likely stem from rounding differences in the percentage calculations (e.g., R’s round() function). These variations are not analytically significant and do not affect the interpretation of the data. 
+
+::: callout-tip
+#### Quiz Time! {.unnumbered}
+
+📝 Let's check your understanding of the data wrangling steps necessary to generate these tables!
+
+\[**Q4**\] What does the `paste0()` function do?
+
+```{r echo=FALSE}
+check_question(
+  c("It combines two or more vectors into one with no separating character."),
+  options = c(
+    "It combines count values and percentages into a single vector.",
+    "It formats columns for easy export to Word.",
+    "It calculates percentages.",
+    "It combines two or more vectors into one and separates these vectors with the number 0."
+  ),
+  type = "radio",
+  random_answer_order = FALSE,
+  button_label = "Check answer",
+  right = "Well done!",
+  wrong = "Not quite. See what happens if you change the function to paste() rather than paste0()."
+)
+check_hint("💡 Hint: Check the help file of the `paste0()` function." , hint_title = "🐭 Click for a hint!")
+
+```
+
+\[**Q5**\] Why did we use `pivot_wider()` in our table generation steps?
+
+```{r echo=FALSE}
+check_question(
+  c("To convert the long-format counts into a wide-format table with forms as columns."),  
+  options = c(
+    "To convert the long-format counts into a wide-format table with forms as columns.",
+    "To make the plot display the x-axis in alphabetical order.",
+    "To automatically rename the apology marker variables.",
+    "To filter out rows with zero frequency."),
+  type = "radio",
+  random_answer_order = FALSE,
+  button_label = "Check answer",
+  right = "Exactly!",
+  wrong = "Not quite! Think about how the data was displayed before and after reshaping."
+)
+check_hint("💡 Hint: We used it after counting form/face combinations — the result looked like a grid of labels and values.", hint_title = "🐭 Click for a hint!")
+```
+:::
+
+# Conclusion
+
+This project set out to reproduce the main findings of [@Jansegers2024], which explored the grammaticalization of *perdón* in Mexican and Peninsular Spanish. Like the original authors, we found that *perdón* is far more frequent in Mexican Spanish, while Peninsular Spanish speakers make use of a broader range of apology forms, including *perdonar* and *lo siento*. Our reproduced frequency tables and percentage distributions closely mirror those published in the study.
+
+Beyond reproducing the numerical results, we also matched the study’s visualizations using bar plots (@fig-DelaPlot) and mosaic plots (@fig-DelaMosaic), which clearly show how apology strategies vary by variety and face orientation. These visuals further support the original claim that *perdón* has undergone grammaticalization—especially in Mexican Spanish into a high-frequency discourse marker used to manage politeness.
+
+Overall, the reproduction validates both the descriptive and statistical results of the original study, demonstrating how *perdón*’s usage reflects broader sociopragmatic and grammatical trends across Spanish varieties. Minor formatting or rounding differences aside, our results strongly align with the published findings and reinforce the value of data sharing in corpus-based linguistic research.
+
+### Suggestions for Future Research
+
+While this project successfully reproduces and extends the findings of @Jansegers2024, further studies could enrich the analysis by incorporating additional Spanish varieties beyond Mexico and Spain, or by examining sociolinguistic variables such as speaker age, gender, and social status [@Hernandez2012]. Longitudinal research could also explore whether the grammaticalization of *perdón* continues to evolve over time.
+
+::: {.callout-note collapse="true" title="📌 Implementing Citation Management with .bib in Quarto"}
+To ensure standardized citation formatting, this project employs a **BibTeX (.bib)** file, referenced within the YAML metadata. The `.bib` file (e.g., `final.bib`) is specified under the `bibliography` field, allowing Quarto to format **in-text citations** and automatically generate a **reference list**.
+
+Additionally, a **Citation Style Language (CSL)** file (`apa.csl`) is included to enforce **APA-style referencing**. This setup enables seamless integration of bibliographic data while maintaining consistency across the document.
+
+In-text citations are implemented using the `@key` notation, which Quarto automatically resolves into properly formatted references during rendering.
+
+For more information on how to insert bibliographic references in Quarto documents, see @sec-References.
+:::
+
+## Packages Used in This Chapter
+
+```{r, echo=FALSE}
+library(RefManageR)
+
+bib_path <- file.path(getwd(), "rpackages.bib")
+
+bib <- ReadBib(bib_path)
+
+bib
+```
+
+## References
