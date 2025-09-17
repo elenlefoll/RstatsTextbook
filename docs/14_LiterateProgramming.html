@@ -1566,7 +1566,7 @@ More complex inline computations
 <span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">OtherLgs =</span> <span class="st">"Additional language"</span>, </span>
 <span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="st">"N"</span>)</span>
 <span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="tbl-L1-languages" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[80,20]" data-tbl-cap-location="top">
+<div id="tbl-L1-languages" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="top" data-tbl-colwidths="[80,20]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-L1-languages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;14.1: Example of a {gt} table
@@ -2667,21 +2667,40 @@ Figure&nbsp;14.15: Artwork CC-BY 4.0 Allison Horst from the <a href="https://min
 </div>
 <section id="word-libreoffice-co." class="level3" data-number="14.12.1">
 <h3 data-number="14.12.1" class="anchored" data-anchor-id="word-libreoffice-co."><span class="header-section-number">14.12.1</span> Word, LibreOffice &amp; co.</h3>
-<p>Your supervisor or colleague may request a <strong>Microsoft Word</strong> document and, thankfully, this is no problem. All you need to do is add the following line to your <strong>YAML header</strong> and then render your document again. This is will generate a <code>.docx</code> file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.</p>
+<p>Your supervisor or colleague may request a <strong>Microsoft Word</strong> document and, thankfully, this is no problem. Add the following line to the bottom of your <strong>YAML header</strong> and then render your document again. This is will generate a <code>.docx</code> file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> docx</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>By default, the quality of the images and graphs in rendered <code>.docx</code> versions is low to keep the file size small. You can improve the quality of the rendered images by specifying the <strong>image definition</strong> in the YAML option. Make sure that you indent each line correctly as shown below; otherwise, you will get an error when you try to render your document:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb45" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">docx</span><span class="kw">:</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fig-dpi</span><span class="kw">:</span><span class="at"> </span><span class="dv">300</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>To share your work with <strong>LibreOffice</strong>, <strong>OnlyOffice</strong>, and <strong>OpenOffice</strong> users, use the <code>format: odt</code> option, which will generate an <strong>OpenDocument</strong> - an open standard file format that can be opened in any text-processing software.</p>
+<div class="callout-title-container flex-fill">
+Hiding code chunks in specific formats
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dynamic code outputs, such as the <strong>interactive</strong> {plotly} graph displayed in <a href="#fig-scatterplot-plotly" class="quarto-xref">Figure&nbsp;<span>14.13</span></a>, cannot meaningfully be rendered to static formats such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors. To avoid <code>R</code> attempting to render these code chunks to formats other than HTML, you can enclose them in the following <code>div</code> block:</p>
+<div class="sourceCode" id="cb45" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>::: {.content-hidden unless-format="html"}</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-scatterplot-plotly</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(L2.scatter2)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>By default, the quality of the images and graphs in rendered <code>.docx</code> versions is low to keep the file size small. You can improve the quality of the rendered images by specifying the <strong>image definition</strong> in the YAML option. To do so, replace the format line that you added above with the following lines. Make sure that you indent each line correctly as shown below; otherwise, you will get an error when you try to render your document.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">docx</span><span class="kw">:</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fig-dpi</span><span class="kw">:</span><span class="at"> </span><span class="dv">300</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To share your work with <strong>LibreOffice</strong>, <strong>OnlyOffice</strong>, and <strong>OpenOffice</strong> users, use the <code>format: odt</code> option, which will generate an <strong>OpenDocument</strong> - an open standard file format that can be opened in any text-processing software, including Microsoft Word.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2701,7 +2720,7 @@ Figure&nbsp;14.15: Artwork CC-BY 4.0 Allison Horst from the <a href="https://min
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2710,7 +2729,7 @@ Click here for the solution to <span style="color:green;"><strong>Task 13.4</str
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Below is a screenshot of a Quarto document with the inline code chunks and its rendered <code>.odt</code> version as opened in LibreOffice Writer.</p>
 <div class="quarto-layout-panel" data-layout-ncol="2">
@@ -2734,25 +2753,6 @@ Click here for the solution to <span style="color:green;"><strong>Task 13.4</str
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Hiding code chunks in specific formats
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Dynamic code outputs, such as the <strong>interactive</strong> {plotly} graph displayed in <a href="#fig-scatterplot-plotly" class="quarto-xref">Figure&nbsp;<span>14.13</span></a>, cannot meaningfully be rendered to static formats such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors. To avoid <code>R</code> attempting to render these code chunks to formats other than HTML, you can enclose them in the following <code>div</code> block:</p>
-<div class="sourceCode" id="cb46" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>::: {.content-hidden unless-format="html"}</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-scatterplot-plotly</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(L2.scatter2)</span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -2837,7 +2837,7 @@ Going further with Quarto 🚀
 <p>Well done! You have successfully completed this chapter on literate programming using Quarto. You have answered <span style="color:green;"><span id="checkdown_final_score">0</span> out of 10 questions</span> correctly.</p>
 <p>Are you confident that you can…?</p>
 <ul class="task-list">
-<li><label><input type="checkbox">Explain the concepts of literate programming and reproducible research to a friend or colleague (<a href="#sec-LiteRateProgramming" class="quarto-xref"><span>Chapter 14</span></a>)</label></li>
+<li><label><input type="checkbox">Explain the concepts of literate programming and reproducible research to a friend or colleague (<a href="#sec-LitProgramming" class="quarto-xref"><span>Section 14.1</span></a>)</label></li>
 <li><label><input type="checkbox">Write and format text (bold, first-level heading, italics, etc.) in a Quarto document (<a href="#sec-Markdown" class="quarto-xref"><span>Section 14.4</span></a>)</label></li>
 <li><label><input type="checkbox">Insert a code chunk in a Quarto document and use inline codes (<a href="#sec-Chunks" class="quarto-xref"><span>Section 14.5</span></a>)</label></li>
 <li><label><input type="checkbox">Insert code chunks in a Quarto document and make use of inline code (<a href="#sec-Inline" class="quarto-xref"><span>Section 14.6</span></a>)</label></li>

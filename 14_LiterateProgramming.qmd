@@ -1225,7 +1225,7 @@ So far, we have only tried rendering our Quarto document to **HTML**, which is t
 
 ### Word, LibreOffice & co.
 
-Your supervisor or colleague may request a **Microsoft Word** document and, thankfully, this is no problem. All you need to do is add the following line to your **YAML header** and then render your document again. This is will generate a `.docx` file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.
+Your supervisor or colleague may request a **Microsoft Word** document and, thankfully, this is no problem. Add the following line to the bottom of your **YAML header** and then render your document again. This is will generate a `.docx` file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.
 
 ```{yaml}
 ---
@@ -1233,7 +1233,22 @@ format: docx
 ---
 ```
 
-By default, the quality of the images and graphs in rendered `.docx` versions is low to keep the file size small. You can improve the quality of the rendered images by specifying the **image definition** in the YAML option. Make sure that you indent each line correctly as shown below; otherwise, you will get an error when you try to render your document:
+
+::: callout-warning
+#### Hiding code chunks in specific formats
+Dynamic code outputs, such as the **interactive** {plotly} graph displayed in @fig-scatterplot-plotly, cannot meaningfully be rendered to static formats such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors. To avoid `R` attempting to render these code chunks to formats other than HTML, you can enclose them in the following `div` block:
+
+```` markdown
+::: {.content-hidden unless-format="html"}
+```{{r}}
+#| label: fig-scatterplot-plotly
+ggplotly(L2.scatter2)
+```
+:::
+````
+:::
+
+By default, the quality of the images and graphs in rendered `.docx` versions is low to keep the file size small. You can improve the quality of the rendered images by specifying the **image definition** in the YAML option. To do so, replace the format line that you added above with the following lines. Make sure that you indent each line correctly as shown below; otherwise, you will get an error when you try to render your document.
 
 ```{yaml}
 ---
@@ -1243,7 +1258,7 @@ format:
 ---
 ```
 
-To share your work with **LibreOffice**, **OnlyOffice**, and **OpenOffice** users, use the `format: odt` option, which will generate an **OpenDocument** - an open standard file format that can be opened in any text-processing software.
+To share your work with **LibreOffice**, **OnlyOffice**, and **OpenOffice** users, use the `format: odt` option, which will generate an **OpenDocument** - an open standard file format that can be opened in any text-processing software, including Microsoft Word.
 
 ::: callout-caution
 #### [**Task 13.4**]{style="color:green;"}
@@ -1269,19 +1284,6 @@ Below is a screenshot of a Quarto document with the inline code chunks and its r
 :::
 ::::
 
-::: callout-warning
-#### Hiding code chunks in specific formats
-Dynamic code outputs, such as the **interactive** {plotly} graph displayed in @fig-scatterplot-plotly, cannot meaningfully be rendered to static formats such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors. To avoid `R` attempting to render these code chunks to formats other than HTML, you can enclose them in the following `div` block:
-
-```` markdown
-::: {.content-hidden unless-format="html"}
-```{{r}}
-#| label: fig-scatterplot-plotly
-ggplotly(L2.scatter2)
-```
-:::
-````
-:::
 
 ### PDF
 
@@ -1358,7 +1360,7 @@ Well done! You have successfully completed this chapter on literate programming 
 
 Are you confident that you can...?
 
--   [ ] Explain the concepts of literate programming and reproducible research to a friend or colleague (@sec-LiteRateProgramming)
+-   [ ] Explain the concepts of literate programming and reproducible research to a friend or colleague (@sec-LitProgramming)
 -   [ ] Write and format text (bold, first-level heading, italics, etc.) in a Quarto document (@sec-Markdown)
 -   [ ] Insert a code chunk in a Quarto document and use inline codes (@sec-Chunks)
 -   [ ] Insert code chunks in a Quarto document and make use of inline code (@sec-Inline)
