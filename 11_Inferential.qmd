@@ -302,7 +302,7 @@ The output of the `t.test()` function is a bit overwhelming at first, so let's f
 
 Unfortunately, **confidence intervals (CI)** are a bit of a misnomer, which frequently leads to misunderstandings. Contrary to what so-called "AI" tools (see @sec-PartingWords) and even some statistics textbooks may claim, confidence intervals do *not* tell us that we can be 95% confident that the true difference across the entire population lies within the 95% confidence interval. Bodo Winter [-@WinterStatisticsLinguistsIntroduction2019: 165] clarifies this common misconception as follows:
 
-> \[T\]he actual population parameter of interest [i.e. in the case of a *t*-test, the difference in mean values] may or may not be inside the confidence interval -- you will actually never know for sure. However, if you imagine an infinite series of experiments and compute a confidence interval each time, 95% of the time this interval would contain the true population parameter.
+> \[T\]he actual population parameter of interest \[i.e. in the case of a *t*-test, the difference in mean values\] may or may not be inside the confidence interval -- you will actually never know for sure. However, if you imagine an infinite series of experiments and compute a confidence interval each time, 95% of the time this interval would contain the true population parameter.
 
 In other words, our confidence interval does not tell us how confident we can be about estimated *value*, but rather how confident we can be about our statistical *method*.
 :::
@@ -767,7 +767,7 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-The interpretation of the grey bands is as follows: if it's possible to draw a straight line that stays within the 95 % confidence band, it is very likely that there is *no* statistically significant correlation between the two numeric variables displayed on the plot at the α-level of 0.05. 
+The interpretation of the grey bands is as follows: if it's possible to draw a straight line that stays within the 95 % confidence band, it is very likely that there is *no* statistically significant correlation between the two numeric variables displayed on the plot at the α-level of 0.05.
 
 As illustrated in @fig-YearEducationPLotGrayBandNullEffectLines, it is impossible to draw such a line in the L1 panel, which is why we reject the null hypothesis of no correlation between years spent in formal education and grammar comprehension test scores in L1 speakers. We conclude that this correlation is significantly different from zero. By contrast, it is perfectly possible to draw such a straight line in the L2 panel, which is why we must conclude that, at the α-level of 0.05, we do not have enough evidence to reject the null hypothesis of no correlation in the L2 population. The observed correlation is not statistically significantly different from zero.
 
@@ -798,7 +798,6 @@ Dabrowska.data |>
        y = "English grammar comprehension test scores") +
   theme_bw()
 ```
-
 
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
@@ -1124,10 +1123,8 @@ cor.test(~ Vocab + EduTotal,
 
 It returns a correlation coefficient τ of `0.28` and a *p*-value of \< 0.05, which allows us to reject the null hypothesis of no association between `Vocab` and `EduTotal` scores among L1 English speakers.
 
-::: {.callout-caution collapse="false"}
-#### Your turn! {.unnumbered}
-
-[**Optional task**]{style="color:green;"} 🦖
+::: {.callout-caution collapse="true"}
+#### [**Optional (fun) task**]{style="color:green;" .unnumbered} 🦖 
 
 Inspired by the Anscombe Quartet, @matejkaSameStatsDifferent2017 created a set of 12 pairs of variables that have the same descriptive statistics as the data that produce a scatter plot representing a tyrannosaurus (see @fig-DinoPLot).
 
@@ -1212,6 +1209,8 @@ Clearly, if we had only used correlation statistics to describe the relationship
 ![Hex sticker of the [{datasauRus}](https://jumpingrivers.github.io/datasauRus/) package](images/hex_datasauRus.png){#fig-hexdatasauRus width="100" fig-alt="The hexagonal logo of the datasauRus package features a scatter plot in which the dots look like a dinosaur."}
 :::
 
+![Remember that the best way to check test assumptions is to visualise your data! (artwork by [Allison Horst](https://twitter.com/allison_horst)) (CC BY 4.0)](images/AHorst_NotNormal.png){#fig-NotNormal fig-alt="Cartoon of a normal distribution looking skeptically at an excited looking bimodal / negatively skewed distribution. The first says to the second, \"you're not normal.\""}
+
 ## Multiple testing problem {#sec-pHacking}
 
 In @sec-PValues we saw that conducting a statistical test with an α-level of 0.05 means that we accept a 5% risk of falsely rejecting the null hypothesis when it is actually true. Falsely rejecting the null hypothesis leads to a **false positive** result, also referred to as making a **Type I error**. It is crucial to understand that if we perform multiple tests on the same data, we dramatically increase the risk of reporting such false positive results. This is known as the multiple testing or multiple comparisons problem.
@@ -1261,7 +1260,7 @@ p_values.adjusted < 0.05
 
 It is crucial to understand that every *p*-value represents a probabilistic finding, not a definitive statement about reality. A *p*-value of 0.03 does *not* mean there is a 97% chance that the alternative hypothesis is true. Instead, it indicates that, if the null hypothesis were true, we would observe data at least as extreme as our sample only 3% of the time. Given the probabilistic nature of statistical inference and the multiple testing problem, **replication** of findings across independent studies is essential for building scientific knowledge (see @sec-Reproducibility). No single study, regardless of its sample size or *p*-value, can ever provide us with definitive evidence.
 
-Because of the multiple testing problem, only reporting statistically significant results and failing to report the number of tests conducted to find them is considered a Questionable Research Practice (QRP). It is one way to [*p*-hack](https://forrt.org/glossary/english/p_hacking/) results. A great resource for definitions and links to further literature related to conducting research is the [FORRT Glossary](https://forrt.org/glossary) — a community-sourced glossary of Open Scholarship terms [@parsonsCommunitysourcedGlossaryOpen2022]. Below is the FORRT Glossary's entry for QRPs.
+Because of the multiple testing problem, only reporting statistically significant results and failing to report the number of tests conducted to find them is considered a **Questionable Research Practice (QRP)**. It is one way to [*p*-hack](https://forrt.org/glossary/english/p_hacking/) results. A great resource for definitions and links to further literature related to conducting research is the [FORRT Glossary](https://forrt.org/glossary) — a community-sourced glossary of Open Scholarship terms [@parsonsCommunitysourcedGlossaryOpen2022]. Below is the FORRT Glossary's entry for QRPs.
 
 > #### Questionable Research Practices or Questionable Reporting Practices (QRPs) {.unnumbered}
 >
@@ -1285,7 +1284,7 @@ Recall how we observed that, for both L1 and L2 participants, there was a positi
 
 ## What's next?
 
-This chapter has given you the keys to understanding the basics of inferential statistics following the frequentist null hypothesis significance testing (NHST) framework. We looked at how we can use *t*-tests and correlation tests to infer information about a population based on a random sample from the population. We introduced *p*-values, standardised effect sizes, and confidence intervals. These are complex concepts that take time to understand. Frequentist inferential statistics can be very powerful and useful, but it isn't intuitive. Most people will need to read this chapter and other resources (see recommended readings) several times to really get to grips with these concepts. 
+This chapter has given you the keys to understanding the basics of inferential statistics following the frequentist null hypothesis significance testing (NHST) framework. We looked at how we can use *t*-tests and correlation tests to infer information about a population based on a random sample from the population. We introduced *p*-values, standardised effect sizes, and confidence intervals. These are complex concepts that take time to understand. Frequentist inferential statistics can be very powerful and useful, but it isn't intuitive. Most people will need to read this chapter and other resources (see recommended readings) several times to really get to grips with these concepts.
 
 In the following two chapters, we will move from single statistical tests to multiple linear regression models. In @sec-SLR will first see how *t*-tests and correlation tests can be understood and computed as simple linear regression models before exploring the potential of multiple linear regression models in @sec-MLR. The latter allow us to quantify and test the effects of several variables in a single model. Multiple linear regression naturally handles multiple predictors simultaneously, thus removing the need for *p*-value adjustments and providing more nuanced insights into the contributions of each variable and their potential interactions.
 
@@ -1312,7 +1311,7 @@ Are you confident that you can...?
 -   [ ] Calculate Cohen's *d* using `R` (@sec-EffectSize)
 -   [ ] Calculate, test, and interpret correlations using `R` (@sec-Correlations)
 -   [ ] Correct *p*-values for multiple comparisons and explain why this is important (@sec-pHacking)
--   Check that the main underlying assumptions of statistical tests are met:
+-   Check that the main underlying assumptions of the most common statistical tests are met:
     -   [ ] randomisation (@sec-Randomisation)
     -   [ ] independence (@sec-Independence)
     -   [ ] normality (@sec-Normality)
