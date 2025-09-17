@@ -98,7 +98,7 @@ There are different ways to draw samples from a population. The most common meth
 | **Representative\                | The sample is designed so as to match the population on key characteristics (e.g., age, gender, region, education).                           | Researchers recruit speakers until the sample mirrors known demographics from census data or other sources.                                                                                                | Often considered to provide a “good enough” picture when true random sampling is impossible.    | Vulnerable to self-selection bias; time-consuming and complex.                                                                                                               |
 | (quota) sampling**               |                                                                                                                                               |                                                                                                                                                                                                            |                                                                                                 |                                                                                                                                                                              |
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Convenience sampling**         | Participants are chosen because they reachable and willing to participate.                                                                    | Most common in experimental linguistics, online and classroom‑based surveys.                                                                                                                               | Quicker, cheaper, and simpler.                                                                  | Over‑represents certain groups; limits external validity.                                                                                                                    |
+| **Convenience sampling**         | Participants are chosen because they are reachable and willing to participate.                                                                | Most common in experimental linguistics, online and classroom‑based surveys.                                                                                                                               | Quicker, cheaper, and simpler.                                                                  | Over‑represents certain groups; limits external validity.                                                                                                                    |
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 In practice, it is quite common for combination of these methods to be used. For example, when researchers run linguistics experiments via commercial platforms such as *Qualtrics* or *Amazon* *MechanicalTurk,* they can select their participants based on some demographic data to obtain a more **representative** **sample**. But the sample nonetheless remains a **convenience** **sample** as only people who sign up to earn money on these platforms can, by definition, be recruited on these platforms. As you can imagine, these click-workers are hardly representative of the full population, even if they are carefully sampled for age, gender, or socio-economic status.
@@ -185,7 +185,7 @@ Dabrowska.data |>
   as.data.frame()
 ```
 
-However, we are also aware that there is a lot of variation around these average values. The standard deviations (SD) around these mean values inform us that there is more variability in the L1 group than in the L2 group. @fig-IQTestPlot visualises this variability. On this boxplot, diamonds represent the mean values.
+However, we are also aware that there is a lot of variation around these average values. The standard deviations (SD) around these mean values inform us that there is more variability in the L1 group than in the L2 group. @fig-IQTestPlot visualises this variability (see @sec-IQR on how to interpret boxplots). On this boxplot, diamonds represent the mean values.
 
 ```{r}
 #| code-fold: true
@@ -226,7 +226,7 @@ ggplot(data = Dabrowska.data,
   theme_bw()
 ```
 
-Using the NHST framework, we can quantify how *likely* it is that this observed difference in means — which is visualised as the dotted line in @fig-IQTestPlot — could have occurred due to chance, i.e. due to naturally occurring variation, only.
+Following the NHST framework, we can quantify how *likely* it is that this observed difference in means — which is visualised as the dotted line in @fig-IQTestPlot — could have occurred due to chance, i.e. due to naturally occurring variation, only.
 
 We start with the assumption that the patterns observed in our sample occurred by chance alone. This initial assumption is known as the **null hypothesis (H~0~)**. It suggests that any patterns observed in our data arose by mere coincidence rather than due to any real effect or underlying relationship. To answer our research question, we formulate the following null hypothesis:
 
@@ -300,11 +300,11 @@ The output of the `t.test()` function is a bit overwhelming at first, so let's f
 ::: callout-warning
 ## Common misconception
 
-Unfortunately, **confidence intervals (CI)** are a bit of a misnomer, which frequently leads to misunderstandings. Contrary to what so-called "AI" tools (see @sec-PartingWords) and even some statistics textbooks may claim, confidence intervals do *not* tell us that we can be 95% confident that the true difference across the entire population lies within the 95% confidence interval.
+Unfortunately, **confidence intervals (CI)** are a bit of a misnomer, which frequently leads to misunderstandings. Contrary to what so-called "AI" tools (see @sec-PartingWords) and even some statistics textbooks may claim, confidence intervals do *not* tell us that we can be 95% confident that the true difference across the entire population lies within the 95% confidence interval. Bodo Winter [-@WinterStatisticsLinguistsIntroduction2019: 165] clarifies this common misconception as follows:
 
-> \[T\]he actual population parameter of interest may or may not be inside the confidence interval -- you will actually never know for sure. However, if you imagine an infinite series of experiments and compute a confidence interval each time, 95% of the time this interval would contain the true population parameter. [@WinterStatisticsLinguistsIntroduction2019: 165]
+> \[T\]he actual population parameter of interest [i.e. in the case of a *t*-test, the difference in mean values] may or may not be inside the confidence interval -- you will actually never know for sure. However, if you imagine an infinite series of experiments and compute a confidence interval each time, 95% of the time this interval would contain the true population parameter.
 
-In other words, our confidence interval does *not* tell us how confident we can be about estimated value, but rather how confident we can be about our statistical method.
+In other words, our confidence interval does not tell us how confident we can be about estimated *value*, but rather how confident we can be about our statistical *method*.
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -319,8 +319,7 @@ Consider the following research question:
 ```{r echo=FALSE}
 check_question("Across the entire adult UK population, there is no difference in the mean scores of L1 vs. L2 speakers on the English receptive vocabulary test.",
                options = c("Across the entire adult UK population, there is no difference in the mean scores of L1 vs. L2 speakers on the English receptive vocabulary test.",
-                           "Across the entire adult UK population, the mean scores of L1 speakers are not higher than those of L2 speakers on the English receptive vocabulary test.",
-                           "Across the entire adult UK population, the mean scores of both L1 and L2 speakers on the English grammar comprehension test are null.",
+                           "Across the entire adult UK population, the mean scores of both L1 and L2 speakers on the English receptive vocabulary test are null.",
                            "Across the entire adult UK population, there is no statistically significant difference between the mean scores of L1 speakers and those of L2 speakers on the English receptive vocabulary test."),
                random_answer_order = TRUE,
                type = "radio",
@@ -457,7 +456,7 @@ However, Cohen [-@cohenStatisticalPowerAnalysis1988: 25] himself cautioned that:
 
 Hence, it is important that linguists and education researchers base their interpretation of standardised effect sizes on prior research relevant to their field of research (see, e.g., @plonskyHowBigBig2014 for L2 research).
 
-The output of the `cohens_d()` function above also includes a 95% confidence interval (CI) around Cohen's *d*. It turns out that there is a direct relationship between the confidence interval around an effect size and the statistical significance of a null hypothesis significance test: if an effect is statistically significant in a two-sided[^11_inferential-6] independent *t*-test with an significance (α) level of 0.05, the 95% CI for the mean difference between the two groups will *not* include zero. The *t*-test that we conducted on the results of the Blocks test across the L1 and L2 groups produced a *p*-value of 0.00001956 which is less than 0.05 and was therefore statistically significant at the α-level of 0.05. But we didn't really need to check the *p*-value because we can see that the effect is statistically significant at the α-level of 0.05 by looking at the 95% CI around Cohen's *d*: the lower bound is `-1.02` and the upper bound `-0.37`. In other words, the CI does not straddle zero.
+The output of the `cohens_d()` function above also includes a 95% confidence interval (CI) around Cohen's *d*. It turns out that there is a direct relationship between the confidence interval around an effect size and the statistical significance of a null hypothesis significance test: if an effect is statistically significant in a two-sided[^11_inferential-6] independent *t*-test with an significance (α) level of 0.05, the 95% confidence interval (CI) for the mean difference between the two groups will *not* include zero. The *t*-test that we conducted on the results of the Blocks test across the L1 and L2 groups produced a *p*-value of 0.00001956 which is less than 0.05 and was therefore statistically significant at the α-level of 0.05. But we didn't really need to check the *p*-value because we can see that the effect is statistically significant at the α-level of 0.05 by looking at the 95% CI around Cohen's *d*: the lower bound is `-1.02` and the upper bound `-0.37`. In other words, the CI does not straddle zero.
 
 [^11_inferential-6]: All of the statistical tests performed in this chapter are two-sided. For a discussion of one-sided vs. two-sided tests, see @lakensImprovingYourStatistical2022: Section 5.10).
 
@@ -496,14 +495,14 @@ cohens_d(Blocks ~ Gender,
 
 Here, the `cohens_d()` function compares the scores of the female participants with those of the male participants because 'female' comes first alphabetically. Hence, the negative Cohen's *d* value means that, on average, males perform better than females. However, we can see that the effect size (`-0.10`) is very small.
 
-Now turning to the 95% CI also output by the function, we can see that, while the lower confidence bound corresponds to a negative effect size, the upper bound is positive, which means that the confidence interval contains the possibility of an effect size of zero, correspoding to no effect at all. Hence, we must conclude that this difference in scores between female and male participants is not statistically significant at an α-level of 0.05. We can confirm this by performing a *t*-test. It returns a *p*-value that is greater than 0.05:
+Now turning to the 95% confidence interval (CI) also output by the function, we can see that, while the lower confidence bound corresponds to a negative effect size, the upper bound is positive, which means that the confidence interval contains the possibility of an effect size of zero, correspoding to no effect at all. Hence, we must conclude that this difference in scores between female and male participants is not statistically significant at an α-level of 0.05. We can confirm this by performing a *t*-test. It returns a *p*-value that is greater than 0.05:
 
 ```{r}
 t.test(Blocks ~ Gender, 
        data = Dabrowska.data)
 ```
 
-By default, the `cohens_d()` function computes a 95% CI, but, if we had chosen a lower α-level of, say, 0.01, we can change this default:
+By default, the `cohens_d()` function computes a 95% confidence interval, but, if we had chosen a lower α-level of, say, 0.01, we can change this default:
 
 ```{r}
 cohens_d(Blocks ~ Gender, 
@@ -561,13 +560,13 @@ cohens_d(Colloc ~ Group,
 
 ```{r echo=FALSE}
 check_question(c("All three differences in means are statistically significant at the α-level of 0.01.",
-                 "For all three effect sizes, the 99% CI is wider than the 95% CI."),
+                 "For all three effect sizes, the 99% CIs are wider than the 95% CI."),
                options = c("All three differences in means are statistically significant at the α-level of 0.01.",
                  "All three differences in means are statistically confident at the α-level of 0.01.",
                            "We can be 99% confident that all three differences in means are real.",
                            "In 99% of cases, L1 speakers perform better than L2 speakers on all three tests.",
                            "The most relevant difference can be found in the collocation test data.",
-                           "For all three effect sizes, the 99% CI are wider than the 95% CI."),
+                           "For all three effect sizes, the 99% CIs are wider than the 95% CI."),
                random_answer_order = TRUE,
                type = "check",
                button_label = "Check answer",
@@ -645,12 +644,9 @@ At the beginning of the chapter, we summarised the following observations based 
 -   For both L1 and L2 participants, there is a positive correlation between the number years they were in formal education and their English grammar comprehension test scores: the longer they were in formal education, the better they did on the test (see @fig-YearEducationPlot).
 
 ```{r}
-#| message: false
-#| code-fold: true
-#| code-summary: "Show code to generate plot."
 #| label: "fig-YearEducationPlot"
 #| fig-cap: "Relationship between years in formal education and English grammar comprehension test scores for groups L1 and L2"
-#| fig-alt: "Two scatter plot showing the relationship between the number of years in formal education and English grammar comprehension test scores for two groups, L1 and L2. Each black dot represents an individual’s score. A blue regression line in each plot shows a positive trend: higher years of education are associated with higher test scores in both groups."
+#| fig-alt: "Two scatter plot showing the relationship between the number of years in formal education and English grammar comprehension test scores for two groups, L1 and L2. Each black dot represents an individual’s score. A blue regression line in each plot shows a positive trend: more years in education are associated with higher test scores in both groups."
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = EduTotal, 
@@ -756,8 +752,8 @@ Confidence intervals around correlation coefficients can be difficult to interpr
 ```{r}
 #| message: false
 #| label: "fig-YearEducationPLotGrayBand"
-#| fig-cap: "Relationship between years in formal education and English grammar comprehension test scores for groups L1 and L2 with confidence intervals"
-#| fig-alt: "This is the same plot as above. The only difference is that two shaded gray bands sloping upwards are drawn around the blue lines of two panels. The bands are narrow and does not encompass a flat horizontal line."
+#| fig-cap: "Relationship between years in formal education and English grammar comprehension test scores for groups L1 and L2 with 95% confidence bands"
+#| fig-alt: "This is the same plot as above. The only difference is that two shaded gray bands sloping upwards are drawn around the blue lines of two panels. The band around the correlation in the L1 panel is quite narrow and does not encompass the possibility of a flat horizontal line. By constrast, the band around the correlation in the L2 panel is much wider and it is easy to imagine a horizontal line going through it."
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = EduTotal, 
@@ -772,12 +768,43 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-The interpretation of the grey bands is as follows: if it's possible to draw a straight line that stays within the grey band, it is very likely that there is *no* statistically significant correlation between the two numeric variables displayed on the plot.
+The interpretation of the grey bands is as follows: if it's possible to draw a straight line that stays within the 95 % confidence band, it is very likely that there is *no* statistically significant correlation between the two numeric variables displayed on the plot at the α-level of 0.05. 
+
+As illustrated in @fig-YearEducationPLotGrayBandNullEffectLines, it is impossible to draw such a line in the L1 panel, which is why we reject the null hypothesis of no correlation between years spent in formal education and grammar comprehension test scores in L1 speakers. We conclude that this correlation is significantly different from zero. By contrast, it is perfectly possible to draw such a straight line in the L2 panel, which is why we must conclude that, at the α-level of 0.05, we do not have enough evidence to reject the null hypothesis of no correlation in the L2 population. The observed correlation is not statistically significantly different from zero.
+
+```{r}
+#| message: false
+#| label: "fig-YearEducationPLotGrayBandNullEffectLines"
+#| fig-cap: "The dotted lines are compatible with the null hypothesis of no correlation."
+#| fig-alt: "This is the same plot as above. The only difference is that dotted flat horizontal lines have been added to both panels. Only the straight dotted line in the L2 panel remains within the confidence band."
+
+Dabrowska.data |> 
+  ggplot(mapping = aes(x = EduTotal, 
+                       y = Grammar)) +
+  facet_wrap(~ Group) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              se = TRUE,
+              level = 0.95) +
+  geom_segment(data = data.frame(Group = c("L1", "L2"), 
+                                 y = c(92, 70),
+                                 x = c(10, 9),      
+                                 xend = c(21, 24)),
+               aes(x = x, xend = xend, y = y, yend = y),
+               inherit.aes = FALSE,
+               linewidth = 0.8,
+               linetype = "dotted",
+               color = "blue") +
+  labs(x = "Number of years in formal education",
+       y = "English grammar comprehension test scores") +
+  theme_bw()
+```
+
 
 ::: {.callout-tip collapse="true"}
 #### Your turn! {.unnumbered}
 
-Generate a facetted scatter plot (similar to @fig-YearEducationPlot) visualising the correlation between age (`Age`) and English receptive vocabulary test scores (`Vocab`) for L1 and L2 participants in two separate panels. Add a grey band visualising 95% confidence intervals around the regression lines.
+Generate a facetted scatter plot (similar to @fig-YearEducationPLotGrayBand) visualising the correlation between age (`Age`) and English receptive vocabulary test scores (`Vocab`) for L1 and L2 participants in two separate panels. Add a grey band visualising 95% confidence intervals around the regression lines.
 
 [**Q11.10**]{style="color:green;"} Looking at your plot only, which of these statements can you confidently say is/are true?
 
@@ -822,12 +849,12 @@ Now use the `cor.test()` function to find out how strong the correlations are in
 
 ```{r echo=FALSE}
 check_question(c("The correlation of Age and Vocab scores in the L1 sample is 0.37.",
-                           "Based on the data available to us, we cannot reject the null hypothesis of no correlation between Age and Vocab scores for the L2 population.",
+                           "Based on the data available to us and an α-level of 0.05, we cannot reject the null hypothesis of no correlation between Age and Vocab scores for the L2 population.",
                            "Assuming that the null hypothesis of no correlation between Age and Vocab scores in the L1 population is true, there is only a 0.03% chance of observing a correlation of 0.37 or larger in a sample of this size.",
                            "In absolute values, the correlation between Age and Vocab scores is stronger in the L1 than in the L2 sample."),
                options = c("The correlation of Age and Vocab scores in the L1 sample is 0.37.",
                  "The correlation of Age and Vocab scores in the L2 population is -0.20.",
-                           "Based on the data available to us, we cannot reject the null hypothesis of no correlation between Age and Vocab scores for the L2 population.",
+                           "Based on the data available to us and an α-level of 0.05, we cannot reject the null hypothesis of no correlation between Age and Vocab scores for the L2 population.",
                            "Assuming that the null hypothesis of no correlation between Age and Vocab scores in the L1 population is true, there is only a 0.03% chance of observing a correlation of 0.37 or larger in a sample of this size.",
                            "In absolute values, the correlation between Age and Vocab scores is stronger in the L1 than in the L2 sample."),
                random_answer_order = TRUE,
@@ -909,7 +936,7 @@ A crucial aspect that we have glossed over so far in this chapter is that the re
 
 ### Randomisation {#sec-Randomisation}
 
-The only assumption that we have mentioned so far is that of **random sampling** (\@sec-Sampling). In practice, this assumption is rarely met in the language sciences. For instance, the L1 and L2 participants recruited for @DabrowskaExperienceAptitudeIndividual2019 were not randomly drawn from the entire adult UK population. Dąbrowska [-@DabrowskaExperienceAptitudeIndividual2019: 5-6] reports that the participants "were recruited through personal contacts, church and social clubs, and advertisements in local newspapers". Such transparency over the sampling procedure is crucial to interpreting the results of a study.
+The only assumption that we have mentioned so far is that of **random sampling** (@sec-Sampling). In practice, this assumption is rarely met in the language sciences. For instance, the L1 and L2 participants recruited for @DabrowskaExperienceAptitudeIndividual2019 were not randomly drawn from the entire adult UK population. Dąbrowska [-@DabrowskaExperienceAptitudeIndividual2019: 5-6] reports that the participants "were recruited through personal contacts, church and social clubs, and advertisements in local newspapers". Such transparency over the sampling procedure is crucial to interpreting the results of a study.
 
 > When the assumption of random sampling is not met, inferences to the population become difficult. In this case, researchers should describe the sample and population in sufficient detail to justify that the sample was at least representative of the intended population ([Wilkinson and APA Task Force on Statistical Inference, 1999](https://doi.org/10.1037/0003-066X.54.8.594)). If such a justification is not made, readers are left to their own interpretation as to the generalizability of the results. [@nimonStatisticalAssumptionsSubstantive2012: 1]
 
@@ -1041,7 +1068,7 @@ Pair1 + Pair2 + Pair3 + Pair4
 
 From @fig-4PairPlot, we can immediately see that the relationship between the two variables in Pair 2 is **non-linear**, which makes the yellow linear regression line nonsensical. The data visualisations for Pairs 3 and 4 illustrate how a single **outlier** can either create an illusion of a correlation that does not exist (Pair 4) or overestimate one that does exists but is probably considerably weaker than Pearson's r would lead to us believe (Pair 3).
 
-The assumption of linearity is relevant to many widely used statistical methods -- notably linear regression models (see @sec-LineaRregression) -- which rely on Pearson's correlation coefficients. In practice, researchers usually assume linearity unless there is a strong theoretical reason to expect a non‑linear pattern (Cohen et al. 2003). However, this assumption should always be checked. The most straightforward way to do this is to visualise the data.
+The assumption of linearity is relevant to many widely used statistical methods -- notably linear regression models (see @sec-SLR and @sec-MLR) -- which rely on Pearson's correlation coefficients. In practice, researchers usually assume linearity unless there is a strong theoretical reason to expect a non‑linear pattern (Cohen et al. 2003). However, this assumption should always be checked. The most straightforward way to do this is to visualise the data.
 
 ::: callout-note
 ### Non-parametric correlations {.unnumbered}
@@ -1068,7 +1095,7 @@ ggplot(Dabrowska.data,
   theme_bw()
 ```
 
-As we already saw in @sec-Normality, the Grammar scores of the L2 group are not normally distributed; hence, we can also see from @fig-GrammarBoxplot that there is much more variance in the L2 data than there is in the L1. In other words, we have heterogeneity of variance. One way to deal with this is to conduct a non-parametric test instead: Wilcox's test does not have assume homogeneity of variance. However, if your data meets the criterion of normality and only fails to meet that homogeneity of variance, you can still conduct a parametric *t*-test because the standard `t.test()` function in `R` includes Welch's adjustment corrects for unequal variances (Field et al. 2012: 373).
+As we already saw in @sec-Normality, the Grammar scores of the L2 group are not normally distributed; hence, we can also see from @fig-GrammarBoxplot that there is much more variance in the L2 data than there is in the L1. In other words, we have heterogeneity of variance. One way to deal with this is to conduct a non-parametric test instead: Wilcox's test does not have assume homogeneity of variance. However, if your data meets the criterion of normality and only fails to meet that homogeneity of variance, you can still conduct a parametric *t*-test because the standard `t.test()` function in `R` includes Welch's adjustment corrects for unequal variances [@FieldDiscoveringstatisticsusing2012: 373].
 
 To check the assumption of homoscedasticity for a correlation, we can visualise the variance (or variability) around the correlation (the linear regression line) with the help of a scatter plot. In @fig-VocabEduPlot, we can see that this variance is much larger for low `Vocab` scores than for medium to high scores.
 
@@ -1103,14 +1130,14 @@ It returns a correlation coefficient τ of `0.28` and a *p*-value of \< 0.05, w
 
 [**Optional task**]{style="color:green;"} 🦖
 
-Inspired by the Anscombe Quartet, @matejkaSameStatsDifferent2017 created a set of 12 pairs of variables that have the same descriptive statistics as the data that produce a scatter plot representing a tyrannosaurus[^11_inferential-7] (see @fig-DinoPLot).
+Inspired by the Anscombe Quartet, @matejkaSameStatsDifferent2017 created a set of 12 pairs of variables that have the same descriptive statistics as the data that produce a scatter plot representing a tyrannosaurus (see @fig-DinoPLot).
 
 ```{r}
 #| echo: false
 #| fig-width: 4
 #| fig-height: 6
 #| label: "fig-DinoPLot"
-#| fig-cap: "Scatter plot depicting a tyrannosaurus (originally created by Alberto Cairo)"
+#| fig-cap: "Scatter plot depicting a tyrannosaurus (originally created by [Alberto Cairo](https://web.archive.org/web/20240620205540/http://www.thefunctionalart.com/2016/08/download-datasaurus-never-trust-summary.html))"
 #| fig-alt: "A scatter plot with the x-axis ranging from 20 to 100, and the y-axis ranging from 0 to 100. The data points form a pattern that looks like a tyrannosaurus."
 
 datasaurus_dozen |> 
@@ -1133,8 +1160,6 @@ datasaurus_dozen
 [**2.**]{style="color:green;"} Run the following code to compare the descriptive statistics of all three datasets within the `datasaurus_dozen`. The fourth set, `dino`, is the one visualised in @fig-DinoPLot. Note that there is a very small, negative correlation between all pairs of variables of `-0.0656`.
 
 ```{r}
-#| echo: false
-
 datasaurus_dozen |> 
   group_by(dataset) |> 
   summarise(
@@ -1183,8 +1208,6 @@ ggplot(datasaurus_dozen,
 
 Clearly, if we had only used correlation statistics to describe the relationships between these 13 pairs of variables, we would have missed some literally dinosaur-sized patterns! 🤯
 :::
-
-[^11_inferential-7]: This scatter plot was first designed by [Alberto Cairo](https://web.archive.org/web/20240620205540/http://www.thefunctionalart.com/2016/08/download-datasaurus-never-trust-summary.html).
 
 ::: column-margin
 ![Hex sticker of the [{datasauRus}](https://jumpingrivers.github.io/datasauRus/) package](images/hex_datasauRus.png){#fig-hexdatasauRus width="100" fig-alt="The hexagonal logo of the datasauRus package features a scatter plot in which the dots look like a dinosaur."}
@@ -1263,7 +1286,7 @@ Recall how we observed that, for both L1 and L2 participants, there was a positi
 
 ## What's next?
 
-This chapter has given you the keys to understanding the basics of inferential statistics following the frequentist null hypothesis significance testing (NHST) framework. We looked at how we can use *t*-tests and correlation tests to infer information about a population based on a random sample from the population. We introduced *p*-values, standardised effect sizes, and confidence intervals. These are complex concepts that, if you think you've immediately understood them, I'm afraid you probably haven't. Frequentist inferential statistics can be very powerful and useful, but it isn't intuitive. In practice, you will need to read and re-read this chapter and other resources (see recommended readings) to really get to grips with these concepts.
+This chapter has given you the keys to understanding the basics of inferential statistics following the frequentist null hypothesis significance testing (NHST) framework. We looked at how we can use *t*-tests and correlation tests to infer information about a population based on a random sample from the population. We introduced *p*-values, standardised effect sizes, and confidence intervals. These are complex concepts that take time to understand. Frequentist inferential statistics can be very powerful and useful, but it isn't intuitive. Most people will need to read this chapter and other resources (see recommended readings) several times to really get to grips with these concepts. 
 
 In the following two chapters, we will move from single statistical tests to multiple linear regression models. In @sec-SLR will first see how *t*-tests and correlation tests can be understood and computed as simple linear regression models before exploring the potential of multiple linear regression models in @sec-MLR. The latter allow us to quantify and test the effects of several variables in a single model. Multiple linear regression naturally handles multiple predictors simultaneously, thus removing the need for *p*-value adjustments and providing more nuanced insights into the contributions of each variable and their potential interactions.
 
@@ -1279,7 +1302,7 @@ In the following two chapters, we will move from single statistical tests to mul
 
 ### Check your progress 🌟 {.unnumbered}
 
-Well done! You have successfully completed this chapter introducing the complex topic of inferential statistics. You have answered [`r checkdown::insert_score()` out of 13 questions]{style="color:green;"} correctly.
+Well done! You have successfully completed this chapter introducing the complex topic of inferential statistics. You have successfully completed [`r checkdown::insert_score()` out of 13 questions]{style="color:green;"} in this chapter.
 
 Are you confident that you can...?
 
