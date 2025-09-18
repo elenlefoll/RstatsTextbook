@@ -48,9 +48,9 @@ This is in contrast to **replicability**, where the same methods, but different 
 
 ![Defining *reproducibility* and related terms (CC-BY 4.0 [The Turing Way Community](https://book.the-turing-way.org/reproducible-research/overview/overview-definitions))](images/TuringWay_reproducible-matrix.jpg){#fig-reproducibility-terminology width="444"}
 
-Given this definition, reproducibility might seem like a low bar to pass. You might be thinking: Shouldn't it be obvious that we'll get the same results if we repeat a study using exactly the same data and method? Well, yes, it should be. But it very often isn't! For a start, to be able to even attempt to reproduce the results of a study, the underlying data must be available. Linguists sharing their raw data as Ewa Dąbrowska did as part of her 2019 paper [@DabrowskaExperienceAptitudeIndividual2019] remains the exception rather than the norm [see @bochynskaReproducibleResearchPractices2023a][^13_literateprogramming-1]. Second, the open data must be in an accessible format and must be published with enough documentation to be understandable to an independent researcher. Third, the author(s) of the original study need to have very diligently documented all their data wrangling and analyses steps. The best way to do this is undoubtedly to use code that does not require closed-source software (e.g., a researcher without a license for SPSS or Stata will not be able to run SPSS or Stata scripts, see @sec-OpenSource). This open code must be shared in an accessible format, too. Fourth, independent researchers need to be able to run these scripts. To this end, it is important that they know exactly which tools were used. Thus, if the analyses were conducted in `R`, they need to know which `R` version and which packages and package versions were used (@sec-Packages). They also need to know in which order the scripts were run and, finally, the scripts must run on their own computers without any errors. So now, reproducibility doesn't sound quite so easy, right? Luckily, if we apply the principles of literate programming in **Quarto**, we can go a long way towards ensuring that our research is reproducible.
+Given this definition, reproducibility might seem like a low bar to pass. You might be thinking: Shouldn't it be obvious that we'll get the same results if we repeat a study using exactly the same data and method? Well, yes, it should be. But it very often isn't! For a start, to be able to even attempt to reproduce the results of a study, the underlying data must be available. Linguists sharing their raw data as Ewa Dąbrowska did as part of her 2019 paper [@DabrowskaExperienceAptitudeIndividual2019] remains the exception rather than the norm [see @bochynskaReproducibleResearchPractices2023a][^14_literateprogramming-1]. Second, the open data must be in an accessible format and must be published with enough documentation to be understandable to an independent researcher. Third, the author(s) of the original study need to have very diligently documented all their data wrangling and analyses steps. The best way to do this is undoubtedly to use code that does not require closed-source software (e.g., a researcher without a license for SPSS or Stata will not be able to run SPSS or Stata scripts, see @sec-OpenSource). This open code must be shared in an accessible format, too. Fourth, independent researchers need to be able to run these scripts. To this end, it is important that they know exactly which tools were used. Thus, if the analyses were conducted in `R`, they need to know which `R` version and which packages and package versions were used (@sec-Packages). They also need to know in which order the scripts were run and, finally, the scripts must run on their own computers without any errors. So now, reproducibility doesn't sound quite so easy, right? Luckily, if we apply the principles of literate programming in **Quarto**, we can go a long way towards ensuring that our research is reproducible.
 
-[^13_literateprogramming-1]: Although there is ground for optimism here because more and more linguists and education scholars are beginning to make their data open in repositories such as the Open Science Framework (OSF), IRIS, and TROLLing (see @sec-Sharing).
+[^14_literateprogramming-1]: Although there is ground for optimism here because more and more linguists and education scholars are beginning to make their data open in repositories such as the Open Science Framework (OSF), IRIS, and TROLLing (see @sec-Sharing).
 
 ::: callout-note
 ### Going further️ 🚀 {.unnumbered collapse="TRUE"}
@@ -65,7 +65,7 @@ Watch this video from 2019, in which Garrett Grolemund (data scientist and instr
 
 {{< video "https://www.youtube.com/watch?v=s9aWmU0atlQ" width="500" height="300" title="Garrett Grolemund | R Markdown The bigger picture (2019)" >}}
 
-[**Q13.1**]{style="color:green;"} What is meant by the replication crisis?[^13_literateprogramming-2]
+[**Q13.1**]{style="color:green;"} What is meant by the replication crisis?[^14_literateprogramming-2]
 
 ```{r echo=FALSE}
 check_question("The finding, and related shift in academic culture and thinking, that a large proportion of scientific studies published across different disciplines do not replicate.",
@@ -128,7 +128,7 @@ check_hint("If you're unsure, re-watch the video from minute 13' onwards.", hint
 ```
 :::
 
-[^13_literateprogramming-2]: The above definitions are all from the community-sourced FORRT glossary [@parsonsCommunitysourcedGlossaryOpen2022].
+[^14_literateprogramming-2]: The above definitions are all from the community-sourced FORRT glossary [@parsonsCommunitysourcedGlossaryOpen2022].
 
 ## Getting started with Quarto {#sec-StartQuarto}
 
@@ -146,9 +146,9 @@ Quarto documents are designed to:
 ![](images/hex_Quarto.png){width="100" alt-text="The Quarto logo is a circle divided into four quarters."}
 :::
 
-We will be writing Quarto documents from the *RStudio* IDE[^13_literateprogramming-3]; however, Quarto itself requires a separate installation. Follow these steps to **install** Quarto and check that everything is working as expected:
+We will be writing Quarto documents from the *RStudio* IDE[^14_literateprogramming-3]; however, Quarto itself requires a separate installation. Follow these steps to **install** Quarto and check that everything is working as expected:
 
-[^13_literateprogramming-3]: You can, of course, write Quarto documents using any other IDE (Integrated Developer Environment, see @sec-IDE) that supports Quarto such as VS Code, Jupyter, or Neovim.
+[^14_literateprogramming-3]: You can, of course, write Quarto documents using any other IDE (Integrated Developer Environment, see @sec-IDE) that supports Quarto such as VS Code, Jupyter, or Neovim.
 
 1.  Go to <https://quarto.org/docs/get-started/> and download the latest Quarto version that is compatible for your operating system.
 
@@ -160,9 +160,9 @@ We will be writing Quarto documents from the *RStudio* IDE[^13_literateprogrammi
 
 ![](images/Quarto_new.png){#fig-QuartoNew width="401"}
 
-4.  *RStudio* has now opened a new, untitled Quarto file (`.qmd`). Change the title of the document (which is not the same as its filename!) and add the following three lines in the **document header** by copying and pasting the following lines at the top of the document.[^13_literateprogramming-4] Quarto document headers are written in **YAML** which, I kid you not, stands for *Yet Another Markup Language*! 😅
+4.  *RStudio* has now opened a new, untitled Quarto file (`.qmd`). Change the title of the document (which is not the same as its filename!) and add the following three lines in the **document header** by copying and pasting the following lines at the top of the document.[^14_literateprogramming-4] Quarto document headers are written in **YAML** which, I kid you not, stands for *Yet Another Markup Language*! 😅
 
-[^13_literateprogramming-4]: Note that, in YAML syntax, character strings such as the document title and your name must be enclosed in quotation marks. By contrast, the date is not enclosed in quotation marks because it is a dynamic variable that will be adjusted to your computer's system date so that, every time you render the document, the date will be updated.
+[^14_literateprogramming-4]: Note that, in YAML syntax, character strings such as the document title and your name must be enclosed in quotation marks. By contrast, the date is not enclosed in quotation marks because it is a dynamic variable that will be adjusted to your computer's system date so that, every time you render the document, the date will be updated.
 
 ```{yaml}
 ---
@@ -377,9 +377,9 @@ As you are working on your code within a Quarto document, you can either run:
 -   each individual line of code using the keyboard shortcut ⌘/Ctrl ⏎ or
 -   the entire code chunk either by clicking the "Run"![](https://d33wubrfki0l68.cloudfront.net/18153fb9953057ee5cff086122bd26f9cee8fe93/3aba9/images/notebook-run-chunk.png)icon or using the shortcut ⇧ ⌘/Ctrl ⏎.
 
-*RStudio* will execute the code and display the results either within your document (below each chunk) or in the Console, depending on your *RStudio* settings.[^13_literateprogramming-5]
+*RStudio* will execute the code and display the results either within your document (below each chunk) or in the Console, depending on your *RStudio* settings.[^14_literateprogramming-5]
 
-[^13_literateprogramming-5]: You can change this behaviour in your *RStudio* preferences under *Tools \> Global Options \>* R Markdown by selecting or unselecting the option: "Show output inline for all R Markdown documents".
+[^14_literateprogramming-5]: You can change this behaviour in your *RStudio* preferences under *Tools \> Global Options \>* R Markdown by selecting or unselecting the option: "Show output inline for all R Markdown documents".
 
 Chunk output can be customised with **chunk options**. There are many options to choose from but, the most important options control whether your code block should be executed when you render your Quarto document and what results are inserted in the rendered version:
 
@@ -548,9 +548,9 @@ Using the Source mode, add the following section to your Quarto document and ren
  `{{r}} nrow(L1.data)` native speakers and `{{r}} nrow(L2.data)` nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.
 ```
 
-The rendered version should read like this (if you are obtaining different numbers, this either means that you have tempered with the original data files or that they have been corrupted)[^13_literateprogramming-6]:
+The rendered version should read like this (if you are obtaining different numbers, this either means that you have tempered with the original data files or that they have been corrupted)[^14_literateprogramming-6]:
 
-[^13_literateprogramming-6]: Using Microsoft Excel to open these `.csv` files can corrupt the files and can happen even if you did not use Excel yourself (e.g., on some Windows computers, this is sometimes done automatically as part of the download process). To find out more, see @sec-ExcelWarning.
+[^14_literateprogramming-6]: Using Microsoft Excel to open these `.csv` files can corrupt the files and can happen even if you did not use Excel yourself (e.g., on some Windows computers, this is sometimes done automatically as part of the download process). To find out more, see @sec-ExcelWarning.
 
 > ### Descriptive statistics about the participants {.unnumbered}
 >
@@ -665,9 +665,9 @@ Once they are saved to the local environment, the values can be inserted inline 
 ```
 :::
 
-If we want to start our paragraph with 90 written in as a word rather than in digits, we can use the `numbers_to_words function()` function from the {xfun} package. First, you'll need to install the {xfun} package and then add a line to your `setup` chunk to load it.[^13_literateprogramming-7]
+If we want to start our paragraph with 90 written in as a word rather than in digits, we can use the `numbers_to_words function()` function from the {xfun} package. First, you'll need to install the {xfun} package and then add a line to your `setup` chunk to load it.[^14_literateprogramming-7]
 
-[^13_literateprogramming-7]: To make your Quarto document even more reproducible, you can replace your `setup` chunk with the following function that will automatically check if a package needs to be installed before it is loaded:
+[^14_literateprogramming-7]: To make your Quarto document even more reproducible, you can replace your `setup` chunk with the following function that will automatically check if a package needs to be installed before it is loaded:
 
     ```{{r}}
     #| label: improved-setup
@@ -1193,7 +1193,7 @@ For an accessible introduction to stabilising your computing environment, I reco
 
 You may have noticed that, in addition to creating an `.html` file, rendering your Quarto document has also generated a folder containing any necessary data, images, stylesheets or other files required to display the HTML version of your document. This is because Quarto keeps external resources separate from the main HTML file by default. While this is advantageous for large documents and complex projects, it does mean that your HTML document can only be viewed if both the `.html` file and its associated folder are shared.
 
-If you want to share a **single, self-contained** `.html` file with someone else or upload it somewhere, you will need to **embed** all the necessary files directly inside your HTML file. This is achieved by adding the following option to your Quarto document's YAML header:
+If you want to share a **single, self-contained** `.html` file with someone else or upload it somewhere, you will need to **embed** all the necessary files directly inside your HTML file. This is achieved by adding the following option at the end of your document's YAML header:
 
 ```{yaml}
 ---
@@ -1225,7 +1225,7 @@ So far, we have only tried rendering our Quarto document to **HTML**, which is t
 
 ### Word, LibreOffice & co.
 
-Your supervisor or colleague may request a **Microsoft Word** document and, thankfully, this is no problem. Add the following line to the bottom of your **YAML header** and then render your document again. This is will generate a `.docx` file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.
+Your supervisor or colleague may request a **Microsoft Word** document and, thankfully, this is no problem. You can change the rendering format to a `.docx` file by changing the format option in your **YAML header**:
 
 ```{yaml}
 ---
@@ -1233,19 +1233,42 @@ format: docx
 ---
 ```
 
+With this format option, rendering your Quarto document will automatically generate a `.docx` file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.
+
+Many (but not all!) of the formatting options available for HTML also work for the `.docx` format:
+
+```{yaml}
+---
+format:
+  docx:
+    embed-resources: true
+    number-sections: true
+    toc: true
+---
+```
+
+Note that any options that are not available in the specified format are ignored without a warning or error message.
 
 ::: callout-warning
-#### Hiding code chunks in specific formats
-Dynamic code outputs, such as the **interactive** {plotly} graph displayed in @fig-scatterplot-plotly, cannot meaningfully be rendered to static formats such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors. To avoid `R` attempting to render these code chunks to formats other than HTML, you can enclose them in the following `div` block:
+#### Not rendering code chunks in specific formats
 
-```` markdown
-::: {.content-hidden unless-format="html"}
+Dynamic code outputs, such as the **interactive** {plotly} graph displayed in @fig-scatterplot-plotly, cannot be meaningfully rendered to **static formats**, such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors such as:
+
+```         
+Error: Functions that produce HTML output found in document targeting docx output.
+Please change the output type of this document to HTML.
+```
+
+To fix this, add the following options to any code chunk that generates content that only works in HTML:
+
 ```{{r}}
-#| label: fig-scatterplot-plotly
+#| eval: !expr 'knitr::is_html_output()'
+#| echo: FALSE
+
 ggplotly(L2.scatter2)
 ```
-:::
-````
+
+These options ensure that the code chunk is ignored when the document is rendered to any format other than HTML.
 :::
 
 By default, the quality of the images and graphs in rendered `.docx` versions is low to keep the file size small. You can improve the quality of the rendered images by specifying the **image definition** in the YAML option. To do so, replace the format line that you added above with the following lines. Make sure that you indent each line correctly as shown below; otherwise, you will get an error when you try to render your document.
@@ -1275,15 +1298,14 @@ Now that you know about **literate programming** in Quarto, rewrite the followin
 :::: {.callout-note collapse="true"}
 #### Click here for the solution to [**Task 13.4**]{style="color:green;"}
 
-Below is a screenshot of a Quarto document with the inline code chunks and its rendered `.odt` version as opened in LibreOffice Writer.
+Below is a screenshot of a Quarto document with the inline code chunks and its rendered `.odt` version as opened in LibreOffice Writer. You can click on the images to zoom in.
 
 ::: {layout-ncol="2"}
-![Quarto source code](images/Quarto_TaskSolution.png){fig-alt="The paragraph with inline code in Quarto reads: On average, English native speakers performed only marginally better in the English grammatical comprehension test (median = `r median(L1.data$GrammarR)`) than English L2 learners (median = `r median(L2.data$GrammarR)`). L1 participants' grammatical comprehension test results ranged from `r min(L1.data$GrammarR)` to `r max(L1.data$GrammarR)`. In this same test, L2 participants' results ranged `r min(L2.data$GrammarR)` to `r max(L2.data$GrammarR)`."}
+![Quarto source code](images/Quarto_TaskSolution.png){#fig-SourceCode fig-alt="The paragraph with inline code in Quarto reads: On average, English native speakers performed only marginally better in the English grammatical comprehension test (median = `r median(L1.data$GrammarR)`) than English L2 learners (median = `r median(L2.data$GrammarR)`). L1 participants' grammatical comprehension test results ranged from `r min(L1.data$GrammarR)` to `r max(L1.data$GrammarR)`. In this same test, L2 participants' results ranged `r min(L2.data$GrammarR)` to `r max(L2.data$GrammarR)`."}
 
-![Rendered document as opened in LibreOffice Writer](images/LibreOffice_TaskSolution.png)
+![Rendered document as opened in LibreOffice Writer](images/LibreOffice_TaskSolution.png){#fig-LibreOfficeScreenshot}
 :::
 ::::
-
 
 ### PDF
 
@@ -1301,7 +1323,7 @@ format: pdf
 ---
 ```
 
-HTML being the default format, some options available for HTML are not -- at least by default -- available in other publishing formats. Many of the basic options, however, work across different formats. 
+HTML being the default format, some options available for HTML are not -- at least by default -- available in other publishing formats. Many of the basic options, however, work across different formats.
 
 The YAML header options below can be used to include a table of content with numbered sections at the start of the PDF version of your document. It also includes two options that are specific to the PDF format: the first will print a list of figures (`lof`) and the second a list of tables (`lot`).
 
@@ -1321,7 +1343,7 @@ format:
 In research, it's quite common that you will be working on a project that will be submitted as a paper or thesis (e.g., in PDF format) *and* that you'll also want to **present** in class, to your research group, or at a conference. You can easily turn your Quarto document into **presentation slides**, too! There are currently three presentation formats to choose from:
 
 |  |  |  |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | [Revealjs](https://quarto.org/docs/presentations/revealjs/) | Revealjs is an open-source HTML presentation framework. | `format: revealjs` |
 | [Power-Point](https://quarto.org/docs/presentations/powerpoint.html) | PowerPoint is Microsoft Office's presentation editing software. | `format: pptx` |
 | [Beamer](https://quarto.org/docs/presentations/beamer.html) | Beamer is a LaTeX class for producing presentations and slides in PDF format. | `format: beamer` |
@@ -1336,14 +1358,14 @@ I recommend using **Revealjs** and the best way to get a sense of what is possib
 
 </div>
 
-If you prefer to view the demo in a standalone browser, you can do that [here](https://quarto.org/docs/presentations/revealjs/demo/){target="_blank"}. Check out the [source code](https://github.com/quarto-dev/quarto-web/blob/main/docs/presentations/revealjs/demo/index.qmd) to see how the slides were created.
+If you prefer to view the demo in large in a standalone browser tab, head to the [Quarto Guide](https://quarto.org/docs/presentations/revealjs/demo/){target="_blank"}. Check out the [source code](https://github.com/quarto-dev/quarto-web/blob/main/docs/presentations/revealjs/demo/index.qmd) to see how the slides were created.
 
 ## Conclusion
 
-In this chapter, we've only just scratched the surface of what's possible in Quarto. The Quarto documentation is very detailed and well worth exploring to find out what else you can do in Quarto from books to blogs and interactive dashboards: <https://quarto.org/docs/guide/>.
+In this chapter, we've only just scratched the surface of what's possible in Quarto. The Quarto documentation is very detailed and well worth exploring to find out what else you can do in Quarto: <https://quarto.org/docs/guide/>. From books to blogs and interactive dashboards, the world's your oyster! 🚀
 
 ::: callout-note
-#### Going further with Quarto 🚀
+#### Going further with Quarto
 
 ➡️ For those of you who want to dive a little deeper, I heartily recommend the final chapter of "An Introduction to Quantitative Text Analysis for Linguistics: Reproducible Research Using R" by Jerid Francom: <https://qtalr.com/book/part_5/11_contribute.html>.
 

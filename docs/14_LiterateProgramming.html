@@ -1566,7 +1566,7 @@ More complex inline computations
 <span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">OtherLgs =</span> <span class="st">"Additional language"</span>, </span>
 <span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="st">"N"</span>)</span>
 <span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="tbl-L1-languages" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="top" data-tbl-colwidths="[80,20]">
+<div id="tbl-L1-languages" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[80,20]" data-tbl-cap-location="top">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-L1-languages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;14.1: Example of a {gt} table
@@ -2632,7 +2632,7 @@ Going further 📚
 <section id="sec-EmbedResources" class="level2" data-number="14.11">
 <h2 data-number="14.11" class="anchored" data-anchor-id="sec-EmbedResources"><span class="header-section-number">14.11</span> Sharing HTML documents</h2>
 <p>You may have noticed that, in addition to creating an <code>.html</code> file, rendering your Quarto document has also generated a folder containing any necessary data, images, stylesheets or other files required to display the HTML version of your document. This is because Quarto keeps external resources separate from the main HTML file by default. While this is advantageous for large documents and complex projects, it does mean that your HTML document can only be viewed if both the <code>.html</code> file and its associated folder are shared.</p>
-<p>If you want to share a <strong>single, self-contained</strong> <code>.html</code> file with someone else or upload it somewhere, you will need to <strong>embed</strong> all the necessary files directly inside your HTML file. This is achieved by adding the following option to your Quarto document’s YAML header:</p>
+<p>If you want to share a <strong>single, self-contained</strong> <code>.html</code> file with someone else or upload it somewhere, you will need to <strong>embed</strong> all the necessary files directly inside your HTML file. This is achieved by adding the following option at the end of your document’s YAML header:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
@@ -2667,38 +2667,54 @@ Figure&nbsp;14.15: Artwork CC-BY 4.0 Allison Horst from the <a href="https://min
 </div>
 <section id="word-libreoffice-co." class="level3" data-number="14.12.1">
 <h3 data-number="14.12.1" class="anchored" data-anchor-id="word-libreoffice-co."><span class="header-section-number">14.12.1</span> Word, LibreOffice &amp; co.</h3>
-<p>Your supervisor or colleague may request a <strong>Microsoft Word</strong> document and, thankfully, this is no problem. Add the following line to the bottom of your <strong>YAML header</strong> and then render your document again. This is will generate a <code>.docx</code> file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.</p>
+<p>Your supervisor or colleague may request a <strong>Microsoft Word</strong> document and, thankfully, this is no problem. You can change the rendering format to a <code>.docx</code> file by changing the format option in your <strong>YAML header</strong>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> docx</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>With this format option, rendering your Quarto document will automatically generate a <code>.docx</code> file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.</p>
+<p>Many (but not all!) of the formatting options available for HTML also work for the <code>.docx</code> format:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">docx</span><span class="kw">:</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">embed-resources</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">number-sections</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that any options that are not available in the specified format are ignored without a warning or error message.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Hiding code chunks in specific formats
+Not rendering code chunks in specific formats
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Dynamic code outputs, such as the <strong>interactive</strong> {plotly} graph displayed in <a href="#fig-scatterplot-plotly" class="quarto-xref">Figure&nbsp;<span>14.13</span></a>, cannot meaningfully be rendered to static formats such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors. To avoid <code>R</code> attempting to render these code chunks to formats other than HTML, you can enclose them in the following <code>div</code> block:</p>
-<div class="sourceCode" id="cb45" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>::: {.content-hidden unless-format="html"}</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-scatterplot-plotly</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(L2.scatter2)</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Dynamic code outputs, such as the <strong>interactive</strong> {plotly} graph displayed in <a href="#fig-scatterplot-plotly" class="quarto-xref">Figure&nbsp;<span>14.13</span></a>, cannot be meaningfully rendered to <strong>static formats</strong>, such as Microsoft Word documents or PDF. Attempting to do so can cause rendering errors such as:</p>
+<pre data-code-line-numbers=""><code>Error: Functions that produce HTML output found in document targeting docx output.
+Please change the output type of this document to HTML.</code></pre>
+<p>To fix this, add the following options to any code chunk that generates content that only works in HTML:</p>
+<div class="sourceCode" id="cb47" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: !expr 'knitr::is_html_output()'</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: FALSE</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(L2.scatter2)</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>These options ensure that the code chunk is ignored when the document is rendered to any format other than HTML.</p>
 </div>
 </div>
 <p>By default, the quality of the images and graphs in rendered <code>.docx</code> versions is low to keep the file size small. You can improve the quality of the rendered images by specifying the <strong>image definition</strong> in the YAML option. To do so, replace the format line that you added above with the following lines. Make sure that you indent each line correctly as shown below; otherwise, you will get an error when you try to render your document.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">docx</span><span class="kw">:</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fig-dpi</span><span class="kw">:</span><span class="at"> </span><span class="dv">300</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">docx</span><span class="kw">:</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fig-dpi</span><span class="kw">:</span><span class="at"> </span><span class="dv">300</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To share your work with <strong>LibreOffice</strong>, <strong>OnlyOffice</strong>, and <strong>OpenOffice</strong> users, use the <code>format: odt</code> option, which will generate an <strong>OpenDocument</strong> - an open standard file format that can be opened in any text-processing software, including Microsoft Word.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -2731,22 +2747,30 @@ Click here for the solution to <span style="color:green;"><strong>Task 13.4</str
 </div>
 <div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Below is a screenshot of a Quarto document with the inline code chunks and its rendered <code>.odt</code> version as opened in LibreOffice Writer.</p>
+<p>Below is a screenshot of a Quarto document with the inline code chunks and its rendered <code>.odt</code> version as opened in LibreOffice Writer. You can click on the images to zoom in.</p>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/Quarto_TaskSolution.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23" title="Quarto source code"><img src="images/Quarto_TaskSolution.png" class="img-fluid figure-img" alt="The paragraph with inline code in Quarto reads: On average, English native speakers performed only marginally better in the English grammatical comprehension test (median = 76) than English L2 learners (median = 75). L1 participants' grammatical comprehension test results ranged from 58 to 80. In this same test, L2 participants' results ranged 40 to 80."></a></p>
-<figcaption>Quarto source code</figcaption>
+<div id="fig-SourceCode" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The paragraph with inline code in Quarto reads: On average, English native speakers performed only marginally better in the English grammatical comprehension test (median = 76) than English L2 learners (median = 75). L1 participants' grammatical comprehension test results ranged from 58 to 80. In this same test, L2 participants' results ranged 40 to 80.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-SourceCode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/Quarto_TaskSolution.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23" title="Figure&nbsp;14.16: Quarto source code"><img src="images/Quarto_TaskSolution.png" class="img-fluid figure-img" alt="The paragraph with inline code in Quarto reads: On average, English native speakers performed only marginally better in the English grammatical comprehension test (median = 76) than English L2 learners (median = 75). L1 participants' grammatical comprehension test results ranged from 58 to 80. In this same test, L2 participants' results ranged 40 to 80."></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-SourceCode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14.16: Quarto source code
+</figcaption>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/LibreOffice_TaskSolution.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24" title="Rendered document as opened in LibreOffice Writer"><img src="images/LibreOffice_TaskSolution.png" class="img-fluid figure-img" alt="Rendered document as opened in LibreOffice Writer"></a></p>
-<figcaption>Rendered document as opened in LibreOffice Writer</figcaption>
+<div id="fig-LibreOfficeScreenshot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-LibreOfficeScreenshot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/LibreOffice_TaskSolution.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24" title="Figure&nbsp;14.17: Rendered document as opened in LibreOffice Writer"><img src="images/LibreOffice_TaskSolution.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-LibreOfficeScreenshot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14.17: Rendered document as opened in LibreOffice Writer
+</figcaption>
 </figure>
 </div>
 </div>
@@ -2763,25 +2787,25 @@ Click here for the solution to <span style="color:green;"><strong>Task 13.4</str
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb47" data-filename="Terminal" data-code-line-numbers=""><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>quarto install tinytex</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb49" data-filename="Terminal" data-code-line-numbers=""><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>quarto install tinytex</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This is likely to take a few minutes but you will only need to do it once. Afterwards, you can add the following line to your Quarto YAML header and you’re ready to render to PDF!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> pdf</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> pdf</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>HTML being the default format, some options available for HTML are not – at least by default – available in other publishing formats. Many of the basic options, however, work across different formats.</p>
 <p>The YAML header options below can be used to include a table of content with numbered sections at the start of the PDF version of your document. It also includes two options that are specific to the PDF format: the first will print a list of figures (<code>lof</code>) and the second a list of tables (<code>lot</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at">  </span></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pdf</span><span class="kw">:</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">number-sections</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">lof</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">lot</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="pp">---    </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at">  </span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pdf</span><span class="kw">:</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">number-sections</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">lof</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">lot</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="pp">---    </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="slides" class="level3" data-number="14.12.3">
@@ -2810,19 +2834,19 @@ Click here for the solution to <span style="color:green;"><strong>Task 13.4</str
 <div>
 <iframe width="600" height="400" class="slide-deck" src="https://quarto.org/docs/presentations/revealjs/demo/"></iframe>
 </div>
-<p>If you prefer to view the demo in a standalone browser, you can do that <a href="https://quarto.org/docs/presentations/revealjs/demo/" target="_blank">here</a>. Check out the <a href="https://github.com/quarto-dev/quarto-web/blob/main/docs/presentations/revealjs/demo/index.qmd">source code</a> to see how the slides were created.</p>
+<p>If you prefer to view the demo in large in a standalone browser tab, head to the <a href="https://quarto.org/docs/presentations/revealjs/demo/" target="_blank">Quarto Guide</a>. Check out the <a href="https://github.com/quarto-dev/quarto-web/blob/main/docs/presentations/revealjs/demo/index.qmd">source code</a> to see how the slides were created.</p>
 </section>
 </section>
 <section id="conclusion" class="level2" data-number="14.13">
 <h2 data-number="14.13" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">14.13</span> Conclusion</h2>
-<p>In this chapter, we’ve only just scratched the surface of what’s possible in Quarto. The Quarto documentation is very detailed and well worth exploring to find out what else you can do in Quarto from books to blogs and interactive dashboards: <a href="https://quarto.org/docs/guide/" class="uri">https://quarto.org/docs/guide/</a>.</p>
+<p>In this chapter, we’ve only just scratched the surface of what’s possible in Quarto. The Quarto documentation is very detailed and well worth exploring to find out what else you can do in Quarto: <a href="https://quarto.org/docs/guide/" class="uri">https://quarto.org/docs/guide/</a>. From books to blogs and interactive dashboards, the world’s your oyster! 🚀</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Going further with Quarto 🚀
+Going further with Quarto
 </div>
 </div>
 <div class="callout-body-container callout-body">
