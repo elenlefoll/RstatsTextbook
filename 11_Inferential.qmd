@@ -609,12 +609,12 @@ cohens_d(Grammar ~ Gender,
 [**Q11.9**]{style="color:green;"} Which statement(s) is/are true about the standardised effect size computed for the difference in the English comprehension grammar scores of male and female Romance L1 speakers in this very small dataset (n = 6)?
 
 ```{r echo=FALSE}
-check_question(c("The effect size is negative, which means that the male participant performed better on the grammar test than the five female participants.",
+check_question(c("The effect size is negative, which means that the single male participant performed better on the grammar test than the five female participants.",
                            "According to Cohen's rule of thumb, the effect size is very large.",
                  "The difference in mean grammar test scores across the two genders is not statistically significant at the α-level of 0.05.",
                "We cannot reject the null hypothesis that there is no difference between male and female performance on the grammar test."),
                options = c("All six participants did equally well at the α-level of 0.05.",
-                           "The effect size is negative which means that the male participant performed better on the grammar test than the five female participants.",
+                           "The effect size is negative, which means that the single male participant performed better on the grammar test than the five female participants.",
                            "According to Cohen's rule of thumb, the effect size is very large.",
                            "According to Cohen's rule of thumb, the effect size is very small.",
                            "The 95% CI around Cohen's d includes zero, which means that there is no practical difference in the performance of male and female participants on the grammar test.",
@@ -625,7 +625,7 @@ check_question(c("The effect size is negative, which means that the male partici
                button_label = "Check answer",
                right = "That's right, very well done! The results of this test show the value of statistical significance testing: Here, the difference between the male and female participants is very large, but because we have such a small sample size, the test warns us that this large difference could very well be due to chance and not actually correspond to a real difference in the population.",
                wrong = "No, not quite.")
-check_hint("Here we have an interesting case of a large effect size but with a very large confidence interval around that effect size that includes zero. Think about what this means.", 
+check_hint("Here we have an interesting case of a large effect size, but with a very wide confidence interval that includes zero. What does this mean?", 
            hint_title = "🦉 Hover over the owl for a first hint.",
            type = "onmouseover")
 check_hint("Four of these statements are correct.", 
@@ -671,23 +671,23 @@ The output of the `cor.test()` function also includes a *t*-statistic (`t`), the
 
 -   A correlation coefficient of **1** means that there is a **perfect positive linear relationship** between the two variables.
 
-    -   [Example]{.underline}: The relationship between reaction times measured in seconds and the same reaction times measured in milliseconds.
+    -   [Example]{.underline}: The relationship between the number of questions that a person correctly answered in a test and the percentage of questions that they got right.
 
         ```{r}
         #| code-fold: true
         #| code-summary: "Show `R` code to simulate data with a perfect positive correlation."
         #| eval: false
 
-        # First, we simulate a series of 100 reaction times measured in milliseconds (don't worry about how we do this exactly):
-        RT.ms <- rlnorm(100, meanlog = log(300), sdlog = 0.25)
+        # First, let's imagine that 100 learners took a test with 15 questions. We simulate the number of questions that they answered correctly using the `sample()` function that generates random numbers, specifying that learners can get between zero and 15 questions right:
+        correct.answers <- sample(0:15, 100, replace = TRUE)
 
-        # Next, we convert these reaction times to seconds by dividing them by 1000:
-        RT.s <- RT.ms / 1000
+        # Next, we convert the number of correctly answered questions into the percentage of questions that they answered correctly:
+        accuracy <- correct.answers / 15 * 100
 
-        # Finally, we compute the correlation coefficient of these two variables. 
-        cor(RT.ms, RT.s)
+        # Finally, we compute the correlation coefficient between the number of  and the percentage of correctly answered questions:
+        cor(correct.answers, accuracy)
 
-        # The correlation coefficient (Pearson's r) equals 1 because the two variables are perfectly correlated with each other. If we know one variable, all we need to do is either multiply or divide it by 1000 to obtain the value of the other!
+        # The correlation coefficient (Pearson's r) equals 1 because the two variables are perfectly correlated with each other. If we know one variable, there is a simple mathematical formula that allows us to obtain the exact value of the other!
         ```
 
 -   A correlation coefficient of **0** means that there is **no linear relationship** between the two variables. Note that, in the real world, we will never find correlations of exactly zero, but rather very close to zero.
@@ -1274,6 +1274,150 @@ Because of the multiple testing problem, only reporting statistically significan
 >
 > **Drafted and Reviewed by:** Mahmoud Elsherif, Tamara Kalandadze, William Ngiam, Sam Parsons, Mariella Paul, Eike Mark Rinke, Timo Roettger, Flávio Azevedo
 
+::: callout-tip
+#### Your turn! {.unnumbered}
+
+The dataset from @DabrowskaExperienceAptitudeIndividual2019 contain the results of numerous additional tests that we have not yet examined.
+
+In this task, we imagine that a friend of yours has decided to test whether, on average, male and female speakers performed equally well on four additional English grammar tests. The four variables that he selected correspond to participants' scores (adjusted for guessing) on English tests assessing participants' mastery of:
+
+-   the active voice (`Active`)
+-   the passive voice (`Passive`)
+-   post-modified subjects (`Postmod`)
+-   subject relatives (`SubRel`)
+
+Your friend conducted the following four *t*-tests to find out whether he could reject the the null hypothesis of no difference in the average performance of male and female English speakers in these four grammar tests. He chose 0.05 as his significance threshold and, on the basis of these four tests, concluded that he could reject the null hypothesis in two out of four tests: the one concerning the active voice and the one about subject relatives.
+
+```{r}
+#| eval: false
+
+t.test(formula = Active ~ Gender, 
+       data = Dabrowska.data)
+
+t.test(formula = Passive ~ Gender, 
+       data = Dabrowska.data)
+
+t.test(formula = Postmod ~ Gender, 
+       data = Dabrowska.data)
+
+t.test(formula = SubRel ~ Gender, 
+       data = Dabrowska.data)
+```
+
+[**Q11.14**]{style="color:green;"} Your friend tells you that, based on the results of the two significant t-tests, he has decided to write a term paper focussing on how men have a better understanding of the active voice and subject relative constructions than women. You warn him that this approach reminds you of a questionable research practice (QRP) that you read about in the [FORRT glossary](https://forrt.org/glossary/english/). Which one?
+
+```{r echo=FALSE}
+check_question("HARKing",
+                 options = c("HARKing",
+                 "Salami slicing",
+                 "Optional stopping",
+                 "Creative use of outliers"), 
+               type = "radio", 
+               random_answer_order = TRUE,
+               button_label = "Check answer",
+               right = "That's right! This sounds like a typical case of HARKing (Hypothesizing After the Results are Known), which means presenting a hypothesis that is based on or informed by your results in a research report as if it was, in fact, a hypothesis that you came up with before looking at the data.",
+               wrong = "No, that's not the problem, here.")
+check_hint("You will need to go to the FORRT glossary to find out what these terms mean.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+[**Q11.15**]{style="color:green;"} You explain to your friend that, if he wants to conduct four separate tests on the same dataset, he needs to correct the *p*-values for multiple testing. Which reason(s) can you use to explain this to your friend?
+
+```{r echo=FALSE}
+check_question(c("Running multiple tests on the same dataset increases your chances of accidentally getting a false positive result.",
+                 "Even though you chose an α-level of 0.05 for each test, your overall risk of erroneously rejecting the null hypothesis in at least one of these four tests is actually much higher than 5%."),
+                 options = c("Running multiple tests on the same dataset increases your chances of accidentally getting a false positive result.",
+                 "Even though you chose an α-level of 0.05 for each test, your overall risk of erroneously rejecting the null hypothesis in at least one of these four tests is actually much higher than 5%.",
+                 "Running multiple tests on the same dataset makes each individual test weaker and less reliable.",
+                 "The sample size gets split up when you conduct multiple tests, which results in less accurate results.",
+                 "Multiple tests on the same dataset make it harder to detect real differences when they actually exist."), 
+               type = "check", 
+               random_answer_order = TRUE,
+               alignment = "vertical",
+               button_label = "Check answer",
+               right = "Well done, your friend will be well-informed!",
+               wrong = "No, not quite.")
+check_hint("Two of these reasons are correct. The other options correspond to common misconceptions about statistical signifiance testing.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+[**Q11.16**]{style="color:green;"} How high is your friend's risk of erroneously rejecting the null hypothesis in at least one of his four tests?
+
+```{r echo=FALSE}
+check_question("19%",
+                 options = c("5%", "7%", "19%", "20%", "almost 100%"), 
+               type = "check", 
+               alignment = "vertical",
+               button_label = "Check answer",
+               right = "That's right and that's definately more than the 5% he originally intended to take!",
+               wrong = "❌")
+check_hint("Section 11.7 showed how to calculate this risk for 20 individual tests. Can you adapt the formula for four tests?", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q11.16"
+#| eval: false
+
+1 - (1 - 0.05)^4 
+```
+
+[**Q11.17**]{style="color:green;"} Use Holm's correction to correct the four *p*-values that your friend obtained to account for the fact that he conducted four tests on the same dataset. After correction, which null hypotheses can be rejected at α-level = 0.05?
+
+```{r echo=FALSE}
+check_question("Only the one concerning the active voice.",
+                 options = c("All four of them.",
+                             "Only the one concerning the active voice.",
+                             "Only the one concerning the passive voice.",
+                             "The one concerning the active voice and the one concerning subject relatives.",
+                             "None of them."), 
+               type = "check", 
+               random_answer_order = TRUE,
+               button_label = "Check answer",
+               right = "That's right, now only one of the four null hypotheses can be rejected.",
+               wrong = "No, that's incorrect.")
+check_hint("You need to first extract the p-values from the outputs of the four t-tests and then apply the correction using the p.adjust() function.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q11.17"
+#| eval: false
+
+# Running the four t-tests and saving the output as four R objects to the local environment:
+active.ttest <- t.test(formula = Active ~ Gender, 
+       data = Dabrowska.data)
+
+passive.ttest <- t.test(formula = Passive ~ Gender, 
+       data = Dabrowska.data)
+
+postmod.ttest <- t.test(formula = Postmod ~ Gender, 
+       data = Dabrowska.data)
+
+subjrel.ttest <- t.test(formula = SubRel ~ Gender, 
+       data = Dabrowska.data)
+
+# Extracting just the p-values from the test outputs
+p.values <- c(active.ttest$p.value, passive.ttest$p.value, postmod.ttest$p.value, subjrel.ttest$p.value)
+
+# The original p-values:
+p.values
+
+# Applying Holm's correction to the p-values
+p_values.adjusted <- p.adjust(p.values, method = "holm")
+
+# The adjusted p-values in scientific notation:
+p_values.adjusted
+
+# Now only the first p-value is below 0.05:
+p_values.adjusted < 0.05
+```
+
+ 
+:::
+
 ::: callout-note
 ### In search of the truth... {.unnumbered}
 
@@ -1310,10 +1454,5 @@ Are you confident that you can...?
 -   [ ] Explain what statistical significance and *p*-values mean (@sec-PValues)
 -   [ ] Calculate Cohen's *d* in `R` (@sec-EffectSize)
 -   [ ] Calculate, test, and interpret correlations in `R` (@sec-Correlations)
+-   Check that the main underlying assumptions of the most common statistical tests are met (@sec-Assumptions)
 -   [ ] Correct *p*-values for multiple comparisons and explain why this is important (@sec-pHacking)
--   Check that the main underlying assumptions of the most common statistical tests are met:
-    -   [ ] randomisation (@sec-Randomisation)
-    -   [ ] independence (@sec-Independence)
-    -   [ ] normality (@sec-Normality)
-    -   [ ] linearity (@sec-Linearity)
-    -   [ ] homoscedasticity (@sec-Homoscedasticity).
