@@ -79,6 +79,8 @@ So far, we have described the data collected by @DabrowskaExperienceAptitudeIndi
 
 In this chapter, we ask whether these observations are **likely to be generalisable** beyond @DabrowskaExperienceAptitudeIndividual2019's **sample** of 90 English native speakers and 67 non-native English speakers to a broader **population**. In the context of this study, we will define the full population as all adult English native and non-native speakers living in the UK.
 
+In the language and education sciences we rarely have access to the entire population for which we would ideally like to generalise our findings. For example, we can hardly go and test *all* English speakers living in the UK. Instead, we have to make due with a **sample** of L1 and L2 English speakers from the UK. Since our studies attempt to *infer* information about entire populations based only sample data, the quality of our samples is crucial: no sophisticated statistical procedure can produce any meaningful inferential statistics from a biased or otherwise flawed sample!
+
 ::: callout-note
 #### Sampling methods
 
@@ -87,9 +89,9 @@ There are different ways to draw samples from a population. The most common meth
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Method                           | What it means                                                                                                                                 | Typical use in linguistics                                                                                                                                                                                 | Main advantages                                                                                 | Main limitations                                                                                                                                                             |
 +==================================+===============================================================================================================================================+============================================================================================================================================================================================================+=================================================================================================+==============================================================================================================================================================================+
-| **Random sampling**              | Every member of the target population has an equal chance of being selected.                                                                  | Rarely feasible if human populations, but can sometimes be approximated with census lists. Feasible in others contexts, e.g., when the target population are all words featured in a specific dictionary.  | Minimises systematic bias. The results can be generalised using inferential statistics methods. | Requires a complete sampling frame (e.g., a list of all English speakers living in the UK) and a perfect world in which everyone sampled consents to participating in study. |
+| **Random sampling**              | Every member of the target population has an equal chance of being selected.                                                                  | Rarely feasible for human populations, but can sometimes be approximated with census lists. Feasible in other contexts, e.g., when the target population are all words featured in a specific dictionary.  | Minimises systematic bias. The results can be generalised using inferential statistics methods. | Requires a complete sampling frame (e.g., a list of all English speakers living in the UK) and a perfect world in which everyone sampled consents to participating in study. |
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Stratifiedsampling\            | The population is divided into strata (e.g., by dialectal region, age group, education level) and a random sample is drawn from each stratum. | Used when researchers need balanced data from distinct sub‑populations (e.g., speakers from several dialectal areas) and their intersections (e.g., a good balance of genders across each dialectal area). | Guarantees coverage of all relevant sub‑populations; reduces sampling error within the strata.  | As above, requires reliable, exhaustive lists for each stratum and consent for all selected; more complex to organise.                                                       |
+| **Stratified sampling\           | The population is divided into strata (e.g., by dialectal region, age group, education level) and a random sample is drawn from each stratum. | Used when researchers need balanced data from distinct sub‑populations (e.g., speakers from several dialectal areas) and their intersections (e.g., a good balance of genders across each dialectal area). | Guarantees coverage of all relevant sub‑populations; reduces sampling error within the strata.  | As above, requires reliable, exhaustive lists for each stratum and consent for all selected; more complex to organise.                                                       |
 | **(a subtype of random sampling) |                                                                                                                                               |                                                                                                                                                                                                            |                                                                                                 |                                                                                                                                                                              |
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **Cluster sampling\              | Whole clusters (e.g., villages, schools, neighbourhoods) are randomly selected, then all members of the chosen clusters are studied.          | Data collection in schools and fieldwork in remote regions where a full speaker list is impractical.                                                                                                       | Efficient when clusters are naturally defined; reduces costs and organisational burden.         | Increases sampling error if clusters are internally homogeneous; may miss variation outside selected clusters.                                                               |
@@ -104,9 +106,7 @@ There are different ways to draw samples from a population. The most common meth
 In practice, it is quite common for combination of these methods to be used. For example, when researchers run linguistics experiments via commercial platforms such as *Qualtrics* or *Amazon* *MechanicalTurk,* they can select their participants based on some demographic data to obtain a more **representative** **sample**. But the sample nonetheless remains a **convenience** **sample** as only people who sign up to earn money on these platforms can, by definition, be recruited on these platforms. As you can imagine, these click-workers are hardly representative of the full population, even if they are carefully sampled for age, gender, or socio-economic status.
 :::
 
-In the language and education sciences we rarely have access to the entire population for which we would ideally like to generalise our findings. For example, we can hardly go and test *all* English speakers living in the UK. Instead, we have to make due with a sample of L1 and L2 English speakers from the UK. Since our studies attempt to *infer* information about entire populations based only sample data, the quality of our samples is crucial: no sophisticated statistical procedure can produce any meaningful inferential statistics from a biased or otherwise flawed sample!
-
-Provided we have a sufficiently representative sample, inferential statistics can help us to answer questions such as: Across all adult English speakers in the UK...
+Provided we have a sufficiently **representative sample**, inferential statistics can help us to answer questions such as: Across all adult English speakers in the UK...
 
 -   do L1 speakers, on average, achieve higher scores than L2 speakers on English grammar and vocabulary comprehension tests?
 
@@ -357,7 +357,7 @@ Dabrowska.data |>
   theme_bw()
 
 # Running the t-test:
-t.test(Vocab ~ Group, 
+t.test(formula = Vocab ~ Group, 
        data = Dabrowska.data)
 
 ```
@@ -400,9 +400,9 @@ check_hint("Only one of these statements is correct.",
 
 ## Statistical significance and *p*-values {#sec-PValues}
 
-When used correctly, the *p*‑value is a very useful metric that can help us to determine whether an observed statistic, such as a difference in means in a *t*-test, is likely to be due to chance variation in the sample rather than indicative of a true effect in the population. A common way[^11_inferential-4] to use *p*‑values is to define — prior to conducting the analysis — an **significance level** threshold (also called **alpha** or **α-level**), which corresponds to the risk that we are willing to accept of mistakenly concluding that there is an effect when, in fact, there is none (this is called a false positive result). In the language and social sciences, the significance level is typically set to 0.05, which means that we accept that, if the null hypothesis is true, we have a 5% risk of obtaining a *p*-value that suggests that we should reject the null hypothesis when, in fact, we shouldn't.[^11_inferential-5] The significance level should be chosen *before* looking at the data and be clearly mentioned in the methods section of every study that uses statistical significance testing.
+When used correctly, the *p*‑value is a very useful metric that can help us to determine whether an observed statistic, such as a difference in means in a *t*-test, is likely to be due to chance variation in the sample rather than indicative of a true effect in the population. A common way[^11_inferential-4] to use *p*‑values is to define — prior to conducting the analysis — a **significance level** threshold (also called **alpha** or **α-level**), which corresponds to the risk that we are willing to accept of mistakenly concluding that there is an effect when, in fact, there is none (this is called a false positive result). In the language and social sciences, the significance level is typically set to 0.05, which means that we accept that, if the null hypothesis is true, we have a 5% risk of obtaining a *p*-value that suggests that we should reject the null hypothesis when, in fact, we shouldn't.[^11_inferential-5] The significance level should be chosen *before* looking at the data and be clearly mentioned in the methods section of every study that uses statistical significance testing.
 
-[^11_inferential-4]: Again, it is important to note that this is by no means the *only* way to interpret *p*-values. As with many things in statistics, how you interpret *p*-values depends on the statistical philosophy that you subscribes to. This approach described in this textbook corresponds the statistical hypothesis testing approach developed by Neyman & Pearson ([1933](https://lakens.github.io/statistical_inferences/references.html#ref-neyman_problem_1933)). "In a Neyman-Pearson framework, the goal of statistical tests is to guide the behavior of researchers with respect to these two hypotheses. Based on the results of a statistical test, and without ever knowing whether the hypothesis is true or not, researchers choose to tentatively act as if the null hypothesis or the alternative hypothesis is true." [@lakensImprovingYourStatistical2022: Section 1.1]
+[^11_inferential-4]: Again, it is important to note that this is by no means the *only* way to interpret *p*-values. As with many things in statistics, how you interpret *p*-values depends on the statistical philosophy that you subscribe to. The approach described in this textbook corresponds to the statistical hypothesis testing approach developed by Neyman & Pearson ([1933](https://lakens.github.io/statistical_inferences/references.html#ref-neyman_problem_1933)). "In a Neyman-Pearson framework, the goal of statistical tests is to guide the behavior of researchers with respect to these two hypotheses. Based on the results of a statistical test, and without ever knowing whether the hypothesis is true or not, researchers choose to tentatively act as if the null hypothesis or the alternative hypothesis is true." [@lakensImprovingYourStatistical2022: Section 1.1]
 
 [^11_inferential-5]: It is worth noting that, just because 0.05 is (currently) the most widely used threshold, doesn't mean that you have to use 0.05, too. If you are not comfortable accepting a 5% risk (which, statistically speaking, will happen one in 20 times, after all), you can define a lower threshold, e.g., 0.01, corresponding to a 1% risk. However, depending on how large your observed effect is and how much data you have, you may find that, with a lower significance‑level, you fail to reject the null hypothesis even when there is a true effect in the population so it's a difficult balance to strike. To find out more, I recommend reading about **statistical power**, e.g. in Lakens [-@lakensImprovingYourStatistical2022: Chapter 2].
 
@@ -412,7 +412,7 @@ In the NHST framework, when the calculated *p*‑value is *smaller* than our cho
 
 Contrary to what some researchers seem to believe, in and of themselves, *p*-values are not the holy grail! They can only meaningfully be interpreted together with other important contextual information such as the **context** in which the data was collected, the magnitude of the observed effect (the **effect size**), and the **variability** around the estimated effect (e.g., as shown in data visualisation) (see @fig-pvalue).
 
-![Don't let your *p*-values sing solo! (artwork by [Allison Horst](https://twitter.com/allison_horst)) (CC BY 4.0)](images/AHorst_p-value.jpg){#fig-pvalue fig-alt="Cartoon of a p-value taking over the microphone on a stage with the rest of the band (effect sizes, context, awesome dataviz and correlations) standing at the back and effect sizes saying \"I can't do it anymore. I can't explain \"ensemble\" again.\"" width="454"}
+![Don't let your *p*-values sing solo! (artwork by [Allison Horst](https://twitter.com/allison_horst) CC BY 4.0)](images/AHorst_p-value.jpg){#fig-pvalue fig-alt="Cartoon of a p-value taking over the microphone on a stage with the rest of the band (effect sizes, context, awesome dataviz and correlations) standing at the back and effect sizes saying \"I can't do it anymore. I can't explain \"ensemble\" again.\"" width="454"}
 
 The problem with *p*-values is that they are a composite metric that is dependent on three aspects:
 
@@ -498,7 +498,7 @@ Here, the `cohens_d()` function compares the scores of the female participants w
 Now turning to the 95% confidence interval (CI) also output by the function, we can see that, while the lower confidence bound corresponds to a negative effect size, the upper bound is positive, which means that the confidence interval contains the possibility of an effect size of zero, correspoding to no effect at all. Hence, we must conclude that this difference in scores between female and male participants is not statistically significant at an α-level of 0.05. We can confirm this by performing a *t*-test. It returns a *p*-value that is greater than 0.05:
 
 ```{r}
-t.test(Blocks ~ Gender, 
+t.test(formula = Blocks ~ Gender, 
        data = Dabrowska.data)
 ```
 
@@ -641,7 +641,7 @@ In this section, we return to correlations — a concept that we encountered in 
 
 At the beginning of the chapter, we summarised the following observations based on our descriptive analyses of the @DabrowskaExperienceAptitudeIndividual2019 data:
 
--   For both L1 and L2 participants, there is a positive correlation between the number years they were in formal education and their English grammar comprehension test scores: the longer they were in formal education, the better they did on the test (see @fig-YearEducationPlot).
+-   For both L1 and L2 participants, there is a positive correlation between the number of years they were in formal education and their English grammar comprehension test scores: the longer they were in formal education, the better they did on the test (see @fig-YearEducationPlot).
 
 ```{r}
 #| label: "fig-YearEducationPlot"
@@ -663,7 +663,7 @@ Dabrowska.data |>
 How strong are the correlations visualised by the blue regression lines on @fig-YearEducationPlot? And are they statistically significantly different from a zero correlation (i.e. no correlation) at the α-level of 0.05? We can answer both these questions using the `cor.test()` function. Note that, for a correlation, the two numeric variables whose correlation we want to estimate come after the tilde (`~`). They are combined with the plus operator (`+`):
 
 ```{r}
-cor.test(~ EduTotal + Grammar,
+cor.test(formula = ~ EduTotal + Grammar,
          data = L1.data)
 ```
 
@@ -678,11 +678,11 @@ The output of the `cor.test()` function also includes a *t*-statistic (`t`), the
         #| code-summary: "Show `R` code to simulate data with a perfect positive correlation."
         #| eval: false
 
-        # First, let's imagine that 100 learners took a test with 15 questions. We simulate the number of questions that they answered correctly using the `sample()` function that generates random numbers, specifying that learners can get between zero and 15 questions right:
-        correct.answers <- sample(0:15, 100, replace = TRUE)
+        # First, let's imagine that 100 learners took a test with 10 questions. We simulate the number of questions that they answered correctly using the `sample()` function that generates random numbers, specifying that learners can get between zero and 10 questions right:
+        correct.answers <- sample(0:10, 100, replace = TRUE)
 
         # Next, we convert the number of correctly answered questions into the percentage of questions that they answered correctly:
-        accuracy <- correct.answers / 15 * 100
+        accuracy <- correct.answers / 10 * 100
 
         # Finally, we compute the correlation coefficient between the number of  and the percentage of correctly answered questions:
         cor(correct.answers, accuracy)
@@ -741,7 +741,7 @@ The output of the `cor.test()` function also returned a 95% confidence interval 
 How about L2 speakers? From the L2 panel of @fig-YearEducationPlot, we can see that the `Grammar` scores of L2 participants are, on average, much further away from the regression line than in the L1 panel, suggesting that it summarises the data far less well. Indeed, when we run the correlation test on the L2 data, we not only find that the correlation coefficient is much smaller (`0.13`), the 95% confidence interval around this coefficient \[`-0.11, 0.36`\] includes zero:
 
 ```{r}
-cor.test(~ EduTotal + Grammar,
+cor.test(formula = ~ EduTotal + Grammar,
          data = L2.data)
 ```
 
@@ -869,10 +869,10 @@ check_hint("Four of these statements are correct.",
 #| code-summary: "Show code to answer Q11.11."
 #| eval: false
 
-cor.test(~ Age + Vocab,
+cor.test(formula = ~ Age + Vocab,
          data = L1.data)
 
-cor.test(~ Age + Vocab,
+cor.test(formula = ~ Age + Vocab,
          data = L2.data)
 ```
 
@@ -907,7 +907,7 @@ check_question(c("-0.31", "- 0.31", "-0.30", "- 0.30"),
 #| code-summary: "Show code to answer Q11.12."
 #| eval: false
 
-cor.test(~ Vocab + Arrival,
+cor.test(formula = ~ Vocab + Arrival,
          data = L2.data)
 ```
 
@@ -1074,11 +1074,11 @@ The assumption of linearity is relevant to many widely used statistical methods 
 For an in-depth explanation of non-parametric correlation coefficients (Spearman's ρ and Kendall's τ) and statistical significance tests with examples from the language sciences, I recommend reading Levshina [-@LevshinaHowlinguisticsData2015: Chapter 6].
 :::
 
-### Homogeneity of variance {#sec-Homoscedasticity}
+### Homogeneity of variance and homoscedasticity {#sec-Homoscedasticity}
 
-Strictly speaking, when conducting a *t*-test, the variances of the samples should be constant, or homogeneous. This is referred to as the assumption of homogeneity of variance. A related assumption is made in correlation tests and linear regression and is called the assumption of **homoscedasticity**. In brief, these assumptions mean that the variances of the groups entered in the tests or models should be roughly the same.
+Strictly speaking, when conducting a *t*-test, the variances of the samples should be constant, or homogeneous. This is referred to as the assumption of homogeneity of variance. It means that the variances of the groups entered in a test should be roughly the same.
 
-Again, these assumptions are best examined visually. For example, we can generate a boxplot to check that the variance of the two groups that we want to compare with a *t*-test are roughly equal (see @fig-GrammarBoxplot).
+Again, this assumption is best examined visually. For example, we can generate a boxplot to check that the variance of the two groups that we want to compare with a *t*-test are roughly equal (see @fig-GrammarBoxplot).
 
 ```{r}
 #| code-fold: true
@@ -1093,16 +1093,16 @@ ggplot(Dabrowska.data,
   theme_bw()
 ```
 
-As we already saw in @sec-Normality, the Grammar scores of the L2 group are not normally distributed; hence, we can also see from @fig-GrammarBoxplot that there is much more variance in the L2 data than there is in the L1. In other words, we have heterogeneity of variance. One way to deal with this is to conduct a non-parametric test instead: Wilcox's test does not have assume homogeneity of variance. However, if your data meets the criterion of normality and only fails to meet that homogeneity of variance, you can still conduct a parametric *t*-test because the standard `t.test()` function in `R` includes Welch's adjustment corrects for unequal variances [@FieldDiscoveringstatisticsusing2012: 373].
+As we already saw in @sec-Normality, the `Grammar` scores of the L2 group are not normally distributed; hence, we can also see from @fig-GrammarBoxplot that there is much more variance in the L2 data than there is in the L1. In other words, we have heterogeneity of variance. One way to deal with this is to conduct a non-parametric test instead: Wilcox's test does not have assume homogeneity of variance. However, if your data meets the criterion of normality and only fails to meet that homogeneity of variance, you can still conduct a parametric *t*-test because the standard `t.test()` function in `R` includes Welch's adjustment corrects for unequal variances [@FieldDiscoveringstatisticsusing2012: 373].
 
-To check the assumption of homoscedasticity for a correlation, we can visualise the variance (or variability) around the correlation (the linear regression line) with the help of a scatter plot. In @fig-VocabEduPlot, we can see that this variance is much larger for low `Vocab` scores than for medium to high scores.
+A related assumption is made in correlation tests and linear regression and is called the assumption of **homoscedasticity** (see also @sec-Residuals). To check the assumption of homoscedasticity for a correlation, we can visualise the variance (or variability) around the correlation (the linear regression line) with the help of a scatter plot. In @fig-VocabEduPlot, we can see that this variance is much larger for higher `Vocab` scores than for low to medium scores.
 
 ```{r}
 #| code-fold: true
 #| code-summary: "See code to generate plot."
 #| label: "fig-VocabEduPlot"
 #| fig-cap: "The relationship between vocabulary and total education years"
-#| fig-alt: "A scatter plot showing the relationship between vocabulary on the x-axis and total education years on the y-axis. Each black dot represents a data point, and a blue line indicates a positive correlation."
+#| fig-alt: "A scatter plot showing the relationship between vocabulary on the x-axis and total education years on the y-axis. Each black dot represents a data point, and a blue line indicates a positive correlation; however, as Vocab scores become higher, the dots appear to be futher removed from the blue regression line."
 
 Dabrowska.data |> 
   filter(Group == "L1") |> 
@@ -1113,10 +1113,10 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-In other words, this data does not meet the assumption of homoscedasticity. In this case, we should therefore use a non-pamametric correlation statistic, such as Spearman's ρ ('rho') and Kendall's τ ('tau'). As we are looking at a relatively small dataset here (only L1 speakers) and some speakers performed equally well on either the `Colloc` or the `Vocab` test (in other words, we have some ties in the ranks), Kendall's τ is recommended:
+In other words, this data does not meet the assumption of homoscedasticity. In this case, we should therefore use a non-pamametric correlation statistic, such as Spearman's ρ ('rho') and Kendall's τ ('tau'). As we are looking at a relatively small dataset here (only L1 speakers) and some speakers performed equally well on the `Vocab` test (in other words, we have some ties in the ranks), Kendall's τ is recommended:
 
 ```{r}
-cor.test(~ Vocab + EduTotal,
+cor.test(formula = ~ Vocab + EduTotal,
          data = L1.data,
          method = "kendall")
 ```
@@ -1124,7 +1124,7 @@ cor.test(~ Vocab + EduTotal,
 It returns a correlation coefficient τ of `0.28` and a *p*-value of \< 0.05, which allows us to reject the null hypothesis of no association between `Vocab` and `EduTotal` scores among L1 English speakers.
 
 ::: {.callout-caution collapse="true"}
-#### [**Optional (fun) task**]{.unnumbered style="color:green;"} 🦖
+#### [Optional (fun) task]{.unnumbered style="color:green;"} 🦖
 
 Inspired by the Anscombe Quartet, @matejkaSameStatsDifferent2017 created a set of 12 pairs of variables that have the same descriptive statistics as the data that produce a scatter plot representing a tyrannosaurus (see @fig-DinoPLot).
 
@@ -1209,7 +1209,7 @@ Clearly, if we had only used correlation statistics to describe the relationship
 ![Hex sticker of the [{datasauRus}](https://jumpingrivers.github.io/datasauRus/) package](images/hex_datasauRus.png){#fig-hexdatasauRus width="100" fig-alt="The hexagonal logo of the datasauRus package features a scatter plot in which the dots look like a dinosaur."}
 :::
 
-![Remember that the best way to check test assumptions is to visualise your data! (artwork by [Allison Horst](https://twitter.com/allison_horst)) (CC BY 4.0)](images/AHorst_NotNormal.png){#fig-NotNormal fig-alt="Cartoon of a normal distribution looking skeptically at an excited looking bimodal / negatively skewed distribution. The first says to the second, \"you're not normal.\"" width="448"}
+![Remember that the best way to check test assumptions is to visualise your data! (artwork by [Allison Horst](https://twitter.com/allison_horst) CC BY 4.0)](images/AHorst_NotNormal.png){#fig-NotNormal fig-alt="Cartoon of a normal distribution looking skeptically at an excited looking bimodal / negatively skewed distribution. The first says to the second, \"you're not normal.\"" width="448"}
 
 ## Multiple testing problem {#sec-pHacking}
 
@@ -1227,7 +1227,7 @@ Thus, having conducted 20 independent tests, we have a 64% chance of finding at 
 1 - (1 - 0.05)^100
 ```
 
-To avoid reporting false positive results, it is therefore recommended that we correct our α-level to account for the number of tests performed on the data. The simplest (but also most conservative) approach to do so is called the **Bonferroni correction**. It consists in adjusting our chosen α-level by dividing it by the number of tests that are conducting on the data. Hence, if we want to use 0.05 as our significance level and conduct 20 independent tests on the same data, we divide 0.05 by 20:
+To avoid reporting false positive results, it is therefore recommended that we correct our α-level to account for the number of tests performed on the data. The simplest (but also most conservative) approach to do so is called the **Bonferroni correction**. It consists in adjusting our chosen α-level by dividing it by the number of tests that we are conducting on the data. Hence, if we want to use 0.05 as our significance level and conduct 20 independent tests on the same data, we divide 0.05 by 20:
 
 ```{r}
 0.05 / 20
