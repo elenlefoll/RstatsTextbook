@@ -1244,14 +1244,16 @@ In summary.lm(test.model) :
 <p>Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <a href="https://doi.org/10.1111/lang.12323" class="uri">https://doi.org/10.1111/lang.12323</a>.</p>
 </blockquote>
 <div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Prerequisites
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>Our starting point is the wrangled combined dataset, <code>combined_L1_L2_data.rds</code>, that we created and saved in <a href="9_DataWrangling.html" class="quarto-xref"><span>Chapter 9</span></a>. Follow the instructions in <a href="9_DataWrangling.html#sec-filter" class="quarto-xref"><span>Section 9.8</span></a> to create this <code>R</code> object or download <code>combined_L1_L2_data.rds</code> from <a href="https://github.com/elenlefoll/RstatsTextbook/blob/main/data/processed/combined_L1_L2_data.rds" class="uri">the textbook’s repository</a>.</p>
 <div class="cell">
@@ -1270,6 +1272,7 @@ Prerequisites
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Group <span class="sc">==</span> <span class="st">"L2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Once you are satisfied that the data is correctly loaded, you are ready to start modelling! 🚀</p>
+</div>
 </div>
 </div>
 <p>Recall that, in <a href="11_Inferential.html#sec-Correlations" class="quarto-xref"><span>Section 11.5</span></a>, we saw that there is a <strong>positive correlation</strong> between the total number of years that English L1 speakers spent in formal education (<code>EduTotal</code>) and their English grammar comprehension test scores (<code>Grammar</code>). <a href="#fig-EducationYearsVocab" class="quarto-xref">Figure&nbsp;<span>12.3</span></a> suggests that this positive correlation also holds for the association between the number of years participants spent in formal education and their receptive vocabulary test scores (<code>Vocab</code>).</p>
@@ -1855,14 +1858,16 @@ F-statistic: 22.54 on 1 and 155 DF,  p-value: 4.644e-06</code></pre>
 <li><p>The <strong>adjusted R-squared</strong> value indicates the proportion of variation in <code>Vocab</code> scores that the model can be accounted for when we know a participant’s native-speaker status: 12.13% (<code>0.1213</code>). This value is not particularly impressive. However, this is not surprising given that our model attempts to predict vocabulary scores based solely on whether someone is an L1 or L2 speaker of English. With only this information, the model can only predict that L1 speakers will achieve the mean L1 score and L2 speakers the mean L2 score of the sample data.</p></li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 It’s (still) all linear regression!
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>Here, too, it is worth noticing that fitting a simple linear regression model with a single binary predictor is — under the hood — exactly the same thing as conducting an <strong>independent</strong> <strong>two-sample <em>t</em>-test</strong>. Compare the <strong><em>t</em>-statistic</strong> of the <em>t</em>-test that we computed earlier with that of the <em>t</em>-statistic of the <code>GroupL2</code> coefficient reported in the summary of our second model. If we ignore the signs of the <em>t</em>-values, we can see that they are almost identical!</p>
 <p>Also, notice how the <strong><em>p</em>-value</strong> computed by the <code>t.test()</code> function and that reported for our <code>GroupL2</code> coefficient are almost identical. They both correspond to values that are extremely close to zero.</p>
@@ -1883,6 +1888,7 @@ alternative hypothesis: true difference in means between group L1 and group L2 i
 sample estimates:
 mean in group L1 mean in group L2 
         69.13580         52.80265 </code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -2441,14 +2447,16 @@ Your turn!
 <p>Independence violations arise from the way data were collected. For example, if we test the same person several times, their test results are likely to be more similar to each other than to the results of other participants. Similarly, if we collect data over time, today’s measurement might be influenced by yesterday’s value. When pupils are sampled from different schools, pupils within the same school or class might be more similar to each other than to pupils from other schools and/classes.</p>
 <p>If our data do not meet the assumption of independence, we need to use a different analysis method that can account for the fact that our data points are related to each other. In the language sciences, this is most commonly achieved using <strong>mixed-effects models</strong>. In this textbook, however, we only cover <strong>fixed-effects</strong> <strong>models</strong> for which the assumption of independence must be held.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Further reading 📚
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>Here are some great starting points to learn about mixed-effects models and how to fit them in <code>R</code>:</p>
 <ul>
@@ -2456,6 +2464,7 @@ Further reading 📚
 <li><span class="citation" data-cites="LevshinaHowlinguisticsData2015">Levshina (<a href="99_references.html#ref-LevshinaHowlinguisticsData2015" role="doc-biblioref">2015</a>)</span>: Ch. 8</li>
 <li><span class="citation" data-cites="WinterStatisticsLinguistsIntroduction2019">Winter (<a href="99_references.html#ref-WinterStatisticsLinguistsIntroduction2019" role="doc-biblioref">2019</a>)</span>: Ch. 14-15</li>
 </ul>
+</div>
 </div>
 </div>
 </section>
