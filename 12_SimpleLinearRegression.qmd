@@ -62,10 +62,13 @@ We will fit our first simple linear regression model on a simulated dataset. It 
 #| code-summary: "Show code to simulate the dataset."
 #| label: "tbl-RTTable"
 
-# Our simulated dataset comprises the results of 100 learners who each took a test with 10 questions. We simulate the number of questions that they answered correctly using the `sample()` function that generates random numbers, specifying that learners got between 1 and 10 questions right:
+# First, we set a seed to ensure that the outcome of our randomly generated number series are always exactly the same:
+set.seed(42)
+
+# Second, we simulate the number of questions that 100 learners answered correctly using the `sample()` function that generates random numbers, specifying that learners got between 1 and 10 questions right:
 N.correct <- sample(1:10, 100, replace = TRUE)
 
- # Next, we convert the number of correctly answered questions into the percentage of questions that these learners answered correctly:
+ # Third, we convert the number of correctly answered questions into the percentage of questions that these learners answered correctly:
 Accuracy <- N.correct / 10 * 100
 
 # Finally, we put these two variables together in a dataframe:
@@ -161,10 +164,10 @@ ggplot(data = test.results,
   theme_bw()
 ```
 
-In our case, we only have one predictor, so the intercept coefficient that our model estimates (`7.065e-14`) corresponds to the predicted percentage of questions answered correctly (outcome) when the number of correct answers (predictor) is equal to zero. Instinctively, we know that this value should be zero because 0 points in a test = 0% correct in the test. And, indeed, our model predicts an intercept extremely close to zero (`7.065e-14`). Using the `format()` function, we can convert this coefficient estimate from scientific notation to standard notation:
+In our case, we only have one predictor, so the intercept coefficient that our model estimates (`-4.711e-14`) corresponds to the predicted percentage of questions answered correctly (outcome) when the number of correct answers (predictor) is equal to zero. Instinctively, we know that this value should be zero because 0 points in a test = 0% correct in the test. And, indeed, our model predicts an intercept extremely close to zero (`-4.711e-14`). Using the `format()` function, we can convert this coefficient estimate from scientific notation to standard notation:
 
 ```{r}
-format(7.065e-14, scientific = FALSE)
+format(-4.711e-14, scientific = FALSE)
 ```
 
 The second, `N.correct` coefficient estimate in our model summary is displayed as `1.000e+01` which is equal to:
@@ -176,7 +179,7 @@ format(1.000e+01, scientific = FALSE)
 This coefficient estimate means that, for every correct answer, our prediction for the percentage of questions answered correctly increases by 10%. For example, if a student answered 9 questions correctly, our model predicts that the percentage of correctly answered question is equal to the intercept coefficient of (nearly) zero plus 9 multiplied by 10, which is equal to 90%:
 
 ```{r}
-7.065e-14 + (9 * 10)
+-4.711e-14 + (9 * 10)
 ```
 
 In our model summary, the coefficient estimate for `N.correct` is associated with a *p*-value of `<2e-16`. It corresponds to the *p*-value of our `cor.test()` on the same data, and is actually the smallest value that `R` will display. In other words, it is extremely small. This *p*-value indicates that we can safely reject the null hypothesis that this coefficient is zero, i.e. that the number of correct answers is *not* a useful predictor to predict the percentage of correctly answered questions under the assumptions of a linear regression model (more on these assumptions in @sec-Assumptions).
@@ -649,7 +652,7 @@ Here, too, it is worth noticing that fitting a simple linear regression model wi
 
 Also, notice how the ***p*****-value** computed by the `t.test()` function and that reported for our `GroupL2` coefficient are almost identical. They both correspond to values that are extremely close to zero.
 
-The very small differences between these values are due to the default correction that the `t.test()` function in `R` makes for unequal group variances (see @sec-Variance). If we switch off this correction, both the *t*-statistic and the *p*-value are exactly the same as those reported in the summary of our second linear model above:
+The very small differences between these values are due to the default correction that the `t.test()` function in `R` makes for unequal group variances (see @sec-Variability). If we switch off this correction, both the *t*-statistic and the *p*-value are exactly the same as those reported in the summary of our second linear model above:
 
 ```{r}
 t.test(Vocab ~ Group, 

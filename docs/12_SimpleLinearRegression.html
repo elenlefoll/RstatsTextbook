@@ -592,14 +592,17 @@ Table&nbsp;12.1
 <div aria-describedby="tbl-RTTable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <details class="code-fold">
 <summary>Show code to simulate the dataset.</summary>
-<div class="sourceCode cell-code" id="cb5" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Our simulated dataset comprises the results of 100 learners who each took a test with 10 questions. We simulate the number of questions that they answered correctly using the `sample()` function that generates random numbers, specifying that learners got between 1 and 10 questions right:</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>N.correct <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<div class="sourceCode cell-code" id="cb5" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, we set a seed to ensure that the outcome of our randomly generated number series are always exactly the same:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a> <span class="co"># Next, we convert the number of correctly answered questions into the percentage of questions that these learners answered correctly:</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>Accuracy <span class="ot">&lt;-</span> N.correct <span class="sc">/</span> <span class="dv">10</span> <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Second, we simulate the number of questions that 100 learners answered correctly using the `sample()` function that generates random numbers, specifying that learners got between 1 and 10 questions right:</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>N.correct <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Finally, we put these two variables together in a dataframe:</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>test.results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(N.correct, Accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a> <span class="co"># Third, we convert the number of correctly answered questions into the percentage of questions that these learners answered correctly:</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Accuracy <span class="ot">&lt;-</span> N.correct <span class="sc">/</span> <span class="dv">10</span> <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Finally, we put these two variables together in a dataframe:</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>test.results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(N.correct, Accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </figure>
@@ -1208,11 +1211,11 @@ Figure&nbsp;12.2: The correlation between leaners’ test results expressed as t
 </div>
 </div>
 </div>
-<p>In our case, we only have one predictor, so the intercept coefficient that our model estimates (<code>7.065e-14</code>) corresponds to the predicted percentage of questions answered correctly (outcome) when the number of correct answers (predictor) is equal to zero. Instinctively, we know that this value should be zero because 0 points in a test = 0% correct in the test. And, indeed, our model predicts an intercept extremely close to zero (<code>7.065e-14</code>). Using the <code>format()</code> function, we can convert this coefficient estimate from scientific notation to standard notation:</p>
+<p>In our case, we only have one predictor, so the intercept coefficient that our model estimates (<code>-4.711e-14</code>) corresponds to the predicted percentage of questions answered correctly (outcome) when the number of correct answers (predictor) is equal to zero. Instinctively, we know that this value should be zero because 0 points in a test = 0% correct in the test. And, indeed, our model predicts an intercept extremely close to zero (<code>-4.711e-14</code>). Using the <code>format()</code> function, we can convert this coefficient estimate from scientific notation to standard notation:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(<span class="fl">7.065e-14</span>, <span class="at">scientific =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(<span class="sc">-</span><span class="fl">4.711e-14</span>, <span class="at">scientific =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>[1] "0.00000000000007065"</code></pre>
+<pre data-code-line-numbers=""><code>[1] "-0.00000000000004711"</code></pre>
 </div>
 </div>
 <p>The second, <code>N.correct</code> coefficient estimate in our model summary is displayed as <code>1.000e+01</code> which is equal to:</p>
@@ -1224,7 +1227,7 @@ Figure&nbsp;12.2: The correlation between leaners’ test results expressed as t
 </div>
 <p>This coefficient estimate means that, for every correct answer, our prediction for the percentage of questions answered correctly increases by 10%. For example, if a student answered 9 questions correctly, our model predicts that the percentage of correctly answered question is equal to the intercept coefficient of (nearly) zero plus 9 multiplied by 10, which is equal to 90%:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fl">7.065e-14</span> <span class="sc">+</span> (<span class="dv">9</span> <span class="sc">*</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">4.711e-14</span> <span class="sc">+</span> (<span class="dv">9</span> <span class="sc">*</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 90</code></pre>
 </div>
@@ -1871,7 +1874,7 @@ It’s (still) all linear regression!
 <div class="callout-body-container callout-body">
 <p>Here, too, it is worth noticing that fitting a simple linear regression model with a single binary predictor is — under the hood — exactly the same thing as conducting an <strong>independent</strong> <strong>two-sample <em>t</em>-test</strong>. Compare the <strong><em>t</em>-statistic</strong> of the <em>t</em>-test that we computed earlier with that of the <em>t</em>-statistic of the <code>GroupL2</code> coefficient reported in the summary of our second model. If we ignore the signs of the <em>t</em>-values, we can see that they are almost identical!</p>
 <p>Also, notice how the <strong><em>p</em>-value</strong> computed by the <code>t.test()</code> function and that reported for our <code>GroupL2</code> coefficient are almost identical. They both correspond to values that are extremely close to zero.</p>
-<p>The very small differences between these values are due to the default correction that the <code>t.test()</code> function in <code>R</code> makes for unequal group variances (see <span class="quarto-unresolved-ref">?sec-Variance</span>). If we switch off this correction, both the <em>t</em>-statistic and the <em>p</em>-value are exactly the same as those reported in the summary of our second linear model above:</p>
+<p>The very small differences between these values are due to the default correction that the <code>t.test()</code> function in <code>R</code> makes for unequal group variances (see <a href="8_DescriptiveStats.html#sec-Variability" class="quarto-xref"><span>Section 8.3</span></a>). If we switch off this correction, both the <em>t</em>-statistic and the <em>p</em>-value are exactly the same as those reported in the summary of our second linear model above:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Vocab <span class="sc">~</span> Group, </span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data,</span>
