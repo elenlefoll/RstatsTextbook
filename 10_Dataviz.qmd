@@ -9,10 +9,6 @@ html:
 
 One of the advantages of working in `R` is that it allows us to create highly customised graphs for effective data visualisation. The **Grammar of Graphics** [@wilkinsonGrammarGraphics2005] is a theoretical framework that defines a structured approach to building and understanding statistical graphs. We will focus on using the tidyverse package [{ggplot2}](https://ggplot2.tidyverse.org/) [@Wickhamggplot2Elegantgraphics2016] to create effective data visualisations. The {ggplot2} is an implementation of the Grammar of Graphics (GG) syntax in `R`.
 
-::: column-margin
-![Hex sticker of the [{ggplot2}](https://ggplot2.tidyverse.org/) package](images/hex_ggplot2.png){#fig-hexggplot2 width="100" fig-alt="The hexagonal logo of the ggplot2 package features a graph with dots that are connected by a line."}
-:::
-
 This chapter is divided into two parts: the first explains the [**syntax**](https://elenlefoll.github.io/RstatsTextbook/10_Dataviz.html#sec-Syntax) of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] and how the {ggplot2} package works, while the second part focuses on the [**semantics**](https://elenlefoll.github.io/RstatsTextbook/10_Dataviz.html#sec-Semantics) of statistical graphics and provides an introduction to the many different types of data visualisations that can be created using the package.
 
 ### Chapter overview {.unnumbered}
@@ -30,7 +26,7 @@ In this chapter, you will learn how to:
 
 ### Set-up and data import {.unnumbered}
 
-::: callout-warning
+::: {.callout-warning collapse="false"}
 ### Prerequisites
 
 This chapter assumes that you are familiar with the concepts of descriptive statistics explained in @sec-DescRiptiveStats, and the use of the data wrangling functions introduced in @sec-DataWrangling.
@@ -39,7 +35,9 @@ All examples and quiz questions are based on data from:
 
 > Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72-100. <https://doi.org/10.1111/lang.12323>.
 
-Our starting point for this chapter is the wrangled combined dataset that we created and saved in @sec-DataWrangling. Follow the instructions in @sec-filter to create this `R` object or download `Dabrowska2019.zip` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/blob/main/Dabrowska2019.zip){.uri}. To get started, unzip the file and then double-click on the `Dabrowska2019.Rproj` file to ensure that RStudio opens up from the correct project directory.
+Our starting point for this chapter is the wrangled combined dataset that we created and saved in @sec-DataWrangling. Follow the instructions in @sec-filter to create this `R` object. 
+
+Alternatively, you can download `Dabrowska2019.zip` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/raw/69d1e31be7394f2b612825f031ebffeb75886390/Dabrowska2019.zip){.uri}. To launch the project correctly, first unzip the file and then double-click on the `Dabrowska2019.Rproj` file.
 :::
 
 Before we begin, we must load the `combined_L1_L2_data.rds` file that we created and saved in @sec-DataWrangling. This file contains the data of all the L1 and L2 participants of @DabrowskaExperienceAptitudeIndividual2019. The categorical variables are stored as factors and obvious data entry inconsistencies and typos have been corrected (see @sec-DataWrangling).
@@ -58,6 +56,10 @@ library(checkdown)
 Check that your data is correctly imported by examining the output of `View(Dabrowska.data)` and `str(Dabrowska.data)`. Once you are satisfied that that's the case, we ready to get creative! 🎨
 
 ## The syntax of graphics {#sec-Syntax}
+
+::: column-margin
+![Hex sticker of the [{ggplot2}](https://ggplot2.tidyverse.org/) package](images/hex_ggplot2.png){#fig-hexggplot2 width="100" fig-alt="The hexagonal logo of the ggplot2 package features a graph with dots that are connected by a line."}
+:::
 
 The syntax of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] is made up of **layers** (@fig-layers), which allow us to create highly effective and efficient data visualisations, while giving us lots of flexibility and control.
 
