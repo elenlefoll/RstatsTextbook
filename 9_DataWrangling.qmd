@@ -71,9 +71,11 @@ In this chapter and the following chapters, all examples, tasks, and quiz questi
 
 > Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72--100. <https://doi.org/10.1111/lang.12323>.
 
+
 You will only be able to reproduce the analyses and answer the quiz questions from this chapter if you have created an RProject and successfully imported the two datasets from @DabrowskaExperienceAptitudeIndividual2019 into your local `R` environment (see @fig-DataLoaded). Detailed instructions to do so can be found from @sec-RProject to @sec-ImportingDataCSV.
 
 Alternatively, you can download `Dabrowska2019.zip` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/raw/69d1e31be7394f2b612825f031ebffeb75886390/Dabrowska2019.zip){.uri}. To launch the project correctly, first unzip the file and then double-click on the `Dabrowska2019.Rproj` file.
+
 
 :::
 
@@ -152,12 +154,13 @@ The tidyverse package [{forcats}](https://forcats.tidyverse.org/) has a lot of v
 ![Hex sticker of the [{forcats}](https://forcats.tidyverse.org/) package](images/hex_forcats.png){#fig-hexdplyr width="100" alt-text="The forcats hexagonal logo features four lazy black cats in a cardboard box."}
 :::
 
-::: callout-tip
-#### Quiz time! {.unnumbered}
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
 
 [**Q9.1**]{style="color:green;"} Type `?fct_` in an `R` script or directly in the Console and then press the tab key (↹ or ⇥ on your keyboard). A list of all loaded functions that start with `fct_` should pop up. Which of these is *not* listed?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question("fct_mutate",
                options = c("fct_count",
                            "fct_mutate",
@@ -175,7 +178,8 @@ check_question("fct_mutate",
 
 [**Q9.2**]{style="color:green;"} In the factor object `L1.Gender.fct` (which we created above), the first level is "F" because it comes first in the alphabet. Which of these commands will make "M" the first level instead? Check out the help files of the following [{forcats}](https://forcats.tidyverse.org/) functions to understand what they do and try them out.
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question(c("fct_relevel(L1.Gender.fct, \"M\")",
                            "fct_rev(L1.Gender.fct)",
                            "fct_recode(L1.Gender.fct, first = \"M\", second = \"F\")"),
@@ -253,14 +257,15 @@ summary(L1.data.fct)
 summary(L1.data.fct[,c(1:12)])
 ```
 
-::: callout-caution
-#### [**Task 9.1**]{style="color:green;"} {.unnumbered}
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
 
 In this [**task**]{style="color:green;"}, you will do some data wrangling on the L2 dataset from @DabrowskaExperienceAptitudeIndividual2019.
 
-[**a.**]{style="color:green;"} Which of these columns from `L2.data` represent categorical variables and therefore ought to be converted to factors?
+[**Q9.3**]{style="color:green;"} Which of these columns from `L2.data` represent categorical variables and therefore ought to be converted to factors?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question(c("OccupGroup", "NativeLg", "EdNative"),
                options = c("OccupGroup", "NativeLg", "EdNative", "Arrival", "FirstExp", "UseEngC"),
 button_label = "Check answer",
@@ -272,9 +277,10 @@ check_hint("Run the `str(L2.data)` command to examine the structure of the L2 da
 
 ```
 
-[**b.**]{style="color:green;"} Convert all character vectors of `L2.data` to factors and save the new table as `L2.data.fct`. Use the `str()` function to check that your conversion has worked as planned. How many different factor levels are there in the categorical variable `Occupation`?
+[**Q9.4**]{style="color:green;"} Convert all character vectors of `L2.data` to factors and save the new table as `L2.data.fct`. Use the `str()` function to check that your conversion has worked as planned. How many different factor levels are there in the categorical variable `Occupation`?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question("48",
                options = c("48", "44", "27", "4", "45", "67"),
 button_label = "Check answer",
@@ -296,9 +302,10 @@ L2.data.fct <- L2.data |>
 str(L2.data.fct)
 ```
 
-[**c.**]{style="color:green;"} Use the `summary()` and `str()` functions to inspect the sanity of L2 dataset now that you have converted all the character vectors to factors. Have you noticed that there three factor levels in the `Gender` variable of the L2 dataset whereas there are only two in the L1 dataset? What is the most likely reason for this?
+[**Q9.5**]{style="color:green;"} Use the `summary()` and `str()` functions to inspect the sanity of L2 dataset now that you have converted all the character vectors to factors. Have you noticed that there three factor levels in the `Gender` variable of the L2 dataset whereas there are only two in the L1 dataset? What is the most likely reason for this?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question("Because sometimes \"female\" was recorded as lower-case \"f\" rather than upper-case \"F\".",
                options = c("Because sometimes \"female\" was recorded as lower-case \"f\" rather than upper-case \"F\".",
                            "Because these six participants were under 18 at the time of data collection.",
@@ -395,8 +402,8 @@ Now the `summary()` function provides a tally of male and female participants th
 summary(L2.data.cleaned$Gender)
 ```
 
-::: callout-caution
-#### [**Task 9.2**]{style="color:green;"} {.unnumbered}
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
 
 This [**task**]{style="color:green;"} focuses on the `OccupGroup` variable, which is found in both the L1 and L2 datasets.
 
@@ -414,9 +421,10 @@ L2.data.fct |>
 > **M**: Manual jobs\
 > **PS**: Professional-level jobs or studying for a degree
 
-[**a.**]{style="color:green;"} Examine the `OccupGroup` variable in the L1 dataset (`L1.data`). What do you notice? Why are L1 participants grouped into five rather than four occupational categories?
+[**Q9.6**]{style="color:green;"} Examine the `OccupGroup` variable in the L1 dataset (`L1.data`). What do you notice? Why are L1 participants grouped into five rather than four occupational categories?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question("Because an extra space character was accidentally added after one \"PS\" value.",
                options = c("Because this study has more L1 participants than L2 participants.",
                            "Because one L1 participant had an occupation that did not fit any of the other four categories.",
@@ -442,9 +450,10 @@ L1.data.fct |>
 
  
 
-[**b.**]{style="color:green;"} Which {stringr} function removes trailing spaces from character strings? Find the appropriate function on the [{stringr} cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf).
+[**Q9.7**]{style="color:green;"} Which {stringr} function removes trailing spaces from character strings? Find the appropriate function on the [{stringr} cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf).
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question("str_trim()",
                options = c("str_trim()",
                            "str_ends()",
@@ -476,9 +485,10 @@ L1.data.cleaned |>
 
  
 
-[**c.**]{style="color:green;"} Following the removal of trailing whitespaces, what percentage of L1 participants have a professional-level jobs/are studying for a degree?
+[**Q9.8**]{style="color:green;"} Following the removal of trailing whitespaces, what percentage of L1 participants have a professional-level jobs/are studying for a degree?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question("28%",
                options = c("20%",
                            "22.22%",
@@ -715,8 +725,8 @@ L2.data <- L2.data |>
 ```
 :::
 
-::: callout-caution
-#### [**Task 9.3**]{style="color:green;"}
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
 
 For some analyses, it may be useful to group together participants whose native languages come from the same family of languages. For example, French, Spanish and Italian L1 speakers, may be considered as a one group of participants whose native language is a Romance language.
 
@@ -731,9 +741,10 @@ Use `mutate()` and `case_when()` to add a new variable to `L2.data` that corresp
 
 If you're not sure which language family a language belongs to, look it up on Wikipedia (e.g. the Wikipedia page on the [German language](https://en.wikipedia.org/wiki/German_language) informs us in a text box at the top of the article that German is a Germanic language).
 
-[**a.**]{style="color:green;"} Which language family is the *second* most represented among L2 participants' native languages in @DabrowskaExperienceAptitudeIndividual2019?
+[**Q9.9**]{style="color:green;"} Which language family is the *second* most represented among L2 participants' native languages in @DabrowskaExperienceAptitudeIndividual2019?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question("Chinese",
                options = c("Baltic", "Chinese", "Germanic", "Hellenic", "Romance", "Slavic"),
                type = "radio",
@@ -746,9 +757,10 @@ check_hint("Once you have created your new variable, use the `table()` or `count
 
  
 
-[**b.**]{style="color:green;"} How many L2 participants are native speakers of a language that belongs to the family of Romance languages?
+[**Q9.10**]{style="color:green;"} How many L2 participants are native speakers of a language that belongs to the family of Romance languages?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question(c("6", "six"),
                button_label = "Check answer",
                right = "✅ Très bien! ¡Muy bien hecho! Ottimo!",
@@ -758,9 +770,10 @@ check_hint("Use the `count()` function as explained above to obtain a tally of t
 
  
 
-[**c.**]{style="color:green;"} What percentage of L2 participants have a Slavic native language? Round your answer to the nearest percent.
+[**Q9.11**]{style="color:green;"} What percentage of L2 participants have a Slavic native language? Round your answer to the nearest percent.
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question(c("58", "fifty-eight", "fifty eight", "58%", "58 %", "58 percent", "fifty-eight percent", "fifty eight percent"),
                button_label = "Check answer",
                right = "✅ Yes, nice data wrangling job!",
@@ -770,9 +783,10 @@ check_hint("You can copy the code from the previous section to add a \"percent\"
 
  
 
-[**d.**]{style="color:green;"} If you check the output of `colnames(L2.data)` or `View(L2.data)`, you will see that the new variable that you created is now the last column in the table. Consult the help file of the {dplyr} function `relocate()` to work out how to place this column immediately after `NativeLg`.
+[**Q9.12**]{style="color:green;"} If you check the output of `colnames(L2.data)` or `View(L2.data)`, you will see that the new variable that you created is now the last column in the table. Consult the help file of the {dplyr} function `relocate()` to work out how to place this column immediately after `NativeLg`.
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question(c("L2.data <- L2.data |> relocate(NativeLgFamily, .after = NativeLg)"),
                options = c("L2.data <- L2.data |> relocate(NativeLgFamily, .after = NativeLg)",
                            "L2.data <- L2.data |> relocate(f, .after = NativeLg)", 
@@ -789,11 +803,11 @@ check_question(c("L2.data <- L2.data |> relocate(NativeLgFamily, .after = Native
 :::
 
 ::: {.callout-note collapse="true"}
-#### Click here for solutions to [**Task 9.3**]{style="color:green;"}
+#### Click here for solutions to [**Q9.9**]{style="color:green;"}—[**Q9.12**]{style="color:green;"}.
 
 As always, there are several solutions to solving this [**task**]{style="color:green;"}. Here is one solution based on what we have covered so far in this chapter.
 
-[**a.**]{style="color:green;"} Note that the following code will only work if you followed the instructions in the section above to create the `NativeLg.cleaned` variable as it relies on this variable to create the new `NativeLgFamily` variable.
+[**Q9.9**]{style="color:green;"} Note that the following code will only work if you followed the instructions in the section above to create the `NativeLg.cleaned` variable as it relies on this variable to create the new `NativeLgFamily` variable.
 
 ```{r}
 L2.data <- L2.data |> 
@@ -813,14 +827,15 @@ L2.data |>
   select(NativeLg.cleaned, NativeLgFamily)
 ```
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 # Printing all rows takes up too much space, therefore I only print the first six rows with this chunk, but show the code in the chunk above that displays all values so that the reader can examine all rows.
 L2.data |> 
   select(NativeLg.cleaned, NativeLgFamily) |> 
   head()
 ```
 
-[**b.**]{style="color:green;"} We can display the distribution of language families using either the base `R` `table()` function or the {tidyverse} `count()` function.
+[**Q9.10**]{style="color:green;"} We can display the distribution of language families using either the base `R` `table()` function or the {tidyverse} `count()` function.
 
 ```{r}
 table(L2.data$NativeLgFamily)
@@ -829,7 +844,7 @@ L2.data |>
   count(NativeLgFamily)
 ```
 
-[**c.**]{style="color:green;"} We can add a column to show the distribution in percentages by adding a new "percent" column to the `count()` table using `mutate()`:
+[**Q9.11**]{style="color:green;"} We can add a column to show the distribution in percentages by adding a new "percent" column to the `count()` table using `mutate()`:
 
 ```{r}
 L2.data |> # <1>
@@ -850,7 +865,7 @@ L2.data |> # <1>
 
 🪐 Note that this a {tidyverse} approach to working out percentages, see @sec-Mode for a base `R` approach.
 
-[**d.**]{style="color:green;"} At the time of writing, the help file of the `relocate()` function still featured examples using the {magrittr} pipe (`%>%`) rather than the native `R` pipe (`|>`) (see @sec-Piping), but the syntax remains the same. The first argument is the data which we are piping into the function, the second argument is the column that we want to move. Then, we need to specify where to with either the ".after" or the ".before" argument.
+[**Q9.12**]{style="color:green;"} At the time of writing, the help file of the `relocate()` function still featured examples using the {magrittr} pipe (`%>%`) rather than the native `R` pipe (`|>`) (see @sec-Piping), but the syntax remains the same. The first argument is the data which we are piping into the function, the second argument is the column that we want to move. Then, we need to specify where to with either the ".after" or the ".before" argument.
 
 ```{r}
 L2.data <- L2.data |> 
@@ -1097,12 +1112,13 @@ summary(combined.data[,c(1:12)])
 
 ```
 
-::: callout-tip
-#### Quiz time! {.unnumbered}
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
 
-[**Q9.3**]{style="color:green;"} The following operations describe the steps performed by the data wrangling code chunk above. In which order are the operations performed?
+[**Q9.13**]{style="color:green;"} The following operations describe the steps performed by the data wrangling code chunk above. In which order are the operations performed?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question(c("Convert one variable to a character variable.",
                  "Add two new variables that each have all the same values.",
                  "Change the name of one variable",
@@ -1123,9 +1139,10 @@ check_hint("Use the up and down arrows to swap the order of any two labels in th
 
  
 
-[**Q9.4**]{style="color:green;"} In the combined dataset, how many participants have a clerical occupation?
+[**Q9.14**]{style="color:green;"} In the combined dataset, how many participants have a clerical occupation?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question(c("32", "thirty-two", "thirty two"),
                button_label = "Check answer",
                right = "✅",
@@ -1136,9 +1153,10 @@ check_hint("Have you tried using the `summary()` function to look into the `Occu
 
  
 
-[**Q9.5**]{style="color:green;"} Of the participants who have a clerical occupation, how many were over 50 years old at the time of the data collection?
+[**Q9.15**]{style="color:green;"} Of the participants who have a clerical occupation, how many were over 50 years old at the time of the data collection?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 check_question(c("6"),
                options = c("none", "1", "2", "6", "all of them"),
                button_label = "Check answer",
@@ -1150,7 +1168,7 @@ check_hint("One way to answer find the answer to this question is to cross-tabul
 :::
 
 ::: {.callout-tip collapse="true"}
-#### Click here to see the `R` code necessary to answer [**Q9.5**]{style="color:green;"}
+#### Click here to see the `R` code necessary to answer [**Q9.15**]{style="color:green;"}
 
 There are various ways to find the answer to Q5. Sticking to a function that we have looked at so far, you could cross-tabulate `Age` and `OccupGroup` using the `count()` function.
 
@@ -1191,12 +1209,17 @@ combined.data |>
 
 As a final step, we want to save the `R` object `combined.data` to a local file on our computer so that, when we continue our analyses in a new `R` session, we can immediately start working with the wrangled dataset. We can either save the wrangled dataset as an `R` object (`.rds`) or export it as a DSV file (e.g. `.csv`, see @sec-DSV). The pros and cons of the two solutions are summarised in @tbl-saving.
 
-| DSV files (e.g., `.csv`, `.tsv`, `.tab`) | `R` data files (`.rds`) |
-|:---|:---|
-| ✅ Highly portable (i.e., can be opened in all standard spreadsheet software and text editors). | ❌ Specific to `R` and cannot be opened in standard spreadsheet software or text editors. |
-| ❌ Inefficient for very large datasets. | ✅ Efficient memory usage for more compact data storage and faster loading times in `R`. |
-| ✅ Universal, language-independent format and therefore suitable for long-term archiving. | ❌ No guarantee that older `.rds` files will be compatible with newer versions of `R` and therefore unsuitable for long-term archiving. |
-| ❌ Loss of metadata. | ✅ Preserve `R` data structures (e.g., factor variables remain stored as factors). |
++-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| DSV files (e.g., `.csv`, `.tsv`, `.tab`)                                                        | `R` data files (`.rds`)                                                                                                                 |
++:================================================================================================+:========================================================================================================================================+
+| ✅ Highly portable (i.e., can be opened in all standard spreadsheet software and text editors). | ❌ Specific to `R` and cannot be opened in standard spreadsheet software or text editors.                                               |
++-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| ❌ Inefficient for very large datasets.                                                         | ✅ Efficient memory usage for more compact data storage and faster loading times in `R`.                                                |
++-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| ✅ Universal, language-independent format and therefore suitable for long-term archiving.       | ❌ No guarantee that older `.rds` files will be compatible with newer versions of `R` and therefore unsuitable for long-term archiving. |
++-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| ❌ Loss of metadata.                                                                            | ✅ Preserve `R` data structures (e.g., factor variables remain stored as factors).                                                      |
++-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
 
 : Pros and cons of saving DSV and `R` data files. {#tbl-saving}
 
@@ -1244,7 +1267,7 @@ write_csv(combined.data, file = here("data", "processed", "combined_L1_L2_data.c
 
 ## Check your progress 🌟 {.unnumbered}
 
-You have successfully completed [`r checkdown::insert_score()` out of 5 questions]{style="color:green;"} in this chapter.
+You have successfully completed [`r checkdown::insert_score()` out of 15 questions]{style="color:green;"} in this chapter.
 
 That was a lot of data wrangling, but we are now ready to proceed with some comparative analyses of L1 and L2 English speakers' language skills!
 
