@@ -35,7 +35,7 @@ In this chapter, you will learn how to:
 
 This chapter assumes that you are familiar with the concepts of descriptive statistics explained in @sec-DescRiptiveStats, and the use of the data wrangling functions introduced in @sec-DataWrangling.
 
-All examples, tasks, and quiz questions are based on data from:
+All examples and quiz questions are based on data from:
 
 > Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72-100. <https://doi.org/10.1111/lang.12323>.
 
@@ -148,8 +148,8 @@ ggplot(data = Dabrowska.data,
        y = "Number of participants")
 ```
 
-::: callout-tip
-#### Quiz time! {.unnumbered}
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
 
 [**Q10.1**]{style="color:green;"} Which of the following labels can be added or modified using the `labs()` function?
 
@@ -816,10 +816,10 @@ In the following, we will first look at how we can plot **categorical variables*
 
 As we saw in @Sec-Syntax, bar plots (also called **bar charts**) are a great way to visualise **categorical variables**. We also saw that, when using horizontal writing systems, it is often easier to interpret a bar plot if its coordinates are flipped so that longer labels can be read more readily.
 
-::: callout-caution
-#### [**Task 10.1**]{style="color:green;"}
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
 
-Study @fig-NativeLanguagesBarplot and think about which {ggplot2} functions were used to generate it. 🤔
+[**Q10.2**]{style="color:green;"} Study @fig-NativeLanguagesBarplot and think about which {ggplot2} functions were used to generate it. 🤔
 
 Then, click on the "Show `R` code" button to compare your intuitions with the actual code. Note that there may well be more than one solution: So do try out your version and see if spot any differences!
 :::
@@ -857,10 +857,10 @@ levels(fct_infreq(Dabrowska.data$NativeLg))
 levels(fct_rev(fct_infreq(Dabrowska.data$NativeLg)))
 ```
 
-::::::: callout-tip
-#### Quiz time! {.unnumbered}
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
 
-[**Q10.2**]{style="color:green;"} Compare the two plots below. Which one makes it easier to see which occupational group has the fewest participants and why?
+[**Q10.3**]{style="color:green;"} Compare the two plots below. Which one makes it easier to see which occupational group has the fewest participants and why?
 
 :::::: columns
 ::: {.column width="45%"}
@@ -941,12 +941,12 @@ check_hint("Two reasons are correct.",
 ```
 :::::::
 
-::: callout-caution
-#### [**Task 10.2**]{style="color:green;"}
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
 
 Using the {ggplot2} library, create a bar plot that shows the distribution of occupational groups (`OccupGroup`) among male L1 and L2 participants in @DabrowskaExperienceAptitudeIndividual2019's study.
 
-[**a.**]{style="color:green;"} Drawing on the information provided by your bar plot, how many male participants reported having manual jobs?
+[**Q10.4**]{style="color:green;"} Drawing on the information provided by your bar plot, how many male participants reported having manual jobs?
 
 ```{r echo=FALSE}
 check_question("exactly 20",
@@ -976,7 +976,7 @@ Dabrowska.data |>
   theme_minimal()
 ```
 
-[**b.**]{style="color:green;"} Is the legend in the bar plot that you have created necessary?
+[**Q10.5**]{style="color:green;"} Is the legend in the bar plot that you have created necessary?
 
 ```{r echo=FALSE}
 check_question("No, it only adds clutter.",
@@ -1006,7 +1006,7 @@ Dabrowska.data |>
   theme(legend.position = "none")
 ```
 
-[**c.**]{style="color:green;"} Create a pie chart that shows the distribution of occupational groups among male participants (as shown in @fig-OccupGroupPieChart). Which line of code is essential to create a pie chart using {ggplot2}?
+[**Q10.6**]{style="color:green;"} Create a pie chart that shows the distribution of occupational groups among male participants (as shown in @fig-OccupGroupPieChart). Which line of code is essential to create a pie chart using {ggplot2}?
 
 ```{r}
 #| echo: false
@@ -1039,7 +1039,7 @@ Dabrowska.data |>
     theme_void()
 ```
 
-[**d.**]{style="color:green;"} Transform the pie chart that you just created in [c.]{style="color:green;"} to make it look like @fig-PieChartRecode. To achieve this, wrangle the data *before* piping it into the `data` argument of the `ggplot()` function. Which {tidyverse} function can you use to rename the labels?
+[**Q10.7**]{style="color:green;"} Transform the pie chart that you just created in [c.]{style="color:green;"} to make it look like @fig-PieChartRecode. To achieve this, wrangle the data *before* piping it into the `data` argument of the `ggplot()` function. Which {tidyverse} function can you use to rename the labels?
 
 ```{r}
 #| echo: false
@@ -1167,10 +1167,10 @@ ggplot(data = Dabrowska.data,
 ```
 :::
 
-::::::::::: callout-caution
-#### [**Task 10.3**]{style="color:green;"}
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
 
-[**a.**]{style="color:green;"} How many different scores did participants obtain on the English grammar test (as stored in the `Grammar` variable).
+[**Q10.8**]{style="color:green;"} How many different scores did participants obtain on the English grammar test (as stored in the `Grammar` variable).
 
 ```{r}
 #| echo: false
@@ -1189,7 +1189,7 @@ unique(Dabrowska.data$Grammar) |>
   length()
 ```
 
-[**b.**]{style="color:green;"} What are the lowest `Grammar` scores among L1 and L2 participants?
+[**Q10.9**]{style="color:green;"} What are the lowest `Grammar` scores among L1 and L2 participants?
 
 ```{r}
 #| echo: false
@@ -1214,7 +1214,7 @@ Dabrowska.data |>
   summarise(lowest = min(Grammar))
 ```
 
-[**c.**]{style="color:green;"} Create a histogram of participants' `Grammar` scores. Which geometrical parameters need to be used to obtain exactly the same histogram as below?
+[**Q10.10**]{style="color:green;"} Create a histogram of participants' `Grammar` scores. Which geometrical parameters need to be used to obtain exactly the same histogram as below?
 
 ```{r}
 #| echo: false
@@ -1256,7 +1256,7 @@ ggplot(data = Dabrowska.data,
   theme_bw()
 ```
 
-[**d.**]{style="color:green;"} Without trying out the code for yourself, which script was used to generate Plot 1 below?
+[**Q10.11**]{style="color:green;"} Without trying out the code for yourself, which script was used to generate Plot 1 below?
 
 ```{r}
 #| echo: false
@@ -1369,7 +1369,7 @@ ggplot(data = Dabrowska.data,
 ```
 :::
 
-[**e.**]{style="color:green;"} Without trying out the code for yourself, which script was used to generate Plot 2 below?
+[**Q10.12**]{style="color:green;"} Without trying out the code for yourself, which script was used to generate Plot 2 below?
 
 ```{r}
 #| echo: false
@@ -1425,10 +1425,10 @@ ggplot(data = Dabrowska.data,
 
 Density plots are particularly useful to examine distribution shapes visually. Looking at @fig-GrammarDensity, we can immediately see that the values of the `Grammar` variable are not normally distributed (see @sec-DistributionsNumeric).
 
-::: callout-caution
-#### [**Task 10.4**]{style="color:green;"}
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
 
-[**a.**]{style="color:green;"} Which line of code needs to be added to the code used to generate @fig-GrammarDensity to produce a two-panel density plot like @fig-GrammarTwoPanelDensity?
+[**Q10.13**]{style="color:green;"} Which line of code needs to be added to the code used to generate @fig-GrammarDensity to produce a two-panel density plot like @fig-GrammarTwoPanelDensity?
 
 ```{r echo=FALSE}
 check_question("facet_wrap(~ Group)",
@@ -1457,7 +1457,7 @@ ggplot(data = Dabrowska.data,
   theme_bw()
 ```
 
-[**b.**]{style="color:green;"} Create four density plots to visualise the distribution of participants' `ART` (author recognisition test), `Blocks` (non-verbal IQ test), `Colloc` (English collocation test), and `Vocab` (English vocabularly test) scores.
+[**Q10.14**]{style="color:green;"} Create four density plots to visualise the distribution of participants' `ART` (author recognisition test), `Blocks` (non-verbal IQ test), `Colloc` (English collocation test), and `Vocab` (English vocabularly test) scores.
 
 Which variable's distribution is closest to a normal distribution?
 
@@ -1614,10 +1614,10 @@ The meaning conveyed by @fig-GrammarBoxPlotGroup is clear: there is hardly any d
 
 What are some of the possible reasons that you can think of? 🤔 Make a note of them as we will explore these hypotheses further in @sec-Scatterplots.
 
-::: callout-tip
-#### Quiz time! {.unnumbered}
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
 
-[**Q10.3**]{style="color:green;"} Create a boxplot to compare how participants in different occupational groups (`OccupGroup`) performed on the English grammar test. Which part of the code used to produce @fig-GrammarBoxPlotGroup do you need to modify to achieve this?
+[**Q10.15**]{style="color:green;"} Create a boxplot to compare how participants in different occupational groups (`OccupGroup`) performed on the English grammar test. Which part of the code used to produce @fig-GrammarBoxPlotGroup do you need to modify to achieve this?
 
 ```{r echo=FALSE}
 check_question("x = Group",
@@ -1648,7 +1648,7 @@ Dabrowska.data |>
   labs(y = "Grammar scores")
 ```
 
-[**Q10.4**]{style="color:green;"} The code below was used to create @fig-OccupBoxPlot, except that the arguments of the `aes()` function have been deleted. Which data mappings were specified inside the `aes()` function to produce @fig-OccupBoxPlot?
+[**Q10.16**]{style="color:green;"} The code below was used to create @fig-OccupBoxPlot, except that the arguments of the `aes()` function have been deleted. Which data mappings were specified inside the `aes()` function to produce @fig-OccupBoxPlot?
 
 ```{r}
 #| eval: false
@@ -1925,8 +1925,8 @@ The regression lines added by the `geom_smooth(method = "lm")` function are **li
 
 So far, all of our data visualisations have only displayed the characteristics of the collected data. In other words, they display **descriptive statistics** (see @sec-DescRiptiveStats) that do not allow us to make inferences about other participants who were not tested as part of @DabrowskaExperienceAptitudeIndividual2019's study. Tests of statistical significance, including of correlations, are introduced in @sec-Inferential.
 
-::: callout-tip
-#### Quiz time!
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
 
 In this quiz, you will explore another hypothesis:
 
@@ -1934,7 +1934,7 @@ In this quiz, you will explore another hypothesis:
 
 Using {ggplot2}, create a **scatter plot** that allows you to explore this hypothesis.
 
-[**Q10.5**]{style="color:green;"} What do you need to do before piping the data into the `ggplot()` function?
+[**Q10.17**]{style="color:green;"} What do you need to do before piping the data into the `ggplot()` function?
 
 ```{r echo=FALSE}
 check_question("filter(Group == \"L2\")",
@@ -1967,7 +1967,7 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-[**Q10.6**]{style="color:green;"} On your scatter plot, which data points are clearly outliers?
+[**Q10.18**]{style="color:green;"} On your scatter plot, which data points are clearly outliers?
 
 ```{r echo=FALSE}
 check_question("The L2 speaker who has lived in the UK for more than 40 years.",
@@ -1988,7 +1988,7 @@ check_hint("If you are getting a warning message telling you that ggplot2 has \"
 
 Identifying outliers is important to check and understand our data. If we spot an outlier corresponding to a participant having lived in a country for 400 years, we can immediately tell that something has gone wrong during data collection and/or pre-processing. In this case, however, common sense tells us that it is prefectly possible to have lived 40+ years in a country. Still, compared to the rest of the data, the outlier is striking and we should check that it is not due to an error.
 
-[**Q10.7**]{style="color:green;"} Using data wrangling functions from the {tidyverse} (see @sec-DataWrangling), check whether the outlier participant is old enough to have lived in the UK for longer than 40 years. How old were they when they first came to the UK?
+[**Q10.19**]{style="color:green;"} Using data wrangling functions from the {tidyverse} (see @sec-DataWrangling), check whether the outlier participant is old enough to have lived in the UK for longer than 40 years. How old were they when they first came to the UK?
 
 ```{r echo=FALSE}
 check_question(c("20", "twenty"),
@@ -2011,7 +2011,7 @@ Dabrowska.data |>
 62-42
 ```
 
-[**Q10.8**]{style="color:green;"} In order to better visualise a potential correlation between L2 participants' grammar comprehension test results and how long they've lived in the UK, we will exclude the outlier and re-draw the scatter plot. Which function can you use to exclude the identified outlier before piping the data into the `ggplot()` function?
+[**Q10.20**]{style="color:green;"} In order to better visualise a potential correlation between L2 participants' grammar comprehension test results and how long they've lived in the UK, we will exclude the outlier and re-draw the scatter plot. Which function can you use to exclude the identified outlier before piping the data into the `ggplot()` function?
 
 ```{r echo=FALSE}
 check_question("filter(LoR < 40)",
@@ -2047,7 +2047,7 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-[**Q10.9**]{style="color:green;"} Having removed the outlier point from the scatter plot, now add a regression line to visualise the correlation between the two variables. Which of the following options best fits the gap in the sentence below?
+[**Q10.21**]{style="color:green;"} Having removed the outlier point from the scatter plot, now add a regression line to visualise the correlation between the two variables. Which of the following options best fits the gap in the sentence below?
 
 > In this group of L2 speakers, there is \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ correlation between participants' grammar test scores and their length of residence in the UK.
 
@@ -2521,7 +2521,7 @@ ggsave("figures/BlocksDensityPlot.svg",
 
 ### Check your progress 🌟 {.unnumbered}
 
-Well done! You have successfully completed this chapter on data visualisation using the Grammar of Graphics approach. You have answered [`r checkdown::insert_score()` out of 9 questions]{style="color:green;"} correctly.
+Well done! You have successfully completed this chapter on data visualisation using the Grammar of Graphics approach. You have answered [`r checkdown::insert_score()` out of 21 questions]{style="color:green;"} correctly.
 
 Are you confident that you can...?
 
