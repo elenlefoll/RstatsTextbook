@@ -171,22 +171,10 @@ Let's begin by considering the following, intriguing research question:
 In the sample collected by @DabrowskaExperienceAptitudeIndividual2019, we can see that L2 speakers, on average, performed better than L1 speakers on the Blocks test. For the two groups, the mean `Blocks` test scores were:
 
 ```{r}
-#| eval: false
 Dabrowska.data |> 
   group_by(Group) |>
   summarise(mean = mean(Blocks),
             SD = sd(Blocks))
-```
-
-```{r}
-#| echo: false
-
-Dabrowska.data |> 
-  group_by(Group) |>
-  summarise(mean = mean(Blocks),
-            SD = sd(Blocks)) |> 
-  mutate(across(where(is.numeric), round, digits = 2)) |> 
-  as.data.frame()
 ```
 
 However, we are also aware that there is a lot of variation around these average values. The standard deviations (SD) around these mean values inform us that there is more variability in the L1 group than in the L2 group. @fig-IQTestPlot visualises this variability (see @sec-IQR on how to interpret boxplots). On this boxplot, diamonds represent the mean values.
@@ -416,7 +404,7 @@ check_hint("Only one of these statements is correct.",
 
 ## Statistical significance and *p*-values {#sec-PValues}
 
-When used correctly, the *p*‑value is a very useful metric that can help us to determine whether an observed statistic, such as a difference in means in a *t*-test, is likely to be due to chance variation in the sample rather than indicative of a true effect in the population. A common way[^11_inferential-4] to use *p*‑values is to define — prior to conducting the analysis — a **significance level** threshold (also called **alpha** or **α-level**), which corresponds to the risk that we are willing to accept of mistakenly concluding that there is an effect when, in fact, there is none (this is called a false positive result). In the language and social sciences, the significance level is typically set to 0.05, which means that we accept that, if the null hypothesis is true, we have a 5% risk of obtaining a *p*-value that suggests that we should reject the null hypothesis when, in fact, we shouldn't.[^11_inferential-5] The significance level should be chosen *before* looking at the data and be clearly mentioned in the methods section of every study that uses statistical significance testing.
+When used correctly, the *p*‑value is a very useful metric that can help us to determine whether an observed statistic, such as a difference in means in a *t*-test, is likely to be due to chance variation in the sample rather than indicative of a true effect in the population. A common way[^11_inferential-4] to use *p*‑values is to define — prior to conducting the analysis — a **significance level** threshold (also called **alpha** or **α-level**), which corresponds to the risk that we are willing to accept of mistakenly concluding that there is an effect when, in fact, there is none (this is called a false positive result). In the language and social sciences, the significance level is typically set to 0.05. This means that, if the null hypothesis is true, we accept a 5% risk of obtaining a *p*-value that suggests that we should reject the null hypothesis when, in fact, we shouldn't.[^11_inferential-5] The significance level should be chosen *before* looking at the data and be clearly mentioned in the methods section of every study that uses statistical significance testing.
 
 [^11_inferential-4]: Again, it is important to note that this is by no means the *only* way to interpret *p*-values. As with many things in statistics, how you interpret *p*-values depends on the statistical philosophy that you subscribe to. The approach described in this textbook corresponds to the statistical hypothesis testing approach developed by Neyman & Pearson ([1933](https://lakens.github.io/statistical_inferences/references.html#ref-neyman_problem_1933)). "In a Neyman-Pearson framework, the goal of statistical tests is to guide the behavior of researchers with respect to these two hypotheses. Based on the results of a statistical test, and without ever knowing whether the hypothesis is true or not, researchers choose to tentatively act as if the null hypothesis or the alternative hypothesis is true." [@lakensImprovingYourStatistical2022: Section 1.1]
 
@@ -436,7 +424,7 @@ The problem with *p*-values is that they are a composite metric that is dependen
 2.  The **variability within the data** (the less variability, the smaller the *p*-value)
 3.  The **sample size** (the larger the sample size, the smaller the *p*-value)
 
-Note that the size (or magnitude) of the observed effect is only *one* of three factors that influence the *p*-value! It is therefore incorrect to claim that an effect (e.g., a difference in means) is particularly large based on a particularly small *p*-value. It is equally incorrect to claim that a *p*-value that falls below the chosen signifiance level points is a (statistically) relevant result. To evaluate the *relevance* of a result, we need contextual information that goes far beyond the results of a single statistical test. In statistics, "significance" and "significant" are terms that have nothing to do with either the relevance or importance of results.
+Note that the size (or magnitude) of the observed effect is only *one* of three factors that influence the *p*-value! It is therefore incorrect to claim that an effect (e.g., a difference in means) is particularly large based on a particularly small *p*-value. It is equally incorrect to claim that a *p*-value that falls below the chosen significance level points to a (statistically) relevant result. To evaluate the *relevance* of a result, we need contextual information that goes far beyond the results of a single statistical test. In statistics, "significance" and "significant" are terms that have nothing to do with either the relevance or importance of results.
 
 ## Effect sizes and confidence intervals {#sec-EffectSize}
 
@@ -472,7 +460,7 @@ However, Cohen [-@cohenStatisticalPowerAnalysis1988: 25] himself cautioned that:
 
 Hence, it is important that linguists and education researchers base their interpretation of standardised effect sizes on prior research relevant to their field of research (see, e.g., @plonskyHowBigBig2014 for L2 research).
 
-The output of the `cohens_d()` function above also includes a 95% confidence interval (CI) around Cohen's *d*. It turns out that there is a direct relationship between the confidence interval around an effect size and the statistical significance of a null hypothesis significance test: if an effect is statistically significant in a two-sided[^11_inferential-6] independent *t*-test with an significance (α) level of 0.05, the 95% confidence interval (CI) for the mean difference between the two groups will *not* include zero. The *t*-test that we conducted on the results of the Blocks test across the L1 and L2 groups produced a *p*-value of 0.00001956 which is less than 0.05 and was therefore statistically significant at the α-level of 0.05. But we didn't really need to check the *p*-value because we can see that the effect is statistically significant at the α-level of 0.05 by looking at the 95% CI around Cohen's *d*: the lower bound is `-1.02` and the upper bound `-0.37`. In other words, the CI does not straddle zero.
+The output of the `cohens_d()` function above also includes a 95% confidence interval (CI) around Cohen's *d*. It turns out that there is a direct relationship between the confidence interval around an effect size and the statistical significance of a null hypothesis significance test: if an effect is statistically significant in a two-sided[^11_inferential-6] independent *t*-test with a significance (α) level of 0.05, the 95% confidence interval (CI) for the mean difference between the two groups will *not* include zero. The *t*-test that we conducted on the results of the Blocks test across the L1 and L2 groups produced a *p*-value of 0.00001956 which is less than 0.05 and was therefore statistically significant at the α-level of 0.05. But we didn't really need to check the *p*-value because we can see that the effect is statistically significant at the α-level of 0.05 by looking at the 95% CI around Cohen's *d*: the lower bound is `-1.02` and the upper bound `-0.37`. In other words, the CI does not straddle zero.
 
 [^11_inferential-6]: All of the statistical tests performed in this chapter are two-sided. For a discussion of one-sided vs. two-sided tests, see @lakensImprovingYourStatistical2022: Section 5.10).
 
@@ -483,23 +471,10 @@ Now, let's consider a new research question and a new null hypothesis:
 Recall that, in this dataset, `Gender` is a binary variable. The descriptive statistics suggest that male participants perform slightly better than female participants on the non-verbal IQ test, but that there is quite a bit of variability in the data:
 
 ```{r}
-#| eval: false
-
 Dabrowska.data |> 
   group_by(Gender) |> 
   summarise(mean = mean(Blocks),
             SD = sd(Blocks))
-```
-
-```{r}
-#| echo: false
-
-Dabrowska.data |> 
-  group_by(Gender) |> 
-  summarise(mean = mean(Blocks),
-            SD = sd(Blocks)) |> 
-  mutate(across(where(is.numeric), round, digits = 2)) |> 
-  as.data.frame()
 ```
 
 We now compute a standardised effect size for this gender gap: Cohen's *d*.
@@ -511,7 +486,7 @@ cohens_d(Blocks ~ Gender,
 
 Here, the `cohens_d()` function compares the scores of the female participants with those of the male participants because 'female' comes first alphabetically. Hence, the negative Cohen's *d* value means that, on average, males perform better than females. However, we can see that the effect size (`-0.10`) is very small.
 
-Now turning to the 95% confidence interval (CI) also output by the function, we can see that, while the lower confidence bound corresponds to a negative effect size, the upper bound is positive, which means that the confidence interval contains the possibility of an effect size of zero, correspoding to no effect at all. Hence, we must conclude that this difference in scores between female and male participants is not statistically significant at an α-level of 0.05. We can confirm this by performing a *t*-test. It returns a *p*-value that is greater than 0.05:
+Now turning to the 95% confidence interval (CI) also output by the function, we can see that, while the lower confidence bound corresponds to a negative effect size, the upper bound is positive, which means that the confidence interval contains the possibility of an effect size of zero, corresponding to no effect at all. Hence, we must conclude that this difference in scores between female and male participants is not statistically significant at an α-level of 0.05. We can confirm this by performing a *t*-test. It returns a *p*-value that is greater than 0.05:
 
 ```{r}
 t.test(formula = Blocks ~ Gender, 
@@ -759,7 +734,7 @@ The output of the `cor.test()` function also includes a *t*-statistic (`t`), the
         cor(errors, accuracy)
         ```
 
-Going back to the output of the `cor.test()` function above, we have a **correlation coefficient** of `0.36` is positive, which means that we are looking at a positive correlation. We already knew this from the direction of the regression line in the L1 panel of @fig-YearEducationPlot. The question is now: is `0.36` a *weak*, *medium* or *strong* positive correlation? Again, it depends... For some research questions in the language sciences, `0.36` may be considered a medium-sized correlation because humans are very strange animals but, for others, it may be considered a small correlation... As always, numbers alone do not suffice to draw conclusions: we need contextual information about our domain of research.
+Going back to the output of the `cor.test()` function above, we have a **correlation coefficient** of `0.36` is positive, which means that we are looking at a positive correlation. We already knew this from the direction of the regression line in the L1 panel of @fig-YearEducationPlot. The question is now: is `0.36` a *weak*, *medium* or *strong* positive correlation? Again, it depends... For some research questions in the language sciences, `0.36` may be considered a medium-sized correlation because humans are strange and complex animals but, for others, it may be considered a small correlation... As always, numbers alone do not suffice to draw conclusions: we need contextual information about our domain of research.
 
 The output of the `cor.test()` function also returned a 95% confidence interval around the correlation coefficient: `[0.16, 0.53]`. It does not straddle zero which is why our *p*-value was \< 0.05. That said, the lower bound of the interval corresponds to a very small correlation, suggesting that the correlation in the full L1 population may be considerably smaller than what we observed in our data (or quite a bit larger as demonstrated by the upper bound). In other words, there is quite a bit of uncertainty around the strength of this correlation coefficient because there is a lot variability in the data and we do not have a particularly large sample size.
 
@@ -1479,7 +1454,7 @@ Recall how we observed that, for both L1 and L2 participants, there was a positi
 
 This chapter has given you the keys to understanding the basics of inferential statistics following the frequentist null hypothesis significance testing (NHST) framework. We looked at how we can use *t*-tests and correlation tests to infer information about a population based on a random sample from the population. We introduced *p*-values, standardised effect sizes, and confidence intervals. These are complex concepts that take time to understand. Frequentist inferential statistics can be very powerful and useful, but it isn't intuitive. Most people will need to read this chapter and other resources (see recommended readings) several times to really get to grips with these concepts.
 
-In the following two chapters, we will move from single statistical tests to multiple linear regression models. In @sec-SLR will first see how *t*-tests and correlation tests can be understood and computed as simple linear regression models before exploring the potential of multiple linear regression models in @sec-MLR. The latter allow us to quantify and test the effects of several variables in a single model. Multiple linear regression naturally handles multiple predictors simultaneously, thus removing the need for *p*-value adjustments and providing more nuanced insights into the contributions of each variable and their potential interactions.
+In the following two chapters, we will move from single statistical tests to multiple linear regression models. In @sec-SLR, we will first see how *t*-tests and correlation tests can be understood and computed as simple linear regression models before exploring the potential of multiple linear regression models in @sec-MLR. The latter allow us to quantify and test the effects of several variables in a single model. Multiple linear regression naturally handles multiple predictors simultaneously, thus removing the need for *p*-value adjustments and providing more nuanced insights into the contributions of each variable and their potential interactions.
 
 ::: callout-tip
 ### Recommended readings 📚 {.unnumbered}
