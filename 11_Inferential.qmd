@@ -42,7 +42,7 @@ As with previous chapters, all the examples, tasks, and quiz questions from this
 
 > Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <https://doi.org/10.1111/lang.12323>.
 
-Our starting point for this chapter is the wrangled combined dataset that we created and saved in @sec-DataWrangling. Follow the instructions in @sec-filter to create this `R` object. 
+Our starting point for this chapter is the wrangled combined dataset that we created and saved in @sec-DataWrangling. Follow the instructions in @sec-filter to create this `R` object.
 
 Alternatively, you can download `Dabrowska2019.zip` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/raw/69d1e31be7394f2b612825f031ebffeb75886390/Dabrowska2019.zip){.uri}. To launch the project correctly, first unzip the file and then double-click on the `Dabrowska2019.Rproj` file.
 
@@ -84,7 +84,7 @@ In this chapter, we ask whether these observations are **likely to be generalisa
 In the language and education sciences we rarely have access to the entire population for which we would ideally like to generalise our findings. For example, we can hardly go and test *all* English speakers living in the UK. Instead, we have to make due with a **sample** of L1 and L2 English speakers from the UK. Since our studies attempt to *infer* information about entire populations based only sample data, the quality of our samples is crucial: no sophisticated statistical procedure can produce any meaningful inferential statistics from a biased or otherwise flawed sample!
 
 ::: callout-note
-#### Sampling methods
+# Sampling methods
 
 There are different ways to draw samples from a population. The most common methods are summarised below.
 
@@ -289,6 +289,12 @@ The output of the `t.test()` function is a bit overwhelming at first, so let's f
     format(1.956e-05, scientific = FALSE)
     ```
 
+::: callout-note
+# Reporting statistical results
+
+To summarise these results, we can write that we conducted a Welch two-sample *t*-test to compare the mean Blocks score of L1 and L2 English speakers. On average, L2 speakers performed significantly better (*M* = 17.46, *SD* = 4.70) than L1 speakers (*M* = 13.84, *SD* = 5.56), *t*~(152.46)~ = -4.4084, *p* \< 0.001.
+:::
+
 ::: callout-warning
 ## Common misconception
 
@@ -492,6 +498,12 @@ Now turning to the 95% confidence interval (CI) also output by the function, we 
 t.test(formula = Blocks ~ Gender, 
        data = Dabrowska.data)
 ```
+
+::: callout-note
+# Reporting statistical results
+
+To summarise these results, we can write that, while male participants performed marginally better (*M* = 15.71, *SD* = 5.81) than female participants (*M* = 15.17, *SD* = 5.30), this difference is very small (Cohen's *d* = -0.10; 95% CI \[-042, 0.22\]) and is not statistically significant at an α-level of 0.05: *t*~(124.58)~ = 0.5956, *p* = 0.5525.
+:::
 
 By default, the `cohens_d()` function computes a 95% confidence interval, but, if we had chosen a lower α-level of, say, 0.01, we can change this default:
 
@@ -747,6 +759,11 @@ cor.test(formula = ~ EduTotal + Grammar,
 
 Along with a *p*-value of \> 0.05, this suggests that we do not have enough evidence to reject the null hypothesis of no correlation between years in formal education and English grammar comprehension in the L2 population.
 
+::: callout-note
+# Reporting statistical results
+To summarise these results, we can write that, in this dataset, there is a small positive and statistically significant correlation between the number of years that participants reported spending in formal education and their receptive English vocabulary test scores, *r* = 0.1344, df = 65, *p* = 0.2782.
+:::
+
 Confidence intervals around correlation coefficients can be difficult to interpret as numbers. The good news is that they can easily be visualised using the {ggplot2} library. In @sec-Scatterplots, we used the argument `se = FALSE` inside the `geom_smooth()` function. If, instead, we set it to `TRUE`, 95% confidence intervals will be displayed as grey bands around the regression lines. To change the α-level, you will need to change the default value of the `level` argument.
 
 ```{r}
@@ -769,7 +786,7 @@ Dabrowska.data |>
 
 The interpretation of the grey bands is as follows: if it's possible to draw a straight line that stays within the 95 % confidence band, it is very likely that there is *no* statistically significant correlation between the two numeric variables displayed on the plot at the α-level of 0.05.
 
-As illustrated in @fig-YearEducationPLotGrayBandNullEffectLines, it is impossible to draw such a line in the L1 panel, which is why we reject the null hypothesis of no correlation between years spent in formal education and grammar comprehension test scores in L1 speakers. We conclude that this correlation is significantly different from zero. By contrast, it is perfectly possible to draw such a straight line in the L2 panel, which is why we must conclude that, at the α-level of 0.05, we do not have enough evidence to reject the null hypothesis of no correlation in the L2 population. The observed correlation is not statistically significantly different from zero.
+As illustrated in @fig-YearEducationPLotGrayBandNullEffectLines, it is impossible to draw such a line in the L1 panel, which is why we reject the null hypothesis of no correlation between years spent in formal education and grammar comprehension test scores for L1 speakers. We conclude that this correlation is significantly different from zero. By contrast, it is perfectly possible to draw such a straight line in the L2 panel, which is why we must conclude that, at the α-level of 0.05, we do not have enough evidence to reject the null hypothesis of no correlation in the L2 population. The observed correlation is not statistically significantly different from zero.
 
 ```{r}
 #| echo: false
@@ -1081,7 +1098,7 @@ From @fig-4PairPlot, we can immediately see that the relationship between the tw
 The assumption of linearity is relevant to many widely used statistical methods -- notably linear regression models (see @sec-SLR and @sec-MLR) -- which rely on Pearson's correlation coefficients. In practice, researchers usually assume linearity unless there is a strong theoretical reason to expect a non‑linear pattern (Cohen et al. 2003). However, this assumption should always be checked. The most straightforward way to do this is to visualise the data.
 
 ::: callout-note
-### Non-parametric correlations {.unnumbered}
+# Non-parametric correlations
 
 For an in-depth explanation of non-parametric correlation coefficients (Spearman's ρ and Kendall's τ) and statistical significance tests with examples from the language sciences, I recommend reading Levshina [-@LevshinaHowlinguisticsData2015: Chapter 6].
 :::
@@ -1443,7 +1460,7 @@ p_values.adjusted < 0.05
 :::
 
 ::: callout-note
-### In search of the truth... {.unnumbered}
+# In search of the truth... 
 
 Inferential statistics, even if used correctly, when all test assumptions are met and *p*-values corrected for multiple comparisons, tell us nothing about the validity or reliability of our results. Fancy statistics cannot fix inaccurate measurements or inconsistent annotations! In her study, Ewa Dąbrowska largely relied on tests that had been tested for **validity** and **reliability** in previous studies, which is why we trust that these test instruments mostly *do* measure what they claim to measure (which makes them valid) and that the results that they produce are consistent across participants (which makes them reliable). However, if this is not the case, we need to be extremely careful about the claims that we are making based on such data!
 

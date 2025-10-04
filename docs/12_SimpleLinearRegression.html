@@ -583,7 +583,12 @@ Warning
 <pre data-code-line-numbers=""><code>[1] 80</code></pre>
 </div>
 </div>
-<p>We will fit our first simple linear regression model on a simulated dataset. It consists of 100 test results expressed a) as the number of correctly answered questions (<code>N.correct</code>), and b) as a percentage (<code>Accuracy</code>). The dataset contains 100 rows corresponding to the results of 100 test-takers. <a href="#tbl-RTTable" class="quarto-xref">Table&nbsp;<span>12.1</span></a> displays the first six rows of this simulated dataset (<code>test.results</code>).</p>
+<p>We will fit our first simple linear regression model on a simulated dataset. It consists of 100 test results expressed:</p>
+<ol type="a">
+<li>as the number of correctly answered questions (<code>N.correct</code>), and</li>
+<li>as a percentage (<code>Accuracy</code>).</li>
+</ol>
+<p>The dataset contains 100 rows corresponding to the results of 100 test-takers. <a href="#tbl-RTTable" class="quarto-xref">Table&nbsp;<span>12.1</span></a> displays the first six rows of this simulated dataset (<code>test.results</code>).</p>
 <div id="tbl-RTTable" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-RTTable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1101,17 +1106,18 @@ Table&nbsp;12.1
 <div class="cell">
 <details class="code-fold">
 <summary>Show code to generate the scatter plot.</summary>
-<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> test.results,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> N.correct, <span class="at">y =</span> Accuracy)) <span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of correct answers"</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"% of questions correctly answered"</span>) <span class="sc">+</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">10.5</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>)) <span class="sc">+</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">105</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">80</span>, <span class="dv">100</span>)) <span class="sc">+</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> test.results,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> N.correct, <span class="at">y =</span> Accuracy)) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of correct answers"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"% of questions correctly answered"</span>) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">10.5</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">105</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">80</span>, <span class="dv">100</span>)) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-RTScatterPLot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatter plot of learners' test results expressed as the number of correct answers they got on the x-axis and as the percentage of correctly answered questions on the y-axis. The data points form a perfect linear relationship. A straight blue regression line runs through all the data points.">
@@ -1211,11 +1217,11 @@ Figure&nbsp;12.2: The correlation between leaners’ test results expressed as t
 </div>
 </div>
 </div>
-<p>In our case, we only have one predictor, so the intercept coefficient that our model estimates (<code>-4.711e-14</code>) corresponds to the predicted percentage of questions answered correctly (outcome) when the number of correct answers (predictor) is equal to zero. Instinctively, we know that this value should be zero because 0 points in a test = 0% correct in the test. And, indeed, our model predicts an intercept extremely close to zero (<code>-4.711e-14</code>). Using the <code>format()</code> function, we can convert this coefficient estimate from scientific notation to standard notation:</p>
+<p>In our case, we only have one predictor, so the intercept coefficient that our model estimates (<code>5.151e-15</code>) corresponds to the predicted percentage of questions answered correctly (outcome) when the number of correct answers (predictor) is equal to zero. Instinctively, we know that this value should be zero because 0 points in a test = 0% correct in the test. And, indeed, our model predicts an intercept extremely close to zero (<code>5.151e-15</code>). Using the <code>format()</code> function, we can convert this coefficient estimate from scientific notation to standard notation:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(<span class="sc">-</span><span class="fl">4.711e-14</span>, <span class="at">scientific =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(<span class="fl">5.151e-15</span>, <span class="at">scientific =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>[1] "-0.00000000000004711"</code></pre>
+<pre data-code-line-numbers=""><code>[1] "0.000000000000005151"</code></pre>
 </div>
 </div>
 <p>The second, <code>N.correct</code> coefficient estimate in our model summary is displayed as <code>1.000e+01</code> which is equal to:</p>
@@ -1227,7 +1233,7 @@ Figure&nbsp;12.2: The correlation between leaners’ test results expressed as t
 </div>
 <p>This coefficient estimate means that, for every correct answer, our prediction for the percentage of questions answered correctly increases by 10%. For example, if a student answered 9 questions correctly, our model predicts that the percentage of correctly answered question is equal to the intercept coefficient of (nearly) zero plus 9 multiplied by 10, which is equal to 90%:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">4.711e-14</span> <span class="sc">+</span> (<span class="dv">9</span> <span class="sc">*</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">5.151e-15</span> <span class="sc">+</span> (<span class="dv">9</span> <span class="sc">*</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 90</code></pre>
 </div>
@@ -1304,7 +1310,7 @@ Figure&nbsp;12.3: Relationship between years spent in formal education and vocab
 </div>
 </div>
 </div>
-<p>In general, the longer L1 speakers were in formal education, the better they performed on the vocabulary test. The correlation is larger than for <code>Grammar</code> scores, and it is statistically significant at a significance level of 0.05 (<em>r</em> = 0.43 [95% CI: 0.25, 0.58]):</p>
+<p>On average, the longer L1 speakers were in formal education, the better they performed on the vocabulary test. The correlation is larger than for <code>Grammar</code> scores, and it is statistically significant at an α-level of 0.05 (<em>r</em> = 0.43 [95% CI: 0.25, 0.58]):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">formula =</span> <span class="sc">~</span> Vocab <span class="sc">+</span> EduTotal,</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1323,7 +1329,7 @@ sample estimates:
 </div>
 </div>
 <p>The straight (i.e.&nbsp;linear) regression line going through our scatter plot in <a href="#fig-EducationYearsVocab" class="quarto-xref">Figure&nbsp;<span>12.3</span></a>, does <em>not</em> go through all the data points like it did in <a href="#fig-RTScatterPLot" class="quarto-xref">Figure&nbsp;<span>12.1</span></a>. This is because, if we know how long an L1 participant was in formal education, we cannot <em>perfectly</em> predict how well they will perform on the <code>Vocab</code> test, even though we do know that, on average, having spent longer in formal education correlates with <code>Vocab</code> test scores. Indeed, <a href="#fig-EducationYearsVocab" class="quarto-xref">Figure&nbsp;<span>12.3</span></a> clearly shows that some of the individuals who attended formal education for the least amount of time scored very low, whilst others scored very high in the <code>Vocab</code> test. This is not surprising, as we can expect that many other factors will play a role in L1 vocabulary knowledge.</p>
-<p>We now fit a simple linear regression model to the L1 data from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> with the aim of predicting <code>Vocab</code> scores (our outcome variable) based on the number of years that they spent in formal education (<code>EduTotal</code>; our predictor variable):</p>
+<p>We now fit a simple linear regression model using the <code>lm()</code> function (which stands for <strong>linear model</strong>) to the L1 data from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> with the aim of predicting <code>Vocab</code> scores (our outcome variable) based on the number of years that they spent in formal education (<code>EduTotal</code>; our predictor variable):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> Vocab <span class="sc">~</span> EduTotal,</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1355,7 +1361,7 @@ F-statistic: 19.61 on 1 and 88 DF,  p-value: 2.721e-05</code></pre>
 <p>This time, we’ll begin our interpretation of the model summary from the top:</p>
 <ul>
 <li><p>The first line is a reminder of the model <strong>formula</strong> and of the <strong>data</strong> on which fitted our linear model (<code>lm</code>).</p></li>
-<li><p>The second paragraph provides information about the <strong>error residuals</strong>. They represent the difference between participants’ actual <code>Vocab</code> scores (the observed values) and the model’s predictions (the predicted values). Hence, they correspond to what is left unaccounted for by the model. The closer to zero these values are, the better the model “fits” the data.</p>
+<li><p>The second paragraph provides information about the <strong>error residuals</strong>. They represent the difference between participants’ actual <code>Vocab</code> scores (the observed values) and the model’s predictions (the predicted values). Hence, they correspond to the variance in <code>Vocab</code> scores that is left unaccounted for by the model. The closer to zero the residuals are, the better the model fits the data. However, no real-life model is perfect so we expect there to be some “left-over” variance.</p>
 <ul>
 <li><code>Min</code>, <code>1Q</code>, <code>Median</code>, <code>3Q</code>, and <code>Max</code> are the minimum, first quartile, median, third quartile, and maximum residuals, respectively. These are the descriptive statistics of a distribution that are typically displayed in a boxplot (see <a href="8_DescriptiveStats.html#sec-IQR" class="quarto-xref"><span>Section 8.3.2</span></a>). These statistics give us a sense of the spread of the residuals. Whilst these values can be informative, it’s best to plot residuals to get a sense of their distribution (see <a href="#sec-Residuals" class="quarto-xref"><span>Section 12.4.3</span></a>). Ideally, the residuals should be normally distributed and centred around zero (see <a href="#sec-AssumptionsLR" class="quarto-xref"><span>Section 12.4</span></a>).</li>
 </ul></li>
@@ -1414,11 +1420,9 @@ It’s all linear regression!
 <span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">colour =</span> <span class="st">"blue"</span>) <span class="sc">+</span>   </span>
 <span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>() <span class="sc">+</span></span>
 <span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_area</span>(<span class="at">guide =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#geom_point(alpha = 0.3, # This makes the individual dots partially transparent, which means that, the more dots overlap, the dark the dot will appear on the plot.</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>             <span class="co">#size = 2) +</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">'Predicted Vocab scores'</span>, </span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">'Years in formal education'</span>) <span class="sc">+</span></span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">'Predicted Vocab scores'</span>, </span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">'Years in formal education'</span>) <span class="sc">+</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-EduPredictedVocab" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A scatter plot showing the relationship between years in formal education and predicted vocabulary scores. The points form an upward linear trend and are shown as black and gray circles.">
@@ -1491,7 +1495,7 @@ Figure&nbsp;12.5: Relationship between actual and predicted <code>Vocab</code> t
 </div>
 </div>
 </div>
-<p>In <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a>, the dotted blue line represents where the points would like, if <code>model1</code> perfectly predicted <code>Vocab</code> scores based only of the number of years that participants spent in formal education. The dots that fall on or very close to the dotted line stand for L1 participants for whom our model accurately predicts their <code>Vocab</code> score based solely on the number of years they spent in formal education. The further the dots are from the dotted line, the worse the predictions for these speakers. The distances between each point and the dotted line in <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> correspond to the model’s residuals (or error). <strong>Residuals</strong> are therefore the ‘leftover’ variability in the data that our model cannot account for.</p>
+<p>In <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a>, the dotted blue line represents where the points would like, if <code>model1</code> perfectly predicted <code>Vocab</code> scores based only of the number of years that participants spent in formal education. The dots that fall on or very close to the dotted line stand for L1 participants for whom our model accurately predicts their <code>Vocab</code> score based solely on the number of years they spent in formal education. The further the dots are from the dotted line, the worse the predictions for these speakers. The distances between each point and the dotted line in <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> correspond to the model’s residuals (or error). <strong>Residuals</strong> are therefore the ‘left-over’ variability in the data that our model cannot account for.</p>
 <p>Residuals can be positive or negative, depending on whether the dots on the predicted vs.&nbsp;actual values plot are above or below the dotted line of perfect fit. However, what matters more are their absolute values. The larger the residuals, the worse the model fit. Returning to the question, ‘How good is our model fit?’, we can conclude from <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> that it’s not great. But we already knew that from the model’s fairly low R² value and, crucially, we also know that many other factors are likely to account for some of the remaining variation in vocabulary scores.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1607,67 +1611,67 @@ Your turn!
 <div class="cell-output-display">
 <form name="form_35078" onsubmit="return validate_form_35078()" method="post">
 <label>
-<input type="radio" name="answer_35078" id="answer_35078_1" value="21.054">
-21.054
+<input type="radio" name="answer_35078" id="answer_35078_1" value="About 75">
+About 75
 </label>
 <br>
 <label>
-<input type="radio" name="answer_35078" id="answer_35078_2" value="-53.394">
--53.394
+<input type="radio" name="answer_35078" id="answer_35078_2" value="About 21">
+About 21
 </label>
 <br>
 <label>
-<input type="radio" name="answer_35078" id="answer_35078_3" value="54.5614">
-54.5614
+<input type="radio" name="answer_35078" id="answer_35078_3" value="About 55">
+About 55
 </label>
 <br>
 <label>
-<input type="radio" name="answer_35078" id="answer_35078_4" value="0.00598">
-0.00598
+<input type="radio" name="answer_35078" id="answer_35078_4" value="About 1">
+About 1
 </label>
 <br>
 <label>
-<input type="radio" name="answer_35078" id="answer_35078_5" value="1.0527">
-1.0527
+<input type="radio" name="answer_35078" id="answer_35078_5" value="Just over 0">
+Just over 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_35078" id="answer_35078_6" value="75.6154">
-75.6154
+<input type="radio" name="answer_35078" id="answer_35078_6" value="About -54">
+About -54
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_35078"></div>
 </form>
-<script>function validate_form_35078() {var x, text; var x = document.forms['form_35078']['answer_35078'].value;if (x == '75.6154'){text = 'Awesome!';} else {text = 'Humm, are you sure?';} document.getElementById('result_35078').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_35078() {var x, text; var x = document.forms['form_35078']['answer_35078'].value;if (x == 'About 75'){text = 'Awesome!';} else {text = 'Humm, are you sure?';} document.getElementById('result_35078').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome!';text = res1 + res2;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_35078').innerText == 'Awesome!';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_51295" onmouseover="return show_hint_51295()">🦉 Hover over the owl for a first hint.</div>
-<div id="result_51295" onmouseover="return show_hint_51295()"></div>
-<script>function show_hint_51295(){var x = document.getElementById('result_51295').innerHTML; if(!x){document.getElementById('result_51295').innerHTML = 'You can answer this question either by plotting the predicted values of your model and reading the value off your graph or by doing some maths using the coefficient estimates provided in the summary of your model.';} else {document.getElementById('result_51295').innerHTML = '';}}</script>
+<div id="hint_15607" onmouseover="return show_hint_15607()">🦉 Hover over the owl for a first hint.</div>
+<div id="result_15607" onmouseover="return show_hint_15607()"></div>
+<script>function show_hint_15607(){var x = document.getElementById('result_15607').innerHTML; if(!x){document.getElementById('result_15607').innerHTML = 'You can answer this question either by plotting the predicted values of your model and reading the value off your graph or by doing some maths using the coefficient estimates provided in the summary of your model.';} else {document.getElementById('result_15607').innerHTML = '';}}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_11307" onclick="return show_hint_11307()">🐭 Click on the mouse for a second hint.</div>
-<div id="result_11307" onclick="return show_hint_11307()"></div>
-<script>function show_hint_11307(){var x = document.getElementById('result_11307').innerHTML; if(!x){document.getElementById('result_11307').innerHTML = 'If you choose to do solve this question numerically, you will need to multiply the coefficient estimate for the Blocks variable by 20 and add this to the coefficient estimate for the intercept.';} else {document.getElementById('result_11307').innerHTML = '';}}</script>
+<div id="hint_2707" onclick="return show_hint_2707()">🐭 Click on the mouse for a second hint.</div>
+<div id="result_2707" onclick="return show_hint_2707()"></div>
+<script>function show_hint_2707(){var x = document.getElementById('result_2707').innerHTML; if(!x){document.getElementById('result_2707').innerHTML = 'If you choose to do solve this question numerically, you will need to multiply the coefficient estimate for the Blocks variable by 20 and add this to the coefficient estimate for the intercept.';} else {document.getElementById('result_2707').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code to answer Q12.2</summary>
-<div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a) numerical approach:</span></span>
+<div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a) Taking a numerical approach, you can add up the model coefficients printed in the model summary. As always, start with the intercept coefficient and add to it the coefficient corresponding to an increase in one point on the Blocks test multiplied by the number of points that this participant achieved (20):</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(taskmodel1)</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fl">54.5614</span> <span class="sc">+</span> (<span class="fl">1.0527</span> <span class="sc">*</span> <span class="dv">20</span>)</span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># or taking the coefficient estimate values directly from the model object:</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternatively, we can take the coefficient estimate values directly from the model object to get an even more precise prediction like this:</span></span>
 <span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>taskmodel1<span class="sc">$</span>coefficients[<span class="dv">1</span>] <span class="sc">+</span> (taskmodel1<span class="sc">$</span>coefficients[<span class="dv">2</span>] <span class="sc">*</span> <span class="dv">20</span>)</span>
 <span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># b) graphical approach:</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># b) Taking a graphical approach, we need to plot the model's predicted Vocab scores against all Blocks test scores in the dataset in order to find out how what the model's prediction is for a Blocks test score of 20. The ggplot code below adds an arrow and a dotted line to help you read the predicted Vocab score from the plot:</span></span>
 <span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(L1.data, </span>
 <span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Blocks, </span>
 <span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">predict</span>(taskmodel1))) <span class="sc">+</span> </span>
@@ -1678,7 +1682,7 @@ Your turn!
 <span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">yend =</span> <span class="dv">75</span>,</span>
 <span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> <span class="st">"blue"</span>,</span>
 <span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.25</span>, <span class="st">"cm"</span>))) <span class="sc">+</span></span>
-<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"segment"</span>,</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"segment"</span>,</span>
 <span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">0</span>, </span>
 <span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>           <span class="at">xend =</span> <span class="fl">19.5</span>, </span>
 <span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fl">75.6</span>,</span>
@@ -1955,8 +1959,8 @@ Your turn!
 <div class="cell-output-display">
 <form name="form_28203" onsubmit="return validate_form_28203()" method="post">
 <label>
-<input type="radio" name="answer_28203" id="answer_28203_1" value="No, because there is a lot of overlap between the two distributions, and the female and male median Vocab scores are very close to each other.">
-No, because there is a lot of overlap between the two distributions, and the female and male median Vocab scores are very close to each other.
+<input type="radio" name="answer_28203" id="answer_28203_1" value="No, because there is a lot of overlap between the two distributions and the female and male median Vocab scores are very close to each other.">
+No, because there is a lot of overlap between the two distributions and the female and male median Vocab scores are very close to each other.
 </label>
 <br>
 <label>
@@ -1984,7 +1988,7 @@ Yes, because there are significantly more female participants in this dataset.
 </form>
 <script>function validate_form_28203() {var x, text; var x = document.forms['form_28203']['answer_28203'].value;if (x == 'No, because there is a lot of overlap between the two distributions and the female and male median Vocab scores are very close to each other.'){text = 'Well done!';} else {text = 'No, that’s not it. Remember that the middle line in a boxplot represents the median.';} document.getElementById('result_28203').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome!'; res3 = document.getElementById('result_93152').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_97241').innerText == 'Indeed!'; res5 = document.getElementById('result_28203').innerText == 'Well done!';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_28203').innerText == 'Well done!';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -2246,7 +2250,7 @@ Your turn!
 <div id="callout-9" class="callout-9-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>In this task, you will explore whether L2 participants’ native language is a useful predictor when trying to model their English <code>Vocab</code> scores.</p>
-<p><span style="color:green;"><strong>Q12.8</strong></span> Fit a linear model to model L2 participants’ <code>Vocab</code> score based on their native language (<code>NativeLg</code>). According to the model’s adjusted R^2 coefficient, how much of the variance in <code>Vocab</code> scores among L2 participants can be accounted for in this model?</p>
+<p><span style="color:green;"><strong>Q12.8</strong></span> Fit a linear model to model L2 participants’ <code>Vocab</code> score based on their native language (<code>NativeLg</code>). According to the model’s adjusted R<sup>2</sup> coefficient, how much of the variance in <code>Vocab</code> scores among L2 participants does this model account for?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_90827" onsubmit="return validate_form_90827()" method="post">
@@ -2299,8 +2303,8 @@ About 49%
 <div class="cell-output-display">
 <form name="form_5498" onsubmit="return validate_form_5498()" method="post">
 <label>
-<input type="checkbox" id="answer_5498_1" value="Because the NativeLg variable is a particularly good predictor of Vocab scores.">
-Because the NativeLg variable is a particularly good predictor of Vocab scores.
+<input type="checkbox" id="answer_5498_1" value="Because knowing a participant's native language is a particularly useful predictor of Vocab scores.">
+Because knowing a participant's native language is a particularly useful predictor of Vocab scores.
 </label>
 <br>
 <label>
@@ -2309,8 +2313,8 @@ Because the NativeLg variable includes 10 different levels.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_5498_3" value="Because the NativeLg variable is inherently connected to vocabulary knowledge.">
-Because the NativeLg variable is inherently connected to vocabulary knowledge.
+<input type="checkbox" id="answer_5498_3" value="Because a participant's native language is inherently connected to their English vocabulary knowledge.">
+Because a participant's native language is inherently connected to their English vocabulary knowledge.
 </label>
 <br>
 <label>
@@ -2321,43 +2325,48 @@ Because the model's p-value is only just below 0.05.
 <input type="submit" value="Check answer">
 <div id="result_5498"></div>
 </form>
-<script>function validate_form_5498() {var text; var x1 = document.getElementById('answer_5498_1'); var x2 = document.getElementById('answer_5498_2'); var x3 = document.getElementById('answer_5498_3'); var x4 = document.getElementById('answer_5498_4'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == false){text = 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for based only on participants’ native language.';} else {text = 'No, that’s not the reason.';} document.getElementById('result_5498').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_5498() {var text; var x1 = document.getElementById('answer_5498_1'); var x2 = document.getElementById('answer_5498_2'); var x3 = document.getElementById('answer_5498_3'); var x4 = document.getElementById('answer_5498_4'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == false){text = 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.';} else {text = 'No, that’s not the reason.';} document.getElementById('result_5498').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome!'; res3 = document.getElementById('result_93152').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_97241').innerText == 'Indeed!'; res5 = document.getElementById('result_28203').innerText == 'Well done!'; res6 = document.getElementById('result_26813').innerText == 'That’s right!'; res7 = document.getElementById('result_5642').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case, of categorical predictor, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_90827').innerText == 'That’s right!'; res9 = document.getElementById('result_5498').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for based only on participants’ native language.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_5498').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
+<div class="cell-output-display">
+<div id="hint_79886" onclick="return show_hint_79886()">🐭 Click on the mouse for a hint.</div>
+<div id="result_79886" onclick="return show_hint_79886()"></div>
+<script>function show_hint_79886(){var x = document.getElementById('result_79886').innerHTML; if(!x){document.getElementById('result_79886').innerHTML = 'Only one of these reasons is correct.';} else {document.getElementById('result_79886').innerHTML = '';}}</script>
 </div>
-<p><span style="color:green;"><strong>Q12.10</strong></span> One way to reduce the number of levels in the <code>NativeLg</code> variable is to model <code>Vocab</code> scores based on L2 participants’ native language family, instead. Fit a model that attempts to predict <code>Vocab</code> scores among L2 participants based on the <code>NativeLgFamily</code> variable. Based on your comparison of the two models, which of the following statements is/are true?</p>
+</div>
+<p><span style="color:green;"><strong>Q12.10</strong></span> One way to reduce the number of levels in the <code>NativeLg</code> variable is to model <code>Vocab</code> scores based on L2 participants’ native language family, instead. Fit a model that attempts to predict <code>Vocab</code> scores among L2 participants based on the <code>NativeLgFamily</code> variable (the creation of this variable was a <span style="color:green;">Your turn!</span> task in <a href="9_DataWrangling.html#sec-casewhen" class="quarto-xref"><span>Section 9.6.4</span></a>). Based on your comparison of the two models, which of the following statements is/are true?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_20115" onsubmit="return validate_form_20115()" method="post">
 <label>
-<input type="radio" name="answer_20115" id="answer_20115_1" value="When adjusted for the number of predictors, the language family model is better at predicting Vocab scores.">
+<input type="checkbox" id="answer_20115_1" value="When adjusted for the number of predictors, the language family model is better at predicting Vocab scores.">
 When adjusted for the number of predictors, the language family model is better at predicting Vocab scores.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_20115" id="answer_20115_2" value="When adjusted for the number of predictors, the language family model is worse at predicting at Vocab scores.">
+<input type="checkbox" id="answer_20115_2" value="When adjusted for the number of predictors, the language family model is worse at predicting at Vocab scores.">
 When adjusted for the number of predictors, the language family model is worse at predicting at Vocab scores.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_20115" id="answer_20115_3" value="The more predictors there are, the easier it is to predict Vocab scores, which is why the language family model has a lower multiple R-squared coefficient.">
-The more predictors there are, the easier it is to predict Vocab scores, which is why the language family model has a lower multiple R-squared coefficient.
+<input type="checkbox" id="answer_20115_3" value="The more predictors there are, the easier it is to predict Vocab scores. This is why the language family model has a lower multiple R-squared coefficient.">
+The more predictors there are, the easier it is to predict Vocab scores. This is why the language family model has a lower multiple R-squared coefficient.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_20115" id="answer_20115_4" value="The language family model is statistically less significant than the other model because it features fewer predictors.">
+<input type="checkbox" id="answer_20115_4" value="The language family model is statistically less significant than the other model because it features fewer predictors.">
 The language family model is statistically less significant than the other model because it features fewer predictors.
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_20115"></div>
 </form>
-<script>function validate_form_20115() {var x, text; var x = document.forms['form_20115']['answer_20115'].value;if (x == 'When adjusted for the number of predictors, the language family model is better at predicting Vocab scores.'|x == 'The more predictors there are, the easier it is to predict Vocab scores which is why the language family model has a lower multiple R-squared coefficient.'){text = 'Yes, well done!';} else {text = 'No, not quite.';} document.getElementById('result_20115').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_20115() {var text; var x1 = document.getElementById('answer_20115_1'); var x2 = document.getElementById('answer_20115_2'); var x3 = document.getElementById('answer_20115_3'); var x4 = document.getElementById('answer_20115_4'); if (x1.checked == true&x2.checked == false&x3.checked == true&x4.checked == false){text = 'Yes, well done!';} else {text = 'No, not quite.';} document.getElementById('result_20115').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome!'; res3 = document.getElementById('result_93152').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_97241').innerText == 'Indeed!'; res5 = document.getElementById('result_28203').innerText == 'Well done!'; res6 = document.getElementById('result_26813').innerText == 'That’s right!'; res7 = document.getElementById('result_5642').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case, of categorical predictor, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_90827').innerText == 'That’s right!'; res9 = document.getElementById('result_5498').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for based only on participants’ native language.'; res10 = document.getElementById('result_20115').innerText == 'Yes, well done!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_20115').innerText == 'Yes, well done!';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
