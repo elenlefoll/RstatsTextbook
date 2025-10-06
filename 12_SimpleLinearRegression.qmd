@@ -103,7 +103,7 @@ We can now plot the two variables of our simulated dataset as a scatter plot to 
 #| code-fold: true
 #| code-summary: "Show code to generate the scatter plot."
 #| label: "fig-RTScatterPLot"
-#| fig-cap: "The correlation between leaners' test results expressed as the number of correct answers and a percentage of questions answered correctly"
+#| fig-cap: "The correlation between learners' test results expressed as the number of correct answers and the percentage of questions answered correctly"
 #| fig-alt: "Scatter plot of learners' test results expressed as the number of correct answers they got on the x-axis and as the percentage of correctly answered questions on the y-axis. The data points form a perfect linear relationship. A straight blue regression line runs through all the data points."
 
 library(tidyverse)
@@ -131,7 +131,7 @@ cor.test(~ N.correct + Accuracy,
          data = test.results)
 ```
 
-Now, we use the base `R` function `lm()` to fit a simple linear model to predict the percentage of questions that learners correctly answered based on the number of correct answers that they gave. Like the significance test functions that we saw in @sec-Inferential, `lm()` takes a **formula** as its first argument. We want to predict the proportion of questions that learners correctly answered as a percentage (`accuracy`) so this variable comes *before* the tilde (`~`). In statistical modelling, the variable that we want to predict is referred to as the **outcome variable**. We want to use the number of correct answers that the learners gave to make our prediction, so we place the variable `N.correct` *after* the tilde. Variables used to predict the outcome are called **predictors**.
+Now, we use the base `R` function `lm()` to fit a simple linear model to predict the percentage of questions that learners correctly answered based on the number of correct answers that they gave. Like the significance test functions that we saw in @sec-Inferential, `lm()` takes a **formula** as its first argument. We want to predict the proportion of questions that learners correctly answered as a percentage (`Accuracy`) so this variable comes *before* the tilde (`~`). In statistical modelling, the variable that we want to predict is referred to as the **outcome variable**. We want to use the number of correct answers that the learners gave to make our prediction, so we place the variable `N.correct` *after* the tilde. Variables used to predict the outcome are called **predictors**.
 
 ```{r}
 test.model <- lm(formula = Accuracy ~ N.correct,
@@ -150,7 +150,7 @@ Let's start by looking at the **coefficients** of our model. Every model has an 
 #| code-fold: true
 #| code-summary: "Show code to generate plot."
 #| label: "fig-RTScatterPLotIntercept"
-#| fig-cap: "The correlation between leaners' test results expressed as the number of correct answers and a percentage of questions answered correctly"
+#| fig-cap: "The correlation between learners' test results expressed as the number of correct answers and the percentage of questions answered correctly"
 #| fig-alt: "This is the same plot as above. The only difference is that a dotted blue line extends the fit blue line to zero."
 
 ggplot(data = test.results,
@@ -185,7 +185,7 @@ format(1.000e+01, scientific = FALSE)
 This coefficient estimate means that, for every correct answer, our prediction for the percentage of questions answered correctly increases by 10%. For example, if a student answered 9 questions correctly, our model predicts that the percentage of correctly answered question is equal to the intercept coefficient of (nearly) zero plus 9 multiplied by 10, which is equal to 90%:
 
 ```{r}
--5.151e-15 + (9 * 10)
+-5.151e-15 + 9 * 10
 ```
 
 In our model summary, the coefficient estimate for `N.correct` is associated with a *p*-value of `<2e-16`. It corresponds to the *p*-value of our `cor.test()` on the same data, and is actually the smallest value that `R` will display. In other words, it is extremely small. This *p*-value indicates that we can safely reject the null hypothesis that this coefficient is zero, i.e. that the number of correct answers is *not* a useful predictor to predict the percentage of correctly answered questions under the assumptions of a linear regression model (more on these assumptions in @sec-Assumptions).
@@ -200,7 +200,7 @@ In summary.lm(test.model) :
   essentially perfect fit: summary may be unreliable
 ```
 
-With this message, the authors of the `lm()` package warn us that our model can make almost perfect predictions. Given that in real-life research this is extremely unlikely, an essentially perfect prediction is usually a sign that we may have made an error of some kind. Here, however, we can safely ignore this warning because we know that the number of correct answers can, indeed, be perfectly converted to percentages of correctly answered questions.
+With this message, the authors of the `lm()` function are warning us that our model can make almost perfect predictions. Given that in real-life research this is extremely unlikely, an essentially perfect prediction is usually a sign that we may have made an error of some kind. Here, however, we can safely ignore this warning because we know that the number of correct answers can, indeed, be perfectly converted to percentages of correctly answered questions.
 
 ### A real-life prediction
 
@@ -254,7 +254,7 @@ L1.data |>
   theme_bw()
 ```
 
-On average, the longer L1 speakers were in formal education, the better they performed on the vocabulary test. The correlation is larger than for `Grammar` scores, and it is statistically significant at an α-level of 0.05 (*r* = 0.43 \[95% CI: 0.25, 0.58\]):
+On average, the longer L1 speakers were in formal education, the better they performed on the vocabulary test. The correlation is larger than for `Grammar` scores, and it is statistically significant at an α-level of 0.05 (*r* = 0.43 \[95% CI: 0.24, 0.58\]):
 
 ```{r}
 cor.test(formula = ~ Vocab + EduTotal,
@@ -289,7 +289,7 @@ This time, we'll begin our interpretation of the model summary from the top:
 -   The **EduTotal coefficient estimate** of `3.546` means that, for each year of formal education, our model predicts that `Vocab` test scores will increase by an additional 3.546 units on top of the baseline score of `20.516`, provided that all other variables remain the same. Hence, if an individual spent 14 years in formal education, their predicted `Vocab` score is:
 
     ```{r}
-    20.5159 + (14*3.5460)
+    20.5159 + 14*3.5460
     ```
 
 -   The ***p-*****value** associated with the `EduTotal` coefficient is very small (`2.72e-05`).
@@ -396,7 +396,7 @@ ggplot(L1.data,
   theme_bw()
 ```
 
-In @fig-ActualPredictedVocab, the dotted blue line represents where the points would like, if `model1` perfectly predicted `Vocab` scores based only of the number of years that participants spent in formal education. The dots that fall on or very close to the dotted line stand for L1 participants for whom our model accurately predicts their `Vocab` score based solely on the number of years they spent in formal education. The further the dots are from the dotted line, the worse the predictions for these speakers. The distances between each point and the dotted line in @fig-ActualPredictedVocab correspond to the model's residuals (or error). **Residuals** are therefore the 'left-over' variability in the data that our model cannot account for.
+In @fig-ActualPredictedVocab, the dotted blue line represents where the points would lie, if `model1` perfectly predicted `Vocab` scores based only on the number of years that participants spent in formal education. The dots that fall on or very close to the dotted line stand for L1 participants for whom our model accurately predicts their `Vocab` score based solely on the number of years they spent in formal education. The further the dots are from the dotted line, the worse the predictions for these speakers. The distances between each point and the dotted line in @fig-ActualPredictedVocab correspond to the model's residuals (or error). **Residuals** are therefore the 'left-over' variability in the data that our model cannot account for.
 
 Residuals can be positive or negative, depending on whether the dots on the predicted vs. actual values plot are above or below the dotted line of perfect fit. However, what matters more are their absolute values. The larger the residuals, the worse the model fit. Returning to the question, 'How good is our model fit?', we can conclude from @fig-ActualPredictedVocab that it's not great. But we already knew that from the model's fairly low R² value and, crucially, we also know that many other factors are likely to account for some of the remaining variation in vocabulary scores.
 
@@ -490,7 +490,7 @@ check_hint("If you choose to do solve this question numerically, you will need t
 # a) Taking a numerical approach, you can add up the model coefficients printed in the model summary. As always, start with the intercept coefficient and add to it the coefficient corresponding to an increase in one point on the Blocks test multiplied by the number of points that this participant achieved (20):
 summary(taskmodel1)
 
-54.5614 + (1.0527 * 20)
+54.5614 + 1.0527*20
 
 # Alternatively, we can take the coefficient estimate values directly from the model object to get an even more precise prediction like this:
 taskmodel1$coefficients[1] + (taskmodel1$coefficients[2] * 20)
@@ -672,8 +672,6 @@ t.test(Vocab ~ Group,
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-Fit a model with `Vocab` as the outcome variable and `Gender` as the predictor with the full dataset from @DabrowskaExperienceAptitudeIndividual2019's study.
-
 [**Q12.5**]{style="color:green;"} Draw a boxplot showing the distribution of `Vocab` scores among male and female participants in `Dabrowska.data`. Based on your boxplot, do you expect `Gender` to be a statistically significant predictor of `Vocab` scores?
 
 ```{r}
@@ -705,7 +703,7 @@ Dabrowska.data |>
   theme_minimal()
 ```
 
-[**Q12.6**]{style="color:green;"} Fit a model to test your intuition based on your boxplot. Is `Gender` a statistically significant predictor of `Vocab` score in this simple linear regression model?
+[**Q12.6**]{style="color:green;"} Fit a model with `Vocab` as the outcome variable and `Gender` as the predictor to test your intuition based on your boxplot. Is `Gender` a statistically significant predictor of `Vocab` score in this simple linear regression model?
 
 ```{r}
 #| echo: false
@@ -819,7 +817,9 @@ summary(model3)
 We can display the predicted `Vocab` scores for each occupational group, together with a 95% confidence interval around these predicted values using the `emmeans()` function from the [{emmeans}](https://rvlenth.github.io/emmeans/index.html) package [@lenthEmmeansEstimatedMarginal2025a]:
 
 ```{r}
+#install.packages("emmeans")
 library(emmeans)
+
 emmeans(model3, ~ OccupGroup)
 ```
 
@@ -1062,9 +1062,9 @@ L2.data |>
 
 Similar to the statistical tests that we conducted in @sec-Inferential, linear regression also has a number of assumptions that should be met if we want to obtain reliable results that we can trust. It is therefore very important that we check that these assumptions are met.
 
-### Assumption 1: Independence
+### Assumption 1: Independence {#sec-IndependenceSLR}
 
-This is the same assumption as for the statistical tests that we covered in @sec-Inferential (see @sec-Independence). It means that each observation in our dataset should be unrelated to every other observation. In other words, knowing the value of one data point shouldn't give us any information about any other data point in our dataset. This assumption is critical because violations can lead to unjustifiably narrower confidence intervals and lower *p*-values.
+This is the same assumption as for the statistical tests that we covered in @sec-Inferential (see @sec-Independence). It means that each observation in our dataset should be unrelated to every other observation. In other words, knowing the value of one data point shouldn't give us any information about any other data point in our dataset. This assumption is critical because violations can lead to unjustifiably low *p*-values and narrower confidence intervals and .
 
 Independence violations arise from the way data were collected. For example, if we test the same person several times, their test results are likely to be more similar to each other than to the results of other participants. Similarly, if we collect data over time, today's measurement might be influenced by yesterday's value. When pupils are sampled from different schools, pupils within the same school or class might be more similar to each other than to pupils from other schools and/classes.
 
@@ -1073,14 +1073,14 @@ If our data do not meet the assumption of independence, we need to use a differe
 ::: {.callout-note collapse="false"}
 ### Further reading 📚 {.unnumbered}
 
-Here are some great starting points to learn about mixed-effects models and how to fit them in `R`:
+Here are some great starting points (in alphabetical order) to learn about mixed-effects models for linguistics research and how to fit them in `R`:
 
--   @griesStatisticsLinguisticsPractical2021: Ch. 6
--   @LevshinaHowlinguisticsData2015: Ch. 8
--   @WinterStatisticsLinguistsIntroduction2019: Ch. 14-15
+-   @griesStatisticsLinguisticsPractical2021: Chapter 6
+-   @LevshinaHowlinguisticsData2015: Chapter 8
+-   @WinterStatisticsLinguistsIntroduction2019: Chapters 14-15
 :::
 
-### Assumption 2: Linearity
+### Assumption 2: Linearity {#sec-LinearitySLR}
 
 The linearity assumption requires that the relationship between any numeric predictor variable and the outcome variable follows a straight (i.e. linear) line rather than a curved one. This assumption is fundamental because linear regression, as the name suggests, can only ever fit a straight line through the data. If the true relationship between our variables is curved, forcing a straight line through the data will lead to poor predictions and misleading conclusions.
 
@@ -1113,7 +1113,7 @@ ggplot(zipf_data_curved, aes(x = word_rank, y = frequency)) +
   theme_minimal()
 ```
 
-### Assumption 3: Homoscedasticity of residuals {#sec-Residuals}
+### Assumption 3: Homogeneity of residuals {#sec-Residuals}
 
 Linear regression models assume homogeneity — or constant variance — of the residuals (see @sec-Homoscedasticity). This assumption is best checked by visually examining the model residuals. In @fig-VocabResidual, we plot the residuals of `model1` and check that their variability does not systematically increase or decrease as the outcome variable increases or decreases.
 
@@ -1141,7 +1141,7 @@ ggplot(residual_data,
 
 In @fig-VocabResidual, we can see that the residuals are not randomly spread across both sides of the blue line, but rather that they form a funnel-like shape: the spread of residuals tends to be larger for low predicted `Vocab` scores and becomes progressively smaller for higher predicted scores. This pattern indicates that our model is more accurate when it comes to predicting high `Vocab` scores than lower ones. This constitutes a violation of the assumption of equal variance or homoscedasticity.
 
-### Assumption 5: Normality of residuals
+### Assumption 5: Normality of residuals {#sec-NormalityResiduals}
 
 Ideally, model residuals also ought to be normally distributed, with a mean of zero. However, this assumption becomes less important as the sample size increases [@williamsAssumptionsMultipleRegression2013: 10]. Again, it is best to check the distribution of residuals visually. As shown in @fig-VocabResidualDensity, the residuals of `model1` are fairly normally distributed.
 
@@ -1174,7 +1174,9 @@ When the sample size is small and the model residuals are not normally distribut
 
 In this chapter, we fitted simple linear regression models. These models demonstrate that we can -- to a greater or lesser degree -- predict (or **model**) participants' receptive vocabulary knowledge test scores on the basis of a single predictor such as the number of years that they spent in formal education or their occupational group.
 
-We have referred to the variable that we are trying to predict as the outcome variable. It is worth knowing that it is sometimes also called the **dependent variable** because we are attempting to model its 'dependence' on one or more **independent variables** (which we have called predictors). In @sec-MLR, we will continue to use the terminology of **outcome** and **predictor** variables, but you should be aware that some textbooks and researchers will speak of dependent and independent variables, instead.
+We have referred to the variable that we are trying to predict as the outcome variable. It is worth knowing that it is sometimes also called the **dependent variable** because we are attempting to model its 'dependence' on one or more **independent variables** (which we have called predictors). In @sec-MLR, we will continue to use the terminology of **outcome** and **predictor** variables, but you should be aware that some textbooks and researchers will speak of dependent and independent variables, instead.[^12_simplelinearregression-1]
+
+[^12_simplelinearregression-1]: This choice of terminology is largely a personal one but, in my experience, learners find this terminology less confusing as it is immediately obvious what is being predicted (the outcome or dependent variable) and what is used to make the prediction (the predictors or the independent variables). Another advantage is that the term predictor can be used by itself (i.e., without the word "variable"), which is handy because when we enter a categorical variable into a model, there are as many predictors as there are variable levels.
 
 While our simple linear regression models did allow us to account for some of the variance in participants' `Vocab` test scores, like the statistical tests that we conducted in @sec-Inferential, they still only allow us to capture one aspect of receptive vocabulary knowledge at a time. What we really want to do is to be able to enter several predictor variables into a single model. For example, it would be interesting to know whether the number of years spent in formal education remains a significant predictor of `Vocab` scores when controlling for participants' occupational groups. This can be achieved with multiple linear regression, and that's coming up in the next chapter!
 
