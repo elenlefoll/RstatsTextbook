@@ -141,10 +141,12 @@ test.model <- lm(formula = Accuracy ~ N.correct,
 We have saved our model to our local environment as an `R` object called `test.model`. We can now use the `summary()` function to examine the model:
 
 ```{r}
+#| message: true
+
 summary(test.model)
 ```
 
-Let's start by looking at the **coefficients** of our model. Every model has an **intercept** coefficient estimate (`(Intercept)`), which is the value that the model predicts for the outcome variable when the predictor variables are zero. In other words, it is where the regression line would cross the *y*-axis if the line were extended to go all the way to zero (as in @fig-RTScatterPLotIntercept).
+In addition to this model summary, the code above outputs a warning about an "essentially perfect fit" in the Console. We will come to this warning at the end of this section, but for now let's start by looking at the **coefficients** of our model summary. Every model has an **intercept** coefficient estimate (`(Intercept)`), which is the value that the model predicts for the outcome variable when the predictor variables are zero. In other words, it is where the regression line would cross the *y*-axis if the line were extended to go all the way to zero as in @fig-RTScatterPLotIntercept.
 
 ```{r}
 #| code-fold: true
@@ -170,7 +172,7 @@ ggplot(data = test.results,
   theme_bw()
 ```
 
-In our case, we only have one predictor, so the intercept coefficient that our model estimates (`5.151e-15`) corresponds to the predicted percentage of questions answered correctly (outcome) when the number of correct answers (predictor) is equal to zero. Instinctively, we know that this value should be zero because 0 points in a test = 0% correct in the test. And, indeed, our model predicts an intercept extremely close to zero (`5.151e-15`). Using the `format()` function, we can convert this coefficient estimate from scientific notation to standard notation:
+In our case, we only have one predictor, so the intercept coefficient that our model estimates (`5.151e-15`) corresponds to the predicted percentage of questions answered correctly (outcome) when the number of correct answers (predictor) is equal to zero. Instinctively, we know that this value should be zero because 0 points in a test = 0% correct in the test. And, indeed, our model predicts an intercept extremely close to zero (`5.151e-15`). Using the `format()` function, we can convert this coefficient estimate from **scientific notation** to standard notation:
 
 ```{r}
 format(5.151e-15, scientific = FALSE)
@@ -188,9 +190,9 @@ This coefficient estimate means that, for every correct answer, our prediction f
 -5.151e-15 + 9 * 10
 ```
 
-In our model summary, the coefficient estimate for `N.correct` is associated with a *p*-value of `<2e-16`. It corresponds to the *p*-value of our `cor.test()` on the same data, and is actually the smallest value that `R` will display. In other words, it is extremely small. This *p*-value indicates that we can safely reject the null hypothesis that this coefficient is zero, i.e. that the number of correct answers is *not* a useful predictor to predict the percentage of correctly answered questions under the assumptions of a linear regression model (more on these assumptions in @sec-Assumptions).
+In our model summary, the coefficient estimate for `N.correct` is associated with a *p*-value of `<2e-16`. It corresponds to the *p*-value of our `cor.test()` on the same data, and is actually the smallest value that `R` will display. In other words, it is extremely small. This *p*-value indicates that we can safely reject the null hypothesis that this coefficient is zero under the assumptions of a linear regression model. In other words, we can reject the null hypothesis that the number of correct answers is *not* a useful predictor to predict the percentage of correctly answered questions under the assumption of a linear regression model (more on these assumptions in @sec-Assumptions).
 
-The second-to-last line of the model summary is also important. It features two **R-squared (R^2^) values**. Like the absolute values of correlation coefficients, these can range between 0 and 1. R^2^ = 0 means that the model accounts for 0% of the variance in the outcome variable. R^2^ = 1 means that the model accounts for 100% of the variance, i.e. that it can perfectly predict the values of the outcome variable from the predictor variable(s). As our simulated `test.results` dataset is based on a perfect correlation, our model is able to perfectly predict the outcome variable, hence both our R^2^ values equal `1`. In this chapter and @sec-MLR, however, we will focus on the **adjusted R-squared value** because it accounts for the fact that the more predictors we include in our model, the easier it is to predict the outcome variable.
+The penultimate line of the model summary is also important. It features two **R-squared (R^2^) values**. Like the absolute values of correlation coefficients, these can range between 0 and 1. R^2^ = 0 means that the model accounts for 0% of the variance in the outcome variable. R^2^ = 1 means that the model accounts for 100% of the variance, i.e. that it can perfectly predict the values of the outcome variable from the predictor variable(s). As our simulated `test.results` dataset is based on a perfect correlation, our model is able to perfectly predict the outcome variable, hence both our R^2^ values equal `1`. In this chapter and @sec-MLR, however, we will focus on the **adjusted R-squared value** because it accounts for the fact that the more predictors we include in our model, the easier it is to predict the outcome variable.
 
 Finally, you may have also noticed that the `lm()` function returned a warning message when we fitted this practice model:
 
@@ -200,7 +202,7 @@ In summary.lm(test.model) :
   essentially perfect fit: summary may be unreliable
 ```
 
-With this message, the authors of the `lm()` function are warning us that our model can make almost perfect predictions. Given that in real-life research this is extremely unlikely, an essentially perfect prediction is usually a sign that we may have made an error of some kind. Here, however, we can safely ignore this warning because we know that the number of correct answers can, indeed, be perfectly converted to percentages of correctly answered questions.
+With this message, the authors of the `lm()` function are warning us that our model can make almost perfect predictions. Given that in real-life research this is extremely unlikely, an "essentially perfect" prediction is usually a sign that we may have made an error of some kind. Here, however, we can safely ignore this warning because we know that the number of correct answers can, indeed, be converted to percentages of correctly answered questions with perfect accuracy (hence our R^2^ of 1 or 100%).
 
 ### A real-life prediction
 
@@ -307,10 +309,10 @@ This time, we'll begin our interpretation of the model summary from the top:
 
 Did you notice that the ***t*****-value** and the ***p*****-value** associated with the `EduTotal` coefficient in our linear regression model are *exactly the same* as those that we obtained earlier using the `cor.test()` function? This is because linear regression with a single numeric predictor is -- under the hood -- exactly the same as a Pearson's correlation test!
 
-Moreover, we said that **R²** stands for the **squared coefficient of correlation**, which is why, if we take the square root of our adjusted R² coefficient, we get 0.42, which corresponds to the **correlation coefficient** (Pearson's *r*) that we obtained from the `cor.test()` function:
+Moreover, we said that **R²** stands for the **squared coefficient of correlation**, which is why, if we take the square root of our adjusted R² coefficient, we get 0.43, which corresponds to the **correlation coefficient** (Pearson's *r*) that we obtained from the `cor.test()` function:
 
 ```{r}
-sqrt(0.1764)
+sqrt(0.1822)
 ```
 
 Having gone through @sec-Inferential, you may now ask yourself: why do we need correlation tests if simple linear regression does the same thing? 🧐 Honestly, we don't. @sec-Inferential introduced correlation tests and *t*-tests because they are widely used in the language sciences, so it is important that you understand them, but the truth is: you can achieve much more by taking a modelling rather than a testing approach to analysing data. Read on to find out more!
@@ -325,7 +327,7 @@ Having gone through @sec-Inferential, you may now ask yourself: why do we need c
 #| code-summary: "See code to generate plot."
 #| label: "fig-EduPredictedVocab"
 #| fig-cap: "Relationship between years spent in formal education and predicted vocabulary test scores"
-#| fig-alt: "A scatter plot showing the relationship between years in formal education and predicted vocabulary scores. The points form an upward linear trend and are shown as black and gray circles."
+#| fig-alt: "A scatter plot showing the relationship between years in formal education and predicted vocabulary scores. The points form an upward linear trend and their size corresponds to the number of people in the L1 dataset who reported being in formal education for that many years. Most people reported spending between 11 and 14 years in formal education but some as many 21 years."
 
 ggplot(L1.data, 
        aes(x = EduTotal, 
@@ -1037,7 +1039,7 @@ check_hint("Remember that p-values depend on three different factors, see Sectio
 #| code-summary: "Show sample code to answer Q12.13"
 #| eval: false
 
-# The plot of predicted values (see cde below) shows that the coefficient estimate for Hellenic speakers is based on only one data point (as is also the case for Germanic speakers).
+# The plot of predicted values (see code below) shows that the coefficient estimate for Hellenic speakers is based on only one data point (as is also the case for Germanic speakers).
 library(visreg)
 visreg(taskmodel4, gg = TRUE) +
   labs(title = "Participants' L1 language family",
@@ -1064,9 +1066,9 @@ Similar to the statistical tests that we conducted in @sec-Inferential, linear r
 
 ### Assumption 1: Independence {#sec-IndependenceSLR}
 
-This is the same assumption as for the statistical tests that we covered in @sec-Inferential (see @sec-Independence). It means that each observation in our dataset should be unrelated to every other observation. In other words, knowing the value of one data point shouldn't give us any information about any other data point in our dataset. This assumption is critical because violations can lead to unjustifiably low *p*-values and narrower confidence intervals and .
+This is the same assumption as for the statistical tests that we covered in @sec-Inferential (see @sec-Independence). It means that each observation in our dataset should be unrelated to every other observation. In other words, knowing the value of one data point shouldn't give us any information about any other data point in our dataset. This assumption is critical because violations can lead to unjustifiably low *p*-values and narrower confidence intervals.
 
-Independence violations arise from the way data were collected. For example, if we test the same person several times, their test results are likely to be more similar to each other than to the results of other participants. Similarly, if we collect data over time, today's measurement might be influenced by yesterday's value. When pupils are sampled from different schools, pupils within the same school or class might be more similar to each other than to pupils from other schools and/classes.
+Independence violations arise from the way data were collected. For example, if we test the same person several times, their test results are likely to be more similar to each other than to the results of other participants. Similarly, if we collect data over time, today's measurement might be influenced by yesterday's value. When pupils are sampled from different schools, pupils within the same school or class might be more similar to each other than to pupils from other schools and/or classes.
 
 If our data do not meet the assumption of independence, we need to use a different analysis method that can account for the fact that our data points are related to each other. In the language sciences, this is most commonly achieved using **mixed-effects models**. In this textbook, however, we only cover **fixed-effects** **models** for which the assumption of independence must be held.
 
@@ -1092,7 +1094,7 @@ In @fig-Nonlinear, by contrast, the data points follow a curved pattern. The reg
 #| echo: false
 #| label: fig-Nonlinear
 
-#### Quick plot generated by Claude Sonnet with utter rubbish data. To do: Find suitable real data to create such a plot! @Vishar: Do not bother adding alt-text or a caption for this plot as I will change it.
+#### To do: Find suitable real data to create such a plot! @Vishar: Do not bother adding alt-text or a caption for this plot as I will change it.
 
 # Data following Zipf's Law 
 set.seed(123)
@@ -1123,7 +1125,7 @@ Linear regression models assume homogeneity — or constant variance — of the 
 #| label: "fig-VocabResidual"
 #| fig-cap: "Comparison of model residuals with predicted vocabulary scores"
 
-# Create a data frame containing the the model's residuals and predictions:
+# Create a data frame containing the model's residuals and predictions:
 residual_data <- data.frame(
   fitted_values = fitted(model1),
   residuals = residuals(model1)
@@ -1141,7 +1143,7 @@ ggplot(residual_data,
 
 In @fig-VocabResidual, we can see that the residuals are not randomly spread across both sides of the blue line, but rather that they form a funnel-like shape: the spread of residuals tends to be larger for low predicted `Vocab` scores and becomes progressively smaller for higher predicted scores. This pattern indicates that our model is more accurate when it comes to predicting high `Vocab` scores than lower ones. This constitutes a violation of the assumption of equal variance or homoscedasticity.
 
-### Assumption 5: Normality of residuals {#sec-NormalityResiduals}
+### Assumption 4: Normality of residuals {#sec-NormalityResiduals}
 
 Ideally, model residuals also ought to be normally distributed, with a mean of zero. However, this assumption becomes less important as the sample size increases [@williamsAssumptionsMultipleRegression2013: 10]. Again, it is best to check the distribution of residuals visually. As shown in @fig-VocabResidualDensity, the residuals of `model1` are fairly normally distributed.
 
