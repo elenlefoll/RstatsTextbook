@@ -12,7 +12,7 @@ library(tidyverse)
 
 #### **Chapter overview** {.unnumbered}
 
-Many introductory `R` textbooks postpone this section until much later by relying on datasets that are directly accessible as `R` data objects. In real life, however, research data rarely comes neatly packaged as an `R` data object. Your data will most likely be stored in a spreadsheet table or as text files of some kind. And -let's be honest- they will be more messy than you would like to admit, making this chapter and the next crucial for learning to do data analysis in `R`.
+Many introductory `R` textbooks postpone this section until much later by relying on datasets that are directly accessible as `R` data objects. In real life, however, research data rarely come neatly packaged as an `R` data object. Your data will most likely be stored in a spreadsheet table or as text files of some kind. And -let's be honest- they will be more messy than you would like to admit, making this chapter and the next crucial for learning to do data analysis in `R`.
 
 This chapter will take you through the process of:
 
@@ -21,7 +21,7 @@ This chapter will take you through the process of:
 -   Importing a `.csv` file as an `R` object in `R`
 -   Examining a data frame object
 
-In future chapters, we will continue to work with this data. We will learn how to "clean it up" for data analysis, before we begin to explore it using descriptive statistics and data visualisations.
+In future chapters, we will continue to work with these data. We will learn how to "clean it up" for data analysis, before we begin to explore it using descriptive statistics and data visualisations.
 
 ## Accessing data from a published study {#sec-AccessingData}
 
@@ -256,7 +256,7 @@ In fact, we could shorten things even further as, unless otherwise specified, `R
 L1.data <- read.csv("data/L1_data.csv")
 ```
 
-The file path `"data/L1_data.csv"` informs `R` that the data is located in a subfolder of the project's working directory called `data` and that, within this `data` subfolder, the file that we want to import is called `L1_data.csv`. Note that the file extension must be specified (see @sec-FileExtensions). Note, also, the file path is separated with a single forward slash `/`. In `R`, this should work regardless of the operating system that you are using and, in order to be able to easily share your scripts with others, it is recommended that you use forward slashes even if you are running Windows (@sec-FoldersPaths).
+The file path `"data/L1_data.csv"` informs `R` that the data are located in a subfolder of the project's working directory called `data` and that, within this `data` subfolder, the file that we want to import is called `L1_data.csv`. Note that the file extension must be specified (see @sec-FileExtensions). Note, also, the file path is separated with a single forward slash `/`. In `R`, this should work regardless of the operating system that you are using and, in order to be able to easily share your scripts with others, it is recommended that you use forward slashes even if you are running Windows (@sec-FoldersPaths).
 
 Although the command above did the job, in practice, it is often safer to spell things out further to remind ourselves of some of the default settings of the function that we are using in case they need to be checked or changed at a later stage. In this example, we will therefore import the data with the following command:
 
@@ -313,7 +313,7 @@ Much like wearing a helmet for extra safety (@fig-HelmetHere), {here} makes the 
 
 ## Import errors and issues 🥺 {#sec-ImportingErrors}
 
-It is crucial that you check whether your data has genuinely been correctly imported. Here's a list of things to check (in that order):
+It is crucial that you check whether your data have genuinely been correctly imported. Here's a list of things to check (in that order):
 
 1.  Were you able to run the import command without producing any errors? If you are getting an error, remember that this is most likely due to a typo (see @sec-Errors)!
 
@@ -459,7 +459,7 @@ For the command above to work, you will first need to save the file `offlinedata
 
 ![Extract of data file AJT_raw_scores_L2.csv from](images/BusterudEA2023_data_snapshot.png){#fig-BusterudEAData fig-alt="The image shows a table from the data file AJT_raw_scores_L2.csv by Busterud et al. It includes rows numbered 261 to 274 with columns for ID, L3, Years of L3, Gender, L3 selfasses, L3 grade, L2 selfasses, and L2 grade. All entries in L3, Years of L3, and Gender are 2, 4, and 4, respectively. Values for L3 selfasses range from 1 to 2,5, L3 grade from 2 to 5, L2 selfasses from 2 to 6, and L2 grade from 3 to 6."}
 
-If you look carefully, you will also see that this dataset has some empty cells. This data can be downloaded from <https://doi.org/10.18710/JBMAPT>. It is delivered with a README text file. It is good practice to include a README file when publishing datasets or code and, as the name suggests, it is always a good idea to actually read README files! 🙃 Among other things, this particular README explains that, in this dataset: "Missing data are represented by empty cells."
+If you look carefully, you will also see that this dataset has some empty cells. These data can be downloaded from <https://doi.org/10.18710/JBMAPT>. It is delivered with a README text file. It is good practice to include a README file when publishing datasets or code and, as the name suggests, it is always a good idea to actually read README files! 🙃 Among other things, this particular README explains that, in this dataset: "Missing data are represented by empty cells."
 
 If you call up the help file for the `read.table()` function again, you will see that there is an argument called `na.strings`. The default value is `NA`. When we import this dataset `AJT_raw_scores_L2.csv` from @busterudVerbPlacementL32023, we will therefore need to change this argument to ensure that empty cells are recognised as missing values.
 
@@ -492,7 +492,7 @@ AJT.raw.scores.L2 |>
 Here, we can see that the data have been correctly imported as a table. The commas have been correctly converted to decimal points and the empty cells are now labelled `NA`.
 
 ```{r include = FALSE}
-# [^importingdata-3]: If you are wondering why some are labelled `NA` and some `<NA>`, that's because cell F124 in this table contains a hyphen (`-`) rather than either a numeric value or nothing at all for a missing value. As a result, `R` is interpreting this variable (`L3.grade`) as a character string variable rather than a numeric variable. In string variables, `NA` is printed as `<NA>`. If we were to analyse this data further, we would need to convert this erroneous `-` to an `NA`. We can actually do that in the `read.table()` function by specifying that missing values are represented by both empty cells and cells containing only a hyphen using the argument `na.strings = c("", "-")`. [Download the data](https://doi.org/10.18710/JBMAPT) and try it out if you're curious!
+# [^importingdata-3]: If you are wondering why some are labelled `NA` and some `<NA>`, that's because cell F124 in this table contains a hyphen (`-`) rather than either a numeric value or nothing at all for a missing value. As a result, `R` is interpreting this variable (`L3.grade`) as a character string variable rather than a numeric variable. In string variables, `NA` is printed as `<NA>`. If we were to analyse these data further, we would need to convert this erroneous `-` to an `NA`. We can actually do that in the `read.table()` function by specifying that missing values are represented by both empty cells and cells containing only a hyphen using the argument `na.strings = c("", "-")`. [Download the data](https://doi.org/10.18710/JBMAPT) and try it out if you're curious!
 ```
 
 ## Using {readr} from the {tidyverse} to import tabular files {#sec-readr}
@@ -638,7 +638,7 @@ MyExcelData <- read_excel("data/MyExcelSpreadsheet.xlsx",
 
 There are also several ways to import data from Google Sheets. The simplest is to export your tabular data as a `.csv`, `.tsv`, `.xslx`, or `.ods` file by selecting Google Sheet's menu option 'File' \> 'Download'. Then, you can simply import this downloaded file in `R` using the corresponding function as described above.
 
-However, if you want to directly import your data from Google Sheets and be able to dynamically update the analyses that you conduct in `R` even as the input data is amended on Google Sheets, you can use the {googlesheets4} package (which is part of the {tidyverse}):
+However, if you want to directly import your data from Google Sheets and be able to dynamically update the analyses that you conduct in `R` even as the input data are amended on Google Sheets, you can use the {googlesheets4} package (which is part of the {tidyverse}):
 
 ```{r eval = FALSE}
 # Install from CRAN (safest option):
@@ -769,7 +769,7 @@ Clicking on 'Import Dataset' opens up RStudio's 'Import Text Data' dialogue box,
 
 ![RStudio's 'Import Text Data' dialogue](images/RStudioReadrImportTextDataDialogue.png){#fig-RStudioReadrImportTextDataDialogue fig-alt="Screenshot of the 'Import Text Data'-dialouge showing the import settings of a the file 'L1_data.csv'. It shows the 'File URL' of the selected file to be imported, a 'Data Preview', the 'Import Options' and the 'Code Preview'." width="740"}
 
-As soon as you click on the 'Import' button, the data is imported and opened using the `View()` function for you to check the sanity of the data.
+As soon as you click on the 'Import' button, the data are imported and opened using the `View()` function for you to check the sanity of the data.
 
 This importing method works a treat, so what's not to like? Well, the first problem is that you are not in full control. You cannot select which import function is used; *RStudio* decides for you. You may have noticed that it chooses to use the {readr} import functions, rather than the base `R` ones. There are lots of good reasons to use the {readr} functions (see @sec-readr), but it may not be what you wanted to do. When we do research, it is important for us to be in control of every step of the analysis process.
 
@@ -788,7 +788,7 @@ Are you confident that you can...?
 -   [ ] Access, save, and examine data from published studies (@sec-AccessingData) - (@sec-SavingData)
 -   [ ] Set up and use projects in *RStudio* (@sec-RProject)
 -   [ ] Import data from `.csv` files into `R` (@sec-ImportingDataCSV)
--   [ ] Check whether your data is correctly imported (@sec-ImportingErrors)
+-   [ ] Check whether your data are correctly imported (@sec-ImportingErrors)
 -   [ ] Import tabular data in other formats (@sec-ImportingTabularData)
 -   [ ] Use the {readr} package to import tabular files (@sec-readr)
 -   [ ] Import files with single and multiple tabs from spreadsheet software (@sec-SpreadsheetSoftware) - (@sec-MultipleSheets)
