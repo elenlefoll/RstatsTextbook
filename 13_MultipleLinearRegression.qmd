@@ -323,10 +323,44 @@ model4Group + model4Age + model4OccupGroup + model4Gender + model4Blocks + model
 
 On plots produced by the `visreg()` function, as in @fig-PredictedVocabByOccupation, the model's predicted values are displayed as blue lines. By default, these predictions are surrounded by 95% confidence bands, which are visualised as grey areas. Now that we have several predictors in our model, the points in `visreg()` plots represent the model's **partial residuals**. Partial residuals are the left-over variance (i.e., the residual) relative to the predictor that we are examining after having subtracted off the contribution of all the other predictors in the model.
 
-When interpreting the numeric predictors plotted in @fig-VisregVocab above, it is important to remember that we entered centered numeric predictors in `model4_c`. This means that an `Age_c` value of 0 corresponds to the median age in the dataset: 31 years. This is why @fig-VisregVocab features negative ages: the negative values correspond to participants who are younger than 31. By contrast, positive scores correspond to participants who are older than 31 years. This is hardly intuitive so, for the purposes of visualising and interpreting our model, it is best to transform these variables back to their original scale (see @fig-PredictedVocabAge). This is achieved by adding the following `xtrans` argument within the `visreg()` function:
+When interpreting the numeric predictors plotted in @fig-VisregVocab above, it is important to remember that we entered centered numeric predictors in `model4_c`. This means that an `Age_c` value of 0 corresponds to the median age in the dataset: 31 years. This is why @fig-VisregVocab features negative ages: the negative values correspond to participants who are younger than 31. By contrast, positive scores correspond to participants who are older than 31 years. This is hardly intuitive so, for the purposes of visualising and interpreting our model, it is best to transform these variables back to their original scale (see @fig-PredictedVocabAge). This is achieved by adding the following `xtrans` argument within the `visreg()` function.
+
+::: callout-warning
+Due to a bug that was introduced in the latest version of the {visreg} package, it is currently necessary to install version 2.7 of the {visreg} package for the `xtrans` argument to work as expected. You can find out which package version you currently have installed, if any, using this function:
 
 ```{r}
 #| eval: false
+packageVersion("visreg")
+```
+
+If you have version 2.8.0, begin by deleting your current installation:
+
+```{r}
+#| eval: false
+remove.packages("visreg")
+```
+
+Then, install the {remotes} package, which allows you to install older versions of packages (if they compatible with your `R` version). You will get a message notifying you that it is necessary to restart your `R` session. Click "yes".
+
+```{r}
+#| eval: false
+install.packages("remotes")
+library(remotes)
+```
+
+Finally, load the {remotes} library and then install version 2.7.0 of the {visreg} package:
+
+```{r}
+#| eval: false
+library(remotes)
+install_version("visreg", "2.7.0")
+```
+:::
+
+```{r}
+#| eval: false
+library(visreg)
+
 visreg(model4_c, 
        xvar = "Age_c", 
        xtrans = function(x) x + median(Dabrowska.data$Age), 
@@ -340,7 +374,7 @@ visreg(model4_c,
 #| echo: false
 #| fig-asp: 0.8
 #| label: "fig-PredictedVocabAge"
-#| fig-cap: "`Vocab` scores as predicted by `model4_c` for speakers of various ages (blue line) and partial model residuals represented as points with two data points highlighted: one representing a very large positive residual and one representing a very small residual"
+#| fig-cap: "`Vocab` scores as predicted by `model4_c` for speakers of various ages (blue line) and partial model residuals represented as points. In the version printed in the textbook, two data points are highlighted: one representing a very large positive residual and one representing a very small residual."
 
 vr <- visreg(model4_c, 
        xvar = "Age_c", 
@@ -567,8 +601,6 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-Note that when two predictor variables are strongly correlated, we say that they are collinear. **Collinearity** can cause issues in statistical modelling so it's something to watch out for (see @sec-ModelAssumptions).
-
 [**Q13.3**]{style="color:green;"} What is the predicted `Vocab` score of a female L1 speaker aged 31 (the median age) with a manual occupation, who scored 16 on the Blocks test (the median score), spent 14 years in formal education (median time period), and scored 20 on the Author Recognition Test?
 
 ```{r echo=FALSE}
@@ -767,7 +799,7 @@ summary(model5)
 
 In the model summary above, the interaction term between `Age` and `Group` is the last coefficient listed (`GroupL2:Age_c`). The values confirm our intuition based on our descriptive visualisation of the data (@fig-CorVocabAge): there is a statistically significant interaction between age and native-speaker status (*p* = 0.002089) and the interaction coefficient for this interaction term (`Age_c:Group`) is negative (`-0.8982`). This means that, whilst being older is generally associated with higher `Vocab` scores for the reference level of L1 speakers, if a participant is an L2 English speaker, this trend is reversed.
 
-To understand how this works in practice, let's compare the predicted `Vocab` scores of two 35-year-olds: one a native English speaker and the other a non-native. For the purposes of this illustration, we will assume that, apart from their native-speaker status, all their other characteristics correspond to the reference level in our model (i.e. they are both female, have a clerical occupation, scored average on the Blocks test and were in formal education for the median number of years). For the L1 speaker, we calculate their predicted `Vocab` as before. We take the intercept as our starting point and then add the `Age_c` coefficient multiplied by the difference between their age and the median age (which is the reference level of our centered predictor) (i.e., 35 - 31 = 4). This means that their predicted `Vocab` score is:
+To understand how this works in practice, let's compare the predicted `Vocab` scores of two 35-year-olds: one a native English speaker and the other a non-native. For the purposes of this illustration, we will assume that, apart from their native-speaker status, all their other characteristics correspond to the reference level in our model (i.e. they are both female, have a clerical occupation, scored average on the Blocks test and were in formal education for the median number of years). For the L1 speaker, we calculate their predicted `Vocab` as before. We take the intercept (`69.1314`) as our starting point and then add the `Age_c` coefficient (`0.5466`) multiplied by the difference between their age and the median age (which is the reference level of our centered predictor) (i.e., 35 - 31 = 4). This means that their predicted `Vocab` score is:
 
 ```{r}
 69.1314 + 0.5466*4
@@ -789,7 +821,7 @@ new_obsL1 <- data.frame(
 predict(model5, newdata = new_obsL1, type = "response")
 ```
 
-For the L2 speaker, we do the same thing but, this time, we also add the `GroupL2` coefficient, and the interaction coefficient (`GroupL2:Age_c`) multiplied by the difference between the speaker's age and the median age (which remains 4 years). Their predicted score is therefore:
+For the L2 speaker, we do the same thing but, this time, we also add the `GroupL2` coefficient (`-19.9128`), and the interaction coefficient (`GroupL2:Age_c -0.8982`) multiplied by the difference between the speaker's age and the median age (which remains 4 years). Their predicted score is therefore:
 
 ```{r}
 69.1314 + 0.5466*4 + -19.9128 + -0.8982*4
@@ -1191,7 +1223,7 @@ summary(L1.model.back3)
 
 Indeed, `L1.model.back3` accounts for 49% of the variance (adjusted R^2^ = `0.4864`), which is considerably less than `L1.model.back2`. We will therefore report and interpret `L1.model.back2`.
 
-::: callout-note
+:::: callout-note
 ## Reporting a multiple regression model
 
 There are many ways to report the **numerical** results of a statistical model. Researchers typically include a table reporting the model's coefficient estimates (sometimes referred to as β, "beta"), together with a measure of variability around these estimates (e.g., standard error or confidence intervals), as well as their associated *p*-values. In addition, it is important to report the accuracy of the model. Different so-called **goodness-of-fit measures** are used for this; one of the most common being the adjusted coefficient of determination, R^2^. The output of the `summary()` function includes all of these statistics and is therefore suitable for a research report.
@@ -1269,7 +1301,7 @@ visreg(fit = L1.model.back2,
 @fig-PredictedVocabEduLit shows the predicted effect of the number of years in formal education on `Vocab` scores for participants who scored 3, 10, and 31 points on the `ART`. The regression line shows a positive relation between `Vocab` scores and years in formal education for below-average and average `ART` scores, but the regression line is almost flat for above-average `ART` scores. This indicates that, for individuals who score very high on the `ART`, years in education is no longer a useful predictor of their `Vocab` scores.
 
 Finally, we should also report the outcome of our model assumption checks. This is covered in the following section.
-:::
+::::
 
 ## Checking model assumptions {#sec-ModelAssumptions}
 
@@ -1404,7 +1436,7 @@ In @fig-Normality, we see that most residuals follow a normal distribution, exce
 The `check_model()` vignette provides more detailed information on these diagnostic plots, how to interpret them, and what to do if the assumptions are not met: <https://easystats.github.io/performance/articles/check_model.html>.
 :::
 
-::: {.callout-tip collapse="false"}
+:::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
 So far in this chapter, we have fitted a model of L1 speakers' `Vocab` scores. We have found that participants' print exposure (as measured by the ART), non-verbal intelligence (as measured by the Blocks test), their age, the number of years they were in formal education, and the interaction between ART scores and years in education all contribute to being able to predict how well they performed on the `Vocab` test. The model that we selected as the optimal model (`L1.model.back2`) was able to predict 58% of the variance in `Vocab` scores among L1 speakers.
@@ -1495,7 +1527,7 @@ diagnostic.plots.L2[[5]] # Here we have three coefficients with VIF scores > 10.
 diagnostic.plots.L2[[6]] # The residuals are not normally distributed, but the largest deviation is at lowest end of the distribution which it not terribly unusual.
 ```
 
-We can display the exact VIF values of a model using the `vif()` function from the {car} package:
+We can display the exact VIF values of a model using the `vif()` function from the [{car}](https://www.john-fox.ca/Companion/index.html) package [@foxCompanionAppliedRegression2019]:
 
 ```{r}
 #install.packages("car")
@@ -1641,6 +1673,10 @@ visreg(fit = L2.model.b,
        xvar = "ReadEng",
        by = "ART")
 ```
+::::
+
+::: column-margin
+![Hex sticker of the [{car}](https://www.john-fox.ca/Companion/index.html) package](images/hex_car.png){width="100" fig-alt="The hexagonal logo of the car package features a fun-looking yellow cartoon car."}
 :::
 
 ## Tapping into the potential of statistical modelling
