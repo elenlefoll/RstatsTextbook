@@ -210,7 +210,7 @@ Let's decipher the summary of `model4_c` step-by-step:
     ```{r}
     Dabrowska.data |> 
       slice(154) |> 
-      select(Age, Gender, Occupation, OccupGroup, Blocks, EduTotal)
+      select(Group, Age, Occupation, OccupGroup, Gender, Blocks, EduTotal)
     ```
 
     To obtain the model's predicted `Vocab` score for a 46-year-old male L2 speaker with a manual occupation (`M`) who scored 23 points on the `Blocks` test and was in formal education for 10 years (`EduTotal`), we combine the coefficient estimates as follows:
@@ -250,7 +250,7 @@ Let's decipher the summary of `model4_c` step-by-step:
     ```{r}
     Dabrowska.data |> 
       slice(154) |> 
-      select(NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)
+      select(Group, Age, Occupation, OccupGroup, Gender, Blocks, EduTotal)
     ```
 
 -   Our model prediction is close to our Polish driver's real `Vocab` test score, but we can see that our model has slightly underestimated his performance. This underestimation results in a positive **residual**. The residual is positive because there are points "left over" by the model. Model residuals are calculated by subtracting a model's prediction from the real, observed value of the outcome variable for any specific data point. In our case, we substract our model's predicted `Vocab` score for a male 46-year old with a manual occupation, a Blocks score of 23, and 10 years in formal education from the Polish 46-year-old driver's actual `Vocab` score:
@@ -284,7 +284,7 @@ Let's decipher the summary of `model4_c` step-by-step:
 
     Dabrowska.data |> 
       slice(which.max(model4_c$residuals)) |> 
-      select(NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)
+      select(Group, NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)
     ```
 
 -   The ***p*****-values** associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable *levels*, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in @sec-Categoricalpredictor, we fitted a simple linear (`model3`) which included only `OccupGroup` as a single predictor. In this simple model, the coefficient estimate for `OccupGroupI` made a statistically significant contribution to the model at an α-level of 0.05 (*p* = 0.0335). By contrast, in the present multiple linear regression model, the predictor level `OccupGroupI` does *not* make a statistically significant contribution (*p* = 0.077600 which is higher than 0.05). This is because our multiple regression model `model4_c` includes more predictors that can better account for the variance in `Vocab` scores in the data than occupational groups can.
@@ -788,7 +788,7 @@ Dabrowska.data |>
 
 @fig-CorVocabAge informs us that what we really need is a model that can account for the fact that `Age` is probably a useful predictor of `Vocab` scores for L1 speakers, but not so much for L2 speakers. In other words, we'd like to model an **interaction** between the predictors `Age` and `Group`.
 
-In `R`'s formula syntax, interaction terms are denoted with a semicolon (`:`) or an asterisk (`*`). In the following model, therefore, we are attempting to predict `Vocab` scores on the basis of a person's native-speaker status (`Group`), their age, occupational group, gender, Blocks test score, number of years in formal education, and the interaction between their age and native-speaker status (`Age_c:Group`):
+In `R`'s formula syntax, interaction terms are denoted with a colon (`:`) or an asterisk (`*`). In the following model, therefore, we are attempting to predict `Vocab` scores on the basis of a person's native-speaker status (`Group`), their age, occupational group, gender, Blocks test score, number of years in formal education, and the interaction between their age and native-speaker status (`Age_c:Group`):
 
 ```{r}
 model5 <- lm(Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + Age_c:Group, 
@@ -821,7 +821,7 @@ new_obsL1 <- data.frame(
 predict(model5, newdata = new_obsL1, type = "response")
 ```
 
-For the L2 speaker, we do the same thing but, this time, we also add the `GroupL2` coefficient (`-19.9128`), and the interaction coefficient (`GroupL2:Age_c -0.8982`) multiplied by the difference between the speaker's age and the median age (which remains 4 years). Their predicted score is therefore:
+For the L2 speaker, we begin by combining the same coefficient estimates as above but, this time, we also add the `GroupL2` coefficient (`-19.9128`), and the interaction coefficient (`GroupL2:Age_c`). The interaction coefficient (`-0.8982`) has to be multiplied by the difference between the speaker's age and the median age (which remains 4 years). This L2 speaker's predicted score is therefore:
 
 ```{r}
 69.1314 + 0.5466*4 + -19.9128 + -0.8982*4
@@ -894,7 +894,7 @@ check_question(c("For both L1 and L2 participants, the number of years that they
                button_label = "Check answer",
                right = "That's right, well done!",
                wrong = "No, that's incorrect. Check the code below if you're struggling to generate the plot.")
-check_hint("Only one of these statements are correct.", 
+check_hint("Only one of these statements is correct.", 
            hint_title = "🐭 Click on the mouse for a hint.")           
 ```
 
@@ -1034,7 +1034,7 @@ visreg(model6,
 
 Examining @fig-PredictedVocabAgeByEdu, we can therefore conclude that the effect of age on `Vocab` scores is not moderated by the number of years that participants spent in formal education.
 
-The `visreg()` function provides two ways to visualise interaction effects between two numeric variables: in @fig-PredictedVocabAgeRL, below-average, average, and above-average number of years in formal education were visualised across three panels. @fig-PredictedVocabAgeRL shows the same predictions but, this time, the code includes the argument "overlay = TRUE", which results in a single panel with three coloured regression lines superimposed. This can make it easier to check whether the lines are parallel.
+The `visreg()` function provides two ways to visualise interaction effects between two numeric variables: in @fig-PredictedVocabAgeRL, below-average, average, and above-average number of years in formal education were visualised across three panels. @fig-PredictedVocabAgeRL shows the same predictions but, this time, the code includes the argument "overlay = TRUE", which results in a single panel with three coloured regression lines superimposed. This can make it easier to check whether the lines are parallel. From @fig-PredictedVocabAgeRL, it is easier to see that the three lines are pretty much parallel to each other. This suggests that the positive effect of `Age` on `Vocab` scores does not change as a function of the number of years that participants were in formal education. 
 
 ```{r}
 #| source-line-numbers: "4"

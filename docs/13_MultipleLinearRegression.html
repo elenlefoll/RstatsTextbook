@@ -871,10 +871,10 @@ F-statistic:  10.5 on 8 and 148 DF,  p-value: 1.327e-11</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">154</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Age, Gender, Occupation, OccupGroup, Blocks, EduTotal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Group, Age, Occupation, OccupGroup, Gender, Blocks, EduTotal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>  Age Gender Occupation OccupGroup Blocks EduTotal
-1  46      M     Driver          M     23       10</code></pre>
+<pre data-code-line-numbers=""><code>  Group Age Occupation OccupGroup Gender Blocks EduTotal
+1    L2  46     Driver          M      M     23       10</code></pre>
 </div>
 </div>
 <p>To obtain the model’s predicted <code>Vocab</code> score for a 46-year-old male L2 speaker with a manual occupation (<code>M</code>) who scored 23 points on the <code>Blocks</code> test and was in formal education for 10 years (<code>EduTotal</code>), we combine the coefficient estimates as follows:</p>
@@ -948,10 +948,10 @@ Tip
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">154</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Group, Age, Occupation, OccupGroup, Gender, Blocks, EduTotal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>  NativeLg Age Occupation Gender Blocks EduTotal    Vocab
-1   Polish  46     Driver      M     23       10 48.88889</code></pre>
+<pre data-code-line-numbers=""><code>  Group Age Occupation OccupGroup Gender Blocks EduTotal
+1    L2  46     Driver          M      M     23       10</code></pre>
 </div>
 </div></li>
 <li><p>Our model prediction is close to our Polish driver’s real <code>Vocab</code> test score, but we can see that our model has slightly underestimated his performance. This underestimation results in a positive <strong>residual</strong>. The residual is positive because there are points “left over” by the model. Model residuals are calculated by subtracting a model’s prediction from the real, observed value of the outcome variable for any specific data point. In our case, we substract our model’s predicted <code>Vocab</code> score for a male 46-year old with a manual occupation, a Blocks score of 23, and 10 years in formal education from the Polish 46-year-old driver’s actual <code>Vocab</code> score:</p>
@@ -981,7 +981,7 @@ Tip
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">which.max</span>(model4_c<span class="sc">$</span>residuals)) <span class="sc">|&gt;</span> </span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Group, NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div></li>
 <li><p>The <strong><em>p</em>-values</strong> associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable <em>levels</em>, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in <a href="12_SimpleLinearRegression.html#sec-Categoricalpredictor" class="quarto-xref"><span>Section 12.3</span></a>, we fitted a simple linear (<code>model3</code>) which included only <code>OccupGroup</code> as a single predictor. In this simple model, the coefficient estimate for <code>OccupGroupI</code> made a statistically significant contribution to the model at an α-level of 0.05 (<em>p</em>&nbsp;=&nbsp;0.0335). By contrast, in the present multiple linear regression model, the predictor level <code>OccupGroupI</code> does <em>not</em> make a statistically significant contribution (<em>p</em>&nbsp;=&nbsp;0.077600 which is higher than 0.05). This is because our multiple regression model <code>model4_c</code> includes more predictors that can better account for the variance in <code>Vocab</code> scores in the data than occupational groups can.</p></li>
@@ -1463,7 +1463,7 @@ Figure&nbsp;13.5: Observed correlation between participants’ vocabulary scores
 </div>
 </div>
 <p><a href="#fig-CorVocabAge" class="quarto-xref">Figure&nbsp;<span>13.5</span></a> informs us that what we really need is a model that can account for the fact that <code>Age</code> is probably a useful predictor of <code>Vocab</code> scores for L1 speakers, but not so much for L2 speakers. In other words, we’d like to model an <strong>interaction</strong> between the predictors <code>Age</code> and <code>Group</code>.</p>
-<p>In <code>R</code>’s formula syntax, interaction terms are denoted with a semicolon (<code>:</code>) or an asterisk (<code>*</code>). In the following model, therefore, we are attempting to predict <code>Vocab</code> scores on the basis of a person’s native-speaker status (<code>Group</code>), their age, occupational group, gender, Blocks test score, number of years in formal education, and the interaction between their age and native-speaker status (<code>Age_c:Group</code>):</p>
+<p>In <code>R</code>’s formula syntax, interaction terms are denoted with a colon (<code>:</code>) or an asterisk (<code>*</code>). In the following model, therefore, we are attempting to predict <code>Vocab</code> scores on the basis of a person’s native-speaker status (<code>Group</code>), their age, occupational group, gender, Blocks test score, number of years in formal education, and the interaction between their age and native-speaker status (<code>Age_c:Group</code>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>model5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Vocab <span class="sc">~</span> Group <span class="sc">+</span> Age_c <span class="sc">+</span> OccupGroup <span class="sc">+</span> Gender <span class="sc">+</span> Blocks_c <span class="sc">+</span> EduTotal_c <span class="sc">+</span> Age_c<span class="sc">:</span>Group, </span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> Dabrowska.data)</span>
@@ -1507,7 +1507,7 @@ F-statistic: 10.98 on 9 and 147 DF,  p-value: 5.537e-13</code></pre>
 <pre data-code-line-numbers=""><code>[1] 71.3178</code></pre>
 </div>
 </div>
-<p>For the L2 speaker, we do the same thing but, this time, we also add the <code>GroupL2</code> coefficient (<code>-19.9128</code>), and the interaction coefficient (<code>GroupL2:Age_c -0.8982</code>) multiplied by the difference between the speaker’s age and the median age (which remains 4 years). Their predicted score is therefore:</p>
+<p>For the L2 speaker, we begin by combining the same coefficient estimates as above but, this time, we also add the <code>GroupL2</code> coefficient (<code>-19.9128</code>), and the interaction coefficient (<code>GroupL2:Age_c</code>). The interaction coefficient (<code>-0.8982</code>) has to be multiplied by the difference between the speaker’s age and the median age (which remains 4 years). This L2 speaker’s predicted score is therefore:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fl">69.1314</span> <span class="sc">+</span> <span class="fl">0.5466</span><span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> <span class="sc">-</span><span class="fl">19.9128</span> <span class="sc">+</span> <span class="sc">-</span><span class="fl">0.8982</span><span class="sc">*</span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1571,29 +1571,29 @@ Your turn!
 <div class="cell-output-display">
 <form name="form_Q13_6" onsubmit="return validate_form_Q13_6()" method="post">
 <label>
-<input type="checkbox" id="answer_Q13_6_1" value="For both L1 and L2 participants, the correlation between the number of years that they spent in formal education and their Vocab scores is not statistically significant.">
-For both L1 and L2 participants, the correlation between the number of years that they spent in formal education and their Vocab scores is not statistically significant.
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q13_6_2" value="For both L1 and L2 participants, the number of years that they spent in formal education is negatively correlated with their Vocab scores.">
+<input type="checkbox" id="answer_Q13_6_1" value="For both L1 and L2 participants, the number of years that they spent in formal education is negatively correlated with their Vocab scores.">
 For both L1 and L2 participants, the number of years that they spent in formal education is negatively correlated with their Vocab scores.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q13_6_3" value="The number of years that L1 participants spent in formal education is positively correlated with their Vocab scores. This is not the case for L2 participants.">
-The number of years that L1 participants spent in formal education is positively correlated with their Vocab scores. This is not the case for L2 participants.
+<input type="checkbox" id="answer_Q13_6_2" value="For both L1 and L2 participants, the number of years that they spent in formal education is positively correlated with their Vocab scores.">
+For both L1 and L2 participants, the number of years that they spent in formal education is positively correlated with their Vocab scores.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q13_6_4" value="For both L1 and L2 participants, the number of years that they spent in formal education is positively correlated with their Vocab scores.">
-For both L1 and L2 participants, the number of years that they spent in formal education is positively correlated with their Vocab scores.
+<input type="checkbox" id="answer_Q13_6_3" value="For both L1 and L2 participants, the correlation between the number of years that they spent in formal education and their Vocab scores is not statistically significant.">
+For both L1 and L2 participants, the correlation between the number of years that they spent in formal education and their Vocab scores is not statistically significant.
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q13_6_4" value="The number of years that L1 participants spent in formal education is positively correlated with their Vocab scores. This is not the case for L2 participants.">
+The number of years that L1 participants spent in formal education is positively correlated with their Vocab scores. This is not the case for L2 participants.
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_Q13_6"></div>
 </form>
-<script>function validate_form_Q13_6() {var text; var x1 = document.getElementById('answer_Q13_6_1'); var x2 = document.getElementById('answer_Q13_6_2'); var x3 = document.getElementById('answer_Q13_6_3'); var x4 = document.getElementById('answer_Q13_6_4'); if (x1.checked == false&x2.checked == false&x3.checked == false&x4.checked == true){text = 'That’s right, well done!';} else {text = 'No, that’s incorrect. Check the code below if you’re struggling to generate the plot.';} document.getElementById('result_Q13_6').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q13_6() {var text; var x1 = document.getElementById('answer_Q13_6_1'); var x2 = document.getElementById('answer_Q13_6_2'); var x3 = document.getElementById('answer_Q13_6_3'); var x4 = document.getElementById('answer_Q13_6_4'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == false){text = 'That’s right, well done!';} else {text = 'No, that’s incorrect. Check the code below if you’re struggling to generate the plot.';} document.getElementById('result_Q13_6').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
          if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done!';text = res1;element.innerHTML = text;
          return false;
@@ -1602,7 +1602,7 @@ For both L1 and L2 participants, the number of years that they spent in formal e
 <div class="cell-output-display">
 <div id="hint_82210" onclick="return show_hint_82210()">🐭 Click on the mouse for a hint.</div>
 <div id="result_82210" onclick="return show_hint_82210()"></div>
-<script>function show_hint_82210(){var x = document.getElementById('result_82210').innerHTML; if(!x){document.getElementById('result_82210').innerHTML = 'Only one of these statements are correct.';} else {document.getElementById('result_82210').innerHTML = '';}}</script>
+<script>function show_hint_82210(){var x = document.getElementById('result_82210').innerHTML; if(!x){document.getElementById('result_82210').innerHTML = 'Only one of these statements is correct.';} else {document.getElementById('result_82210').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -1812,7 +1812,7 @@ Figure&nbsp;13.7: <code>Vocab</code> scores as predicted by <code>model4_c</code
 </div>
 </div>
 <p>Examining <a href="#fig-PredictedVocabAgeByEdu" class="quarto-xref">Figure&nbsp;<span>13.7</span></a>, we can therefore conclude that the effect of age on <code>Vocab</code> scores is not moderated by the number of years that participants spent in formal education.</p>
-<p>The <code>visreg()</code> function provides two ways to visualise interaction effects between two numeric variables: in <a href="#fig-PredictedVocabAgeRL" class="quarto-xref">Figure&nbsp;<span>13.8</span></a>, below-average, average, and above-average number of years in formal education were visualised across three panels. <a href="#fig-PredictedVocabAgeRL" class="quarto-xref">Figure&nbsp;<span>13.8</span></a> shows the same predictions but, this time, the code includes the argument “overlay = TRUE”, which results in a single panel with three coloured regression lines superimposed. This can make it easier to check whether the lines are parallel.</p>
+<p>The <code>visreg()</code> function provides two ways to visualise interaction effects between two numeric variables: in <a href="#fig-PredictedVocabAgeRL" class="quarto-xref">Figure&nbsp;<span>13.8</span></a>, below-average, average, and above-average number of years in formal education were visualised across three panels. <a href="#fig-PredictedVocabAgeRL" class="quarto-xref">Figure&nbsp;<span>13.8</span></a> shows the same predictions but, this time, the code includes the argument “overlay = TRUE”, which results in a single panel with three coloured regression lines superimposed. This can make it easier to check whether the lines are parallel. From <a href="#fig-PredictedVocabAgeRL" class="quarto-xref">Figure&nbsp;<span>13.8</span></a>, it is easier to see that the three lines are pretty much parallel to each other. This suggests that the positive effect of <code>Age</code> on <code>Vocab</code> scores does not change as a function of the number of years that participants were in formal education.</p>
 <div class="cell" data-source-line-numbers="4">
 <div class="sourceCode cell-code" id="cb66" data-source-line-numbers="4" data-code-line-numbers="4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(model6,</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">xvar =</span> <span class="st">"Age_c"</span>, </span>
