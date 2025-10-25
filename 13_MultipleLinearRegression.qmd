@@ -1034,7 +1034,7 @@ visreg(model6,
 
 Examining @fig-PredictedVocabAgeByEdu, we can therefore conclude that the effect of age on `Vocab` scores is not moderated by the number of years that participants spent in formal education.
 
-The `visreg()` function provides two ways to visualise interaction effects between two numeric variables: in @fig-PredictedVocabAgeRL, below-average, average, and above-average number of years in formal education were visualised across three panels. @fig-PredictedVocabAgeRL shows the same predictions but, this time, the code includes the argument "overlay = TRUE", which results in a single panel with three coloured regression lines superimposed. This can make it easier to check whether the lines are parallel. From @fig-PredictedVocabAgeRL, it is easier to see that the three lines are pretty much parallel to each other. This suggests that the positive effect of `Age` on `Vocab` scores does not change as a function of the number of years that participants were in formal education. 
+The `visreg()` function provides two ways to visualise interaction effects between two numeric variables: in @fig-PredictedVocabAgeRL, below-average, average, and above-average number of years in formal education were visualised across three panels. @fig-PredictedVocabAgeRL shows the same predictions but, this time, the code includes the argument "overlay = TRUE", which results in a single panel with three coloured regression lines superimposed. This can make it easier to check whether the lines are parallel. From @fig-PredictedVocabAgeRL, it is easier to see that the three lines are pretty much parallel to each other. This suggests that the positive effect of `Age` on `Vocab` scores does not change as a function of the number of years that participants were in formal education.
 
 ```{r}
 #| source-line-numbers: "4"
@@ -1103,12 +1103,10 @@ L1.data |>
 
 In general, we can calculate the `Vocab` scores that our `L1.model` predicts by combining the model's coefficient estimates like this:
 
-```         
-Intercept + 
-`ART` coefficient\*`ART` score + 
-`EduTotal` coefficient\*(`EduTotal` in years - median `EduTotal`) +
-`ART:EduTotal` coefficient\*`ART` score\*(`EduTotal` in years - median `EduTotal`)
-```
+> Intercept + \
+> `ART` coefficient\*`ART` score + \
+> `EduTotal` coefficient\*(`EduTotal` in years - median `EduTotal`) + \
+> `ART:EduTotal` coefficient\*`ART` score\*(`EduTotal` in years - median `EduTotal`)
 
 Based on the coefficient estimates of the model summary, we can therefore calculate the predicted `Vocab` score of the student/support worker as follows:
 
@@ -1436,7 +1434,7 @@ In @fig-Normality, we see that most residuals follow a normal distribution, exce
 The `check_model()` vignette provides more detailed information on these diagnostic plots, how to interpret them, and what to do if the assumptions are not met: <https://easystats.github.io/performance/articles/check_model.html>.
 :::
 
-:::: {.callout-tip collapse="false"}
+::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
 So far in this chapter, we have fitted a model of L1 speakers' `Vocab` scores. We have found that participants' print exposure (as measured by the ART), non-verbal intelligence (as measured by the Blocks test), their age, the number of years they were in formal education, and the interaction between ART scores and years in education all contribute to being able to predict how well they performed on the `Vocab` test. The model that we selected as the optimal model (`L1.model.back2`) was able to predict 58% of the variance in `Vocab` scores among L1 speakers.
@@ -1673,7 +1671,7 @@ visreg(fit = L2.model.b,
        xvar = "ReadEng",
        by = "ART")
 ```
-::::
+:::
 
 ::: column-margin
 ![Hex sticker of the [{car}](https://www.john-fox.ca/Companion/index.html) package](images/hex_car.png){width="100" fig-alt="The hexagonal logo of the car package features a fun-looking yellow cartoon car."}
