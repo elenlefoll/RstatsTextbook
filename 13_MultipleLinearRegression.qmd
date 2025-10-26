@@ -309,6 +309,7 @@ visreg(model4_c)
 #| fig-width: 8
 #| label: "fig-VisregVocab"
 #| fig-cap: "`Vocab` scores as predicted by `model4_c` (blue lines) as a function of various predictor variables and partial model residuals (grey points)"
+#| fig-alt: "Six-panel scatter plot showing vocabulary scores predicted by various factors, with partial residual points and blue regression lines in each panel. Categorical predictors show relatively flat trends and continuous predictors show positive linear relationships."
 
 model4Group <- visreg(model4_c, "Group", whitespace = 0.3, gg = TRUE) + theme_bw()
 model4Age <- visreg(model4_c, "Age_c", gg = TRUE) + theme_bw()
@@ -375,6 +376,7 @@ visreg(model4_c,
 #| fig-asp: 0.8
 #| label: "fig-PredictedVocabAge"
 #| fig-cap: "`Vocab` scores as predicted by `model4_c` for speakers of various ages (blue line) and partial model residuals represented as points. In the version printed in the textbook, two data points are highlighted: one representing a very large positive residual and one representing a very small residual."
+#| fig-alt: "Scatter plot showing predicted vocabulary scores versus age in years, with partial residual points and a blue regression line with gray confidence band showing a slight positive trend. Two data points are highlighted: a pink point labeled Lithuanian bar staff showing a large positive residual around age 25, and a purple point labeled Polish driver showing a small residual around age 50."
 
 vr <- visreg(model4_c, 
        xvar = "Age_c", 
@@ -592,6 +594,7 @@ Have you noticed how, having added `ART` as a predictor to your model, `Age` no 
 #| fig-asp: 0.8
 #| label: "fig-AgeArtPlot"
 #| fig-cap: "Observed relationship between participants' age and their Author Recognition Test (ART) scores. The blue line shows that there is a moderate positive correlation between these two variables."
+#| fig-alt: "Scatter plot showing the relationship between age on the x-axis and Author Recognition Test (ART) scores on the y-axis, with data points scattered throughout. A blue regression line with gray confidence band shows a moderate positive correlation."
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = Age,
@@ -714,6 +717,7 @@ We can also visualise these values in the form of a bar plot (see @fig-ModelLmg)
 ```{r}
 #| label: "fig-ModelLmg"
 #| fig-cap: "Relative importance of predictors in `model 4_c`"
+#| fig-alt: "Bar plot showing the relative importance of six predictors in model4_c, with predictor names on the y-axis and lmg values on the x-axis. Group has the highest importance and Gender has the lowest one."
 
 rel.imp.metric.df |> 
   ggplot(mapping = aes(x = fct_reorder(Predictor, lmg),
@@ -775,6 +779,7 @@ However, if you completed [**Task 11.1**]{style="color:green;"}, you might remem
 ```{r}
 #| label: "fig-CorVocabAge"
 #| fig-cap: "Observed correlation between participants' vocabulary scores and their age in both the L1 and L2 groups"
+#| fig-alt: "Two-panel scatter plot showing vocabulary scores versus age for L1 and L2 groups, with data points and blue regression lines with gray confidence bands. The L1 panel shows a positive correlation, while the L2 panel shows a negative correlation."
 
 Dabrowska.data |> 
    ggplot(mapping = aes(x = Age, 
@@ -858,6 +863,7 @@ The best way to avoid misinterpreting interaction effects is to make sure you al
 #| label: "fig-PredictedVocabAgeInteraction"
 #| source-line-numbers: "3"
 #| fig-cap: "`Vocab` scores as predicted by `model4_c` for L1 and L2 speakers of various ages (blue lines) and partial model residuals (grey points)"
+#| fig-alt: "Two-panel plot showing vocabulary scores versus age for L1 and L2 groups, with data points and blue regression lines with gray confidence bands. The L1 panel shows a positive correlation, while the L2 panel shows a negative correlation."
 
 visreg(model5, 
        xvar = "Age_c", 
@@ -1021,6 +1027,7 @@ In @fig-PredictedVocabAgeByEdu, we visualise this statistically non-significant 
 ```{r}
 #| label: "fig-PredictedVocabAgeByEdu"
 #| fig-cap: "`Vocab` scores as predicted by `model4_c` for English speakers of various ages who were in formal education for a below-average, average, and above-average length of time (in blue) and partial model residuals (grey points)"
+#| fig-alt: "Three-panel plot showing predicted vocabulary scores versus age for different education levels, with partial residual points and blue regression lines with gray confidence bands. All three panels show positive correlations between age and vocabulary scores, with higher education levels showing higher predicted scores overall."
 
 visreg(model6,
        xvar = "Age_c", 
@@ -1040,6 +1047,7 @@ The `visreg()` function provides two ways to visualise interaction effects betwe
 #| source-line-numbers: "4"
 #| label: "fig-PredictedVocabAgeRL"
 #| fig-cap: "`Vocab` scores as predicted by `model4_c` for English speakers of various ages who were in formal education for a below-average (red line), average (green line), and above-average (blue line) period of time and partial model residuals (coloured points)."
+#| fig-alt: "Visreg plot showing predicted vocabulary scores versus age for three education levels, with color-coded partial residual points and regression lines with confidence bands. The red line is rising from approximately 55 to 80, the green line is rising from about 65 to 90, and the blue lines is rising from approximately 75 to 95."
 
 visreg(model6,
        xvar = "Age_c", 
@@ -1154,6 +1162,7 @@ Notice how these two predicted scores are very similar, even though the housewif
 #| code-summary: "Show code to generate plot."
 #| label: "fig-VocabEduART"
 #| fig-cap: "`Vocab` scores as predicted by `model4_c` (in blue) and partial model residuals (grey points) as a function of the number of years speakers were in formal education and for three ART test scores"
+#| fig-alt: "Three-panel plot showing predicted vocabulary scores versus years in formal education for three ART scores (3, 10, and 31), with partial residual points and blue regression lines with gray confidence bands. The left panel (ART: 3) shows a strong positive correlation, the middle panel (ART: 10) shows a moderate positive correlation, and the right panel (ART: 31) shows a nearly flat but negative relationship around 90."
 
 visreg(L1.model,
        xvar = "EduTotal_c", 
@@ -1272,7 +1281,8 @@ The message warns us that we should not attempt to interpret `ART` and `EduTotal
 
 ```{r}
 #| label: "fig-PredictedVocabEduL1"
-#| fig-cap: "Predicted predicted vocabulary scores for L1 speakers as a function of the number of years that they were in formal education (in blue) and partial residuals (grey points)."
+#| fig-cap: "Predicted vocabulary scores for L1 speakers as a function of the number of years that they were in formal education (in blue) and partial residuals (grey points)."
+#| fig-alt: "Scatter plot showing predicted vocabulary scores versus years in formal education for L1 speakers, with partial residual points and a blue regression line with gray confidence band. The plot shows a positive correlation, with predicted scores increasing from approximately 57 at 10 years of education to approximately 87 at 21 years of education."
 
 visreg(fit = L1.model.back2, 
        xvar = "EduTotal_c",
@@ -1287,7 +1297,9 @@ As suggested by the warning message, we can (and should!) visualise interactions
 
 ```{r}
 #| label: "fig-PredictedVocabEduLit"
-#| fig-cap: "Predicted predicted vocabulary scores for L1 speakers as a function of the number of years that they were in formal education and across three different ART scores (in blue) and partial residuals (grey points)."
+#| fig-cap: "Predicted vocabulary scores for L1 speakers as a function of the number of years that they were in formal education and across three different ART scores (in blue) and partial residuals (grey points)."
+#| fig-alt: "Three-panel plot showing predicted vocabulary scores versus years in formal education for L1 speakers at different ART scores (3, 10, and 31), with partial residual points and blue regression lines with gray confidence bands. The relationship between education and vocabulary scores weakens with higher ART scores."
+
 visreg(fit = L1.model.back2, 
        xvar = "EduTotal_c", 
        xtrans = function(x) x + median(L1.data$EduTotal), 
@@ -1343,6 +1355,9 @@ Running the function on the saved model object should generate a large figure co
 #| fig-asp: 1.5
 #| label: "fig-6plots"
 #| fig-cap: "Six plots output by the `check_model()` function for assessing key assumptions of linear regression models"
+#| fig-alt: "Six-panel plot for linear regression model assessment. Posterior Predictive Check shows green model-predicted density curve closely overlapping blue observed data density; Linearity plot shows residuals versus fitted values with points scattered around a horizontal dashed reference line. Homogeneity of Variance shows square root of absolute residuals versus fitted values with a green trend line; Influential Observations shows standardized residuals versus leverage. Collinearity shows VIF values for predictors in blue; Normality of Residuals shows standard normal distribution quantiles and sample quantile deviations."
+
+
 check_model(L1.model.back2)
 ```
 
