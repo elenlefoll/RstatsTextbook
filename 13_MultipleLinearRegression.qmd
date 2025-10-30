@@ -32,7 +32,7 @@ In this chapter, you will learn how to:
 -   Compute and plot the relative importance of predictors
 -   Fit interaction effects and interpret their coefficient estimates
 -   Visualise the predictions of a multiple linear regression model and its (partial) residuals
--   Report the results of multiple linear regression model in tabular and graphical formats
+-   Report the results of a multiple linear regression model in tabular and graphical formats
 -   Check that the assumptions of multiple linear regression models are met.
 
 ## From simple to multiple linear regression models
@@ -210,7 +210,7 @@ Let's decipher the summary of `model4_c` step-by-step:
     ```{r}
     Dabrowska.data |> 
       slice(154) |> 
-      select(Age, Gender, Occupation, OccupGroup, Blocks, EduTotal)
+      select(Group, Age, NativeLg, Occupation, OccupGroup, Gender, Blocks, EduTotal)
     ```
 
     To obtain the model's predicted `Vocab` score for a 46-year-old male L2 speaker with a manual occupation (`M`) who scored 23 points on the `Blocks` test and was in formal education for 10 years (`EduTotal`), we combine the coefficient estimates as follows:
@@ -250,10 +250,10 @@ Let's decipher the summary of `model4_c` step-by-step:
     ```{r}
     Dabrowska.data |> 
       slice(154) |> 
-      select(NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)
+      select(Group, Age, NativeLg, Occupation, OccupGroup, Gender, Blocks, EduTotal, Vocab)
     ```
 
--   Our model prediction is close to our Polish driver's real `Vocab` test score, but we can see that our model has slightly underestimated his performance. This underestimation results in a positive **residual**. The residual is positive because there are points "left over" by the model. Model residuals are calculated by subtracting a model's prediction from the real, observed value of the outcome variable for any specific data point. In our case, we substract our model's predicted `Vocab` score for a male 46-year old with a manual occupation, a Blocks score of 23, and 10 years in formal education from the Polish 46-year-old driver's actual `Vocab` score:
+-   Our model prediction (`45.53989`) is close to our Polish driver's real `Vocab` test score (`48.88889`), but our model has slightly underestimated his performance. This underestimation results in a positive **residual**. The residual is positive because there are points "left over" by the model. Model residuals are calculated by subtracting a model's prediction from the real, observed value of the outcome variable for any specific data point. In our case, we substract our model's predicted `Vocab` score for a male 46-year old with a manual occupation, a Blocks score of 23, and 10 years in formal education from the Polish 46-year-old driver's actual `Vocab` score:
 
     ```{r}
     48.88889 - 45.53989
@@ -265,7 +265,7 @@ Let's decipher the summary of `model4_c` step-by-step:
     model4_c$residuals[154]
     ```
 
--   If we compare this particular residual (of the 154^th^ participant in the dataset) with the **summary statistics of all residuals** (corresponding to all participants) which is displayed at the top of the output of `summary(model4_c)`, we can see that this particular residual is slightly higher than the average (median) residual. This means that, on average, our model does a slightly better job of predicting `Vocab` scores than it does for this particular combination of predictors.
+-   We can compare this particular residual (corresponding to the 154^th^ participant in the dataset) to all model residuals (corresponding to all participants) by examining the **summary statistics of all residuals**, which are displayed at the top of the model summary output (`summary(model4_c)`). These descriptive statistics inform us that the residual for the 154^th^ participant is slightly higher than the average (median) residual. This means that, on average, our model does a slightly better job of predicting `Vocab` scores than it does for this particular combination of predictors.
 
     ```         
     Residuals:
@@ -284,10 +284,10 @@ Let's decipher the summary of `model4_c` step-by-step:
 
     Dabrowska.data |> 
       slice(which.max(model4_c$residuals)) |> 
-      select(NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)
+      select(Group, NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)
     ```
 
--   The ***p*****-values** associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable *levels*, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in @sec-Categoricalpredictor, we fitted a simple linear (`model3`) which included only `OccupGroup` as a single predictor. In this simple model, the coefficient estimate for `OccupGroupI` made a statistically significant contribution to the model at an α-level of 0.05 (*p* = 0.0335). By contrast, in the present multiple linear regression model, the predictor level `OccupGroupI` does *not* make a statistically significant contribution (*p* = 0.077600 which is higher than 0.05). This is because our multiple regression model `model4_c` includes more predictors that can better account for the variance in `Vocab` scores in the data than occupational groups can.
+-   The ***p*****-values** associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable *levels*, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in @sec-Categoricalpredictor, we fitted a simple linear model (`model3`) which included only `OccupGroup` as a single predictor. In this simple model, the coefficient estimate for `OccupGroupI` made a statistically significant contribution to the model at an α-level of 0.05 (*p* = 0.0335). By contrast, in the present multiple linear regression model, the predictor level `OccupGroupI` does *not* make a statistically significant contribution (*p* = 0.077600 which is higher than 0.05). This is because our multiple regression model `model4_c` includes more predictors that can better account for the variance in `Vocab` scores in the data than occupational groups can.
 
 -   From the **adjusted R-squared** value (`0.3276`) displayed at the bottom of the model summary output, we can see that our multiple linear regression model accounts for around 33% of the total variance in `Vocab` scores found in the @DabrowskaExperienceAptitudeIndividual2019 data. This is considerably more than we achieved with any of the simple linear models that we fitted in @sec-SLR.
 
@@ -341,7 +341,7 @@ If you have version 2.8.0, begin by deleting your current installation:
 remove.packages("visreg")
 ```
 
-Then, install the {remotes} package, which allows you to install older versions of packages (if they compatible with your `R` version). You will get a message notifying you that it is necessary to restart your `R` session. Click "yes".
+Then, install the {remotes} package, which allows you to install older versions of packages (if they are compatible with your `R` version). You will get a message notifying you that it is necessary to restart your `R` session. Click "yes".
 
 ```{r}
 #| eval: false
@@ -476,7 +476,7 @@ geom_segment(
   theme_bw()
 ```
 
-In @fig-PredictedVocabAge, we focus on one predictor from our model: `Age`. We know from our model summary that the coefficient estimate for age is positive (`0.3718`), hence the upward trend. But we also know that this coefficient is relatively small, which is why the blue line is not very steep. Recall that the points on @fig-PredictedVocabAge represent the partial residuals. Hence, there are as many points as there are participants in the dataset used to fit the model. The further away a point is from the predicted value (the blue line), the poorer the prediction is for that participant.
+In @fig-PredictedVocabAge, we focus on one predictor from our model: `Age`. We know from our model summary that the coefficient estimate for age is positive (`0.3718`), hence the upward trend. But we also know that this coefficient is relatively small, which is why the blue line is not very steep. Recall that the points on @fig-PredictedVocabAge represent the partial residuals. This means that there are as many points as there are participants in the dataset used to fit the model. The further away a point is from the predicted value (the blue line), the poorer the prediction is for that participant.
 
 We can see that many of the points on @fig-PredictedVocabAge are not within the grey 95% confidence band, which means that our model cannot account for all of the variance in `Vocab` scores. Some of the partial residuals are particularly large: the `Vocab` score of the 23-year-old Lithuanian bar staff, for instance, is vastly underestimated. By contrast, the 46-year-old Polish driver's predicted score is well within the confidence band of the predicted `Vocab` score for his age, indicating that our model makes a pretty good prediction for this L2 speaker.
 
@@ -514,7 +514,7 @@ vr +
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-The dataset from @DabrowskaExperienceAptitudeIndividual2019 includes a variable that we have not explored yet: `ART`. It stands for Author Recognition Test [@acheson2008] and is a measure of print exposure to \[almost exclusively Western, English-language\] literature. Dąbrowska [-@DabrowskaExperienceAptitudeIndividual2019: 9] explains the testing instrument and her motivation for including it in her battery of tests as follows:
+The dataset from @DabrowskaExperienceAptitudeIndividual2019 includes a variable that we have not explored yet: `ART`. It stands for Author Recognition Test [@acheson2008] and is a measure of print exposure to (almost exclusively Western, English-language) literature. Dąbrowska [-@DabrowskaExperienceAptitudeIndividual2019: 9] explains the testing instrument and her motivation for including it in her battery of tests as follows:
 
 > The test consists of a list of 130 names, half of which are names of real authors. The participants’ task is to mark the names that they know to be those of published authors. To penalize guessing, the score is computed by subtracting the number of foils \[wrong guesses\] from the number of real authors selected. Thus, the maximum possible score is 65, and the minimum score could be negative if a participant selects more foils than real authors. When this happened, the negative number was replaced with 0.
 >
@@ -688,6 +688,16 @@ Although not currently widely used in the language sciences [but see, e.g. @Dabr
 Once we have installed and loaded the {[relaimpo](https://cran.r-universe.dev/relaimpo/doc/manual.html)} package [@grömping2006], we can use its `calc.relimp()` function to calculate a range of relative importance metrics for linear models. With the argument "type", we specify that we are interested in the lmg metric:
 
 ```{r}
+#| eval: false
+install.packages("relaimpo")
+library(relaimpo)
+
+rel.imp.metric <- calc.relimp(model4_c, 
+                              type = "lmg")
+```
+
+```{r}
+#| echo: false
 #install.packages("relaimpo")
 library(relaimpo)
 
@@ -793,7 +803,7 @@ Dabrowska.data |>
 
 @fig-CorVocabAge informs us that what we really need is a model that can account for the fact that `Age` is probably a useful predictor of `Vocab` scores for L1 speakers, but not so much for L2 speakers. In other words, we'd like to model an **interaction** between the predictors `Age` and `Group`.
 
-In `R`'s formula syntax, interaction terms are denoted with a semicolon (`:`) or an asterisk (`*`). In the following model, therefore, we are attempting to predict `Vocab` scores on the basis of a person's native-speaker status (`Group`), their age, occupational group, gender, Blocks test score, number of years in formal education, and the interaction between their age and native-speaker status (`Age_c:Group`):
+In `R`'s formula syntax, interaction terms are denoted with a colon (`:`) or an asterisk (`*`). In the following model, therefore, we are attempting to predict `Vocab` scores on the basis of a person's native-speaker status (`Group`), their age, occupational group, gender, Blocks test score, number of years in formal education, and the interaction between their age and native-speaker status (`Age_c:Group`):
 
 ```{r}
 model5 <- lm(Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + Age_c:Group, 
@@ -804,7 +814,7 @@ summary(model5)
 
 In the model summary above, the interaction term between `Age` and `Group` is the last coefficient listed (`GroupL2:Age_c`). The values confirm our intuition based on our descriptive visualisation of the data (@fig-CorVocabAge): there is a statistically significant interaction between age and native-speaker status (*p* = 0.002089) and the interaction coefficient for this interaction term (`Age_c:Group`) is negative (`-0.8982`). This means that, whilst being older is generally associated with higher `Vocab` scores for the reference level of L1 speakers, if a participant is an L2 English speaker, this trend is reversed.
 
-To understand how this works in practice, let's compare the predicted `Vocab` scores of two 35-year-olds: one a native English speaker and the other a non-native. For the purposes of this illustration, we will assume that, apart from their native-speaker status, all their other characteristics correspond to the reference level in our model (i.e. they are both female, have a clerical occupation, scored average on the Blocks test and were in formal education for the median number of years). For the L1 speaker, we calculate their predicted `Vocab` as before. We take the intercept (`69.1314`) as our starting point and then add the `Age_c` coefficient (`0.5466`) multiplied by the difference between their age and the median age (which is the reference level of our centered predictor) (i.e., 35 - 31 = 4). This means that their predicted `Vocab` score is:
+To understand how this works in practice, let's compare the predicted `Vocab` scores of two 35-year-olds: one a native English speaker and the other a non-native. For the purposes of this illustration, we will assume that, apart from their native-speaker status, all their other characteristics correspond to the reference level in our model (i.e. they are both female, have a clerical occupation, scored average on the Blocks test and were in formal education for the median number of years). For the L1 speaker, we calculate their predicted `Vocab` score as before. We take the intercept (`69.1314`) as our starting point and then add the `Age_c` coefficient (`0.5466`) multiplied by the difference between their age and the median age (which is the reference level of our centered predictor) (i.e., 35 - 31 = 4). This means that their predicted `Vocab` score is:
 
 ```{r}
 69.1314 + 0.5466*4
@@ -826,7 +836,7 @@ new_obsL1 <- data.frame(
 predict(model5, newdata = new_obsL1, type = "response")
 ```
 
-For the L2 speaker, we do the same thing but, this time, we also add the `GroupL2` coefficient (`-19.9128`), and the interaction coefficient (`GroupL2:Age_c -0.8982`) multiplied by the difference between the speaker's age and the median age (which remains 4 years). Their predicted score is therefore:
+For the L2 speaker, we begin by combining the same coefficient estimates as above but, this time, we also add the `GroupL2` coefficient (`-19.9128`), and the interaction coefficient (`GroupL2:Age_c`). The interaction coefficient (`-0.8982`) has to be multiplied by the difference between the speaker's age and the median age (which remains 4 years). This L2 speaker's predicted score is therefore:
 
 ```{r}
 69.1314 + 0.5466*4 + -19.9128 + -0.8982*4
@@ -853,7 +863,7 @@ predict(model5, newdata = new_obsL2, type = "response")
 
 Whenever we have a model with an interaction, we can no longer interpret the individual coefficient estimates of the predictors that enter into the interaction by themselves: instead, we must interpret our model's main effects together with their interaction!
 
-For example, in `model5`, if we only took account of the model's main effect for age, we would be misled into thinking that age is *always* positively associated with `Vocab` scores. However, as illustrated in @fig-CorVocabAge, we know that this is not true for L2 speakers — hence the statistically significant interaction between `Age_c` and `Group` in this model in `model5`.
+For example, in `model5`, if we only took account of the model's main effect for age, we would be misled into thinking that age is *always* positively associated with `Vocab` scores. However, as illustrated in @fig-CorVocabAge, we know that this is not true for L2 speakers — hence the statistically significant interaction between `Age_c` and `Group` in `model5`.
 :::
 
 The best way to avoid misinterpreting interaction effects is to make sure you always visualise the predictions of models that involve interactions. The `visreg()` function includes a "by" argument, which is ideal for this:
@@ -862,7 +872,7 @@ The best way to avoid misinterpreting interaction effects is to make sure you al
 #| fig-asp: 0.8
 #| label: "fig-PredictedVocabAgeInteraction"
 #| source-line-numbers: "3"
-#| fig-cap: "`Vocab` scores as predicted by `model4_c` for L1 and L2 speakers of various ages (blue lines) and partial model residuals (grey points)"
+#| fig-cap: "`Vocab` scores as predicted by `model5` for L1 and L2 speakers of various ages (blue lines) and partial model residuals (grey points)"
 #| fig-alt: "Two-panel plot showing vocabulary scores versus age for L1 and L2 groups, with data points and blue regression lines with gray confidence bands. The L1 panel shows a positive correlation, while the L2 panel shows a negative correlation."
 
 visreg(model5, 
@@ -900,7 +910,7 @@ check_question(c("For both L1 and L2 participants, the number of years that they
                button_label = "Check answer",
                right = "That's right, well done!",
                wrong = "No, that's incorrect. Check the code below if you're struggling to generate the plot.")
-check_hint("Only one of these statements are correct.", 
+check_hint("Only one of these statements is correct.", 
            hint_title = "🐭 Click on the mouse for a hint.")           
 ```
 
@@ -915,7 +925,8 @@ Dabrowska.data |>
      geom_point() +
      facet_wrap(~ Group) +
      geom_smooth(method = "lm", 
-                 se = TRUE)
+                 se = TRUE) +
+     theme_bw()
 ```
 
 [**Q13.7**]{style="color:green;"} Below is the model formula for `model5`:
@@ -1007,7 +1018,7 @@ visreg(model5.int,
 
 ### Interactions between two numeric predictors
 
-We can also model interactions between two numeric predictors. For instance, we may hypothesize that the positive effect of time spent in formal education is moderated by age. If this interaction effect were negative, this would mean that, as people get older, the fact that they spent longer in formal education becomes less relevant to predict their current vocabulary knowledge.
+We can also model interactions between two numeric predictors. For instance, we may hypothesise that the positive effect of time spent in formal education is moderated by age. If this interaction effect were negative, this would mean that, as people get older, the fact that they spent longer in formal education becomes less relevant to predict their current vocabulary knowledge.
 
 Let's add an `Age_c:EduTotal_c` interaction to our model to find out if our data supports this hypothesis.
 
@@ -1026,7 +1037,7 @@ In @fig-PredictedVocabAgeByEdu, we visualise this statistically non-significant 
 
 ```{r}
 #| label: "fig-PredictedVocabAgeByEdu"
-#| fig-cap: "`Vocab` scores as predicted by `model4_c` for English speakers of various ages who were in formal education for a below-average, average, and above-average length of time (in blue) and partial model residuals (grey points)"
+#| fig-cap: "`Vocab` scores as predicted by `model6` for English speakers of various ages who were in formal education for a below-average, average, and above-average length of time (in blue) and partial model residuals (grey points)"
 #| fig-alt: "Three-panel plot showing predicted vocabulary scores versus age for different education levels, with partial residual points and blue regression lines with gray confidence bands. All three panels show positive correlations between age and vocabulary scores, with higher education levels showing higher predicted scores overall."
 
 visreg(model6,
@@ -1041,7 +1052,7 @@ visreg(model6,
 
 Examining @fig-PredictedVocabAgeByEdu, we can therefore conclude that the effect of age on `Vocab` scores is not moderated by the number of years that participants spent in formal education.
 
-The `visreg()` function provides two ways to visualise interaction effects between two numeric variables: in @fig-PredictedVocabAgeRL, below-average, average, and above-average number of years in formal education were visualised across three panels. @fig-PredictedVocabAgeRL shows the same predictions but, this time, the code includes the argument "overlay = TRUE", which results in a single panel with three coloured regression lines superimposed. This can make it easier to check whether the lines are parallel.
+The `visreg()` function provides two ways to visualise interaction effects between two numeric variables: in @fig-PredictedVocabAgeByEdu, below-average, average, and above-average number of years in formal education were visualised across three panels. @fig-PredictedVocabAgeRL shows the same predictions but, this time, the code includes the argument "overlay = TRUE", which results in a single panel with three coloured regression lines superimposed. This can make it easier to check whether the lines are parallel. From @fig-PredictedVocabAgeRL, it is easier to see that the three lines are pretty much parallel to each other. This suggests that the positive effect of `Age` on `Vocab` scores does not change as a function of the number of years that participants were in formal education.
 
 ```{r}
 #| source-line-numbers: "4"
@@ -1111,14 +1122,12 @@ L1.data |>
 
 In general, we can calculate the `Vocab` scores that our `L1.model` predicts by combining the model's coefficient estimates like this:
 
-```         
-Intercept + 
-`ART` coefficient\*`ART` score + 
-`EduTotal` coefficient\*(`EduTotal` in years - median `EduTotal`) +
-`ART:EduTotal` coefficient\*`ART` score\*(`EduTotal` in years - median `EduTotal`)
-```
+> Intercept +\
+> `ART` coefficient\*`ART` score +\
+> `EduTotal` coefficient\*(`EduTotal` in years - median `EduTotal`) +\
+> `ART:EduTotal` coefficient\*`ART` score\*(`EduTotal` in years - median `EduTotal`)
 
-Based on the coefficient estimates of the model summary, we can therefore calculate the predicted `Vocab` score of the student/support worker as follows:
+Based on the coefficient estimates of the model summary, we can therefore calculate the predicted `Vocab` score of the student / support worker as follows:
 
 ```{r}
 51.9162 + # <1>
@@ -1153,7 +1162,7 @@ predict(L1.model)[2]
 predict(L1.model)[18]
 ```
 
-Notice how these two predicted scores are very similar, even though the housewife spent longer in formal education than the student/support worker. This is because, for L1 speakers, greater print exposure and more education generally lead to a larger vocabulary (as indicated by the positive main-effect coefficient estimates in `L1.model`), but the increase in vocabulary for each additional year of education is predicted to be smaller for individuals with higher ART scores.
+Notice how these two predicted scores are very similar, even though the housewife spent longer in formal education than the student / support worker. This is because, for L1 speakers, greater print exposure and more education generally lead to a larger vocabulary (as indicated by the positive main-effect coefficient estimates in `L1.model`), but the increase in vocabulary for each additional year of education is predicted to be smaller for individuals with higher ART scores.
 
 @fig-VocabEduART visualises the predictions of `L1.model`. How can we interpret these three regression lines?
 
@@ -1161,7 +1170,7 @@ Notice how these two predicted scores are very similar, even though the housewif
 #| code-fold: true
 #| code-summary: "Show code to generate plot."
 #| label: "fig-VocabEduART"
-#| fig-cap: "`Vocab` scores as predicted by `model4_c` (in blue) and partial model residuals (grey points) as a function of the number of years speakers were in formal education and for three ART test scores"
+#| fig-cap: "`Vocab` scores as predicted by `L1.model` (in blue) and partial model residuals (grey points) as a function of the number of years speakers were in formal education and for three ART test scores"
 #| fig-alt: "Three-panel plot showing predicted vocabulary scores versus years in formal education for three ART scores (3, 10, and 31), with partial residual points and blue regression lines with gray confidence bands. The left panel (ART: 3) shows a strong positive correlation, the middle panel (ART: 10) shows a moderate positive correlation, and the right panel (ART: 31) shows a nearly flat but negative relationship around 90."
 
 visreg(L1.model,
@@ -1184,7 +1193,9 @@ Some people consider model selection to be a bit of an art. This chapter only ai
 
 In this chapter, we will use the **adjusted R^2^** as our model selection decision criterion to arrive at an optimal model of `Vocab` scores among L1 and L2 speakers of English. Recall that R^2^ values correspond to the amount of variance in the outcome variable that a model can predict. The adjusted R^2^ is particularly useful because it is adjusted for the number of predictors entered in the model; models with more predictors are penalised.
 
-> When using adjusted R^2^ as the decision criterion, we seek to eliminate or add predictors depending on whether they lead to the largest improvement in adjusted and we stop when adding or eliminating another predictor does not lead to further improvement in adjusted R^2^. Adjusted R^2^ describes the strength of a model fit, and it is a useful tool for evaluating which predictors are adding value to the model, where *adding value* means they are (likely) improving the accuracy in predicting future outcomes [@cetinkaya-rundelIntroductionModernStatistics2021: [Section 8.4](https://openintro-ims.netlify.app/model-mlr#sec-model-selection)].
+> When using adjusted R^2^ as the decision criterion, we seek to eliminate or add predictors depending on whether they lead to the largest improvement in adjusted R^2^ and we stop when adding or eliminating another predictor does not lead to further improvement in adjusted R^2^.
+>
+> Adjusted R^2^ describes the strength of a model fit, and it is a useful tool for evaluating which predictors are adding value to the model, where *adding value* means they are (likely) improving the accuracy in predicting future outcomes [@cetinkaya-rundelIntroductionModernStatistics2021: [Section 8.4](https://openintro-ims.netlify.app/model-mlr#sec-model-selection)].
 
 There are two common ways to add or remove predictors in a multiple regression model. These are called backward elimination and forward selection. They are often called **stepwise selection** because they add or remove one variable at a time.
 
@@ -1192,7 +1203,7 @@ There are two common ways to add or remove predictors in a multiple regression m
 >
 > **Forward selection** is the reverse of the backward elimination technique. Instead of eliminating predictors one-at-a-time, we add predictors one-at-a-time until we cannot find any predictors that improve the model any further [@cetinkaya-rundelIntroductionModernStatistics2021: [Section 8.4](https://openintro-ims.netlify.app/model-mlr#sec-model-selection)].
 
-We will use backward elimination as it allows us to start with a **full model**, that includes all the predictors and any interactions that we believe are justified on the basis of theory and/or prior research. At this stage, it is absolutely crucial to think about which variables and which interactions are genuinely meaningful and which are not!
+We will use backward elimination as it allows us to start with a **full model** that includes all the predictors and any interactions that we believe are justified on the basis of theory and/or prior research. At this stage, it is absolutely crucial to think about which variables and which interactions are genuinely meaningful and which are not!
 
 With the @DabrowskaExperienceAptitudeIndividual2019 data, several full models can be justified. In this section, we will attempt to model `Vocab` scores among L1 participants using four predictors (`ART`, `Blocks_c`, `Age_c`, `EduTotal_c`, and `OccupGroup`) and the following four interactions (`ART:EduTotal_c`, `Blocks_c:EduTotal_c`, `ART:Age_c`, and `Blocks:Age_c`). We can justify this choice of predictors based on our current understanding of language learning.
 
@@ -1203,7 +1214,7 @@ L1.model.full <- lm(Vocab ~ ART + Blocks_c + Age_c + EduTotal_c + OccupGroup + A
 summary(L1.model.full)
 ```
 
-Our full model has an adjusted R^2^ of `0.5632`, which means that the combination of these variables and the four interactions account for about 56% of the variance in `Vocab` scores in the L1 data. However, many of the model coefficients in `model.full` are not statistically significant, so we could try to remove them to see whether this leads to a lower adjusted R^2^ or not. Strictly speaking, a stepwise selection procedure would entail removing each interaction one-by-one. To save space here, we remove all three non-significant interaction terms in a single backward step:
+Our full model has an adjusted R^2^ of `0.5632`, which means that the combination of these variables and the four interactions account for about 56% of the variance in `Vocab` scores in the L1 data. However, many of the model coefficients in `L1.model.full` are not statistically significant, so we could try to remove them to see whether this leads to a lower adjusted R^2^ or not. Strictly speaking, a stepwise selection procedure would entail removing each interaction one-by-one. To save space here, we remove all three non-significant interaction terms in a single backward step:
 
 ```{r}
 L1.model.back1 <- lm(Vocab ~ ART + Blocks_c + Age_c + EduTotal_c + OccupGroup + ART:EduTotal_c, 
@@ -1333,7 +1344,7 @@ There is only one additional assumption that is specific to models that include 
 
 -   No multicollinearity
 
-In the following, we use the `check_model()` function from the {[performance](https://easystats.github.io/performance)} package [@ludeckePerformancePackageAssessment2021] to check these assumptions graphically. The `check_model()` function also requires the installation of the {[qqplotr](https://aloy.github.io/qqplotr/index.html)} [@almeidaGgplot2CompatibleQuantilequantile2018] package to work.
+In the following, we use the `check_model()` function from the {[performance](https://easystats.github.io/performance)} package [@ludeckePerformancePackageAssessment2021] to check these assumptions graphically. The `check_model()` function also requires the installation of the {[qqplotr](https://aloy.github.io/qqplotr/index.html)} [@almeidaGgplot2CompatibleQuantilequantile2018] and {[see](https://easystats.github.io/see/)} [@ludeckeSeePackageVisualizing2021] packages to work.
 
 ::: column-margin
 ![Hex sticker of the [{performance}](https://easystats.github.io/performance/) package](images/hex_performance.png){width="100"}
@@ -1341,9 +1352,8 @@ In the following, we use the `check_model()` function from the {[performance](ht
 
 ```{r}
 #| eval: false
-install.packages(c("performance", "qqplotr"))
+install.packages(c("performance", "qqplotr", "see"))
 library(performance)
-library(qqplotr)
 ```
 
 Running the function on the saved model object should generate a large figure comprising six plots[^13_multiplelinearregression-1] (see @fig-6plots). In the following, we will learn to interpret them one-by-one.
@@ -1381,17 +1391,17 @@ The second plot (@fig-Linearity) is designed to check the assumption of **linear
 
 ```{r}
 #| label: "fig-Linearity"
-#| fig-cap: "The relationship between model residuals and model predictions (fitted values)"
+#| fig-cap: "The relationship between model predictions (fitted values) and model residuals"
 diagnostic.plots[[2]]
 ```
 
-Note that @fig-Homoscedasticity is actually the same kind of plot as @fig-VocabResidual that we generated to check the assumption of equal (or constant) variance, i.e. **homoscedasticity**. Fitted values is another term for predicted values. Thus, in @fig-Homoscedasticity, the *x*-axis represents the `Vocab` scores predicted by the model. When the assumption of homoscedasticity is met, the model residuals are randomly distributed above and below 0, i.e. they do not notably increase or decrease as predicted values increase.
+Note that @fig-Linearity is actually the same kind of plot as @fig-VocabResidual that we generated to check the assumption of equal (or constant) variance, i.e. **homoscedasticity**. Fitted values is another term for predicted values. Thus, in @fig-Linearity, the *x*-axis represents the `Vocab` scores predicted by the model. When the assumption of homoscedasticity is met, the model residuals are randomly distributed above and below 0, i.e. they do not notably increase or decrease as predicted values increase.
 
-The {performance} package proposes a different kind of diagnostic plot to check the assumption **homoscedasticity** with the square-root of the absolute values of residuals on the *y*-axis (@fig-Homoscedasticity). A roughly flat and horizontal green reference line indicates homoscedasticity. Again, although the reference line in @fig-Homoscedasticity is by no means perfectly flat, a flat line can be drawn within the grey band.
+The {performance} package proposes a different kind of diagnostic plot to check the assumption of **homoscedasticity** (see @fig-Homoscedasticity) with the square-root of the absolute values of residuals on the *y*-axis. A roughly flat and horizontal green reference line indicates homoscedasticity. Again, although the reference line in @fig-Homoscedasticity is by no means perfectly flat, a flat line can be drawn within the grey band, suggesting that the assumption is met.
 
 ```{r}
 #| label: "fig-Homoscedasticity"
-#| fig-cap: "The relationship between the square root of absolute standardized residuals and the model predictions (fitted values)"
+#| fig-cap: "The relationship between the model predictions (fitted values) and the square root of absolute standardised residuals"
 diagnostic.plots[[3]]
 ```
 
@@ -1399,7 +1409,7 @@ The fourth diagnostic plot (@fig-Influential) helps to detect **outliers** in th
 
 ```{r}
 #| label: "fig-Influential"
-#| fig-cap: "The relationship between standardized residuals and leverage as estimated using Cook's distance"
+#| fig-cap: "The relationship between leverage as estimated using Cook's distance and standardised residuals"
 diagnostic.plots[[4]]
 ```
 
@@ -1451,7 +1461,7 @@ In @fig-Normality, we see that most residuals follow a normal distribution, exce
 The `check_model()` vignette provides more detailed information on these diagnostic plots, how to interpret them, and what to do if the assumptions are not met: <https://easystats.github.io/performance/articles/check_model.html>.
 :::
 
-:::: {.callout-tip collapse="false"}
+::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
 So far in this chapter, we have fitted a model of L1 speakers' `Vocab` scores. We have found that participants' print exposure (as measured by the ART), non-verbal intelligence (as measured by the Blocks test), their age, the number of years they were in formal education, and the interaction between ART scores and years in education all contribute to being able to predict how well they performed on the `Vocab` test. The model that we selected as the optimal model (`L1.model.back2`) was able to predict 58% of the variance in `Vocab` scores among L1 speakers.
@@ -1545,6 +1555,15 @@ diagnostic.plots.L2[[6]] # The residuals are not normally distributed, but the l
 We can display the exact VIF values of a model using the `vif()` function from the [{car}](https://www.john-fox.ca/Companion/index.html) package [@foxCompanionAppliedRegression2019]:
 
 ```{r}
+#| eval: false
+install.packages("car")
+library(car)
+
+vif(L2.model)
+```
+
+```{r}
+#| echo: false
 #install.packages("car")
 library(car)
 
@@ -1688,7 +1707,7 @@ visreg(fit = L2.model.b,
        xvar = "ReadEng",
        by = "ART")
 ```
-::::
+:::
 
 ::: column-margin
 ![Hex sticker of the [{car}](https://www.john-fox.ca/Companion/index.html) package](images/hex_car.png){width="100" fig-alt="The hexagonal logo of the car package features a fun-looking yellow cartoon car."}
@@ -1696,9 +1715,9 @@ visreg(fit = L2.model.b,
 
 ## Tapping into the potential of statistical modelling
 
-This chapter aimed to provide first insights into the potential of statistical modelling with multiple predictors. It has demonstrated the importance of considering interactions between predictors and of visualising both the observed, sample data, as well as simulated values based on the predictions of a statistical model.
+This chapter aimed to provide first insights into the potential of statistical modelling with multiple predictors. It has demonstrated the importance of considering interactions between predictors and of visualising both the observed sample data, as well as simulated values based on the predictions of a statistical model.
 
-You may noted that *p*-values were *not* at the heart of this chapter. Instead, we focused on model accuracy (as measured by the adjusted R^2^), coefficient estimates and their relative importance (as measured by the lmg metric), predicted values, and (partial) model residuals. This is because there is an unfortunate tendency among some students and researchers to be misled into thinking that, if a result turns out to be statistically significant, it must be true. As statistician Andrew Gelman puts it, some confuse statistics for "a form of modern alchemy, transforming the uncertainty and variation of the laboratory and field measurements into clean scientific conclusions that can be taken as truth" [@gelmanEthicsStatisticalPractice2018: 43].
+You may have noted that *p*-values were *not* at the heart of this chapter. Instead, we focused on model accuracy (as measured by the adjusted R^2^), coefficient estimates and their relative importance (as measured by the lmg metric), predicted values, and (partial) model residuals. This is because there is an unfortunate tendency among some students and researchers to be misled into thinking that, if a result turns out to be statistically significant, it must be true. As statistician Andrew Gelman puts it, some confuse statistics for "a form of modern alchemy, transforming the uncertainty and variation of the laboratory and field measurements into clean scientific conclusions that can be taken as truth" [@gelmanEthicsStatisticalPractice2018: 43].
 
 I hope that working through @sec-Inferential to [-@sec-MLR] has shown you that a big part of learning to work with quantitative data in the language sciences is really about "embracing variation and accepting uncertainty" [@gelmanEmbracingVariationAccepting2019]. If we intend to report inferential statistics based on sample data, it is important that we decide on significance level thresholds, model selection criteria, and other such parameters *before* conducting our data analysis [on the benefits of preregistrating protocols and methods in the language sciences, see e.g. @mertzenBenefitsPreregistrationHypothesisdriven2021; @roettgerPreregistrationExperimentalLinguistics2021]. We must strive to test well-defined hypotheses and to quantify (and ideally also visualise!) **uncertainty**. Ultimately, it is worth remembering that "in almost all practical data analysis situations – we can only draw uncertain conclusions from data, regardless of whether we manage to obtain statistical significance or not" [@vasishthHowEmbraceVariation2021: 1311].
 
