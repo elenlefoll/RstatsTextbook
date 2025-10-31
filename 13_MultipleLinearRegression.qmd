@@ -121,7 +121,7 @@ levels(Dabrowska.data$Group) # 'L1' is the first level.
 levels(Dabrowska.data$OccupGroup) # 'C' corresponding to a clerical professional occupation is the first level.
 ```
 
-The reference level of the **numeric predictors**, by contrast, corresponds to the value of **zero**. In `model4`, therefore, the estimated coefficient for the intercept corresponds to the predicted `Vocab` score of an adult English native speaker who belongs to the occupational group "C", is female, who is aged 0 (!), scored 0 on the Blocks test, and spent 0 years (!) in formal education. Needless to say that trying to interpret this value is utterly meaningless! This is why, in this case, it makes sense to **center** our numeric predictor variables before entering them into our model.
+The reference level of the **numeric predictors**, by contrast, corresponds to the value of **zero**. In `model4`, therefore, the estimated coefficient for the intercept corresponds to the predicted `Vocab` score of an adult English native speaker who belongs to the occupational group "C", is female, who is aged 0 (!), scored 0 on the Blocks test, and spent 0 years (!) in formal education. Needless to say that trying to interpret this value is utterly meaningless! This is why, in this case, it makes sense to **center** our numeric predictor variables before entering them into our model. Another way to go about this would be to standardise the predictors using a *z*-transformation [see e.g. @WinterStatisticsLinguistsIntroduction2019: Section 5.2].
 
 ## Centering numeric predictors
 
@@ -287,7 +287,7 @@ Let's decipher the summary of `model4_c` step-by-step:
       select(Group, NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)
     ```
 
--   The ***p*****-values** associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable *levels*, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in @sec-Categoricalpredictor, we fitted a simple linear regression model (`model3`) which included only `OccupGroup` as a single predictor. In this simple model, the coefficient estimate for `OccupGroupI` made a statistically significant contribution to the model at an α-level of 0.05 (*p* = 0.0335). By contrast, in the present multiple linear regression model, the predictor level `OccupGroupI` does *not* make a statistically significant contribution (*p* = 0.077600 which is higher than 0.05). This is because our multiple regression model `model4_c` includes more predictors that can better account for the variance in `Vocab` scores in the data than occupational groups can.
+-   The ***p*****-values** associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable *levels*, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in @sec-Categoricalpredictor, we fitted a simple linear regression model (`model3`) which included only `OccupGroup` as a single predictor. In this simple model, the coefficient estimate for `OccupGroupI` made a statistically significant contribution to the model at an α-level of 0.05 (*p* = 0.0335). By contrast, in the present multiple linear regression model, the predictor level `OccupGroupI` does *not* make a statistically significant contribution (*p* = 0.077600 which is greater than 0.05). This is because our multiple regression model `model4_c` includes predictors that account for some of the same variance in `Vocab` scores in the data that occupational groups accounted for in our earlier model. This leaves less unique variance attributable to occupational group, thereby rendering it statistically non-significant.
 
 -   From the **adjusted R-squared** value (`0.3276`) displayed at the bottom of the model summary output, we can see that our multiple linear regression model accounts for around 33% of the total variance in `Vocab` scores found in the @DabrowskaExperienceAptitudeIndividual2019 data. This is considerably more than we achieved with any of the simple linear models that we fitted in @sec-SLR.
 
@@ -476,9 +476,11 @@ geom_segment(
   theme_bw()
 ```
 
-In @fig-PredictedVocabAge, we focus on one predictor from our model: `Age`. We know from our model summary that the coefficient estimate for age is positive (`0.3718`), hence the upward trend. But we also know that this coefficient is relatively small, which is why the blue line is not very steep. Recall that the points on @fig-PredictedVocabAge represent the partial residuals. This means that there are as many points as there are participants in the dataset used to fit the model. The further away a point is from the predicted value (the blue line), the poorer the prediction is for that participant.
+In @fig-PredictedVocabAge, we focus on one predictor from our model: `Age`. We know from our model summary that the coefficient estimate for age is positive (`0.3718`), hence the upward blue line. The grey 95% confidence band visualises the uncertainty around the estimated mean predicted `Vocab` scores.
 
-We can see that many of the points on @fig-PredictedVocabAge are not within the grey 95% confidence band, which means that our model cannot account for all of the variance in `Vocab` scores. Some of the partial residuals are particularly large: the `Vocab` score of the 23-year-old Lithuanian bar staff, for instance, is vastly underestimated. By contrast, the 46-year-old Polish driver's predicted score is well within the confidence band of the predicted `Vocab` score for his age, indicating that our model makes a pretty good prediction for this L2 speaker.
+The points on @fig-PredictedVocabAge represent the partial residuals. This means that there are as many points as there are participants in the dataset used to fit the model. The further away a point is from the predicted value (the blue line), the poorer the prediction is for that particular participant.
+
+Some of the partial residuals are particularly large: the `Vocab` score of the 23-year-old Lithuanian bar staff, for instance, is vastly underestimated. By contrast, the 46-year-old Polish driver's predicted score is well within the confidence band of the predicted `Vocab` score for his age, indicating that our model makes a pretty accurate prediction for this L2 speaker.
 
 ```{r}
 #| echo: false
@@ -685,12 +687,29 @@ Because they are in different units that represent different quantities or level
 
 Although not currently widely used in the language sciences [but see, e.g. @DabrowskaExperienceAptitudeIndividual2019: 14], lmg has a number of advantages. Its interpretation is fairly intuitive because it is similar to a coefficient of determination (R^2^): a value of 0 means that, in this model, a predictor accounts for 0% of the variance in the outcome variable, while a value of 1 would mean that it can be used to perfectly predict the outcome variable. Calculating lmg values is computationally involved because the metric includes both direct effects and is adjusted for all the other predictors of the model. But this need not worry us because a researcher and statistician, Ulrike Grömping, has developed and published an `R` package that will do the computation for us. 😊
 
-Once we have installed and loaded the {[relaimpo](https://cran.r-universe.dev/relaimpo/doc/manual.html)} package [@grömping2006], we can use its `calc.relimp()` function to calculate a range of relative importance metrics for linear models. With the argument "type", we specify that we are interested in the lmg metric:
+Once we have installed and loaded the {[relaimpo](https://cran.r-universe.dev/relaimpo/doc/manual.html)} package[^13_multiplelinearregression-1] [@grömping2006], we can use its `calc.relimp()` function to calculate a range of relative importance metrics for linear models. With the argument "type", we specify that we are interested in the lmg metric:
+
+[^13_multiplelinearregression-1]: Loading the {relaimpo} package returns several warnings informing us, on the one hand, about packages that {relaimpo} requires to work and which are therefore also automatically loaded (these are called **dependencies**) and, on the other, about objects being **masked** by different packages, e.g.:
+
+    ```         
+    The following object is masked from ‘package:dplyr’:
+
+    select
+    ```
+
+    It is worth paying attention to the latter set of warnings because it means that some function names, e.g. `select()`, are now shared by more than one package in our `R` environment. This can cause code that previously worked fine to suddenly return errors. For example, after loading the {relaimpo} package, you may find that the `select()` function no longer works as expected because `R` attempts to use the `select()` function from the {MASS} package rather than from the tidyverse {dplyr} package. To avoid this happening, we can manually assign the correct package to the function name like this:
+
+    ```{r}
+    select <- dplyr::select
+    ```
+
+    This ensures that any future mentions of the `select()` function are, by default, interpreted as the function defined in the {dplyr} package.
 
 ```{r}
 #| eval: false
 install.packages("relaimpo")
 library(relaimpo)
+select <- dplyr::select
 
 rel.imp.metric <- calc.relimp(model4_c, 
                               type = "lmg")
@@ -738,7 +757,9 @@ rel.imp.metric.df |>
   coord_flip() 
 ```
 
-Many studies will compare the coefficient estimates of multiple regression models using **standardised coefficients**. To understand what standardised coefficients represent and how to use them yourself, I recommended reading Winter [-@winterStatisticsLinguistsIntroduction2020: Section 6.2].
+It is also worth noting that the second most important predictor is `OccupGroup`. This may come as a surprise given that none of its levels (or rather none of the differences between the reference level of `C` for clerical occupations and the remaining levels) make a statistically significant contribution to the model. This result illustrates the value of this type of analysis compared to only looking at a model's coefficient estimates.
+
+Many studies will compare the coefficient estimates of multiple regression models using **standardised coefficients** \[see e.g. \@winterStatisticsLinguistsIntroduction2020: Section 6.2\]; however, this approach can lead to misleading conclusions [see e.g. @mizumotoCalculatingRelativeImportance2023].
 
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
@@ -1187,21 +1208,23 @@ For low and mid-level ART scores, the model predicts a positive correlation betw
 
 ## Model selection
 
-Typically, the more predictors we enter in a model, the better the model fits the data. However, having predictors that contribute very little to the model and/or whose contributions are not statistically significant risks lowering the accuracy of the model's predictions on new data. In this case, we say that the model **overfits**. A model that overfits the sample data risks not generalising to other data. If the aim of our statistical modelling is to infer from our sample to the general population (see @sec-Inferential), it can make sense to try to find an 'optimal' model that accounts for as much of the variance in the outcome variable as possible whilst relying only on association effects that we can be fairly confident could not have occurred due to chance only. This is where model selection comes into play.
+Typically, the more predictors we enter in a model, the better the model fits the data. However, having predictors that contribute very little to the model and/or whose contributions are not statistically significant risks lowering the accuracy of the model's predictions on new data. In this case, we say that the model **overfits**. A model that overfits the sample data risks not generalising to other data. If the aim of our statistical modelling is to infer from our sample to the general population (see @sec-Inferential), it can sometimes make sense to try to find an 'optimal' model that accounts for as much of the variance in the outcome variable as possible whilst relying only on association effects that we can be fairly confident could not have occurred due to chance only. This is where model selection comes into play.
 
-Some people consider model selection to be a bit of an art. This chapter only aims to introduce the topic and does not cover — let alone compare — different model selection procedures. Ultimately, what really matters is that, if we intend to apply a model selection procedure, we decide on the method *before* analysing the data. This is because the method selection procedure bears the very real risk of (consciously or unconsciously) "fishing" for statistically significant results. Fishing is a highly Questionable Research Practice (QRP, see @sec-pHacking) that consists in trying out different methods until we obtain results that match our theory and/or hypotheses.
+Some people consider model selection to be a bit of an art. This chapter only aims to introduce the topic and does not cover — let alone compare or endorse — different model selection procedures. Ultimately, what really matters is that, *if* we intend to apply a model selection procedure, we decide on the method *before* analysing the data. This is because method selection bears the very real risk of (consciously or unconsciously) "fishing" for statistically significant results. Fishing is a highly Questionable Research Practice (QRP, see @sec-pHacking) that consists in trying out different methods until we arrive at findings that match our theory and/or hypotheses. For this reason, selection procedures in regression modelling have been heavily criticised over the years and there are very good arguments for not engaging in any model selection at all [@thompsonStepwiseRegressionStepwise1995; @smithStepAwayStepwise2018; @harrellRegressionModelingStrategies2015: Section 4.3].
 
-In this chapter, we will use the **adjusted R^2^** as our model selection decision criterion to arrive at an optimal model of `Vocab` scores among L1 and L2 speakers of English. Recall that R^2^ values correspond to the amount of variance in the outcome variable that a model can predict. The adjusted R^2^ is particularly useful because it is adjusted for the number of predictors entered in the model; models with more predictors are penalised.
+> A fundamental problem with stepwise regression is that some real explanatory variables that have causal effects on the dependent variable may happen to not be statistically significant, while nuisance variables may be coincidentally significant. As a result, the model may fit the data well in-sample, but do poorly out-of-sample. [@smithStepAwayStepwise2018: 1]
+
+Nonetheless, in the following section, we will see how we might - *if* we decide to narrow down predictor variables using model selection - arrive at an optimal model of `Vocab` scores among L1 and L2 speakers of English using the **adjusted R^2^** as our model selection decision criterion. Recall that R^2^ values correspond to the amount of variance in the outcome variable that a model can predict. The adjusted R^2^ is particularly useful because it is adjusted for the number of predictors entered in the model; models with more predictors are penalised.
 
 > When using adjusted R^2^ as the decision criterion, we seek to eliminate or add predictors depending on whether they lead to the largest improvement in adjusted R^2^ and we stop when adding or eliminating another predictor does not lead to further improvement in adjusted R^2^.
 >
-> Adjusted R^2^ describes the strength of a model fit, and it is a useful tool for evaluating which predictors are adding value to the model, where *adding value* means they are (likely) improving the accuracy in predicting future outcomes [@cetinkaya-rundelIntroductionModernStatistics2021: [Section 8.4](https://openintro-ims.netlify.app/model-mlr#sec-model-selection)].
+> Adjusted R^2^ describes the strength of a model fit, and it is a useful tool for evaluating which predictors are adding value to the model, where *adding value* means they are (likely) improving the accuracy in predicting future outcomes. [@cetinkaya-rundelIntroductionModernStatistics2021: [Section 8.4](https://openintro-ims.netlify.app/model-mlr#sec-model-selection)]
 
 There are two common ways to add or remove predictors in a multiple regression model. These are called backward elimination and forward selection. They are often called **stepwise selection** because they add or remove one variable at a time.
 
 > **Backward elimination** starts with the full model – the model that includes all potential predictor variables. Predictors are eliminated one-at-a-time from the model until we cannot improve the model any further.
 >
-> **Forward selection** is the reverse of the backward elimination technique. Instead of eliminating predictors one-at-a-time, we add predictors one-at-a-time until we cannot find any predictors that improve the model any further [@cetinkaya-rundelIntroductionModernStatistics2021: [Section 8.4](https://openintro-ims.netlify.app/model-mlr#sec-model-selection)].
+> **Forward selection** is the reverse of the backward elimination technique. Instead of eliminating predictors one-at-a-time, we add predictors one-at-a-time until we cannot find any predictors that improve the model any further. [@cetinkaya-rundelIntroductionModernStatistics2021: [Section 8.4](https://openintro-ims.netlify.app/model-mlr#sec-model-selection)]
 
 We will use backward elimination as it allows us to start with a **full model** that includes all the predictors and any interactions that we believe are justified on the basis of theory and/or prior research. At this stage, it is absolutely crucial to think about which variables and which interactions are genuinely meaningful and which are not!
 
@@ -1356,9 +1379,9 @@ install.packages(c("performance", "qqplotr", "see"))
 library(performance)
 ```
 
-Running the function on the saved model object should generate a large figure comprising six plots[^13_multiplelinearregression-1] (see @fig-6plots). In the following, we will learn to interpret them one-by-one.
+Running the function on the saved model object should generate a large figure comprising six plots[^13_multiplelinearregression-2] (see @fig-6plots). In the following, we will learn to interpret them one-by-one.
 
-[^13_multiplelinearregression-1]: If your version of RStudio does not display the six-panelled figure but instead only a white canvas, this is probably because your Plots pane is too small. In this case, you will need to make it as large as possible and then try running the function again. If that doesn't work either, don't worry as we will save and examine individual plots from now on.
+[^13_multiplelinearregression-2]: If your version of RStudio does not display the six-panelled figure but instead only a white canvas, this is probably because your Plots pane is too small. In this case, you will need to make it as large as possible and then try running the function again. If that doesn't work either, don't worry as we will save and examine individual plots from now on.
 
 ```{r}
 #| fig-width: 8
@@ -1397,7 +1420,7 @@ diagnostic.plots[[2]]
 
 Note that @fig-Linearity is actually the same kind of plot as @fig-VocabResidual that we generated to check the assumption of equal (or constant) variance, i.e. **homoscedasticity**. Fitted values is another term for predicted values. Thus, in @fig-Linearity, the *x*-axis represents the `Vocab` scores predicted by the model. When the assumption of homoscedasticity is met, the model residuals are randomly distributed above and below 0, i.e. they do not notably increase or decrease as predicted values increase.
 
-The {performance} package proposes a different kind of diagnostic plot to check the assumption of **homoscedasticity** (see @fig-Homoscedasticity) with the square-root of the absolute values of residuals on the *y*-axis. A roughly flat and horizontal green reference line indicates homoscedasticity. Again, although the reference line in @fig-Homoscedasticity is by no means perfectly flat, a flat line can be drawn within the grey band, suggesting that the assumption is met.
+The {performance} package proposes a different kind of diagnostic plot to check the assumption of **homoscedasticity** (see @fig-Homoscedasticity) with the square-root of the absolute standardised residuals on the *y*-axis. A roughly flat and horizontal green reference line indicates homoscedasticity. Again, although the reference line in @fig-Homoscedasticity is by no means perfectly flat, a flat line can be drawn within the grey band, suggesting that the assumption is met.
 
 ```{r}
 #| label: "fig-Homoscedasticity"
@@ -1719,7 +1742,7 @@ This chapter aimed to provide first insights into the potential of statistical m
 
 You may have noted that *p*-values were *not* at the heart of this chapter. Instead, we focused on model accuracy (as measured by the adjusted R^2^), coefficient estimates and their relative importance (as measured by the lmg metric), predicted values, and (partial) model residuals. This is because there is an unfortunate tendency among some students and researchers to be misled into thinking that, if a result turns out to be statistically significant, it must be true. As statistician Andrew Gelman puts it, some confuse statistics for "a form of modern alchemy, transforming the uncertainty and variation of the laboratory and field measurements into clean scientific conclusions that can be taken as truth" [@gelmanEthicsStatisticalPractice2018: 43].
 
-I hope that working through @sec-Inferential to [-@sec-MLR] has shown you that a big part of learning to work with quantitative data in the language sciences is really about "embracing variation and accepting uncertainty" [@gelmanEmbracingVariationAccepting2019]. If we intend to report inferential statistics based on sample data, it is important that we decide on significance level thresholds, model selection criteria, and other such parameters *before* conducting our data analysis [on the benefits of preregistrating protocols and methods in the language sciences, see e.g. @mertzenBenefitsPreregistrationHypothesisdriven2021; @roettgerPreregistrationExperimentalLinguistics2021]. We must strive to test well-defined hypotheses and to quantify (and ideally also visualise!) **uncertainty**. Ultimately, it is worth remembering that "in almost all practical data analysis situations – we can only draw uncertain conclusions from data, regardless of whether we manage to obtain statistical significance or not" [@vasishthHowEmbraceVariation2021: 1311].
+I hope that working through @sec-Inferential to [-@sec-MLR] has shown you that a big part of learning to work with quantitative data in the language sciences is really about "embracing variation and accepting uncertainty" [@gelmanEmbracingVariationAccepting2019]. If we intend to report inferential statistics based on sample data, it is important that we decide on significance level thresholds, model selection criteria, and other such parameters *before* conducting our data analysis [on the benefits of preregistrating protocols and methods in the language sciences, see e.g. @mertzenBenefitsPreregistrationHypothesisdriven2021; @roettgerPreregistrationExperimentalLinguistics2021]. If we want to test hypotheses, these must be well-defined hypotheses and we must strive to quantify (and ideally also visualise!) **uncertainty**. Ultimately, it is worth remembering that "in almost all practical data analysis situations – we can only draw uncertain conclusions from data, regardless of whether we manage to obtain statistical significance or not" [@vasishthHowEmbraceVariation2021: 1311]. Crucially, we must be extremely careful when extrapolating our results beyond the range of our observed data.
 
 As explained in @sec-Inferential, statistical inference based on NHST and *p*-values comes from a statistical framework called **frequentism**, which happens to (currently) be the most widely used framework in the language sciences. Taking a frequentist approach means that the statistical properties of the hypothesis tests that we conduct are considered under hypothetical replications of our study with new sample data. This is because, in the frequentist framework, we estimate the long-run probability of observing certain effects, were we to repeat the study many times. This is one of the reasons why **replication** (see @sec-Reproducibility) is key to advancing our knowledge of linguistics and language teaching and learning. Whenever we have small sample sizes, small effect sizes (i.e. small coefficient estimates in statistical models), large measurement error, and/or lots of variability among the target population -- as is often the case in the language sciences -- we simply cannot get **reliable** results from a single sample.
 
@@ -1735,7 +1758,7 @@ Does this mean that we should give up with quantitative data analysis and statis
 
 -   The observations (i.e. the data points) used to fit a **fixed-effect model** must be independent of each other. In the language sciences, such a situation is actually quite rare (see @sec-IndependenceSLR). To model interdependencies between observations, we can fit **mixed-effects models** (also called multilevel or hierarchical models) [to learn more, see e.g. @griesStatisticsLinguisticsPractical2021: Chapter 6; @sondereggerRegressionModelingLinguistic2023: Chapters 8-10; @WinterStatisticsLinguistsIntroduction2019: Chapters 14-15].
 
--   Linear regression models assume **linear** relationships between the predictors. There are different ways to circumvent this problem. In some cases, predictors can be **transformed** to meet this assumption [see @WinterStatisticsLinguistsIntroduction2019: Chapter 5]. In others, it may be wiser to model non-linear associations with other kinds of models such as Generalised Additive Mixed Models [GAMMs, see e.g. @soskuthyGeneralisedAdditiveMixed2017].
+-   Linear regression models assume **linear** relationships between the predictors. There are different ways to circumvent this problem. In some cases, predictors can be **transformed** to meet this assumption [see @WinterStatisticsLinguistsIntroduction2019: Chapter 5]. In others, it may be wiser to model non-linear associations with other kinds of models such as Generalised Additive Mixed Models [GAMMs, see @soskuthyGeneralisedAdditiveMixed2017 and @wielingAnalyzingDynamicPhonetic2018].
 
 -   Finally, we need not stick to the **frequentist** school of statistics. In fact, quantitative linguists are increasingly turning to **Bayesian** statistics and finding that Bayesian models help them work with the particularities of linguistic data [to learn more about Bayesian statistics, see e.g. @levshinaComparingBayesianFrequentist2022; @nicenboimIntroductionBayesianData2026].
 
