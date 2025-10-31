@@ -127,7 +127,7 @@ The reference level of the **numeric predictors**, by contrast, corresponds to t
 
 Centering involves subtracting a variable's average from each value in the variable. Typically, we subtract the mean from each value but, given that we know that many of the numeric variables in our dataset are not normally distributed (see @sec-DistributionsNumeric), here, we will subtract the median instead.
 
-To this end, we use the `mutate()` function to add three columns to the `R` data object `Dabrowska.data`. These new columns contain **transformed** versions of the variable predictors that we previously entered into our model:
+To this end, we use the `mutate()` function to add three columns to the `R` data object `Dabrowska.data`. These new columns contain **transformed** versions of the predictor variables that we previously entered into our model:
 
 ```{r}
 Dabrowska.data <- Dabrowska.data |> 
@@ -265,7 +265,7 @@ Let's decipher the summary of `model4_c` step-by-step:
     model4_c$residuals[154]
     ```
 
--   We can compare this particular residual (corresponding to the 154^th^ participant in the dataset) to all model residuals (corresponding to all participants) by examining the **summary statistics of all residuals**, which are displayed at the top of the model summary output (`summary(model4_c)`). These descriptive statistics inform us that the residual for the 154^th^ participant is slightly higher than the average (median) residual. This means that, on average, our model does a slightly better job of predicting `Vocab` scores than it does for this particular combination of predictors.
+-   We can compare this particular residual (corresponding to the 154^th^ participant in the dataset) to all model residuals (corresponding to all participants) by examining the **summary statistics of all residuals**, which are displayed at the top of the model summary output (`summary(model4_c)`). These descriptive statistics inform us that the residual for the 154^th^ participant is slightly higher than the average (median) residual, but well within the IQR (see @sec-IQR) of model residuals:
 
     ```         
     Residuals:
@@ -287,7 +287,7 @@ Let's decipher the summary of `model4_c` step-by-step:
       select(Group, NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)
     ```
 
--   The ***p*****-values** associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable *levels*, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in @sec-Categoricalpredictor, we fitted a simple linear model (`model3`) which included only `OccupGroup` as a single predictor. In this simple model, the coefficient estimate for `OccupGroupI` made a statistically significant contribution to the model at an α-level of 0.05 (*p* = 0.0335). By contrast, in the present multiple linear regression model, the predictor level `OccupGroupI` does *not* make a statistically significant contribution (*p* = 0.077600 which is higher than 0.05). This is because our multiple regression model `model4_c` includes more predictors that can better account for the variance in `Vocab` scores in the data than occupational groups can.
+-   The ***p*****-values** associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable *levels*, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in @sec-Categoricalpredictor, we fitted a simple linear regression model (`model3`) which included only `OccupGroup` as a single predictor. In this simple model, the coefficient estimate for `OccupGroupI` made a statistically significant contribution to the model at an α-level of 0.05 (*p* = 0.0335). By contrast, in the present multiple linear regression model, the predictor level `OccupGroupI` does *not* make a statistically significant contribution (*p* = 0.077600 which is higher than 0.05). This is because our multiple regression model `model4_c` includes more predictors that can better account for the variance in `Vocab` scores in the data than occupational groups can.
 
 -   From the **adjusted R-squared** value (`0.3276`) displayed at the bottom of the model summary output, we can see that our multiple linear regression model accounts for around 33% of the total variance in `Vocab` scores found in the @DabrowskaExperienceAptitudeIndividual2019 data. This is considerably more than we achieved with any of the simple linear models that we fitted in @sec-SLR.
 
@@ -341,7 +341,7 @@ If you have version 2.8.0, begin by deleting your current installation:
 remove.packages("visreg")
 ```
 
-Then, install the {remotes} package, which allows you to install older versions of packages (if they are compatible with your `R` version). You will get a message notifying you that it is necessary to restart your `R` session. Click "yes".
+Then, install the {remotes} package, which allows you to install older versions of packages (if they are compatible with your `R` version). You will likely get a message notifying you that it is necessary to restart your `R` session. Click "yes".
 
 ```{r}
 #| eval: false
@@ -784,7 +784,7 @@ rel.imp.metric.df |>
 
 One of the strengths of multiple linear regression is that we can also model interactions between predictors. This is important because a predictor's relationship with the outcome variable may depend on another predictor. Consider `Age` as a predictor of `Vocab` scores. In `model4_c`, we saw that this predictor made a statistically significant contribution to the model. The coefficient was positive, which means that the model predicts that the older the participants, the higher their receptive English vocabulary.
 
-However, if you completed [**Task 11.1**]{style="color:green;"}, you might remember that `Age` correlates positively with `Vocab` scores among L1 participants, but does not among L2 participants (see @fig-CorVocabAge below). If anything, the correlation visualised in the right-hand panel of @fig-CorVocabAge is slightly negative. Moreover, the confidence band is wide enough to draw a straight line through it, which suggests that the data are also compatible with the null hypothesis of no correlation. As a result, we can conclude that this slightly negative correlation is not statistically significant.
+However, if you completed [**Task 11.1**]{style="color:green;"}, you might remember that `Age` correlates positively with `Vocab` scores among L1 participants, but does not among L2 participants (see @fig-CorVocabAge below). If anything, the correlation visualised in the right-hand panel of @fig-CorVocabAge is slightly negative. Moreover, the confidence band is wide enough to draw a horizontal line through it, which suggests that the data are also compatible with the null hypothesis of no correlation. As a result, we can conclude that this slightly negative correlation is not statistically significant.
 
 ```{r}
 #| label: "fig-CorVocabAge"
@@ -993,9 +993,9 @@ check_question("Years in formal education is a statistically significant predict
                button_label = "Check answer",
                type = "radio",
                q_id = "Q13.9",
-               right = "That's right, well done! We can tell from the plot that years in education is a statistically significant predictor because, in both the L1 and the L2 panel, it is impossible to draw a straight line that stays within the confidence band. A straight line would represent the null hypothesis of no association and, if we cannot draw it within the confidence band, this means that we can reject the null hypothesis. Concerning the statistical significance of the interaction, however, it is not obvious that the slopes of the two lines differ much. All the predicted Vocab scores for L2 speakers are lower than for L1 speakers, but the increase associated with more years of formal education, as represented by the gradients of the two slopes, look about the same. This is why the interaction coefficient turned out not to be statistically significant.",
+               right = "That's right, well done! We can tell from the plot that years in education is a statistically significant predictor because, in both the L1 and the L2 panel, it is impossible to draw a horizontal line that stays within the confidence band. A horizontal line would represent the null hypothesis of no association and, if we cannot draw it within the confidence band, this means that we can reject the null hypothesis. Concerning the statistical significance of the interaction, however, it is not obvious that the slopes of the two lines differ much. All the predicted Vocab scores for L2 speakers are lower than for L1 speakers, but the increase associated with more years of formal education, as represented by the gradients of the two slopes, look about the same. This is why the interaction coefficient turned out not to be statistically significant.",
                wrong = "No. Remember that the strength of the association is represented by the gradient of the slope of the regression lines.")
-check_hint("Think about whether a straight line indicating no correlation (i.e. the null hypothesis) could be drawn within the confidence bands.", 
+check_hint("Think about whether a horizontal line indicating no correlation (i.e. the null hypothesis) could be drawn within the confidence bands.", 
            hint_title = "🐭 Click on the mouse for a hint.")
 
 ```
@@ -1387,7 +1387,7 @@ diagnostic.plots[[1]]
 
 This first plot (@fig-PosteriorPredictiveCheck) is another way to compare the model's predicted values (represented as here blue distributions) with the real-life (i.e observed) outcome variable (represented here in green). We can see that the center of the distribution of observed `Vocab` scores is slightly shifted to the right compared to most distributions of model-predicted data. That said, the simulated distributions are close to the real distribution and largely follow a similar shape. If they didn't, this would suggest that a linear regression model may not be suitable for our data.
 
-The second plot (@fig-Linearity) is designed to check the assumption of **linearity**. If the predictors are linearly related, the green reference line should be flat and horizontal. Our reference line is slightly curved, but it remains possible to draw a straight line through the grey band, hence we can conclude that the assumption of linearity is not severely violated.
+The second plot (@fig-Linearity) is designed to check the assumption of **linearity**. If the predictors are linearly related, the green reference line should be flat and horizontal. Our reference line is slightly curved, but it remains possible to draw a horizontal line through the grey band, hence we can conclude that the assumption of linearity is not severely violated.
 
 ```{r}
 #| label: "fig-Linearity"
@@ -1549,7 +1549,7 @@ diagnostic.plots.L2[[4]] # No observation points appear to have an overly large 
 
 diagnostic.plots.L2[[5]] # Here we have three coefficients with VIF scores > 10. This is problematic!
 
-diagnostic.plots.L2[[6]] # The residuals are not normally distributed, but the largest deviation is at lowest end of the distribution which it not terribly unusual.
+diagnostic.plots.L2[[6]] # The residuals are not normally distributed, but the largest deviation is at lowest end of the distribution which is not terribly unusual.
 ```
 
 We can display the exact VIF values of a model using the `vif()` function from the [{car}](https://www.john-fox.ca/Companion/index.html) package [@foxCompanionAppliedRegression2019]:
@@ -1725,7 +1725,7 @@ As explained in @sec-Inferential, statistical inference based on NHST and *p*-va
 
 Does this mean that we should give up with quantitative data analysis and statistics all together? No, of course not. On the contrary, this uncertainty makes research in the language sciences all the more interesting and worth pursuing! It also means that there is much more to be learnt in terms of methods. In this chapter, you have learnt about **frequentist fixed-effects linear regression models**. These models are incredibly useful and can be used in many contexts, but they make a number of important assumptions that do not always hold:
 
--   Perhaps the most obvious, yet one that we have not discussed so far, is that the **outcome variable** of a linear regression model must be **continuous**, like the `Vocab` variable in `Dabrowska.data`, which ranges from -13.33 to 95.56 (see @sec-Variables). Other types of statistical models can be used to model other types of outcome variables, including:
+-   Perhaps the most obvious, yet one that we have not discussed so far, is that the **outcome variable** of a linear regression model must be **quantitative**, like the `Vocab` variable in `Dabrowska.data`, which ranges from -13.33 to 95.56 (see @sec-Variables). Other types of statistical models can be used to model other types of outcome variables, including:
 
     -   **Binomial (or binary) logistic regression models** allow us to predict **binary** outcomes (e.g. whether or not a verb is negated) [to find out more, see e.g. @LevshinaHowlinguisticsData2015: Chapter 12; @sondereggerRegressionModelingLinguistic2023: Chapter 6; @WinterStatisticsLinguistsIntroduction2019: Chapter 12].
 

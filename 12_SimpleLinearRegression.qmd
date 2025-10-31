@@ -280,9 +280,9 @@ summary(model1)
 
 This time, we'll begin our interpretation of the model summary from the top:
 
--   The first line is a reminder of the model **formula** and of the **data** on which fitted our linear model (`lm`).
+-   The first line is a reminder of the model **formula** and of the **data** on which we fitted our linear model (`lm`).
 
--   The second paragraph provides information about the **error residuals**. They represent the difference between participants' actual `Vocab` scores (the observed values) and the model's predictions (the predicted values). Hence, they correspond to the variance in `Vocab` scores that is left unaccounted for by the model. The closer to zero the residuals are, the better the model fits the data. However, no real-life model is perfect so we expect there to be some "left-over" variance.
+-   The second paragraph provides information about the **residuals**. They represent the difference between participants' actual `Vocab` scores (the observed values) and the model's predictions (the predicted values). Hence, they correspond to the variance in `Vocab` scores that is left unaccounted for by the model. The closer to zero the residuals are, the better the model fits the data. However, no real-life model is perfect so we expect there to be some "left-over" variance.
 
     -   `Min`, `1Q`, `Median`, `3Q`, and `Max` are the minimum, first quartile, median, third quartile, and maximum residuals, respectively. These are the descriptive statistics of a distribution that are typically displayed in a boxplot (see @sec-IQR). These statistics give us a sense of the spread of the residuals. Whilst these values can be informative, it's best to plot residuals to get a sense of their distribution (see @sec-Residuals). Ideally, the residuals should be normally distributed and centred around zero (see @sec-AssumptionsLR).
 
@@ -309,7 +309,7 @@ This time, we'll begin our interpretation of the model summary from the top:
 
 Did you notice that the ***t*****-value** and the ***p*****-value** associated with the `EduTotal` coefficient in our linear regression model are *exactly the same* as those that we obtained earlier using the `cor.test()` function? This is because linear regression with a single numeric predictor is -- under the hood -- exactly the same as a Pearson's correlation test!
 
-Moreover, we said that **R²** stands for the **squared coefficient of correlation**, which is why, if we take the square root of our adjusted R² coefficient, we get 0.43, which corresponds to the **correlation coefficient** (Pearson's *r*) that we obtained from the `cor.test()` function:
+Moreover, we said that **R²** stands for the **squared coefficient of correlation**, which is why, if we take the square root of our unadjusted R² coefficient, we get 0.43, which corresponds to the **correlation coefficient** (Pearson's *r*) that we obtained from the `cor.test()` function:
 
 ```{r}
 sqrt(0.1822)
@@ -354,7 +354,7 @@ This is all very well, but as we learnt from @fig-EducationYearsVocab, in realit
 #| code-summary: "Show code to generate plot."
 #| label: "fig-ActualPredictedVocab"
 #| fig-cap: "Relationship between actual and predicted `Vocab` test scores"
-#| fig-alt: "Scatter plot with predicted Vocab scores on the x-axis and actual Vocab scores on the y-axis with a dotted blue diagonal line showing where the dots would lie if the model's prediction were perfect. The model's predictions are far from perfect; few dots fall on the dotted line. For two dots, there is a blue line drawn from the dot to the dotted line; the length of these lines represent the residuals or the model's error for these two participants."
+#| fig-alt: "Scatter plot with predicted Vocab scores on the x-axis and actual Vocab scores on the y-axis with a dotted blue diagonal line showing where the dots would lie if the model's prediction were perfect. The model's predictions are far from perfect; few dots fall on the dotted line. For two dots, there is a blue line drawn from the dot to the dotted line; the length of these lines represent the model's residuals for these two participants."
 
 
 pred_vals   <- predict(model1) # Vector of predictions
@@ -398,7 +398,7 @@ ggplot(L1.data,
   theme_bw()
 ```
 
-In @fig-ActualPredictedVocab, the dotted blue line represents where the points would lie, if `model1` perfectly predicted `Vocab` scores based only on the number of years that participants spent in formal education. The dots that fall on or very close to the dotted line stand for L1 participants for whom our model accurately predicts their `Vocab` score based solely on the number of years they spent in formal education. The further the dots are from the dotted line, the worse the predictions for these speakers. The distances between each point and the dotted line in @fig-ActualPredictedVocab correspond to the model's residuals (or error). **Residuals** are therefore the 'left-over' variability in the data that our model cannot account for.
+In @fig-ActualPredictedVocab, the dotted blue line represents where the points would lie, if `model1` perfectly predicted `Vocab` scores based only on the number of years that participants spent in formal education. The dots that fall on or very close to the dotted line stand for L1 participants for whom our model accurately predicts their `Vocab` score based solely on the number of years they spent in formal education. The further the dots are from the dotted line, the worse the predictions for these speakers. The distances between each point and the dotted line in @fig-ActualPredictedVocab correspond to the model's residuals. **Residuals** are therefore the 'left-over' variability in the data that our model cannot account for.
 
 Residuals can be positive or negative, depending on whether the dots on the predicted vs. actual values plot are above or below the dotted line of perfect fit. However, what matters more are their absolute values. The larger the residuals, the worse the model fit. Returning to the question, 'How good is our model fit?', we can conclude from @fig-ActualPredictedVocab that it's not great. But we already knew that from the model's fairly low R² value and, crucially, we also know that many other factors are likely to account for some of the remaining variation in vocabulary scores.
 
@@ -419,7 +419,7 @@ It is often tempting to interpret the results of statistical tests and models ca
 
 There are three main reasons for this:
 
-1.  There may be one or more **confounding variables** that we have not included in our model, but which (partially) correlate with the predictor variables that we have used to fit our model. For instance, we can predict with a fair degree of accuracy how much vocabulary an infant understands based on their weight. However, the weight of a young child is, of course, highly correlated with their age and, by extension, the amount of language exposure they have had. Clearly, it is not their weight that is *causing* them to understand more words. Unfortunately, it's not always that obvious. Going back to `model1`, it is very likely that some of the younger participants in the @DabrowskaExperienceAptitudeIndividual2019 dataset were still in formal education at the time of data collection; this includes all those who reported being students. In other words, for at least some of the participants, the `EduTotal` variable confounds age and years spent in formal education.
+1.  There may be one or more **confounding variables** that we have not accounted for in our model. For instance, we can predict with a fair degree of accuracy how much vocabulary an infant understands based on their weight. However, the weight of young children is, of course, highly correlated with their age and, by extension, the amount of language exposure they've had so far in their life. Clearly, it is not their weight that is *causing* them to understand more words. Unfortunately, it's not always that obvious. Going back to `model1`, it is very likely that some of the younger participants in the @DabrowskaExperienceAptitudeIndividual2019 dataset were still in formal education at the time of data collection; this includes all those who reported being students. In other words, for at least some of the participants, the `EduTotal` variable confounds age and years spent in formal education.
 
 2.  Even if there is a causal effect, it may not be in the **direction** that we assume. For example, the vocabulary knowledge of adult learners of a foreign language is probably a fairly good predictor of how many foreign language classes these adult learners have attended. However, this does not mean that vocabulary knowledge *causes* adults to attend classes. If anything, it is more likely to be the other way around. Whilst it seems rather obvious in this example, in linguistics and education, complex interdependencies between predictors are very common. Consider reading ability: the more a child reads, the better they become at reading. Therefore, we might conclude that spending more time reading leads to better reading skills. However, for some children, poor reading skills may actually *cause* a lack of motivation and interest in reading in the first place. Clearly, determining causal relationships is tricky!
 
@@ -475,7 +475,7 @@ check_question("About 75",
                            "About -54"),
                button_label = "Check answer",
                type = "radio",
-               right = "Awesome!",
+               right = "Awesome! Note that we also use the predict() function to extract the model's predicted value for any combination of predictor values, e.g. `predict(taskmodel1, data.frame(Blocks = 20))`",
                wrong = "Humm, are you sure?")
 check_hint("You can answer this question either by plotting the predicted values of your model and reading the value off your graph or by doing some maths using the coefficient estimates provided in the summary of your model.", 
            hint_title = "🦉 Hover over the owl for a first hint.",
@@ -523,8 +523,8 @@ ggplot(L1.data,
 
 ```{r}
 #| echo: false
-check_question("Blocks test scores are a more useful predictor of Vocab scores for L1 than L2 participants.",
-               options = c("Blocks test scores are a more useful predictor of Vocab scores for L1 than L2 participants.",
+check_question("Blocks test scores are a much more useful predictor of Vocab scores for L1 than L2 participants.",
+               options = c("Blocks test scores are a much more useful predictor of Vocab scores for L1 than L2 participants.",
                            "Blocks test scores are a much useful predictor of Vocab scores for L2 than L1 participants.",
                            "Higher Blocks test scores lead to statistically significantly higher Vocab scores among L1 participants.",
                            "Blocks test scores allow us to almost perfectly predict Vocab scores among L1 participants.",
@@ -553,7 +553,7 @@ summary(taskmodel2) # Adjusted R-squared:  0.007177
 summary(taskmodel1) # Adjusted R-squared:  0.07232 
 ```
 
-[**Q12.4**]{style="color:green;"} In your L2 model, the *p*-value should be `0.228620`. True or false: This *p*-value means that there is a 23% chance of obtaining a Blocks coefficient estimate of 0.72 or higher in a random sample of 67 L2 speakers of English when there is actually no association between the results of the `Blocks` test and those of the `Vocab` test?
+[**Q12.4**]{style="color:green;"} In your L2 model, the *p*-value for the `Blocks` predictor should be `0.228620`. True or false: This *p*-value means that there is a 23% chance of obtaining a Blocks coefficient estimate of 0.72 or higher in a random sample of 67 L2 speakers of English when there is actually no association between the results of the `Blocks` test and those of the `Vocab` test?
 
 ```{r}
 #| echo: false
@@ -653,7 +653,7 @@ Let's break down the model summary:
 
 -   The ***p*****-value** associated with the coefficient `GroupL2` is extremely small (`4.64e-06`). It informs us that `Group` is a statistically significant predictor of receptive English vocabulary knowledge based on our data.
 
--   The **adjusted R-squared** value indicates the proportion of variation in `Vocab` scores that the model can be accounted for when we know a participant's native-speaker status: 12.13% (`0.1213`). This value is not particularly impressive. However, this is not surprising given that our model attempts to predict vocabulary scores based solely on whether someone is an L1 or L2 speaker of English. With only this information, the model can only predict that L1 speakers will achieve the mean L1 score and L2 speakers the mean L2 score of the sample data.
+-   The **adjusted R-squared** value indicates the proportion of variation in `Vocab` scores that the model can account for when we know a participant's native-speaker status: 12.13% (`0.1213`). This value is not particularly impressive. However, this is not surprising given that our model attempts to predict vocabulary scores based solely on whether someone is an L1 or L2 speaker of English. With only this information, the model can only predict that L1 speakers will achieve the mean L1 score and L2 speakers the mean L2 score of the sample data.
 
 ::: {.callout-note collapse="false"}
 # It's (still) all linear regression!
@@ -743,7 +743,7 @@ check_question("False.",
                            "False."),
                type = "radio",
                button_label = "Check answer",
-               right = "You're right. This statement is completely wrong: the model's R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case, of categorical predictor, the number of levels in each predictor) that are entered into the model.",
+               right = "You're right. This statement is completely wrong: the model's R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.",
                wrong = "No, that's incorrect.")
 
 ```
@@ -914,7 +914,7 @@ check_hint("Only one of these reasons is correct.", hint_title = "🐭 Click on 
 check_question(c("When adjusted for the number of predictors, the language family model is better at predicting Vocab scores.",
                  "The more predictors there are, the easier it is to predict Vocab scores. This is why the language family model has a lower multiple R-squared coefficient."),
                options = c("When adjusted for the number of predictors, the language family model is better at predicting Vocab scores.",
-                           "When adjusted for the number of predictors, the language family model is worse at predicting at Vocab scores.",
+                           "When adjusted for the number of predictors, the language family model is worse at predicting Vocab scores.",
                            "The more predictors there are, the easier it is to predict Vocab scores. This is why the language family model has a lower multiple R-squared coefficient.",
                            "The language family model is statistically less significant than the other model because it features fewer predictors."),
                type = "check",
@@ -1084,7 +1084,7 @@ Here are some great starting points (in alphabetical order) to learn about mixed
 
 ### Assumption 2: Linearity {#sec-LinearitySLR}
 
-The linearity assumption requires that the relationship between any numeric predictor variable and the outcome variable follows a straight (i.e. linear) line rather than a curved one. This assumption is fundamental because linear regression, as the name suggests, can only ever fit a straight line through the data. If the true relationship between our variables is curved, forcing a straight line through the data will lead to poor predictions and misleading conclusions.
+The linearity assumption requires that the relationship between the numeric predictor variables entered into a model and the outcome variable follows a straight (i.e. linear) line rather than a curved one. This assumption is fundamental because linear regression, as the name suggests, can only ever fit a straight line through the data. If the true relationship between our predictors is curved, forcing a straight line through the data will lead to poor predictions and misleading conclusions.
 
 To check this assumption, it is best to plot the predictor variable against the outcome variable in the form of a scatter plot (see @fig-RTScatterPLot). When examining such plots, we are looking for rough straight-line patterns. We are not expecting all the same data points to fall on the linear regression line (that would be entirely unrealistic with real data). However, the points should be scattered around an imaginary straight line without showing any obvious curved patterns.
 
@@ -1135,7 +1135,7 @@ residual_data <- data.frame(
 ggplot(residual_data, 
        aes(x = fitted_values, y = residuals)) +
   geom_point(alpha = 0.6) +
-  geom_hline(yintercept = 0, color = "blue", size = 1) +
+  geom_hline(yintercept = 0, color = "blue", linewidth = 1) +
   labs(x = "Predicted Vocab scores (fitted values)", 
        y = "Model residuals") +
   theme_minimal()
@@ -1189,7 +1189,7 @@ Well done! You have successfully completed this chapter introducing the linear r
 Are you confident that you can...?
 
 -   [ ] Fit a simple linear model to predict a numeric outcome variable
--   [ ] Visualise the predictions of a simple linear regression models
+-   [ ] Visualise the predictions of a simple linear regression model
 -   [ ] Find out what the intercept of a model corresponds to and interpret the model's coefficient estimates
 -   [ ] Interpret a model's adjusted R^2^ coefficient
 -   [ ] Check for the main assumptions of linear regression: independence, linearity, homoscedasticity, and normality of residuals (@sec-AssumptionsLR)
