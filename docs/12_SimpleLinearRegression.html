@@ -1372,8 +1372,8 @@ F-statistic: 19.61 on 1 and 88 DF,  p-value: 2.721e-05</code></pre>
 </div>
 <p>This time, we’ll begin our interpretation of the model summary from the top:</p>
 <ul>
-<li><p>The first line is a reminder of the model <strong>formula</strong> and of the <strong>data</strong> on which fitted our linear model (<code>lm</code>).</p></li>
-<li><p>The second paragraph provides information about the <strong>error residuals</strong>. They represent the difference between participants’ actual <code>Vocab</code> scores (the observed values) and the model’s predictions (the predicted values). Hence, they correspond to the variance in <code>Vocab</code> scores that is left unaccounted for by the model. The closer to zero the residuals are, the better the model fits the data. However, no real-life model is perfect so we expect there to be some “left-over” variance.</p>
+<li><p>The first line is a reminder of the model <strong>formula</strong> and of the <strong>data</strong> on which we fitted our linear model (<code>lm</code>).</p></li>
+<li><p>The second paragraph provides information about the <strong>residuals</strong>. They represent the difference between participants’ actual <code>Vocab</code> scores (the observed values) and the model’s predictions (the predicted values). Hence, they correspond to the variance in <code>Vocab</code> scores that is left unaccounted for by the model. The closer to zero the residuals are, the better the model fits the data. However, no real-life model is perfect so we expect there to be some “left-over” variance.</p>
 <ul>
 <li><code>Min</code>, <code>1Q</code>, <code>Median</code>, <code>3Q</code>, and <code>Max</code> are the minimum, first quartile, median, third quartile, and maximum residuals, respectively. These are the descriptive statistics of a distribution that are typically displayed in a boxplot (see <a href="8_DescriptiveStats.html#sec-IQR" class="quarto-xref"><span>Section 8.3.2</span></a>). These statistics give us a sense of the spread of the residuals. Whilst these values can be informative, it’s best to plot residuals to get a sense of their distribution (see <a href="#sec-Residuals" class="quarto-xref"><span>Section 12.4.3</span></a>). Ideally, the residuals should be normally distributed and centred around zero (see <a href="#sec-AssumptionsLR" class="quarto-xref"><span>Section 12.4</span></a>).</li>
 </ul></li>
@@ -1406,7 +1406,7 @@ It’s all linear regression!
 </div>
 <div class="callout-body-container callout-body">
 <p>Did you notice that the <strong><em>t</em>-value</strong> and the <strong><em>p</em>-value</strong> associated with the <code>EduTotal</code> coefficient in our linear regression model are <em>exactly the same</em> as those that we obtained earlier using the <code>cor.test()</code> function? This is because linear regression with a single numeric predictor is – under the hood – exactly the same as a Pearson’s correlation test!</p>
-<p>Moreover, we said that <strong>R²</strong> stands for the <strong>squared coefficient of correlation</strong>, which is why, if we take the square root of our adjusted R² coefficient, we get 0.43, which corresponds to the <strong>correlation coefficient</strong> (Pearson’s <em>r</em>) that we obtained from the <code>cor.test()</code> function:</p>
+<p>Moreover, we said that <strong>R²</strong> stands for the <strong>squared coefficient of correlation</strong>, which is why, if we take the square root of our unadjusted R² coefficient, we get 0.43, which corresponds to the <strong>correlation coefficient</strong> (Pearson’s <em>r</em>) that we obtained from the <code>cor.test()</code> function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fl">0.1822</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1495,10 +1495,10 @@ Figure&nbsp;12.4: Relationship between years spent in formal education and predi
 <span id="cb35-39"><a href="#cb35-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-ActualPredictedVocab" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatter plot with predicted Vocab scores on the x-axis and actual Vocab scores on the y-axis with a dotted blue diagonal line showing where the dots would lie if the model's prediction were perfect. The model's predictions are far from perfect; few dots fall on the dotted line. For two dots, there is a blue line drawn from the dot to the dotted line; the length of these lines represent the residuals or the model's error for these two participants.">
+<div id="fig-ActualPredictedVocab" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatter plot with predicted Vocab scores on the x-axis and actual Vocab scores on the y-axis with a dotted blue diagonal line showing where the dots would lie if the model's prediction were perfect. The model's predictions are far from perfect; few dots fall on the dotted line. For two dots, there is a blue line drawn from the dot to the dotted line; the length of these lines represent the model's residuals for these two participants.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ActualPredictedVocab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="12_SimpleLinearRegression_files/figure-html/fig-ActualPredictedVocab-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;12.5: Relationship between actual and predicted Vocab test scores"><img src="12_SimpleLinearRegression_files/figure-html/fig-ActualPredictedVocab-1.png" class="img-fluid figure-img" alt="Scatter plot with predicted Vocab scores on the x-axis and actual Vocab scores on the y-axis with a dotted blue diagonal line showing where the dots would lie if the model's prediction were perfect. The model's predictions are far from perfect; few dots fall on the dotted line. For two dots, there is a blue line drawn from the dot to the dotted line; the length of these lines represent the residuals or the model's error for these two participants." width="672"></a>
+<a href="12_SimpleLinearRegression_files/figure-html/fig-ActualPredictedVocab-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;12.5: Relationship between actual and predicted Vocab test scores"><img src="12_SimpleLinearRegression_files/figure-html/fig-ActualPredictedVocab-1.png" class="img-fluid figure-img" alt="Scatter plot with predicted Vocab scores on the x-axis and actual Vocab scores on the y-axis with a dotted blue diagonal line showing where the dots would lie if the model's prediction were perfect. The model's predictions are far from perfect; few dots fall on the dotted line. For two dots, there is a blue line drawn from the dot to the dotted line; the length of these lines represent the model's residuals for these two participants." width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ActualPredictedVocab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;12.5: Relationship between actual and predicted <code>Vocab</code> test scores
@@ -1507,7 +1507,7 @@ Figure&nbsp;12.5: Relationship between actual and predicted <code>Vocab</code> t
 </div>
 </div>
 </div>
-<p>In <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a>, the dotted blue line represents where the points would lie, if <code>model1</code> perfectly predicted <code>Vocab</code> scores based only on the number of years that participants spent in formal education. The dots that fall on or very close to the dotted line stand for L1 participants for whom our model accurately predicts their <code>Vocab</code> score based solely on the number of years they spent in formal education. The further the dots are from the dotted line, the worse the predictions for these speakers. The distances between each point and the dotted line in <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> correspond to the model’s residuals (or error). <strong>Residuals</strong> are therefore the ‘left-over’ variability in the data that our model cannot account for.</p>
+<p>In <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a>, the dotted blue line represents where the points would lie, if <code>model1</code> perfectly predicted <code>Vocab</code> scores based only on the number of years that participants spent in formal education. The dots that fall on or very close to the dotted line stand for L1 participants for whom our model accurately predicts their <code>Vocab</code> score based solely on the number of years they spent in formal education. The further the dots are from the dotted line, the worse the predictions for these speakers. The distances between each point and the dotted line in <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> correspond to the model’s residuals. <strong>Residuals</strong> are therefore the ‘left-over’ variability in the data that our model cannot account for.</p>
 <p>Residuals can be positive or negative, depending on whether the dots on the predicted vs.&nbsp;actual values plot are above or below the dotted line of perfect fit. However, what matters more are their absolute values. The larger the residuals, the worse the model fit. Returning to the question, ‘How good is our model fit?’, we can conclude from <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> that it’s not great. But we already knew that from the model’s fairly low R² value and, crucially, we also know that many other factors are likely to account for some of the remaining variation in vocabulary scores.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1531,7 +1531,7 @@ Association does not imply causation.
 <p>It is often tempting to interpret the results of statistical tests and models causally, but this is the result of a well-known human cognitive bias <span class="citation" data-cites="matuteIllusionsCausalityHow2015 kaufmanIllusionCausalityCognitive2018">(see, e.g, <a href="99_references.html#ref-matuteIllusionsCausalityHow2015" role="doc-biblioref">Matute et al. 2015</a>; <a href="99_references.html#ref-kaufmanIllusionCausalityCognitive2018" role="doc-biblioref">Kaufman &amp; Kaufman 2018</a>)</span>. In the language sciences and across the social sciences more generally, there are usually far too many potential factors at play to warrant any causal interpretation. What we are modelling throughout this chapter and <a href="13_MultipleLinearRegression.html" class="quarto-xref"><span>Chapter 13</span></a> are <strong>statistical associations</strong>. We cannot draw any conclusions about what <em>caused</em> what from these models. In the context of statistical modelling, we can extend the famous saying to: <strong>Association does not imply causation</strong>.</p>
 <p>There are three main reasons for this:</p>
 <ol type="1">
-<li><p>There may be one or more <strong>confounding variables</strong> that we have not included in our model, but which (partially) correlate with the predictor variables that we have used to fit our model. For instance, we can predict with a fair degree of accuracy how much vocabulary an infant understands based on their weight. However, the weight of a young child is, of course, highly correlated with their age and, by extension, the amount of language exposure they have had. Clearly, it is not their weight that is <em>causing</em> them to understand more words. Unfortunately, it’s not always that obvious. Going back to <code>model1</code>, it is very likely that some of the younger participants in the <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> dataset were still in formal education at the time of data collection; this includes all those who reported being students. In other words, for at least some of the participants, the <code>EduTotal</code> variable confounds age and years spent in formal education.</p></li>
+<li><p>There may be one or more <strong>confounding variables</strong> that we have not accounted for in our model. For instance, we can predict with a fair degree of accuracy how much vocabulary an infant understands based on their weight. However, the weight of young children is, of course, highly correlated with their age and, by extension, the amount of language exposure they’ve had so far in their life. Clearly, it is not their weight that is <em>causing</em> them to understand more words. Unfortunately, it’s not always that obvious. Going back to <code>model1</code>, it is very likely that some of the younger participants in the <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> dataset were still in formal education at the time of data collection; this includes all those who reported being students. In other words, for at least some of the participants, the <code>EduTotal</code> variable confounds age and years spent in formal education.</p></li>
 <li><p>Even if there is a causal effect, it may not be in the <strong>direction</strong> that we assume. For example, the vocabulary knowledge of adult learners of a foreign language is probably a fairly good predictor of how many foreign language classes these adult learners have attended. However, this does not mean that vocabulary knowledge <em>causes</em> adults to attend classes. If anything, it is more likely to be the other way around. Whilst it seems rather obvious in this example, in linguistics and education, complex interdependencies between predictors are very common. Consider reading ability: the more a child reads, the better they become at reading. Therefore, we might conclude that spending more time reading leads to better reading skills. However, for some children, poor reading skills may actually <em>cause</em> a lack of motivation and interest in reading in the first place. Clearly, determining causal relationships is tricky!</p></li>
 <li><p>Finally, it is important to consider the possibility that even a statistically significant association could be entirely <strong>spurious</strong>. This happens more often than you might think, and it is more likely to happen with smaller datasets. Moreover, the more we test associations, the more likely we are to find statistically significant ones (see <a href="11_Inferential.html#sec-pHacking" class="quarto-xref"><span>Section 11.7</span></a> on the multiple testing problem and Type 1 errors). When associations are very strong, we may be tempted to think that they are real, but this may not be the case. To raise awareness of this risk, <a href="https://tylervigen.com/about-spurious-correlations">Tyler Vigen</a> conducted correlation tests on millions of combinations of randomly selected variables and created a website featuring thousands of examples of very large and highly significant correlations that are all entirely spurious (e.g. <a href="#fig-SpuriousCorrelation" class="quarto-xref">Figure&nbsp;<span>12.6</span></a>).</p>
 <div id="fig-SpuriousCorrelation" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A linear line chart with years as the X-axis and two variables on the Y-axis. The first variable is Air pollution in Johnstown, Pennsylvania and the second variable is Master's degrees awarded in Education.  The chart goes from 2012 to 2021, and the two variables track closely in value over that time. The following statistics are displayed on the graph: Pearson's r = 0.989, r-squared = 0.979, p < 0.01 Source: tylervigen.com/spurious/correlation/3139">
@@ -1655,9 +1655,9 @@ About -54
 <input type="submit" value="Check answer">
 <div id="result_35078"></div>
 </form>
-<script>function validate_form_35078() {var x, text; var x = document.forms['form_35078']['answer_35078'].value;if (x == 'About 75'){text = 'Awesome!';} else {text = 'Humm, are you sure?';} document.getElementById('result_35078').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_35078() {var x, text; var x = document.forms['form_35078']['answer_35078'].value;if (x == 'About 75'){text = 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. <code>predict(taskmodel1, data.frame(Blocks = 20))</code>';} else {text = 'Humm, are you sure?';} document.getElementById('result_35078').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_35078').innerText == 'Awesome!';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1708,50 +1708,50 @@ About -54
 <p><span style="color:green;"><strong>Q12.3</strong></span> Now fit a new linear model to predict <code>Vocab</code> scores among L2 participants based on their <code>Blocks</code> test scores. Comparing the adjusted R<sup>2</sup> value of this new L2 model to your previous L1 model, which of these statements is/are true?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_93152" onsubmit="return validate_form_93152()" method="post">
+<form name="form_20558" onsubmit="return validate_form_20558()" method="post">
 <label>
-<input type="checkbox" id="answer_93152_1" value="Blocks test scores are a more useful predictor of Vocab scores for L1 than L2 participants.">
-Blocks test scores are a more useful predictor of Vocab scores for L1 than L2 participants.
+<input type="checkbox" id="answer_20558_1" value="Blocks test scores are a much more useful predictor of Vocab scores for L1 than L2 participants.">
+Blocks test scores are a much more useful predictor of Vocab scores for L1 than L2 participants.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_93152_2" value="Blocks test scores are a much useful predictor of Vocab scores for L2 than L1 participants.">
+<input type="checkbox" id="answer_20558_2" value="Blocks test scores are a much useful predictor of Vocab scores for L2 than L1 participants.">
 Blocks test scores are a much useful predictor of Vocab scores for L2 than L1 participants.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_93152_3" value="Higher Blocks test scores lead to statistically significantly higher Vocab scores among L1 participants.">
+<input type="checkbox" id="answer_20558_3" value="Higher Blocks test scores lead to statistically significantly higher Vocab scores among L1 participants.">
 Higher Blocks test scores lead to statistically significantly higher Vocab scores among L1 participants.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_93152_4" value="Blocks test scores allow us to almost perfectly predict Vocab scores among L1 participants.">
+<input type="checkbox" id="answer_20558_4" value="Blocks test scores allow us to almost perfectly predict Vocab scores among L1 participants.">
 Blocks test scores allow us to almost perfectly predict Vocab scores among L1 participants.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_93152_5" value="Blocks test scores allow us to almost perfectly predict Vocab scores among L2 participants.">
+<input type="checkbox" id="answer_20558_5" value="Blocks test scores allow us to almost perfectly predict Vocab scores among L2 participants.">
 Blocks test scores allow us to almost perfectly predict Vocab scores among L2 participants.
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_93152"></div>
+<div id="result_20558"></div>
 </form>
-<script>function validate_form_93152() {var text; var x1 = document.getElementById('answer_93152_1'); var x2 = document.getElementById('answer_93152_2'); var x3 = document.getElementById('answer_93152_3'); var x4 = document.getElementById('answer_93152_4'); var x5 = document.getElementById('answer_93152_5'); if (x1.checked == true&x2.checked == false&x3.checked == false&x4.checked == false&x5.checked == false){text = 'That’s right, well done!';} else {text = 'No, compare the adjusted R-squared values of the two models.';} document.getElementById('result_93152').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_20558() {var text; var x1 = document.getElementById('answer_20558_1'); var x2 = document.getElementById('answer_20558_2'); var x3 = document.getElementById('answer_20558_3'); var x4 = document.getElementById('answer_20558_4'); var x5 = document.getElementById('answer_20558_5'); if (x1.checked == true&x2.checked == false&x3.checked == false&x4.checked == false&x5.checked == false){text = 'That’s right, well done!';} else {text = 'No, compare the adjusted R-squared values of the two models.';} document.getElementById('result_20558').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome!'; res3 = document.getElementById('result_93152').innerText == 'That’s right, well done!';text = res1 + res2 + res3;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_20558').innerText == 'That’s right, well done!';text = res1 + res2 + res3;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_79616" onmouseover="return show_hint_79616()">🦉 Hover over the owl for a first hint.</div>
-<div id="result_79616" onmouseover="return show_hint_79616()"></div>
-<script>function show_hint_79616(){var x = document.getElementById('result_79616').innerHTML; if(!x){document.getElementById('result_79616').innerHTML = 'Remember that we cannot interpret linear regression models causally.';} else {document.getElementById('result_79616').innerHTML = '';}}</script>
+<div id="hint_24013" onmouseover="return show_hint_24013()">🦉 Hover over the owl for a first hint.</div>
+<div id="result_24013" onmouseover="return show_hint_24013()"></div>
+<script>function show_hint_24013(){var x = document.getElementById('result_24013').innerHTML; if(!x){document.getElementById('result_24013').innerHTML = 'Remember that we cannot interpret linear regression models causally.';} else {document.getElementById('result_24013').innerHTML = '';}}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_8002" onclick="return show_hint_8002()">🐭 Click on the mouse for a second hint.</div>
-<div id="result_8002" onclick="return show_hint_8002()"></div>
-<script>function show_hint_8002(){var x = document.getElementById('result_8002').innerHTML; if(!x){document.getElementById('result_8002').innerHTML = 'Only one of these statements is true.';} else {document.getElementById('result_8002').innerHTML = '';}}</script>
+<div id="hint_25602" onclick="return show_hint_25602()">🐭 Click on the mouse for a second hint.</div>
+<div id="result_25602" onclick="return show_hint_25602()"></div>
+<script>function show_hint_25602(){var x = document.getElementById('result_25602').innerHTML; if(!x){document.getElementById('result_25602').innerHTML = 'Only one of these statements is true.';} else {document.getElementById('result_25602').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -1764,26 +1764,26 @@ Blocks test scores allow us to almost perfectly predict Vocab scores among L2 pa
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(taskmodel1) <span class="co"># Adjusted R-squared:  0.07232 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><span style="color:green;"><strong>Q12.4</strong></span> In your L2 model, the <em>p</em>-value should be <code>0.228620</code>. True or false: This <em>p</em>-value means that there is a 23% chance of obtaining a Blocks coefficient estimate of 0.72 or higher in a random sample of 67 L2 speakers of English when there is actually no association between the results of the <code>Blocks</code> test and those of the <code>Vocab</code> test?</p>
+<p><span style="color:green;"><strong>Q12.4</strong></span> In your L2 model, the <em>p</em>-value for the <code>Blocks</code> predictor should be <code>0.228620</code>. True or false: This <em>p</em>-value means that there is a 23% chance of obtaining a Blocks coefficient estimate of 0.72 or higher in a random sample of 67 L2 speakers of English when there is actually no association between the results of the <code>Blocks</code> test and those of the <code>Vocab</code> test?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_97241" onsubmit="return validate_form_97241()" method="post">
+<form name="form_68806" onsubmit="return validate_form_68806()" method="post">
 <label>
-<input type="radio" name="answer_97241" id="answer_97241_1" value="True.">
+<input type="radio" name="answer_68806" id="answer_68806_1" value="True.">
 True.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_97241" id="answer_97241_2" value="False.">
+<input type="radio" name="answer_68806" id="answer_68806_2" value="False.">
 False.
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_97241"></div>
+<div id="result_68806"></div>
 </form>
-<script>function validate_form_97241() {var x, text; var x = document.forms['form_97241']['answer_97241'].value;if (x == 'True.'){text = 'Indeed!';} else {text = 'No, remember that the <em>p</em>-value is statement about the likelihood of the data given the null hypothesis of no association.';} document.getElementById('result_97241').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_68806() {var x, text; var x = document.forms['form_68806']['answer_68806'].value;if (x == 'True.'){text = 'Indeed!';} else {text = 'No, remember that the <em>p</em>-value is statement about the likelihood of the data given the null hypothesis of no association.';} document.getElementById('result_68806').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome!'; res3 = document.getElementById('result_93152').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_97241').innerText == 'Indeed!';text = res1 + res2 + res3 + res4;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_20558').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_68806').innerText == 'Indeed!';text = res1 + res2 + res3 + res4;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1915,7 +1915,7 @@ F-statistic: 22.54 on 1 and 155 DF,  p-value: 4.644e-06</code></pre>
 </div>
 </div></li>
 <li><p>The <strong><em>p</em>-value</strong> associated with the coefficient <code>GroupL2</code> is extremely small (<code>4.64e-06</code>). It informs us that <code>Group</code> is a statistically significant predictor of receptive English vocabulary knowledge based on our data.</p></li>
-<li><p>The <strong>adjusted R-squared</strong> value indicates the proportion of variation in <code>Vocab</code> scores that the model can be accounted for when we know a participant’s native-speaker status: 12.13% (<code>0.1213</code>). This value is not particularly impressive. However, this is not surprising given that our model attempts to predict vocabulary scores based solely on whether someone is an L1 or L2 speaker of English. With only this information, the model can only predict that L1 speakers will achieve the mean L1 score and L2 speakers the mean L2 score of the sample data.</p></li>
+<li><p>The <strong>adjusted R-squared</strong> value indicates the proportion of variation in <code>Vocab</code> scores that the model can account for when we know a participant’s native-speaker status: 12.13% (<code>0.1213</code>). This value is not particularly impressive. However, this is not surprising given that our model attempts to predict vocabulary scores based solely on whether someone is an L1 or L2 speaker of English. With only this information, the model can only predict that L1 speakers will achieve the mean L1 score and L2 speakers the mean L2 score of the sample data.</p></li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
@@ -1968,38 +1968,38 @@ Your turn!
 <p><span style="color:green;"><strong>Q12.5</strong></span> Draw a boxplot showing the distribution of <code>Vocab</code> scores among male and female participants in <code>Dabrowska.data</code>. Based on your boxplot, do you expect <code>Gender</code> to be a statistically significant predictor of <code>Vocab</code> scores?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_28203" onsubmit="return validate_form_28203()" method="post">
+<form name="form_71636" onsubmit="return validate_form_71636()" method="post">
 <label>
-<input type="radio" name="answer_28203" id="answer_28203_1" value="No, because there is a lot of overlap between the two distributions and the female and male median Vocab scores are very close to each other.">
+<input type="radio" name="answer_71636" id="answer_71636_1" value="No, because there is a lot of overlap between the two distributions and the female and male median Vocab scores are very close to each other.">
 No, because there is a lot of overlap between the two distributions and the female and male median Vocab scores are very close to each other.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_28203" id="answer_28203_2" value="No, because the female and male mean Vocab scores are very close to each other.">
+<input type="radio" name="answer_71636" id="answer_71636_2" value="No, because the female and male mean Vocab scores are very close to each other.">
 No, because the female and male mean Vocab scores are very close to each other.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_28203" id="answer_28203_3" value="Yes, because the mean Vocab score of male participants is higher than that of female participants.">
+<input type="radio" name="answer_71636" id="answer_71636_3" value="Yes, because the mean Vocab score of male participants is higher than that of female participants.">
 Yes, because the mean Vocab score of male participants is higher than that of female participants.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_28203" id="answer_28203_4" value="Yes, because there are a lot of very low Vocab scores among female participants.">
+<input type="radio" name="answer_71636" id="answer_71636_4" value="Yes, because there are a lot of very low Vocab scores among female participants.">
 Yes, because there are a lot of very low Vocab scores among female participants.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_28203" id="answer_28203_5" value="Yes, because there are significantly more female participants in this dataset.">
+<input type="radio" name="answer_71636" id="answer_71636_5" value="Yes, because there are significantly more female participants in this dataset.">
 Yes, because there are significantly more female participants in this dataset.
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_28203"></div>
+<div id="result_71636"></div>
 </form>
-<script>function validate_form_28203() {var x, text; var x = document.forms['form_28203']['answer_28203'].value;if (x == 'No, because there is a lot of overlap between the two distributions and the female and male median Vocab scores are very close to each other.'){text = 'Well done!';} else {text = 'No, that’s not it. Remember that the middle line in a boxplot represents the median.';} document.getElementById('result_28203').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_71636() {var x, text; var x = document.forms['form_71636']['answer_71636'].value;if (x == 'No, because there is a lot of overlap between the two distributions and the female and male median Vocab scores are very close to each other.'){text = 'Well done!';} else {text = 'No, that’s not it. Remember that the middle line in a boxplot represents the median.';} document.getElementById('result_71636').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_28203').innerText == 'Well done!';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_20558').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_68806').innerText == 'Indeed!'; res5 = document.getElementById('result_71636').innerText == 'Well done!';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -2019,40 +2019,40 @@ Yes, because there are significantly more female participants in this dataset.
 <p><span style="color:green;"><strong>Q12.6</strong></span> Fit a model with <code>Vocab</code> as the outcome variable and <code>Gender</code> as the predictor to test your intuition based on your boxplot. Is <code>Gender</code> a statistically significant predictor of <code>Vocab</code> score in this simple linear regression model?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_26813" onsubmit="return validate_form_26813()" method="post">
+<form name="form_156" onsubmit="return validate_form_156()" method="post">
 <label>
-<input type="radio" name="answer_26813" id="answer_26813_1" value="No, the p-value associated with GenderM coefficient is higher than 0.05.">
+<input type="radio" name="answer_156" id="answer_156_1" value="No, the p-value associated with GenderM coefficient is higher than 0.05.">
 No, the p-value associated with GenderM coefficient is higher than 0.05.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_26813" id="answer_26813_2" value="Yes, the p-value associated with GenderM coefficient is higher than 0.05.">
+<input type="radio" name="answer_156" id="answer_156_2" value="Yes, the p-value associated with GenderM coefficient is higher than 0.05.">
 Yes, the p-value associated with GenderM coefficient is higher than 0.05.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_26813" id="answer_26813_3" value="No, the p-value associated with GenderM coefficient is lower than 0.05.">
+<input type="radio" name="answer_156" id="answer_156_3" value="No, the p-value associated with GenderM coefficient is lower than 0.05.">
 No, the p-value associated with GenderM coefficient is lower than 0.05.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_26813" id="answer_26813_4" value="Yes, the p-value associated with GenderM coefficient is lower than 0.05.">
+<input type="radio" name="answer_156" id="answer_156_4" value="Yes, the p-value associated with GenderM coefficient is lower than 0.05.">
 Yes, the p-value associated with GenderM coefficient is lower than 0.05.
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_26813"></div>
+<div id="result_156"></div>
 </form>
-<script>function validate_form_26813() {var x, text; var x = document.forms['form_26813']['answer_26813'].value;if (x == 'No, the p-value associated with GenderM coefficient is higher than 0.05.'){text = 'That’s right!';} else {text = 'Are you sure? You should have obtained a p-value of 0.957.';} document.getElementById('result_26813').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_156() {var x, text; var x = document.forms['form_156']['answer_156'].value;if (x == 'No, the p-value associated with GenderM coefficient is higher than 0.05.'){text = 'That’s right!';} else {text = 'Are you sure? You should have obtained a p-value of 0.957.';} document.getElementById('result_156').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome!'; res3 = document.getElementById('result_93152').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_97241').innerText == 'Indeed!'; res5 = document.getElementById('result_28203').innerText == 'Well done!'; res6 = document.getElementById('result_26813').innerText == 'That’s right!';text = res1 + res2 + res3 + res4 + res5 + res6;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_20558').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_68806').innerText == 'Indeed!'; res5 = document.getElementById('result_71636').innerText == 'Well done!'; res6 = document.getElementById('result_156').innerText == 'That’s right!';text = res1 + res2 + res3 + res4 + res5 + res6;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_81131" onclick="return show_hint_81131()">🐭 Click on the mouse for a hint.</div>
-<div id="result_81131" onclick="return show_hint_81131()"></div>
-<script>function show_hint_81131(){var x = document.getElementById('result_81131').innerHTML; if(!x){document.getElementById('result_81131').innerHTML = 'You will need to fit a linear model with <code>Vocab</code> as the outcome variable and <code>Gender</code> as the predictor.';} else {document.getElementById('result_81131').innerHTML = '';}}</script>
+<div id="hint_95173" onclick="return show_hint_95173()">🐭 Click on the mouse for a hint.</div>
+<div id="result_95173" onclick="return show_hint_95173()"></div>
+<script>function show_hint_95173(){var x = document.getElementById('result_95173').innerHTML; if(!x){document.getElementById('result_95173').innerHTML = 'You will need to fit a linear model with <code>Vocab</code> as the outcome variable and <code>Gender</code> as the predictor.';} else {document.getElementById('result_95173').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -2067,23 +2067,23 @@ Yes, the p-value associated with GenderM coefficient is lower than 0.05.
 <p><span style="color:green;"><strong>Q12.7</strong></span> The adjusted R<sup>2</sup> coefficient of the model is <code>-0.006433</code>. True or false: This means that male participants, on average, score 0.006433 fewer points than female participants on the <code>Vocab</code> test?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_5642" onsubmit="return validate_form_5642()" method="post">
+<form name="form_63340" onsubmit="return validate_form_63340()" method="post">
 <label>
-<input type="radio" name="answer_5642" id="answer_5642_1" value="True.">
+<input type="radio" name="answer_63340" id="answer_63340_1" value="True.">
 True.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_5642" id="answer_5642_2" value="False.">
+<input type="radio" name="answer_63340" id="answer_63340_2" value="False.">
 False.
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_5642"></div>
+<div id="result_63340"></div>
 </form>
-<script>function validate_form_5642() {var x, text; var x = document.forms['form_5642']['answer_5642'].value;if (x == 'False.'){text = 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case, of categorical predictor, the number of levels in each predictor) that are entered into the model.';} else {text = 'No, that’s incorrect.';} document.getElementById('result_5642').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_63340() {var x, text; var x = document.forms['form_63340']['answer_63340'].value;if (x == 'False.'){text = 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.';} else {text = 'No, that’s incorrect.';} document.getElementById('result_63340').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome!'; res3 = document.getElementById('result_93152').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_97241').innerText == 'Indeed!'; res5 = document.getElementById('result_28203').innerText == 'Well done!'; res6 = document.getElementById('result_26813').innerText == 'That’s right!'; res7 = document.getElementById('result_5642').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case, of categorical predictor, the number of levels in each predictor) that are entered into the model.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_20558').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_68806').innerText == 'Indeed!'; res5 = document.getElementById('result_71636').innerText == 'Well done!'; res6 = document.getElementById('result_156').innerText == 'That’s right!'; res7 = document.getElementById('result_63340').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -2266,38 +2266,38 @@ Your turn!
 <p><span style="color:green;"><strong>Q12.8</strong></span> Fit a linear model to model L2 participants’ <code>Vocab</code> score based on their native language (<code>NativeLg</code>). According to the model’s adjusted R<sup>2</sup> coefficient, how much of the variance in <code>Vocab</code> scores among L2 participants does this model account for?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_90827" onsubmit="return validate_form_90827()" method="post">
+<form name="form_1488" onsubmit="return validate_form_1488()" method="post">
 <label>
-<input type="radio" name="answer_90827" id="answer_90827_1" value="Practically 0%">
+<input type="radio" name="answer_1488" id="answer_1488_1" value="Practically 0%">
 Practically 0%
 </label>
 <br>
 <label>
-<input type="radio" name="answer_90827" id="answer_90827_2" value="About 5%">
+<input type="radio" name="answer_1488" id="answer_1488_2" value="About 5%">
 About 5%
 </label>
 <br>
 <label>
-<input type="radio" name="answer_90827" id="answer_90827_3" value="About 13%">
+<input type="radio" name="answer_1488" id="answer_1488_3" value="About 13%">
 About 13%
 </label>
 <br>
 <label>
-<input type="radio" name="answer_90827" id="answer_90827_4" value="About 26%">
+<input type="radio" name="answer_1488" id="answer_1488_4" value="About 26%">
 About 26%
 </label>
 <br>
 <label>
-<input type="radio" name="answer_90827" id="answer_90827_5" value="About 49%">
+<input type="radio" name="answer_1488" id="answer_1488_5" value="About 49%">
 About 49%
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_90827"></div>
+<div id="result_1488"></div>
 </form>
-<script>function validate_form_90827() {var x, text; var x = document.forms['form_90827']['answer_90827'].value;if (x == 'About 13%'){text = 'That’s right!';} else {text = 'No, this is not the correct value.';} document.getElementById('result_90827').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_1488() {var x, text; var x = document.forms['form_1488']['answer_1488'].value;if (x == 'About 13%'){text = 'That’s right!';} else {text = 'No, this is not the correct value.';} document.getElementById('result_1488').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome!'; res3 = document.getElementById('result_93152').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_97241').innerText == 'Indeed!'; res5 = document.getElementById('result_28203').innerText == 'Well done!'; res6 = document.getElementById('result_26813').innerText == 'That’s right!'; res7 = document.getElementById('result_5642').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case, of categorical predictor, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_90827').innerText == 'That’s right!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_20558').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_68806').innerText == 'Indeed!'; res5 = document.getElementById('result_71636').innerText == 'Well done!'; res6 = document.getElementById('result_156').innerText == 'That’s right!'; res7 = document.getElementById('result_63340').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_1488').innerText == 'That’s right!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -2314,72 +2314,72 @@ About 49%
 <p><span style="color:green;"><strong>Q12.9</strong></span> In this model, there is a greater difference between the multiple R<sup>2</sup> and the adjusted R<sup>2</sup> coefficients than in all previous models in this chapter. Why might that be?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_5498" onsubmit="return validate_form_5498()" method="post">
+<form name="form_4743" onsubmit="return validate_form_4743()" method="post">
 <label>
-<input type="checkbox" id="answer_5498_1" value="Because knowing a participant's native language is a particularly useful predictor of Vocab scores.">
+<input type="checkbox" id="answer_4743_1" value="Because knowing a participant's native language is a particularly useful predictor of Vocab scores.">
 Because knowing a participant's native language is a particularly useful predictor of Vocab scores.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_5498_2" value="Because the NativeLg variable includes 10 different levels.">
+<input type="checkbox" id="answer_4743_2" value="Because the NativeLg variable includes 10 different levels.">
 Because the NativeLg variable includes 10 different levels.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_5498_3" value="Because a participant's native language is inherently connected to their English vocabulary knowledge.">
+<input type="checkbox" id="answer_4743_3" value="Because a participant's native language is inherently connected to their English vocabulary knowledge.">
 Because a participant's native language is inherently connected to their English vocabulary knowledge.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_5498_4" value="Because the model's p-value is only just below 0.05.">
+<input type="checkbox" id="answer_4743_4" value="Because the model's p-value is only just below 0.05.">
 Because the model's p-value is only just below 0.05.
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_5498"></div>
+<div id="result_4743"></div>
 </form>
-<script>function validate_form_5498() {var text; var x1 = document.getElementById('answer_5498_1'); var x2 = document.getElementById('answer_5498_2'); var x3 = document.getElementById('answer_5498_3'); var x4 = document.getElementById('answer_5498_4'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == false){text = 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.';} else {text = 'No, that’s not the reason.';} document.getElementById('result_5498').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_4743() {var text; var x1 = document.getElementById('answer_4743_1'); var x2 = document.getElementById('answer_4743_2'); var x3 = document.getElementById('answer_4743_3'); var x4 = document.getElementById('answer_4743_4'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == false){text = 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.';} else {text = 'No, that’s not the reason.';} document.getElementById('result_4743').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_5498').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_20558').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_68806').innerText == 'Indeed!'; res5 = document.getElementById('result_71636').innerText == 'Well done!'; res6 = document.getElementById('result_156').innerText == 'That’s right!'; res7 = document.getElementById('result_63340').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_1488').innerText == 'That’s right!'; res9 = document.getElementById('result_4743').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_79886" onclick="return show_hint_79886()">🐭 Click on the mouse for a hint.</div>
-<div id="result_79886" onclick="return show_hint_79886()"></div>
-<script>function show_hint_79886(){var x = document.getElementById('result_79886').innerHTML; if(!x){document.getElementById('result_79886').innerHTML = 'Only one of these reasons is correct.';} else {document.getElementById('result_79886').innerHTML = '';}}</script>
+<div id="hint_57394" onclick="return show_hint_57394()">🐭 Click on the mouse for a hint.</div>
+<div id="result_57394" onclick="return show_hint_57394()"></div>
+<script>function show_hint_57394(){var x = document.getElementById('result_57394').innerHTML; if(!x){document.getElementById('result_57394').innerHTML = 'Only one of these reasons is correct.';} else {document.getElementById('result_57394').innerHTML = '';}}</script>
 </div>
 </div>
 <p><span style="color:green;"><strong>Q12.10</strong></span> One way to reduce the number of levels in the <code>NativeLg</code> variable is to model <code>Vocab</code> scores based on L2 participants’ native language family, instead. Fit a model that attempts to predict <code>Vocab</code> scores among L2 participants based on the <code>NativeLgFamily</code> variable (the creation of this variable was a <span style="color:green;">Your turn!</span> task in <a href="9_DataWrangling.html#sec-casewhen" class="quarto-xref"><span>Section 9.6.4</span></a>). Based on your comparison of the two models, which of the following statements is/are true?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_20115" onsubmit="return validate_form_20115()" method="post">
+<form name="form_73058" onsubmit="return validate_form_73058()" method="post">
 <label>
-<input type="checkbox" id="answer_20115_1" value="When adjusted for the number of predictors, the language family model is better at predicting Vocab scores.">
+<input type="checkbox" id="answer_73058_1" value="When adjusted for the number of predictors, the language family model is better at predicting Vocab scores.">
 When adjusted for the number of predictors, the language family model is better at predicting Vocab scores.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_20115_2" value="When adjusted for the number of predictors, the language family model is worse at predicting at Vocab scores.">
-When adjusted for the number of predictors, the language family model is worse at predicting at Vocab scores.
+<input type="checkbox" id="answer_73058_2" value="When adjusted for the number of predictors, the language family model is worse at predicting Vocab scores.">
+When adjusted for the number of predictors, the language family model is worse at predicting Vocab scores.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_20115_3" value="The more predictors there are, the easier it is to predict Vocab scores. This is why the language family model has a lower multiple R-squared coefficient.">
+<input type="checkbox" id="answer_73058_3" value="The more predictors there are, the easier it is to predict Vocab scores. This is why the language family model has a lower multiple R-squared coefficient.">
 The more predictors there are, the easier it is to predict Vocab scores. This is why the language family model has a lower multiple R-squared coefficient.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_20115_4" value="The language family model is statistically less significant than the other model because it features fewer predictors.">
+<input type="checkbox" id="answer_73058_4" value="The language family model is statistically less significant than the other model because it features fewer predictors.">
 The language family model is statistically less significant than the other model because it features fewer predictors.
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_20115"></div>
+<div id="result_73058"></div>
 </form>
-<script>function validate_form_20115() {var text; var x1 = document.getElementById('answer_20115_1'); var x2 = document.getElementById('answer_20115_2'); var x3 = document.getElementById('answer_20115_3'); var x4 = document.getElementById('answer_20115_4'); if (x1.checked == true&x2.checked == false&x3.checked == true&x4.checked == false){text = 'Yes, well done!';} else {text = 'No, not quite.';} document.getElementById('result_20115').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_73058() {var text; var x1 = document.getElementById('answer_73058_1'); var x2 = document.getElementById('answer_73058_2'); var x3 = document.getElementById('answer_73058_3'); var x4 = document.getElementById('answer_73058_4'); if (x1.checked == true&x2.checked == false&x3.checked == true&x4.checked == false){text = 'Yes, well done!';} else {text = 'No, not quite.';} document.getElementById('result_73058').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_20115').innerText == 'Yes, well done!';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_20558').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_68806').innerText == 'Indeed!'; res5 = document.getElementById('result_71636').innerText == 'Well done!'; res6 = document.getElementById('result_156').innerText == 'That’s right!'; res7 = document.getElementById('result_63340').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_1488').innerText == 'That’s right!'; res9 = document.getElementById('result_4743').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.'; res10 = document.getElementById('result_73058').innerText == 'Yes, well done!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -2396,45 +2396,45 @@ The language family model is statistically less significant than the other model
 <p><span style="color:green;"><strong>Q12.11</strong></span> According to your <code>NativeLgFamily</code> model, what is the predicted <code>Vocab</code> score of an L2 participant with a Baltic L1?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_30386" onsubmit="return validate_form_30386()" method="post">
+<form name="form_74201" onsubmit="return validate_form_74201()" method="post">
 <label>
-<input type="radio" name="answer_30386" id="answer_30386_1" value="73.778">
-73.778
+<input type="radio" name="answer_74201" id="answer_74201_1" value="0.1133">
+0.1133
 </label>
 <br>
 <label>
-<input type="radio" name="answer_30386" id="answer_30386_2" value="7.768">
-7.768
-</label>
-<br>
-<label>
-<input type="radio" name="answer_30386" id="answer_30386_3" value="-23.749">
--23.749
-</label>
-<br>
-<label>
-<input type="radio" name="answer_30386" id="answer_30386_4" value="9.497">
+<input type="radio" name="answer_74201" id="answer_74201_2" value="9.497">
 9.497
 </label>
 <br>
 <label>
-<input type="radio" name="answer_30386" id="answer_30386_5" value="0.1133">
-0.1133
+<input type="radio" name="answer_74201" id="answer_74201_3" value="7.768">
+7.768
+</label>
+<br>
+<label>
+<input type="radio" name="answer_74201" id="answer_74201_4" value="73.778">
+73.778
+</label>
+<br>
+<label>
+<input type="radio" name="answer_74201" id="answer_74201_5" value="-23.749">
+-23.749
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_30386"></div>
+<div id="result_74201"></div>
 </form>
-<script>function validate_form_30386() {var x, text; var x = document.forms['form_30386']['answer_30386'].value;if (x == '73.778'){text = 'Absolutely!';} else {text = 'No, check the hint if you can’t find the right coefficient.';} document.getElementById('result_30386').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_74201() {var x, text; var x = document.forms['form_74201']['answer_74201'].value;if (x == '73.778'){text = 'Absolutely!';} else {text = 'No, check the hint if you can’t find the right coefficient.';} document.getElementById('result_74201').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome!'; res3 = document.getElementById('result_93152').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_97241').innerText == 'Indeed!'; res5 = document.getElementById('result_28203').innerText == 'Well done!'; res6 = document.getElementById('result_26813').innerText == 'That’s right!'; res7 = document.getElementById('result_5642').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case, of categorical predictor, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_90827').innerText == 'That’s right!'; res9 = document.getElementById('result_5498').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for based only on participants’ native language.'; res10 = document.getElementById('result_20115').innerText == 'Yes, well done!'; res11 = document.getElementById('result_30386').innerText == 'Absolutely!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_20558').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_68806').innerText == 'Indeed!'; res5 = document.getElementById('result_71636').innerText == 'Well done!'; res6 = document.getElementById('result_156').innerText == 'That’s right!'; res7 = document.getElementById('result_63340').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_1488').innerText == 'That’s right!'; res9 = document.getElementById('result_4743').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.'; res10 = document.getElementById('result_73058').innerText == 'Yes, well done!'; res11 = document.getElementById('result_74201').innerText == 'Absolutely!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_90131" onclick="return show_hint_90131()">🐭 Click on the mouse for a hint.</div>
-<div id="result_90131" onclick="return show_hint_90131()"></div>
-<script>function show_hint_90131(){var x = document.getElementById('result_90131').innerHTML; if(!x){document.getElementById('result_90131').innerHTML = 'The Baltic language family is the first and, therefore reference, level in the variable <code>NativeLgFamily</code>.';} else {document.getElementById('result_90131').innerHTML = '';}}</script>
+<div id="hint_89879" onclick="return show_hint_89879()">🐭 Click on the mouse for a hint.</div>
+<div id="result_89879" onclick="return show_hint_89879()"></div>
+<script>function show_hint_89879(){var x = document.getElementById('result_89879').innerHTML; if(!x){document.getElementById('result_89879').innerHTML = 'The Baltic language family is the first and, therefore reference, level in the variable <code>NativeLgFamily</code>.';} else {document.getElementById('result_89879').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -2450,45 +2450,45 @@ The language family model is statistically less significant than the other model
 <p><span style="color:green;"><strong>Q12.12</strong></span> According to your <code>NativeLgFamily</code> model, what is the predicted <code>Vocab</code> score of an L2 participant with a Slavic L1?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_2101" onsubmit="return validate_form_2101()" method="post">
+<form name="form_93346" onsubmit="return validate_form_93346()" method="post">
 <label>
-<input type="radio" name="answer_2101" id="answer_2101_1" value="23.749">
-23.749
-</label>
-<br>
-<label>
-<input type="radio" name="answer_2101" id="answer_2101_2" value="50.029">
-50.029
-</label>
-<br>
-<label>
-<input type="radio" name="answer_2101" id="answer_2101_3" value="-23.749">
--23.749
-</label>
-<br>
-<label>
-<input type="radio" name="answer_2101" id="answer_2101_4" value="73.778">
+<input type="radio" name="answer_93346" id="answer_93346_1" value="73.778">
 73.778
 </label>
 <br>
 <label>
-<input type="radio" name="answer_2101" id="answer_2101_5" value="10.088">
+<input type="radio" name="answer_93346" id="answer_93346_2" value="-23.749">
+-23.749
+</label>
+<br>
+<label>
+<input type="radio" name="answer_93346" id="answer_93346_3" value="23.749">
+23.749
+</label>
+<br>
+<label>
+<input type="radio" name="answer_93346" id="answer_93346_4" value="50.029">
+50.029
+</label>
+<br>
+<label>
+<input type="radio" name="answer_93346" id="answer_93346_5" value="10.088">
 10.088
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_2101"></div>
+<div id="result_93346"></div>
 </form>
-<script>function validate_form_2101() {var x, text; var x = document.forms['form_2101']['answer_2101'].value;if (x == '50.029'){text = '✅ Absolutely!';} else {text = 'No, check the hint if you’re not sure how to proceed.';} document.getElementById('result_2101').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_93346() {var x, text; var x = document.forms['form_93346']['answer_93346'].value;if (x == '50.029'){text = '✅ Absolutely!';} else {text = 'No, check the hint if you’re not sure how to proceed.';} document.getElementById('result_93346').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome!'; res3 = document.getElementById('result_93152').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_97241').innerText == 'Indeed!'; res5 = document.getElementById('result_28203').innerText == 'Well done!'; res6 = document.getElementById('result_26813').innerText == 'That’s right!'; res7 = document.getElementById('result_5642').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case, of categorical predictor, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_90827').innerText == 'That’s right!'; res9 = document.getElementById('result_5498').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for based only on participants’ native language.'; res10 = document.getElementById('result_20115').innerText == 'Yes, well done!'; res11 = document.getElementById('result_30386').innerText == 'Absolutely!'; res12 = document.getElementById('result_2101').innerText == '✅ Absolutely!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_20558').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_68806').innerText == 'Indeed!'; res5 = document.getElementById('result_71636').innerText == 'Well done!'; res6 = document.getElementById('result_156').innerText == 'That’s right!'; res7 = document.getElementById('result_63340').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_1488').innerText == 'That’s right!'; res9 = document.getElementById('result_4743').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.'; res10 = document.getElementById('result_73058').innerText == 'Yes, well done!'; res11 = document.getElementById('result_74201').innerText == 'Absolutely!'; res12 = document.getElementById('result_93346').innerText == '✅ Absolutely!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_85263" onclick="return show_hint_85263()">🐭 Click on the mouse for a hint.</div>
-<div id="result_85263" onclick="return show_hint_85263()"></div>
-<script>function show_hint_85263(){var x = document.getElementById('result_85263').innerHTML; if(!x){document.getElementById('result_85263').innerHTML = 'Remember that, to find the predicted score for Slavic L1 speakers, you need to add the Slavic L1 coefficient to the Intercept coefficient. Alternatively, you can plot the predicted values and read the prediction off the graph.';} else {document.getElementById('result_85263').innerHTML = '';}}</script>
+<div id="hint_93915" onclick="return show_hint_93915()">🐭 Click on the mouse for a hint.</div>
+<div id="result_93915" onclick="return show_hint_93915()"></div>
+<script>function show_hint_93915(){var x = document.getElementById('result_93915').innerHTML; if(!x){document.getElementById('result_93915').innerHTML = 'Remember that, to find the predicted score for Slavic L1 speakers, you need to add the Slavic L1 coefficient to the Intercept coefficient. Alternatively, you can plot the predicted values and read the prediction off the graph.';} else {document.getElementById('result_93915').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -2514,45 +2514,45 @@ The language family model is statistically less significant than the other model
 <p><span style="color:green;"><strong>Q12.13</strong></span> According to the <code>NativeLgFamily</code> model, Hellenic L1 speakers are predicted to perform considerably better than the reference level of Baltic L1 speakers. However, the <em>p</em>-value associated with this coefficient estimate is very large (<code>0.4591</code>). Why is that?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_67289" onsubmit="return validate_form_67289()" method="post">
+<form name="form_13651" onsubmit="return validate_form_13651()" method="post">
 <label>
-<input type="radio" name="answer_67289" id="answer_67289_1" value="Because p-values have nothing to do with effect sizes.">
-Because p-values have nothing to do with effect sizes.
+<input type="radio" name="answer_13651" id="answer_13651_1" value="Because the model chose a particularly low α-level.">
+Because the model chose a particularly low α-level.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_67289" id="answer_67289_2" value="Because the data for Hellenic speakers is less reliable than for the other L2 speakers.">
+<input type="radio" name="answer_13651" id="answer_13651_2" value="Because the data for Hellenic speakers is less reliable than for the other L2 speakers.">
 Because the data for Hellenic speakers is less reliable than for the other L2 speakers.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_67289" id="answer_67289_3" value="Because the dataset only includes one Greek L1 speaker.">
-Because the dataset only includes one Greek L1 speaker.
+<input type="radio" name="answer_13651" id="answer_13651_3" value="Because p-values have nothing to do with effect sizes.">
+Because p-values have nothing to do with effect sizes.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_67289" id="answer_67289_4" value="Because the model chose a particularly low α-level.">
-Because the model chose a particularly low α-level.
+<input type="radio" name="answer_13651" id="answer_13651_4" value="Because the dataset only includes one Greek L1 speaker.">
+Because the dataset only includes one Greek L1 speaker.
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_67289"></div>
+<div id="result_13651"></div>
 </form>
-<script>function validate_form_67289() {var x, text; var x = document.forms['form_67289']['answer_67289'].value;if (x == 'Because the dataset only includes one Greek L1 speaker.'){text = 'Absolutely!';} else {text = 'No, check the hints if you’re not sure how to proceed. And remember that, if in doubt, visualisation is always a good idea!';} document.getElementById('result_67289').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_13651() {var x, text; var x = document.forms['form_13651']['answer_13651'].value;if (x == 'Because the dataset only includes one Greek L1 speaker.'){text = 'Absolutely!';} else {text = 'No, check the hints if you’re not sure how to proceed. And remember that, if in doubt, visualisation is always a good idea!';} document.getElementById('result_13651').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome!'; res3 = document.getElementById('result_93152').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_97241').innerText == 'Indeed!'; res5 = document.getElementById('result_28203').innerText == 'Well done!'; res6 = document.getElementById('result_26813').innerText == 'That’s right!'; res7 = document.getElementById('result_5642').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case, of categorical predictor, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_90827').innerText == 'That’s right!'; res9 = document.getElementById('result_5498').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for based only on participants’ native language.'; res10 = document.getElementById('result_20115').innerText == 'Yes, well done!'; res11 = document.getElementById('result_30386').innerText == 'Absolutely!'; res12 = document.getElementById('result_2101').innerText == '✅ Absolutely!'; res13 = document.getElementById('result_67289').innerText == 'Absolutely!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13;res1 = document.getElementById('result_53559').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_35078').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_20558').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_68806').innerText == 'Indeed!'; res5 = document.getElementById('result_71636').innerText == 'Well done!'; res6 = document.getElementById('result_156').innerText == 'That’s right!'; res7 = document.getElementById('result_63340').innerText == 'You’re right. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_1488').innerText == 'That’s right!'; res9 = document.getElementById('result_4743').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.'; res10 = document.getElementById('result_73058').innerText == 'Yes, well done!'; res11 = document.getElementById('result_74201').innerText == 'Absolutely!'; res12 = document.getElementById('result_93346').innerText == '✅ Absolutely!'; res13 = document.getElementById('result_13651').innerText == 'Absolutely!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_96592" onmouseover="return show_hint_96592()">🦉 Hover over the owl for a first hint.</div>
-<div id="result_96592" onmouseover="return show_hint_96592()"></div>
-<script>function show_hint_96592(){var x = document.getElementById('result_96592').innerHTML; if(!x){document.getElementById('result_96592').innerHTML = 'It is never the model that chooses the α-level, but rather us, the researchers.';} else {document.getElementById('result_96592').innerHTML = '';}}</script>
+<div id="hint_78778" onmouseover="return show_hint_78778()">🦉 Hover over the owl for a first hint.</div>
+<div id="result_78778" onmouseover="return show_hint_78778()"></div>
+<script>function show_hint_78778(){var x = document.getElementById('result_78778').innerHTML; if(!x){document.getElementById('result_78778').innerHTML = 'It is never the model that chooses the α-level, but rather us, the researchers.';} else {document.getElementById('result_78778').innerHTML = '';}}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_82692" onclick="return show_hint_82692()">🐭 Click on the mouse for a second hint.</div>
-<div id="result_82692" onclick="return show_hint_82692()"></div>
-<script>function show_hint_82692(){var x = document.getElementById('result_82692').innerHTML; if(!x){document.getElementById('result_82692').innerHTML = 'Remember that p-values depend on three different factors, see Section 11.3';} else {document.getElementById('result_82692').innerHTML = '';}}</script>
+<div id="hint_92916" onclick="return show_hint_92916()">🐭 Click on the mouse for a second hint.</div>
+<div id="result_92916" onclick="return show_hint_92916()"></div>
+<script>function show_hint_92916(){var x = document.getElementById('result_92916').innerHTML; if(!x){document.getElementById('result_92916').innerHTML = 'Remember that p-values depend on three different factors, see Section 11.3';} else {document.getElementById('result_92916').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -2612,7 +2612,7 @@ Further reading 📚
 </section>
 <section id="sec-LinearitySLR" class="level3" data-number="12.4.2">
 <h3 data-number="12.4.2" class="anchored" data-anchor-id="sec-LinearitySLR"><span class="header-section-number">12.4.2</span> Assumption 2: Linearity</h3>
-<p>The linearity assumption requires that the relationship between any numeric predictor variable and the outcome variable follows a straight (i.e.&nbsp;linear) line rather than a curved one. This assumption is fundamental because linear regression, as the name suggests, can only ever fit a straight line through the data. If the true relationship between our variables is curved, forcing a straight line through the data will lead to poor predictions and misleading conclusions.</p>
+<p>The linearity assumption requires that the relationship between the numeric predictor variables entered into a model and the outcome variable follows a straight (i.e.&nbsp;linear) line rather than a curved one. This assumption is fundamental because linear regression, as the name suggests, can only ever fit a straight line through the data. If the true relationship between our predictors is curved, forcing a straight line through the data will lead to poor predictions and misleading conclusions.</p>
 <p>To check this assumption, it is best to plot the predictor variable against the outcome variable in the form of a scatter plot (see <a href="#fig-RTScatterPLot" class="quarto-xref">Figure&nbsp;<span>12.1</span></a>). When examining such plots, we are looking for rough straight-line patterns. We are not expecting all the same data points to fall on the linear regression line (that would be entirely unrealistic with real data). However, the points should be scattered around an imaginary straight line without showing any obvious curved patterns.</p>
 <p>In <a href="#fig-Nonlinear" class="quarto-xref">Figure&nbsp;<span>12.10</span></a>, by contrast, the data points follow a curved pattern. The regression line is forced to be straight, creating systematic prediction errors. Such a pattern of errors indicates that the assumption of linearity is violated.</p>
 <div class="cell">
@@ -2646,7 +2646,7 @@ Figure&nbsp;12.10
 <span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(residual_data, </span>
 <span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> fitted_values, <span class="at">y =</span> residuals)) <span class="sc">+</span></span>
 <span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Predicted Vocab scores (fitted values)"</span>, </span>
 <span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Model residuals"</span>) <span class="sc">+</span></span>
 <span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2717,7 +2717,7 @@ Figure&nbsp;12.12: Distribution of model residuals
 <p>Are you confident that you can…?</p>
 <ul class="task-list">
 <li><label><input type="checkbox">Fit a simple linear model to predict a numeric outcome variable</label></li>
-<li><label><input type="checkbox">Visualise the predictions of a simple linear regression models</label></li>
+<li><label><input type="checkbox">Visualise the predictions of a simple linear regression model</label></li>
 <li><label><input type="checkbox">Find out what the intercept of a model corresponds to and interpret the model’s coefficient estimates</label></li>
 <li><label><input type="checkbox">Interpret a model’s adjusted R<sup>2</sup> coefficient</label></li>
 <li><label><input type="checkbox">Check for the main assumptions of linear regression: independence, linearity, homoscedasticity, and normality of residuals (<a href="#sec-AssumptionsLR" class="quarto-xref"><span>Section 12.4</span></a>)</label></li>

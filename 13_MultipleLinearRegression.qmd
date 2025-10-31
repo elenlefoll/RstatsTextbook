@@ -127,7 +127,7 @@ The reference level of the **numeric predictors**, by contrast, corresponds to t
 
 Centering involves subtracting a variable's average from each value in the variable. Typically, we subtract the mean from each value but, given that we know that many of the numeric variables in our dataset are not normally distributed (see @sec-DistributionsNumeric), here, we will subtract the median instead.
 
-To this end, we use the `mutate()` function to add three columns to the `R` data object `Dabrowska.data`. These new columns contain **transformed** versions of the variable predictors that we previously entered into our model:
+To this end, we use the `mutate()` function to add three columns to the `R` data object `Dabrowska.data`. These new columns contain **transformed** versions of the predictor variables that we previously entered into our model:
 
 ```{r}
 Dabrowska.data <- Dabrowska.data |> 
@@ -265,7 +265,7 @@ Let's decipher the summary of `model4_c` step-by-step:
     model4_c$residuals[154]
     ```
 
--   We can compare this particular residual (corresponding to the 154^th^ participant in the dataset) to all model residuals (corresponding to all participants) by examining the **summary statistics of all residuals**, which are displayed at the top of the model summary output (`summary(model4_c)`). These descriptive statistics inform us that the residual for the 154^th^ participant is slightly higher than the average (median) residual. This means that, on average, our model does a slightly better job of predicting `Vocab` scores than it does for this particular combination of predictors.
+-   We can compare this particular residual (corresponding to the 154^th^ participant in the dataset) to all model residuals (corresponding to all participants) by examining the **summary statistics of all residuals**, which are displayed at the top of the model summary output (`summary(model4_c)`). These descriptive statistics inform us that the residual for the 154^th^ participant is slightly higher than the average (median) residual, but well within the IQR (see @sec-IQR) of model residuals:
 
     ```         
     Residuals:
@@ -287,7 +287,7 @@ Let's decipher the summary of `model4_c` step-by-step:
       select(Group, NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)
     ```
 
--   The ***p*****-values** associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable *levels*, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in @sec-Categoricalpredictor, we fitted a simple linear model (`model3`) which included only `OccupGroup` as a single predictor. In this simple model, the coefficient estimate for `OccupGroupI` made a statistically significant contribution to the model at an α-level of 0.05 (*p* = 0.0335). By contrast, in the present multiple linear regression model, the predictor level `OccupGroupI` does *not* make a statistically significant contribution (*p* = 0.077600 which is higher than 0.05). This is because our multiple regression model `model4_c` includes more predictors that can better account for the variance in `Vocab` scores in the data than occupational groups can.
+-   The ***p*****-values** associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable *levels*, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in @sec-Categoricalpredictor, we fitted a simple linear regression model (`model3`) which included only `OccupGroup` as a single predictor. In this simple model, the coefficient estimate for `OccupGroupI` made a statistically significant contribution to the model at an α-level of 0.05 (*p* = 0.0335). By contrast, in the present multiple linear regression model, the predictor level `OccupGroupI` does *not* make a statistically significant contribution (*p* = 0.077600 which is higher than 0.05). This is because our multiple regression model `model4_c` includes more predictors that can better account for the variance in `Vocab` scores in the data than occupational groups can.
 
 -   From the **adjusted R-squared** value (`0.3276`) displayed at the bottom of the model summary output, we can see that our multiple linear regression model accounts for around 33% of the total variance in `Vocab` scores found in the @DabrowskaExperienceAptitudeIndividual2019 data. This is considerably more than we achieved with any of the simple linear models that we fitted in @sec-SLR.
 
@@ -1549,7 +1549,7 @@ diagnostic.plots.L2[[4]] # No observation points appear to have an overly large 
 
 diagnostic.plots.L2[[5]] # Here we have three coefficients with VIF scores > 10. This is problematic!
 
-diagnostic.plots.L2[[6]] # The residuals are not normally distributed, but the largest deviation is at lowest end of the distribution which it not terribly unusual.
+diagnostic.plots.L2[[6]] # The residuals are not normally distributed, but the largest deviation is at lowest end of the distribution which is not terribly unusual.
 ```
 
 We can display the exact VIF values of a model using the `vif()` function from the [{car}](https://www.john-fox.ca/Companion/index.html) package [@foxCompanionAppliedRegression2019]:
@@ -1725,7 +1725,7 @@ As explained in @sec-Inferential, statistical inference based on NHST and *p*-va
 
 Does this mean that we should give up with quantitative data analysis and statistics all together? No, of course not. On the contrary, this uncertainty makes research in the language sciences all the more interesting and worth pursuing! It also means that there is much more to be learnt in terms of methods. In this chapter, you have learnt about **frequentist fixed-effects linear regression models**. These models are incredibly useful and can be used in many contexts, but they make a number of important assumptions that do not always hold:
 
--   Perhaps the most obvious, yet one that we have not discussed so far, is that the **outcome variable** of a linear regression model must be **continuous**, like the `Vocab` variable in `Dabrowska.data`, which ranges from -13.33 to 95.56 (see @sec-Variables). Other types of statistical models can be used to model other types of outcome variables, including:
+-   Perhaps the most obvious, yet one that we have not discussed so far, is that the **outcome variable** of a linear regression model must be **quantitative**, like the `Vocab` variable in `Dabrowska.data`, which ranges from -13.33 to 95.56 (see @sec-Variables). Other types of statistical models can be used to model other types of outcome variables, including:
 
     -   **Binomial (or binary) logistic regression models** allow us to predict **binary** outcomes (e.g. whether or not a verb is negated) [to find out more, see e.g. @LevshinaHowlinguisticsData2015: Chapter 12; @sondereggerRegressionModelingLinguistic2023: Chapter 6; @WinterStatisticsLinguistsIntroduction2019: Chapter 12].
 
