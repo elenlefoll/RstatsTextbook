@@ -43,7 +43,7 @@ In @sec-SLR, we used the `lm()` function to fit simple linear regression models.
 outcome.variable ~ predictor
 ```
 
-In the second half of this chapter, we will continue to try to predict (i.e., try to better understand) `Vocab` scores among L1 and L2 English speakers, but this time, we will do so with *multiple* predictors. To this end, we will use the `+` operator to add predictors to our model formula like this:
+In the second half of this chapter, we will continue to try to predict (i.e. try to better understand) `Vocab` scores among L1 and L2 English speakers, but this time, we will do so with *multiple* predictors. To this end, we will use the `+` operator to add predictors to our model formula like this:
 
 ```         
 outcome.variable ~ predictor1 + predictor2 + predictor3
@@ -322,7 +322,7 @@ library(patchwork)
 model4Group + model4Age + model4OccupGroup + model4Gender + model4Blocks + model4EduTotal
 ```
 
-On plots produced by the `visreg()` function, as in @fig-PredictedVocabByOccupation, the model's predicted values are displayed as blue lines. By default, these predictions are surrounded by 95% confidence bands, which are visualised as grey areas. Now that we have several predictors in our model, the points in `visreg()` plots represent the model's **partial residuals**. Partial residuals are the left-over variance (i.e., the residual) relative to the predictor that we are examining after having subtracted off the contribution of all the other predictors in the model.
+On plots produced by the `visreg()` function, as in @fig-PredictedVocabByOccupation, the model's predicted values are displayed as blue lines. By default, these predictions are surrounded by 95% confidence bands, which are visualised as grey areas. Now that we have several predictors in our model, the points in `visreg()` plots represent the model's **partial residuals**. Partial residuals are the left-over variance (i.e. the residual) relative to the predictor that we are examining after having subtracted off the contribution of all the other predictors in the model.
 
 When interpreting the numeric predictors plotted in @fig-VisregVocab above, it is important to remember that we entered centered numeric predictors in `model4_c`. This means that an `Age_c` value of 0 corresponds to the median age in the dataset: 31 years. This is why @fig-VisregVocab features negative ages: the negative values correspond to participants who are younger than 31. By contrast, positive scores correspond to participants who are older than 31 years. This is hardly intuitive so, for the purposes of visualising and interpreting our model, it is best to transform these variables back to their original scale (see @fig-PredictedVocabAge). This is achieved by adding the following `xtrans` argument within the `visreg()` function.
 
@@ -674,7 +674,7 @@ visreg(model.ART,
        alpha = .01)
 ```
 
-Observe how the width of the confidence bands changes when you increase the significance level from 0.01 to 0.1: the higher the significance level, the narrower the confidence band becomes. Remember that the significance level corresponds to the risk that we are willing to take of wrongly rejecting the null hypothesis when it is actually true. Therefore, when we lower this risk by choosing a lower significance level (i.e., 0.01), we end up with wider confidence bands that are more likely to allow us to draw a flat line (see @sec-Correlations). If we can draw a flat line through a 99% confidence band, this means that we do not have enough evidence to reject the null hypothesis at the significance level of 0.01.
+Observe how the width of the confidence bands changes when you increase the significance level from 0.01 to 0.1: the higher the significance level, the narrower the confidence band becomes. Remember that the significance level corresponds to the risk that we are willing to take of wrongly rejecting the null hypothesis when it is actually true. Therefore, when we lower this risk by choosing a lower significance level (i.e. 0.01), we end up with wider confidence bands that are more likely to allow us to draw a flat line (see @sec-Correlations). If we can draw a flat line through a 99% confidence band, this means that we do not have enough evidence to reject the null hypothesis at the significance level of 0.01.
 :::
 
 ## Relative importance of predictors
@@ -814,7 +814,7 @@ summary(model5)
 
 In the model summary above, the interaction term between `Age` and `Group` is the last coefficient listed (`GroupL2:Age_c`). The values confirm our intuition based on our descriptive visualisation of the data (@fig-CorVocabAge): there is a statistically significant interaction between age and native-speaker status (*p* = 0.002089) and the interaction coefficient for this interaction term (`Age_c:Group`) is negative (`-0.8982`). This means that, whilst being older is generally associated with higher `Vocab` scores for the reference level of L1 speakers, if a participant is an L2 English speaker, this trend is reversed.
 
-To understand how this works in practice, let's compare the predicted `Vocab` scores of two 35-year-olds: one a native English speaker and the other a non-native. For the purposes of this illustration, we will assume that, apart from their native-speaker status, all their other characteristics correspond to the reference level in our model (i.e. they are both female, have a clerical occupation, scored average on the Blocks test and were in formal education for the median number of years). For the L1 speaker, we calculate their predicted `Vocab` score as before. We take the intercept (`69.1314`) as our starting point and then add the `Age_c` coefficient (`0.5466`) multiplied by the difference between their age and the median age (which is the reference level of our centered predictor) (i.e., 35 - 31 = 4). This means that their predicted `Vocab` score is:
+To understand how this works in practice, let's compare the predicted `Vocab` scores of two 35-year-olds: one a native English speaker and the other a non-native. For the purposes of this illustration, we will assume that, apart from their native-speaker status, all their other characteristics correspond to the reference level in our model (i.e. they are both female, have a clerical occupation, scored average on the Blocks test and were in formal education for the median number of years). For the L1 speaker, we calculate their predicted `Vocab` score as before. We take the intercept (`69.1314`) as our starting point and then add the `Age_c` coefficient (`0.5466`) multiplied by the difference between their age and the median age (which is the reference level of our centered predictor) (i.e. 35 - 31 = 4). This means that their predicted `Vocab` score is:
 
 ```{r}
 69.1314 + 0.5466*4
@@ -1246,7 +1246,7 @@ Indeed, `L1.model.back3` accounts for 49% of the variance (adjusted R^2^ = `0.48
 :::: callout-note
 ## Reporting a multiple regression model
 
-There are many ways to report the **numerical** results of a statistical model. Researchers typically include a table reporting the model's coefficient estimates (sometimes referred to as β, "beta"), together with a measure of variability around these estimates (e.g., standard error or confidence intervals), as well as their associated *p*-values. In addition, it is important to report the accuracy of the model. Different so-called **goodness-of-fit measures** are used for this; one of the most common being the adjusted coefficient of determination, R^2^. The output of the `summary()` function includes all of these statistics and is therefore suitable for a research report.
+There are many ways to report the **numerical** results of a statistical model. Researchers typically include a table reporting the model's coefficient estimates (sometimes referred to as β, "beta"), together with a measure of variability around these estimates (e.g. standard error or confidence intervals), as well as their associated *p*-values. In addition, it is important to report the accuracy of the model. Different so-called **goodness-of-fit measures** are used for this; one of the most common being the adjusted coefficient of determination, R^2^. The output of the `summary()` function includes all of these statistics and is therefore suitable for a research report.
 
 Alternatively, the [{sjPlot}](https://strengejacke.github.io/sjPlot/) library [@lüdecke2020] includes a handy function that produces nicely formatted tables to report all kinds of models, including multiple linear regression models. When you run the `tab_model()` function in RStudio, the table will be displayed in the Viewer pane. By default, it includes the model's coefficient estimates and 95% confidence intervals around these estimates, as well as *p*-values formatted in bold if they are below 0.05.
 
