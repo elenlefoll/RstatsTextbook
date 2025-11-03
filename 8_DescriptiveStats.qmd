@@ -76,7 +76,7 @@ This average grade does not describe very well how *any* of the students did: Fo
 
 ### Mean {#sec-Mean}
 
-The measure of central tendency that we have looked at so far is the **arithmetic mean**. When people speak of averages, they typically *mean* mean values.
+The measure of central tendency that we have looked at so far is the **arithmetic mean**. When people speak of averages, they typically mean *mean* values.
 
 In @sec-RFunctions, we saw that means are calculated by adding up all the values and dividing the sum by the total of values.
 
@@ -247,7 +247,7 @@ check_hint("In some cases, comparing mean or median values *can* lead to differe
 
 ```{r}
 #| echo: false
-check_question("The difference between the average ages of the L1 and the L2 group is greater when comparing mean than median ages.",
+check_question("The difference between the average ages of the two groups is greater when comparing mean than median ages.",
                options = c("The difference between the average ages of the two groups is greater when comparing mean than median ages.",
                            "The difference between the average ages of the two groups is greater when comparing median than mean ages.",
                            "The difference remains the same no matter what type of central tendency measure we use."),
@@ -312,10 +312,9 @@ OtherLgs.prop |>
 In addition to using frequency tables, we can **visualise** data distributions graphically. **Bar plots** allow us to easily compare the distribution of categorical variables across different datasets and subsets of data. For example, in @fig-OtherLgsGender, we can see that the distribution of additional languages spoken by the L1 participants is very similar in both the female and the male subset of participants.
 
 ```{r}
-#| echo: FALSE
 #| label: "fig-OtherLgsGender"
 #| code-fold: true
-#| code-summary: "Show the `R` code to produce the plot below (but note that data visualisation is covered in Chapter 11)."
+#| code-summary: "Show the `R` code to produce the plot below (but note that data visualisation is covered in Chapter 10)."
 #| fig-cap: "Additional languages spoken by L1 participants in Dąbrowska (2019)"
 #| fig-alt: "Two bar plots showing the additional languages spoken by the female and male L1 participants. The distribution of languages is very similar in both genders. Most L1 speakers in the dataset do not speak any languages other than English. The other languages that are spoken (by very few people) are French, German, and Spanish."
 
@@ -360,7 +359,7 @@ As the above table contains a lot of different values, it's easier to visualise 
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show the `R` code to produce the plot below (but note that data visualisation is covered in Chapter 11)."
+#| code-summary: "Show the `R` code to produce the plot below (but note that data visualisation is covered in Chapter 10)."
 #| fig-width: 8
 #| fig-height: 5
 #| fig-alt: "Bar plot showing the distribution of L2 participants’ ages. The y-axis represents the number of L2 participants and the x-axis represents their age. A single bar corresponding to 28 years of age on the x-axis is highlighted as the mode for having the highest number of participants. The next three highest bars correspond to 22, 31, and 39 years of age."
@@ -702,7 +701,7 @@ L2.data |>
 
 If we wanted to work out the probability of an L2 participant being between `42` and `62` years old, we would have to calculate the **area under the curve** between these two points on the *x*-axis. Even without doing any maths, you can see that this area is considerably smaller than between the ages of `22` and `42`. This means that, in this dataset, participants are considerably more likely to be between 22 and 42 than between 42 and 62 years old.[^8_descriptivestats-4]
 
-[^8_descriptivestats-4]: Of course, there is an `R` function to help you do the maths! The `edcf()` function allows us to calculate the area under the curve between the ages of 42 and 62.
+[^8_descriptivestats-4]: Of course, there is an `R` function to help you do the maths! The `ecdf()` function allows us to calculate the area under the curve between the ages of 42 and 62.
 
     ```{r}
     ecdf(L2.data$Age)(62) - ecdf(L2.data$Age)(42)
@@ -741,7 +740,7 @@ If we wanted to work out the probability of an L2 participant being between `42`
       plot_annotation(tag_levels = "A")
     ```
 
-The density plot of L2 participants' ages features a characteristic bell-shaped curve, which indicates that the distribution resembles a normal distribution. However, it also features a long tail towards the older years. We are therefore dealing with a **skewed distribution**. **Skewness** is a measure of asymmetry in the a distribution. Skewed distributions occur when one tail end of the bell is longer than the other. Here, the asymmetry is due to the fact that @DabrowskaExperienceAptitudeIndividual2019's L2 data includes quite a few participants who were older than 40 at the time of the study, whereas there were none who were younger than 20. As the tail is to the right of the plot, this is a **right skewed (or positive) distribution**.
+The density plot of L2 participants' ages features a characteristic bell-shaped curve, which indicates that the distribution resembles a normal distribution. However, it also features a long tail towards the older years. We are therefore dealing with a **skewed distribution**. **Skewness** is a measure of asymmetry in a distribution. Skewed distributions occur when one tail end of the bell is longer than the other. Here, the asymmetry is due to the fact that @DabrowskaExperienceAptitudeIndividual2019's L2 data includes quite a few participants who were older than 40 at the time of the study, whereas there were none who were younger than 20. As the tail is to the right of the plot, this is a **right skewed (or positive) distribution**.
 
 The **median** is usually better than the mean for describing the central tendency of a skewed distribution because it is less susceptible to the outlier(s) contained in the tail of a skewed distribution (see @sec-Median). @fig-L2AgeDensityPlot confirms that the median is a better approximation of L2 participants' ages than the mean.
 
@@ -1244,7 +1243,7 @@ IQR(L1.data$GrammarR)
 
 The reason that the `summary()` function is probably more useful than `IQR()` is that, like the full range, the interquantile range is not usually reported as the difference between Q~3~ and Q~1~. This is because it is more informative to consider the first quartile (Q~1~), the median (Q~2~), and the third quartile (Q~3~) together to grasp both the central tendency of a set of numbers and the amount of variability there is around this central tendency.
 
-In practice, quartiles are rarely reported as numbers. Instead, they are usually visualised as **boxplots**. Boxplots present a visual summary of a numeric variable's central tendency and variability around this central tendency. On a boxplot, the **box** represents the **IQR**. Its **dividing line** is the **median**. The **whiskers** and any **outlier points** represent the rest of the distribution (see @fig-MakingBoxplot). In other words, the lower whisker roughly covers the lower 25% of the data and the upper whisper the top 25% of the data. Boxplots are most often displayed vertically and are used to visually compare the main characteristics of distributions of numeric values across different groups (e.g. grammar comprehension across different language proficiency groups).
+In practice, quartiles are rarely reported as numbers. Instead, they are usually visualised as **boxplots**. Boxplots present a visual summary of a numeric variable's central tendency and variability around this central tendency. On a boxplot, the **box** represents the **IQR**. Its **dividing line** is the **median**. The **whiskers** and any **outlier points** represent the rest of the distribution (see @fig-MakingBoxplot). In other words, the lower whisker roughly covers the lower 25% of the data and the upper whisker the top 25% of the data. Boxplots are most often displayed vertically and are used to visually compare the main characteristics of distributions of numeric values across different groups (e.g. grammar comprehension across different language proficiency groups).
 
 ![Animation showing the making of a boxplot (Le Foll 2024. Zenodo. <https://doi.org/10.5281/zenodo.17440384>)](images/boxplot.gif){#fig-MakingBoxplot fig-alt="Animation showing the making of a boxplot. The minimum, the maximum, the median and the other quartiles of a set of values get highlighted. As the set is turned into a boxplot, a box depicts the interquartile range with two whiskers connecting the sides of the box to the maximum and minimum. The median is also highlighted."}
 
@@ -1289,6 +1288,7 @@ check_question(c("Ages in Group 1 are normally distributed.",
                            "Ages in Group 2 are normally distributed.",
                            "Ages in Group 2 are not normally distributed.",
                            "Ages in Group 3 are normally distributed.",
+                           "Ages in Group 3 are not normally distributed",
                            "On average, participants were older in Group 1 and younger in Group 3.",
                            "In all three groups, the median age is approximately the same.",
                            "In all three groups, the IQR is approximately the same."),

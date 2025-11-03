@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.26">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -55,18 +55,19 @@ div.csl-indent {
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-3e3370d44295d9fa30cc16d77ad785c2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-540c66f2be59a33d43b8e94dc657d4ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-2dc7341fb0871247097a223aafd3766b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -127,7 +128,7 @@ div.csl-indent {
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -160,7 +161,7 @@ div.csl-indent {
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -200,7 +201,7 @@ div.csl-indent {
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -228,7 +229,7 @@ div.csl-indent {
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -251,20 +252,22 @@ div.csl-indent {
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -291,7 +294,9 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Analysis for the<br>Language Sciences</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -571,7 +576,7 @@ Figure&nbsp;1.1: Open software development (CC-BY 4.0 Scriberia with <a href="ht
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -707,7 +712,7 @@ Ubuntu
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -735,7 +740,7 @@ Your turn!
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Going further
+<span class="screen-reader-only">Note</span>Going further
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -758,13 +763,13 @@ Going further
 <p>Open Education is a key component of Open Scholarship (see <a href="#sec-OpenScholarship" class="quarto-xref"><span>Chapter 1</span></a>). Open Education aims to stimulate collaborative teaching and learning and to provide high-quality Open Educational Resources (OERs) that are accessible for all.</p>
 <p>As illustrated in <a href="#fig-OER" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>, OERs are licensed in such a way that everyone has the right to engage in “5 Rs” when using OERs. The 5 Rs of OERs are:</p>
 <ol type="1">
-<li><strong>R</strong>etain - the right to make, own, and control copies of the content (e.g., download, duplicate, and store copies of an OER).</li>
-<li><strong>R</strong>euse - the right to use the content in a range of ways (e.g., as teaching materials on a course, as part of a website, or in a video).</li>
-<li><strong>R</strong>evise - the right to adapt, adjust, modify, or alter the content itself (e.g., translate the content into another language, create a version for a different programming language).</li>
+<li><strong>R</strong>etain - the right to make, own, and control copies of the content (e.g.&nbsp;download, duplicate, and store copies of an OER).</li>
+<li><strong>R</strong>euse - the right to use the content in a range of ways (e.g.&nbsp;as teaching materials on a course, as part of a website, or in a video).</li>
+<li><strong>R</strong>evise - the right to adapt, adjust, modify, or alter the content itself (e.g.&nbsp;translate the content into another language, create a version for a different programming language).</li>
 <li><strong>R</strong>emix - the right to combine the original or revised content with other open materials to create something new.</li>
-<li><strong>R</strong>edistribute - the right to share copies of the original content, any revisions, and remixes with others (e.g., give a copy of the content to a friend).</li>
+<li><strong>R</strong>edistribute - the right to share copies of the original content, any revisions, and remixes with others (e.g.&nbsp;give a copy of the content to a friend).</li>
 </ol>
-<div id="fig-OER" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Sketchnote graphic about Open Educational Resources" data-fig-align="center">
+<div id="fig-OER" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Sketchnote graphic about Open Educational Resources">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-OER-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/oer.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;1.2: OER sketch note CC-BY 4.0 Yvonne Stry"><img src="images/oer.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Sketchnote graphic about Open Educational Resources"></a>
@@ -774,11 +779,11 @@ Figure&nbsp;1.2: OER sketch note CC-BY 4.0 <a href="https://leko.th-nuernberg.de
 </figcaption>
 </figure>
 </div>
-<p>OERs may be published under different licenses and, in engaging in the 5 Rs, the exact terms of an OER’s license must be respected. For example, the web-based version of this textbook is published as an OER under the Creative Commons license <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><code>CC BY-NC-SA</code></a>. This means that anyone can engage in the 5 Rs with it (i.e., users are free to read and use, edit, remix, and expand upon the textbook) as long as:</p>
+<p>OERs may be published under different licenses and, in engaging in the 5 Rs, the exact terms of an OER’s license must be respected. For example, the web-based version of this textbook is published as an OER under the Creative Commons license <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><code>CC BY-NC-SA</code></a>. This means that anyone can engage in the 5 Rs with it (i.e.&nbsp;users are free to read and use, edit, remix, and expand upon the textbook) as long as:</p>
 <ol type="1">
 <li><p>the original author and source is mentioned (hence you should specify who this resource is <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><code>BY</code></a>),</p></li>
 <li><p>any derived version is not made into a commercial product (<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><code>NC</code></a> stands for <em>non-commercial</em>), and that</p></li>
-<li><p>any derived versions of this textbook (e.g., a translated version or a version adapted for history scholars) are also shared with this same license (<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><code>SA</code></a> stands for <em>share alike</em>).</p></li>
+<li><p>any derived versions of this textbook (e.g.&nbsp;a translated version or a version adapted for history scholars) are also shared with this same license (<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><code>SA</code></a> stands for <em>share alike</em>).</p></li>
 </ol>
 <p>In line with the principles of Open Education, all of the datasets used as case studies in this textbook have been published in open access. We will analyse real data from published research studies in the fields of applied linguistics and language education to learn about data management, statistics, and data visualisation.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -787,7 +792,7 @@ Figure&nbsp;1.2: OER sketch note CC-BY 4.0 <a href="https://leko.th-nuernberg.de
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -892,7 +897,7 @@ Course syllabi
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Going further
+<span class="screen-reader-only">Note</span>Going further
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -958,7 +963,7 @@ The Turing Way Community. 2022. The turing way: A handbook for reproducible, eth
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1008,13 +1013,14 @@ The Turing Way Community. 2022. The turing way: A handbook for reproducible, eth
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

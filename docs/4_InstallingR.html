@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.26">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,18 +90,19 @@ div.csl-indent {
 <link href="./3_DataManagement.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-3e3370d44295d9fa30cc16d77ad785c2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-540c66f2be59a33d43b8e94dc657d4ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-2dc7341fb0871247097a223aafd3766b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -162,7 +163,7 @@ div.csl-indent {
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -195,7 +196,7 @@ div.csl-indent {
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -235,7 +236,7 @@ div.csl-indent {
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -263,7 +264,7 @@ div.csl-indent {
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -286,20 +287,22 @@ div.csl-indent {
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -326,7 +329,9 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Analysis for the<br>Language Sciences</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -581,7 +586,7 @@ Figure&nbsp;4.1: “<a href="https://www.flickr.com/photos/47264866@N00/94551410
 </div>
 </blockquote>
 <p>Last but not least, in choosing to learn <code>R</code>, you are entering a vibrant <strong>community</strong> of users. As an open-source programming environment, <code>R</code> is the product of many different people’s contributions. Everyday, new packages, functions, and resources are being developed, improved, and shared with the community. Given that <code>R</code> has evolved into one of the most popular languages for <strong>scientific programming</strong> <span class="citation" data-cites="WinterStatisticsLinguistsIntroduction2019">(and has become “the de facto standard in the language sciences” <a href="99_references.html#ref-WinterStatisticsLinguistsIntroduction2019" role="doc-biblioref">Winter 2019: xiii</a>)</span>, many of these have been created by scientists and are particularly well-suited to <strong>research workflows</strong>. Moreover, the <code>R</code> community is known for being welcoming, <strong>supportive</strong>, and <strong>inclusive</strong>. This is reflected in the strong presence of many community-led initiatives such as <a href="https://rladies.org/">RLadies+</a>, <a href="https://rainbowr.netlify.app/">RainbowR</a>, and <a href="https://latinr.org/">LatinR</a>, that encourage under-represented groups to participate in and contribute to the <code>R</code> community. 🤗</p>
-<div id="fig-RLadies" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Hex sticker logo showing the R logo painted in the colours of the rainbow and the transgender flags" data-fig-align="center">
+<div id="fig-RLadies" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Hex sticker logo showing the R logo painted in the colours of the rainbow and the transgender flags">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-RLadies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/rladiesrp_logo.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;4.2: Logo of the RLadies Ribeirão Preto meet-up group, one of many RLadies+ chapters."><img src="images/rladiesrp_logo.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Hex sticker logo showing the R logo painted in the colours of the rainbow and the transgender flags" width="250"></a>
@@ -594,14 +599,14 @@ Figure&nbsp;4.2: Logo of the <a href="https://rladiesrp.github.io/">RLadies Ribe
 <section id="look-i-am-studying-a-languagelinguistics-so-why-should-i-learn-to-code" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="look-i-am-studying-a-languagelinguistics-so-why-should-i-learn-to-code"><em>“Look, I am studying a language/linguistics so why should I learn to code?”</em> 🤔</h4>
 <p>Using scripts rather than GUI software will help you make your research <strong>less error-prone</strong>, more <strong>transparent</strong>, and <strong>sustainable</strong>. Being open-source, there are no restrictions as to who can run <code>R</code> code and older versions are available ensuring that exact reproduction is possible, even years later. As many other linguists use <code>R</code>, you will be able to <strong>collaborate</strong> with others and understand other researchers’ <code>R</code> code. As we will see in <a href="14_LiterateProgramming.html" class="quarto-xref"><span>Chapter 14</span></a>, in <em>RStudio</em>, it is also very easy to export <code>R</code> code and share your scripts, for example as part of an appendix to your research publication, in various formats (including <code>.html</code> that can be opened in any browser and <code>.pdf</code>).</p>
-<p>In addition, learning to code in <code>R</code> is an excellent way to understand the fundamentals of <strong>data literacy</strong> and <strong>statistical reasoning</strong>. These are <strong>skills</strong> that are highly valued among employers, both in academia and the industry. Many companies, public institutions (e.g., ministries, hospitals, national agencies) and NGOs hire data scientists who often work in <code>R</code>. And, even if you end up doing little to no coding yourself, understanding the basic principles of programming is undoubtedly a highly useful skill in the modern world.</p>
+<p>In addition, learning to code in <code>R</code> is an excellent way to understand the fundamentals of <strong>data literacy</strong> and <strong>statistical reasoning</strong>. These are <strong>skills</strong> that are highly valued among employers, both in academia and the industry. Many companies, public institutions (e.g.&nbsp;ministries, hospitals, national agencies) and NGOs hire data scientists who often work in <code>R</code>. And, even if you end up doing little to no coding yourself, understanding the basic principles of programming is undoubtedly a highly useful skill in the modern world.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-What about learning Python instead? 🐍
+<span class="screen-reader-only">Note</span>What about learning Python instead? 🐍
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -654,12 +659,12 @@ Figure&nbsp;4.3: Even the two logos are easy to confuse, but remember that <code
 </figure>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Using other IDEs to work in <code>R</code>
+<span class="screen-reader-only">Note</span>Using other IDEs to work in <code>R</code>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -684,7 +689,7 @@ Using other IDEs to work in <code>R</code>
 <li><p>Click on the “Download R for …” link that matches your operating system (Linux, macOS or Windows), then:</p>
 <ul>
 <li>For <strong>Windows</strong>, click on the top ‘base’ link, also marked as “install R for the first time” (Note that you should also use this link if you are updating your R version). On the next page, click on the top “Download R” link.</li>
-<li>For <strong>MacOS</strong>, click on either the top <code>.pkg</code> link if you have an Apple silicon Mac (e.g., M1, M2, M3) or the second <code>.pkg</code> link, if you have an older Intel Mac.</li>
+<li>For <strong>MacOS</strong>, click on either the top <code>.pkg</code> link if you have an Apple silicon Mac (e.g.&nbsp;M1, M2, M3) or the second <code>.pkg</code> link, if you have an older Intel Mac.</li>
 <li>For <strong>Linux</strong>, click on your Linux distribution and then follow the instructions on the following pages.</li>
 </ul></li>
 <li><p>Once you have downloaded one of these <code>R</code> versions, navigate to the folder where you have saved it (by default, this will be your Downloads folder), and double click on the executable file to install <code>R</code>.</p></li>
@@ -729,19 +734,19 @@ Figure&nbsp;4.4: Testing R
 <p>✅ If you see the plot above, you have successfully installed and tested <code>R</code> and you can go on to installing RStudio.</p>
 <p>⚠️ If that’s not the case, make a note of the errors produced (copy and paste them into a text document or take a screenshot) and search for solutions on the internet. It is very likely that many other people have already encountered the same problem as you and that someone from the <code>R</code> community has posted a solution online.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-What to do if you cannot get R and/or <em>RStudio</em> working on your computer
+<span class="screen-reader-only">Note</span>What to do if you cannot get R and/or <em>RStudio</em> working on your computer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The aim of this chapter is to install both <code>R</code> and <em>R Studio</em> on your own computer so that you can write and run your own scripts locally (i.e., on your own computer without the need for an internet connection). In some cases, however, this might not be possible. For example, because the programmes are not available for your operating system, or because you do not have admin rights on your computer, or because your disk is full and you cannot delete anything. None of these situations are ideal to do research, but don’t give up on learning <code>R</code>: there is an alternative!</p>
-<p>You can sign up to <a href="https://posit.co/products/cloud/cloud/">Posit Cloud</a>. Posit Cloud will allow you to run <code>R</code> in <em>RStudio</em> in a browser (e.g., Firefox or Chrome) without having to install anything on your computer. Although Posit Cloud’s <a href="https://posit.cloud/plans/free">free plan</a> is limited, it will suffice to learn the contents of this textbook. You will be able to follow the textbook in exactly the same way as everyone else. However, you will need a stable internet connection and you may find that you need to be a bit more patient as things are likely to run a little slower. If you decide to opt for the Posit Cloud solution, create a free account and then go straight to <a href="#sec-SettingupR" class="quarto-xref"><span>Section 4.3</span></a>.</p>
+<p>The aim of this chapter is to install both <code>R</code> and <em>R Studio</em> on your own computer so that you can write and run your own scripts locally (i.e.&nbsp;on your own computer without the need for an internet connection). In some cases, however, this might not be possible. For example, because the programmes are not available for your operating system, or because you do not have admin rights on your computer, or because your disk is full and you cannot delete anything. None of these situations are ideal to do research, but don’t give up on learning <code>R</code>: there is an alternative!</p>
+<p>You can sign up to <a href="https://posit.co/products/cloud/cloud/">Posit Cloud</a>. Posit Cloud will allow you to run <code>R</code> in <em>RStudio</em> in a browser (e.g.&nbsp;Firefox or Chrome) without having to install anything on your computer. Although Posit Cloud’s <a href="https://posit.cloud/plans/free">free plan</a> is limited, it will suffice to learn the contents of this textbook. You will be able to follow the textbook in exactly the same way as everyone else. However, you will need a stable internet connection and you may find that you need to be a bit more patient as things are likely to run a little slower. If you decide to opt for the Posit Cloud solution, create a free account and then go straight to <a href="#sec-SettingupR" class="quarto-xref"><span>Section 4.3</span></a>.</p>
 </div>
 </div>
 </div>
@@ -887,7 +892,7 @@ Figure&nbsp;4.7: Testing that <em>RStudio</em> is communicating well with your <
 <section id="what-are-packages" class="level3" data-number="4.4.1">
 <h3 data-number="4.4.1" class="anchored" data-anchor-id="what-are-packages"><span class="header-section-number">4.4.1</span> What are packages?</h3>
 <p>You now have a base installation of <code>R</code>. Base <code>R</code> is very powerful and comes with many standard packages and functions that <code>R</code> users use on a daily basis. If you click on the <strong>Packages</strong> tab in the bottom-right pane and scroll down, you will see that there are many packages available. Only a few are selected. These are part of the base <code>R</code> installation.</p>
-<p>You can think of base <code>R</code> as a fully functional student kitchen. It is rather small and only has the most essential ingredients and equipment, but it still has everything you need to cook simple, delicious meals. Downloading and installing additional packages is like buying fancier ingredients (i.e., packages with datasets) or more sophisticated and specialised kitchen devices (i.e., packages that provide additional functions).</p>
+<p>You can think of base <code>R</code> as a fully functional student kitchen. It is rather small and only has the most essential ingredients and equipment, but it still has everything you need to cook simple, delicious meals. Downloading and installing additional packages is like buying fancier ingredients (i.e.&nbsp;packages with datasets) or more sophisticated and specialised kitchen devices (i.e.&nbsp;packages that provide additional functions).</p>
 <p>In addition to the members of the R Core Team who develop and maintain base <code>R</code>, thousands of <code>R</code> users develop and share additional <code>R</code> packages every day. These enable us to vastly increase the capacities of base <code>R</code>. Packages are a very helpful way to bundle together a set of <strong>functions</strong>, <strong>data</strong>, and <strong>documentation files</strong> so that other <code>R</code> users can easily download these bundles and add them to their local <code>R</code> installation.</p>
 <p>Throughout this textbook, the names of packages will be enclosed in curly brackets like this: {ggplot2}.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -896,7 +901,7 @@ Figure&nbsp;4.7: Testing that <em>RStudio</em> is communicating well with your <
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1006,18 +1011,18 @@ Figure&nbsp;4.8: Screenshot showing that the package has been correctly installe
 </div>
 <p>To check that the package has been successfully downloaded and installed, head over to the Packages tab of the bottom-right pane and scroll down to the {janeaustenr} package, or search for it using the search window within this same tab. The {janeaustenr} package should now be visible, which tells us that the package is installed on your computer. Note, however, that the checkbox next to it is currently empty. This means that the package hasn’t been loaded in our current <code>R</code> session and therefore cannot be used yet.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-More ways of installing <code>R</code> packages
+<span class="screen-reader-only">Note</span>More ways of installing <code>R</code> packages
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>There are other ways to install packages, e.g., from <a href="https://www.bioconductor.org/">Bioconductor</a> and <a href="https://github.com/">GitHub</a>.</p>
+<p>There are other ways to install packages, e.g.&nbsp;from <a href="https://www.bioconductor.org/">Bioconductor</a> and <a href="https://github.com/">GitHub</a>.</p>
 <p>To find out more, read <a href="https://intro2r.com/packages.html">Section 1.5</a> from <span class="citation" data-cites="douglasIntroduction2024">Douglas et al. (<a href="99_references.html#ref-douglasIntroduction2024" role="doc-biblioref">2024</a>)</span>, which is available as an Open Educational Resource (see <a href="1_OpenScholarship.html#sec-OpenEducation" class="quarto-xref"><span>Section 1.3</span></a>).</p>
 </div>
 </div>
@@ -1025,10 +1030,10 @@ More ways of installing <code>R</code> packages
 </section>
 <section id="loading-packages" class="level3" data-number="4.4.3">
 <h3 data-number="4.4.3" class="anchored" data-anchor-id="loading-packages"><span class="header-section-number">4.4.3</span> Loading packages</h3>
-<p>If you want to use the fancy ingredient or new kitchen device that was delivered in the package that you installed, you first need to get it out of the fridge or the cupboard and place it on your kitchen counter. This is the equivalent of “loading” a package. The command to load a package is <code>library()</code>. This is because, rather confusingly, once they are unpacked (i.e., installed), packages are usually referred to as libraries.</p>
+<p>If you want to use the fancy ingredient or new kitchen device that was delivered in the package that you installed, you first need to get it out of the fridge or the cupboard and place it on your kitchen counter. This is the equivalent of “loading” a package. The command to load a package is <code>library()</code>. This is because, rather confusingly, once they are unpacked (i.e.&nbsp;installed), packages are usually referred to as libraries.</p>
 <p>To load the {janeaustenr} package, enter the following command in the Console:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janeaustenr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janeaustenr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>If you correctly installed the package and have not misspelt the command, it may look like nothing has happened, as the Console returns nothing (see first red ellipse on <a href="#fig-LoadingJane" class="quarto-xref">Figure&nbsp;<span>4.9</span></a>). However, if you go back to your Packages tab and scroll down to the {janeaustenr} package, you will see that the box next to it is now ticked (see second ellipse on <a href="#fig-LoadingJane" class="quarto-xref">Figure&nbsp;<span>4.9</span></a>). This means that the package is loaded and ready to be used.</p>
 <div id="fig-LoadingJane" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The screenshot shows that the command library (janeaustern) has been run in the console and that the console returned a new empty line and nothing else. The screenshot also shows the packages tab with the words &quot;jan&quot; in the search box and two packages displayed.  The first is the janeaustern package and the checkbox to the left of it is ticked. The second is a package that also starts with &quot;jan&quot; namely &quot;janitor&quot; but this one does not have a checked box next to it because it has not been loaded.">
@@ -1048,7 +1053,7 @@ Figure&nbsp;4.9: Loading a library
 <h2 data-number="4.5" class="anchored" data-anchor-id="sec-PackageDocumentation"><span class="header-section-number">4.5</span> Package documentation</h2>
 <p>To find out more about any package or function, use the handy <code>help()</code> function or its shortcut <code>?</code>. For example, to find out more about the {janeaustenr} package, enter the command <code>help(janeaustenr)</code> or <code>?janeaustenr</code> in the Console. The help file will open up in the <strong>Help</strong> tab of the bottom-right pane (see <a href="#fig-RStudioNewLayout" class="quarto-xref">Figure&nbsp;<span>4.6 (b)</span></a>). It contains the name of the package and a short description, as well as the name of the package maintainer, Julia Silge, and some additional links.</p>
 <p>One of these links takes us to the package creator’s GitHub repository. This is where we can find a source code for the package, should we want to check how it works under the hood, or amend it in any way. Click on this link and scroll down the package’s GitHub page to consult its <strong>README file</strong>. This document informs us that the package includes plain text versions of Jane Austen’s six completed, published novels and tells us under what name they are stored within the library. For example, to access <em>Pride and Prejudice,</em> we need to load the library object <code>prideprejudice</code>.</p>
-<p>Pick your favourite Jane Austen novel and enter its corresponding object name in the Console, e.g., <code>emma</code>. The entire novel will be printed in the Console output! You can print only a few lines by selecting them within square brackets. For example, the command <code>emma[20:25]</code> will print lines 20 to 25 of the object <code>emma</code> (see <a href="#fig-emma2025" class="quarto-xref">Figure&nbsp;<span>4.10</span></a>).</p>
+<p>Pick your favourite Jane Austen novel and enter its corresponding object name in the Console, e.g.&nbsp;<code>emma</code>. The entire novel will be printed in the Console output! You can print only a few lines by selecting them within square brackets. For example, the command <code>emma[20:25]</code> will print lines 20 to 25 of the object <code>emma</code> (see <a href="#fig-emma2025" class="quarto-xref">Figure&nbsp;<span>4.10</span></a>).</p>
 <div id="fig-emma2025" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Screenshot from RStudio. The command is: emma[20:25] and the Console output reads: [1] &quot;She was the youngest of the two daughters of a most affectionate,&quot;        [2] &quot;indulgent father; and had, in consequence of her sister's marriage, been&quot; [3] &quot;mistress of his house from a very early period. Her mother had died&quot;      [4] &quot;too long ago for her to have more than an indistinct remembrance of&quot;      [5] &quot;her caresses; and her place had been supplied by an excellent woman as&quot;   [6] &quot;governess, who had fallen little short of a mother in affection.&quot;">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-emma2025-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1059,14 +1064,14 @@ Figure&nbsp;4.10: Screenshot showing a selection of lines from the object <code>
 </figcaption>
 </figure>
 </div>
-<p>To find out more about a dataset or function within a package, use the functions <code>help()</code> or <code>?</code>, e.g., <code>help(emma)</code> or <code>?emma</code>. In this case, the help file provides us with a short description of this object and a link to the original source from which the package creator obtained the novel (which is in the <a href="https://www.gutenberg.org/help/faq.html#what-books-does-project-gutenberg-publish">public domain</a>, otherwise it would not be possible to share it in this way).</p>
+<p>To find out more about a dataset or function within a package, use the functions <code>help()</code> or <code>?</code>, e.g.&nbsp;<code>help(emma)</code> or <code>?emma</code>. In this case, the help file provides us with a short description of this object and a link to the original source from which the package creator obtained the novel (which is in the <a href="https://www.gutenberg.org/help/faq.html#what-books-does-project-gutenberg-publish">public domain</a>, otherwise it would not be possible to share it in this way).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1187,12 +1192,12 @@ https://en.wikipedia.org/wiki/Sense_and_Sensibility
 </blockquote>
 <p>Note that you can see the full references by hovering on the in-text citation links or by going to the <a href="@sec-References">References</a> section of this book. <a href="14_LiterateProgramming.html" class="quarto-xref"><span>Chapter 14</span></a> explains how to insert bibliographic references in documents that include <code>R</code> code.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-More about referencing packages
+<span class="screen-reader-only">Note</span>More about referencing packages
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1200,12 +1205,12 @@ More about referencing packages
 <div class="callout-body-container callout-body">
 <p>You may also want to install the {report} package, which includes a number of useful functions for citing <code>R</code> versions and <code>R</code> packages:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report_system</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report_system</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Analyses were conducted using the R Statistical language (version 4.5.0; R Core
 Team, 2025) on macOS Sequoia 15.4.1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">cite_packages</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">cite_packages</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  - Barr D, DeBruine L (2023). _webexercises: Create Interactive Web Exercises in 'R Markdown' (Formerly 'webex')_. doi:10.32614/CRAN.package.webexercises &lt;https://doi.org/10.32614/CRAN.package.webexercises&gt;, R package version 1.1.0, &lt;https://CRAN.R-project.org/package=webexercises&gt;.
   - Makowski D, Lüdecke D, Patil I, Thériault R, Ben-Shachar M, Wiernik B (2023). "Automated Results Reporting as a Practical Tool to Improve Reproducibility and Methodological Best Practices Adoption." _CRAN_. &lt;https://easystats.github.io/report/&gt;.
@@ -1214,7 +1219,7 @@ Team, 2025) on macOS Sequoia 15.4.1</code></pre>
   - Silge J (2022). _janeaustenr: Jane Austen's Complete Novels_. doi:10.32614/CRAN.package.janeaustenr &lt;https://doi.org/10.32614/CRAN.package.janeaustenr&gt;, R package version 1.0.0, &lt;https://CRAN.R-project.org/package=janeaustenr&gt;.
   - Xie Y (2025). _knitr: A General-Purpose Package for Dynamic Report Generation in R_. R package version 1.50, &lt;https://yihui.org/knitr/&gt;. Xie Y (2015). _Dynamic Documents with R and knitr_, 2nd edition. Chapman and Hall/CRC, Boca Raton, Florida. ISBN 978-1498716963, &lt;https://yihui.org/knitr/&gt;. Xie Y (2014). "knitr: A Comprehensive Tool for Reproducible Research in R." In Stodden V, Leisch F, Peng RD (eds.), _Implementing Reproducible Computational Research_. Chapman and Hall/CRC. ISBN 978-1466561595.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report_packages</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report_packages</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  - webexercises (version 1.1.0; Barr D, DeBruine L, 2023)
   - report (version 0.6.1; Makowski D et al., 2023)
@@ -1251,7 +1256,7 @@ Figure&nbsp;4.11: Warning message on MacOS when installing an updated version of
 <h3 data-number="4.7.2" class="anchored" data-anchor-id="updating-r"><span class="header-section-number">4.7.2</span> Updating <code>R</code></h3>
 <p>Updating <code>R</code> is a little more complex because you will also need to update all of your <code>R</code> packages, too. Some of the packages that you use may not (yet) be available for the latest <code>R</code> version. This is why, for beginners, I do not recommend updating <code>R</code> in the middle of a project. That said, it is a good idea to keep your <code>R</code> version up-to-date. To find out which version of <code>R</code> you are currently working with, run this command in the Console.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>R.version.string</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>R.version.string</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "R version 4.5.0 (2025-04-11)"</code></pre>
 </div>
@@ -1272,7 +1277,7 @@ Figure&nbsp;4.12: CRAN <code>R</code> for macOS page using the latest recommende
 <h3 data-number="4.7.3" class="anchored" data-anchor-id="updating-r-packages"><span class="header-section-number">4.7.3</span> Updating <code>R</code> packages</h3>
 <p>Once you have updated <code>R</code>, it is important that you also update your installed packages. To do so, run the following command in the Console:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>(<span class="at">ask =</span> <span class="cn">FALSE</span>, <span class="at">checkBuilt =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>(<span class="at">ask =</span> <span class="cn">FALSE</span>, <span class="at">checkBuilt =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Alternatively, you can also go to the <strong>Packages</strong> tab of <em>RStudio</em> and click on the button “Update”. A pop-up window will appear with a list of the packages that need updating. Click on “Select All” and “Install Updates”.</p>
 <div id="fig-UpdateGUI" class="quarto-layout-panel">
@@ -1312,12 +1317,12 @@ Figure&nbsp;4.13: Updating packages using RStudio’s Graphical User Interface (
 </div>
 <p>Note that, if you have installed a lot of packages, this updating operation could take a while. It requires a stable internet connection and a bit of patience. 🧘🏾</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-An easier way to update <code>R</code> using {installr} (for Windows only)
+<span class="screen-reader-only">Note</span>An easier way to update <code>R</code> using {installr} (for Windows only)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1325,9 +1330,9 @@ An easier way to update <code>R</code> using {installr} (for Windows only)
 <div class="callout-body-container callout-body">
 <p>The {installr} package simplifies updating <code>R</code> on Windows. To install the package use the usual commands:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"installr"</span>) <span class="co"># Run this command the first time you use the package.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"installr"</span>) <span class="co"># Run this command the first time you use the package.</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(installr) <span class="co"># Run this command everytime you want to update R using this package.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(installr) <span class="co"># Run this command everytime you want to update R using this package.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then, run the <code>updateR()</code> function, which automates the updating process by detecting your current <code>R</code> version, comparing it with the latest available version, and guiding you through the process of downloading and installing the latest version.</p>
 <p>It is also possible to customise the update process with arguments like <code>updateR(update_packages = FALSE)</code> to skip package updates. For more details, check the documentation using the command <code>?updateR</code>.</p>
@@ -1382,7 +1387,7 @@ Winter, Bodo. 2019. <em>Statistics for linguists: An introduction using <span>R<
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1432,13 +1437,14 @@ Winter, Bodo. 2019. <em>Statistics for linguists: An introduction using <span>R<
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

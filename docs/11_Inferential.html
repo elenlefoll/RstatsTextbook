@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.26">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,18 +90,19 @@ div.csl-indent {
 <link href="./10_Dataviz.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-3e3370d44295d9fa30cc16d77ad785c2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-540c66f2be59a33d43b8e94dc657d4ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-2dc7341fb0871247097a223aafd3766b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -162,7 +163,7 @@ div.csl-indent {
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -195,7 +196,7 @@ div.csl-indent {
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -235,7 +236,7 @@ div.csl-indent {
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -263,7 +264,7 @@ div.csl-indent {
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -286,20 +287,22 @@ div.csl-indent {
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -326,7 +329,9 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Analysis for the<br>Language Sciences</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -549,7 +554,7 @@ div.csl-indent {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+<span class="screen-reader-only">Warning</span>Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -576,7 +581,7 @@ Warning
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Prerequisites
+<span class="screen-reader-only">Warning</span>Prerequisites
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -586,23 +591,23 @@ Prerequisites
 <blockquote class="blockquote">
 <p>Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <a href="https://doi.org/10.1111/lang.12323" class="uri">https://doi.org/10.1111/lang.12323</a>.</p>
 </blockquote>
-<p>Our starting point for this chapter is the wrangled combined dataset that we created and saved in <a href="9_DataWrangling.html" class="quarto-xref"><span>Chapter 9</span></a>. Follow the instructions in <a href="9_DataWrangling.html#sec-filter" class="quarto-xref"><span>Section 9.8</span></a> to create this <code>R</code> object.</p>
+<p>Our starting point for this chapter is the wrangled combined dataset that we created and saved in <a href="9_DataWrangling.html" class="quarto-xref"><span>Chapter 9</span></a>. Follow the instructions in <a href="9_DataWrangling.html#sec-filter" class="quarto-xref"><span>Section 9.7</span></a> to create this <code>R</code> object.</p>
 <p>Alternatively, you can download <code>Dabrowska2019.zip</code> from <a href="https://github.com/elenlefoll/RstatsTextbook/raw/69d1e31be7394f2b612825f031ebffeb75886390/Dabrowska2019.zip" class="uri">the textbook’s GitHub repository</a>. To launch the project correctly, first unzip the file and then double-click on the <code>Dabrowska2019.Rproj</code> file.</p>
 <p>To begin, load the <code>combined_L1_L2_data.rds</code> file that we created in <a href="9_DataWrangling.html" class="quarto-xref"><span>Chapter 9</span></a>. This file contains the full data of all the L1 and L2 participants of <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>. The categorical variables are stored as factors and obvious data entry inconsistencies and typos have been corrected (see <a href="9_DataWrangling.html" class="quarto-xref"><span>Chapter 9</span></a>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"combined_L1_L2_data.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"combined_L1_L2_data.rds"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Before you get started, check that you have correctly imported the data by examining the output of <code>View(Dabrowska.data)</code> and <code>str(Dabrowska.data)</code>. In addition, run the following lines of code to load the {tidyverse} and create “clean” versions of both the L1 and L2 datasets as separate <code>R</code> objects.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Group <span class="sc">==</span> <span class="st">"L1"</span>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> Dabrowska.data <span class="sc">|&gt;</span> </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Group <span class="sc">==</span> <span class="st">"L2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Group <span class="sc">==</span> <span class="st">"L2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Once you are satisfied that your data are sound, read on to learn about frequentist statistical inference and significance testing!</p>
 </div>
@@ -611,7 +616,7 @@ Prerequisites
 </section>
 <section id="sec-Sampling" class="level2" data-number="11.1">
 <h2 data-number="11.1" class="anchored" data-anchor-id="sec-Sampling"><span class="header-section-number">11.1</span> From the sample to the population</h2>
-<p>So far, we have described the data collected by <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>. In <a href="8_DescriptiveStats.html" class="quarto-xref"><span>Chapter 8</span></a>, we described these data using <strong>descriptive statistics</strong> thanks to measures of <a href="8_DescriptiveStats.html#sec-CentralTendency">central tendencies</a> (e.g., <a href="#sec-means">means</a>) and <a href="8_DescriptiveStats.html#sec-Variability">measures of variability</a> around the central tendency (e.g., <a href="8_DescriptiveStats.html#sec-SD">standard deviations</a>). In <a href="10_Dataviz.html" class="quarto-xref"><span>Chapter 10</span></a>, we described the data <strong>visually</strong> using different kinds of statistical plots. These descriptive analyses enabled us to spot some interesting patterns (and there are many more for you to explore!). For instance, we noticed that:</p>
+<p>So far, we have described the data collected by <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>. In <a href="8_DescriptiveStats.html" class="quarto-xref"><span>Chapter 8</span></a>, we described these data using <strong>descriptive statistics</strong> thanks to measures of <a href="8_DescriptiveStats.html#sec-CentralTendency">central tendencies</a> (e.g.&nbsp;<a href="#sec-means">means</a>) and <a href="8_DescriptiveStats.html#sec-Variability">measures of variability</a> around the central tendency (e.g.&nbsp;<a href="8_DescriptiveStats.html#sec-SD">standard deviations</a>). In <a href="10_Dataviz.html" class="quarto-xref"><span>Chapter 10</span></a>, we described the data <strong>visually</strong> using different kinds of statistical plots. These descriptive analyses enabled us to spot some interesting patterns (and there are many more for you to explore!). For instance, we noticed that:</p>
 <ul>
 <li><p>On average, L2 participants scored lower than the L1 participants on the English grammar, vocabulary and collocation comprehension tests. This was to be expected, but our visualisations also revealed that many L2 participants scored at least as well and sometimes even better than average L1 participants.</p></li>
 <li><p>On average, L2 participants obtained higher non-verbal IQ scores (as measured by the Blocks test) than L1 participants but, here, too, there was a lot of overlap between the two distributions.</p></li>
@@ -625,7 +630,7 @@ Prerequisites
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Sampling methods
+<span class="screen-reader-only">Note</span>Sampling methods
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -651,33 +656,22 @@ Sampling methods
 <tr class="odd">
 <td><strong>Random sampling</strong></td>
 <td>Every member of the target population has an equal chance of being selected.</td>
-<td>Rarely feasible for human populations, but can sometimes be approximated with census lists. Feasible in other contexts, e.g., when the target population are all words featured in a specific dictionary.</td>
-<td>Minimises systematic bias. The results can be generalised using inferential statistics methods.</td>
-<td>Requires a complete sampling frame (e.g., a list of all English speakers living in the UK) and a perfect world in which everyone sampled consents to participating in study.</td>
+<td colspan="3">Rarely feasible for human populations, but can sometimes be approximated with census lists. Feasible in other contexts, e.g.&nbsp;when the target population are all words featured in a specific dictionary. | Minimises systematic bias. The results can be generalised using inferential statistics methods. | Requires a complete sampling frame (e.g.&nbsp;a list of all English speakers living in the UK) and a perfect world in which everyone sampled consents to participating in study. |</td>
 </tr>
 <tr class="even">
 <td><strong>Stratified sampling<br>
 </strong>(a subtype of random sampling)</td>
-<td>The population is divided into strata (e.g., by dialectal region, age group, education level) and a random sample is drawn from each stratum.</td>
-<td>Used when researchers need balanced data from distinct sub‑populations (e.g., speakers from several dialectal areas) and their intersections (e.g., a good balance of genders across each dialectal area).</td>
-<td>Guarantees coverage of all relevant sub‑populations; reduces sampling error within the strata.</td>
-<td>As above, requires reliable, exhaustive lists for each stratum and consent for all selected; more complex to organise.</td>
+<td colspan="4">The population is divided into strata (e.g.&nbsp;by dialectal region, age group, education level) and a random sample is drawn from each stratum. | Used when researchers need balanced data from distinct sub‑populations (e.g.&nbsp;speakers from several dialectal areas) and their intersections (e.g.&nbsp;a good balance of genders across each dialectal area). | Guarantees coverage of all relevant sub‑populations; reduces sampling error within the strata. | As above, requires reliable, exhaustive lists for each stratum and consent for all selected; more complex to organise. | | | |</td>
 </tr>
 <tr class="odd">
 <td><strong>Cluster sampling<br>
 </strong>(a subtype of random sampling)</td>
-<td>Whole clusters (e.g., villages, schools, neighbourhoods) are randomly selected, then all members of the chosen clusters are studied.</td>
-<td>Data collection in schools and fieldwork in remote regions where a full speaker list is impractical.</td>
-<td>Efficient when clusters are naturally defined; reduces costs and organisational burden.</td>
-<td>Increases sampling error if clusters are internally homogeneous; may miss variation outside selected clusters.</td>
+<td colspan="4">Whole clusters (e.g.&nbsp;villages, schools, neighbourhoods) are randomly selected, then all members of the chosen clusters are studied. | Data collection in schools and fieldwork in remote regions where a full speaker list is impractical. | Efficient when clusters are naturally defined; reduces costs and organisational burden. | Increases sampling error if clusters are internally homogeneous; may miss variation outside selected clusters. | | | |</td>
 </tr>
 <tr class="even">
 <td><strong>Representative<br>
 (quota) sampling</strong></td>
-<td>The sample is designed so as to match the population on key characteristics (e.g., age, gender, region, education).</td>
-<td>Researchers recruit speakers until the sample mirrors known demographics from census data or other sources.</td>
-<td>Often considered to provide a “good enough” picture when true random sampling is impossible.</td>
-<td>Often difficult to implement because we rarely known enough about the characteristics of the full population; vulnerable to self-selection bias.</td>
+<td colspan="4">The sample is designed so as to match the population on key characteristics (e.g.&nbsp;age, gender, region, education). | Researchers recruit speakers until the sample mirrors known demographics from census data or other sources. | Often considered to provide a “good enough” picture when true random sampling is impossible. | Often difficult to implement because we rarely known enough about the characteristics of the full population; vulnerable to self-selection bias. | | | |</td>
 </tr>
 <tr class="odd">
 <td><strong>Convenience sampling</strong></td>
@@ -706,7 +700,7 @@ Sampling methods
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -715,33 +709,33 @@ Your turn!
 <p><span style="color:green;"><strong>Q11.1</strong></span> Which of the following statements best describes random sampling?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_12592" onsubmit="return validate_form_12592()" method="post">
+<form name="form_615" onsubmit="return validate_form_615()" method="post">
 <label>
-<input type="radio" name="answer_12592" id="answer_12592_1" value="Each individual in the population has the same known probability of being chosen (e.g., 0.001%).">
-Each individual in the population has the same known probability of being chosen (e.g., 0.001%).
+<input type="radio" name="answer_615" id="answer_615_1" value="Each individual in the population has the same known probability of being chosen (e.g. 0.001%).">
+Each individual in the population has the same known probability of being chosen (e.g. 0.001%).
 </label>
 <br>
 <label>
-<input type="radio" name="answer_12592" id="answer_12592_2" value="Participants are selected because they are easy to reach (e.g., university students).">
-Participants are selected because they are easy to reach (e.g., university students).
-</label>
-<br>
-<label>
-<input type="radio" name="answer_12592" id="answer_12592_3" value="The sample is built so that its composition (age, gender, socioeconomic status, etc.) matches known census figures.">
+<input type="radio" name="answer_615" id="answer_615_2" value="The sample is built so that its composition (age, gender, socioeconomic status, etc.) matches known census figures.">
 The sample is built so that its composition (age, gender, socioeconomic status, etc.) matches known census figures.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_12592" id="answer_12592_4" value="Every member of the target population is guaranteed to take part in the study.">
+<input type="radio" name="answer_615" id="answer_615_3" value="Participants are selected because they are easy to reach (e.g. university students).">
+Participants are selected because they are easy to reach (e.g. university students).
+</label>
+<br>
+<label>
+<input type="radio" name="answer_615" id="answer_615_4" value="Every member of the target population is guaranteed to take part in the study.">
 Every member of the target population is guaranteed to take part in the study.
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_12592"></div>
+<div id="result_615"></div>
 </form>
-<script>function validate_form_12592() {var x, text; var x = document.forms['form_12592']['answer_12592'].value;if (x == 'Each individual in the population has the same known probability of being chosen (e.g., 0.001%).'){text = 'Correct! Random sampling (also called probability sampling) gives every individual an equal, known chance of being selected.';} else {text = 'Incorrect. Review the definition of random sampling in the table above. It is not about convenience or quota‑matching.';} document.getElementById('result_12592').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_615() {var x, text; var x = document.forms['form_615']['answer_615'].value;if (x == 'Each individual in the population has the same known probability of being chosen (e.g. 0.001%).'){text = 'Correct! Random sampling (also called probability sampling) gives every individual an equal, known chance of being selected.';} else {text = 'Incorrect. Review the definition of random sampling in the table above. It is not about convenience or quota‑matching.';} document.getElementById('result_615').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_12592').innerText == 'Correct! Random sampling (also called probability sampling) gives every individual an equal, known chance of being selected.';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_615').innerText == 'Correct! Random sampling (also called probability sampling) gives every individual an equal, known chance of being selected.';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -749,23 +743,23 @@ Every member of the target population is guaranteed to take part in the study.
 <p><span style="color:green;"><strong>Q11.2</strong></span> True or false: In a convenience sample, the researcher can ensure that the sample is representative of the entire population if they are careful to match the sample to census demographics (age, gender, region, etc.).</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_5683" onsubmit="return validate_form_5683()" method="post">
+<form name="form_4781" onsubmit="return validate_form_4781()" method="post">
 <label>
-<input type="radio" name="answer_5683" id="answer_5683_1" value="True">
+<input type="radio" name="answer_4781" id="answer_4781_1" value="True">
 True
 </label>
 <br>
 <label>
-<input type="radio" name="answer_5683" id="answer_5683_2" value="False">
+<input type="radio" name="answer_4781" id="answer_4781_2" value="False">
 False
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_5683"></div>
+<div id="result_4781"></div>
 </form>
-<script>function validate_form_5683() {var x, text; var x = document.forms['form_5683']['answer_5683'].value;if (x == 'False'){text = 'Correct. Even when a convenience sample is “quota‑matched” on observable demographics, it remains a convenience sample because participants first volunteered to take part (e.g., they signed up on a platform like MTurk). This means that unobserved factors, such as motivation, socioeconomic status, and language background, can still render the sample unrepresentative, thus limiting the external validity of inferential data analyses made on the basis of these data.';} else {text = 'Incorrect.';} document.getElementById('result_5683').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_4781() {var x, text; var x = document.forms['form_4781']['answer_4781'].value;if (x == 'False'){text = 'Correct. Even when a convenience sample is “quota‑matched” on observable demographics, it remains a convenience sample because participants first volunteered to take part (e.g. they signed up on a platform like MTurk). This means that unobserved factors, such as motivation, socioeconomic status, and language background, can still render the sample unrepresentative, thus limiting the external validity of inferential data analyses made on the basis of these data.';} else {text = 'Incorrect.';} document.getElementById('result_4781').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_12592').innerText == 'Correct! Random sampling (also called probability sampling) gives every individual an equal, known chance of being selected.'; res2 = document.getElementById('result_5683').innerText == 'Correct. Even when a convenience sample is “quota‑matched” on observable demographics, it remains a convenience sample because participants first volunteered to take part (e.g., they signed up on a platform like MTurk). This means that unobserved factors, such as motivation, socioeconomic status, and language background, can still render the sample unrepresentative, thus limiting the external validity of inferential data analyses made on the basis of these data.';text = res1 + res2;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_615').innerText == 'Correct! Random sampling (also called probability sampling) gives every individual an equal, known chance of being selected.'; res2 = document.getElementById('result_4781').innerText == 'Correct. Even when a convenience sample is “quota‑matched” on observable demographics, it remains a convenience sample because participants first volunteered to take part (e.g. they signed up on a platform like MTurk). This means that unobserved factors, such as motivation, socioeconomic status, and language background, can still render the sample unrepresentative, thus limiting the external validity of inferential data analyses made on the basis of these data.';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -781,10 +775,10 @@ False
 </ul>
 <p>In the sample collected by <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>, we can see that L2 speakers, on average, performed better than L1 speakers on the Blocks test. For the two groups, the mean <code>Blocks</code> test scores were:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Group) <span class="sc">|&gt;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Blocks),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">SD =</span> <span class="fu">sd</span>(Blocks))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">SD =</span> <span class="fu">sd</span>(Blocks))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 2 × 3
   Group  mean    SD
@@ -797,7 +791,7 @@ False
 <div class="cell">
 <details class="code-fold">
 <summary>See code to generate plot.</summary>
-<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>group_means <span class="ot">&lt;-</span> Dabrowska.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>group_means <span class="ot">&lt;-</span> Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Group) <span class="sc">|&gt;</span> </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_blocks =</span> <span class="fu">mean</span>(Blocks))</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -826,7 +820,7 @@ False
 <span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"purple"</span>) <span class="sc">+</span></span>
 <span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>,</span>
 <span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Non-verbal IQ (Blocks) test"</span>) <span class="sc">+</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-IQTestPlot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A Boxplot comparing Non-verbal IQ (Blocks) test scores between two groups, L1 and L2. L1 has a mean of 13.84, while L2 has a mean of 17.46. A dashed purple line connects the mean values of both groups, indicating an increase from L1 to L2.">
@@ -858,7 +852,7 @@ Figure&nbsp;11.1: Comparison of non-verbal IQ (blocks) test scores between group
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Common misconception
+<span class="screen-reader-only">Warning</span>Common misconception
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -889,8 +883,8 @@ Common misconception
 <li><strong>H<sub>0</sub></strong>: On average, the results of the non-verbal IQ (Blocks) test are <em>not</em> dependent on whether the test-takers are L1 or L2 speakers of English.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">formula =</span> Blocks <span class="sc">~</span> Group, </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">formula =</span> Blocks <span class="sc">~</span> Group, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>
     Welch Two Sample t-test
@@ -910,7 +904,7 @@ mean in group L1 mean in group L2
 <li><p>The first line of the output informs us that we ran a <code>Welch Two Sample t-test</code>. We ran a <strong>two-sample test</strong> because we are comparing the means of two <em>independent</em> groups: L1 vs.&nbsp;L2 speakers. And it is a <strong>Welch <em>t</em>-test</strong> as opposed to a <strong>Student’s <em>t</em>-test</strong> because we are not assuming that the standard deviation of the two groups’ test scores in the full population is equal.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p></li>
 <li><p>Next, the <strong><em>t</em>-statistic</strong> is reported as <code>t = -4.4084</code>. In this case, it is a negative value which means that the mean score of the first group (here L1) is <em>lower</em> than that of the second group (here L2). Note that, by default, the groups are ordered alphabetically. The larger the absolute value of the <em>t</em>-statistic, the greater the difference between the group means. At the same time, however, the more variability there is in the data, the lower the absolute value of the <em>t</em>-statistic.</p></li>
 <li><p><code>df = 152.46</code> corresponds to the <strong>degrees of freedom</strong>. These are automatically calculated by the <code>t.test()</code> function based on the number of data points in our sample and the number of constraints in our test.</p></li>
-<li><p>The <strong><em>p</em>-value</strong> is reported as <code>1.956e-05</code>. This is scientific notation for: 1.956 multiplied by 10 to the power of minus 5 (<code>1.956&nbsp;*&nbsp;10^-5</code>), which equals <code>0.00001956</code>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> This means that our test estimates that there is a very, very small probability — namely 0.001956% — of observing a difference in mean scores on the Blocks test as large as we observed (3.62 points) or an even larger one <u>under the null hypothesis</u>, i.e., under the assumption that there is <em>no</em> real-world difference between L1 and L2 speakers’ performance on this test.</p></li>
+<li><p>The <strong><em>p</em>-value</strong> is reported as <code>1.956e-05</code>. This is scientific notation for: 1.956 multiplied by 10 to the power of minus 5 (<code>1.956&nbsp;*&nbsp;10^-5</code>), which equals <code>0.00001956</code>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> This means that our test estimates that there is a very, very small probability — namely 0.001956% — of observing a difference in mean scores on the Blocks test as large as we observed (3.62 points) or an even larger one <u>under the null hypothesis</u>, i.e.&nbsp;under the assumption that there is <em>no</em> real-world difference between L1 and L2 speakers’ performance on this test.</p></li>
 <li><p>The output also includes a <strong>95% confidence interval (CI)</strong> of the difference between the means. It ranges from <code>-5.239791</code> to <code>-1.996693</code>. In our sample, we observed a mean difference between L1 participants’ and L2 participants’ Blocks test scores of -3.62 points. If we were to repeat this experiment a 100 times with a 100 different samples of L1 and L2 speakers, we can be confident that, in 95 out of 100 repetitions, the confidence interval that we compute would include the true average difference across the entire population. In other words, the average difference between L1 and L2 speakers could be quite a bit larger than in Dabrowska’s sample or quite a bit lower, but is very unlikely to be zero (which would correspond to the null hypothesis of no difference). Given the same observed difference, the larger our sample, the smaller our confidence interval.</p></li>
 <li><p>At the very bottom of the output, we can read the <strong>sample estimates</strong> for the L1 and the L2 groups. These are the mean Blocks test scores that we had already calculated using descriptive statistics (see <a href="#sec-NHST" class="quarto-xref"><span>Section 11.1.1</span></a>). They simply serve as a reminder that we are testing the statistical significance of the difference between these two means under the null hypothesis of no difference.</p></li>
 </ul>
@@ -920,7 +914,7 @@ mean in group L1 mean in group L2
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-How to report
+<span class="screen-reader-only">Note</span>How to report
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -933,7 +927,7 @@ How to report
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Common misconception
+<span class="screen-reader-only">Warning</span>Common misconception
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -950,7 +944,7 @@ Common misconception
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1031,7 +1025,7 @@ Across the entire adult UK population, the mean scores of both L1 and L2 speaker
 <div class="cell">
 <details class="code-fold">
 <summary>Show sample code to answer Q11.4.</summary>
-<div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># It is always a good idea to visualise the data before running a statistical test:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># It is always a good idea to visualise the data before running a statistical test:</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> Vocab,</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">x =</span> Group)) <span class="sc">+</span></span>
@@ -1040,7 +1034,7 @@ Across the entire adult UK population, the mean scores of both L1 and L2 speaker
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Running the t-test:</span></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">formula =</span> Vocab <span class="sc">~</span> Group, </span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p><span style="color:green;"><strong>Q11.5</strong></span> What is the <em>p</em>-value associated with the <em>t</em>-test you ran above?</p>
@@ -1137,7 +1131,7 @@ Given the sample size, the results of this t-test are highly precise.
 <blockquote class="blockquote">
 <p>Once <em>p</em> &lt; α, a result is claimed to be ‘statistically significant’, which is just the same as saying that the data are sufficiently incompatible with the null hypothesis. If the researcher obtained a significant result for a <em>t</em>-test, the researcher may act as if there actually was a group difference in the population. <span class="citation" data-cites="WinterStatisticsLinguistsIntroduction2019">(<a href="99_references.html#ref-WinterStatisticsLinguistsIntroduction2019" role="doc-biblioref">Winter 2019</a>: 168)</span></p>
 </blockquote>
-<p>Contrary to what some researchers seem to believe, in and of themselves, <em>p</em>-values are not the holy grail! They can only meaningfully be interpreted together with other important contextual information such as the <strong>context</strong> in which the data were collected, the magnitude of the observed effect (the <strong>effect size</strong>), and the <strong>variability</strong> around the estimated effect (e.g., as shown in data visualisation) (see <a href="#fig-pvalue" class="quarto-xref">Figure&nbsp;<span>11.2</span></a>).</p>
+<p>Contrary to what some researchers seem to believe, in and of themselves, <em>p</em>-values are not the holy grail! They can only meaningfully be interpreted together with other important contextual information such as the <strong>context</strong> in which the data were collected, the magnitude of the observed effect (the <strong>effect size</strong>), and the <strong>variability</strong> around the estimated effect (e.g.&nbsp;as shown in data visualisation) (see <a href="#fig-pvalue" class="quarto-xref">Figure&nbsp;<span>11.2</span></a>).</p>
 <div id="fig-pvalue" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Cartoon of a p-value taking over the microphone on a stage with the rest of the band (effect sizes, context, awesome dataviz and correlations) standing at the back and effect sizes saying &quot;I can't do it anymore. I can't explain &quot;ensemble&quot; again.&quot;">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pvalue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1154,7 +1148,7 @@ Figure&nbsp;11.2: Don’t let your <em>p</em>-values sing solo! (artwork by <a h
 <li>The <strong>variability within the data</strong> (the less variability, the smaller the <em>p</em>-value)</li>
 <li>The <strong>sample size</strong> (the larger the sample size, the smaller the <em>p</em>-value)</li>
 </ol>
-<p>Note that the size (or magnitude) of the observed effect is only <em>one</em> of three factors that influence the <em>p</em>-value! It is therefore incorrect to claim that an effect (e.g., a difference in means) is particularly large based on a particularly small <em>p</em>-value. It is equally incorrect to claim that a <em>p</em>-value that falls below the chosen significance level points to a (statistically) relevant result. To evaluate the <em>relevance</em> of a result, we need contextual information that goes far beyond the results of a single statistical test. In statistics, “significance” and “significant” are terms that have nothing to do with either the relevance or importance of results.</p>
+<p>Note that the size (or magnitude) of the observed effect is only <em>one</em> of three factors that influence the <em>p</em>-value! It is therefore incorrect to claim that an effect (e.g.&nbsp;a difference in means) is particularly large based on a particularly small <em>p</em>-value. It is equally incorrect to claim that a <em>p</em>-value that falls below the chosen significance level points to a (statistically) relevant result. To evaluate the <em>relevance</em> of a result, we need contextual information that goes far beyond the results of a single statistical test. In statistics, “significance” and “significant” are terms that have nothing to do with either the relevance or importance of results.</p>
 </section>
 <section id="sec-EffectSize" class="level2 page-columns page-full" data-number="11.4">
 <h2 data-number="11.4" class="anchored" data-anchor-id="sec-EffectSize"><span class="header-section-number">11.4</span> Effect sizes and confidence intervals</h2>
@@ -1173,13 +1167,13 @@ Figure&nbsp;11.3: Hex sticker of the <a href="https://easystats.github.io/effect
 </div>
 </div></div><p>By contrast, <strong>Cohen’s <em>d</em></strong> is a <strong>standardised effect size measure</strong>. As such, it can be used to compare the magnitude of the difference in mean values across different variables, samples, and studies. Cohen’s <em>d</em> (the <em>d</em> stands for difference) can be calculated by dividing the difference between two means (the raw strength of an effect) by the standard deviation of both groups together (the overall variability of the data). But fear not: we don’t need to do the maths ourselves as the formula is implemented in several <code>R</code> packages. In the following, we will use <code>cohens_d()</code> from the {<a href="https://easystats.github.io/effectsize/">effectsize</a>} package <span class="citation" data-cites="ben-shachar2020">(<a href="99_references.html#ref-ben-shachar2020" role="doc-biblioref">Ben-Shachar, Lüdecke &amp; Makowski 2020</a>)</span> which, like the <code>t.test()</code> function, also takes a formula as its first argument.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"effectsize"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"effectsize"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Recall the difference that we observed between L1 and L2 English speakers’ non-verbal IQ (Blocks) test results in <a href="#fig-IQTestPlot" class="quarto-xref">Figure&nbsp;<span>11.1</span></a>. With the <code>cohens_d()</code> function, we can now answer the question: How large is this effect?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Blocks <span class="sc">~</span> Group, </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> Dabrowska.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Blocks <span class="sc">~</span> Group, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> Dabrowska.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Cohen's d |         95% CI
 --------------------------
@@ -1198,7 +1192,7 @@ Figure&nbsp;11.3: Hex sticker of the <a href="https://easystats.github.io/effect
 <blockquote class="blockquote">
 <p>The terms “small,” “medium,” and “large” are relative, not only to each other, but to the area of behavioral science or even more particularly to the specific content and research method being employed in any given investigation […].</p>
 </blockquote>
-<p>Hence, it is important that linguists and education researchers base their interpretation of standardised effect sizes on prior research relevant to their field of research (see, e.g., <span class="citation" data-cites="plonskyHowBigBig2014">Plonsky &amp; Oswald (<a href="99_references.html#ref-plonskyHowBigBig2014" role="doc-biblioref">2014</a>)</span> for L2 research).</p>
+<p>Hence, it is important that linguists and education researchers base their interpretation of standardised effect sizes on prior research relevant to their field of research (see, e.g. <span class="citation" data-cites="plonskyHowBigBig2014">Plonsky &amp; Oswald (<a href="99_references.html#ref-plonskyHowBigBig2014" role="doc-biblioref">2014</a>)</span> for L2 research).</p>
 <p>The output of the <code>cohens_d()</code> function above also includes a 95% confidence interval (CI) around Cohen’s&nbsp;<em>d</em>. It turns out that there is a direct relationship between the confidence interval around an effect size and the statistical significance of a null hypothesis significance test: if an effect is statistically significant in a two-sided<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> independent <em>t</em>-test with a significance (α) level of 0.05, the 95% confidence interval (CI) for the mean difference between the two groups will <em>not</em> include zero. The <em>t</em>-test that we conducted on the results of the Blocks test across the L1 and L2 groups produced a <em>p</em>-value of 0.00001956 which is less than 0.05 and was therefore statistically significant at the α-level of 0.05. But we didn’t really need to check the <em>p</em>-value because we can see that the effect is statistically significant at the α-level of 0.05 by looking at the 95% CI around Cohen’s <em>d</em>: the lower bound is <code>-1.02</code> and the upper bound <code>-0.37</code>. In other words, the CI does not straddle zero.</p>
 <p>Now, let’s consider a new research question and a new null hypothesis:</p>
 <ul>
@@ -1206,10 +1200,10 @@ Figure&nbsp;11.3: Hex sticker of the <a href="https://easystats.github.io/effect
 </ul>
 <p>Recall that, in this dataset, <code>Gender</code> is a binary variable. The descriptive statistics suggest that male participants perform slightly better than female participants on the non-verbal IQ test, but that there is quite a bit of variability in the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Gender) <span class="sc">|&gt;</span> </span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Blocks),</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">SD =</span> <span class="fu">sd</span>(Blocks))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">SD =</span> <span class="fu">sd</span>(Blocks))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 2 × 3
   Gender  mean    SD
@@ -1220,8 +1214,8 @@ Figure&nbsp;11.3: Hex sticker of the <a href="https://easystats.github.io/effect
 </div>
 <p>We now compute a standardised effect size for this gender gap: Cohen’s <em>d</em>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Blocks <span class="sc">~</span> Gender, </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Blocks <span class="sc">~</span> Gender, </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Cohen's d |        95% CI
 -------------------------
@@ -1233,8 +1227,8 @@ Figure&nbsp;11.3: Hex sticker of the <a href="https://easystats.github.io/effect
 <p>Here, the <code>cohens_d()</code> function compares the scores of the female participants with those of the male participants because ‘female’ comes first alphabetically. Hence, the negative Cohen’s <em>d</em> value means that, on average, males perform better than females. However, we can see that the effect size (<code>-0.10</code>) is very small.</p>
 <p>Now turning to the 95% confidence interval (CI) also output by the function, we can see that, while the lower confidence bound corresponds to a negative effect size, the upper bound is positive, which means that the confidence interval contains the possibility of an effect size of zero, corresponding to no effect at all. Hence, we must conclude that this difference in scores between female and male participants is not statistically significant at an α-level of 0.05. We can confirm this by performing a <em>t</em>-test. It returns a <em>p</em>-value that is greater than 0.05:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">formula =</span> Blocks <span class="sc">~</span> Gender, </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">formula =</span> Blocks <span class="sc">~</span> Gender, </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>
     Welch Two Sample t-test
@@ -1255,7 +1249,7 @@ mean in group F mean in group M
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-How to report
+<span class="screen-reader-only">Note</span>How to report
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1264,9 +1258,9 @@ How to report
 </div>
 <p>By default, the <code>cohens_d()</code> function computes a 95% confidence interval, but, if we had chosen a lower α-level of, say, 0.01, we can change this default:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Blocks <span class="sc">~</span> Gender, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Blocks <span class="sc">~</span> Gender, </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">ci =</span> <span class="fl">0.99</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">ci =</span> <span class="fl">0.99</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Cohen's d |        99% CI
 -------------------------
@@ -1282,7 +1276,7 @@ How to report
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1342,14 +1336,14 @@ The difference in all three effect sizes is statistically significant.
 <div class="cell">
 <details class="code-fold">
 <summary>Show sample code to answer Q11.7.</summary>
-<div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Grammar <span class="sc">~</span> Group, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Grammar <span class="sc">~</span> Group, </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Vocab <span class="sc">~</span> Group, </span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Colloc <span class="sc">~</span> Group, </span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p><span style="color:green;"><strong>Q11.8</strong></span> Now compute 99% confidence intervals (CI) around the same three Cohen’s <em>d</em> values. Which statement(s) is/are true?</p>
@@ -1404,7 +1398,7 @@ The most relevant difference can be found in the collocation test data.
 <div class="cell">
 <details class="code-fold">
 <summary>Show code to answer Q11.8.</summary>
-<div class="sourceCode cell-code" id="cb23" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Grammar <span class="sc">~</span> Group, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Grammar <span class="sc">~</span> Group, </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data,</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">ci =</span> <span class="fl">0.99</span>)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1414,22 +1408,22 @@ The most relevant difference can be found in the collocation test data.
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Colloc <span class="sc">~</span> Group, </span>
 <span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data,</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">ci =</span> <span class="fl">0.99</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">ci =</span> <span class="fl">0.99</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Consider the code and its outputs below. We are now comparing the English grammar comprehension test scores of male and female native speakers of Romance languages only. Hence, we are now looking at a very small sample size comprising just five female and one male participants.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.Romance <span class="ot">&lt;-</span> Dabrowska.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.Romance <span class="ot">&lt;-</span> Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NativeLgFamily <span class="sc">==</span> <span class="st">"Romance"</span>)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(Dabrowska.Romance<span class="sc">$</span>Gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(Dabrowska.Romance<span class="sc">$</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>
 F M 
 5 1 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Grammar <span class="sc">~</span> Gender,</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> Dabrowska.Romance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_d</span>(Grammar <span class="sc">~</span> Gender,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> Dabrowska.Romance)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Cohen's d |        95% CI
 -------------------------
@@ -1503,14 +1497,14 @@ According to Cohen's rule of thumb, the effect size is very large.
 </section>
 <section id="sec-Correlations" class="level2" data-number="11.5">
 <h2 data-number="11.5" class="anchored" data-anchor-id="sec-Correlations"><span class="header-section-number">11.5</span> Correlation tests</h2>
-<p>So far, we have looked at just one type of statistical significance test, the <em>t</em>-test, which we used to compare two mean values. This kind of <em>t</em>-test is used to test the association between a numeric variable (e.g., test scores ranging from 0 to 100) and a binary categorical variable (e.g., L1 vs.&nbsp;L2 status).</p>
-<p>In this section, we return to correlations — a concept that we encountered in <a href="10_Dataviz.html#sec-Scatterplots" class="quarto-xref"><span>Section 10.2.5</span></a> when we generated and interpreted scatter plots. Recall that correlations capture the strength of the association between two numeric variables (e.g., age and grammar test scores).</p>
+<p>So far, we have looked at just one type of statistical significance test, the <em>t</em>-test, which we used to compare two mean values. This kind of <em>t</em>-test is used to test the association between a numeric variable (e.g.&nbsp;test scores ranging from 0 to 100) and a binary categorical variable (e.g.&nbsp;L1 vs.&nbsp;L2 status).</p>
+<p>In this section, we return to correlations — a concept that we encountered in <a href="10_Dataviz.html#sec-Scatterplots" class="quarto-xref"><span>Section 10.2.5</span></a> when we generated and interpreted scatter plots. Recall that correlations capture the strength of the association between two numeric variables (e.g.&nbsp;age and grammar test scores).</p>
 <p>At the beginning of the chapter, we summarised the following observations based on our descriptive analyses of the <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> data:</p>
 <ul>
 <li>For both L1 and L2 participants, there is a positive correlation between the number of years they were in formal education and their English grammar comprehension test scores: the longer they were in formal education, the better they did on the test (see <a href="#fig-YearEducationPlot" class="quarto-xref">Figure&nbsp;<span>11.4</span></a>).</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> EduTotal, </span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> Grammar)) <span class="sc">+</span></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Group) <span class="sc">+</span></span>
@@ -1519,7 +1513,7 @@ According to Cohen's rule of thumb, the effect size is very large.
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of years in formal education"</span>,</span>
 <span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"English grammar comprehension test scores"</span>) <span class="sc">+</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-YearEducationPlot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two scatter plot showing the relationship between the number of years in formal education and English grammar comprehension test scores for two groups, L1 and L2. Each black dot represents an individual’s score. A blue regression line in each plot shows a positive trend: more years in education are associated with higher test scores in both groups.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1536,8 +1530,8 @@ Figure&nbsp;11.4: Relationship between years in formal education and English gra
 <p>How strong are the correlations visualised by the blue regression lines on <a href="#fig-YearEducationPlot" class="quarto-xref">Figure&nbsp;<span>11.4</span></a>? And how likely is it that we might observe such correlations or stronger ones by chance alone? The first question is about the size of the effect, whilst the second is about its statistical significance.</p>
 <p>We can answer both questions using the <code>cor.test()</code> function. This function also takes a formula as its first argument: the two numeric variables whose correlation we want to estimate come after the tilde (<code>~</code>) and the two variables are combined using the plus (<code>+</code>) operator:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">formula =</span> <span class="sc">~</span> EduTotal <span class="sc">+</span> Grammar,</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">formula =</span> <span class="sc">~</span> EduTotal <span class="sc">+</span> Grammar,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> L1.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>
     Pearson's product-moment correlation
@@ -1560,7 +1554,7 @@ sample estimates:
 <div class="cell">
 <details class="code-fold">
 <summary>Show <code>R</code> code to simulate data with a perfect positive correlation.</summary>
-<div class="sourceCode cell-code" id="cb31" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, let's imagine that 100 learners took a test with 10 questions. We simulate the number of questions that they answered correctly using the `sample()` function that generates random numbers, specifying that learners can get between zero and 10 questions right:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, let's imagine that 100 learners took a test with 10 questions. We simulate the number of questions that they answered correctly using the `sample()` function that generates random numbers, specifying that learners can get between zero and 10 questions right:</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>correct.answers <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Next, we convert the number of correctly answered questions into the percentage of questions that they answered correctly:</span></span>
@@ -1569,7 +1563,7 @@ sample estimates:
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Finally, we compute the correlation coefficient between the number of  and the percentage of correctly answered questions:</span></span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(correct.answers, accuracy)</span>
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="co"># The correlation coefficient (Pearson's r) equals 1 because the two variables are perfectly correlated with each other. If we know one variable, there is a simple mathematical formula that allows us to obtain the exact value of the other!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="co"># The correlation coefficient (Pearson's r) equals 1 because the two variables are perfectly correlated with each other. If we know one variable, there is a simple mathematical formula that allows us to obtain the exact value of the other!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div></li>
 </ul></li>
@@ -1579,7 +1573,7 @@ sample estimates:
 <div class="cell">
 <details class="code-fold">
 <summary>Show <code>R</code> code to simulate random data with a near-zero correlation</summary>
-<div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, we set a seed to ensure that the outcome of our randomly generated number series are always exactly the same:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, we set a seed to ensure that the outcome of our randomly generated number series are always exactly the same:</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Next, we generate two series of a hundred randomly generated numbers ranging between 0 and 10:</span></span>
@@ -1592,7 +1586,7 @@ sample estimates:
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co"># However, if we run a correlation test on our two randomly generated variables x and y, we find that a) the p-value is &gt;&nbsp;0.05 and b) our 95% confidence interval includes 0. </span></span>
 <span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(x, y)</span>
 <span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co"># We can therefore conclude there is not enough evidence in our sample data to reject the null hypothesis of no correlation in the full population. This makes sense because we are testing the correlation of two independently, randomly generated strings of numbers that shouldn't have anything to do with each other!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co"># We can therefore conclude there is not enough evidence in our sample data to reject the null hypothesis of no correlation in the full population. This makes sense because we are testing the correlation of two independently, randomly generated strings of numbers that shouldn't have anything to do with each other!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div></li>
 </ul></li>
@@ -1602,14 +1596,14 @@ sample estimates:
 <div class="cell">
 <details class="code-fold">
 <summary>Show <code>R</code> code to simulate data with a perfectly negative correlation</summary>
-<div class="sourceCode cell-code" id="cb33" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, let's imagine that 100 learners took a test with 20 questions. We simulate the number of errors that they each made:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, let's imagine that 100 learners took a test with 20 questions. We simulate the number of errors that they each made:</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>errors <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">20</span>, <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Next, we convert the number of errors into the percentage of questions that they correctly answered:</span></span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> ((<span class="dv">20</span> <span class="sc">-</span> errors)<span class="sc">/</span><span class="dv">20</span>) <span class="sc">*</span> <span class="dv">100</span></span>
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Finally, we compute the correlation coefficient between the number of errors and the percentage of correctly answered questions:</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(errors, accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(errors, accuracy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div></li>
 </ul></li>
@@ -1622,7 +1616,7 @@ sample estimates:
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-How to report
+<span class="screen-reader-only">Note</span>How to report
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1631,8 +1625,8 @@ How to report
 </div>
 <p>How about L2 speakers? From the L2 panel of <a href="#fig-YearEducationPlot" class="quarto-xref">Figure&nbsp;<span>11.4</span></a>, we can see that the <code>Grammar</code> scores of L2 participants are, on average, much further away from the regression line than in the L1 panel, suggesting that it summarises the data far less well. Indeed, when we run the correlation test on the L2 data, we not only find that the correlation coefficient is much smaller (<code>0.13</code>), the 95% confidence interval around this coefficient [<code>-0.11, 0.36</code>] includes zero:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">formula =</span> <span class="sc">~</span> EduTotal <span class="sc">+</span> Grammar,</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> L2.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">formula =</span> <span class="sc">~</span> EduTotal <span class="sc">+</span> Grammar,</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> L2.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>
     Pearson's product-moment correlation
@@ -1654,7 +1648,7 @@ sample estimates:
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-How to report
+<span class="screen-reader-only">Note</span>How to report
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1663,7 +1657,7 @@ How to report
 </div>
 <p>Confidence intervals around correlation coefficients can be difficult to interpret as numbers. The good news is that they can easily be visualised using the {ggplot2} library. In <a href="10_Dataviz.html#sec-Scatterplots" class="quarto-xref"><span>Section 10.2.5</span></a>, we used the argument <code>se = FALSE</code> inside the <code>geom_smooth()</code> function. If, instead, we set it to <code>TRUE</code>, 95% confidence intervals will be displayed as grey bands around the regression lines. To change the α-level, you will need to change the default value of the <code>level</code> argument.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> EduTotal, </span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> Grammar)) <span class="sc">+</span></span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Group) <span class="sc">+</span></span>
@@ -1673,7 +1667,7 @@ How to report
 <span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">level =</span> <span class="fl">0.95</span>) <span class="sc">+</span></span>
 <span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of years in formal education"</span>,</span>
 <span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"English grammar comprehension test scores"</span>) <span class="sc">+</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-YearEducationPLotGrayBand" class="quarto-float quarto-figure quarto-figure-center anchored" alt="This is the same plot as above. The only difference is that two shaded gray bands sloping upwards are drawn around the blue lines of two panels. The band around the correlation in the L1 panel is quite narrow and does not encompass the possibility of a flat horizontal line. By constrast, the band around the correlation in the L2 panel is much wider and it is easy to imagine a horizontal line going through it.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1709,7 +1703,7 @@ Figure&nbsp;11.6: The dotted lines are compatible with the null hypothesis of no
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1768,14 +1762,14 @@ Even though one correlation is positive and the other negative, in absolute valu
 <div class="cell">
 <details class="code-fold">
 <summary>Show code to generate the plot needed to answer Q11.10.</summary>
-<div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Age, </span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">y =</span> Vocab)) <span class="sc">+</span></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">facet_wrap</span>(<span class="sc">~</span> Group) <span class="sc">+</span></span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, </span>
 <span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Now use the <code>cor.test()</code> function to find out how strong the correlations are in both the L1 and the L2 groups. Use the default α-level of 0.05.</p>
@@ -1826,22 +1820,22 @@ Assuming that the null hypothesis of no correlation between Age and Vocab scores
 <div class="cell">
 <details class="code-fold">
 <summary>Show code to answer Q11.11.</summary>
-<div class="sourceCode cell-code" id="cb38" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">formula =</span> <span class="sc">~</span> Age <span class="sc">+</span> Vocab,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">formula =</span> <span class="sc">~</span> Age <span class="sc">+</span> Vocab,</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> L1.data)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">formula =</span> <span class="sc">~</span> Age <span class="sc">+</span> Vocab,</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> L2.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> L2.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Consider the code and its output below. <a href="#fig-VocabArrivalPLot" class="quarto-xref">Figure&nbsp;<span>11.7</span></a> visualises the correlation between L2 speakers’ English receptive vocabulary test scores (<code>Vocab</code>) and their age of arrival in the UK (<code>Arrival</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span> </span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Arrival, </span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">y =</span> Vocab)) <span class="sc">+</span></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, </span>
 <span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-VocabArrivalPLot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A scatter plot showing the relationship between the L2 speakers' vocabulary test scores and their age of arrival in the UK. Each black dot represents an individual’s score. A blue regression line in the plot shows a negative trend: higher test scores are associated with younger ages of arrival. A shaded gray band sloping downwards is drawn around the blue line.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1873,8 +1867,8 @@ Figure&nbsp;11.7: Correlation between L2 speakers’ English vocabulary test sco
 <div class="cell">
 <details class="code-fold">
 <summary>Show code to answer Q11.12.</summary>
-<div class="sourceCode cell-code" id="cb40" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">formula =</span> <span class="sc">~</span> Vocab <span class="sc">+</span> Arrival,</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> L2.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">formula =</span> <span class="sc">~</span> Vocab <span class="sc">+</span> Arrival,</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> L2.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p><span style="color:green;"><strong>Q11.13</strong></span> How likely are we to observe such a strong correlation or an even stronger one in a sample of this size, if there is actually no correlation in the full L2 population?</p>
@@ -1937,18 +1931,18 @@ It's impossible to tell because the correlation is not statistically significant
 <section id="sec-Normality" class="level3" data-number="11.6.3">
 <h3 data-number="11.6.3" class="anchored" data-anchor-id="sec-Normality"><span class="header-section-number">11.6.3</span> Normality</h3>
 <p>For many inferential statistical tests commonly reported in the language sciences, it is also assumed that the <strong>population data</strong> are normally distributed (see <a href="8_DescriptiveStats.html#sec-Normal" class="quarto-xref"><span>Section 8.2.3</span></a>). This assumption is often quite reasonable, because many real-world quantities are normally distributed. This is why we typically say that this assumption can be relaxed if we have more than 30 observations per group.</p>
-<p>However, there are some things in the world that are inherently non-normally distributed. For instance, word frequencies in a text or a collection of texts (i.e., a corpus) are never normally distributed: a handful of words occur extremely frequently (in written English typically: <em>the</em>, <em>of</em>, <em>a</em>, <em>in</em>, <em>to</em>, etc.), some words are fairly frequent, but the vast majority are very infrequent. Reaction times is another example of a kind of variable that hardly ever meets the criterion of normality. One way to deal with highly skewed distributions like word frequencies and reaction times is to apply <strong>transformations</strong> to these variables before attempting to do any inferential statistics <span class="citation" data-cites="WinterStatisticsLinguistsIntroduction2019">(see <a href="99_references.html#ref-WinterStatisticsLinguistsIntroduction2019" role="doc-biblioref">Winter 2019</a>: Chapter 5)</span>.</p>
+<p>However, there are some things in the world that are inherently non-normally distributed. For instance, word frequencies in a text or a collection of texts (i.e.&nbsp;a corpus) are never normally distributed: a handful of words occur extremely frequently (in written English typically: <em>the</em>, <em>of</em>, <em>a</em>, <em>in</em>, <em>to</em>, etc.), some words are fairly frequent, but the vast majority are very infrequent. Reaction times is another example of a kind of variable that hardly ever meets the criterion of normality. One way to deal with highly skewed distributions like word frequencies and reaction times is to apply <strong>transformations</strong> to these variables before attempting to do any inferential statistics <span class="citation" data-cites="WinterStatisticsLinguistsIntroduction2019">(see <a href="99_references.html#ref-WinterStatisticsLinguistsIntroduction2019" role="doc-biblioref">Winter 2019</a>: Chapter 5)</span>.</p>
 <p>Of course, we cannot check if the population data meet the assumption of normality because we do not have the entire population data (and if we did, we wouldn’t <em>need</em> inferential statistics!) so the best we can do is check if our <em>data</em> are normally distributed. This is best achieved visually. For instance, before conducting a <em>t</em>-test comparing the mean difference in <code>Grammar</code> scores in the L1 and L2 groups using the <code>t.test()</code> function, we should first visualise the two distributions of <code>Grammar</code> scores to check that they are approximately normally distributed. <a href="#fig-GrammarDensityPlot" class="quarto-xref">Figure&nbsp;<span>11.8</span></a> shows that this is clearly <em>not</em> the case!</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code to generate plot.</summary>
-<div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Grammar,</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fill =</span> Group)) <span class="sc">+</span></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
 <span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
 <span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"English grammar comprehension test scores"</span>) <span class="sc">+</span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-GrammarDensityPlot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A density plot comparing English grammar comprehension test scores for two groups, L1 (purple) and L2 (yellow). The x-axis represents the test scores, while the y-axis indicates the density. The L1 group shows a higher concentration of scores near the top end of the scale. The L2 group has a broader distribution, indicating more variability.">
@@ -1965,8 +1959,8 @@ Figure&nbsp;11.8: Density plot comparing English grammar comprehension test scor
 </div>
 <p>We are dealing here with <strong>non-normal</strong> or <strong>non-parametric data</strong>, hence we need a non-parametric version of the <em>t</em>-test: the <strong>Wilcoxon test</strong> (also known as the Mann-Whitney test or the <em>U</em>-test):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(Grammar <span class="sc">~</span> Group, </span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> Dabrowska.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(Grammar <span class="sc">~</span> Group, </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> Dabrowska.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>
     Wilcoxon rank sum test with continuity correction
@@ -1977,15 +1971,15 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
 <p>The output of the <code>wilcox.test()</code> function tells us that there is a 2.6% chance of obtaining our observed difference in <strong>median</strong> <code>Grammar</code> scores in an L1 and L2 sample of this size or an even larger difference under the assumption of the null hypothesis (of no difference across the two groups). Hence, if we had previously defined our α-level as 0.05, we reject the null hypothesis. If, however, we had chosen a stricter α-level of 0.01, we fail to reject the null hypothesis.</p>
-<p>The Wilcoxon test does not make any assumptions about the distributions of the population data, which means that it can be used for all kinds of continuous variables including word frequencies. However, there is a drawback: it is usually less powerful than the standard <em>t</em>-test. Using it, we are more likely to report a false negative (i.e., to fail to report a real difference in two means), which is why a transformation may be wiser <span class="citation" data-cites="WinterStatisticsLinguistsIntroduction2019">(for more about transformations, see <a href="99_references.html#ref-WinterStatisticsLinguistsIntroduction2019" role="doc-biblioref">Winter 2019</a>: Chapter 5)</span>.</p>
+<p>The Wilcoxon test does not make any assumptions about the distributions of the population data, which means that it can be used for all kinds of continuous variables including word frequencies. However, there is a drawback: it is usually less powerful than the standard <em>t</em>-test. Using it, we are more likely to report a false negative (i.e.&nbsp;to fail to report a real difference in two means), which is why a transformation may be wiser <span class="citation" data-cites="WinterStatisticsLinguistsIntroduction2019">(for more about transformations, see <a href="99_references.html#ref-WinterStatisticsLinguistsIntroduction2019" role="doc-biblioref">Winter 2019</a>: Chapter 5)</span>.</p>
 </section>
 <section id="sec-Linearity" class="level3" data-number="11.6.4">
 <h3 data-number="11.6.4" class="anchored" data-anchor-id="sec-Linearity"><span class="header-section-number">11.6.4</span> Linearity and outliers</h3>
-<p>All statistical significance tests are sensitive to outliers. Hence, it is important to identify any outliers (e.g., by plotting your data as part of preliminary data exploration) and to carefully consider the extent to which they may influence the results of your analysis.</p>
-<p>Another important assumption of Pearson’s correlation coefficient (<em>r</em>) is that the continuous variables are linearly related. Again, this is best perceived visually: if you plot the two variables against one another in a scatter plot (see <a href="10_Dataviz.html#sec-Scatterplots" class="quarto-xref"><span>Section 10.2.5</span></a>), the points should fall roughly along a single, straight line. When the true association is non-linear (e.g., curvilinear), Pearson’s <em>r</em> will underestimate the strength of that association as it only captures the linear component of an association <span class="citation" data-cites="TabachnickUsingMultivariateStatistics2014">(<a href="99_references.html#ref-TabachnickUsingMultivariateStatistics2014" role="doc-biblioref">Tabachnick &amp; Fidell 2014</a>: 117)</span>.</p>
+<p>All statistical significance tests are sensitive to outliers. Hence, it is important to identify any outliers (e.g.&nbsp;by plotting your data as part of preliminary data exploration) and to carefully consider the extent to which they may influence the results of your analysis.</p>
+<p>Another important assumption of Pearson’s correlation coefficient (<em>r</em>) is that the continuous variables are linearly related. Again, this is best perceived visually: if you plot the two variables against one another in a scatter plot (see <a href="10_Dataviz.html#sec-Scatterplots" class="quarto-xref"><span>Section 10.2.5</span></a>), the points should fall roughly along a single, straight line. When the true association is non-linear (e.g.&nbsp;curvilinear), Pearson’s <em>r</em> will underestimate the strength of that association as it only captures the linear component of an association <span class="citation" data-cites="TabachnickUsingMultivariateStatistics2014">(<a href="99_references.html#ref-TabachnickUsingMultivariateStatistics2014" role="doc-biblioref">Tabachnick &amp; Fidell 2014</a>: 117)</span>.</p>
 <p>In 1973, the statistician Frank Anscombe put together a small dataset with four pairs of variables (<em>x</em> and <em>y</em>) with the aim of illustrating the necessity to visualise data and not rely solely on statistics. The dataset is included in base <code>R</code> so we can access it by calling its name without downloading or installing anything:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>anscombe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>anscombe</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>   x1 x2 x3 x4    y1   y2    y3    y4
 1  10 10 10  8  8.04 9.14  7.46  6.58
@@ -2003,23 +1997,23 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 <p>Known as the Anscombe Quartet, the dataset’s four pairs of variables have exactly the same correlation coefficient (when rounded to two decimal places):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x1, anscombe<span class="sc">$</span>y1) <span class="sc">|&gt;</span> </span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x1, anscombe<span class="sc">$</span>y1) <span class="sc">|&gt;</span> </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 0.82</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x2, anscombe<span class="sc">$</span>y2) <span class="sc">|&gt;</span> </span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x2, anscombe<span class="sc">$</span>y2) <span class="sc">|&gt;</span> </span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 0.82</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x3, anscombe<span class="sc">$</span>y3) <span class="sc">|&gt;</span> </span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x3, anscombe<span class="sc">$</span>y3) <span class="sc">|&gt;</span> </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 0.82</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x4, anscombe<span class="sc">$</span>y4) <span class="sc">|&gt;</span> </span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x4, anscombe<span class="sc">$</span>y4) <span class="sc">|&gt;</span> </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 0.82</code></pre>
 </div>
@@ -2028,7 +2022,7 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>See {ggplot2} code to generate plots.</summary>
-<div class="sourceCode cell-code" id="cb54" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>Pair1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> anscombe, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>Pair1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> anscombe, </span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x1, <span class="at">y =</span> y1)) <span class="sc">+</span></span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"blue"</span>,</span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>,</span>
@@ -2073,7 +2067,7 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 <span id="cb54-43"><a href="#cb54-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
 <span id="cb54-44"><a href="#cb54-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-45"><a href="#cb54-45" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb54-46"><a href="#cb54-46" aria-hidden="true" tabindex="-1"></a>Pair1 <span class="sc">+</span> Pair2 <span class="sc">+</span> Pair3 <span class="sc">+</span> Pair4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-46"><a href="#cb54-46" aria-hidden="true" tabindex="-1"></a>Pair1 <span class="sc">+</span> Pair2 <span class="sc">+</span> Pair3 <span class="sc">+</span> Pair4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-4PairPlot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A set of four scatter plots showing the relationship between four pairs of variables (x1, y1), (x2, y2), (x3, y3), and (x4, y4). The Pair 2 plot shows a non-linear relationship between variables.">
@@ -2096,7 +2090,7 @@ Figure&nbsp;11.9: Four plots showing the relationship between pairs of variables
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Non-parametric correlations
+<span class="screen-reader-only">Note</span>Non-parametric correlations
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2111,10 +2105,10 @@ Non-parametric correlations
 <div class="cell">
 <details class="code-fold">
 <summary>See code to generate plot.</summary>
-<div class="sourceCode cell-code" id="cb55" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Dabrowska.data,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Dabrowska.data,</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Group, <span class="at">y =</span> Grammar)) <span class="sc">+</span></span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-GrammarBoxplot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A box plot comparing grammar scores between two groups, L1 and L2. The L1 group shows a narrow range of high scores clustered near 100, with one outlier around 50. The L2 group displays a wider range of scores.">
@@ -2134,13 +2128,13 @@ Figure&nbsp;11.10: Comparison of grammar scores between L1 and L2 groups
 <div class="cell">
 <details class="code-fold">
 <summary>See code to generate plot.</summary>
-<div class="sourceCode cell-code" id="cb56" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Group <span class="sc">==</span> <span class="st">"L1"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Vocab, <span class="at">y =</span> EduTotal)) <span class="sc">+</span></span>
 <span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
 <span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-VocabEduPlot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A scatter plot showing the relationship between vocabulary on the x-axis and total education years on the y-axis. Each black dot represents a data point, and a blue line indicates a positive correlation; however, as Vocab scores become higher, the dots appear to be futher removed from the blue regression line.">
@@ -2157,9 +2151,9 @@ Figure&nbsp;11.11: The relationship between vocabulary and total education years
 </div>
 <p>In other words, these data do not meet the assumption of homoscedasticity. In this case, we should therefore use a non-pamametric correlation statistic, such as Spearman’s ρ (‘rho’) and Kendall’s τ (‘tau’). As we are looking at a relatively small dataset here (only L1 speakers) and some speakers performed equally well on the <code>Vocab</code> test (in other words, we have some ties in the ranks), Kendall’s τ is recommended:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">formula =</span> <span class="sc">~</span> Vocab <span class="sc">+</span> EduTotal,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">formula =</span> <span class="sc">~</span> Vocab <span class="sc">+</span> EduTotal,</span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> L1.data,</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"kendall"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"kendall"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>
     Kendall's rank correlation tau
@@ -2174,12 +2168,12 @@ sample estimates:
 </div>
 <p>It returns a correlation coefficient τ of <code>0.28</code> and a <em>p</em>-value of &lt;&nbsp;0.05, which allows us to reject the null hypothesis of no association between <code>Vocab</code> and <code>EduTotal</code> scores among L1 English speakers.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="unnumbered" style="color:green;">Optional (fun) task</span> 🦖
+<span class="screen-reader-only">Caution</span><span class="unnumbered" style="color:green;">Optional (fun) task</span> 🦖
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2202,21 +2196,21 @@ Figure&nbsp;11.12: Scatter plot depicting a tyrannosaurus (originally created by
 </div>
 <p><span style="color:green;"><strong>1.</strong></span> Install and load the <code>datasauRus</code> package to access the <code>R</code> data object <code>datasaurus_dozen</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"datasauRus"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"datasauRus"</span>)</span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasauRus)</span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><span style="color:green;"><strong>2.</strong></span> Run the following code to compare the descriptive statistics of all three datasets within the <code>datasaurus_dozen</code>. The fourth set, <code>dino</code>, is the one visualised in <a href="#fig-DinoPLot" class="quarto-xref">Figure&nbsp;<span>11.12</span></a>. Note that there is a very small, negative correlation between all pairs of variables of <code>-0.0656</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">|&gt;</span> </span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dataset) <span class="sc">|&gt;</span> </span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_x =</span> <span class="fu">mean</span>(x), </span>
 <span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_y =</span> <span class="fu">mean</span>(y), </span>
 <span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">std_dev_x =</span> <span class="fu">sd</span>(x), </span>
 <span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">std_dev_y =</span> <span class="fu">sd</span>(y), </span>
-<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">corr_x_y =</span> <span class="fu">cor</span>(x, y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">corr_x_y =</span> <span class="fu">cor</span>(x, y))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 13 × 6
    dataset    mean_x mean_y std_dev_x std_dev_y corr_x_y
@@ -2238,20 +2232,20 @@ Figure&nbsp;11.12: Scatter plot depicting a tyrannosaurus (originally created by
 </div>
 <p><span style="color:green;"><strong>3.</strong></span> Run the following code to visualise the relationships between the other 12 pairs of variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datasaurus_dozen, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datasaurus_dozen, </span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">colour =</span> dataset)) <span class="sc">+</span> </span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> dataset, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
 <span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
 <span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><span style="color:green;"><strong>4.</strong></span> Add a <code>geom_</code> layer (see <a href="10_Dataviz.html#sec-geoms" class="quarto-xref"><span>Section 10.1.4</span></a>) to the following {ggplot2} code to add a blue linear regression line in all 13 panels.</p>
+<p><span style="color:green;"><strong>4.</strong></span> Add a <code>geom_</code> layer (see <a href="10_Dataviz.html#sec-geoms" class="quarto-xref"><span>Section 10.1.2</span></a>) to the following {ggplot2} code to add a blue linear regression line in all 13 panels.</p>
 <div class="cell" data-source-line-numbers="4:6">
 <details class="code-fold">
 <summary>View code to complete Part 4 of the task.</summary>
-<div class="sourceCode cell-code" id="cb63" data-source-line-numbers="4:6" data-code-line-numbers="4:6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datasaurus_dozen, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63" data-source-line-numbers="4:6" data-code-line-numbers="4:6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datasaurus_dozen, </span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">colour =</span> dataset)) <span class="sc">+</span> </span>
 <span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> dataset, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
@@ -2261,7 +2255,7 @@ Figure&nbsp;11.12: Scatter plot depicting a tyrannosaurus (originally created by
 <span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
 <span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
 <span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="cn">NULL</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="cn">NULL</span>)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Clearly, if we had only used correlation statistics to describe the relationships between these 13 pairs of variables, we would have missed some literally dinosaur-sized patterns! 🤯</p>
@@ -2297,21 +2291,21 @@ Figure&nbsp;11.14: Remember that the best way to check test assumptions is to vi
 <p>In <a href="#sec-PValues" class="quarto-xref"><span>Section 11.3</span></a> we saw that conducting a statistical test with an α-level of 0.05 means that we accept a 5% risk of falsely rejecting the null hypothesis when it is actually true. Falsely rejecting the null hypothesis leads to a <strong>false positive</strong> result, also referred to as making a <strong>Type I error</strong>. It is crucial to understand that if we perform multiple tests on the same data, we dramatically increase the risk of reporting such false positive results. This is known as the multiple testing or multiple comparisons problem.</p>
 <p>Imagine that we want to test 20 independent null hypotheses on a single dataset using α&nbsp;=&nbsp;0.05 as our significance threshold. Even if all null hypotheses are actually true, the probability of obtaining at least one significant result, i.e.&nbsp;at least one <em>p</em>-value &lt;&nbsp; 0.05, by chance is equal to 64%.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span>)<span class="sc">^</span><span class="dv">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span>)<span class="sc">^</span><span class="dv">20</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 0.6415141</code></pre>
 </div>
 </div>
 <p>Thus, having conducted 20 independent tests, we have a 64% chance of finding at least one statistically significant result purely by chance! As the number of tests increases, this probability approaches certainty <span class="citation" data-cites="BaayenAnalyzinglinguisticdata2008">(see also <a href="99_references.html#ref-BaayenAnalyzinglinguisticdata2008" role="doc-biblioref">Baayen 2008</a>: 106-107)</span>. With 100 tests, we are at 99%:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span>)<span class="sc">^</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span>)<span class="sc">^</span><span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 0.9940795</code></pre>
 </div>
 </div>
 <p>To avoid reporting false positive results, it is therefore recommended that we correct our α-level to account for the number of tests performed on the data. The simplest (but also most conservative) approach to do so is called the <strong>Bonferroni correction</strong>. It consists in adjusting our chosen α-level by dividing it by the number of tests that we are conducting on the data. Hence, if we want to use 0.05 as our significance level and conduct 20 independent tests on the same data, we divide 0.05 by 20:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.05</span> <span class="sc">/</span> <span class="dv">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.05</span> <span class="sc">/</span> <span class="dv">20</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 0.0025</code></pre>
 </div>
@@ -2320,25 +2314,25 @@ Figure&nbsp;11.14: Remember that the best way to check test assumptions is to vi
 <p>Other correction methods for multiple testing exist. <strong>Holm’s</strong> method, for example, is a popular, slightly less conservative alternative to the Bonferroni correction. The base <code>R</code> function <code>p.adjust()</code> can be used to automatically adjust <em>p</em>-values using different methods including Bonferroni’s and Holm’s.</p>
 <p>Here are the seven <em>p</em>-values that we obtained from the seven independent statistical tests that we performed on the <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> data as part of this chapter:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>p_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.956e-05</span>, <span class="fl">0.000007032</span>, <span class="fl">0.5525</span>, <span class="fl">0.0005581</span>, <span class="fl">0.2782</span>, <span class="fl">0.026</span>, <span class="fl">0.0003992</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>p_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.956e-05</span>, <span class="fl">0.000007032</span>, <span class="fl">0.5525</span>, <span class="fl">0.0005581</span>, <span class="fl">0.2782</span>, <span class="fl">0.026</span>, <span class="fl">0.0003992</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>At our chosen α-level of 0.05, five of these <em>p</em>-values were statistically significant, leading us to reject the corresponding five null hypotheses. However, if we apply Holm’s correction using <code>p.adjust()</code>, we find that we can only reject four of these null hypotheses.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>p_values.adjusted <span class="ot">&lt;-</span> <span class="fu">p.adjust</span>(p_values, <span class="at">method =</span> <span class="st">"holm"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>p_values.adjusted <span class="ot">&lt;-</span> <span class="fu">p.adjust</span>(p_values, <span class="at">method =</span> <span class="st">"holm"</span>)</span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The adjusted p-values in scientific notation:</span></span>
-<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>p_values.adjusted</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>p_values.adjusted</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 1.1736e-04 4.9224e-05 5.5640e-01 2.2324e-03 5.5640e-01 7.8000e-02 1.9960e-03</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb73" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The adjusted p-values in standard notation:</span></span>
-<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(p_values.adjusted, <span class="at">scientific =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The adjusted p-values in standard notation:</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(p_values.adjusted, <span class="at">scientific =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "0.000117360" "0.000049224" "0.556400000" "0.002232400" "0.556400000"
 [6] "0.078000000" "0.001996000"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb75" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Which adjusted p-values are below 0.05, indicating that we can reject the corresponding null hypothesis:</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>p_values.adjusted <span class="sc">&lt;</span> <span class="fl">0.05</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Which adjusted p-values are below 0.05, indicating that we can reject the corresponding null hypothesis:</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>p_values.adjusted <span class="sc">&lt;</span> <span class="fl">0.05</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1]  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE</code></pre>
 </div>
@@ -2359,7 +2353,7 @@ Figure&nbsp;11.14: Remember that the best way to check test assumptions is to vi
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2373,7 +2367,7 @@ Your turn!
 </ul>
 <p>Your friend conducted the following four <em>t</em>-tests to find out whether he could reject the the null hypothesis of no difference in the average performance of male and female English speakers in these four grammar tests. He chose 0.05 as his significance threshold and, on the basis of these four tests, concluded that he could reject the null hypothesis in two out of four tests: the one concerning the active voice and the one about subject relatives.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">formula =</span> Active <span class="sc">~</span> Gender, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">formula =</span> Active <span class="sc">~</span> Gender, </span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span>
 <span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">formula =</span> Passive <span class="sc">~</span> Gender, </span>
@@ -2383,7 +2377,7 @@ Your turn!
 <span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span>
 <span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">formula =</span> SubRel <span class="sc">~</span> Gender, </span>
-<span id="cb77-11"><a href="#cb77-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb77-11"><a href="#cb77-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><span style="color:green;"><strong>Q11.14</strong></span> Your friend tells you that, based on the results of the two significant t-tests, he has decided to write a term paper focussing on how men have a better understanding of the active voice and subject relative constructions than women. You warn him that this approach reminds you of a questionable research practice (QRP) that you read about in the <a href="https://forrt.org/glossary/english/">FORRT glossary</a>. Which one?</p>
 <div class="cell">
@@ -2515,7 +2509,7 @@ almost 100%
 <div class="cell">
 <details class="code-fold">
 <summary>Show sample code to answer Q11.16</summary>
-<div class="sourceCode cell-code" id="cb78" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span>)<span class="sc">^</span><span class="dv">4</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span>)<span class="sc">^</span><span class="dv">4</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p><span style="color:green;"><strong>Q11.17</strong></span> Use Holm’s correction to correct the four <em>p</em>-values that your friend obtained to account for the fact that he conducted four tests on the same dataset. After correction, which null hypotheses can be rejected at α-level&nbsp;=&nbsp;0.05?</p>
@@ -2565,7 +2559,7 @@ None of them.
 <div class="cell">
 <details class="code-fold">
 <summary>Show sample code to answer Q11.17</summary>
-<div class="sourceCode cell-code" id="cb79" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Running the four t-tests and saving the output as four R objects to the local environment:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Running the four t-tests and saving the output as four R objects to the local environment:</span></span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>active.ttest <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="at">formula =</span> Active <span class="sc">~</span> Gender, </span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> Dabrowska.data)</span>
 <span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -2591,7 +2585,7 @@ None of them.
 <span id="cb79-24"><a href="#cb79-24" aria-hidden="true" tabindex="-1"></a>p_values.adjusted</span>
 <span id="cb79-25"><a href="#cb79-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb79-26"><a href="#cb79-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Now only the first p-value is below 0.05:</span></span>
-<span id="cb79-27"><a href="#cb79-27" aria-hidden="true" tabindex="-1"></a>p_values.adjusted <span class="sc">&lt;</span> <span class="fl">0.05</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb79-27"><a href="#cb79-27" aria-hidden="true" tabindex="-1"></a>p_values.adjusted <span class="sc">&lt;</span> <span class="fl">0.05</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>&nbsp;</p>
@@ -2603,7 +2597,7 @@ None of them.
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-In search of the truth…
+<span class="screen-reader-only">Note</span>In search of the truth…
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2622,7 +2616,7 @@ In search of the truth…
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Recommended readings 📚
+<span class="screen-reader-only">Tip</span>Recommended readings 📚
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2699,14 +2693,14 @@ Winter, Bodo. 2019. <em>Statistics for linguists: An introduction using <span>R<
 <li id="fn2"><p>Which, based on the results of our descriptive statistics, is a very reasonable assumption to make about the full population. If, however, you wanted to conduct a Student’s <em>t</em>-test that treats the variance of both groups as equal, then you would need to change the default value of the <code>var.equal</code> argument of the <code>t.test()</code> function to <code>TRUE</code> (for details see <code>?t.test</code>).<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>In scientific notation, “E” stands for “exponent”, which refers to the number of times a number needs to be multiplied by 10 or, if it is followed by a minus sign, multiplied by minus 10. This notation is used as a shorthand way of writing very large or very small numbers. One way to convert values from scientific notation to standard notation in <code>R</code> is to use the <code>format()</code> function like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(<span class="fl">1.956e-05</span>, <span class="at">scientific =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(<span class="fl">1.956e-05</span>, <span class="at">scientific =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "0.00001956"</code></pre>
 </div>
 </div>
 <a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></li>
 <li id="fn4"><p>Again, it is important to note that this is by no means the <em>only</em> way to interpret <em>p</em>-values. As with many things in statistics, how you interpret <em>p</em>-values depends on the statistical philosophy that you subscribe to. The approach described in this textbook corresponds to the statistical hypothesis testing approach developed by Neyman &amp; Pearson (<a href="https://lakens.github.io/statistical_inferences/references.html#ref-neyman_problem_1933">1933</a>). “In a Neyman-Pearson framework, the goal of statistical tests is to guide the behavior of researchers with respect to these two hypotheses. Based on the results of a statistical test, and without ever knowing whether the hypothesis is true or not, researchers choose to tentatively act as if the null hypothesis or the alternative hypothesis is true.” <span class="citation" data-cites="lakensImprovingYourStatistical2022">(<a href="99_references.html#ref-lakensImprovingYourStatistical2022" role="doc-biblioref">Lakens 2022</a>: Section 1.1)</span><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>It is worth noting that, just because 0.05 is (currently) the most widely used threshold, doesn’t mean that you have to use 0.05, too. If you are not comfortable accepting a 5% risk (which, statistically speaking, will happen one in 20 times, after all), you can define a lower threshold, e.g., 0.01, corresponding to a 1% risk. However, depending on how large your observed effect is and how much data you have, you may find that, with a lower significance‑level, you fail to reject the null hypothesis even when there is a true effect in the population so it’s a difficult balance to strike. To find out more, I recommend reading about <strong>statistical power</strong>, e.g.&nbsp;in Lakens <span class="citation" data-cites="lakensImprovingYourStatistical2022">(<a href="99_references.html#ref-lakensImprovingYourStatistical2022" role="doc-biblioref">2022</a>: Chapter 2)</span>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>It is worth noting that, just because 0.05 is (currently) the most widely used threshold, doesn’t mean that you have to use 0.05, too. If you are not comfortable accepting a 5% risk (which, statistically speaking, will happen one in 20 times, after all), you can define a lower threshold, e.g.&nbsp;0.01, corresponding to a 1% risk. However, depending on how large your observed effect is and how much data you have, you may find that, with a lower significance‑level, you fail to reject the null hypothesis even when there is a true effect in the population so it’s a difficult balance to strike. To find out more, I recommend reading about <strong>statistical power</strong>, e.g.&nbsp;in Lakens <span class="citation" data-cites="lakensImprovingYourStatistical2022">(<a href="99_references.html#ref-lakensImprovingYourStatistical2022" role="doc-biblioref">2022</a>: Chapter 2)</span>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>All of the statistical tests performed in this chapter are two-sided. For a discussion of one-sided vs.&nbsp;two-sided tests, see <span class="citation" data-cites="lakensImprovingYourStatistical2022">Lakens (<a href="99_references.html#ref-lakensImprovingYourStatistical2022" role="doc-biblioref">2022</a>)</span>: Section 5.10).<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
@@ -2726,7 +2720,7 @@ Winter, Bodo. 2019. <em>Statistics for linguists: An introduction using <span>R<
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -2776,13 +2770,14 @@ Winter, Bodo. 2019. <em>Statistics for linguists: An introduction using <span>R<
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

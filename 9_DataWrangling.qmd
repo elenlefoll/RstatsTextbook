@@ -102,7 +102,7 @@ summary(L1.data$GrammarR)
 
 To check the sanity of a dataset, we can use this same function on an entire data table (provided that the data are in the tidy format, see @sec-tidyverse). Thus, the command `summary(L1.data)`[^9_datawrangling-1] outputs summary statistics on all the variables of the L1 dataset - in other words, on all the columns of the data frame `L1.data`.
 
-[^9_datawrangling-1]: Note that, throughout this chapter, long code output is shortened to save space. When you run this command on your own computer, however, you will see that the output is much longer that what is reprinted in this chapter. You will likely need to scroll up in your Console window to view it all.
+[^9_datawrangling-1]: Note that, throughout this chapter, long code output is shortened to save space. When you run this command on your own computer, however, you will see that the output is much longer than what is reprinted in this chapter. You will likely need to scroll up in your Console window to view it all.
 
 ```{r}
 #| eval: false
@@ -150,9 +150,11 @@ summary(L1.Gender.fct)
 
 The tidyverse package [{forcats}](https://forcats.tidyverse.org/) has a lot of very useful functions to manipulate factors. They all start with `fct_`.
 
-::: column-margin {.content-visible when-format="html"}
+:::: {.content-visible when-format="html"}
+::: {.column-margin}
 ![Hex sticker of the [{forcats}](https://forcats.tidyverse.org/) package](images/hex_forcats.png){width="100" alt-text="The forcats hexagonal logo features four lazy black cats in a cardboard box."}
 :::
+::::
 
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
@@ -181,8 +183,7 @@ check_question("fct_mutate",
 ```{r}
 #| echo: false
 check_question(c("fct_relevel(L1.Gender.fct, \"M\")",
-                           "fct_rev(L1.Gender.fct)",
-                           "fct_recode(L1.Gender.fct, first = \"M\", second = \"F\")"),
+                           "fct_rev(L1.Gender.fct)"),
                options = c("fct_relevel(L1.Gender.fct, \"M\")",
                            "fct_rev(L1.Gender.fct)",
                            "fct_recode(L1.Gender.fct, first = \"M\", second = \"F\")",
@@ -192,7 +193,7 @@ check_question(c("fct_relevel(L1.Gender.fct, \"M\")",
                type = "check",
                button_label = "Check answer",
                right = "Correct, well done!",
-               wrong = "No, not quite. Note that three of these commands will yield the desired outcome! Check out the functions' descriptions in the help files, as some of these function names may be misleading.")
+               wrong = "No, not quite. Note that two of these commands will yield the desired outcome! Check out the functions' descriptions in the help files, as some of these function names may be misleading.")
 check_hint("Use the `?` function to access the help files of each function and then try the above commands out! When you print an entire factor variable in the Console, the order of the levels is displayed at the bottom of the output. If the last line of your output reads \"Levels: M F\", then the operation was successful.", 
            hint_title = "😇 Hover for a hint", 
            type = "onmouseover")
@@ -206,9 +207,11 @@ check_hint("Use the `?` function to access the help files of each function and t
 
 In the previous section, we stored the factor representing L1 participants' gender as a separate `R` object called `L1.Gender.fct`. If, instead, we want to add this factor as an additional column to our dataset, we can use the `mutate()` function from [{dplyr}](https://dplyr.tidyverse.org/).
 
-::: column-margin {.content-visible when-format="html"}
+:::: {.content-visible when-format="html"}
+::: {.column-margin}
 ![Hex sticker of the [{dplyr}](https://dplyr.tidyverse.org/) package](images/hex_dplyr.png){width="100"}
 :::
+::::
 
 ```{r}
 L1.data <- L1.data |> 
@@ -302,7 +305,7 @@ L2.data.fct <- L2.data |>
 str(L2.data.fct)
 ```
 
-[**Q9.5**]{style="color:green;"} Use the `summary()` and `str()` functions to inspect the sanity of L2 dataset now that you have converted all the character vectors to factors. Have you noticed that there three factor levels in the `Gender` variable of the L2 dataset whereas there are only two in the L1 dataset? What is the most likely reason for this?
+[**Q9.5**]{style="color:green;"} Use the `summary()` and `str()` functions to inspect the sanity of L2 dataset now that you have converted all the character vectors to factors. Have you noticed that there are three factor levels in the `Gender` variable of the L2 dataset whereas there are only two in the L1 dataset? What is the most likely reason for this?
 
 ```{r}
 #| echo: false
@@ -361,9 +364,11 @@ Like `mutate()` and `select()`, `str_to_upper()` also comes from a tidyverse pac
 
 [^9_datawrangling-2]: The equivalent base `R` function is `toupper()`.
 
-::: column-margin {.content-visible when-format="html"}
+:::: {.content-visible when-format="html"}
+::: {.column-margin}
 ![Hex sticker of the [{stringr}](https://stringr.tidyverse.org/) package](images/hex_stringr.png){width="100"}
 :::
+::::
 
 -   `str_to_upper()` converts to string upper case.
 -   `str_to_lower()` converts to string lower case.
@@ -545,19 +550,19 @@ Below is an extract of the help page for the `word()` function (accessed with th
 > |----------------|----------------:|
 > | word {stringr} | R Documentation |
 >
-> ## Extract words from a sentence {#sec-WordHelp}
+> ## Extract words from a sentence {.unnumbered}
 >
-> ### Description
+> ### Description {.unnumbered}
 >
 > Extract words from a sentence
 >
-> ### Usage
+> ### Usage {.unnumbered}
 >
 > ```         
 > word(string, start = 1L, end = start, sep = fixed(" "))
 > ```
 >
-> ### Arguments
+> ### Arguments {.unnumbered}
 >
 > +----------------+-------------------------------------------------------------------------------------------------------------------------+
 > | `string`       | Input vector. Either a character vector, or something coercible to one.                                                 |
@@ -590,7 +595,7 @@ L2.data$NativeLg |>
   sort()
 ```
 
-As you can tell from the output above, the `word()` function uses white space to identify word boundaries. In this dataset, however, some of the participants' native languages are separated by forward slashes (`/`) rather than or in addition to spaces. The "Usage" section of the help file for the `word()` function (see `?word` and @sec-WordHelp) also confirms that the default word separator symbol is a space and shows us the syntax for changing the default separator. Below we change it to a forward slash.
+As you can tell from the output above, the `word()` function uses white space to identify word boundaries. In this dataset, however, some of the participants' native languages are separated by forward slashes (`/`) rather than or in addition to spaces. The "Usage" section of the help file for the `word()` function (see `?word` and above) also confirms that the default word separator symbol is a space and shows us the syntax for changing the default separator. Below we change it to a forward slash.
 
 ```{r}
 L2.data$NativeLg |>
@@ -804,7 +809,7 @@ check_question(c("L2.data <- L2.data |> relocate(NativeLgFamily, .after = Native
 ::: {.callout-note collapse="true"}
 #### Click here for solutions to [**Q9.9**]{style="color:green;"}—[**Q9.12**]{style="color:green;"}.
 
-As always, there are several solutions to solving this [**task**]{style="color:green;"}. Here is one solution based on what we have covered so far in this chapter.
+As is often the case, there are several ways to solve these [**Your turn!**]{style="color:green;"} tasks. Here is one solution based on what we have covered so far in this chapter.
 
 [**Q9.9**]{style="color:green;"} Note that the following code will only work if you followed the instructions in the section above to create the `NativeLg.cleaned` variable as it relies on this variable to create the new `NativeLgFamily` variable.
 
@@ -885,7 +890,7 @@ L2.data |>
 ```{r}
 #| echo: false
 L2.data |> 
-  relocate(NativeLgFamily, after = NativeLg) |> 
+  relocate(NativeLgFamily, .after = NativeLg) |> 
   select(1:6) |> 
   str()
 ```
@@ -1022,7 +1027,7 @@ combined.data |>
 
 Run `View(combined.data)` to inspect the combined dataset and check in which other columns there are `NA` values.
 
-:::: {.callout-note collapse="true"}
+:::: {.callout-note collapse="false"}
 #### What if my data are not yet in tidy format? 🤨
 
 Combining the two datasets from @DabrowskaExperienceAptitudeIndividual2019 was relatively easy because the data was already in tidy format. But, fear not: if you need to first convert your data to tidy format, the [{tidyr}](https://tidyr.tidyverse.org/) package has got you covered! 😎
@@ -1031,9 +1036,11 @@ The `pivot_longer()` and `pivot_wider()` functions allow you to easily convert t
 
 ![Extract of the [data tidying with tidyr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf) (CC BY SA Posit Software, PBC)](images/tidyr_cheatsheet_extract.png){#fig-tidyrcheatsheet fig-alt="pivot_longer(data, cols, names_to = \"name\", values_to = \"value\", values_drop_na = FALSE) \"Lengthen\" data by collapsing several columns into two. Column names move to a new names_to column and values to a new values_to column. pivot_longer(table4a, cols = 2:3, names_to =\"year\", values_to = \"cases\") pivot_wider(data, names_from = \"name\", values_from = \"value\") The inverse of pivot_longer(). \"Widen\" data by expanding two columns into several. One column provides the new column names, the other the values. pivot_wider(table2, names_from = type, values_from = count)" out-width="60%"}
 
-::: column-margin {.content-visible when-format="html"}
+:::: {.content-visible when-format="html"}
+::: {.column-margin}
 ![Hex sticker of the [{tidyr}](https://tidyr.tidyverse.org/) package](images/hex_tidyr.png){width="100"}
 :::
+::::
 
 Remember to carefully check the output of any data manipulation that you do *before* moving on to doing any analyses! To this end, the `View()` function is particularly helpful.
 ::::
@@ -1283,4 +1290,4 @@ Are you confident that you can...?
 -   [ ] Use tidyverse functions to pre-process data in an readable and reproducible way (@sec-Preprocessing) and (@sec-filter)
 -   [ ] Save `R` objects as `.rds` and `.csv` files on your computer (@sec-ExportingRObjects)
 
-The [following chapter](@sec-DataViz) stays in the tidyverse as we will learn how to use the popular tidyverse package {ggplot2} to visualise the pre-processed data from @DabrowskaExperienceAptitudeIndividual2019.
+In @sec-DataViz we continue to explore the tidyverse as we learn how to use the popular tidyverse package {ggplot2} to visualise the pre-processed data from @DabrowskaExperienceAptitudeIndividual2019. Are you ready to get creative? 🎨

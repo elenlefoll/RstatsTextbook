@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.26">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,18 +91,19 @@ div.csl-indent {
 <link href="../../B_CaseStudies/Poppy/ThrowVerbs.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-3e3370d44295d9fa30cc16d77ad785c2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-540c66f2be59a33d43b8e94dc657d4ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-2dc7341fb0871247097a223aafd3766b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -163,7 +164,7 @@ div.csl-indent {
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -196,7 +197,7 @@ div.csl-indent {
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -236,7 +237,7 @@ div.csl-indent {
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -264,7 +265,7 @@ div.csl-indent {
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -287,20 +288,22 @@ div.csl-indent {
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -327,7 +330,9 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../../">Data Analysis for the<br>Language Sciences</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -561,12 +566,12 @@ div.csl-indent {
 
 
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<strong>About the authors of this chapter</strong>
+<span class="screen-reader-only">Note</span><strong>About the authors of this chapter</strong>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -624,7 +629,7 @@ Figure&nbsp;17.1: Emoji pairs and their AU codes <span class="citation" data-cit
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-How did the experiment work?
+<span class="screen-reader-only">Note</span>How did the experiment work?
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -661,7 +666,7 @@ Figure&nbsp;17.2: Example of a test item in the experiment <span class="citation
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quiz time!
+<span class="screen-reader-only">Tip</span>Quiz time!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -798,29 +803,29 @@ Figure&nbsp;17.3: Barplots from Fricke, Grosz &amp; Scheffler <span class="citat
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Session set-up
+<span class="screen-reader-only">Warning</span>Session set-up
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>To run the code of this chapter, you will need the following packages. Make sure that they are installed and loaded before starting.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("patchwork")</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ragg")</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ragg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ragg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 <p>We import the authors’ raw data using the <code>read.csv()</code> and <code>here()</code> functions. You will need to adjust the file path to match the folder structure of your computer (see <a href="../../6_ImpoRtingData.html#sec-ImportingDataCSV" class="quarto-xref"><span>Section 6.5</span></a>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"B_CaseStudies"</span>, <span class="st">"Rose-Gina"</span>, <span class="st">"data"</span>, <span class="st">"raw_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"B_CaseStudies"</span>, <span class="st">"Rose-Gina"</span>, <span class="st">"data"</span>, <span class="st">"raw_data.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>As specified by Fricke, Grosz &amp; Scheffler <span class="citation" data-cites="fricke2024semantic">(<a href="../../99_references.html#ref-fricke2024semantic" role="doc-biblioref">2024</a>: 8)</span>, we filter out participants who exceed the maximum age of 35 years for all following analyses. We do this by using the <code>filter()</code> function and store the result in a new data frame called <code>df</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> raw_data <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&lt;=</span> <span class="dv">35</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> raw_data <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&lt;=</span> <span class="dv">35</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="sec-gender-freq" class="level3" data-number="17.2.2">
@@ -828,8 +833,8 @@ Session set-up
 <p>Let’s first get a general overview: How many men, women, and non-binary people participated in the study?</p>
 <p>The relevant variable in the data set is called <code>gender</code>. However, you will see that the names of the gender groups are in German. To figure out what the labels of the different gender groups are, we use the <code>count()</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>    gender    n
 1   divers   72
@@ -839,14 +844,14 @@ Session set-up
 </div>
 <p>Before we start analysing, we should translate the labels (levels) of the categories into English. Using a combination of <code>mutate()</code> and <code>recode()</code>, we translate <em>männlich</em> to <em>men</em>, <em>weiblich</em> to <em>women</em>, and <em>divers</em> to <em>non-binary.</em><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">recode</span>(gender, </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"männlich"</span> <span class="ot">=</span> <span class="st">"men"</span>, </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"weiblich"</span> <span class="ot">=</span> <span class="st">"women"</span>, </span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"divers"</span> <span class="ot">=</span> <span class="st">"non-binary"</span>))</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>      gender    n
 1        men 2616
@@ -857,9 +862,9 @@ Session set-up
 <p>Now that <code>gender</code> variable have English labels, we want to determine how many male, female, and non-binary subjects participated. We have used the <code>table()</code> function, which determines the number of occurrences of the different genders in the data. But in this case counting the occurrences is not straightforward. The data frame contains 24 rows for each subject, as each participant saw 24 items (see <a href="#sec-design" class="quarto-xref"><span>Section 17.1.2</span></a>). So, if we were to simply count the occurrences of <em>men</em>, <em>women</em>, and <em>non-binary</em> in the data with <code>count()</code>, we would end up with 24 times the values of the frequencies.</p>
 <p>To determine the actual gender distribution, we need to count the occurrences according to the subjects’ unique IDs. To do this, we apply the <code>distinct()</code> function to keep only unique occurrences (to be precise, the first unique occurrence) of each <code>submission_id</code>. The argument <code>.keep_all</code> is set to <code>TRUE</code>, which means that all other variables in the data frame are kept and not deleted.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(submission_id, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>      gender   n
 1        men 109
@@ -874,7 +879,7 @@ Session set-up
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quiz time!
+<span class="screen-reader-only">Tip</span>Quiz time!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -926,8 +931,8 @@ The y-axis of the plot may become distorted and therefore inaccurate.
 <p>Next, we calculate the relative frequencies of the different levels of emoji understanding for each gender.</p>
 <p>The variable we are interested in is called <code>emoji_understanding</code>. Just like with <code>gender</code>, we first have to do some data wrangling. We use the <code>count()</code> function to get the labels:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(emoji_understanding)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(emoji_understanding)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  emoji_understanding    n
 1            eher gut  912
@@ -938,14 +943,14 @@ The y-axis of the plot may become distorted and therefore inaccurate.
 </div>
 <p>We translate <em>mittelmäßig</em> to <em>moderate</em>, <em>eher gut</em> to <em>rather good</em>, <em>gut</em> to <em>good</em>, and <em>sehr gut</em> to <em>very good</em>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">emoji_understanding =</span> <span class="fu">recode</span>(emoji_understanding,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"mittelmäßig"</span> <span class="ot">=</span> <span class="st">"moderate"</span>,</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"eher gut"</span> <span class="ot">=</span> <span class="st">"rather good"</span>,</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"gut"</span> <span class="ot">=</span> <span class="st">"good"</span>,</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"sehr gut"</span> <span class="ot">=</span> <span class="st">"very good"</span>))</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(emoji_understanding)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(emoji_understanding)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  emoji_understanding    n
 1                good 1344
@@ -956,7 +961,7 @@ The y-axis of the plot may become distorted and therefore inaccurate.
 </div>
 <p>The levels are still in the wrong order. We need to rearrange them in an ascending order from <em>moderate</em> to <em>very good</em>. To do this, we define a vector <code>c("moderate", "rather good", "good", "very good")</code>. Using the <code>factor()</code> function, we encode this vector as a factor:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">emoji_understanding =</span> <span class="fu">factor</span>(emoji_understanding,</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"moderate"</span>,</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                                                   <span class="st">"rather good"</span>,</span>
@@ -964,7 +969,7 @@ The y-axis of the plot may become distorted and therefore inaccurate.
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                                                   <span class="st">"very good"</span>)))</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(emoji_understanding)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(emoji_understanding)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  emoji_understanding    n
 1            moderate   48
@@ -980,10 +985,10 @@ The y-axis of the plot may become distorted and therefore inaccurate.
 </ol>
 <p>To achieve both, we have to first group our data, using the powerful combination of <code>group_by()</code> and <code>count()</code>. We create a new data frame <code>gender_understanding_count</code> and again keep only each participant’s unique <code>submission_id</code> as above. We group the data by gender and count the frequencies for the different genders within the <code>emoji_understanding</code> factor:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(submission_id, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">|&gt;</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(gender, emoji_understanding)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(gender, emoji_understanding)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 10 × 3
 # Groups:   gender [3]
@@ -1003,13 +1008,13 @@ The y-axis of the plot may become distorted and therefore inaccurate.
 </div>
 <p>In this table, <code>n</code> was calculated by the <code>count()</code> function and represents the number of occurrences for each combination of <code>gender</code> and <code>emoji_understanding</code>. Next, we use <code>mutate()</code> to add a column with the relative frequencies, which we calculate with the formula <code>proportions(n) * 100</code> to obtain percentages.</p>
 <div class="cell" data-source-line-numbers="5">
-<div class="sourceCode cell-code" id="cb18" data-source-line-numbers="5" data-code-line-numbers="5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>gender_understanding_count <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" data-source-line-numbers="5" data-code-line-numbers="5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>gender_understanding_count <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(submission_id, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">|&gt;</span> </span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(gender, emoji_understanding) <span class="sc">|&gt;</span> </span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percentage =</span> <span class="fu">proportions</span>(n) <span class="sc">*</span> <span class="dv">100</span>)</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>gender_understanding_count</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>gender_understanding_count</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 10 × 4
 # Groups:   gender [3]
@@ -1033,12 +1038,12 @@ The y-axis of the plot may become distorted and therefore inaccurate.
 <h3 data-number="17.2.4" class="anchored" data-anchor-id="sec-gender-understanding-vis"><span class="header-section-number">17.2.4</span> Data visualisation 📊</h3>
 <p>As mentioned above, we will visualise the relative rather than the absolute frequencies to make sure that the numbers for the different genders are comparable. In line with Fricke, Grosz &amp; Scheffler <span class="citation" data-cites="fricke2024semantic">(<a href="../../99_references.html#ref-fricke2024semantic" role="doc-biblioref">2024</a>: 9)</span>, we also exclude the three non-binary participants. To this end, we use the <code>filter()</code> function combined with the <code>!=</code> operator (see <a href="../../5_GettingStaRted.html#sec-RelationalOperators" class="quarto-xref"><span>Section 5.5</span></a>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>gender_understanding_count <span class="ot">&lt;-</span> gender_understanding_count <span class="sc">|&gt;</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(gender <span class="sc">!=</span> <span class="st">"non-binary"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>gender_understanding_count <span class="ot">&lt;-</span> gender_understanding_count <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(gender <span class="sc">!=</span> <span class="st">"non-binary"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We use <code>ggplot()</code> to create a barplot with the <code>emoji_understanding</code> categories on the <em>x</em>-axis and the relative frequencies that we calculated on the <em>y</em>-axis. The bars are coloured according to <code>gender</code>. We also add a title and axis labels. Finally, we remove the white space between the bottom of the bars with an additional <code>scale_y_continuous(expand = c(0,0))</code> layer and change the colours to make our plot look nicer. The hexadecimal color values chosen here are from the colour-blind friendly palette “Set2” from the package <a href="https://cran.r-project.org/web/packages/RColorBrewer/index.html">{RColorBrewer}</a><span class="citation" data-cites="neuwirth2022package">(<a href="../../99_references.html#ref-neuwirth2022package" role="doc-biblioref">Neuwirth 2022</a>)</span>. Since we only need two colours, we chose to insert them manually to avoid having to install an additional package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gender_understanding_count, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gender_understanding_count, </span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> emoji_understanding, </span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> percentage, </span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
@@ -1048,7 +1053,7 @@ The y-axis of the plot may become distorted and therefore inaccurate.
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Emoji understanding"</span>,</span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Percent"</span>) <span class="sc">+</span></span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#8DA0CB"</span>, <span class="st">"#FC8D62"</span>)) <span class="sc">+</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1064,7 +1069,7 @@ The y-axis of the plot may become distorted and therefore inaccurate.
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quiz time!
+<span class="screen-reader-only">Tip</span>Quiz time!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1116,8 +1121,8 @@ Women reported a lower level of emoji understanding than men.
 <h3 data-number="17.3.1" class="anchored" data-anchor-id="sec-au-data-preparation"><span class="header-section-number">17.3.1</span> Preprocessing the data</h3>
 <p>First, we need a variable that includes the experimental conditions of each trial. The variable <code>name</code> tells us whether a trial consisted of an emoji pair with an AU difference (AU+) or not (AU-), or a filler. Trials with AU+ differences include “AU” in the trial <code>name</code>, those with no AU difference begin with “N”, and the fillers with “filler”.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1136,17 +1141,17 @@ Women reported a lower level of emoji understanding than men.
 </div>
 <p>We use a combination of <code>mutate()</code>, <code>case_when()</code> and <code>str_detect()</code> to construct a new variable (<code>AU_difference</code>) that captures the type of trial that we are dealing with. The command essentially says: look for the string “AU” in the column <code>name</code>, and in all cases where you find it (<code>case_when()</code>), insert the value “AU+” in a new column called <code>AU_difference</code>. We follow this procedure for the other trial conditions, too. If neither “AU”, “N” or “filler” is detected, nothing (<code>NULL</code>) is inserted in <code>AU_difference</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AU_difference =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(name, <span class="st">"AU"</span>) <span class="sc">~</span> <span class="st">"AU+"</span>,</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">str_detect</span>(name, <span class="st">"N"</span>) <span class="sc">~</span> <span class="st">"AU-"</span>,</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">str_detect</span>(name, <span class="st">"filler"</span>) <span class="sc">~</span> <span class="st">"filler"</span>,</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">.default =</span> <span class="cn">NULL</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">.default =</span> <span class="cn">NULL</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We use <code>select()</code> to compare the two columns and check that everything worked.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, AU_difference)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, AU_difference)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>              name AU_difference
 1     filler-party        filler
@@ -1163,12 +1168,12 @@ Women reported a lower level of emoji understanding than men.
 </div>
 <p>This looks promising. Since we are only interested in the experimental items, we now filter out all filler trials.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AU_difference <span class="sc">!=</span> <span class="st">"filler"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AU_difference <span class="sc">!=</span> <span class="st">"filler"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We will now create another variable called <code>context</code>. The column of this variable will contain the context descriptions used by Fricke, Grosz &amp; Scheffler <span class="citation" data-cites="fricke2024semantic">(<a href="../../99_references.html#ref-fricke2024semantic" role="doc-biblioref">2024</a>: 5)</span> in <a href="#fig-emojipairs" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>. Again, we combine <code>mutate()</code>, <code>case_when()</code> and <code>str_detect()</code>: In the <code>question</code> column, we look for context-characteristic strings, and add the context descriptions whenever we have a match. Again, we check the output with <code>table()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">context =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(question, <span class="st">"freut sich"</span>) <span class="sc">~</span> <span class="st">"happiness"</span>,</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">str_detect</span>(question, <span class="st">"lacht"</span>) <span class="sc">~</span> <span class="st">"(cheeky) laughter"</span>,</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1185,7 +1190,7 @@ Women reported a lower level of emoji understanding than men.
 <span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">.default =</span> <span class="cn">NULL</span>))</span>
 <span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>context)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>context)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>
   (cheeky) laughter (intense) happiness           amusement           annoyance 
@@ -1202,7 +1207,7 @@ mild disappointment     mild irritation            surprise
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quiz time!
+<span class="screen-reader-only">Tip</span>Quiz time!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1256,13 +1261,13 @@ Figure&nbsp;17.4: Screenshot from the authors’ analysis script available at <a
 </div>
 <p>The emoji 🙁 (<em>mild disappointment</em>) is coded as <code>N-36</code> and ☹️ (<em>moderate disappointment</em>) as <code>N-37</code>. We use this information to assign these two contexts to our <code>context</code> variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">context =</span> <span class="fu">case_when</span>(</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">str_detect</span>(name, <span class="st">"N-36"</span>) <span class="sc">~</span> <span class="st">"mild disappointment"</span>,</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">str_detect</span>(name, <span class="st">"N-37"</span>) <span class="sc">~</span> <span class="st">"moderate disappointment"</span>,</span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">.default =</span> context))</span>
 <span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>context)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>context)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>
       (cheeky) laughter     (intense) happiness               amusement 
@@ -1277,7 +1282,7 @@ Figure&nbsp;17.4: Screenshot from the authors’ analysis script available at <a
 </div>
 <p>Finally, we add the critical variable that describes whether there is a match between the chosen emojis and the contexts: if the emoji and the context agree, the variable will have the value <em>match</em>. Otherwise, the value will be <em>no match</em>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">match =</span> <span class="fu">case_when</span>(</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    context <span class="sc">==</span> <span class="st">"happiness"</span> <span class="sc">&amp;</span> response <span class="sc">==</span> <span class="st">"grinning_face_with_big_eyes"</span> <span class="sc">~</span> <span class="st">"match"</span>,</span>
@@ -1292,17 +1297,17 @@ Figure&nbsp;17.4: Screenshot from the authors’ analysis script available at <a
 <span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    context <span class="sc">==</span> <span class="st">"moderate disappointment"</span> <span class="sc">&amp;</span> response <span class="sc">==</span> <span class="st">"frowning_face"</span> <span class="sc">~</span> <span class="st">"match"</span>,</span>
 <span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    context <span class="sc">==</span> <span class="st">"happiness2"</span> <span class="sc">&amp;</span> response <span class="sc">==</span> <span class="st">"smiling_face_with_smiling_eyes"</span> <span class="sc">~</span> <span class="st">"match"</span>,</span>
 <span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    context <span class="sc">==</span> <span class="st">"bashfulness"</span> <span class="sc">&amp;</span> response <span class="sc">==</span> <span class="st">"smiling_face"</span> <span class="sc">~</span> <span class="st">"match"</span>,</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">.default =</span> <span class="st">"no match"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">.default =</span> <span class="st">"no match"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="sec-au-plot-building" class="level3" data-number="17.3.2">
 <h3 data-number="17.3.2" class="anchored" data-anchor-id="sec-au-plot-building"><span class="header-section-number">17.3.2</span> Building the plots</h3>
 <p>We will now build our plots to visualise the matching rates per emoji pair. In a new table called <code>data_AU</code>, we group the data by contexts. The command <code>count(match)</code> counts matches and non-matches for each context and stores them in a new column called <code>n</code>. We add the column <code>percent</code> to store the rounded percentage of matches and non-matches for each context-pair.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>data_AU <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>data_AU <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(context) <span class="sc">|&gt;</span> </span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(match) <span class="sc">|&gt;</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(<span class="fu">proportions</span>(n)<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(<span class="fu">proportions</span>(n)<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Using the <code>View()</code> function, we take a look at our data.</p>
 <div id="fig-data-percentages" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -1317,7 +1322,7 @@ Figure&nbsp;17.5: The first 14 columns of the data frame data_AU as visualised u
 </div>
 <p>We plot the first emoji pair of the AU+ condition 😯 😲 with their respective contexts <em>concern</em> and <em>surprise.</em></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>plot_concern_surprise <span class="ot">&lt;-</span> data_AU <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>plot_concern_surprise <span class="ot">&lt;-</span> data_AU <span class="sc">|&gt;</span> </span>
 <span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">filter</span>(context <span class="sc">==</span> <span class="st">"concern"</span> <span class="sc">|</span> context <span class="sc">==</span> <span class="st">"surprise"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> context, <span class="at">y =</span> percent, <span class="at">fill =</span> match)) <span class="sc">+</span></span>
 <span id="cb34-4"><a href="#cb34-4"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
@@ -1328,7 +1333,7 @@ Figure&nbsp;17.5: The first 14 columns of the data frame data_AU as visualised u
 <span id="cb34-9"><a href="#cb34-9"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"😯 😲"</span>, <span class="at">x =</span> <span class="st">""</span>) <span class="sc">+</span></span>
 <span id="cb34-10"><a href="#cb34-10"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
 <span id="cb34-11"><a href="#cb34-11"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">20</span>), </span>
-<span id="cb34-12"><a href="#cb34-12"></a>        <span class="at">legend.title=</span><span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-12"><a href="#cb34-12"></a>        <span class="at">legend.title=</span><span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The code above creates a barplot and stores it in <code>plot_concern_surprise</code>. Here’s what each line of code does:</p>
 <ol type="1">
@@ -1347,7 +1352,7 @@ Figure&nbsp;17.5: The first 14 columns of the data frame data_AU as visualised u
 </ol>
 <p>Let’s take a look at our plot. It’s looking great, but we don’t need just one plot, we need six: one for each emoji pair. We could write it all out for each emoji pair, but since the code is identical (except for the contexts and the emojis), it is much more efficient to define a <strong>function</strong> to do this.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>plot_concern_surprise</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>plot_concern_surprise</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><a href="images/CS_RoseGina_plot_concern_surprise.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="images/CS_RoseGina_plot_concern_surprise.png" class="img-fluid"></a></p>
 <div class="callout callout-style-default callout-note callout-titled" title="Defining our own functions">
@@ -1356,7 +1361,7 @@ Figure&nbsp;17.5: The first 14 columns of the data frame data_AU as visualised u
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Defining our own functions
+<span class="screen-reader-only">Note</span>Defining our own functions
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1378,7 +1383,7 @@ Defining our own functions
 <li>We name our function <code>plot_AU_matches</code> to make clear what it does: it plots AU matches.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>plot_AU_matches <span class="ot">&lt;-</span> <span class="cf">function</span>(contexts, emojis) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>plot_AU_matches <span class="ot">&lt;-</span> <span class="cf">function</span>(contexts, emojis) {</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  data_AU <span class="sc">|&gt;</span> </span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(context <span class="sc">%in%</span> contexts) <span class="sc">|&gt;</span> </span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> context, <span class="at">y =</span> percent, <span class="at">fill =</span> match)) <span class="sc">+</span></span>
@@ -1391,24 +1396,24 @@ Defining our own functions
 <span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
 <span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">20</span>), </span>
 <span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.title=</span><span class="fu">element_blank</span>())</span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We the apply this function to all contexts and emoji pairs by filling them in as the arguments.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>plot_concern_surprise <span class="ot">&lt;-</span> <span class="fu">plot_AU_matches</span>(<span class="fu">c</span>(<span class="st">"concern"</span>, <span class="st">"surprise"</span>), <span class="st">"😯 😲"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>plot_concern_surprise <span class="ot">&lt;-</span> <span class="fu">plot_AU_matches</span>(<span class="fu">c</span>(<span class="st">"concern"</span>, <span class="st">"surprise"</span>), <span class="st">"😯 😲"</span>)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>plot_happiness_cheeky <span class="ot">&lt;-</span> <span class="fu">plot_AU_matches</span>(<span class="fu">c</span>(<span class="st">"happiness"</span>, <span class="st">"(cheeky) laughter"</span>), <span class="st">"😃 😆"</span>)</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>plot_mild_irr_annoyance <span class="ot">&lt;-</span> <span class="fu">plot_AU_matches</span>(<span class="fu">c</span>(<span class="st">"mild irritation"</span>, <span class="st">"annoyance"</span>), <span class="st">"😐 😑"</span>)</span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>plot_mild_disapp_mod_dissap <span class="ot">&lt;-</span> <span class="fu">plot_AU_matches</span>(<span class="fu">c</span>(<span class="st">"mild disappointment"</span>, <span class="st">"moderate disappointment"</span>), <span class="st">"🙁️ ☹️"</span>)</span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>plot_amusement_int_happiness <span class="ot">&lt;-</span> <span class="fu">plot_AU_matches</span>(<span class="fu">c</span>(<span class="st">"amusement"</span>, <span class="st">"(intense) happiness"</span>), <span class="st">"😄 😁"</span>)</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>plot_happiness2_bashfulness <span class="ot">&lt;-</span> <span class="fu">plot_AU_matches</span>(<span class="fu">c</span>(<span class="st">"happiness2"</span>, <span class="st">"bashfulness"</span>), <span class="st">"😊 ☺️"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>plot_happiness2_bashfulness <span class="ot">&lt;-</span> <span class="fu">plot_AU_matches</span>(<span class="fu">c</span>(<span class="st">"happiness2"</span>, <span class="st">"bashfulness"</span>), <span class="st">"😊 ☺️"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-How to insert emojis in <code>R</code> and render plots with emojis 😰
+<span class="screen-reader-only">Note</span>How to insert emojis in <code>R</code> and render plots with emojis 😰
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1454,13 +1459,13 @@ Figure&nbsp;17.6: Tools for inserting and displaying emojis in RStudio
 </div>
 <p>If you are using AGG as your graphics backend, you can use the <a href="https://ragg.r-lib.org">{ragg}</a> package <span class="citation" data-cites="pedersen2024ragg">(<a href="../../99_references.html#ref-pedersen2024ragg" role="doc-biblioref">Pedersen &amp; Shemanarev 2024</a>)</span> to correctly render your Quarto/RMarkdown document to HTML with all the emojis in the plots. This package provides graphic devices based on AGG and includes advanced text rendering, with support for emojis. To use {ragg} in combinination with the {knitr} engine, first install the package and then add the following setup command at the beginning of your document:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ragg"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ragg"</span>)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">dev =</span> <span class="st">"ragg_png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">dev =</span> <span class="st">"ragg_png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>If AGG does not work for you, you can use Cairo. Cairo comes preinstalled with <code>R</code> so you don’t need to install it yourself. The set-up command for your Quarto/RMarkdown document is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">dev.args =</span> <span class="fu">list</span>(<span class="at">png =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">"cairo"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">dev.args =</span> <span class="fu">list</span>(<span class="at">png =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">"cairo"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -1503,7 +1508,7 @@ column2 &lt;- p4 / p5 / p6
 columns_combined &lt;- column1 | column2</code></pre>
 <p>We follow the logic above to create our combined plot, choosing informative names for our subplots. To run this code, you will need to have the {patchwork} package installed and the library loaded.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("patchwork")</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("patchwork")</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co">#library(patchwork)</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co">#AU+ condition:</span></span>
@@ -1512,29 +1517,29 @@ columns_combined &lt;- column1 | column2</code></pre>
 <span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="co">#AU- condition:</span></span>
 <span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>AU_minus_patch <span class="ot">&lt;-</span></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  plot_mild_disapp_mod_dissap <span class="sc">/</span> plot_amusement_int_happiness <span class="sc">/</span> plot_happiness2_bashfulness</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  plot_mild_disapp_mod_dissap <span class="sc">/</span> plot_amusement_int_happiness <span class="sc">/</span> plot_happiness2_bashfulness</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>To further specify the layout, we use the <code>plot_layout()</code> function from {patchwork}. By setting the “guide” argument to “collect”, legends that are identical within each patchwork are merged into one. We place the legends at the bottom of each subplot.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#AU+ condition:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#AU+ condition:</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>AU_plus_patch <span class="ot">&lt;-</span> AU_plus_patch <span class="sc">+</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"collect"</span>) <span class="sc">&amp;</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co">#AU- condition:</span></span>
 <span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>AU_minus_patch <span class="ot">&lt;-</span> AU_minus_patch <span class="sc">+</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"collect"</span>) <span class="sc">&amp;</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"collect"</span>) <span class="sc">&amp;</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Since <code>AU_plus_patch</code> and <code>AU_minus_patch</code> are to be combined in one plot, we need to add titles to keep them apart. Technically, it is possible (and recommended!) to use the <code>plot_annotation()</code> function of the {patchwork} package for this. However, annotations made with this function are only shown at the highest nesting level. As we will be building a double-nested plot, any annotations we do on the “blocks-of-three”-level will not be displayed. We can work around this by using the function <code>wrap_elements()</code>. This fixates the blocks in their current position and allows us to add titles using <code>ggtitles()</code> instead.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>AU_plus_patch <span class="ot">&lt;-</span> <span class="fu">wrap_elements</span>(<span class="at">plot =</span> AU_plus_patch) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>AU_plus_patch <span class="ot">&lt;-</span> <span class="fu">wrap_elements</span>(<span class="at">plot =</span> AU_plus_patch) <span class="sc">+</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"[AU+] condition"</span>)</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>AU_minus_patch <span class="ot">&lt;-</span> <span class="fu">wrap_elements</span>(<span class="at">plot =</span> AU_minus_patch) <span class="sc">+</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"[AU-] condition"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"[AU-] condition"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Finally, we put both columns together to get our final plot.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>AU_plus_patch <span class="sc">|</span> AU_minus_patch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>AU_plus_patch <span class="sc">|</span> AU_minus_patch</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="fig-AUpatch" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1548,12 +1553,12 @@ Figure&nbsp;17.9: Plot combining all six plots into one figure
 </div>
 <p><a href="#fig-AUpatch" class="quarto-xref">Figure&nbsp;<span>17.9</span></a> contains information on the matching rates of all emoji pairs with their contexts. It contains the same information as <a href="#fig-AUFricke" class="quarto-xref">Figure&nbsp;<span>17.8</span></a> from <span class="citation" data-cites="fricke2024semantic">Fricke, Grosz &amp; Scheffler (<a href="../../99_references.html#ref-fricke2024semantic" role="doc-biblioref">2024</a>)</span>, but does not look exactly the same. Which look do you think is easiest to interpret?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Alternative ways of dealing with the legend">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Alternative ways of dealing with the legend
+<span class="screen-reader-only">Note</span>Alternative ways of dealing with the legend
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1611,7 +1616,7 @@ Figure&nbsp;17.10: Options for the legend placement
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quiz time!
+<span class="screen-reader-only">Tip</span>Quiz time!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1770,12 +1775,12 @@ The stories of the mild irritation context were perceived as more annoying than 
 <p>In this chapter, we have created an informative figure that answers the experiment’s research question by combining multiple plots. The question whether Action Unit (AU) differences are critical for emoji preference was answered in the negative. However, we have made several other discoveries along the way: As noted by <span class="citation" data-cites="fricke2024semantic">Fricke, Grosz &amp; Scheffler (<a href="../../99_references.html#ref-fricke2024semantic" role="doc-biblioref">2024</a>)</span>, we have found that small changes of emojis’ facial features do affect choice patterns.</p>
 <p>Emojis, it turns out, contain lots of information, and there is a science behind them 🤓. While experimentally measuring why we prefer certain emojis over other ones represents a real challenge, <span class="citation" data-cites="fricke2024semantic">Fricke, Grosz &amp; Scheffler (<a href="../../99_references.html#ref-fricke2024semantic" role="doc-biblioref">2024</a>)</span> provide valuable insights into this fascinating area of study. As the authors shared their data and code, we were able to successfully reproduce their results, as well as create new informative figures on the basis of their data.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<strong>How to cite this chapter</strong>
+<span class="screen-reader-only">Note</span><strong>How to cite this chapter</strong>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1937,7 +1942,7 @@ Wickham, Hadley, Romain François &amp; Lucy D’Agostino McGowan. 2024. <em>Emo
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1987,13 +1992,14 @@ Wickham, Hadley, Romain François &amp; Lucy D’Agostino McGowan. 2024. <em>Emo
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

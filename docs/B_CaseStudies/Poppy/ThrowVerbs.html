@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.26">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,18 +91,19 @@ div.csl-indent {
 <link href="../../A_FurtherResources.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-3e3370d44295d9fa30cc16d77ad785c2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-540c66f2be59a33d43b8e94dc657d4ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-2dc7341fb0871247097a223aafd3766b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -155,7 +156,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -192,7 +193,7 @@ window.Quarto = {
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -225,7 +226,7 @@ window.Quarto = {
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -265,7 +266,7 @@ window.Quarto = {
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -293,7 +294,7 @@ window.Quarto = {
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -316,20 +317,22 @@ window.Quarto = {
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -356,7 +359,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../../">Data Analysis for the<br>Language Sciences</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -593,12 +598,12 @@ window.Quarto = {
 
 
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<strong>About the author of this chapter</strong>
+<span class="screen-reader-only">Note</span><strong>About the author of this chapter</strong>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -639,7 +644,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quiz time!
+<span class="screen-reader-only">Tip</span>Quiz time!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -744,7 +749,7 @@ The shift in meaning from the concrete to the abstract.
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quiz time!
+<span class="screen-reader-only">Tip</span>Quiz time!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -829,20 +834,20 @@ Tokens that represent infinitives following 'a' with an incorrect auxiliary.
 <h2 data-number="16.3" class="anchored" data-anchor-id="sec-ImportingVanHulle"><span class="header-section-number">16.3</span> Impo<code>R</code>ting the authors’ original data</h2>
 <p>Before we can import the dataset, we need to load all the packages that we will need for this project. Note that you may need to install some of these packages first (see <a href="../../14_LiterateProgramming.html#sec-Packages" class="quarto-xref"><span>Section 14.10</span></a> for instructions).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading required packages for this project</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading required packages for this project</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"B_CaseStudies/Poppy/ThrowVerbs.qmd"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xfun)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xfun)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Next, we import the dataset containing the number of occurrences of ‘throw’ verbs in the corpora analysed in <span class="citation" data-cites="vanhulleCategoryThrowVerbs2024">Van Hulle &amp; Enghels (<a href="../../99_references.html#ref-vanhulleCategoryThrowVerbs2024" role="doc-biblioref">2024a</a>)</span> (<code>Spanish_ThrowVerbs_Inchoatives_20230413.csv</code>) as a new object called <code>spanish.data</code>. You will need to adjust the file path to match the folder structure of your computer (see <a href="../../6_ImpoRtingData.html#sec-ImportingDataCSV" class="quarto-xref"><span>Section 6.5</span></a>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing the Spanish verbs dataset</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing the Spanish verbs dataset</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>spanish.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"B_CaseStudies"</span>, <span class="st">"Poppy"</span>, <span class="st">"data"</span>, <span class="st">"Spanish_ThrowVerbs_Inchoatives_20230413.csv"</span>),</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>,</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">dec =</span> <span class="st">"."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">dec =</span> <span class="st">"."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We check the sanity of the imported data by visually examining the output of <code>View(spanish.data)</code> (<a href="#fig-screenShot" class="quarto-xref">Figure&nbsp;<span>16.1</span></a>).</p>
 <div id="fig-screenShot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The figure displays a table with four columns labeled AUX, Century, INF, and Class, representing Auxiliary, Century, Infinitive, and Semantic Class, respectively. The data shows pairings of auxiliaries with infinitives and their corresponding semantic classes across different centuries. For example, the auxiliary lanzar is paired with the infinitive llevar under the semantic class 'Desplazamiento' (Movement), while echar is paired with dormir under 'Fisiología' (Physiology). The table contains 2,882 entries, with a preview of the first 15 rows shown here.">
@@ -874,8 +879,8 @@ DATA-SPECIFIC INFORMATION FOR: Spanish_ThrowVerbs_Inchoatives_20230413.csv
 &nbsp;</code></pre>
 <p>To obtain a list of all the ‘throw’ verbs included in the dataset and their total frequencies, we use the familiar <code>count()</code> function from {dyplr} (see <a href="https://elenlefoll.github.io/RstatsTextbook/9_DataWrangling.html">Chapter 9</a>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>spanish.data <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(AUX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>spanish.data <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(AUX)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>       AUX    n
 1  arrojar  160
@@ -892,7 +897,7 @@ DATA-SPECIFIC INFORMATION FOR: Spanish_ThrowVerbs_Inchoatives_20230413.csv
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quiz time!
+<span class="screen-reader-only">Tip</span>Quiz time!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -983,9 +988,9 @@ dormir
 <h3 data-number="16.4.1" class="anchored" data-anchor-id="sec-TokenFreqTable"><span class="header-section-number">16.4.1</span> Creating a table of token frequencies</h3>
 <p>First of all, we want to find out how often each ‘throw’ verb was observed in each century. To do so, we use the <code>count()</code> function to output the number of corpus occurrences for all possible combinations of the <code>AUX</code> and <code>Century</code> variables. Then, we pipe this output into an <code>arrange()</code> command to order the rows of the table by the values of the <code>Century</code> and <code>AUX</code> columns (as shown in <a href="#tbl-Freq" class="quarto-xref">Table&nbsp;<span>16.1</span></a> below), prioritising the order of the <code>Century</code> over the alphabetical order of the <code>AUX</code>. This ensures that the centuries are ordered correctly from the 13<sup>th</sup> to the 21<sup>st</sup> century, rather than being jumbled. We store this summary table (see <a href="#tbl-Freq" class="quarto-xref">Table&nbsp;<span>16.1</span></a>) as a new <code>R</code> object called <code>verbs.investigated</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>verbs.investigated <span class="ot">&lt;-</span> spanish.data <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>verbs.investigated <span class="ot">&lt;-</span> spanish.data <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(AUX, Century, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Century, AUX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Century, AUX)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><a href="#tbl-Freq" class="quarto-xref">Table&nbsp;<span>16.1</span></a> contains 26 rows and three columns, <code>AUX</code>, <code>Century</code>, both from the original dataset, and <code>n</code> which contains the number of occurrences for each combination of the <code>Century</code>and <code>AUX</code> variables. For example, the verb <em>echar</em> occurs 32, 15, and 101 times in the corpus data from the 13<sup>th</sup>, 14<sup>th</sup>, and 15<sup>th</sup> centuries respectively and so on.</p>
 <div class="cell">
@@ -1253,10 +1258,10 @@ Table&nbsp;16.2: Absolute token frequency of Spanish ‘throw’ verbs as report
 </figure>
 </div>
 </div>
-<p>To reproduce this table on the basis of the data provided by the authors, we begin by reshaping the data frame <code>spanish.data</code> from <strong>long format</strong> to <strong>wide format</strong> using the <code>pivot_wider()</code> function (see <a href="../../9_DataWrangling.html#sec-CombiningDatasets" class="quarto-xref"><span>Section 9.7</span></a>). This function takes the arguments “names_from” to specify which column is to provide the names for the output columns, and “values_from” to determine which column is to supply the cell values.</p>
+<p>To reproduce this table on the basis of the data provided by the authors, we begin by reshaping the data frame <code>spanish.data</code> from <strong>long format</strong> to <strong>wide format</strong> using the <code>pivot_wider()</code> function (see <a href="../../9_DataWrangling.html#sec-CombiningDatasets" class="quarto-xref"><span>Section 9.6</span></a>). This function takes the arguments “names_from” to specify which column is to provide the names for the output columns, and “values_from” to determine which column is to supply the cell values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>verbs.investigated <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Century, <span class="at">values_from =</span> n) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>verbs.investigated <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Century, <span class="at">values_from =</span> n) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 5 × 10
   AUX       `13`  `14`  `15`  `16`  `17`  `18`  `19`  `20`  `21`
@@ -1270,12 +1275,12 @@ Table&nbsp;16.2: Absolute token frequency of Spanish ‘throw’ verbs as report
 </div>
 <p>As you can see, this table includes a lot of <code>NA</code> values for the verbs for which zero occurrences were found in certain centuries. To replace missing values (<code>NA</code>) with a different value (here <code>0</code> to match <a href="#tbl-absPaper" class="quarto-xref">Table&nbsp;<span>16.2</span></a>), we can use the tidyverse function <code>replace_na()</code> in combination with <code>mutate()</code>. By applying this operation <code>across(everything())</code>, we ensure that the modifications are performed on all columns. We pipe this output into the <code>arrange()</code> function to order the rows of the table by the alphabetical order of the <code>AUX</code>. This is important as we will later use <code>token.data</code> to calculate the type/token frequency (see <a href="#tbl-typeTokenData" class="quarto-xref">Table&nbsp;<span>16.11</span></a>) for which we will merge <code>token.data</code> with the <code>types.wide</code>, which is also arranged by the alphabetical order of the <code>AUX</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>token.data <span class="ot">&lt;-</span> verbs.investigated <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>token.data <span class="ot">&lt;-</span> verbs.investigated <span class="sc">|&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Century, <span class="at">values_from =</span> n) <span class="sc">|&gt;</span> </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">replace_na</span>(., <span class="dv">0</span>))) <span class="sc">|&gt;</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AUX) </span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>token.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>token.data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 5 × 10
   AUX       `13`  `14`  `15`  `16`  `17`  `18`  `19`  `20`  `21`
@@ -1289,10 +1294,10 @@ Table&nbsp;16.2: Absolute token frequency of Spanish ‘throw’ verbs as report
 </div>
 <p>We now want to add the total number of verb occurrences in each row and column of our table, as in <span class="citation" data-cites="vanhulleCategoryThrowVerbs2024">(<a href="../../99_references.html#ref-vanhulleCategoryThrowVerbs2024" role="doc-biblioref">Van Hulle &amp; Enghels 2024a</a>, Table 4)</span> (see also <a href="#tbl-absPaper" class="quarto-xref">Table&nbsp;<span>16.2</span></a>). We begin by calculating the total number of occurrences of each verb in <code>token.data</code>. We therefore first select just the columns containing numeric values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>numeric_columns <span class="ot">&lt;-</span> token.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>numeric_columns <span class="ot">&lt;-</span> token.data <span class="sc">|&gt;</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric))</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>numeric_columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>numeric_columns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 5 × 9
    `13`  `14`  `15`  `16`  `17`  `18`  `19`  `20`  `21`
@@ -1306,26 +1311,26 @@ Table&nbsp;16.2: Absolute token frequency of Spanish ‘throw’ verbs as report
 </div>
 <p>It is important that we specify that we only add the values in columns representing numeric variables because if we ask <code>R</code> to do any mathematical operations with values of the <code>AUX</code> variable, we will get an error message indicating that it is impossible to add up character string values!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(token.data<span class="sc">$</span>AUX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(token.data<span class="sc">$</span>AUX)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre data-code-line-numbers=""><code>Error in sum(token.data$AUX) : invalid 'type' (character) of argument</code></pre>
 <p>This is why we first created an <code>R</code> object that contains only the numeric variables of <code>token.data</code>: these are the columns that we will need to compute our sums. Next, we use the base <code>R</code> function <code>rowSums()</code> to calculate the total number of occurrences of each ‘throw’ verb across all corpus texts queried, from the 13<sup>th</sup> to the 21<sup>th</sup> century.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>row_sums <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(numeric_columns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>row_sums <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(numeric_columns)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We have saved the output of the <code>rowSums()</code> function to a new object called <code>row_sums</code>. This object is a numeric vector containing just the row totals.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>row_sums</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>row_sums</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1]  160    8 1936  680   98</code></pre>
 </div>
 </div>
 <p>To check that these are in fact the correct totals, we can compare these row sums to the output of <code>table(spanish.data$AUX)</code> (see also <a href="#sec-ImportingVanHulle" class="quarto-xref"><span>Section 16.3</span></a>). As the numbers match, we can now use <code>mutate()</code> to add <code>row_sums</code> as a new column to <code>token.data</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>token.data.rowSums <span class="ot">&lt;-</span> token.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>token.data.rowSums <span class="ot">&lt;-</span> token.data <span class="sc">|&gt;</span> </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Total =</span> row_sums)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>token.data.rowSums</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>token.data.rowSums</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 5 × 11
   AUX       `13`  `14`  `15`  `16`  `17`  `18`  `19`  `20`  `21` Total
@@ -1339,9 +1344,9 @@ Table&nbsp;16.2: Absolute token frequency of Spanish ‘throw’ verbs as report
 </div>
 <p>Now, let’s turn to the column totals. We can use <code>colSums()</code> to calculate the total number of ‘throw’ verb occurrences in each century.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>column_sums <span class="ot">&lt;-</span> <span class="fu">colSums</span>(numeric_columns)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>column_sums <span class="ot">&lt;-</span> <span class="fu">colSums</span>(numeric_columns)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>column_sums</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>column_sums</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  13   14   15   16   17   18   19   20   21 
   32   15  103  173  145   64  594  644 1112 </code></pre>
@@ -1349,9 +1354,9 @@ Table&nbsp;16.2: Absolute token frequency of Spanish ‘throw’ verbs as report
 </div>
 <p>In the original paper, the row of totals is labelled “Total”. Furthermore, we also have a value representing the total number of verbs included in the dataset. Hence, the last row will be constructed as follows using the combine function <code>c()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>total_row <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Total"</span>, column_sums, <span class="fu">sum</span>(row_sums))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>total_row <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Total"</span>, column_sums, <span class="fu">sum</span>(row_sums))</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>total_row</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>total_row</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>             13      14      15      16      17      18      19      20      21 
 "Total"    "32"    "15"   "103"   "173"   "145"    "64"   "594"   "644"  "1112" 
@@ -1361,7 +1366,7 @@ Table&nbsp;16.2: Absolute token frequency of Spanish ‘throw’ verbs as report
 </div>
 <p>Again, we can check that we have not “lost” any verbs along the way by comparing the last value of <code>total_row</code> with the number of observations in our original long-format dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(spanish.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(spanish.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 2882</code></pre>
 </div>
@@ -1373,9 +1378,9 @@ Table&nbsp;16.2: Absolute token frequency of Spanish ‘throw’ verbs as report
 Table&nbsp;16.3: Absolute token frequency of Spanish ‘throw’ verbs based on dataset
 </figcaption>
 <div aria-describedby="tbl-absData-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode cell-code" id="cb26" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>token.table.totals <span class="ot">&lt;-</span> <span class="fu">rbind</span>(token.data.rowSums, total_row)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>token.table.totals <span class="ot">&lt;-</span> <span class="fu">rbind</span>(token.data.rowSums, total_row)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>token.table.totals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>token.table.totals</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 6 × 11
   AUX      `13`  `14`  `15`  `16`  `17`  `18`  `19`  `20`  `21`  Total
@@ -1405,7 +1410,7 @@ Table&nbsp;16.3: Absolute token frequency of Spanish ‘throw’ verbs based on 
 <p>Next, we generate a contingency table with the altered values for those verbs by applying the <code>pivot_wider()</code> function as in <a href="#tbl-absData" class="quarto-xref">Table&nbsp;<span>16.3</span></a> above. The result is displayed in <a href="#tbl-absCorpus" class="quarto-xref">Table&nbsp;<span>16.4</span></a> below.</p>
 <details class="code-fold">
 <summary>Show the <code>R</code> code to generate the table below.</summary>
-<div class="sourceCode cell-code" id="cb28" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>verbs.corpus <span class="ot">&lt;-</span> verbs.investigated <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>verbs.corpus <span class="ot">&lt;-</span> verbs.investigated <span class="sc">|&gt;</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Modifying specific columns with mutate()</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n =</span> <span class="fu">case_when</span>(</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    AUX <span class="sc">==</span> <span class="st">"echar"</span> <span class="sc">&amp;</span> Century <span class="sc">==</span> <span class="dv">19</span> <span class="sc">~</span> <span class="dv">799</span>,</span>
@@ -1421,7 +1426,7 @@ Table&nbsp;16.3: Absolute token frequency of Spanish ‘throw’ verbs based on 
 <span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">replace_na</span>(., <span class="dv">0</span>))) <span class="sc">|&gt;</span></span>
 <span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AUX)</span>
 <span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>verbs.corpus.wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>verbs.corpus.wide</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="tbl-absCorpus" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -1552,8 +1557,8 @@ Table&nbsp;16.5: Normalized frequency (pmw) as reported in the published paper <
 </div>
 <p>The sizes of the corpora for each century are provided in Van Hulle &amp; Enghels <span class="citation" data-cites="vanhulleCategoryThrowVerbs2024">(<a href="../../99_references.html#ref-vanhulleCategoryThrowVerbs2024" role="doc-biblioref">Van Hulle &amp; Enghels 2024a</a>: 227, footnote 12)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. We create a table of word counts for each century (<a href="#tbl-corpusSizes" class="quarto-xref">Table&nbsp;<span>16.6</span></a>) using the <code>tibble()</code> function from the tidyverse, by concatenating (using the <code>c()</code> function) the values of <code>Words</code> and <code>Century</code> and storing these as a new data frame named <code>corpus_sizes</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>corpus_sizes <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Century =</span> <span class="fu">c</span>(<span class="dv">13</span>, <span class="dv">14</span>, <span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>, <span class="dv">20</span>, <span class="dv">21</span>),</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Words =</span> <span class="fu">c</span>(<span class="dv">7829566</span>, <span class="dv">7483952</span>, <span class="dv">22796824</span>, <span class="dv">49912675</span>, <span class="dv">38083322</span>, <span class="dv">14466748</span>, <span class="dv">42726881</span>, <span class="dv">58686214</span>, <span class="dv">3554986755</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>corpus_sizes <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Century =</span> <span class="fu">c</span>(<span class="dv">13</span>, <span class="dv">14</span>, <span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>, <span class="dv">20</span>, <span class="dv">21</span>),</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Words =</span> <span class="fu">c</span>(<span class="dv">7829566</span>, <span class="dv">7483952</span>, <span class="dv">22796824</span>, <span class="dv">49912675</span>, <span class="dv">38083322</span>, <span class="dv">14466748</span>, <span class="dv">42726881</span>, <span class="dv">58686214</span>, <span class="dv">3554986755</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="tbl-corpusSizes" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -1561,7 +1566,7 @@ Table&nbsp;16.5: Normalized frequency (pmw) as reported in the published paper <
 Table&nbsp;16.6: Total numbers of words in the corpora
 </figcaption>
 <div aria-describedby="tbl-corpusSizes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode cell-code" id="cb33" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>corpus_sizes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>corpus_sizes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code># A tibble: 9 × 2
   Century      Words
@@ -1581,7 +1586,7 @@ Table&nbsp;16.6: Total numbers of words in the corpora
 </div>
 <p>We will apply this formula to each verb for every century. First, we use the <code>left_join</code> function from {dplyr} to combine two data frames, i.e.&nbsp;<code>verbs.corpus</code>, which we used to create <a href="#tbl-absCorpus" class="quarto-xref">Table&nbsp;<span>16.4</span></a>, and <code>corpus_sizes</code>, which we just created (<a href="#tbl-corpusSizes" class="quarto-xref">Table&nbsp;<span>16.6</span></a>), based on the common <code>Century</code> column.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(verbs.corpus, corpus_sizes, <span class="at">by =</span> <span class="st">"Century"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(verbs.corpus, corpus_sizes, <span class="at">by =</span> <span class="st">"Century"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>        AUX Century     n      Words
 1     echar      13    32    7829566
@@ -1614,10 +1619,10 @@ Table&nbsp;16.6: Total numbers of words in the corpora
 </div>
 <p>Next, we pipe the combined data frames into a <code>mutate()</code> function to add a new column named <code>normalized</code> and apply the formula <code>(n / Words) * 1000000</code> to normalize the frequency. In a second step, we round the result to two decimal places.</p>
 <div class="cell" data-source-line-numbers="2:3">
-<div class="sourceCode cell-code" id="cb37" data-source-line-numbers="2:3" data-code-line-numbers="2:3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(verbs.corpus, corpus_sizes, <span class="at">by =</span> <span class="st">"Century"</span>) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37" data-source-line-numbers="2:3" data-code-line-numbers="2:3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(verbs.corpus, corpus_sizes, <span class="at">by =</span> <span class="st">"Century"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">normalized =</span> (n <span class="sc">/</span> Words) <span class="sc">*</span> <span class="dv">1000000</span>) <span class="sc">|&gt;</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">normalized =</span> <span class="fu">round</span>(normalized,</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">digits =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">digits =</span> <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>        AUX Century     n      Words normalized
 1     echar      13    32    7829566       4.09
@@ -1650,7 +1655,7 @@ Table&nbsp;16.6: Total numbers of words in the corpora
 </div>
 <p>Next, we remove the <code>n</code> and <code>Words</code> columns that we no longer need here by combining the minus operator <code>-</code> and the <code>select()</code> function to “unselect” these columns.</p>
 <div class="cell" data-source-line-numbers="7:8">
-<div class="sourceCode cell-code" id="cb39" data-source-line-numbers="7:8" data-code-line-numbers="7:8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>verb.normalized <span class="ot">&lt;-</span> <span class="fu">left_join</span>(verbs.corpus,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39" data-source-line-numbers="7:8" data-code-line-numbers="7:8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>verb.normalized <span class="ot">&lt;-</span> <span class="fu">left_join</span>(verbs.corpus,</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                           corpus_sizes,</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">by =</span> <span class="st">"Century"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">normalized =</span> (n <span class="sc">/</span> Words) <span class="sc">*</span> <span class="dv">1000000</span>) <span class="sc">|&gt;</span></span>
@@ -1658,7 +1663,7 @@ Table&nbsp;16.6: Total numbers of words in the corpora
 <span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">digits =</span> <span class="dv">2</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(n, Words))</span>
 <span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>verb.normalized</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>verb.normalized</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>        AUX Century normalized
 1     echar      13       4.09
@@ -1691,12 +1696,12 @@ Table&nbsp;16.6: Total numbers of words in the corpora
 </div>
 <p>We reshape the data frame <code>verb.normalized</code> from <strong>long format</strong> to <strong>wide format</strong> by replicating the <code>pivot_wider()</code> function, which we used to create <a href="#tbl-absPaper" class="quarto-xref">Table&nbsp;<span>16.2</span></a> and <a href="#tbl-absCorpus" class="quarto-xref">Table&nbsp;<span>16.4</span></a>. The new column names will be taken from <code>Century</code>. The values in the new column will come from <code>normalized</code>. As earlier, we sort the rows of the data frame according to the alphabetical order of <code>AUX</code> using <code>arrange()</code>. We convert the output into a data frame format with the <code>as.data.frame()</code> command and assign the output to <code>normalized.wide</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>normalized.wide <span class="ot">&lt;-</span> verb.normalized <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>normalized.wide <span class="ot">&lt;-</span> verb.normalized <span class="sc">|&gt;</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Century, <span class="at">values_from =</span> normalized) <span class="sc">|&gt;</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AUX) <span class="sc">|&gt;</span> </span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span>
 <span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>normalized.wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>normalized.wide</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>       AUX   13 14   15   16   17   18    19    20   21
 1  arrojar   NA NA   NA 0.40 1.23 1.11  0.89  0.19 0.01
@@ -1708,12 +1713,12 @@ Table&nbsp;16.6: Total numbers of words in the corpora
 </div>
 <p>Next, we use the <code>is.na()</code> function to find all missing values (<code>NA</code>) in the data frame <code>normalized.wide</code>. We replace all these <code>NA</code> values with a dash (<code>"-"</code>) using the <code>&lt;-</code> operator.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>normalized.wide[<span class="fu">is.na</span>(normalized.wide)] <span class="ot">&lt;-</span> <span class="st">"-"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>normalized.wide[<span class="fu">is.na</span>(normalized.wide)] <span class="ot">&lt;-</span> <span class="st">"-"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The result can be seen in <a href="#tbl-normData" class="quarto-xref">Table&nbsp;<span>16.7</span></a>.</p>
 <details class="code-fold">
 <summary>Show the <code>R</code> code to generate the wide table below.</summary>
-<div class="sourceCode cell-code" id="cb44" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use left_join to merge the dataframes</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use left_join to merge the dataframes</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>verb.normalized <span class="ot">&lt;-</span> <span class="fu">left_join</span>(verbs.corpus,</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                             corpus_sizes,</span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">by =</span> <span class="st">"Century"</span>) <span class="sc">|&gt;</span></span>
@@ -1733,7 +1738,7 @@ Table&nbsp;16.6: Total numbers of words in the corpora
 <span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a><span class="co"># replace NA with "-"</span></span>
 <span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>normalized.wide[<span class="fu">is.na</span>(normalized.wide)] <span class="ot">&lt;-</span> <span class="st">"-"</span></span>
 <span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>normalized.wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>normalized.wide</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="tbl-normData" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -1761,7 +1766,7 @@ Table&nbsp;16.7: Normalized frequency of Spanish ‘throw’ verbs (pmw) based o
 <p>For a diachronic study based on corpus data, it is reasonable to choose a connected scatterplot, which is essentially a combination of a scatterplot and a line plot. Using the {ggplot2} package, this entails combining a <code>geom_point()</code> layer on top of a <code>geom_line()</code> layer. The connected scatterplot provides a visualisation that helps to identify the usage of the five ‘throw’ verbs in inchoative constructions over time.</p>
 <p><a href="#fig-normFreq" class="quarto-xref">Figure&nbsp;<span>16.2</span></a> is created using a <code>ggplot()</code> function that takes the data frame <code>verb.normalized</code> as its first argument and the aesthetics (<code>aes</code>) as its second argument. For the <code>aes</code> argument, we choose the <code>Century</code> column for the <em>x</em>-axis and the column <code>normalized</code> for the <em>y</em>-axis. Additionally, we specify two more optional aesthetics mappings in <code>aes</code>: “color” and “group”. Both will be mapped onto the <code>AUX</code> variable, meaning that each verb will be displayed in a different color, and the line will be grouped by each verb over time. We also add a <code>scale_x_continuous()</code> layer ensures that the <em>x</em>-axis is labelled from the 13<sup>th</sup> to 21<sup>st</sup> century.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(verb.normalized, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(verb.normalized, </span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Century, </span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> normalized, </span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> AUX, </span>
@@ -1773,7 +1778,7 @@ Table&nbsp;16.7: Normalized frequency of Spanish ‘throw’ verbs (pmw) based o
 <span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Century"</span>,</span>
 <span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Normalized frequency (pmw)"</span>,</span>
 <span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Verbs"</span>) <span class="sc">+</span></span>
-<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-normFreq" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1893,8 +1898,8 @@ Table&nbsp;16.8: Type frequency of Spanish ‘throw’ verbs based on the publis
 </div>
 <p>Based on the object <code>spanish.data</code> (see <a href="#fig-screenShot" class="quarto-xref">Figure&nbsp;<span>16.1</span></a>), which we created from on the TROLLing dataset <code>Spanish_ThrowVerbs_Inchoatives_20230413.csv</code>, we can calculate the type frequency of each ‘throw’ verbs in inchoative construction (see <a href="#tbl-typeData" class="quarto-xref">Table&nbsp;<span>16.9</span></a>). To achieve this, we first select the first three columns of <code>spanish.data</code>, i.e.&nbsp;<code>AUX</code>, <code>Century</code>, <code>INF</code>. The result is a long table with the three columns and 2,882 rows. We check the first six lines of the table using the <code>head()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>type.token <span class="ot">&lt;-</span> <span class="fu">select</span>(spanish.data, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(type.token)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>type.token <span class="ot">&lt;-</span> <span class="fu">select</span>(spanish.data, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(type.token)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>     AUX Century      INF
 1 lanzar      21   llevar
@@ -1907,23 +1912,23 @@ Table&nbsp;16.8: Type frequency of Spanish ‘throw’ verbs based on the publis
 </div>
 <p>We then calculate the number of unique combinations among these variables using the <code>distinct()</code> function. We pipe the output into a <code>group_by()</code> function, which allows us to group all the corpus occurences according to <code>Century</code> and <code>AUX</code>. Then, using the <code>summarize()</code> function, we create a new column called <code>Types</code> with the number <code>(n)</code> of types corresponding to each combination of <code>Century</code> and <code>AUX</code>. We convert the output into a data frame format using <code>as.data.frame()</code> and assign it to a new <code>R</code> object called <code>verb.types</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>verb.types <span class="ot">&lt;-</span> type.token <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>verb.types <span class="ot">&lt;-</span> type.token <span class="sc">|&gt;</span> </span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(Century, AUX, INF) <span class="sc">|&gt;</span> </span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Century, AUX) <span class="sc">|&gt;</span> </span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Types =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We reshape the object <code>verb.types</code> from <strong>long format</strong> to <strong>wide format</strong> using the <code>pivot_wider()</code> function. The new column names will be taken from <code>Century</code>. The values in the new column will come from <code>Types</code>. We use <code>mutate(across(everything())</code> to modify all columns at once. The modification entails replacing all missing values <code>(NA)</code> with <code>0</code> using the <code>replace_na</code> function. Next, we sort the rows of the data frame in the alphabetical order of the <code>AUX</code> column using the <code>arrange()</code> function. We assign the output to <code>types.wide</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>types.wide <span class="ot">&lt;-</span> verb.types <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>types.wide <span class="ot">&lt;-</span> verb.types <span class="sc">|&gt;</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Century, <span class="at">values_from =</span> Types) <span class="sc">|&gt;</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">replace_na</span>(., <span class="dv">0</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AUX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AUX)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The result is displayed as <a href="#tbl-typeData" class="quarto-xref">Table&nbsp;<span>16.9</span></a>.</p>
 <details class="code-fold">
 <summary>Show the <code>R</code> code to generate the table below.</summary>
-<div class="sourceCode cell-code" id="cb51" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting the first three columns of spanish.data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51" data-code-line-numbers=""><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting the first three columns of spanish.data</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a type frequency table labelled as type.token</span></span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>type.token <span class="ot">&lt;-</span> <span class="fu">select</span>(spanish.data, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
 <span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1947,7 +1952,7 @@ Table&nbsp;16.8: Type frequency of Spanish ‘throw’ verbs based on the publis
 <span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AUX)</span>
 <span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-24"><a href="#cb51-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing the table in elegantly formatted HTML format</span></span>
-<span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a>types.wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a>types.wide</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="tbl-typeData" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -1976,7 +1981,7 @@ Table&nbsp;16.9: Type frequency of Spanish ‘throw’ verbs based on data
 <div class="cell">
 <details class="code-fold">
 <summary>Show the <code>R</code> code to generate the graph below.</summary>
-<div class="sourceCode cell-code" id="cb53" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using the ggplot() function with the dataframe verb.types</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using the ggplot() function with the dataframe verb.types</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The y-axis represents the type frequency</span></span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(verb.types, </span>
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Century, </span>
@@ -1990,7 +1995,7 @@ Table&nbsp;16.9: Type frequency of Spanish ‘throw’ verbs based on data
 <span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Century"</span>,</span>
 <span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Type frequency"</span>,</span>
 <span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Verbs"</span>) <span class="sc">+</span></span>
-<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-typeFreq" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2017,7 +2022,7 @@ Figure&nbsp;16.3: Type frequency of Spanish ‘throw’ verbs over time
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quiz time!
+<span class="screen-reader-only">Tip</span>Quiz time!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2215,10 +2220,10 @@ Table&nbsp;16.10: Type/token ratio of Spanish ‘throw’ verbs over time based 
 <p>Next, we calculate the type/token ratio. This is done by dividing the numeric values in <code>types.wide</code> (i.e., all columns except the first) by the corresponding values in <code>token.data</code>. To this end, we use the notation <code>types.wide[, -1] / token.data[, -1]</code>. The <code>[, -1]</code> indicates that we take all columns except the first one. We exclude the first column because it contains non-numeric values (the <code>AUX</code> column).</p>
 <p>Finally, we combine these components into our new data frame. We include the <code>AUX</code> column as the first column by selecting it with the command <code>token.data[, 1]</code>. To ensure that the column names remain unchanged, we set <code>check.names = FALSE</code> in the <code>data.frame()</code> function. This prevents <code>R</code> from altering the original column names, keeping them exactly as they are in <code>token.data</code>. We also <code>round()</code> the values of all numeric columns to just two decimals.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(token.data[, <span class="dv">1</span>], </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(token.data[, <span class="dv">1</span>], </span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>           types.wide[, <span class="sc">-</span><span class="dv">1</span>] <span class="sc">/</span> token.data[, <span class="sc">-</span><span class="dv">1</span>],</span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">check.names =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), round, <span class="at">digits =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), round, <span class="at">digits =</span> <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>       AUX   13  14   15   16   17   18   19   20   21
 1  arrojar  NaN NaN  NaN 0.80 0.72 0.81 0.84 0.91 0.96
@@ -2230,14 +2235,14 @@ Table&nbsp;16.10: Type/token ratio of Spanish ‘throw’ verbs over time based 
 </div>
 <p>Our table contains a lot <code>NaN</code> values. In these cells of the table, the number of tokens was zero and, as a consequence, the number of types was also zero. As it is mathematically impossible to divide zero by zero, <code>R</code> returns <code>NaN</code> values instead. To replace these <code>NaN</code> values to dashes (<code>"-"</code>) to match the formatting of the published tables, we use the base <code>R</code> function <code>is.na()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>type.token1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(token.data[, <span class="dv">1</span>], </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>type.token1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(token.data[, <span class="dv">1</span>], </span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>                          types.wide[, <span class="sc">-</span><span class="dv">1</span>] <span class="sc">/</span> token.data[, <span class="sc">-</span><span class="dv">1</span>],</span>
 <span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">check.names =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), round, <span class="at">digits =</span> <span class="dv">2</span>))</span>
 <span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>type.token1[<span class="fu">is.na</span>(type.token1)] <span class="ot">&lt;-</span> <span class="st">"-"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>type.token1[<span class="fu">is.na</span>(type.token1)] <span class="ot">&lt;-</span> <span class="st">"-"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The result is saved as <code>type.token1</code> and is displayed below as <a href="#tbl-typeTokenData" class="quarto-xref">Table&nbsp;<span>16.11</span></a>.</p>
 <div id="tbl-typeTokenData" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -2267,18 +2272,18 @@ Table&nbsp;16.11: Type/token ratio of Spanish ‘throw’ verbs over time based 
 <h3 data-number="16.7.2" class="anchored" data-anchor-id="visualising-the-typetoken-ratios-as-a-line-graph"><span class="header-section-number">16.7.2</span> Visualising the type/token ratios as a line graph</h3>
 <p>For the visualisation of the type/token ratios (<a href="#fig-typeTokenRatio" class="quarto-xref">Figure&nbsp;<span>16.4</span></a>), we create a new data frame. We start by merging the data frames <code>verbs.investigated</code> and <code>verb.types</code> using the <code>left_join()</code> function, ensuring that the <code>Century</code> and <code>AUX</code> variables are aligned. This results in a single data frame, which we save as <code>type_token</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>type_token <span class="ot">&lt;-</span> <span class="fu">left_join</span>(verbs.investigated, verb.types, </span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"Century"</span>, <span class="st">"AUX"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>type_token <span class="ot">&lt;-</span> <span class="fu">left_join</span>(verbs.investigated, verb.types, </span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"Century"</span>, <span class="st">"AUX"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Next, we calculate the type/token ratios by adding a new column, <code>TypeTokenRatio</code>, to the <code>type_token</code> data frame using the <code>mutate()</code> function, which applies the type/token ratio formula to each row. Finally, we use the <code>arrange()</code> function to sort the data by <code>Century</code> and <code>AUX</code> organizing the results chronologically by <code>Century</code> and alphabetically by the verb type (<code>AUX</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>type.token.ratio <span class="ot">&lt;-</span> type_token  <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>type.token.ratio <span class="ot">&lt;-</span> type_token  <span class="sc">|&gt;</span> </span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TypeTokenRatio =</span> Types <span class="sc">/</span> n) <span class="sc">|&gt;</span> </span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Century, AUX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Century, AUX)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The output is a table with 26 rows and five columns: <code>AUX</code>, <code>Century</code>, <code>n</code>, and <code>Types</code> and <code>TypeTokenRatio</code>. We can display the first six rows of the table using the <code>head()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(type.token.ratio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(type.token.ratio)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>      AUX Century   n Types TypeTokenRatio
 1   echar      13  32     8     0.25000000
@@ -2293,7 +2298,7 @@ Table&nbsp;16.11: Type/token ratio of Spanish ‘throw’ verbs over time based 
 <div class="cell">
 <details class="code-fold">
 <summary>Show the <code>R</code> code to generate the table below.</summary>
-<div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(type.token.ratio, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(type.token.ratio, </span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Century, </span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> TypeTokenRatio, </span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> AUX, </span>
@@ -2305,7 +2310,7 @@ Table&nbsp;16.11: Type/token ratio of Spanish ‘throw’ verbs over time based 
 <span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Century"</span>,</span>
 <span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"type/token ratio"</span>,</span>
 <span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Verbs"</span>) <span class="sc">+</span></span>
-<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-typeTokenRatio" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2332,7 +2337,7 @@ Figure&nbsp;16.4: type/token ratio of Spanish ‘throw’ Verbs Over Time
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quiz time!
+<span class="screen-reader-only">Tip</span>Quiz time!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2468,12 +2473,12 @@ tirar
 <p>This chapter attempted to reproduce the results of a corpus linguistics study that explores the evolution of five throw verbs in Peninsular Spanish (<em>echar</em>, <em>lanzar</em>, <em>disparar</em>, <em>tirar</em>, and <em>arrojar</em>) into aspectual auxiliaries in inchoative constructions that express the beginning of an event. The authors of the original study, <span class="citation" data-cites="vanhulleCategoryThrowVerbs2024">Van Hulle &amp; Enghels (<a href="../../99_references.html#ref-vanhulleCategoryThrowVerbs2024" role="doc-biblioref">2024a</a>)</span>, used historical and contemporary data to analyse the development and usage of these verbs, making their research data openly accessible. As part of this chapter, we identified some discrepancies between the results we obtained on the basis of the authors’ data <span class="citation" data-cites="vanhulleReplicationDataCategory2024">(<a href="../../99_references.html#ref-vanhulleReplicationDataCategory2024" role="doc-biblioref">Van Hulle &amp; Enghels 2024b</a>)</span> and those published in the 2024 study, indicating that the version of the dataset uploaded onto TROLLing does not exactly match the one used for the published results.</p>
 <p>We have also created some new data visualizations based on the authors’ uploaded data, which uncover patterns in the evolution of Spanish inchoative constructions that might not be immediately apparent through the examination of the tabular results alone. These visualizations underscore the effectiveness of graphical representation as a tool for understanding linguistic shifts over time—an approach not employed in the original study.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<strong>How to cite this chapter</strong>
+<span class="screen-reader-only">Note</span><strong>How to cite this chapter</strong>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2595,7 +2600,7 @@ Van Hulle, Sven &amp; Renata Enghels. 2024b. TROLLing replication data for: <spa
 <li id="fn2"><p>The normalized frequencies of <em>echar</em> and <em>lanzar</em> are found in Table 5 <span class="citation" data-cites="vanhulleCategoryThrowVerbs2024">(<a href="../../99_references.html#ref-vanhulleCategoryThrowVerbs2024" role="doc-biblioref">Van Hulle &amp; Enghels 2024a</a>: 227)</span>, whilst those for <em>arrojar</em>, <em>disparar</em> and <em>tirar</em> are displayed in Table 8 <span class="citation" data-cites="vanhulleCategoryThrowVerbs2024">(<a href="../../99_references.html#ref-vanhulleCategoryThrowVerbs2024" role="doc-biblioref">Van Hulle &amp; Enghels 2024a</a>: 232)</span>. Note that in Tables 5 and 8 <span class="citation" data-cites="vanhulleCategoryThrowVerbs2024">(<a href="../../99_references.html#ref-vanhulleCategoryThrowVerbs2024" role="doc-biblioref">Van Hulle &amp; Enghels 2024a</a>: 232)</span> all values are rounded off to two decimal places except the normalized frequency of <em>disparar</em> in the 21<sup>st</sup> which is reported as “0.0008”.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Note that we cannot copy the word counts directly from the paper, as the authors use the continental European format with the dot <code>(.)</code> as the thousand-separator and the comma <code>(,)</code> as a decimal point (e.g., 7.829.566 for the 13<sup>th</sup> century). In <code>R</code>, however, the dot is interpreted as a decimal separator so entering <code>7.829.566</code> will generate an error:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span>.<span class="fl">829.566</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span>.<span class="fl">829.566</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre data-code-line-numbers=""><code>unexpected numeric constant in "7.829.566"</code></pre>
 <a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></li>
@@ -2618,7 +2623,7 @@ Van Hulle, Sven &amp; Renata Enghels. 2024b. TROLLing replication data for: <spa
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -2668,13 +2673,14 @@ Van Hulle, Sven &amp; Renata Enghels. 2024b. TROLLing replication data for: <spa
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

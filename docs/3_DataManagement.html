@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.26">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -55,18 +55,19 @@ div.csl-indent {
 <link href="./2_Data.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-3e3370d44295d9fa30cc16d77ad785c2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-540c66f2be59a33d43b8e94dc657d4ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-2dc7341fb0871247097a223aafd3766b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -127,7 +128,7 @@ div.csl-indent {
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -160,7 +161,7 @@ div.csl-indent {
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -200,7 +201,7 @@ div.csl-indent {
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -228,7 +229,7 @@ div.csl-indent {
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -251,20 +252,22 @@ div.csl-indent {
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -291,7 +294,9 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Analysis for the<br>Language Sciences</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -569,9 +574,9 @@ Figure&nbsp;3.3: Two sets of file names, one clearly better than the other.
 </figure>
 </div>
 <p>Like the labels on your neatly organised spice jars, file and folder names should be clear, concise, and easily readable. Good file and folder names should be both human-friendly and computer-friendly.</p>
-<p>By <strong>human-friendly</strong> we mean that you and any other human being should easily be able to understand what a folder or file contains. Just like you wouldn’t want a label on a spice jar to be a random string of numbers (e.g., <code>0171</code>) or only include the best-before date but nothing else (e.g., <code>31 Jan 2028</code>), you also wouldn’t want to guess what a file contains based on an ambiguous or unclear name like <code>Chili</code>. Labels should be informative but succinct (e.g., <code>Thai Bird's Eye Chilli 31 Jan 2028</code> not <code>Thai Bird's Eye Chilli bought on December 19, 2023 whilst Christmas shopping with mum, note that the best before date is 31 January 2028</code>)! Unless you and all your colleagues read Thai, do not be tempted to write the part of the file name in Thai as this could also lead to misunderstandings.</p>
-<p>Another reason for not including Thai characters in your file name is that it would not be <strong>computer-friendly</strong>. In general, computers are not good at dealing with names that contain anything else but Latin alphanumeric characters, e.g., the letters <code>A</code> to <code>Z</code> and <code>a</code> to <code>z</code> with no accents and the numbers <code>0</code> to <code>9</code>. Hyphens (<code>-</code>) and underscores (<code>_</code>) can also be used, but not spaces. The dot (<code>.</code>) is reserved for the file extension and should ideally not be used elsewhere in the file name.</p>
-<p>Hence, whilst <code>Thai Bird's Eye Chilli 31 Jan 2028</code> is human-friendly, it is not computer-friendly. To make it a computer-friendly label, we need to remove the apostrophe. Whilst spaces are not strictly forbidden, they can cause all kinds of issues and are therefore also best avoided. Space characters can be replaced by hyphens (<code>-</code>) and underscores (<code>_</code>) and the two can be combined in a meaningful way. For example, in the label <code>Thai-Birds-Eye-Chilli_31-Jan-2028</code>, the <code>_</code> distinguishes between two different pieces of information, whilst the <code>-</code> helps humans to parse individual words within a piece of information. Using such patterns consistently not only helps humans to read file names efficiently, it also means that computers can easily ‘parse’, i.e., break down such names into meaningful items. This can be very useful to search for files or automatically extract metadata from file names.</p>
+<p>By <strong>human-friendly</strong> we mean that you and any other human being should easily be able to understand what a folder or file contains. Just like you wouldn’t want a label on a spice jar to be a random string of numbers (e.g.&nbsp;<code>0171</code>) or only include the best-before date but nothing else (e.g.&nbsp;<code>31 Jan 2028</code>), you also wouldn’t want to guess what a file contains based on an ambiguous or unclear name like <code>Chili</code>. Labels should be informative but succinct (e.g.&nbsp;<code>Thai Bird's Eye Chilli 31 Jan 2028</code> not <code>Thai Bird's Eye Chilli bought on December 19, 2023 whilst Christmas shopping with mum, note that the best before date is 31 January 2028</code>)! Unless you and all your colleagues read Thai, do not be tempted to write the part of the file name in Thai as this could also lead to misunderstandings.</p>
+<p>Another reason for not including Thai characters in your file name is that it would not be <strong>computer-friendly</strong>. In general, computers are not good at dealing with names that contain anything else but Latin alphanumeric characters, e.g.&nbsp;the letters <code>A</code> to <code>Z</code> and <code>a</code> to <code>z</code> with no accents and the numbers <code>0</code> to <code>9</code>. Hyphens (<code>-</code>) and underscores (<code>_</code>) can also be used, but not spaces. The dot (<code>.</code>) is reserved for the file extension and should ideally not be used elsewhere in the file name.</p>
+<p>Hence, whilst <code>Thai Bird's Eye Chilli 31 Jan 2028</code> is human-friendly, it is not computer-friendly. To make it a computer-friendly label, we need to remove the apostrophe. Whilst spaces are not strictly forbidden, they can cause all kinds of issues and are therefore also best avoided. Space characters can be replaced by hyphens (<code>-</code>) and underscores (<code>_</code>) and the two can be combined in a meaningful way. For example, in the label <code>Thai-Birds-Eye-Chilli_31-Jan-2028</code>, the <code>_</code> distinguishes between two different pieces of information, whilst the <code>-</code> helps humans to parse individual words within a piece of information. Using such patterns consistently not only helps humans to read file names efficiently, it also means that computers can easily ‘parse’, i.e.&nbsp;break down such names into meaningful items. This can be very useful to search for files or automatically extract metadata from file names.</p>
 <div id="fig-InThatCase" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Cartoon representations of common cases in coding. A snake screams &quot;SCREAMING_SNAKE_CASE&quot; into the face of a camel (wearing ear muffs) with &quot;camelCase&quot; written along its back. Vegetables on a skewer spell out &quot;kebab-case&quot; (words on a skewer). A mellow, happy looking snake has text &quot;snake_case&quot; along it.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-InThatCase-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -590,7 +595,7 @@ Figure&nbsp;3.4: To help us remember the different, systematic ways to use lette
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -713,7 +718,7 @@ MC1.png
 </div>
 </div>
 </div>
-<p>It is also important to ensure that file names are easily sortable. If you have a series of files that document a process, consider beginning each file name with a number that correspond to the order of the process, e.g., <code>01_DataPreparation.R</code>, <code>02_DataAnnotation.R</code>, <code>03_AnnotationEvaluation.R</code>. Left-padding the numbers with one or more <code>0</code> will mean that the files are sorted numerically, even when files are listed alphabetically (see <a href="#fig-FileNamesLeftPaddedNumbers" class="quarto-xref">Figure&nbsp;<span>3.5 (b)</span></a>).</p>
+<p>It is also important to ensure that file names are easily sortable. If you have a series of files that document a process, consider beginning each file name with a number that correspond to the order of the process, e.g.&nbsp;<code>01_DataPreparation.R</code>, <code>02_DataAnnotation.R</code>, <code>03_AnnotationEvaluation.R</code>. Left-padding the numbers with one or more <code>0</code> will mean that the files are sorted numerically, even when files are listed alphabetically (see <a href="#fig-FileNamesLeftPaddedNumbers" class="quarto-xref">Figure&nbsp;<span>3.5 (b)</span></a>).</p>
 <div id="fig-NumberPadding" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-NumberPadding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -789,25 +794,25 @@ Figure&nbsp;3.6: Why using the YYYY-MM-DD is good file naming practice.
 </section>
 <section id="sec-FoldersPaths" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="sec-FoldersPaths"><span class="header-section-number">3.3</span> Folders and paths</h2>
-<p>Now that you know how to name your files and folders sensibly, we can turn to best practices for organising these files and folders. Returning to our kitchen analogy, imagine that, over many years, you collected hundreds of recipes from friends and family. These recipes are jotted down on individual sheets of paper, all of which have been thoughtlessly tossed into a large kitchen drawer called ‘Documents’, which also happens to contain receipts for kitchen appliances still under warranty, takeaway brochures, and various other bits of paper. In such a kitchen, finding Aunt Sophie’s famous caramelised apple cake could take a while! If, however, you had a dedicated kitchen drawer for recipes which contained neatly labelled folders of different types of dishes, you would know to look for this cake recipe in the Desserts folder. Within the Desserts folder, you could have sub-folders for different types of desserts (e.g., cakes, ice creams, trifles). This would make finding Aunt Sophie’s recipe an absolute piece of cake!</p>
+<p>Now that you know how to name your files and folders sensibly, we can turn to best practices for organising these files and folders. Returning to our kitchen analogy, imagine that, over many years, you collected hundreds of recipes from friends and family. These recipes are jotted down on individual sheets of paper, all of which have been thoughtlessly tossed into a large kitchen drawer called ‘Documents’, which also happens to contain receipts for kitchen appliances still under warranty, takeaway brochures, and various other bits of paper. In such a kitchen, finding Aunt Sophie’s famous caramelised apple cake could take a while! If, however, you had a dedicated kitchen drawer for recipes which contained neatly labelled folders of different types of dishes, you would know to look for this cake recipe in the Desserts folder. Within the Desserts folder, you could have sub-folders for different types of desserts (e.g.&nbsp;cakes, ice creams, trifles). This would make finding Aunt Sophie’s recipe an absolute piece of cake!</p>
 <p>Thinking about how to structure folders and sub-folders for your projects is about creating a kind of road map that should be readily interpretable by both humans and computers. This is where the concept of ‘paths’ arises. Paths, in simple terms, describe the location of a file or a folder in a computer’s filesystem. There are different types of paths. An <strong>absolute path</strong> provides a complete path from the computer’s “root folder”. If our house were our root folder, the absolute path to Aunt Sophie’s recipe would be <code>"/Kitchen/Recipes/Desserts/Cakes/Apple-Cake_Aunt-Sophie"</code>. Hence, just like your home’s postal address, which ideally specifies your home’s absolute location worldwide, an absolute path provides a complete path from a computer’s <strong>root folder</strong> to the file or folder in question.</p>
-<p>By contrast, a <strong>relative path</strong> represents the location of a file or folder relative to another folder. Hence, if we already have the Dessert folder open in front of us, the relative path to the apple cake recipe would simply be <code>"Cakes/Apple-Cake_Aunt-Sophie"</code>. However, if we wanted to access a recipe in the Starters folder from the Cakes folder, we would first have to go “back up the path” from the Cakes folder to the Recipes drawer. This is achieved by adding <code>../</code> to the front of the relative path, e.g., <code>"../Starters/Soups/Pea-Mint-Soup_Barbara"</code>.</p>
+<p>By contrast, a <strong>relative path</strong> represents the location of a file or folder relative to another folder. Hence, if we already have the Dessert folder open in front of us, the relative path to the apple cake recipe would simply be <code>"Cakes/Apple-Cake_Aunt-Sophie"</code>. However, if we wanted to access a recipe in the Starters folder from the Cakes folder, we would first have to go “back up the path” from the Cakes folder to the Recipes drawer. This is achieved by adding <code>../</code> to the front of the relative path, e.g.&nbsp;<code>"../Starters/Soups/Pea-Mint-Soup_Barbara"</code>.</p>
 <p>For example, <code>"/Users/lefoll/Documents/Teaching/RstatsTextbook/ToDo.txt"</code> is the absolute path from my computer’s root folder to the file containing my to-do list in relation to this textbook project. By contrast, a “relative path” represents the location of a file or folder relative to another folder. Hence, if I am already in the directory <code>"/Users/lefoll/Documents/Teaching/RstatsTextbook/"</code>, the relative path to my to-do list is only <code>"ToDo.txt"</code>.</p>
 <p>Note that, here, we use the term “folder” as a metaphor for a computer file directory. Most modern operating systems use folder icons that look like the kind of paper file folders that office workers use to have piled up on their desks as a means of visually representing directories in computer file systems.</p>
-<p>To complicate things a little, the way file paths are written varies depending on the computer’s operating system. In Unix-based systems like Linux and macOS, paths are written using forward slashes (e.g., <code>"/Users/elen/Documents/Teaching/RstatsTextbook/ToDo.txt"</code>), whereas on Windows, paths are written using backslashes (e.g., <code>"C:\Users\elen\Documents\Teaching\RstatsTextbook\ToDo.txt"</code>).</p>
+<p>To complicate things a little, the way file paths are written varies depending on the computer’s operating system. In Unix-based systems like Linux and macOS, paths are written using forward slashes (e.g.&nbsp;<code>"/Users/elen/Documents/Teaching/RstatsTextbook/ToDo.txt"</code>), whereas on Windows, paths are written using backslashes (e.g.&nbsp;<code>"C:\Users\elen\Documents\Teaching\RstatsTextbook\ToDo.txt"</code>).</p>
 <p>There are many ways to find out where your files are stored on your computer. Let us begin by opening a Finder window (on macOS) or a File Explorer window (on Windows). Navigate to the folder which contains the file for which you want to find the absolute path. Alternatively you could use your computer’s search function to search for the file. Once you have found it:</p>
 <ul>
-<li><p>on Windows: Right-click on the file (in some older Windows versions, you may also need to press the “shift” key). Among the options presented to you, click on the one to copy the file path (e.g., “Copy as path” or similar in the language of your operating system).</p></li>
+<li><p>on Windows: Right-click on the file (in some older Windows versions, you may also need to press the “shift” key). Among the options presented to you, click on the one to copy the file path (e.g.&nbsp;“Copy as path” or similar in the language of your operating system).</p></li>
 <li><p>on macOS: Right-click on the file and then press the Option/⌥ key on your keyboard. Pressing down this key will change the options you are given after having right-clicked. One of these options should now be “Copy … as Pathname” (or something equivalent in the language of your operating system). Click on this option.</p></li>
 </ul>
-<p>Then, open any text-editing programme (e.g., LibreOffice Writer, Microsoft Word, TextEdit, or NotePad++) and use the shortcut <code>Ctrl/Cmd + V</code> to paste your file’s path in the empty document. If you are on Windows, your path should have backslashes, whereas if you are on Linux or macOS, your path should have forward slashes.</p>
+<p>Then, open any text-editing programme (e.g.&nbsp;LibreOffice Writer, Microsoft Word, TextEdit, or NotePad++) and use the shortcut <code>Ctrl/Cmd + V</code> to paste your file’s path in the empty document. If you are on Windows, your path should have backslashes, whereas if you are on Linux or macOS, your path should have forward slashes.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -937,7 +942,7 @@ Rscripts/2_ErrorsAreFun.R
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1045,9 +1050,9 @@ R
 <input type="submit" value="Check answer">
 <div id="result_91621"></div>
 </form>
-<script>function validate_form_91621() {var x, text; var x = document.forms['form_91621']['answer_91621'].value;if (x == 'HTML'){text = 'That’s right! This means that the analysis code can be opened in any browser (e.g., Firefox, Chrome, or Safari) without needing to install R.';} else {text = 'No. The code was written in R, using Rmarkdown, but the file format used to share the code is a different one.';} document.getElementById('result_91621').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_91621() {var x, text; var x = document.forms['form_91621']['answer_91621'].value;if (x == 'HTML'){text = 'That’s right! This means that the analysis code can be opened in any browser (e.g. Firefox, Chrome, or Safari) without needing to install R.';} else {text = 'No. The code was written in R, using Rmarkdown, but the file format used to share the code is a different one.';} document.getElementById('result_91621').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9;res1 = document.getElementById('result_4').innerText == 'That’s right!'; res2 = document.getElementById('result_5').innerText == 'That’s right! This file name is problematic due to the fact that it contains spaces, that it is unclear what ‘MyDocument’ and ‘final’ mean, and the use of the dot, which should only be used as part of the file extension. While mixed capitalisation will not cause any errors, it is not good file naming practice and should therefore be avoided.'; res3 = document.getElementById('result_6').innerText == 'That’s right, well done!'; res4 = document.getElementById('result_7').innerText == 'That’s right! As suggested in the bottom-left of the screenshot, this computer is running macOS so forward slashes are used and the absolute path begins at the root which is higher up the folder hierarchy than the UzK folder.'; res5 = document.getElementById('result_8').innerText == 'That’s right!'; res6 = document.getElementById('result_9').innerText == 'That’s right!'; res7 = document.getElementById('result_76449').innerText == 'That’s right, well done!'; res8 = document.getElementById('result_80535').innerText == 'That’s right! Have you tried to download one of the video files to see what it contains?'; res9 = document.getElementById('result_91621').innerText == 'That’s right! This means that the analysis code can be opened in any browser (e.g., Firefox, Chrome, or Safari) without needing to install R.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_91621').innerText == 'That’s right! This means that the analysis code can be opened in any browser (e.g. Firefox, Chrome, or Safari) without needing to install R.';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1101,18 +1106,18 @@ Tab
 <p>A basic principle of sound data management consists in keeping a copy of <em>all</em> your files in more than one place. This ensures that, should something go awry, your research is not lost forever but instead can be recovered and restored promptly. There are many ways things could go wrong: laptops can get stolen or permanently damaged (laptops are not terribly keen on hot chocolate as it turns out… 🙈), computer files can be corrupted and become unusable, you or someone else may accidentally delete files, your computer can become infested with a nasty virus, etc.</p>
 <p>An effective way to protect your projects is to abide by the <strong>3-2-1 rule</strong> <span class="citation" data-cites="schweinbergerDataManagementVersion2022">(<a href="99_references.html#ref-schweinbergerDataManagementVersion2022" role="doc-biblioref">Schweinberger 2022</a>)</span>. It’s simple:</p>
 <ul>
-<li>Ensure that you have at least <strong>three</strong> copies of your data (e.g., one that you work with on your personal computer and two back-up copies).</li>
-<li>Split the backup copies between <strong>two</strong> different storage media (e.g., a hard-drive stored in your office and online in a secure cloud service).</li>
-<li>Store <strong>one</strong> of these copies in a secure place off-site (i.e., not where your computer usually is).</li>
+<li>Ensure that you have at least <strong>three</strong> copies of your data (e.g.&nbsp;one that you work with on your personal computer and two back-up copies).</li>
+<li>Split the backup copies between <strong>two</strong> different storage media (e.g.&nbsp;a hard-drive stored in your office and online in a secure cloud service).</li>
+<li>Store <strong>one</strong> of these copies in a secure place off-site (i.e.&nbsp;not where your computer usually is).</li>
 </ul>
 <p>One solution is to store your <strong>three copies</strong> on:</p>
 <ol type="1">
 <li>your personal laptop or computer,</li>
 <li>a backup hard drive stored in a secure location, and</li>
-<li>a secure online repository such as the data management system provided by your institution, e.g., Sciebo, ownCloud, or GitLab.</li>
+<li>a secure online repository such as the data management system provided by your institution, e.g.&nbsp;Sciebo, ownCloud, or GitLab.</li>
 </ol>
-<p>Choosing an online repository will protect your data if your computer malfunctions or is damaged or stolen, but remember that it can also potentially make your data accessible to others. This is particularly true of commercial back-up solutions such as Microsoft’s OneDrive, Google’s Drive, Apple’s iCloud, or Dropbox, which although convenient and very user-friendly, should not be used to store sensitive data (e.g., data that may be used to identify individuals, contain financial information, health records, location data, or proprietary research data). Always check if your institution has its own, secure cloud option. If not, keeping a second hard-drive copy in a separate, secure location is likely the safest solution.</p>
-<p>Whilst the <strong>3-2-1 rule</strong> stipulates that you should keep at least three copies of each file, in an optimal scenario, each file should exist only once at each location (e.g., on your laptop, a separate hard-drive, and the server of an online repository). It is quite easy to (often unknowingly) end up with several duplicates of the same file on any one machine but this can cause issues if, for example, you end up updating the wrong version of the file. Avoiding and eliminating file duplicates is therefore an important step towards proficient data management.</p>
+<p>Choosing an online repository will protect your data if your computer malfunctions or is damaged or stolen, but remember that it can also potentially make your data accessible to others. This is particularly true of commercial back-up solutions such as Microsoft’s OneDrive, Google’s Drive, Apple’s iCloud, or Dropbox, which although convenient and very user-friendly, should not be used to store sensitive data (e.g.&nbsp;data that may be used to identify individuals, contain financial information, health records, location data, or proprietary research data). Always check if your institution has its own, secure cloud option. If not, keeping a second hard-drive copy in a separate, secure location is likely the safest solution.</p>
+<p>Whilst the <strong>3-2-1 rule</strong> stipulates that you should keep at least three copies of each file, in an optimal scenario, each file should exist only once at each location (e.g.&nbsp;on your laptop, a separate hard-drive, and the server of an online repository). It is quite easy to (often unknowingly) end up with several duplicates of the same file on any one machine but this can cause issues if, for example, you end up updating the wrong version of the file. Avoiding and eliminating file duplicates is therefore an important step towards proficient data management.</p>
 </section>
 <section id="conclusion" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">3.5</span> Conclusion</h2>
@@ -1153,12 +1158,12 @@ Figure&nbsp;3.8: Artwork illustrating the kitchen workflow metaphor by <a href="
 </figure>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Going further
+<span class="screen-reader-only">Note</span>Going further
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1221,7 +1226,7 @@ Schweinberger, Martin. 2022. Data management, version control, and reproducibili
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1271,13 +1276,14 @@ Schweinberger, Martin. 2022. Data management, version control, and reproducibili
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

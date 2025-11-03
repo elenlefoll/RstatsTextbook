@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.26">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,18 +90,19 @@ div.csl-indent {
 <link href="./6_ImpoRtingData.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-3e3370d44295d9fa30cc16d77ad785c2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-540c66f2be59a33d43b8e94dc657d4ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-2dc7341fb0871247097a223aafd3766b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -162,7 +163,7 @@ div.csl-indent {
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -195,7 +196,7 @@ div.csl-indent {
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -235,7 +236,7 @@ div.csl-indent {
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -263,7 +264,7 @@ div.csl-indent {
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -286,20 +287,22 @@ div.csl-indent {
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -326,7 +329,9 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Analysis for the<br>Language Sciences</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -557,7 +562,7 @@ div.csl-indent {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Prerequisites
+<span class="screen-reader-only">Warning</span>Prerequisites
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -571,10 +576,10 @@ Prerequisites
 <p>Alternatively, you can download <code>Dabrowska2019.zip</code> from <a href="https://github.com/elenlefoll/RstatsTextbook/raw/69d1e31be7394f2b612825f031ebffeb75886390/Dabrowska2019.zip" class="uri">the textbook’s GitHub repository</a>. To launch the project correctly, first unzip the file and then double-click on the <code>Dabrowska2019.Rproj</code> file.</p>
 <p>Before we get started, import both L1 and the L2 datasets to your local <code>R</code> environment:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"L1_data.csv"</span>))</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"L2_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"L2_data.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Check the Environment pane in RStudio to ensure that everything has gone to plan (see <a href="#fig-DataLoaded" class="quarto-xref">Figure&nbsp;<span>7.1</span></a>).</p>
 <div id="fig-DataLoaded" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The environment pane contains two rows under the label Data: the L1.data object with 90 obs. of 31 variables and the L2.data object with 67 obs. of 45 variables">
@@ -596,7 +601,7 @@ Figure&nbsp;7.1: Environment pane of RStudio showing that the datasets have been
 <p>In <a href="6_ImpoRtingData.html#sec-ImportingErrors" class="quarto-xref"><span>Section 6.6</span></a>, we saw that we can use the <code>View()</code> function to display tabular data in a format that resembles that of a spreadsheet programme (see <a href="#fig-ViewData1" class="quarto-xref">Figure&nbsp;<span>7.2</span></a>).</p>
 <p>The two datasets from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> are both long and wide so you will need to scroll in both directions to view all the data. <em>RStudio</em> also provides a filter option and a search tool (see <a href="#fig-ViewData1" class="quarto-xref">Figure&nbsp;<span>7.2</span></a>). Note that both of these tools can only be used to visually inspect the data. You cannot alter the dataset in any way using these tools (and that’s a good thing!).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(L1.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="fig-ViewData1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RStudio tab showing the first 22 rows and 7 columns of the L1.dataset. The filter and search buttons at the top of the tab are circled in red.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -614,7 +619,7 @@ Figure&nbsp;7.2: The L1.data object as visualised using the <code>View()</code> 
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -665,7 +670,7 @@ The R Console prints the data in a randomly jumbled way.
 </div>
 <p>In practice, it is often useful to printing subsets of a dataset in the Console to quickly check the sanity of the data. To do so, we can use the function <code>head()</code> that prints the first six rows of a tabular dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(L1.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  Participant Age Gender             Occupation OccupGroup OtherLgs
 1           1  21      M                Student         PS     None
@@ -703,7 +708,7 @@ The R Console prints the data in a randomly jumbled way.
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -768,13 +773,13 @@ head(L2.data, n = 10L)
 <section id="types-of-variables" class="level3" data-number="7.2.1">
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="types-of-variables"><span class="header-section-number">7.2.1</span> Types of variables</h3>
 <p>In statistics, we differentiate between <strong>numeric</strong> (or <strong>quantitative</strong>) and <strong>categorical</strong> (or <strong>qualitative</strong>) variables. Each variable type can be subdivided into different subtypes. It is very important to understand the differences between these types of data as we frequently have to use different statistics and visualisations depending on the type(s) of variable(s) that we are dealing with.</p>
-<p>Some <strong>numeric variables</strong> are <strong>continuous</strong>: they contain measured data that, at least theoretically, can have an infinite number of values within a range (e.g., time). In practice, however the number of possible values depends on the precision of the measurement (e.g., are we measuring time in years, as in the age of adults, or milliseconds, as in participants’ reaction times in a linguistic experiment). <strong>Numeric variables</strong> for which only a defined set of values are possible are called <strong>discrete</strong> variables (e.g., number of occurrences of a word in a corpus). Most often, discrete numeric variables represent counts of something.</p>
+<p>Some <strong>numeric variables</strong> are <strong>continuous</strong>: they contain measured data that, at least theoretically, can have an infinite number of values within a range (e.g.&nbsp;time). In practice, however the number of possible values depends on the precision of the measurement (e.g.&nbsp;are we measuring time in years, as in the age of adults, or milliseconds, as in participants’ reaction times in a linguistic experiment). <strong>Numeric variables</strong> for which only a defined set of values are possible are called <strong>discrete</strong> variables (e.g.&nbsp;number of occurrences of a word in a corpus). Most often, discrete numeric variables represent counts of something.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="https://allisonhorst.com"><img src="images/AHorst_NumericVariables.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Cartoon comparison of continuous versus discrete data. On the left: &quot;Continuous - measured data, can have infinite values within possible range.&quot; Below is an illustration of a chick, with text &quot;I am 3.1&quot; tall, I weight 34.16 grams.&quot; On the right: &quot;Discrete - observations can only exist at limited values, often counts.&quot; Below is an illustration of an octopus with text &quot;I have 8 legs and 4 spots!&quot;" width="509"></a></p>
 </figure>
 </div>
-<p><strong>Categorical variables</strong> can be <strong>nominal</strong> or <strong>ordinal</strong>. Nominal variables contain unordered categorical values (e.g., participants’ mother tongue or nationality), whereas ordinal variables have categorical values that can be ordered meaningfully (e.g., participants’ proficiency in a specific language where the values <em>beginner, intermediate</em> and <em>advanced</em> or <em>A1</em>, <em>A2</em>, <em>B1</em>, <em>B2</em>, <em>C1</em> and <em>C2</em> have a meaningful order). However, the difference between each category (or level) is not necessarily equal. <strong>Binary</strong> variables are a special case of nominal variable which only has two mutually exclusive outcomes (e.g., <em>true</em> or <em>false</em> in a quiz question).</p>
+<p><strong>Categorical variables</strong> can be <strong>nominal</strong> or <strong>ordinal</strong>. Nominal variables contain unordered categorical values (e.g.&nbsp;participants’ mother tongue or nationality), whereas ordinal variables have categorical values that can be ordered meaningfully (e.g.&nbsp;participants’ proficiency in a specific language where the values <em>beginner, intermediate</em> and <em>advanced</em> or <em>A1</em>, <em>A2</em>, <em>B1</em>, <em>B2</em>, <em>C1</em> and <em>C2</em> have a meaningful order). However, the difference between each category (or level) is not necessarily equal. <strong>Binary</strong> variables are a special case of nominal variable which only has two mutually exclusive outcomes (e.g.&nbsp;<em>true</em> or <em>false</em> in a quiz question).</p>
 <p><a href="https://allisonhorst.com/"><img src="images/AHorst_CategoricalVariables.png" class="img-fluid" alt="Visual representations of nominal, ordinal, and binary variables. Left: Nominal (ordered descriptions) with illustrations below of a turtle, snail, and butterfly. Center: Ordinal (ordered descriptions) with illustrations below of three bees - one looks unhappy (saying &quot;I am unhappy&quot;), one looks ok (saying &quot;I am OK&quot;), and one looks very happy (saying &quot;I am awesome!&quot;). Right: Binary (only 2 mutually exclusive outcomes), with below a T-rex saying &quot;I am extinct&quot; and a shark saying &quot;HA.&quot;"></a></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
@@ -782,7 +787,7 @@ head(L2.data, n = 10L)
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -917,7 +922,7 @@ Binary
 <p>In <strong>tidy data</strong> tabular formats (see Chapter 8), each row corresponds to one observation and each column to a variable. Each cell, therefore, corresponds to a single data point, which is the value of a specific variable (column) for a specific observation (row). As we will see in the following chapters, this data structure allows for efficient and intuitive data manipulation, analysis, and visualisation.</p>
 <p>The <code>names()</code> functions returns the names of all of the columns of a data frame. Given that the datasets from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> are ‘tidy’, this means that <code>names(L1.data)</code> returns a list of all the column names in the L1 dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(L1.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "Participant" "Age"         "Gender"      "Occupation"  "OccupGroup" 
  [6] "OtherLgs"    "Education"   "EduYrs"      "ReadEng1"    "ReadEng2"   
@@ -933,7 +938,7 @@ Binary
 <h3 data-number="7.2.3" class="anchored" data-anchor-id="sec-DataTypes"><span class="header-section-number">7.2.3</span> <code>R</code> data types</h3>
 <p>A useful way to get a quick and informative overview of a large dataset is to use the function <code>str()</code>, which was mentioned in <a href="6_ImpoRtingData.html#sec-ImportingErrors" class="quarto-xref"><span>Section 6.6</span></a>. It returns the “internal structure” of any <code>R</code> object. It is particular useful for large tables with many columns</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(L1.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>'data.frame':   90 obs. of  31 variables:
  $ Participant: chr  "1" "2" "3" "4" ...
@@ -977,7 +982,7 @@ Binary
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1168,7 +1173,7 @@ Because the L1 participants' IDs only contain whole numbers with no decimal poin
 <h3 data-number="7.2.4" class="anchored" data-anchor-id="sec-DollarSign"><span class="header-section-number">7.2.4</span> Accessing individual columns in <code>R</code></h3>
 <p>We can call up individual columns within a data frame using the <code>$</code> operator. This displays all of the participants’ values for this one variable. As shown below, this works for any type of data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>L1.data<span class="sc">$</span>Gender</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>L1.data<span class="sc">$</span>Gender</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "M" "M" "M" "F" "F" "F" "F" "M" "M" "F" "F" "M" "M" "F" "M" "F" "M" "F" "F"
 [20] "F" "F" "F" "F" "F" "F" "M" "F" "M" "F" "M" "F" "F" "F" "M" "F" "F" "M" "F"
@@ -1176,7 +1181,7 @@ Because the L1 participants' IDs only contain whole numbers with no decimal poin
 [58] "F" "F" "M" "M" "M" "M" "F" "M" "M" "M" "M" "M" "M" "M" "M" "F" "M" "F" "F"
 [77] "M" "M" "M" "F" "F" "M" "M" "F" "F" "M" "M" "M" "F" "M"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>L1.data<span class="sc">$</span>Age</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>L1.data<span class="sc">$</span>Age</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] 21 38 55 26 55 58 31 58 42 59 32 27 60 51 32 29 41 57 60 18 41 60 21 25 26
 [26] 60 57 60 52 25 23 42 59 30 21 21 60 51 62 65 19 65 29 38 37 42 20 32 29 29
@@ -1192,11 +1197,11 @@ Because the L1 participants' IDs only contain whole numbers with no decimal poin
 <p>Looking at the <code>Gender</code> and <code>Age</code> variables, we can see that all the L1 participants declared being either ‘male’ (<code>"M"</code>) or ‘female’ (<code>"F"</code>), that the youngest were 17 years old, and that no participant was improbably old. A single improbable value is likely to be the result of a data entry error, e.g.&nbsp;a participant or researcher entered <code>188</code> as an age, instead of <code>18</code>. If you spot lots of improbable or outright weird values (e.g.&nbsp;<code>C</code>, <code>I</code> and <code>PS</code> as age values!), something is likely to have gone wrong during the data import process (see <a href="6_ImpoRtingData.html#sec-ImportingErrors" class="quarto-xref"><span>Section 6.6</span></a>).</p>
 <p>Just like we can save individual numbers and words as <code>R</code> objects to our <code>R</code> environment, we can also save individual variables as individual <code>R</code> objects. As we saw in <a href="5_GettingStaRted.html#sec-WorkingRObjects" class="quarto-xref"><span>Section 5.3</span></a>, in this case, the values of the variable are not printed in the Console, but rather saved to our <code>R</code> environment.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>L1.Occupation <span class="ot">&lt;-</span> L1.data<span class="sc">$</span>Occupation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>L1.Occupation <span class="ot">&lt;-</span> L1.data<span class="sc">$</span>Occupation</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>If we want to display the content of this variable, we must print our new <code>R</code> object by calling it up with its name, e.g.&nbsp;<code>L1.Occupation</code>. Try it out! As listing all of the all of the L1 participant’s jobs makes for a very long list, below, we only display the first six values using the <code>head()</code> function.</p>
+<p>If we want to display the content of this variable, we must print our new <code>R</code> object by calling it up with its name, e.g.&nbsp;<code>L1.Occupation</code>. Try it out! As listing all of the L1 participant’s jobs makes for a very long list, below, we only display the first six values using the <code>head()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(L1.Occupation)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(L1.Occupation)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "Student"                "Student/Support Worker" "Retired"               
 [4] "Web designer"           "Homemaker"              "Retired"               </code></pre>
@@ -1208,21 +1213,21 @@ Because the L1 participants' IDs only contain whole numbers with no decimal poin
 <h2 data-number="7.3" class="anchored" data-anchor-id="sec-SquareBrackets"><span class="header-section-number">7.3</span> Accessing individual data points in <code>R</code></h2>
 <p>We can also access individual data points from a variable using the index operator, the square brackets (<code>[]</code>). For example, we can access the <code>Occupation</code> value for the fourth L1 participant by specifying that we only want the fourth element of the <code>R</code> object <code>L1.Occupation</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>L1.Occupation[<span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>L1.Occupation[<span class="dv">4</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "Web designer"</code></pre>
 </div>
 </div>
 <p>We can also do this from the <code>L1.data</code> data frame object directly. To this end, we use a combination of the <code>$</code> and the <code>[]</code> operators.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>L1.data<span class="sc">$</span>Occupation[<span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>L1.data<span class="sc">$</span>Occupation[<span class="dv">4</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "Web designer"</code></pre>
 </div>
 </div>
 <p>We can access a continuous range of data points using the <code>:</code> operator.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>L1.data<span class="sc">$</span>Occupation[<span class="dv">10</span><span class="sc">:</span><span class="dv">15</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>L1.data<span class="sc">$</span>Occupation[<span class="dv">10</span><span class="sc">:</span><span class="dv">15</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "Housewife"             "Admin Assistant"       "Content Editor"       
 [4] "School Crossing Guard" "Carer/Cleaner"         "IT Support"           </code></pre>
@@ -1230,7 +1235,7 @@ Because the L1 participants' IDs only contain whole numbers with no decimal poin
 </div>
 <p>Or, if they are not continuous, we can list the numbers of the values that we are interesting in using the combine function (<code>c()</code>) and commas separating each index value.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>L1.data<span class="sc">$</span>Occupation[<span class="fu">c</span>(<span class="dv">11</span>,<span class="dv">13</span>,<span class="dv">29</span>,<span class="dv">90</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>L1.data<span class="sc">$</span>Occupation[<span class="fu">c</span>(<span class="dv">11</span>,<span class="dv">13</span>,<span class="dv">29</span>,<span class="dv">90</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "Admin Assistant"       "School Crossing Guard" "Dental Nurse"         
 [4] "Student"              </code></pre>
@@ -1240,14 +1245,14 @@ Because the L1 participants' IDs only contain whole numbers with no decimal poin
 <pre data-code-line-numbers=""><code>[row,column]</code></pre>
 <p>For example, given that we know that <code>Occupation</code> is stored in the fourth column of <code>L1.data</code>, we can find out the occupation of the L1 participant in the 60<sup>th</sup> row of the dataset like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>L1.data[<span class="dv">60</span>,<span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>L1.data[<span class="dv">60</span>,<span class="dv">4</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "Train Driver"</code></pre>
 </div>
 </div>
 <p>All of these approaches can be combined. For example, here we access the values of the second, third, and fourth columns for the 11<sup>th</sup>, 13<sup>th</sup>, 29<sup>th</sup>, and 90<sup>th</sup> L1 participants.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>L1.data[<span class="fu">c</span>(<span class="dv">11</span>,<span class="dv">13</span>,<span class="dv">29</span>,<span class="dv">90</span>),<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>L1.data[<span class="fu">c</span>(<span class="dv">11</span>,<span class="dv">13</span>,<span class="dv">29</span>,<span class="dv">90</span>),<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>   Age Gender            Occupation
 11  32      F       Admin Assistant
@@ -1262,7 +1267,7 @@ Because the L1 participants' IDs only contain whole numbers with no decimal poin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1340,7 +1345,7 @@ L2.data[67:c(2,3,5,9)]
 </form>
 <script>function validate_form_42459() {var text; var x1 = document.getElementById('answer_42459_1'); var x2 = document.getElementById('answer_42459_2'); var x3 = document.getElementById('answer_42459_3'); var x4 = document.getElementById('answer_42459_4'); var x5 = document.getElementById('answer_42459_5'); var x6 = document.getElementById('answer_42459_6'); if (x1.checked == true&x2.checked == false&x3.checked == true&x4.checked == false&x5.checked == true&x6.checked == false){text = 'Great job!';} else {text = 'Not quite. Try out these options to find out for yourself which ones work and which don’t.';} document.getElementById('result_42459').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12;res1 = document.getElementById('result_80486').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_44705').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_3112').innerText == 'Correct. These job categories cannot be meaningfully ordered.'; res4 = document.getElementById('result_43347').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is binary because all of the participants either identified as female (F) or male (M).'; res5 = document.getElementById('result_98375').innerText == 'That’s right. These are participants’ score on a vocabularly test. The more items they got right, the more points they got.'; res6 = document.getElementById('result_20405').innerText == 'That’s right, well done!'; res7 = document.getElementById('result_68929').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res8 = document.getElementById('result_87952').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.'; res9 = document.getElementById('result_51679').innerText == 'Yes, well done!'; res10 = document.getElementById('result_93991').innerText == 'That’s correct.'; res11 = document.getElementById('result_93343').innerText == 'Brawo! 🎉'; res12 = document.getElementById('result_42459').innerText == 'Great job!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_42459').innerText == 'Great job!';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1348,6 +1353,11 @@ L2.data[67:c(2,3,5,9)]
 <div id="hint_41925" onmouseover="return show_hint_41925()">😇 Hover for a hint</div>
 <div id="result_41925" onmouseover="return show_hint_41925()"></div>
 <script>function show_hint_41925(){var x = document.getElementById('result_41925').innerHTML; if(!x){document.getElementById('result_41925').innerHTML = 'Using <code>-1</code> as an index to access the last row is a neat trick in Python, but it sadly doesn’t work in <code>R</code>.';} else {document.getElementById('result_41925').innerHTML = '';}}</script>
+</div>
+<div class="cell-output-display">
+<div id="hint_89556" onclick="return show_hint_89556()">🐭 Click on the mouse for a second hint.</div>
+<div id="result_89556" onclick="return show_hint_89556()"></div>
+<script>function show_hint_89556(){var x = document.getElementById('result_89556').innerHTML; if(!x){document.getElementById('result_89556').innerHTML = 'Three of these will work. You’ll need to find all three!';} else {document.getElementById('result_89556').innerHTML = '';}}</script>
 </div>
 </div>
 <p>&nbsp;</p>
@@ -1359,46 +1369,46 @@ L2.data[67:c(2,3,5,9)]
 <h2 data-number="7.4" class="anchored" data-anchor-id="sec-RFunctions"><span class="header-section-number">7.4</span> Using built-in <code>R</code> functions</h2>
 <p>We know from our examination of the L1 dataset from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> that it includes 90 English native speaker participants. To find out their mean average age, we could add up all of their ages and divide the sum by 90 (see <a href="8_DescriptiveStats.html#sec-CentralTendency" class="quarto-xref"><span>Section 8.1</span></a> for more ways to report the central tendency of a variable).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">21</span> <span class="sc">+</span> <span class="dv">38</span> <span class="sc">+</span> <span class="dv">55</span> <span class="sc">+</span> <span class="dv">26</span> <span class="sc">+</span> <span class="dv">55</span> <span class="sc">+</span> <span class="dv">58</span> <span class="sc">+</span> <span class="dv">31</span> <span class="sc">+</span> <span class="dv">58</span> <span class="sc">+</span> <span class="dv">42</span> <span class="sc">+</span> <span class="dv">59</span> <span class="sc">+</span> <span class="dv">32</span> <span class="sc">+</span> <span class="dv">27</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">51</span> <span class="sc">+</span> <span class="dv">32</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">41</span> <span class="sc">+</span> <span class="dv">57</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">18</span> <span class="sc">+</span> <span class="dv">41</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">21</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">26</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">57</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">52</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">23</span> <span class="sc">+</span> <span class="dv">42</span> <span class="sc">+</span> <span class="dv">59</span> <span class="sc">+</span> <span class="dv">30</span> <span class="sc">+</span> <span class="dv">21</span> <span class="sc">+</span> <span class="dv">21</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">51</span> <span class="sc">+</span> <span class="dv">62</span> <span class="sc">+</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">19</span> <span class="sc">+</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">38</span> <span class="sc">+</span> <span class="dv">37</span> <span class="sc">+</span> <span class="dv">42</span> <span class="sc">+</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">32</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">27</span> <span class="sc">+</span> <span class="dv">28</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">33</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">52</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">53</span> <span class="sc">+</span> <span class="dv">22</span> <span class="sc">+</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">61</span> <span class="sc">+</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">61</span> <span class="sc">+</span> <span class="dv">30</span> <span class="sc">+</span> <span class="dv">30</span> <span class="sc">+</span> <span class="dv">32</span> <span class="sc">+</span> <span class="dv">30</span> <span class="sc">+</span> <span class="dv">39</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">55</span> <span class="sc">+</span> <span class="dv">18</span> <span class="sc">+</span> <span class="dv">32</span> <span class="sc">+</span> <span class="dv">31</span> <span class="sc">+</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">38</span> <span class="sc">+</span> <span class="dv">44</span> <span class="sc">+</span> <span class="dv">18</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span>) <span class="sc">/</span> <span class="dv">90</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">21</span> <span class="sc">+</span> <span class="dv">38</span> <span class="sc">+</span> <span class="dv">55</span> <span class="sc">+</span> <span class="dv">26</span> <span class="sc">+</span> <span class="dv">55</span> <span class="sc">+</span> <span class="dv">58</span> <span class="sc">+</span> <span class="dv">31</span> <span class="sc">+</span> <span class="dv">58</span> <span class="sc">+</span> <span class="dv">42</span> <span class="sc">+</span> <span class="dv">59</span> <span class="sc">+</span> <span class="dv">32</span> <span class="sc">+</span> <span class="dv">27</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">51</span> <span class="sc">+</span> <span class="dv">32</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">41</span> <span class="sc">+</span> <span class="dv">57</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">18</span> <span class="sc">+</span> <span class="dv">41</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">21</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">26</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">57</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">52</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">23</span> <span class="sc">+</span> <span class="dv">42</span> <span class="sc">+</span> <span class="dv">59</span> <span class="sc">+</span> <span class="dv">30</span> <span class="sc">+</span> <span class="dv">21</span> <span class="sc">+</span> <span class="dv">21</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">51</span> <span class="sc">+</span> <span class="dv">62</span> <span class="sc">+</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">19</span> <span class="sc">+</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">38</span> <span class="sc">+</span> <span class="dv">37</span> <span class="sc">+</span> <span class="dv">42</span> <span class="sc">+</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">32</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">27</span> <span class="sc">+</span> <span class="dv">28</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">33</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">52</span> <span class="sc">+</span> <span class="dv">25</span> <span class="sc">+</span> <span class="dv">53</span> <span class="sc">+</span> <span class="dv">22</span> <span class="sc">+</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">61</span> <span class="sc">+</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">61</span> <span class="sc">+</span> <span class="dv">30</span> <span class="sc">+</span> <span class="dv">30</span> <span class="sc">+</span> <span class="dv">32</span> <span class="sc">+</span> <span class="dv">30</span> <span class="sc">+</span> <span class="dv">39</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">55</span> <span class="sc">+</span> <span class="dv">18</span> <span class="sc">+</span> <span class="dv">32</span> <span class="sc">+</span> <span class="dv">31</span> <span class="sc">+</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">38</span> <span class="sc">+</span> <span class="dv">44</span> <span class="sc">+</span> <span class="dv">18</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span> <span class="sc">+</span> <span class="dv">17</span>) <span class="sc">/</span> <span class="dv">90</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 37.54444</code></pre>
 </div>
 </div>
 <p>Of course, we would much rather not write all of this out! Especially, as we are very likely to make errors in the process. Instead, we can use the base <code>R</code> function <code>sum()</code> to add up all of the L1 participant’s ages and divide that by 90.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(L1.data<span class="sc">$</span>Age) <span class="sc">/</span> <span class="dv">90</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(L1.data<span class="sc">$</span>Age) <span class="sc">/</span> <span class="dv">90</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 37.54444</code></pre>
 </div>
 </div>
-<p>This already looks much better, but it’s still less than ideal: What if we decided to exclude some participants (e.g., because they did not complete all of the experimental tasks)? Or decided to add data from more participants? In both these cases, 90 will no longer be the correct denominator to calculate their average age! That’s why it is better to work out the denominator by computing the total number of values in the variable of interest. To this end, we can use the <code>length()</code> function, which returns the number of values in any given vector.</p>
+<p>This already looks much better, but it’s still less than ideal: What if we decided to exclude some participants (e.g.&nbsp;because they did not complete all of the experimental tasks)? Or decided to add data from more participants? In both these cases, 90 will no longer be the correct denominator to calculate their average age! That’s why it is better to work out the denominator by computing the total number of values in the variable of interest. To this end, we can use the <code>length()</code> function, which returns the number of values in any given vector.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(L1.data<span class="sc">$</span>Age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(L1.data<span class="sc">$</span>Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 90</code></pre>
 </div>
 </div>
 <p>We can then combine the <code>sum()</code> and the <code>length()</code> functions to calculate the participants’ average age.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(L1.data<span class="sc">$</span>Age) <span class="sc">/</span> <span class="fu">length</span>(L1.data<span class="sc">$</span>Age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(L1.data<span class="sc">$</span>Age) <span class="sc">/</span> <span class="fu">length</span>(L1.data<span class="sc">$</span>Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 37.54444</code></pre>
 </div>
 </div>
 <p>Base <code>R</code> includes lots of useful functions, especially to do statistics. Hence, it will come as no surprise to find that there is a built-in function to calculate mean average values. It is called <code>mean()</code> and is very simple to use.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.data<span class="sc">$</span>Age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.data<span class="sc">$</span>Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 37.54444</code></pre>
 </div>
 </div>
 <p>If you save the values of a variable to your <code>R</code> session environment, you do not need to use the name of the dataset and the <code>$</code> sign to calculate its mean. Instead, you can directly apply the <code>mean()</code> function to the stored <code>R</code> object.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Saving the values of the Age variable to a new R object called L1.Age:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Saving the values of the Age variable to a new R object called L1.Age:</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>L1.Age <span class="ot">&lt;-</span> L1.data<span class="sc">$</span>Age</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Applying the mean() function to this new R object:</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.Age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 37.54444</code></pre>
 </div>
@@ -1409,7 +1419,7 @@ L2.data[67:c(2,3,5,9)]
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1459,7 +1469,7 @@ On average, the L2 participants are younger than the L1 participants.
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1467,12 +1477,12 @@ Your turn!
 <div class="callout-body-container callout-body">
 <p>For this <span style="color:green;"><strong>task</strong></span>, you first need to check that you have saved the following two variables from the L1 dataset to your <code>R</code> environment.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>L1.Age <span class="ot">&lt;-</span> L1.data<span class="sc">$</span>Age</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>L1.Occupation <span class="ot">&lt;-</span> L1.data<span class="sc">$</span>Occupation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>L1.Age <span class="ot">&lt;-</span> L1.data<span class="sc">$</span>Age</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>L1.Occupation <span class="ot">&lt;-</span> L1.data<span class="sc">$</span>Occupation</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><span style="color:green;"><strong>Q7.14</strong></span> Below is a list of useful base <code>R</code> functions. Try them out with the variable <code>L1.Age</code>. What does each function do? Make a note by writing a comment next to each command (see <a href="5_GettingStaRted.html#sec-Comments" class="quarto-xref"><span>Section 5.4.4</span></a>). The first one has been done for you.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.Age) <span class="co"># The mean() function returns the mean average of a set of number.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.Age) <span class="co"># The mean() function returns the mean average of a set of number.</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>()</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>()</span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>()</span>
@@ -1480,7 +1490,7 @@ Your turn!
 <span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mode</span>()</span>
 <span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>()</span>
 <span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>()</span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><span style="color:green;"><strong>Q7.15</strong></span> <code>Age</code> is a numeric variable. What happens if you try these same functions with a character string variable? Find out by trying them out with the variable <code>L1.Occupation</code> which contains words rather than numbers.</p>
 <p>&nbsp;</p>
@@ -1488,12 +1498,12 @@ Your turn!
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click here for the solutions to <span style="color:green;"><strong>Q7.14</strong></span>—<span style="color:green;"><strong>Q7.15</strong></span>.
+<span class="screen-reader-only">Note</span>Click here for the solutions to <span style="color:green;"><strong>Q7.14</strong></span>—<span style="color:green;"><strong>Q7.15</strong></span>.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1501,7 +1511,7 @@ Click here for the solutions to <span style="color:green;"><strong>Q7.14</strong
 <div class="callout-body-container callout-body">
 <p>As you will have seen, often the clue is in the name of the function - but not always! 😉</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.Age) <span class="co"># The mean() function returns the mean average of a set of number.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.Age) <span class="co"># The mean() function returns the mean average of a set of number.</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.Occupation) <span class="co"># It does not make sense to calculate a mean average value of a set of words, therefore R returns an 'NA' (not applicable) and a warning in red explaining that the mean() function expects a numeric or logical argument.</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(L1.Age) <span class="co"># For a numeric variable, min() returns the lowest numeric value.</span></span>
@@ -1526,7 +1536,7 @@ Click here for the solutions to <span style="color:green;"><strong>Q7.14</strong
 <span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(L1.Occupation) <span class="co"># For a string variable, the function table() outputs a table that tallies the number of occurrences of each unique value in a set of values and sorts them alphabetically.</span></span>
 <span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L1.Age) <span class="co"># For a numeric variable, the function summary() outputs six values that, together, summarise the set of values contained in this variable: the minimum and maximum values, the first and third quartiles (more on this in Chapter *), and the mean and median (more on this in Chapter *).</span></span>
-<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L1.Occupation) <span class="co"># For a string variable, the summary() function only outputs the length of the string vector, its object class and data mode. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L1.Occupation) <span class="co"># For a string variable, the summary() function only outputs the length of the string vector, its object class and data mode. </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -1535,17 +1545,17 @@ Click here for the solutions to <span style="color:green;"><strong>Q7.14</strong
 <h3 data-number="7.4.1" class="anchored" data-anchor-id="function-arguments"><span class="header-section-number">7.4.1</span> Function arguments</h3>
 <p>All of the functions that we have looked at this chapter so far work with just a single argument: either a vector of values (e.g.&nbsp;a variable from our dataset as in <code>mean(L1.data$Age)</code>) or an entire tabular dataset (e.g.&nbsp;<code>str(L1.data)</code>). When we looked at the <code>head()</code> function, we saw that, per default, it displays the first six rows but that we can change this by specifying a second argument in the function. In <code>R</code>, arguments within a function are always separated by a comma.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(L1.Age, <span class="at">n =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(L1.Age, <span class="at">n =</span> <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 21 38 55 26 55 58</code></pre>
 </div>
 </div>
 <p>The names of the argument can be specified but do not have to be if they are listed in the order specified in the documentation. You can check the ‘Usage’ section of a function’s help file (e.g.&nbsp;using <code>help(head)</code> function or <code>?head</code>) to find out the order of the arguments. Run the following commands and compare their output:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="at">x =</span> L1.Age, <span class="at">n =</span> <span class="dv">6</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="at">x =</span> L1.Age, <span class="at">n =</span> <span class="dv">6</span>)</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(L1.Age, <span class="dv">6</span>)</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>, <span class="at">x =</span> L1.Age)</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="dv">6</span>, L1.Age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="dv">6</span>, L1.Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Whilst the first three return exactly the same output, the fourth returns an error because the argument names are not specified and are not in the order specified in the function’s help file. To avoid making errors and confusing your collaborators and/or future self, it’s good practice to explicitly name all the arguments except the most obvious ones.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1554,7 +1564,7 @@ Click here for the solutions to <span style="color:green;"><strong>Q7.14</strong
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1562,7 +1572,7 @@ Your turn!
 <div class="callout-body-container callout-body">
 <p>Look at the two lines of code and their outputs below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>L1.data<span class="sc">$</span>Vocab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>L1.data<span class="sc">$</span>Vocab</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] 73.333333 95.555556 95.555556 84.444444 88.888889 73.333333 53.333333
  [8] 73.333333 35.555556 60.000000 40.000000 95.555556 86.666667 53.333333
@@ -1578,7 +1588,7 @@ Your turn!
 [78] 71.111111 46.666667 64.444444 60.000000 22.222222 64.444444 48.888889
 [85] 42.222222 60.000000 53.333333 42.222222 51.111111 68.888889</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(L1.data<span class="sc">$</span>Vocab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(L1.data<span class="sc">$</span>Vocab)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] 73 96 96 84 89 73 53 73 36 60 40 96 87 53 89 47 87 84 87 78 93 91 69 82 76
 [26] 80 87 89 76 58 89 96 60 78 56 80 89 93 93 96 76 78 82 80 44 62 58 93 58 67
@@ -1670,10 +1680,10 @@ round(L1.data$Vocab, digits = -4)
 <h2 data-number="7.5" class="anchored" data-anchor-id="combining-functions-in-r"><span class="header-section-number">7.5</span> Combining functions in <code>R</code></h2>
 <p>Combining functions is where the real fun starts with programming! In <a href="#sec-RFunctions" class="quarto-xref"><span>Section 7.4</span></a>, we already combined two functions using a mathematical operator (<code>/</code>). But what if we want to compute L1 participant’s average age to two decimal places? To do this, we need to combine the <code>mean()</code> function and the <code>round()</code> function. We can do this in two steps.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1:</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>L1.mean.age <span class="ot">&lt;-</span> <span class="fu">mean</span>(L1.Age)</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2:</span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(L1.mean.age, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(L1.mean.age, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 37.54</code></pre>
 </div>
@@ -1684,7 +1694,7 @@ round(L1.data$Vocab, digits = -4)
 <h3 data-number="7.5.1" class="anchored" data-anchor-id="sec-Nesting"><span class="header-section-number">7.5.1</span> Nested functions</h3>
 <p>The first method involves lots of brackets (also known as ‘parentheses’). This is because in nested functions, one function is placed inside another function. The inner function is evaluated first, and its result is passed to the next outer function. Here’s an example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">mean</span>(L1.Age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">mean</span>(L1.Age))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 38</code></pre>
 </div>
@@ -1692,7 +1702,7 @@ round(L1.data$Vocab, digits = -4)
 <p>In this example, the <code>mean()</code> function is nested inside the <code>round()</code> function. The <code>mean()</code> function calculates the mean of <code>L1.Age</code>, and the result is passed to the <code>round()</code> function, which rounds the result to the nearest integer.</p>
 <p>You can also pass additional arguments to any of the functions, but you must make sure that you place the arguments within the correct set of brackets.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">mean</span>(L1.Age), <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">mean</span>(L1.Age), <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 37.54</code></pre>
 </div>
@@ -1715,17 +1725,17 @@ Figure&nbsp;7.3: A schematic representations of a) one function with two argumen
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Time to think!
+<span class="screen-reader-only">Tip</span>Time to think!
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Consider the three lines of code below. Without running them, can you tell which of the three lines of code will output the square root of L1 participant’s average age to two decimal places?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">mean</span>(L1.Age) <span class="at">digits =</span> <span class="dv">2</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">mean</span>(L1.Age) <span class="at">digits =</span> <span class="dv">2</span>))</span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">round</span>(<span class="fu">mean</span>(L1.Age), <span class="at">digits =</span> <span class="dv">2</span>))</span>
 <span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">mean</span>(L1.Age)), <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">mean</span>(L1.Age)), <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The first line will return an “unexpected symbol” error because it is missing a comma before the argument <code>digits = 2</code>. The second line actually outputs <code>6.126989</code>, which has more than two decimal places! This is because <code>R</code> interprets the functions from the inside out: first, it calculates the mean value, then it rounds that off to two decimal places, and only then does it compute the square root of that rounded off value. The third line, in contrast, does the rounding operation as the last step. Note that, in the two lines of code that do not produce an error, the brackets around the argument <code>digits = 2</code> are also located in different places.</p>
 <p>It is very easy to make bracketing errors when writing code and especially so when nesting functions (see <a href="#fig-NestedFunctions" class="quarto-xref">Figure&nbsp;<span>7.3</span></a>). Watch your commas and brackets (see also <a href="5_GettingStaRted.html#sec-Errors" class="quarto-xref"><span>Section 5.6</span></a>)!</p>
@@ -1737,19 +1747,19 @@ Time to think!
 <p>If you found all these brackets overwhelming: fear not! There is a second method for combining functions in <code>R</code>, which is often more convenient and almost always easier to decipher. It involves the pipe operator, which in <code>R</code> is <code>|&gt;</code>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p>The <code>|&gt;</code> operator passes the output of one function on to the first argument of the next function. This allows us to chain multiple functions together in a much more intuitive way.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>L1.Age <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>L1.Age <span class="sc">|&gt;</span> </span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">mean</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">round</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">round</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 38</code></pre>
 </div>
 </div>
 <p>In this example, the object <code>L1.Age</code> is passed on to the first argument of the <code>mean()</code> function. This calculates the mean of <code>L1.Age</code>. Next, this result is passed to the <code>round()</code> function, which rounds the mean value to the nearest integer.</p>
-<p>If we want to pass additional arguments to any function in the pipeline, we simply at it in the brackets corresponding to the function in question.</p>
+<p>To pass additional arguments to any function in the pipeline, we add them within the brackets that belong to that function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>L1.Age <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>L1.Age <span class="sc">|&gt;</span> </span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">mean</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 37.54</code></pre>
 </div>
@@ -1771,7 +1781,7 @@ Figure&nbsp;7.4: Remix of René Magritte’s “La Trahison des images” with t
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1818,12 +1828,12 @@ Your turn!
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click here for a detailed answer to Q7.18
+<span class="screen-reader-only">Note</span>Click here for a detailed answer to Q7.18
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1831,41 +1841,41 @@ Click here for a detailed answer to Q7.18
 <div class="callout-body-container callout-body">
 <p>They are lots of ways to tackle question 16. Here is one approach:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">mean</span>(L1.data<span class="sc">$</span>Vocab) <span class="sc">-</span> <span class="fu">mean</span>(L2.data<span class="sc">$</span>Vocab)) <span class="sc">|&gt;</span> </span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">mean</span>(L1.data<span class="sc">$</span>Vocab) <span class="sc">-</span> <span class="fu">mean</span>(L2.data<span class="sc">$</span>Vocab)) <span class="sc">|&gt;</span> </span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 16.33</code></pre>
 </div>
 </div>
 <p>Note that this approach requires a set of brackets around the first subtraction operation, otherwise only the second mean value is rounded off to two decimal places. Compare the following lines of code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.data<span class="sc">$</span>Vocab) <span class="sc">-</span> <span class="fu">mean</span>(L2.data<span class="sc">$</span>Vocab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.data<span class="sc">$</span>Vocab) <span class="sc">-</span> <span class="fu">mean</span>(L2.data<span class="sc">$</span>Vocab)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 16.33315</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb66" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">mean</span>(L1.data<span class="sc">$</span>Vocab) <span class="sc">-</span> <span class="fu">mean</span>(L2.data<span class="sc">$</span>Vocab)) <span class="sc">|&gt;</span> </span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">mean</span>(L1.data<span class="sc">$</span>Vocab) <span class="sc">-</span> <span class="fu">mean</span>(L2.data<span class="sc">$</span>Vocab)) <span class="sc">|&gt;</span> </span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 16.33</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb68" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.data<span class="sc">$</span>Vocab) <span class="sc">-</span> <span class="fu">round</span>(<span class="fu">mean</span>(L2.data<span class="sc">$</span>Vocab), <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.data<span class="sc">$</span>Vocab) <span class="sc">-</span> <span class="fu">round</span>(<span class="fu">mean</span>(L2.data<span class="sc">$</span>Vocab), <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 16.3358</code></pre>
 </div>
 </div>
 <p>Another solution would be to store the difference in means as an <code>R</code> object and pass this object to the round() function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>mean.diff.vocab <span class="ot">&lt;-</span> <span class="fu">mean</span>(L1.data<span class="sc">$</span>Vocab) <span class="sc">-</span> <span class="fu">mean</span>(L2.data<span class="sc">$</span>Vocab)</span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(mean.diff.vocab, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>mean.diff.vocab <span class="ot">&lt;-</span> <span class="fu">mean</span>(L1.data<span class="sc">$</span>Vocab) <span class="sc">-</span> <span class="fu">mean</span>(L2.data<span class="sc">$</span>Vocab)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(mean.diff.vocab, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 16.33</code></pre>
 </div>
 </div>
 <p>Or, if you want to use the pipe:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>mean.diff.vocab <span class="ot">&lt;-</span> <span class="fu">mean</span>(L1.data<span class="sc">$</span>Vocab) <span class="sc">-</span> <span class="fu">mean</span>(L2.data<span class="sc">$</span>Vocab)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>mean.diff.vocab <span class="ot">&lt;-</span> <span class="fu">mean</span>(L1.data<span class="sc">$</span>Vocab) <span class="sc">-</span> <span class="fu">mean</span>(L2.data<span class="sc">$</span>Vocab)</span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>mean.diff.vocab <span class="sc">|&gt;</span> </span>
-<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 16.33</code></pre>
 </div>
@@ -1918,7 +1928,7 @@ Dąbrowska, Ewa. 2019. Experience, aptitude, and individual differences in lingu
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1968,13 +1978,14 @@ Dąbrowska, Ewa. 2019. Experience, aptitude, and individual differences in lingu
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

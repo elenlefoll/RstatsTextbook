@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.26">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,18 +90,19 @@ div.csl-indent {
 <link href="./13_MultipleLinearRegression.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-3e3370d44295d9fa30cc16d77ad785c2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-540c66f2be59a33d43b8e94dc657d4ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-2dc7341fb0871247097a223aafd3766b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -171,7 +172,7 @@ div.csl-indent {
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -204,7 +205,7 @@ div.csl-indent {
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -244,7 +245,7 @@ div.csl-indent {
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -272,7 +273,7 @@ div.csl-indent {
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -295,20 +296,22 @@ div.csl-indent {
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -335,7 +338,9 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Analysis for the<br>Language Sciences</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -562,7 +567,7 @@ div.csl-indent {
 
 <section id="chapter-overview" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="chapter-overview">Chapter overview</h3>
-<p>So far, we have seen how we can export the outputs of our analyses conducted in <code>R</code>, both in the form of tables (<a href="9_DataWrangling.html#sec-ExportingRObjects" class="quarto-xref"><span>Section 9.9</span></a>) and graphics (<a href="10_Dataviz.html#sec-ExploringPlots" class="quarto-xref"><span>Section 10.3</span></a>). However, in most situations, we want to communicate our research in the form of a document that combines both text and analysis outputs. This is where <strong>literate programming</strong> comes into play!</p>
+<p>So far, we have seen how we can export the outputs of our analyses conducted in <code>R</code>, both in the form of tables (<a href="9_DataWrangling.html#sec-ExportingRObjects" class="quarto-xref"><span>Section 9.8</span></a>) and graphics (<a href="10_Dataviz.html#sec-ExploringPlots" class="quarto-xref"><span>Section 10.3</span></a>). However, in most situations, we want to communicate our research in the form of a document that combines both text and analysis outputs. This is where <strong>literate programming</strong> comes into play!</p>
 <p>In this chapter, you will learn about:</p>
 <ul>
 <li>the concept of literate programming</li>
@@ -586,7 +591,7 @@ Figure&nbsp;14.1: A schematic representation showing Quarto can understand multi
 </figcaption>
 </figure>
 </div>
-<p>Literate programming is particularly useful for <strong>academic research</strong> and <strong>data science</strong>. Did you know that this entire textbook was written in Quarto? I chose this format because it allows for the seamless combination of explanations with nicely formatted <code>R</code> code and code outputs (i.e., all of the textbook’s tables, data visualisations, quiz questions, etc.). It also automatically generates consistent section and figure numbers, cross-references, bibliographic references, and much more. By the end of this chapter, you’ll be ready to start writing your own term paper, dissertation, thesis, journal article, blog, or presentation slides in Quarto.</p>
+<p>Literate programming is particularly useful for <strong>academic research</strong> and <strong>data science</strong>. Did you know that this entire textbook was written in Quarto? I chose this format because it allows for the seamless combination of explanations with nicely formatted <code>R</code> code and code outputs (i.e.&nbsp;all of the textbook’s tables, data visualisations, quiz questions, etc.). It also automatically generates consistent section and figure numbers, cross-references, bibliographic references, and much more. By the end of this chapter, you’ll be ready to start writing your own term paper, dissertation, thesis, journal article, blog, or presentation slides in Quarto.</p>
 </section>
 <section id="sec-Reproducibility" class="level2 page-columns page-full" data-number="14.2">
 <h2 data-number="14.2" class="anchored" data-anchor-id="sec-Reproducibility"><span class="header-section-number">14.2</span> Reproducible research</h2>
@@ -605,14 +610,14 @@ Figure&nbsp;14.2: Defining <em>reproducibility</em> and related terms (CC-BY 4.0
 </figcaption>
 </figure>
 </div>
-<p>Given this definition, reproducibility might seem like a low bar to pass. You might be thinking: shouldn’t it be obvious that we’ll get the same results if we repeat a study using exactly the same data and method? Well, yes, it should be. But it very often isn’t! For a start, to be able to even attempt to reproduce the results of a study, the underlying data must be available. Linguists that share their primary data as Ewa Dąbrowska did as part of her 2019 paper <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">(<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">Dąbrowska 2019</a>)</span> remain the exception rather than the norm <span class="citation" data-cites="bochynskaReproducibleResearchPractices2023a">(see <a href="99_references.html#ref-bochynskaReproducibleResearchPractices2023a" role="doc-biblioref">Bochynska et al. 2023</a>)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Second, the data must be available in an accessible format and must be published together with enough documentation to be understandable to an independent researcher. Third, the author(s) of the original study need to have very diligently documented all their data wrangling and analyses steps. The best way to do this is undoubtedly to use code that does not require closed-source software (e.g., a researcher without a license for SPSS or Stata will not be able to run SPSS or Stata scripts, see <a href="1_OpenScholarship.html#sec-OpenSource" class="quarto-xref"><span>Section 1.2</span></a>). This open code must be shared in an accessible format, too. Fourth, independent researchers need to be able to run these scripts. To this end, it is important that they know exactly which tools were used. Thus, if the analyses were conducted in <code>R</code>, they need to know which <code>R</code> version and which packages and package versions were used (<a href="#sec-Packages" class="quarto-xref"><span>Section 14.10</span></a>). They also need to know in which order the scripts were run and, finally, the scripts must run on their own computers without any errors. So now, reproducibility doesn’t sound quite so easy, right? Luckily, if we apply the principles of literate programming in <strong>Quarto</strong>, we can go a long way towards ensuring that our research is reproducible.</p>
+<p>Given this definition, reproducibility might seem like a low bar to pass. You might be thinking: shouldn’t it be obvious that we’ll get the same results if we repeat a study using exactly the same data and method? Well, yes, it should be. But it very often isn’t! For a start, to be able to even attempt to reproduce the results of a study, the underlying data must be available. Linguists that share their primary data as Ewa Dąbrowska did as part of her 2019 paper <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">(<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">Dąbrowska 2019</a>)</span> remain the exception rather than the norm <span class="citation" data-cites="bochynskaReproducibleResearchPractices2023a">(see <a href="99_references.html#ref-bochynskaReproducibleResearchPractices2023a" role="doc-biblioref">Bochynska et al. 2023</a>)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Second, the data must be available in an accessible format and must be published together with enough documentation to be understandable to an independent researcher. Third, the author(s) of the original study need to have very diligently documented all their data wrangling and analyses steps. The best way to do this is undoubtedly to use code that does not require closed-source software (e.g.&nbsp;a researcher without a license for SPSS or Stata will not be able to run SPSS or Stata scripts, see <a href="1_OpenScholarship.html#sec-OpenSource" class="quarto-xref"><span>Section 1.2</span></a>). This open code must be shared in an accessible format, too. Fourth, independent researchers need to be able to run these scripts. To this end, it is important that they know exactly which tools were used. Thus, if the analyses were conducted in <code>R</code>, they need to know which <code>R</code> version and which packages and package versions were used (<a href="#sec-Packages" class="quarto-xref"><span>Section 14.10</span></a>). They also need to know in which order the scripts were run and, finally, the scripts must run on their own computers without any errors. So now, reproducibility doesn’t sound quite so easy, right? Luckily, if we apply the principles of literate programming in <strong>Quarto</strong>, we can go a long way towards ensuring that our research is reproducible.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Going further️ 🚀
+<span class="screen-reader-only">Note</span>Going further️ 🚀
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -625,7 +630,7 @@ Going further️ 🚀
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -636,50 +641,50 @@ Your turn!
 <p><span style="color:green;"><strong>Q14.1</strong></span> What is meant by the replication crisis?<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_8264" onsubmit="return validate_form_8264()" method="post">
+<form name="form_44032" onsubmit="return validate_form_44032()" method="post">
 <label>
-<input type="radio" name="answer_8264" id="answer_8264_1" value="An approach that integrates external criticism by colleagues and peers into the research process.">
-An approach that integrates external criticism by colleagues and peers into the research process.
-</label>
-<br>
-<label>
-<input type="radio" name="answer_8264" id="answer_8264_2" value="The tendency to report only significant results in the abstract, while reporting non-significant results within the main body of the manuscript (not reporting non-significant results altogether would constitute selective reporting).">
+<input type="radio" name="answer_44032" id="answer_44032_1" value="The tendency to report only significant results in the abstract, while reporting non-significant results within the main body of the manuscript (not reporting non-significant results altogether would constitute selective reporting).">
 The tendency to report only significant results in the abstract, while reporting non-significant results within the main body of the manuscript (not reporting non-significant results altogether would constitute selective reporting).
 </label>
 <br>
 <label>
-<input type="radio" name="answer_8264" id="answer_8264_3" value="The application of statistical principles to arrive at well-founded —i.e., likely corresponding accurately to the real world— concepts, conclusions or measurement.">
-The application of statistical principles to arrive at well-founded —i.e., likely corresponding accurately to the real world— concepts, conclusions or measurement.
+<input type="radio" name="answer_44032" id="answer_44032_2" value="The finding, and related shift in academic culture and thinking, that a large proportion of scientific studies published across different disciplines do not replicate.">
+The finding, and related shift in academic culture and thinking, that a large proportion of scientific studies published across different disciplines do not replicate.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_8264" id="answer_8264_4" value="An aphorism describing the pressure researchers feel to publish academic manuscripts, often in high prestige academic journals, in order to have a successful academic career.">
+<input type="radio" name="answer_44032" id="answer_44032_3" value="An aphorism describing the pressure researchers feel to publish academic manuscripts, often in high prestige academic journals, in order to have a successful academic career.">
 An aphorism describing the pressure researchers feel to publish academic manuscripts, often in high prestige academic journals, in order to have a successful academic career.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_8264" id="answer_8264_5" value="A set of good research practices based on fundamental principles: honesty, reliability, respect and accountability.">
+<input type="radio" name="answer_44032" id="answer_44032_4" value="A set of good research practices based on fundamental principles: honesty, reliability, respect and accountability.">
 A set of good research practices based on fundamental principles: honesty, reliability, respect and accountability.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_8264" id="answer_8264_6" value="The finding, and related shift in academic culture and thinking, that a large proportion of scientific studies published across different disciplines do not replicate.">
-The finding, and related shift in academic culture and thinking, that a large proportion of scientific studies published across different disciplines do not replicate.
+<input type="radio" name="answer_44032" id="answer_44032_5" value="An approach that integrates external criticism by colleagues and peers into the research process.">
+An approach that integrates external criticism by colleagues and peers into the research process.
+</label>
+<br>
+<label>
+<input type="radio" name="answer_44032" id="answer_44032_6" value="The application of statistical principles to arrive at well-founded —i.e. likely corresponding accurately to the real world— concepts, conclusions or measurement.">
+The application of statistical principles to arrive at well-founded —i.e. likely corresponding accurately to the real world— concepts, conclusions or measurement.
 </label>
 <br>
 <input type="submit" value="Check answer">
-<div id="result_8264"></div>
+<div id="result_44032"></div>
 </form>
-<script>function validate_form_8264() {var x, text; var x = document.forms['form_8264']['answer_8264'].value;if (x == 'The finding, and related shift in academic culture and thinking, that a large proportion of scientific studies published across different disciplines do not replicate.'){text = 'That’s right! The other options are short definitions of the terms ‘abstract bias’, ‘research integrity’, ‘red teams’, ‘validity’, and ‘publish or perish’, taken from the FORRT glossary. Can you tell which is which? Check your intuition here: <a href="https://forrt.org/glossary/english/">https://forrt.org/glossary/english/</a>.';} else {text = 'No, that’s not it.';} document.getElementById('result_8264').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_44032() {var x, text; var x = document.forms['form_44032']['answer_44032'].value;if (x == 'The finding, and related shift in academic culture and thinking, that a large proportion of scientific studies published across different disciplines do not replicate.'){text = 'That’s right! The other options are short definitions of the terms ‘abstract bias’, ‘research integrity’, ‘red teams’, ‘validity’, and ‘publish or perish’, taken from the FORRT glossary. Can you tell which is which? Check your intuition here: <a href="https://forrt.org/glossary/english/">https://forrt.org/glossary/english/</a>.';} else {text = 'No, that’s not it.';} document.getElementById('result_44032').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_8264').innerText == 'That’s right! The other options are short definitions of the terms ‘abstract bias’, ‘research integrity’, ‘red teams’, ‘validity’, and ‘publish or perish’, taken from the FORRT glossary. Can you tell which is which? Check your intuition here: https://forrt.org/glossary/english/.';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_44032').innerText == 'That’s right! The other options are short definitions of the terms ‘abstract bias’, ‘research integrity’, ‘red teams’, ‘validity’, and ‘publish or perish’, taken from the FORRT glossary. Can you tell which is which? Check your intuition here: https://forrt.org/glossary/english/.';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_32167" onclick="return show_hint_32167()">🐭 Click on the mouse for a hint.</div>
-<div id="result_32167" onclick="return show_hint_32167()"></div>
-<script>function show_hint_32167(){var x = document.getElementById('result_32167').innerHTML; if(!x){document.getElementById('result_32167').innerHTML = 'The community-sourced FORRT glossary provides excellent, short definitions for many Open Science terms: <a href="https://forrt.org/glossary/english/">https://forrt.org/glossary/english/</a>.';} else {document.getElementById('result_32167').innerHTML = '';}}</script>
+<div id="hint_67414" onclick="return show_hint_67414()">🐭 Click on the mouse for a hint.</div>
+<div id="result_67414" onclick="return show_hint_67414()"></div>
+<script>function show_hint_67414(){var x = document.getElementById('result_67414').innerHTML; if(!x){document.getElementById('result_67414').innerHTML = 'The community-sourced FORRT glossary provides excellent, short definitions for many Open Science terms: <a href="https://forrt.org/glossary/english/">https://forrt.org/glossary/english/</a>.';} else {document.getElementById('result_67414').innerHTML = '';}}</script>
 </div>
 </div>
 <p><span style="color:green;"><strong>Q14.2</strong></span> Which stages of the research process are potential sources of uncertainty?</p>
@@ -813,16 +818,16 @@ Figure&nbsp;14.3
 <li><em>RStudio</em> has now opened a new, untitled Quarto file (<code>.qmd</code>). Change the title of the document (which is not the same as its filename!) and add the following three lines in the <strong>document header</strong> by copying and pasting the following lines at the top of the document.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Quarto document headers are written in <strong>YAML</strong> which, I kid you not, stands for <em>Yet Another Markup Language</em>! 😅</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Learning Quarto"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">"by reproducing the descriptive statistics of Dąbrowska's (2019) study"</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Write your name here"</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> last-modified</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol start="5" type="1">
-<li><p>To check your Quarto installation, render your document by either selecting <em>File&nbsp;&gt;&nbsp;Render Document</em> in the main menu, or clicking on “Render” button in the Quarto menu bar (see <a href="#fig-QuartoRender" class="quarto-xref">Figure&nbsp;<span>14.4</span></a>). You will first be prompted to give your <code>.qmd</code> file a name (e.g., <code>LearningQuarto.qmd</code>) and save it. Once you have saved it, your <code>.qmd</code> file will automatically be rendered to HTML (Quarto’s default rendering format).</p></li>
-<li><p>Navigate to the folder where you saved your <code>.qmd</code> file to find the rendered HTML file. It will have the same filename as your Quarto document but with the file extension <code>.html</code> (e.g., <code>LearningQuarto.html</code>). If you double-click on the file, it will open up in your default web browser (e.g., Firefox, Google Chrome, Safari). You should see that the HTML document features the title of your document, your name as the author, and today’s date (see <a href="#fig-QuartoHTML" class="quarto-xref">Figure&nbsp;<span>14.5</span></a>).</p></li>
+<li><p>To check your Quarto installation, render your document by either selecting <em>File&nbsp;&gt;&nbsp;Render Document</em> in the main menu, or clicking on “Render” button in the Quarto menu bar (see <a href="#fig-QuartoRender" class="quarto-xref">Figure&nbsp;<span>14.4</span></a>). You will first be prompted to give your <code>.qmd</code> file a name (e.g.&nbsp;<code>LearningQuarto.qmd</code>) and save it. Once you have saved it, your <code>.qmd</code> file will automatically be rendered to HTML (Quarto’s default rendering format).</p></li>
+<li><p>Navigate to the folder where you saved your <code>.qmd</code> file to find the rendered HTML file. It will have the same filename as your Quarto document but with the file extension <code>.html</code> (e.g.&nbsp;<code>LearningQuarto.html</code>). If you double-click on the file, it will open up in your default web browser (e.g.&nbsp;Firefox, Google Chrome, Safari). You should see that the HTML document features the title of your document, your name as the author, and today’s date (see <a href="#fig-QuartoHTML" class="quarto-xref">Figure&nbsp;<span>14.5</span></a>).</p></li>
 </ol>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
@@ -875,7 +880,7 @@ Figure&nbsp;14.6: Source and Visual mode in RStudio
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -888,7 +893,7 @@ Your turn!
 <li>Render the document and compare how it is formatted in the HTML version.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Introduction</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Introduction</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>The aim of this report is to reproduce the descriptive statistics reported in Dąbrowska (2019: 5-6) using the original datasets (Dąbrowska 2019: Appendix S4):</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -898,7 +903,7 @@ Your turn!
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>Ninety native speakers (42 male and 48 female) and 67 nonnative speakers of English (21 male and 46 female) were recruited through personal contacts, church and social clubs, and advertisements in local newspapers. Participants were told that the purpose of the study was to examine individual differences in native and nonnative speakers’ knowledge of English and whether these differences are related to their linguistic experience and abilities. All participants signed a written consent form before the research commenced.</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from 17 to 65 years (M = 38, SD = 16). Twenty-two percent of the participants held manual jobs, 24% held clerical positions, and 28% had professional-level jobs or were studying for a degree; the remaining 26% were occupationally inactive (i.e., unemployed, retired, or homemakers). In terms of education, participants’ backgrounds ranged from no formal qualifications to Ph.D., with corresponding differences in the number of years spent in full-time education (from 10 to 21; M = 14, SD = 2). Six participants reported a working knowledge of another language; the rest described themselves as monolinguals.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from 17 to 65 years (M = 38, SD = 16). Twenty-two percent of the participants held manual jobs, 24% held clerical positions, and 28% had professional-level jobs or were studying for a degree; the remaining 26% were occupationally inactive (i.e. unemployed, retired, or homemakers). In terms of education, participants’ backgrounds ranged from no formal qualifications to Ph.D., with corresponding differences in the number of years spent in full-time education (from 10 to 21; M = 14, SD = 2). Six participants reported a working knowledge of another language; the rest described themselves as monolinguals.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="fig-QuartoIntro" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -914,12 +919,12 @@ Figure&nbsp;14.7: <em>RStudio</em>’s Visual mode
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click here for the solution to <span style="color:green;"><strong>Q14.4</strong></span>
+<span class="screen-reader-only">Note</span>Click here for the solution to <span style="color:green;"><strong>Q14.4</strong></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -952,7 +957,7 @@ Figure&nbsp;14.8
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1118,7 +1123,7 @@ as a subsection heading
 </div>
 </div>
 <p>There are many more formatting options in <strong>Markdown</strong>. Below are a few more for you to try out.</p>
-<div class="sourceCode" id="cb3" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Lists</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Lists</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Bulleted list item 1</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1147,7 +1152,7 @@ as a subsection heading
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> First Header <span class="pp">|</span> Second Header <span class="pp">|</span></span>
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------------|---------------|</span></span>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Content Cell <span class="pp">|</span> Content Cell  <span class="pp">|</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Content Cell <span class="pp">|</span> Content Cell  <span class="pp">|</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Content Cell <span class="pp">|</span> Content Cell  <span class="pp">|</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The best way to get the hang of Markdown is simply to try things out. You will also find a handy cheatsheet under <em>Help &gt; Markdown Quick Reference</em>. Remember that you can always go back to the <strong>Visual</strong> mode to format your text, if that’s easier for you. When it comes to debugging any Quarto syntax errors, however, it’s usually easier to catch these in plain text, so you’ll typically want to use the <strong>Source</strong> mode for that.</p>
 </section>
 <section id="sec-Chunks" class="level2" data-number="14.5">
@@ -1161,10 +1166,10 @@ as a subsection heading
 <p>It is definitely worth learning the keyboard shortcut as it will save you a lot of time in the long run!</p>
 <p>In the code chunk below, <code>{r}</code> tells Quarto that this chunk is written in the programming language <code>R</code>. If you wanted to embed a chunk of Python code, you must begin it with <code>```{python}</code> instead.</p>
 <p>Using one of the three aforementioned options, insert the following <code>R</code> code chunk in your document.</p>
-<div class="sourceCode" id="cb4" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>As you are working on your code within a Quarto document, you can either run:</p>
 <ul>
 <li>each individual line of code using the keyboard shortcut ⌘/Ctrl ⏎ or</li>
@@ -1206,19 +1211,19 @@ as a subsection heading
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>In your Quarto document, add a label to your first <code>R</code> chunk and render your document to HTML.</p>
-<div class="sourceCode" id="cb5" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span style="color:green;"><strong>Q14.9</strong></span> What is the output of the <code>setup</code> chunk in your rendered <code>.html</code> document?</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1367,7 +1372,7 @@ An error message ending in: "Execution halted".
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Prerequisites
+<span class="screen-reader-only">Warning</span>Prerequisites
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1385,13 +1390,13 @@ Prerequisites
 </div>
 </div>
 <p>In your Quarto document, insert the following <code>R</code> chunk to load the Dąbrowska (2019) data.</p>
-<div class="sourceCode" id="cb6" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: import-data</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"L1_data.csv"</span>))</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"L2_data.csv"</span>))</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>As this new <code>import-data</code> chunk requires the <code>here()</code> function, make sure that it comes <em>after</em> the <code>setup</code> chunk because, when the document is rendered, code chunks will be executed in the order that they appear. If the {here} library is not loaded <em>before</em> the data are imported, the rendering process will be aborted and an error message will be displayed in the Console.</p>
 <p>To begin, we will reproduce the following basic descriptive statistics about the two datasets:</p>
 <blockquote class="blockquote">
@@ -1399,27 +1404,27 @@ Prerequisites
 </blockquote>
 <p>As you may recall from <a href="7_VariablesFunctions.html" class="quarto-xref"><span>Chapter 7</span></a>, the number of native and non-native participants corresponds to the number of rows in the corresponding dataset:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(L1.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 90</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(L2.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(L2.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 67</code></pre>
 </div>
 </div>
 <p>In Quarto, we can use <strong>inline code</strong> to dynamically insert these numbers in our paragraph. Inline code in <code>R</code> begins with <code>`{r}</code> and ends with a single backtick <code>`</code>. It is best to use the Source mode to insert inline code.</p>
 <p>Using the Source mode, add the following section to your Quarto document and render it to HTML.</p>
-<div class="sourceCode" id="cb11" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Descriptive statistics about the participants</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Descriptive statistics about the participants</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="in">`{{r}} nrow(L1.data)`</span> native speakers and <span class="in">`{r} nrow(L2.data)`</span> nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="in">`{{r}} nrow(L1.data)`</span> native speakers and <span class="in">`{r} nrow(L2.data)`</span> nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The rendered version should read like this (if you are obtaining different numbers, this either means that you have tempered with the original data files or that they have been corrupted)<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>:</p>
 <blockquote class="blockquote">
 <h3 id="descriptive-statistics-about-the-participants" class="unnumbered anchored">Descriptive statistics about the participants</h3>
 <p>90 native speakers and 67 nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.</p>
 </blockquote>
 <p>Inline code should only be used for very simple code, ideally with no more than one function, as in <code>`{r} nrow(L1.data)`</code>. To insert the output of more complex operations, it is best to write the code and save its output(s) to the local environment in a <strong>hidden code chunk</strong> (using the option <code>#| include: false</code>).</p>
-<div class="sourceCode" id="cb12" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: L1-gender</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1430,9 +1435,9 @@ Prerequisites
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>L1.females <span class="ot">&lt;-</span> L1.data <span class="sc">|&gt;</span></span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">==</span> <span class="st">"F"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The saved objects (<code>L1.males</code> and <code>L1.females</code>) each contain one number. They can therefore be directly called within the text as inline code.</p>
-<div class="sourceCode" id="cb13" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">`{{r}} nrow(L1.data)`</span> native speakers (<span class="in">`{r} L1.males`</span> male and <span class="in">`{r} L1.females`</span> female) and <span class="in">`{r} nrow(L2.data)`</span> nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">`{{r}} nrow(L1.data)`</span> native speakers (<span class="in">`{r} L1.males`</span> male and <span class="in">`{r} L1.females`</span> female) and <span class="in">`{r} nrow(L2.data)`</span> nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>When rendered, the paragraph will read:</p>
 <blockquote class="blockquote">
 <p>90 native speakers (42 male and 48 female) and 67 nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.</p>
@@ -1443,7 +1448,7 @@ Prerequisites
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1458,12 +1463,12 @@ Your turn!
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click here for the solution to <span style="color:green;"><strong>Q14.12</strong></span>
+<span class="screen-reader-only">Note</span>Click here for the solution to <span style="color:green;"><strong>Q14.12</strong></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1471,13 +1476,13 @@ Click here for the solution to <span style="color:green;"><strong>Q14.12</strong
 <div class="callout-body-container callout-body">
 <p>To save the number of male L2 participants as an <code>R</code> object, we can follow the same procedure as above.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>L2.males <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span>  </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>L2.males <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span>  </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">==</span> <span class="st">"M"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>For the number of female L2 participants, however, it’s not so simple because some are labelled <code>f</code>, while others are labelled <code>F</code> (see <span style="color:green;"><strong>Task 9.1</strong></span> in <a href="9_DataWrangling.html#sec-across" class="quarto-xref"><span>Section 9.4.2</span></a>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(L2.data<span class="sc">$</span>Gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(L2.data<span class="sc">$</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>
  f  F  M 
@@ -1486,7 +1491,7 @@ Click here for the solution to <span style="color:green;"><strong>Q14.12</strong
 </div>
 <p>Below are four possible methods to solve this issue (and there are many more still!):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 1:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 1:</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>L2.Females <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">==</span> <span class="st">"F"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span>
@@ -1511,51 +1516,51 @@ Click here for the solution to <span style="color:green;"><strong>Q14.12</strong
 <span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>L2.allfemales <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Gender =</span> <span class="fu">toupper</span>(Gender)) <span class="sc">|&gt;</span> </span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">==</span> <span class="st">"F"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Some of these methods are perhaps more elegant than others, but they are all acceptable. After all, they all work! 🙃</p>
 <p>Once they are saved to the local environment, the values can be inserted inline in the usual way:</p>
-<div class="sourceCode" id="cb18" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a> <span class="in">`{r} nrow(L1.data)`</span> native speakers (<span class="in">`{r} L1.males`</span> male and <span class="in">`{r} L1.females`</span> female) and <span class="in">`{r} nrow(L2.data)`</span> nonnative speakers of English (<span class="in">`{r} L2.males`</span> male and <span class="in">`{r} L2.allfemales`</span> female) were recruited through personal contacts, church and social clubs, and advertisements in local newspapers. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a> <span class="in">`{r} nrow(L1.data)`</span> native speakers (<span class="in">`{r} L1.males`</span> male and <span class="in">`{r} L1.females`</span> female) and <span class="in">`{r} nrow(L2.data)`</span> nonnative speakers of English (<span class="in">`{r} L2.males`</span> male and <span class="in">`{r} L2.allfemales`</span> female) were recruited through personal contacts, church and social clubs, and advertisements in local newspapers. </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 <p>If we want to start our paragraph with 90 written in as a word rather than in digits, we can use the <code>numbers_to_words function()</code> function from the {xfun} package. First, you’ll need to install the {xfun} package and then add a line to your <code>setup</code> chunk to load it.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
-<div class="sourceCode" id="cb20" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xfun)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>First, you can test that it works by running this code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">numbers_to_words</span>(<span class="fu">nrow</span>(L1.data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">numbers_to_words</span>(<span class="fu">nrow</span>(L1.data))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "ninety"</code></pre>
 </div>
 </div>
 <p>To start our paragraph with a capital letter, we’ll need to set the function’s <code>cap</code> argument to <code>TRUE</code>.</p>
-<div class="sourceCode" id="cb23" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="in">`{{r}} numbers_to_words(nrow(L1.data), cap = TRUE)`</span> native speakers (<span class="in">`{r} L1.males`</span> male and <span class="in">`{r} L1.females`</span> female) and <span class="in">`{r} nrow(L2.data)`</span> nonnative speakers of English (<span class="in">`{r} L2.males`</span> male and <span class="in">`{r} L2.allfemales`</span> female) were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="in">`{{r}} numbers_to_words(nrow(L1.data), cap = TRUE)`</span> native speakers (<span class="in">`{r} L1.males`</span> male and <span class="in">`{r} L1.females`</span> female) and <span class="in">`{r} nrow(L2.data)`</span> nonnative speakers of English (<span class="in">`{r} L2.males`</span> male and <span class="in">`{r} L2.allfemales`</span> female) were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Next, we want to reproduce the following descriptive statistics about the L1 participants:</p>
 <blockquote class="blockquote">
 <p>The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from 17 to 65 years (<em>M</em> = 38, <em>SD</em> = 16).</p>
 </blockquote>
 <p>We can use the base <code>R</code> functions <code>min()</code>, <code>max()</code>, <code>mean()</code>, and <code>sd()</code> to compute these values.</p>
-<div class="sourceCode" id="cb24" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from <span class="in">`{r} min(L1.data$Age)`</span> to <span class="in">`{r} max(L1.data$Age)`</span> years (*M* = `{r} mean(L1.data$Age)`, *SD* = <span class="in">`{r} sd(L1.data$Age)`</span>).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from <span class="in">`{r} min(L1.data$Age)`</span> to <span class="in">`{r} max(L1.data$Age)`</span> years (*M* = `{r} mean(L1.data$Age)`, *SD* = <span class="in">`{r} sd(L1.data$Age)`</span>).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The rendered document will read:</p>
 <blockquote class="blockquote">
 <p>The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from 17 to 65 years (<em>M</em> = 37.5444444, <em>SD</em> = 16.148998).</p>
 </blockquote>
 <p>Whilst these values are correct, in practice, we want to round them off to the nearest integer. To this end, we can wrap the <code>round()</code> function around the <code>mean()</code> and <code>max()</code> function (see <a href="7_VariablesFunctions.html#sec-Nesting" class="quarto-xref"><span>Section 7.5.1</span></a>).</p>
-<div class="sourceCode" id="cb25" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from <span class="in">`{r} min(L1.data$Age)`</span> to <span class="in">`{r} max(L1.data$Age)`</span> years (*M* = `{r} round(mean(L1.data$Age))`, *SD* = <span class="in">`{r} round(sd(L1.data$Age))`</span>).</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from <span class="in">`{r} min(L1.data$Age)`</span> to <span class="in">`{r} max(L1.data$Age)`</span> years (*M* = `{r} round(mean(L1.data$Age))`, *SD* = <span class="in">`{r} round(sd(L1.data$Age))`</span>).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The rendered document will read:</p>
 <blockquote class="blockquote">
 <p>The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from 17 to 65 years (<em>M</em> = 38, <em>SD</em> = 16).</p>
 </blockquote>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-More complex inline computations
+<span class="screen-reader-only">Note</span>More complex inline computations
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1564,7 +1569,7 @@ More complex inline computations
 <p>For more complex computations, it is much better to compute the values in a dedicated code chunk. This also allows you to add <strong>code annotation</strong> which is important to ensure that other researchers (and your future self!) understand the reasoning behind the code.</p>
 <p>For example, the following chunk containing annotated code can be used to reproduce the descriptive statistics concerning L1 participants’ professional occupations and foreign language skills.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: L1-jobs</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Counting manual job participants using a tidyverse solution:</span></span>
@@ -1595,13 +1600,13 @@ More complex inline computations
 <span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>L1.otherlgs <span class="ot">&lt;-</span> L1.data <span class="sc">|&gt;</span></span>
 <span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(OtherLgs <span class="sc">!=</span> <span class="st">"None"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span>
-<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The values saved to the local environment as <code>R</code> objects can then be inserted inline within the Markdown text as follows:</p>
-<div class="sourceCode" id="cb27" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="in">`{{r}} numbers_to_words((L1.manualjobs*100), cap = TRUE)`</span> percent of the participants held manual jobs, <span class="in">`{r} L1.clerical*100`</span>% held clerical positions, and <span class="in">`{r} L1.pro*100`</span>% had professional-level jobs or were studying for a degree; the remaining <span class="in">`{r} L1.inactive*100`</span>% were occupationally inactive (i.e., unemployed, retired, or homemakers). In terms of education, participants’ backgrounds ranged from no formal qualifications to Ph.D., with corresponding differences in the number of years spent in full-time education (from <span class="in">`{r} min(L1.data$EduYrs)`</span> to <span class="in">`{r} max(L1.data$EduYrs)`</span>; *M* = `{r} round(mean(L1.data$EduYrs))`, *SD* = <span class="in">`{r} round(sd(L1.data$EduYrs))`</span>). <span class="in">`{r} L1.otherlgs`</span> participants reported a working knowledge of another language; the rest described themselves as monolinguals.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="in">`{{r}} numbers_to_words((L1.manualjobs*100), cap = TRUE)`</span> percent of the participants held manual jobs, <span class="in">`{r} L1.clerical*100`</span>% held clerical positions, and <span class="in">`{r} L1.pro*100`</span>% had professional-level jobs or were studying for a degree; the remaining <span class="in">`{r} L1.inactive*100`</span>% were occupationally inactive (i.e. unemployed, retired, or homemakers). In terms of education, participants’ backgrounds ranged from no formal qualifications to Ph.D., with corresponding differences in the number of years spent in full-time education (from <span class="in">`{r} min(L1.data$EduYrs)`</span> to <span class="in">`{r} max(L1.data$EduYrs)`</span>; *M* = `{r} round(mean(L1.data$EduYrs))`, *SD* = <span class="in">`{r} round(sd(L1.data$EduYrs))`</span>). <span class="in">`{r} L1.otherlgs`</span> participants reported a working knowledge of another language; the rest described themselves as monolinguals.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>🧑‍💻 Add this section to your Quarto document and render it to HTML. Compare the values in your rendered document with the original ones from the published study.</p>
 <blockquote class="blockquote">
-<p>Twenty-two percent of the participants held manual jobs, 24% held clerical positions, and 28% had professional-level jobs or were studying for a degree; the remaining 26% were occupationally inactive (i.e., unemployed, retired, or homemakers). In terms of education, participants’ backgrounds ranged from no formal qualifications to Ph.D., with corresponding differences in the number of years spent in full-time education (from 10 to 21; M = 14, SD = 2). Six participants reported a working knowledge of another language; the rest described themselves as monolinguals <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">(<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">Dąbrowska 2019</a>: 6)</span>.</p>
+<p>Twenty-two percent of the participants held manual jobs, 24% held clerical positions, and 28% had professional-level jobs or were studying for a degree; the remaining 26% were occupationally inactive (i.e.&nbsp;unemployed, retired, or homemakers). In terms of education, participants’ backgrounds ranged from no formal qualifications to Ph.D., with corresponding differences in the number of years spent in full-time education (from 10 to 21; M = 14, SD = 2). Six participants reported a working knowledge of another language; the rest described themselves as monolinguals <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">(<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">Dąbrowska 2019</a>: 6)</span>.</p>
 </blockquote>
 <p><span style="color:green;"><strong>Q14.11</strong></span> Compare the rendered version of your document with the original descriptive statistics reported in Dąbrowska <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">(<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">Dąbrowska 2019</a>: 6)</span>. Could you successfully <strong>reproduce</strong> these descriptive statistics? Which values are different?</p>
 <div class="cell">
@@ -1668,17 +1673,17 @@ The values expressed in percentages.
 </table>
 <p>&nbsp;</p>
 <p>When you switch to the Source mode, you will see that, in <strong>Markdown</strong> (see <a href="#sec-Markdown" class="quarto-xref"><span>Section 14.4</span></a>), your table has been converted to a <strong>pipe table</strong>. Pipe tables allow for column alignment and captions.</p>
-<div class="sourceCode" id="cb28" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                               <span class="pp">|</span> Same data    <span class="pp">|</span> Different data <span class="pp">|</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                               <span class="pp">|</span> Same data    <span class="pp">|</span> Different data <span class="pp">|</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|-------------------------------|--------------|----------------|</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Same analysis method**      <span class="pp">|</span> Reproducible <span class="pp">|</span> Replicable     <span class="pp">|</span></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Different analysis method** <span class="pp">|</span> Robust       <span class="pp">|</span> Generalisable  <span class="pp">|</span></span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>: Terminology used in this chapter</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>: Terminology used in this chapter</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Most of the time, however, you will want to display tabular results based on data that you have imported, manipulated, and/or analysed in <code>R</code>. If the output of a code chunk within your Quarto document is a table, it will automatically be displayed in your rendered document (unless you specify a chunk option to hide its output, see <a href="#sec-Chunks" class="quarto-xref"><span>Section 14.5</span></a>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="sc">|&gt;</span> </span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(OtherLgs,</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  OtherLgs  n
 1     None 84
@@ -1689,7 +1694,7 @@ The values expressed in percentages.
 </div>
 <p>However, this output is not particularly nicely formatted. There are several <code>R</code> packages designed to create tables that are “presentation-ready”. One of these is the <strong>{gt}</strong> package. Beyond its main function <code>gt()</code>, it offers many more functions to further style tables such as <code>cols_label()</code> to change the column headers.</p>
 <div class="cell" data-tbl-colwidths="[80,20]" data-tbl-cap-location="top">
-<div class="sourceCode cell-code" id="cb31" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-L1-languages</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Example of a {gt} table"</span></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap-location: top</span></span>
@@ -1705,8 +1710,8 @@ The values expressed in percentages.
 <span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
 <span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">OtherLgs =</span> <span class="st">"Additional language"</span>, </span>
 <span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="st">"N"</span>)</span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="tbl-L1-languages" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="top" data-tbl-colwidths="[80,20]">
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tbl-L1-languages" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[80,20]" data-tbl-cap-location="top">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-L1-languages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;14.1: Example of a {gt} table
@@ -2163,7 +2168,7 @@ Table&nbsp;14.1: Example of a {gt} table
 }
 </style>
 
-<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_col_headings header">
 <th id="OtherLgs" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Additional language</th>
@@ -2203,7 +2208,7 @@ Table&nbsp;14.1: Example of a {gt} table
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Going further
+<span class="screen-reader-only">Note</span>Going further
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2213,10 +2218,10 @@ Going further
 </section>
 <section id="sec-QuartoFigures" class="level2" data-number="14.8">
 <h2 data-number="14.8" class="anchored" data-anchor-id="sec-QuartoFigures"><span class="header-section-number">14.8</span> Figures</h2>
-<p>In Quarto documents, figures can either be inserted from image files (e.g., <code>.png</code> or <code>.jpeg</code> files, see <a href="2_Data.html#sec-FileExtensions" class="quarto-xref"><span>Section 2.3</span></a>) or generated as a result of a code chunk.</p>
+<p>In Quarto documents, figures can either be inserted from image files (e.g.&nbsp;<code>.png</code> or <code>.jpeg</code> files, see <a href="2_Data.html#sec-FileExtensions" class="quarto-xref"><span>Section 2.3</span></a>) or generated as a result of a code chunk.</p>
 <section id="sec-QuartoImages" class="level3" data-number="14.8.1">
 <h3 data-number="14.8.1" class="anchored" data-anchor-id="sec-QuartoImages"><span class="header-section-number">14.8.1</span> Images</h3>
-<p>To embed an image from an external file, you can use the “Insert” menu in <em>RStudio</em>’s <strong>Visual</strong> editor and select “Figure / Image” (see <a href="#fig-InsertingImage" class="quarto-xref">Figure&nbsp;<span>14.9</span></a>). This will open up a menu where you can select the image that you want to insert, as well as add <strong>alt-text</strong> (see <a href="10_Dataviz.html#sec-StatsLabs" class="quarto-xref"><span>Section 10.1.5</span></a>) and a <strong>caption</strong>. The easiest way to adjust the size of an embedded image is to click on the image and then adjust the <strong>size</strong> of the image with the blue circle in the bottom-right corner of the image (see <a href="#fig-InsertingImage" class="quarto-xref">Figure&nbsp;<span>14.9</span></a>).</p>
+<p>To embed an image from an external file, you can use the “Insert” menu in <em>RStudio</em>’s <strong>Visual</strong> editor and select “Figure / Image” (see <a href="#fig-InsertingImage" class="quarto-xref">Figure&nbsp;<span>14.9</span></a>). This will open up a menu where you can select the image that you want to insert, as well as add <strong>alt-text</strong> (see <a href="10_Dataviz.html#sec-StatsLabs" class="quarto-xref"><span>Section 10.1.3</span></a>) and a <strong>caption</strong>. The easiest way to adjust the size of an embedded image is to click on the image and then adjust the <strong>size</strong> of the image with the blue circle in the bottom-right corner of the image (see <a href="#fig-InsertingImage" class="quarto-xref">Figure&nbsp;<span>14.9</span></a>).</p>
 <div id="fig-InsertingImage" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Cartoon drawing of a pipe with three entry points for &quot;data&quot; and the output producing a research paper with text, a table, and a plot. Sections of the pipe are labelled: data cleaning, overview, figures, modelling, and text.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-InsertingImage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -2228,7 +2233,7 @@ Figure&nbsp;14.9: Adjusting the size of an image in Quarto
 </figure>
 </div>
 <p>Below is the source code for <a href="#fig-RealisticPipeline" class="quarto-xref">Figure&nbsp;<span>14.10</span></a> in Markdown. The code includes the <strong>relative path</strong> to the image file (see <a href="3_DataManagement.html#sec-FoldersPaths" class="quarto-xref"><span>Section 3.3</span></a>) relative to the <strong>project directory</strong> (see <a href="6_ImpoRtingData.html#sec-RProject" class="quarto-xref"><span>Section 6.3</span></a>). In the example below, the image file <code>BERD_pipeline-real.jpg</code> is located in a subfolder called <code>images</code>. If you want to try this out yourself, you will need to create this subfolder within your own project directory and save <a href="#fig-RealisticPipeline" class="quarto-xref">Figure&nbsp;<span>14.10</span></a> to this subfolder.</p>
-<div class="sourceCode" id="cb32" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">A more realistic research pipeline [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/) @seiboldBERDCourseMake2023</span><span class="co">](images/BERD_pipeline-real.jpg)</span>{#fig-RealisticPipeline fig-alt="Cartoon drawing of a complex set of pipes with various entry points for \"data\" and a single output: a research paper with text, a table, and a plot. Sections of the pipe are coloured according to the processes that they correspond to. These include data cleaning, overview, figures, modelling, and text." width="480"}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">A more realistic research pipeline [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/) @seiboldBERDCourseMake2023</span><span class="co">](images/BERD_pipeline-real.jpg)</span>{#fig-RealisticPipeline fig-alt="Cartoon drawing of a complex set of pipes with various entry points for \"data\" and a single output: a research paper with text, a table, and a plot. Sections of the pipe are coloured according to the processes that they correspond to. These include data cleaning, overview, figures, modelling, and text." width="480"}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="fig-RealisticPipeline" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Cartoon drawing of a complex set of pipes with various entry points for &quot;data&quot; and a single output: a research paper with text, a table, and a plot. Sections of the pipe are coloured according to the processes that they correspond to. These include data cleaning, overview, figures, modelling, and text.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-RealisticPipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -2239,15 +2244,15 @@ Figure&nbsp;14.10: A more realistic research pipeline <a href="https://creativec
 </figcaption>
 </figure>
 </div>
-<p>This example embedded image includes a caption (that, itself, includes a link), an alt-text (see <a href="10_Dataviz.html#sec-StatsLabs" class="quarto-xref"><span>Section 10.1.5</span></a>), and a custom width in pixel. Note that, in the source code, special characters such as quotation marks need to be escaped using a backslash <code>\</code>. Tags beginning with <code>#fig-</code> can be used to cross-reference images by replacing the <code>#</code> with <code>@</code>. Hence, in this chapter, <code>@fig-RealisticPipeline</code> in Markdown is rendered as <a href="#fig-RealisticPipeline" class="quarto-xref">Figure&nbsp;<span>14.10</span></a>.</p>
+<p>This example embedded image includes a caption (that, itself, includes a link), an alt-text (see <a href="10_Dataviz.html#sec-StatsLabs" class="quarto-xref"><span>Section 10.1.3</span></a>), and a custom width in pixel. Note that, in the source code, special characters such as quotation marks need to be escaped using a backslash <code>\</code>. Tags beginning with <code>#fig-</code> can be used to cross-reference images by replacing the <code>#</code> with <code>@</code>. Hence, in this chapter, <code>@fig-RealisticPipeline</code> in Markdown is rendered as <a href="#fig-RealisticPipeline" class="quarto-xref">Figure&nbsp;<span>14.10</span></a>.</p>
 <p>Figures can be arranged in many ways. The example below uses the <code>:::</code> <strong>div syntax</strong> to display two images side-by-side. This syntax also allows for subcaptions as shown in <a href="#fig-Pipelines" class="quarto-xref">Figure&nbsp;<span>14.11</span></a>.</p>
-<div class="sourceCode" id="cb33" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>::: {#fig-Pipelines layout-ncol="2"}</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>::: {#fig-Pipelines layout-ncol="2"}</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="al">![An idealised research pipeline](images/BERD_pipeline-simple.jpg)</span>{#fig-IdealisedPipeline}</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="al">![A more realistic research pipeline](images/BERD_pipeline-real.jpg)</span>{#fig-RealisticPipeline2}</span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>Research workflows as pipelines <span class="co">[</span><span class="ot">CC-BY 4.0</span><span class="co">](https://creativecommons.org/licenses/by/4.0/)</span> @seiboldBERDCourseMake2023</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="fig-Pipelines" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-Pipelines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -2289,7 +2294,7 @@ Figure&nbsp;14.11: Research workflows as pipelines <a href="https://creativecomm
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Going further
+<span class="screen-reader-only">Note</span>Going further
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2302,7 +2307,7 @@ Going further
 <p>If your Quarto document includes code chunks that generate plots, they will automatically be integrated in your rendered document. Plots will either appear immediately after the corresponding code chunk or where the code chunk would be, if you chose to hide the code chunk that generated the plot with the <code>echo: false</code> option.</p>
 <p>As with computed tables (see <a href="#sec-QuartoTables" class="quarto-xref"><span>Section 14.7</span></a>), various code chunk options can be added to customise the look of computed figures in rendered documents. Compare the code chunk options below and the generated output in <a href="#fig-scatterplot" class="quarto-xref">Figure&nbsp;<span>14.12</span></a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-scatterplot</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "L2 participants' lexical proficiency in English and their professional occupational group"</span></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
@@ -2320,7 +2325,7 @@ Going further
 <span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Collocation test scores"</span>,</span>
 <span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">colour =</span> <span class="st">"Occupational</span><span class="sc">\n</span><span class="st">groups"</span>) <span class="sc">+</span></span>
 <span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-scatterplot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2339,7 +2344,7 @@ Figure&nbsp;14.12: L2 participants’ lexical proficiency in English and their p
 <div class="cell">
 <details class="code-fold">
 <summary>Show <code>R</code> code to generate the interactive plot below.</summary>
-<div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("plotly")</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("plotly")</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>L2.scatter2 <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
@@ -2354,7 +2359,7 @@ Figure&nbsp;14.12: L2 participants’ lexical proficiency in English and their p
 <span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">colour =</span> <span class="st">"Occupational</span><span class="sc">\n</span><span class="st">groups"</span>) <span class="sc">+</span></span>
 <span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
 <span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(L2.scatter2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(L2.scatter2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-scatterplot-plotly" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2372,7 +2377,7 @@ Figure&nbsp;14.13: An interactive plot of L2 participants’ lexical proficiency
 </section>
 <section id="sec-References" class="level2 page-columns page-full" data-number="14.9">
 <h2 data-number="14.9" class="anchored" data-anchor-id="sec-References"><span class="header-section-number">14.9</span> References</h2>
-<p>An important aspect of academic writing is the inclusion of in-text bibliographic references (<strong>citations</strong>) and a well-formatted list of references (the <strong>bibliography</strong>). <em>RStudio</em>’s Visual editor makes inserting bibliographic references extremely simple. To insert a reference, simply click on “Insert” and then select “Citation” or use the keyboard shortcut ⌘/Ctrl ⇧ F8. This opens up a menu (see <a href="#fig-QuartoCitation" class="quarto-xref">Figure&nbsp;<span>14.14</span></a>) giving you the option to search for the source that you’d like to cite on your own computer (e.g., in your own Zotero database, if you use Zotero) or on the web via the <a href="https://www.crossref.org/">Crossref</a> database or directly using a <a href="https://forrt.org/glossary/english/doi/">DOI</a>.</p>
+<p>An important aspect of academic writing is the inclusion of in-text bibliographic references (<strong>citations</strong>) and a well-formatted list of references (the <strong>bibliography</strong>). <em>RStudio</em>’s Visual editor makes inserting bibliographic references extremely simple. To insert a reference, simply click on “Insert” and then select “Citation” or use the keyboard shortcut ⌘/Ctrl ⇧ F8. This opens up a menu (see <a href="#fig-QuartoCitation" class="quarto-xref">Figure&nbsp;<span>14.14</span></a>) giving you the option to search for the source that you’d like to cite on your own computer (e.g.&nbsp;in your own Zotero database, if you use Zotero) or on the web via the <a href="https://www.crossref.org/">Crossref</a> database or directly using a <a href="https://forrt.org/glossary/english/doi/">DOI</a>.</p>
 <div id="fig-QuartoCitation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-QuartoCitation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -2397,12 +2402,12 @@ Tip
 <p>For more information on how to format your in-text citations, see the <a href="https://quarto.org/docs/authoring/footnotes-and-citations.html#sec-citations">Quarto guide</a>.</p>
 </div>
 </div>
-<p>When you insert your first reference in a Quarto document, <em>RStudio</em> will automatically create a <code>references.bib</code> file in your project folder. All references are automatically added to this new <a href="https://en.wikipedia.org/wiki/BibLaTeX">BibLaTeX</a> file. As shown below, <code>.bib</code> files contain entries that begin with <code>@</code> followed by the type of reference (<code>article</code>, <code>book</code>, <code>manual</code>, <code>url</code>, etc.) and the reference identifier (e.g., <code>DabrowskaExperienceAptitudeIndividual2019</code>, <code>wickhamDataScienceImport2023</code>). The rest of the entries contains structured information about each reference including its title, date of publication, and DOI or ISBN.</p>
+<p>When you insert your first reference in a Quarto document, <em>RStudio</em> will automatically create a <code>references.bib</code> file in your project folder. All references are automatically added to this new <a href="https://en.wikipedia.org/wiki/BibLaTeX">BibLaTeX</a> file. As shown below, <code>.bib</code> files contain entries that begin with <code>@</code> followed by the type of reference (<code>article</code>, <code>book</code>, <code>manual</code>, <code>url</code>, etc.) and the reference identifier (e.g.&nbsp;<code>DabrowskaExperienceAptitudeIndividual2019</code>, <code>wickhamDataScienceImport2023</code>). The rest of the entries contains structured information about each reference including its title, date of publication, and DOI or ISBN.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>references.bib</strong></pre>
 </div>
-<div class="sourceCode" id="cb36" data-filename="references.bib" data-code-line-numbers=""><pre class="sourceCode bib code-with-copy"><code class="sourceCode bibtex"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="va">@article</span>{</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36" data-filename="references.bib" data-code-line-numbers=""><pre class="sourceCode bib code-with-copy"><code class="sourceCode bibtex"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="va">@article</span>{</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="ot">DabrowskaExperienceAptitudeIndividual2019</span>,</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span>={Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers},</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">volume</span>={69},</span>
@@ -2426,17 +2431,17 @@ Tip
 <span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">publisher</span>={O’Reilly},</span>
 <span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">author</span>={Wickham, Hadley and Çetinkaya-Rundel, Mine and Grolemund, Garrett},</span>
 <span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>  <span class="dt">year</span>={2023} </span>
-<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>In order to connect this <code>bibliography.bib</code> file with our Quarto document, we need to add a <code>bibliography</code> key to our <strong>YAML header</strong>. If our <code>references.bib</code> file is located in the same folder as our Quarto document (which is what <em>RStudio</em> does by default), we can simply add the following line to our document header:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="pp">--- </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="pp">--- </span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Learning Quarto"</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">"by reproducing the descriptive statistics of Dąbrowska's (2019) study"</span></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Elen Le Foll"</span></span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> last-modified</span></span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> references.bib</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>With this modified YAML header, when the document is rendered, a bibliography will automatically be added to the end of the document. This means that, if you have citations in your document, it is a good idea to include a header section <code># References</code> at the end of the document.</p>
 <blockquote class="blockquote">
@@ -2446,14 +2451,14 @@ Tip
 </blockquote>
 <p>By default, Quarto will use the <a href="https://chicagomanualofstyle.org/">Chicago Manual of Style</a> author-date citation format (as above). However, you can point to a different <strong>citation stylesheet</strong> in the form of a <code>.csl</code> (Citation Style Language) file in the YAML header. This allows us to determine exactly how our bibliography and in-text citations should be formatted. Many institutions, publishers, and journals have their own (sometimes annoyingly specific!) requirements. Luckily, the research community has put together a large repository of citation stylesheets for you to choose from: <a href="https://www.zotero.org/styles" class="uri">https://www.zotero.org/styles</a>. You can download any of these stylesheets (as a <code>.csl</code> file), place the file in your project folder, and then link it to your Quarto document by adding a <code>cls</code> key to your header.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Learning Quarto"</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">"by reproducing the descriptive statistics of Dąbrowska's (2019) study"</span></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Elen Le Foll"</span></span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> last-modified</span></span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> references.bib</span></span>
 <span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="fu">csl</span><span class="kw">:</span><span class="at"> international-journal-of-learner-corpus-research.csl</span></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>For example, if you wanted to submit your paper to the <a href="https://benjamins.com/catalog/ijlcr">International Journal of Learner Corpus Research</a>, you could find the <a href="https://www.zotero.org/styles/international-journal-of-learner-corpus-research">corresponding CLS stylesheet</a> in the <a href="https://www.zotero.org/styles">Zotero styles database</a>, save it in your project folder, and link to it in your YAML header as above. When rendered, your document’s bibliography would then read:</p>
 <blockquote class="blockquote">
@@ -2467,7 +2472,7 @@ Tip
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2569,7 +2574,7 @@ In’nami, Yo, Atsushi Mizumoto, Luke Plonsky &amp; Rie Koizumi
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Literature management
+<span class="screen-reader-only">Tip</span>Literature management
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2592,29 +2597,29 @@ Literature management
 <p>The easiest way to “give credit where credit is due” to <code>R</code> package developers is to use the <a href="https://pakillo.github.io/grateful/">{grateful}</a> package. Its <code>cite_packages()</code> function will scan your project for all the <code>R</code> packages that are used and generate a BibTeX file called <code>grateful-refs.bib</code> that contains the package references.</p>
 <p>You will first need to add a reference to the BibTeX file generated by {grateful} in your YAML header. This means that your Quarto document will now have two bibliography files, which is fine as long as you use the following YAML syntax to reference them both.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> </span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> references.bib</span></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> grateful-refs.bib</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then, load the library (which you will have to install first, of course) and call the <code>cite_packages(output = "paragraph")</code> function. This will generate a paragraph that mentions all the used packages (see below) and add their references to the bibliography (either at the bottom of your rendered Quarto document or, in the case of this textbook, in the corresponding chapter, see <a href="#sec-References" class="quarto-xref"><span>Section 14.9</span></a>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("grateful")</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(grateful)</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cite_packages</span>(<span class="at">output =</span> <span class="st">"paragraph"</span>, <span class="at">out.dir =</span> <span class="st">"."</span>)</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <p>We used R version 4.5.0 <span class="citation" data-cites="base">(<a href="99_references.html#ref-base" role="doc-biblioref">R Core Team 2025a</a>)</span> and the following R packages: car v. 3.1.3 <span class="citation" data-cites="car">(<a href="99_references.html#ref-car" role="doc-biblioref">Fox &amp; Weisberg 2019</a>)</span>, checkdown v. 0.0.13 <span class="citation" data-cites="checkdown">(<a href="99_references.html#ref-checkdown" role="doc-biblioref">Moroz 2020</a>)</span>, colorBlindness v. 0.1.9 <span class="citation" data-cites="colorBlindness">(<a href="99_references.html#ref-colorBlindness" role="doc-biblioref">Ou 2021</a>)</span>, datasauRus v. 0.1.9 <span class="citation" data-cites="datasauRus">(<a href="99_references.html#ref-datasauRus" role="doc-biblioref">Gillespie et al. 2025</a>)</span>, effectsize v. 1.0.1 <span class="citation" data-cites="effectsize">(<a href="99_references.html#ref-effectsize" role="doc-biblioref">Ben-Shachar, Lüdecke &amp; Makowski 2020</a>)</span>, emmeans v. 1.11.1 <span class="citation" data-cites="emmeans">(<a href="99_references.html#ref-emmeans" role="doc-biblioref">Lenth 2025</a>)</span>, ggmosaic v. 0.3.3 <span class="citation" data-cites="ggmosaic">(<a href="99_references.html#ref-ggmosaic" role="doc-biblioref">Jeppson, Hofmann &amp; Cook 2021</a>)</span>, ggpattern v. 1.1.4 <span class="citation" data-cites="ggpattern">(<a href="99_references.html#ref-ggpattern" role="doc-biblioref">FC, Davis &amp; ggplot2 authors 2025</a>)</span>, ggrepel v. 0.9.6 <span class="citation" data-cites="ggrepel">(<a href="99_references.html#ref-ggrepel" role="doc-biblioref">Slowikowski 2024</a>)</span>, ggwordcloud v. 0.6.2 <span class="citation" data-cites="ggwordcloud">(<a href="99_references.html#ref-ggwordcloud" role="doc-biblioref">Le Pennec &amp; Slowikowski 2024</a>)</span>, gt v. 1.0.0 <span class="citation" data-cites="gt">(<a href="99_references.html#ref-gt" role="doc-biblioref">Iannone et al. 2025</a>)</span>, here v. 1.0.1 <span class="citation" data-cites="here">(<a href="99_references.html#ref-here" role="doc-biblioref">Müller 2020</a>)</span>, janeaustenr v. 1.0.0 <span class="citation" data-cites="janeaustenr">(<a href="99_references.html#ref-janeaustenr" role="doc-biblioref">Silge 2022</a>)</span>, kableExtra v. 1.4.0 <span class="citation" data-cites="kableExtra">(<a href="99_references.html#ref-kableExtra" role="doc-biblioref">Zhu 2024</a>)</span>, knitcitations v. 1.0.12 <span class="citation" data-cites="knitcitations">(<a href="99_references.html#ref-knitcitations" role="doc-biblioref">Boettiger 2021</a>)</span>, knitr v. 1.50 <span class="citation" data-cites="knitr2014 knitr2015 knitr2025">(<a href="99_references.html#ref-knitr2014" role="doc-biblioref">Xie 2014</a>; <a href="99_references.html#ref-knitr2015" role="doc-biblioref">Xie 2015</a>; <a href="99_references.html#ref-knitr2025" role="doc-biblioref">Xie 2025a</a>)</span>, paletteer v. 1.6.0 <span class="citation" data-cites="paletteer">(<a href="99_references.html#ref-paletteer" role="doc-biblioref">Hvitfeldt 2021</a>)</span>, patchwork v. 1.3.0 <span class="citation" data-cites="patchwork">(<a href="99_references.html#ref-patchwork" role="doc-biblioref">Pedersen 2024</a>)</span>, performance v. 0.15.1 <span class="citation" data-cites="performance">(<a href="99_references.html#ref-performance" role="doc-biblioref">Lüdecke et al. 2021</a>)</span>, plotly v. 4.11.0 <span class="citation" data-cites="plotly">(<a href="99_references.html#ref-plotly" role="doc-biblioref">Sievert 2020</a>)</span>, qqplotr v. 0.0.7 <span class="citation" data-cites="qqplotr">(<a href="99_references.html#ref-qqplotr" role="doc-biblioref">Almeida, Loy &amp; Hofmann 2018</a>)</span>, RefManageR v. 1.4.0 <span class="citation" data-cites="RefManageR2014 RefManageR2017">(<a href="99_references.html#ref-RefManageR2014" role="doc-biblioref">McLean 2014</a>; <a href="99_references.html#ref-RefManageR2017" role="doc-biblioref">McLean 2017</a>)</span>, relaimpo v. 2.2.7 <span class="citation" data-cites="relaimpo">(<a href="99_references.html#ref-relaimpo" role="doc-biblioref">Groemping 2006</a>)</span>, report v. 0.6.1 <span class="citation" data-cites="report">(<a href="99_references.html#ref-report" role="doc-biblioref">Makowski et al. 2023</a>)</span>, rmarkdown v. 2.30 <span class="citation" data-cites="rmarkdown2018 rmarkdown2020 rmarkdown2025">(<a href="99_references.html#ref-rmarkdown2018" role="doc-biblioref">Xie, Allaire &amp; Grolemund 2018</a>; <a href="99_references.html#ref-rmarkdown2020" role="doc-biblioref">Xie, Dervieux &amp; Riederer 2020</a>; <a href="99_references.html#ref-rmarkdown2025" role="doc-biblioref">Allaire et al. 2025</a>)</span>, scales v. 1.4.0 <span class="citation" data-cites="scales">(<a href="99_references.html#ref-scales" role="doc-biblioref">Wickham, Pedersen &amp; Seidel 2025</a>)</span>, sjPlot v. 2.8.17 <span class="citation" data-cites="sjPlot">(<a href="99_references.html#ref-sjPlot" role="doc-biblioref">Lüdecke 2024</a>)</span>, skimr v. 2.2.1 <span class="citation" data-cites="skimr">(<a href="99_references.html#ref-skimr" role="doc-biblioref">Waring et al. 2025</a>)</span>, tidyverse v. 2.0.0 <span class="citation" data-cites="tidyverse">(<a href="99_references.html#ref-tidyverse" role="doc-biblioref">Wickham et al. 2019</a>)</span>, tools v. 4.5.0 <span class="citation" data-cites="tools">(<a href="99_references.html#ref-tools" role="doc-biblioref">R Core Team 2025b</a>)</span>, truncnorm v. 1.0.9 <span class="citation" data-cites="truncnorm">(<a href="99_references.html#ref-truncnorm" role="doc-biblioref">Mersmann et al. 2023</a>)</span>, viridis v. 0.6.5 <span class="citation" data-cites="viridis">(<a href="99_references.html#ref-viridis" role="doc-biblioref">Garnier et al. 2024</a>)</span>, visreg v. 2.7.0 <span class="citation" data-cites="visreg">(<a href="99_references.html#ref-visreg" role="doc-biblioref">Breheny &amp; Burchett 2017</a>)</span>, xfun v. 0.53 <span class="citation" data-cites="xfun">(<a href="99_references.html#ref-xfun" role="doc-biblioref">Xie 2025b</a>)</span>.</p>
 </div>
 </div>
 <p>Alternatively, <code>cite_packages()</code> can generate a table with all the package names, versions, and references. <a href="#tbl-packages" class="quarto-xref">Table&nbsp;<span>14.2</span></a> lists all of the packages used in the making of this textbook. To display functioning links and references, the table is rendered using the <code>kable()</code> function from the {knitr} package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("knitr")</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("knitr")</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">cite_packages</span>(<span class="at">output =</span> <span class="st">"table"</span>, <span class="at">out.dir =</span> <span class="st">"."</span>)</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(pkgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(pkgs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div id="tbl-packages" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -2834,7 +2839,7 @@ Table&nbsp;14.2
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Going further 📚
+<span class="screen-reader-only">Note</span>Going further 📚
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2847,22 +2852,22 @@ Going further 📚
 <p>You may have noticed that, in addition to creating an <code>.html</code> file, rendering your Quarto document has also generated a folder containing any necessary data, images, stylesheets or other files required to display the HTML version of your document. This is because Quarto keeps external resources separate from the main HTML file by default. While this is advantageous for large documents and complex projects, it does mean that your HTML document can only be viewed if both the <code>.html</code> file and its associated folder are shared.</p>
 <p>If you want to share a <strong>single, self-contained</strong> <code>.html</code> file with someone else or upload it somewhere, you will need to <strong>embed</strong> all the necessary files directly inside your HTML file. This is achieved by adding the following option at the end of your document’s YAML header:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">embed-resources</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>With this setting, Quarto will package all the necessary resources inside the HTML file, resulting in a self-contained document that is easy to share and archive as it can be viewed in any web browser (e.g., Firefox, Google Chrome, Safari).</p>
+<p>With this setting, Quarto will package all the necessary resources inside the HTML file, resulting in a self-contained document that is easy to share and archive as it can be viewed in any web browser (e.g.&nbsp;Firefox, Google Chrome, Safari).</p>
 <p>If you intend to share a longer Quarto document, it may be a good idea to number the headings and sub-headings (<code>number-sections</code>) and to include a table of content (<code>toc</code>). You can do this by adding the following two lines to the <code>format</code> section of your YAML header:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">embed-resources</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">number-sections</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="sec-PublishingFormats" class="level2" data-number="14.12">
@@ -2882,20 +2887,20 @@ Figure&nbsp;14.15: Artwork CC-BY 4.0 Allison Horst from the <a href="https://min
 <h3 data-number="14.12.1" class="anchored" data-anchor-id="word-libreoffice-co."><span class="header-section-number">14.12.1</span> Word, LibreOffice &amp; co.</h3>
 <p>Your supervisor or colleague may request a <strong>Microsoft Word</strong> version of your Quarto document and, thankfully, this is no problem. You can change the rendering format to a <code>.docx</code> file by ammending the format option in your <strong>YAML header</strong>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> docx</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>With this format option, rendering your Quarto document will generate a <code>.docx</code> file that includes your text, any code that you wanted to show in your document, and all of the code outputs that you wanted to share, such as your statistics, graphs, and tables.</p>
 <p>Some of the formatting options available for HTML also work in the <code>.docx</code> format:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">docx</span><span class="kw">:</span></span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">embed-resources</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">number-sections</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Note that any options that are not available in the rendering format specified are ignored without warning or error messages.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -2904,7 +2909,7 @@ Figure&nbsp;14.15: Artwork CC-BY 4.0 Allison Horst from the <a href="https://min
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Not rendering code chunks in specific formats
+<span class="screen-reader-only">Warning</span>Not rendering code chunks in specific formats
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2912,16 +2917,16 @@ Not rendering code chunks in specific formats
 <pre data-code-line-numbers=""><code>Error: Functions that produce HTML output found in document targeting docx output.
 Please change the output type of this document to HTML.</code></pre>
 <p>To fix this, add the following options to any code chunk that generates content that only works in HTML:</p>
-<div class="sourceCode" id="cb47" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: !expr 'knitr::is_html_output()'</span></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: FALSE</span></span>
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(L2.scatter2)</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>These options ensure that the code chunk is ignored when the document is rendered to any format other than HTML.</p>
 </div>
 </div>
-<p>When you open the <code>.docx</code> version of your Quarto document in Microsoft Word, you may get a number of warnings (e.g., <a href="#fig-MSWordWarnings" class="quarto-xref">Figure&nbsp;<span>14.16</span></a>). You can safely click “Yes” or “Close” to get rid of these warnings and open up your Word file. If you cannot open the file in Microsoft Word, I recommend rendering to <code>.odt</code> instead (see below).</p>
+<p>When you open the <code>.docx</code> version of your Quarto document in Microsoft Word, you may get a number of warnings (e.g. <a href="#fig-MSWordWarnings" class="quarto-xref">Figure&nbsp;<span>14.16</span></a>). You can safely click “Yes” or “Close” to get rid of these warnings and open up your Word file. If you cannot open the file in Microsoft Word, I recommend rendering to <code>.odt</code> instead (see below).</p>
 <div id="fig-MSWordWarnings" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-MSWordWarnings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -2959,17 +2964,17 @@ Figure&nbsp;14.16: Examples of popup menus that may appear when opening the <cod
 </div>
 <p>To share your work with <strong>LibreOffice</strong>, <strong>OnlyOffice</strong>, and <strong>OpenOffice</strong> users, use the <code>.odt</code> rendering option. This will generate an <strong>OpenDocument</strong> - an open standard file format that can be opened in any text-processing software, including Microsoft Word.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> odt</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>By default, the quality of the images and graphs in rendered <code>.docx</code> and <code>.odt</code> files is low to keep the file size reasonable. You can improve the quality of the rendered images by specifying the <strong>image definition</strong> in the YAML option. To do so, replace the format line that you added above with the following lines. Make sure that you indent each line correctly as shown below; otherwise, you will get an error when you try to render your document.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> </span></span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">odt</span><span class="kw">:</span></span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fig-dpi</span><span class="kw">:</span><span class="at"> </span><span class="dv">300</span></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="true" aria-label="Toggle callout">
@@ -2977,7 +2982,7 @@ Figure&nbsp;14.16: Examples of popup menus that may appear when opening the <cod
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2993,12 +2998,12 @@ Your turn!
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click here for the solution to <span style="color:green;"><strong>Q14.16</strong></span>
+<span class="screen-reader-only">Note</span>Click here for the solution to <span style="color:green;"><strong>Q14.16</strong></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -3044,30 +3049,30 @@ Figure&nbsp;14.18: Rendered document as opened in LibreOffice Writer
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode" id="cb50" data-filename="Terminal" data-code-line-numbers=""><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>quarto install tinytex</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50" data-filename="Terminal" data-code-line-numbers=""><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>quarto install tinytex</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This is likely to take a few minutes but you will only need to do it once. Afterwards, you can add the following line to your Quarto YAML header and you’re ready to render to PDF!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> pdf</span></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>HTML being the default format, some options available for HTML are not – at least by default – available in other publishing formats. Many of the basic options, however, work across different formats.</p>
 <p>The YAML header options below can be used to include a table of content with numbered sections at the start of the PDF version of your document. It also includes two options that are specific to the PDF format: the first will print a list of figures (<code>lof</code>) and the second a list of tables (<code>lot</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at">  </span></span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pdf</span><span class="kw">:</span></span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">number-sections</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">lof</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">lot</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="pp">---    </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="pp">---    </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="slides" class="level3" data-number="14.12.3">
 <h3 data-number="14.12.3" class="anchored" data-anchor-id="slides"><span class="header-section-number">14.12.3</span> Slides</h3>
-<p>In research, it’s quite common that you will be working on a project that will be submitted as a paper or thesis (e.g., in PDF format) <em>and</em> that you’ll also want to <strong>present</strong> in class, to your research group, or at a conference. You can easily turn your Quarto document into <strong>presentation slides</strong>, too! There are currently three presentation formats to choose from:</p>
+<p>In research, it’s quite common that you will be working on a project that will be submitted as a paper or thesis (e.g.&nbsp;in PDF format) <em>and</em> that you’ll also want to <strong>present</strong> in class, to your research group, or at a conference. You can easily turn your Quarto document into <strong>presentation slides</strong>, too! There are currently three presentation formats to choose from:</p>
 <table class="caption-top table">
 <tbody>
 <tr class="odd">
@@ -3103,7 +3108,7 @@ Figure&nbsp;14.18: Rendered document as opened in LibreOffice Writer
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Going further with Quarto
+<span class="screen-reader-only">Note</span>Going further with Quarto
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -3275,9 +3280,9 @@ Zhu, Hao. 2024. <em><span class="nocase">kableExtra</span>: Construct complex ta
 <li id="fn3"><p>You can, of course, write Quarto documents using any other IDE (Integrated Developer Environment, see <a href="4_InstallingR.html#sec-IDE" class="quarto-xref"><span>Section 4.2.1</span></a>) that supports Quarto such as VS Code, Jupyter, or Neovim.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Note that, in YAML syntax, character strings such as the document title and your name must be enclosed in quotation marks. By contrast, the date is not enclosed in quotation marks because it is a dynamic variable that will be adjusted to your computer’s system date so that, every time you render the document, the date will be updated.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>You can change this behaviour in your <em>RStudio</em> preferences under <em>Tools &gt; Global Options &gt;</em> R Markdown by selecting or unselecting the option: “Show output inline for all R Markdown documents”.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>Using Microsoft Excel to open these <code>.csv</code> files can corrupt the files and can happen even if you did not use Excel yourself (e.g., on some Windows computers, this is sometimes done automatically as part of the download process). To find out more, see <a href="2_Data.html#sec-ExcelWarning" class="quarto-xref"><span>Section 2.6</span></a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Using Microsoft Excel to open these <code>.csv</code> files can corrupt the files and can happen even if you did not use Excel yourself (e.g.&nbsp;on some Windows computers, this is sometimes done automatically as part of the download process). To find out more, see <a href="2_Data.html#sec-ExcelWarning" class="quarto-xref"><span>Section 2.6</span></a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>To make your Quarto document even more reproducible, you can replace your <code>setup</code> chunk with the following function that will automatically check if a package needs to be installed before it is loaded:</p>
-<div class="sourceCode" id="cb19" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" data-code-line-numbers=""><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: improved-setup</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># List of packages necessary in this Quarto document:</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"here"</span>, <span class="st">"tidyverse"</span>, <span class="st">"xfun"</span>)</span>
@@ -3288,7 +3293,7 @@ Zhu, Hao. 2024. <em><span class="nocase">kableExtra</span>: Construct complex ta
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to load the packages without printing any messages:</span></span>
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(<span class="fu">lapply</span>(packages, library, <span class="at">character.only =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Alternatively, consider using {renv} or {rix} for your project (see <a href="#sec-Packages" class="quarto-xref"><span>Section 14.10</span></a>).<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
@@ -3308,7 +3313,7 @@ Zhu, Hao. 2024. <em><span class="nocase">kableExtra</span>: Construct complex ta
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -3358,13 +3363,14 @@ Zhu, Hao. 2024. <em><span class="nocase">kableExtra</span>: Construct complex ta
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

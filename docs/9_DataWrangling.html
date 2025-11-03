@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.26">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,18 +90,19 @@ div.csl-indent {
 <link href="./8_DescriptiveStats.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-3e3370d44295d9fa30cc16d77ad785c2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-540c66f2be59a33d43b8e94dc657d4ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-2dc7341fb0871247097a223aafd3766b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -162,7 +163,7 @@ div.csl-indent {
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -195,7 +196,7 @@ div.csl-indent {
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -235,7 +236,7 @@ div.csl-indent {
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -263,7 +264,7 @@ div.csl-indent {
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -286,20 +287,22 @@ div.csl-indent {
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -326,7 +329,9 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Analysis for the<br>Language Sciences</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -511,11 +516,11 @@ div.csl-indent {
   <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning"><span class="header-section-number">9.5</span> Data cleaning 🧼</a>
   <ul class="collapse">
   <li><a href="#sec-stringR" id="toc-sec-stringR" class="nav-link" data-scroll-target="#sec-stringR"><span class="header-section-number">9.5.1</span> Using {stringr} functions</a></li>
-  <li><a href="#sec-casewhen" id="toc-sec-casewhen" class="nav-link" data-scroll-target="#sec-casewhen"><span class="header-section-number">9.6.4</span> Using <code>case_when()</code></a></li>
+  <li><a href="#sec-casewhen" id="toc-sec-casewhen" class="nav-link" data-scroll-target="#sec-casewhen"><span class="header-section-number">9.5.2</span> Using <code>case_when()</code></a></li>
   </ul></li>
-  <li><a href="#sec-CombiningDatasets" id="toc-sec-CombiningDatasets" class="nav-link" data-scroll-target="#sec-CombiningDatasets"><span class="header-section-number">9.7</span> Combining datasets</a></li>
-  <li><a href="#sec-filter" id="toc-sec-filter" class="nav-link" data-scroll-target="#sec-filter"><span class="header-section-number">9.8</span> A pre-processing pipeline</a></li>
-  <li><a href="#sec-ExportingRObjects" id="toc-sec-ExportingRObjects" class="nav-link" data-scroll-target="#sec-ExportingRObjects"><span class="header-section-number">9.9</span> Saving and exporting <code>R</code> objects</a></li>
+  <li><a href="#sec-CombiningDatasets" id="toc-sec-CombiningDatasets" class="nav-link" data-scroll-target="#sec-CombiningDatasets"><span class="header-section-number">9.6</span> Combining datasets</a></li>
+  <li><a href="#sec-filter" id="toc-sec-filter" class="nav-link" data-scroll-target="#sec-filter"><span class="header-section-number">9.7</span> A pre-processing pipeline</a></li>
+  <li><a href="#sec-ExportingRObjects" id="toc-sec-ExportingRObjects" class="nav-link" data-scroll-target="#sec-ExportingRObjects"><span class="header-section-number">9.8</span> Saving and exporting <code>R</code> objects</a></li>
   <li><a href="#check-your-progress" id="toc-check-your-progress" class="nav-link" data-scroll-target="#check-your-progress">Check your progress 🌟</a></li>
   </ul>
 </nav>
@@ -604,7 +609,7 @@ Figure&nbsp;9.3: A galaxy of tidyverse-related hex stickers (artwork by <a href=
 </div>
 <p>In this chapter, we will explore functions from {<a href="https://dplyr.tidyverse.org/">dplyr</a>}, {<a href="https://stringr.tidyverse.org/">stringr</a>}, and {<a href="https://tidyr.tidyverse.org/">tidyr</a>}. The popular {<a href="https://ggplot2.tidyverse.org/">ggplot2</a>} tidyverse library for data visualisation following the “Grammar of Graphics” approach will be introduced in <a href="@sec-DataViz">Chapter 10</a>. Make sure that you have loaded the tidyverse packages before proceeding with the rest of this chapter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="sec-Sanity" class="level2 page-columns page-full" data-number="9.3">
@@ -616,7 +621,7 @@ Figure&nbsp;9.3: A galaxy of tidyverse-related hex stickers (artwork by <a href=
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Prerequisites
+<span class="screen-reader-only">Warning</span>Prerequisites
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -633,19 +638,19 @@ Prerequisites
 </div>
 <p>Before we get started, make sure that both the L1 and the L2 datasets are correctly loaded by checking the structure of the <code>R</code> objects using the <code>str()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"L1_data.csv"</span>))</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(L1.data)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"L2_data.csv"</span>))</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(L2.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(L2.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="sec-CheckNumeric" class="level3" data-number="9.3.1">
 <h3 data-number="9.3.1" class="anchored" data-anchor-id="sec-CheckNumeric"><span class="header-section-number">9.3.1</span> Numeric variables</h3>
 <p>In <a href="8_DescriptiveStats.html#sec-IQR" class="quarto-xref"><span>Section 8.3.2</span></a>, we used the <code>summary()</code> function to obtain some useful descriptive statistics on a single numeric variable, namely the range, mean, median, and interquartile range (IQR).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L1.data<span class="sc">$</span>GrammarR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L1.data<span class="sc">$</span>GrammarR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
   58.00   71.25   76.00   74.42   79.00   80.00 </code></pre>
@@ -653,7 +658,7 @@ Prerequisites
 </div>
 <p>To check the sanity of a dataset, we can use this same function on an entire data table (provided that the data are in the tidy format, see <a href="#sec-tidyverse" class="quarto-xref"><span>Section 9.1</span></a>). Thus, the command <code>summary(L1.data)</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> outputs summary statistics on all the variables of the L1 dataset - in other words, on all the columns of the data frame <code>L1.data</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L1.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -680,14 +685,14 @@ Prerequisites
  Max.   :5.000   Max.   :5.000   Max.   :4.000   Max.   :14.000  </code></pre>
 </div>
 </div>
-<p>For the numeric variables in the dataset, the <code>summary()</code> function provides us with many useful descriptive statistics to check the sanity of the data. For example, we can check whether the minimum values include improbably low values (e.g., a five-year-old participant in a written language exam) or outright impossible ones (e.g., a minus 18-year old participant!). Equally, if we know that the maximum number of points that could be obtained in the English grammar test is 100, a maximum value of more than 100 would be highly suspicious and warrant further investigation.</p>
+<p>For the numeric variables in the dataset, the <code>summary()</code> function provides us with many useful descriptive statistics to check the sanity of the data. For example, we can check whether the minimum values include improbably low values (e.g.&nbsp;a five-year-old participant in a written language exam) or outright impossible ones (e.g.&nbsp;a minus 18-year old participant!). Equally, if we know that the maximum number of points that could be obtained in the English grammar test is 100, a maximum value of more than 100 would be highly suspicious and warrant further investigation.</p>
 <p>As far as we can see from the output of <code>summary(L1.data)</code> above, the numeric variables in <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>’s L1 dataset do not appear to feature any obvious problematic values.</p>
 </section>
 <section id="sec-Factors" class="level3 page-columns page-full" data-number="9.3.2">
 <h3 data-number="9.3.2" class="anchored" data-anchor-id="sec-Factors"><span class="header-section-number">9.3.2</span> Categorical variables as factors</h3>
 <p>Having examined the numeric variables, we now turn to the non-numeric, categorical ones (see <a href="7_VariablesFunctions.html#sec-Variables" class="quarto-xref"><span>Section 7.2</span></a>). For these variables, the descriptive statistics returned by <code>summary(L1.data)</code> are not as insightful. They only tell us that they each include 90 values, which corresponds to the 90 participants in the L1 dataset. As we can see from the output of the <code>str()</code> function, these categorical variables are stored in <code>R</code> as character string vectors (abbreviated in the <code>str()</code> output to “chr”).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(L1.data<span class="sc">$</span>Gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(L1.data<span class="sc">$</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> chr [1:90] "M" "M" "M" "F" "F" "F" "F" "M" "M" "F" "F" "M" "M" "F" "M" "F" ...</code></pre>
 </div>
@@ -695,11 +700,11 @@ Prerequisites
 <p>Character string vectors are a useful <code>R</code> object type for text but, in <code>R</code>, categorical variables are best stored as factors. Factors are a more efficient way to store character values because each unique character value is stored only once. The data itself are stored as a vector of integers. Let’s look at an example.</p>
 <p>First, we convert the categorical variable <code>Gender</code> from <code>L1.data</code> that is currently stored as a character string vector to a factor vector called <code>L1.Gender.fct</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>L1.Gender.fct <span class="ot">&lt;-</span> <span class="fu">factor</span>(L1.data<span class="sc">$</span>Gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>L1.Gender.fct <span class="ot">&lt;-</span> <span class="fu">factor</span>(L1.data<span class="sc">$</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>When we now inspect its structure using <code>str()</code>, we can see that <code>L1.Gender.fct</code> is a factor with two levels “F” and “M”. The values themselves, however, are no longer listed as “M” “M” “M” “F” “F”…, but rather as integers: 2 2 2 1 1 1….</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(L1.Gender.fct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(L1.Gender.fct)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> Factor w/ 2 levels "F","M": 2 2 2 1 1 1 1 2 2 1 ...</code></pre>
 </div>
@@ -707,7 +712,7 @@ Prerequisites
 <p>By default, the levels of a factor are ordered alphabetically, hence in <code>L1.Gender.fct</code>, 1 corresponds to “F” and 2 to “M”.</p>
 <p>The summary output of factor vectors are far more insightful than of character variables (and look rather like the output of the <code>table()</code> function that we used in <a href="8_DescriptiveStats.html#sec-Mode" class="quarto-xref"><span>Section 8.1.3</span></a>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L1.Gender.fct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L1.Gender.fct)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> F  M 
 48 42 </code></pre>
@@ -728,7 +733,7 @@ Prerequisites
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -806,9 +811,9 @@ fct_relevel(L1.Gender.fct, "M")
 <input type="submit" value="Check answer">
 <div id="result_25731"></div>
 </form>
-<script>function validate_form_25731() {var text; var x1 = document.getElementById('answer_25731_1'); var x2 = document.getElementById('answer_25731_2'); var x3 = document.getElementById('answer_25731_3'); var x4 = document.getElementById('answer_25731_4'); var x5 = document.getElementById('answer_25731_5'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == true&x5.checked == true){text = 'Correct, well done!';} else {text = 'No, not quite. Note that three of these commands will yield the desired outcome! Check out the functions’ descriptions in the help files, as some of these function names may be misleading.';} document.getElementById('result_25731').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_25731() {var text; var x1 = document.getElementById('answer_25731_1'); var x2 = document.getElementById('answer_25731_2'); var x3 = document.getElementById('answer_25731_3'); var x4 = document.getElementById('answer_25731_4'); var x5 = document.getElementById('answer_25731_5'); if (x1.checked == false&x2.checked == false&x3.checked == false&x4.checked == true&x5.checked == true){text = 'Correct, well done!';} else {text = 'No, not quite. Note that two of these commands will yield the desired outcome! Check out the functions’ descriptions in the help files, as some of these function names may be misleading.';} document.getElementById('result_25731').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_70985').innerText == 'That’s right!'; res2 = document.getElementById('result_25731').innerText == 'Correct, well done!';text = res1 + res2;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_25731').innerText == 'Correct, well done!';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -837,8 +842,8 @@ fct_relevel(L1.Gender.fct, "M")
 </figure>
 </div>
 </div></div><div class="cell">
-<div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> L1.data <span class="sc">|&gt;</span> </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Gender.fct =</span> <span class="fu">factor</span>(L1.data<span class="sc">$</span>Gender))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> L1.data <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Gender.fct =</span> <span class="fu">factor</span>(L1.data<span class="sc">$</span>Gender))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The <code>mutate()</code> function allows us to add new columns to a dataset. By default, it also keeps all the existing ones (to control which columns are retained, check the help file and read about the “.keep =” argument).</p>
 <div id="fig-mutate" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Cartoon of cute fuzzy monsters dressed up as different X-men characters, working together to add a new column to an existing data frame. Stylized title text reads “dplyr::mutate - add columns, keep existing.”">
@@ -853,7 +858,7 @@ Figure&nbsp;9.4: Artwork explaining the <code>dplyr::mutate()</code> function by
 </div>
 <p>We can use the <code>colnames()</code> function to check that the new column has been correctly appended to the table. Alternatively, you can use the <code>View()</code> function to display the table in full in a new <em>RStudio</em> tab. In both cases, you should see that the new column is now the last column in the table (column number 32).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(L1.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "Participant" "Age"         "Gender"      "Occupation"  "OccupGroup" 
  [6] "OtherLgs"    "Education"   "EduYrs"      "ReadEng1"    "ReadEng2"   
@@ -866,16 +871,16 @@ Figure&nbsp;9.4: Artwork explaining the <code>dplyr::mutate()</code> function by
 </div>
 <p>Watch out: if you add a new column to a table using an existing column name, <code>mutate()</code> will overwrite the entire content of the existing column with the new values! In the following code chunk, we are therefore overwriting the character vector <code>Gender</code> with a factor vector also called <code>Gender</code>. We should only do this if we are certain that we won’t need to compare the original values with the new ones!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> L1.data <span class="sc">|&gt;</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Gender =</span> <span class="fu">factor</span>(L1.data<span class="sc">$</span>Gender))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> L1.data <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Gender =</span> <span class="fu">factor</span>(L1.data<span class="sc">$</span>Gender))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="sec-across" class="level3" data-number="9.4.2">
 <h3 data-number="9.4.2" class="anchored" data-anchor-id="sec-across"><span class="header-section-number">9.4.2</span> Using <code>across()</code> to transform multiple columns</h3>
 <p>In addition to <code>Gender</code>, there are quite a few more character vectors in <code>L1.data</code> that represent categorical variables and that would therefore be better stored as factors. We could use <code>mutate()</code> and <code>factor()</code> to convert them one by one like we did for <code>Gender</code> above, but that would require several lines of code in which we could easily make a silly error or two. Instead, we can use a series of neat tidyverse functions to convert all character vectors to factor vectors in one go.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>L1.data.fct <span class="ot">&lt;-</span> L1.data <span class="sc">|&gt;</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), factor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>L1.data.fct <span class="ot">&lt;-</span> L1.data <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), factor))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Above, we use <code>mutate()</code> to convert <code>across()</code> the entire dataset all columns <code>where()</code> there are character vectors to <code>factor()</code> vectors (using the <code>is.character()</code> function to determine which columns contain character vectors).</p>
 <div id="fig-across" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A cute round fuzzy monster with fairy wings and a wand, with a party hat on reading “mean”, bouncing across the top of a data table applying the function to each column. Stylized text reads: “dplyr::across() - use within mutate() or summarize() to apply function(s) to a selection of columns!” An example shows the use within summarize: summarize(across(where(is.numeric), mean)).">
@@ -890,7 +895,7 @@ Figure&nbsp;9.5: Artwork explaining the <code>across()</code> function by <a hre
 </div>
 <p>We can check that the correct variables have been converted by comparing the output of <code>summary(L1.data)</code> (partially printed in <a href="#sec-CheckNumeric" class="quarto-xref"><span>Section 9.3.1</span></a>) with the output of <code>summary(L1.data.fct)</code> (partially printed below).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L1.data.fct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L1.data.fct)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -926,7 +931,7 @@ Figure&nbsp;9.5: Artwork explaining the <code>across()</code> function by <a hre
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1029,13 +1034,13 @@ FirstExp
 <div class="cell">
 <details class="code-fold">
 <summary>🐭 Click on the mouse to view <code>R</code> code to help you answer <strong>c.</strong></summary>
-<div class="sourceCode cell-code" id="cb21" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>L2.data.fct <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>L2.data.fct <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), factor))</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(L2.data.fct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(L2.data.fct)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p><span style="color:green;"><strong>Q9.5</strong></span> Use the <code>summary()</code> and <code>str()</code> functions to inspect the sanity of L2 dataset now that you have converted all the character vectors to factors. Have you noticed that there three factor levels in the <code>Gender</code> variable of the L2 dataset whereas there are only two in the L1 dataset? What is the most likely reason for this?</p>
+<p><span style="color:green;"><strong>Q9.5</strong></span> Use the <code>summary()</code> and <code>str()</code> functions to inspect the sanity of L2 dataset now that you have converted all the character vectors to factors. Have you noticed that there are three factor levels in the <code>Gender</code> variable of the L2 dataset whereas there are only two in the L1 dataset? What is the most likely reason for this?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_4220" onsubmit="return validate_form_4220()" method="post">
@@ -1084,7 +1089,7 @@ Because these six participants identify as non-binary.
 <h2 data-number="9.5" class="anchored" data-anchor-id="data-cleaning"><span class="header-section-number">9.5</span> Data cleaning 🧼</h2>
 <p>By closely examining the data, we noticed that the values of the categorical variables were not always entered in a consistent way, which may lead to incorrect analyses. For example, in the L2 dataset, most female participants’ gender is recorded as <code>F</code> except for six participants, where it is <code>f</code>. As <code>R</code> is a case-sensitive language, these two factor levels are treated as two different levels of the <code>Gender</code> variable. This means that any future analyses on the effect of <code>Gender</code> on language learning will compare participants across these three groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L2.data.fct<span class="sc">$</span>Gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L2.data.fct<span class="sc">$</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> f  F  M 
  6 40 21 </code></pre>
@@ -1107,13 +1112,13 @@ Important
 <h3 data-number="9.5.1" class="anchored"><span class="header-section-number">9.5.1</span> Using {stringr} functions</h3>
 <p>To convert all of the lower-case “f” in the <code>Gender</code> variable to upper-case “F”, we can combine the <code>mutate()</code> with the <code>str_to_upper()</code> function. This ensures that all values in the new <code>Gender.corrected</code> column are in capital letters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>L2.data.cleaned <span class="ot">&lt;-</span> L2.data.fct <span class="sc">|&gt;</span> </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Gender.corrected =</span> <span class="fu">str_to_upper</span>(Gender))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>L2.data.cleaned <span class="ot">&lt;-</span> L2.data.fct <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Gender.corrected =</span> <span class="fu">str_to_upper</span>(Gender))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We should check that our correction has gone to plan by comparing the original <code>Gender</code> variable with the new <code>Gender.corrected</code>. To this end, we display them side by side using the <code>select()</code> function from {dplyr}.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>L2.data.cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Gender, Gender.corrected)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>L2.data.cleaned <span class="sc">|&gt;</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Gender, Gender.corrected)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1144,35 +1149,35 @@ Important
 <p>For more useful functions to manipulate character strings, check out the {stringr} cheatsheet: <a href="https://github.com/rstudio/cheatsheets/blob/main/strings.pdf" class="uri">https://github.com/rstudio/cheatsheets/blob/main/strings.pdf</a>.</p>
 <p>Note that in the code chunk above, we did not save the output to a new <code>R</code> object. We merely printed the output in the Console. Once we have checked that our data wrangling operation went well, we can overwrite the original <code>Gender</code> variable with the cleaned version by using the original variable name as the name of the new column.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>L2.data.cleaned <span class="ot">&lt;-</span> L2.data.fct <span class="sc">|&gt;</span> </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Gender =</span> <span class="fu">str_to_upper</span>(Gender))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>L2.data.cleaned <span class="ot">&lt;-</span> L2.data.fct <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Gender =</span> <span class="fu">str_to_upper</span>(Gender))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Using <code>summary()</code> or <code>class()</code>, we can see that manipulating the <code>Gender</code> variable with a function from {stringr} has resulted in the factor variable being converted back to a character variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L2.data.cleaned<span class="sc">$</span>Gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L2.data.cleaned<span class="sc">$</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>   Length     Class      Mode 
        67 character character </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(L2.data.cleaned<span class="sc">$</span>Gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(L2.data.cleaned<span class="sc">$</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "character"</code></pre>
 </div>
 </div>
 <p>We therefore need to add a line of code to reconvert it to a factor. We can do this within a single <code>mutate()</code> command.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>L2.data.cleaned <span class="ot">&lt;-</span> L2.data.fct <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>L2.data.cleaned <span class="ot">&lt;-</span> L2.data.fct <span class="sc">|&gt;</span> </span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Gender =</span> <span class="fu">str_to_upper</span>(Gender),</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">Gender =</span> <span class="fu">factor</span>(Gender))</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(L2.data.cleaned<span class="sc">$</span>Gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(L2.data.cleaned<span class="sc">$</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] "factor"</code></pre>
 </div>
 </div>
 <p>Now the <code>summary()</code> function provides a tally of male and female participants that corresponds to the values reported in <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019: 5</a>)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L2.data.cleaned<span class="sc">$</span>Gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L2.data.cleaned<span class="sc">$</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> F  M 
 46 21 </code></pre>
@@ -1184,7 +1189,7 @@ Important
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1193,8 +1198,8 @@ Your turn!
 <p>This <span style="color:green;"><strong>task</strong></span> focuses on the <code>OccupGroup</code> variable, which is found in both the L1 and L2 datasets.</p>
 <p><code>OccupGroup</code> is a categorical variable that groups participants’ professional occupations into different categories. In the L2 dataset, there are four occupational categories.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>L2.data.fct <span class="sc">|&gt;</span> </span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(OccupGroup)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>L2.data.fct <span class="sc">|&gt;</span> </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(OccupGroup)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  OccupGroup  n
 1          C 10
@@ -1206,7 +1211,7 @@ Your turn!
 <p><span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019: 6</a>)</span> explains that these abbreviations correspond to:</p>
 <blockquote class="blockquote">
 <p><strong>C</strong>: Clerical positions<br>
-<strong>I</strong>: Occupationally inactive (i.e., unemployed, retired, or homemakers)<br>
+<strong>I</strong>: Occupationally inactive (i.e.&nbsp;unemployed, retired, or homemakers)<br>
 <strong>M</strong>: Manual jobs<br>
 <strong>PS</strong>: Professional-level jobs or studying for a degree</p>
 </blockquote>
@@ -1247,7 +1252,7 @@ Because the original data file was saved in a format incompatible with R.
 <div class="cell">
 <details class="code-fold">
 <summary>🐭 Click on the mouse to help you answer <strong>a.</strong></summary>
-<div class="sourceCode cell-code" id="cb38" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L1.data.fct<span class="sc">$</span>OccupGroup)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L1.data.fct<span class="sc">$</span>OccupGroup)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   C   I   M  PS PS  </span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  22  23  20  24   1</span></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1258,7 +1263,7 @@ Because the original data file was saved in a format incompatible with R.
 <span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 2          I 23</span></span>
 <span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 3          M 20</span></span>
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 4         PS 24</span></span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 5        PS   1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 5        PS   1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>&nbsp;</p>
@@ -1314,11 +1319,11 @@ str_glue()
 <div class="cell">
 <details class="code-fold">
 <summary>Show <code>R</code> code to use the function and check that it worked as expected.</summary>
-<div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>L1.data.cleaned <span class="ot">&lt;-</span> L1.data.fct <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>L1.data.cleaned <span class="ot">&lt;-</span> L1.data.fct <span class="sc">|&gt;</span> </span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">OccupGroup =</span> <span class="fu">str_trim</span>(OccupGroup))</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>L1.data.cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(OccupGroup)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(OccupGroup)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>&nbsp;</p>
@@ -1374,12 +1379,12 @@ str_glue()
 <div class="cell">
 <details class="code-fold">
 <summary>Show <code>R</code> code to answer question <strong>c.</strong></summary>
-<div class="sourceCode cell-code" id="cb40" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>L1.data.cleaned <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>L1.data.cleaned <span class="sc">|&gt;</span> </span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(OccupGroup) <span class="sc">|&gt;</span> </span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n),</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">percent =</span> percent<span class="sc">*</span><span class="dv">100</span>, </span>
 <span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">percent =</span> <span class="fu">round</span>(percent, <span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>         )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>         )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1387,9 +1392,9 @@ str_glue()
 </div>
 <p>So far, we have looked at rather simple data cleaning cases. Let’s now turn to a slightly more complex one: In the L2 dataset, the variable <code>NativeLg</code> contains character string values that correspond to the L2 participants’ native language. Using the base <code>R</code> function <code>unique()</code>, we can see that there are a total of 22 unique values in this variable. However using <code>sort()</code> to order these 22 values alphabetically, we can easily see that there are, in fact, fewer unique native languages in this dataset due to different spellings and the inconsistent use of upper-case letters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span> </span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "Cantonese"           "Cantonese/Hokkein"   "chinese"            
  [4] "Chinese"             "french"              "German"             
@@ -1403,10 +1408,10 @@ str_glue()
 </div>
 <p>If we convert all <code>NativeLg</code> values to title case, we can reduce the number of unique languages to 19.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_title</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "Cantonese"           "Cantonese/Hokkein"   "Chinese"            
  [4] "French"              "German"              "Greek"              
@@ -1428,12 +1433,12 @@ str_glue()
 </tr>
 </tbody>
 </table>
-<h2 id="sec-WordHelp" data-number="9.6" class="anchored" data-anchor-id="sec-stringR"><span class="header-section-number">9.6</span> Extract words from a sentence</h2>
-<h3 id="description" data-number="9.6.1" class="anchored"><span class="header-section-number">9.6.1</span> Description</h3>
+<h2 id="extract-words-from-a-sentence" class="unnumbered anchored" data-anchor-id="sec-stringR">Extract words from a sentence</h2>
+<h3 id="description" class="unnumbered anchored">Description</h3>
 <p>Extract words from a sentence</p>
-<h3 id="usage" data-number="9.6.2" class="anchored"><span class="header-section-number">9.6.2</span> Usage</h3>
+<h3 id="usage" class="unnumbered anchored">Usage</h3>
 <pre data-code-line-numbers=""><code>word(string, start = 1L, end = start, sep = fixed(" "))</code></pre>
-<h3 id="arguments" data-number="9.6.3" class="anchored"><span class="header-section-number">9.6.3</span> Arguments</h3>
+<h3 id="arguments" class="unnumbered anchored">Arguments</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 12%">
@@ -1458,11 +1463,11 @@ str_glue()
 </blockquote>
 <p>The help file tells us that “The default value select the first word”. In our case, this means that we can simply use the <code>word()</code> function with no specified argument as this will automatically retain only the first word of every entry.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_title</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">word</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "Cantonese"          "Cantonese/Hokkein"  "Chinese"           
  [4] "French"             "German"             "Greek"             
@@ -1474,11 +1479,11 @@ str_glue()
 </div>
 <p>Alternatively, we can choose to specify the “start” argument as a reminder of what we did and to better document our code. The output is exactly the same.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_title</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">word</span>(<span class="at">start =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "Cantonese"          "Cantonese/Hokkein"  "Chinese"           
  [4] "French"             "German"             "Greek"             
@@ -1488,13 +1493,13 @@ str_glue()
 [16] "Polish/Russian"     "Russian"            "Spanish"           </code></pre>
 </div>
 </div>
-<p>As you can tell from the output above, the <code>word()</code> function uses white space to identify word boundaries. In this dataset, however, some of the participants’ native languages are separated by forward slashes (<code>/</code>) rather than or in addition to spaces. The “Usage” section of the help file for the <code>word()</code> function (see <code>?word</code> and <a href="#sec-WordHelp" class="quarto-xref"><span>Section 9.6</span></a>) also confirms that the default word separator symbol is a space and shows us the syntax for changing the default separator. Below we change it to a forward slash.</p>
+<p>As you can tell from the output above, the <code>word()</code> function uses white space to identify word boundaries. In this dataset, however, some of the participants’ native languages are separated by forward slashes (<code>/</code>) rather than or in addition to spaces. The “Usage” section of the help file for the <code>word()</code> function (see <code>?word</code> and above) also confirms that the default word separator symbol is a space and shows us the syntax for changing the default separator. Below we change it to a forward slash.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_title</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">word</span>(<span class="at">start =</span> <span class="dv">1</span>, <span class="at">sep =</span> <span class="fu">fixed</span>(<span class="st">"/"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "Cantonese"         "Chinese"           "French"           
  [4] "German"            "Greek"             "Italian"          
@@ -1505,12 +1510,12 @@ str_glue()
 </div>
 <p>Now we can combine these two word extraction methods using the pipe operator (<code>|&gt;</code>) so that “Cantonese/Hokkein” is abbreviated to “Cantonese” and “Mandarin/ Cantonese” to “Mandarin”.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_title</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">word</span>(<span class="at">start =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="co"># Extracts the first word before the first space</span></span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">word</span>(<span class="at">start =</span> <span class="dv">1</span>, <span class="at">sep =</span> <span class="fu">fixed</span>(<span class="st">"/"</span>)) <span class="sc">|&gt;</span> <span class="co"># Extracts the first word before the first forward slash</span></span>
 <span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "Cantonese"   "Chinese"     "French"      "German"      "Greek"      
  [6] "Italian"     "Lithuanian"  "Lithunanina" "Lituanian"   "Mandarin"   
@@ -1518,12 +1523,12 @@ str_glue()
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Going further: Using regular expressions (regex) 🤓
+<span class="screen-reader-only">Note</span>Going further: Using regular expressions (regex) 🤓
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1532,11 +1537,11 @@ Going further: Using regular expressions (regex) 🤓
 <p>Many functions of the {stringr} package involve <strong>regular expressions</strong> (short: <strong>regex</strong>). The second page of the <a href="https://github.com/rstudio/cheatsheets/blob/main/strings.pdf">{stringr} cheatsheet</a> provides a nice overview of how regular expressions can be used to manipulate character strings in <code>R</code>.</p>
 <p>Using the <code>str_extract()</code> function together with the regex <code>\\w+</code>, it is possible to extract the first word of each <code>NativeLg</code> value with just one line of code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg <span class="sc">|&gt;</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_title</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">w+"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "Cantonese"   "Chinese"     "French"      "German"      "Greek"      
  [6] "Italian"     "Lithuanian"  "Lithunanina" "Lituanian"   "Mandarin"   
@@ -1549,9 +1554,9 @@ Going further: Using regular expressions (regex) 🤓
 </div>
 </div>
 </section>
-<section id="sec-casewhen" class="level3" data-number="9.6.4">
-<h3 data-number="9.6.4" class="anchored" data-anchor-id="sec-casewhen"><span class="header-section-number">9.6.4</span> Using <code>case_when()</code></h3>
-<p>We have now reduced the number of levels in the <code>NativeLg</code> variable to just 14 unique languages. But we still have some typos to correct, e.g., “Lithunanina” and “Lituanian”.</p>
+<section id="sec-casewhen" class="level3" data-number="9.5.2">
+<h3 data-number="9.5.2" class="anchored" data-anchor-id="sec-casewhen"><span class="header-section-number">9.5.2</span> Using <code>case_when()</code></h3>
+<p>We have now reduced the number of levels in the <code>NativeLg</code> variable to just 14 unique languages. But we still have some typos to correct, e.g.&nbsp;“Lithunanina” and “Lituanian”.</p>
 <p>We can correct these on a case-by-case basis using <code>case_when()</code>. This is a very useful tidyverse function from the {dplyr} package that is easy to use once you have gotten used to its syntax. <a href="#fig-case_when" class="quarto-xref">Figure&nbsp;<span>9.6</span></a> illustrates the syntax with a toy example dataset about the dangerousness of dragons (<code>df</code>). In this annotated line of code in <a href="#fig-case_when" class="quarto-xref">Figure&nbsp;<span>9.6</span></a>, <code>mutate()</code> is used to add a new column called <code>danger</code> whose values depend on the type of dragon that we are dealing with. The first argument of <code>case_when()</code> determines that, when the dragon <code>type</code> is equal to “kraken”, then the <code>danger</code> value is set to “extreme”, otherwise the danger value is set to “high”. You can see the outcome in the appended <code>danger</code> column.</p>
 <div id="fig-case_when" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Cartoon showing a table with creature type (kraken, dragon, or cyclops) and age (baby, teen, or adult). The three creatures listed are adding a new column named “danger”, which contains the word “extreme!” if the type is “kraken”, or “high” for any other type. Stylized text reads “dplyr::case_when() - IF ELSE...but you love it? An example of code is shown: mutate(danger = case_when(type == “kraken” ~ “extreme!”, TRUE ~ “high”).">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1570,7 +1575,7 @@ Figure&nbsp;9.6: Artwork explaining the <code>case_when()</code> function by <a 
 </ol>
 <p>Using <code>mutate()</code>, we save this cleaned-up version of the <code>NativeLg</code> variable as a new column in our <code>L2.data</code> table, which we call <code>NativeLg.cleaned</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">NativeLg.cleaned =</span> <span class="fu">str_to_title</span>(NativeLg) <span class="sc">|&gt;</span> </span>
 <span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">word</span>(<span class="at">start =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
@@ -1579,12 +1584,12 @@ Figure&nbsp;9.6: Artwork explaining the <code>case_when()</code> function by <a 
 <span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>      NativeLg.cleaned <span class="sc">==</span> <span class="st">"Mandarine"</span> <span class="sc">~</span> <span class="st">"Mandarin"</span>,</span>
 <span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>      NativeLg.cleaned <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Lithunanina"</span>, <span class="st">"Lituanian"</span>) <span class="sc">~</span> <span class="st">"Lithuanian"</span>,</span>
 <span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> NativeLg.cleaned)</span>
-<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Whenever we do any data wrangling, it is crucial that we take the time to carefully check that we have not made any mistakes in the process. To this end, we display the original <code>NativeLg</code> and the new <code>NativeLg.cleaned</code> variables side by side using the <code>select()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span> </span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NativeLg, NativeLg.cleaned)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span> </span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NativeLg, NativeLg.cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1599,12 +1604,12 @@ Figure&nbsp;9.6: Artwork explaining the <code>case_when()</code> function by <a 
 </div>
 <p>As you can see, only the first six rows of the table are printed above. Run the code yourself to check all the other rows.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Using base <code>R</code> functions instead
+<span class="screen-reader-only">Note</span>Using base <code>R</code> functions instead
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1612,10 +1617,10 @@ Using base <code>R</code> functions instead
 <div class="callout-body-container callout-body">
 <p>This chapter focuses on {tidyverse} functions, however all of the above data wrangling and cleaning operations can equally be achieved using base <code>R</code> functions. For example, the <code>mutate()</code> code chunk above could be replaced by the following lines of base <code>R</code> code.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-80" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-80" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-80-1" class="code-annotation-target"><a href="#annotated-cell-80-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg.cleaned.base <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"([a-zA-Z]+).*"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, L2.data<span class="sc">$</span>NativeLg)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-80" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-80" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-80-1" class="code-annotation-target"><a href="#annotated-cell-80-1" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg.cleaned.base <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"([a-zA-Z]+).*"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, L2.data<span class="sc">$</span>NativeLg)</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-80" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-80-2" class="code-annotation-target"><a href="#annotated-cell-80-2" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg.cleaned.base <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">toTitleCase</span>(L2.data<span class="sc">$</span>NativeLg.cleaned.base)</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-80" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-80-3" class="code-annotation-target"><a href="#annotated-cell-80-3" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg.cleaned.base[L2.data<span class="sc">$</span>NativeLg.cleaned.base <span class="sc">==</span> <span class="st">"Mandarine"</span>] <span class="ot">&lt;-</span> <span class="st">"Mandarin"</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-80" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-80-4" class="code-annotation-target"><a href="#annotated-cell-80-4" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg.cleaned.base[L2.data<span class="sc">$</span>NativeLg.cleaned.base <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Lithunanina"</span>, <span class="st">"Lituanian"</span>)] <span class="ot">&lt;-</span> <span class="st">"Lithuanian"</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-80" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-80-4" class="code-annotation-target"><a href="#annotated-cell-80-4" aria-hidden="true" tabindex="-1"></a>L2.data<span class="sc">$</span>NativeLg.cleaned.base[L2.data<span class="sc">$</span>NativeLg.cleaned.base <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Lithunanina"</span>, <span class="st">"Lituanian"</span>)] <span class="ot">&lt;-</span> <span class="st">"Lithuanian"</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-80" data-target-annotation="1">1</dt>
@@ -1639,8 +1644,8 @@ Using base <code>R</code> functions instead
 </div>
 <p>If we now compare the variable created with the tidyverse code (<code>NativeLg.cleaned</code>) vs.&nbsp;the one created using base R functions only (<code>NativeLg.cleaned.base</code>), we can see that they are exactly the same.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span> </span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NativeLg.cleaned, NativeLg.cleaned.base) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span> </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NativeLg.cleaned, NativeLg.cleaned.base) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1656,8 +1661,8 @@ Using base <code>R</code> functions instead
 <p>An undeniable advantage of sticking to base <code>R</code> functions is that your code is more portable as it does not require the installation of any additional packages, keeping dependencies on external packages to the minimum. However, base <code>R</code> lacks the consistency of the tidyverse framework, which can make certain data transformation tasks considerably more tricky and code less readable (and therefore less transparent) to yourself and others.</p>
 <p>As we don’t need two versions of the cleaned <code>NativLg</code> variable, we will now remove the <code>NativeLg.cleaned.base</code> column from <code>L2.data</code>. To do so, we use the <code>select()</code> function combined with the <code>-</code> operator to “unselect” the column we no longer need.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span> NativeLg.cleaned.base)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span> NativeLg.cleaned.base)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -1668,7 +1673,7 @@ Using base <code>R</code> functions instead
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1803,33 +1808,33 @@ Slavic
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click here for solutions to <span style="color:green;"><strong>Q9.9</strong></span>—<span style="color:green;"><strong>Q9.12</strong></span>.
+<span class="screen-reader-only">Note</span>Click here for solutions to <span style="color:green;"><strong>Q9.9</strong></span>—<span style="color:green;"><strong>Q9.12</strong></span>.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>As always, there are several solutions to solving this <span style="color:green;"><strong>task</strong></span>. Here is one solution based on what we have covered so far in this chapter.</p>
+<p>As is often the case, there are several ways to solve these <span style="color:green;"><strong>Your turn!</strong></span> tasks. Here is one solution based on what we have covered so far in this chapter.</p>
 <p><span style="color:green;"><strong>Q9.9</strong></span> Note that the following code will only work if you followed the instructions in the section above to create the <code>NativeLg.cleaned</code> variable as it relies on this variable to create the new <code>NativeLgFamily</code> variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NativeLgFamily =</span> <span class="fu">case_when</span>(</span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>    NativeLg.cleaned <span class="sc">==</span> <span class="st">"Lithuanian"</span> <span class="sc">~</span> <span class="st">"Baltic"</span>,</span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>    NativeLg.cleaned <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Cantonese"</span>, <span class="st">"Mandarin"</span>, <span class="st">"Chinese"</span>) <span class="sc">~</span> <span class="st">"Chinese"</span>,</span>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>    NativeLg.cleaned <span class="sc">==</span> <span class="st">"German"</span> <span class="sc">~</span> <span class="st">"Germanic"</span>,</span>
 <span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>    NativeLg.cleaned <span class="sc">==</span> <span class="st">"Greek"</span> <span class="sc">~</span> <span class="st">"Hellenic"</span>,</span>
 <span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    NativeLg.cleaned <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"French"</span>, <span class="st">"Italian"</span>, <span class="st">"Spanish"</span>) <span class="sc">~</span> <span class="st">"Romance"</span>,</span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>    NativeLg.cleaned <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Polish"</span>, <span class="st">"Russian"</span>) <span class="sc">~</span> <span class="st">"Slavic"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>    NativeLg.cleaned <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Polish"</span>, <span class="st">"Russian"</span>) <span class="sc">~</span> <span class="st">"Slavic"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>As always, it is important to check that things have gone to plan.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span> </span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NativeLg.cleaned, NativeLgFamily)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span> </span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NativeLg.cleaned, NativeLgFamily)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1844,14 +1849,14 @@ Click here for solutions to <span style="color:green;"><strong>Q9.9</strong></sp
 </div>
 <p><span style="color:green;"><strong>Q9.10</strong></span> We can display the distribution of language families using either the base <code>R</code> <code>table()</code> function or the {tidyverse} <code>count()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(L2.data<span class="sc">$</span>NativeLgFamily)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(L2.data<span class="sc">$</span>NativeLgFamily)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>
   Baltic  Chinese Germanic Hellenic  Romance   Slavic 
        5       15        1        1        6       39 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb67" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span> </span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(NativeLgFamily)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span> </span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(NativeLgFamily)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  NativeLgFamily  n
 1         Baltic  5
@@ -1864,13 +1869,13 @@ Click here for solutions to <span style="color:green;"><strong>Q9.9</strong></sp
 </div>
 <p><span style="color:green;"><strong>Q9.11</strong></span> We can add a column to show the distribution in percentages by adding a new “percent” column to the <code>count()</code> table using <code>mutate()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-88" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-88" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-88-1" class="code-annotation-target"><a href="#annotated-cell-88-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-88" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-88" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-88-1" class="code-annotation-target"><a href="#annotated-cell-88-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span></span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-88" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-88-2" class="code-annotation-target"><a href="#annotated-cell-88-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(NativeLgFamily) <span class="sc">|&gt;</span></span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-88" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-88-3" class="code-annotation-target"><a href="#annotated-cell-88-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n),</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-88" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-88-4" class="code-annotation-target"><a href="#annotated-cell-88-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">percent =</span> percent<span class="sc">*</span><span class="dv">100</span>,</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-88" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-88-5" class="code-annotation-target"><a href="#annotated-cell-88-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">percent =</span> <span class="fu">round</span>(percent, <span class="at">digits =</span> <span class="dv">0</span>)</span>
 <span id="annotated-cell-88-6"><a href="#annotated-cell-88-6" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">|&gt;</span> </span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-88" data-target-annotation="6" onclick="event.preventDefault();">6</a><span id="annotated-cell-88-7" class="code-annotation-target"><a href="#annotated-cell-88-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-88" data-target-annotation="6" onclick="event.preventDefault();">6</a><span id="annotated-cell-88-7" class="code-annotation-target"><a href="#annotated-cell-88-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-88" data-target-annotation="1">1</dt>
@@ -1912,8 +1917,8 @@ Click here for solutions to <span style="color:green;"><strong>Q9.9</strong></sp
 <p>🪐 Note that this a {tidyverse} approach to working out percentages, see <a href="8_DescriptiveStats.html#sec-Mode" class="quarto-xref"><span>Section 8.1.3</span></a> for a base <code>R</code> approach.</p>
 <p><span style="color:green;"><strong>Q9.12</strong></span> At the time of writing, the help file of the <code>relocate()</code> function still featured examples using the {magrittr} pipe (<code>%&gt;%</code>) rather than the native <code>R</code> pipe (<code>|&gt;</code>) (see <a href="7_VariablesFunctions.html#sec-Piping" class="quarto-xref"><span>Section 7.5.2</span></a>), but the syntax remains the same. The first argument is the data which we are piping into the function, the second argument is the column that we want to move. Then, we need to specify where to with either the “.after” or the “.before” argument.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(NativeLgFamily, <span class="at">.after =</span> NativeLg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(NativeLgFamily, <span class="at">.after =</span> NativeLg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="fig-relocate" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Cartoon of fuzzy monsters moving columns around in fork lifts, while one supervises. Stylized text reads “dplyr::relocate() - move columns around! Default: move to FRONT , or move to .before or .after a specified column.”">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1927,19 +1932,19 @@ Figure&nbsp;9.7: Artwork explaining the <code>dplyr::relocate()</code> function 
 </div>
 <p>Note that the help file specifies that both “.after” and “.before” begin with a dot. If you leave the dot out, the function will not work as expected! Can you see what’s happened here?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="sc">|&gt;</span> </span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(NativeLgFamily, <span class="at">after =</span> NativeLg) <span class="sc">|&gt;</span> </span>
-<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>'data.frame':   67 obs. of  6 variables:
- $ NativeLgFamily: chr  "Baltic" "Slavic" "Slavic" "Romance" ...
- $ after         : chr  "Lithuanian" "polish" "Polish" "Italian" ...
  $ Participant   : int  220 244 46 221 222 230 247 237 243 213 ...
  $ Gender        : chr  "F" "f" "F" "F" ...
  $ Occupation    : chr  "Student" "student" "Cleaner" "Student" ...
- $ OccupGroup    : chr  "PS" "PS" "M" "PS" ...</code></pre>
+ $ OccupGroup    : chr  "PS" "PS" "M" "PS" ...
+ $ NativeLg      : chr  "Lithuanian" "polish" "Polish" "Italian" ...
+ $ NativeLgFamily: chr  "Baltic" "Slavic" "Slavic" "Romance" ...</code></pre>
 </div>
 </div>
 <p>The <code>relocate()</code> function has moved <code>NativeLgFamily</code> to the first column (the function’s default position) and has also moved <code>NativeLg</code> to the second position, but it has renamed the column <code>after</code>.</p>
@@ -1949,18 +1954,18 @@ Figure&nbsp;9.7: Artwork explaining the <code>dplyr::relocate()</code> function 
 </div>
 </section>
 </section>
-<section id="sec-CombiningDatasets" class="level2 page-columns page-full" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="sec-CombiningDatasets"><span class="header-section-number">9.7</span> Combining datasets</h2>
+<section id="sec-CombiningDatasets" class="level2 page-columns page-full" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="sec-CombiningDatasets"><span class="header-section-number">9.6</span> Combining datasets</h2>
 <p>So far, we have analysed the L1 and L2 datasets individually. In the following chapters, however, we will conduct comparative analyses, comparing the performance of the L1 and L2 participants in the various language-related tests conduced as part of <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>. To this end, we need to create a combined table that includes the data of all participants from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>.</p>
 <p>Remember that both tables, <code>L1.data</code> and <code>L2.data</code>, are in a tidy data format. This means that:</p>
 <ul>
-<li>each row represents an observation (i.e., here, a participant),</li>
+<li>each row represents an observation (i.e.&nbsp;here, a participant),</li>
 <li>each cell represents a measurement, and</li>
 <li>each variable forms a column.</li>
 </ul>
 <p>To combine the two datasets, therefore, we need to combine the rows of the two tables. However, we cannot simply add the rows of the <code>L2.data</code> table to the bottom of <code>L1.data</code> table because, as shown below, the two tables do not have the same number of columns and the shared columns are not in the same position! We therefore need to ensure that, when the two datasets are combined, the shared columns are aligned.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb73" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(L1.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(L1.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "Participant" "Age"         "Gender"      "Occupation"  "OccupGroup" 
  [6] "OtherLgs"    "Education"   "EduYrs"      "ReadEng1"    "ReadEng2"   
@@ -1972,7 +1977,7 @@ Figure&nbsp;9.7: Artwork explaining the <code>dplyr::relocate()</code> function 
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb75" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(L2.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(L2.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code> [1] "Participant"      "Gender"           "Occupation"       "OccupGroup"      
  [5] "NativeLg"         "NativeLgFamily"   "OtherLgs"         "EdNative"        
@@ -1990,11 +1995,11 @@ Figure&nbsp;9.7: Artwork explaining the <code>dplyr::relocate()</code> function 
 </div>
 <p>Note, also, that participants’ total number of years in education is stored in the <code>EduYrs</code> column in <code>L1.data</code>, whereas the corresponding column in <code>L2.data</code> is called <code>EduTotal</code>. Hence, we first use the {dplyr} function <code>rename()</code> to rename <code>EduYrs</code> in <code>L1.data</code> as <code>EduTotal</code> before we merge the two tables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> L1.data <span class="sc">|&gt;</span> </span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">EduTotal =</span> EduYrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> L1.data <span class="sc">|&gt;</span> </span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">EduTotal =</span> EduYrs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The {dplyr} package boasts an array of useful functions to combine tables (see <a href="#fig-dplyrcheatsheet" class="quarto-xref">Figure&nbsp;<span>9.8</span></a>). For our purposes, <code>bind_rows()</code> appears to be the perfect function.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<div id="fig-dplyrcheatsheet" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Extract from dplyr cheatsheet showing all the &quot;join&quot; functions. Screenreader friendly version can be found here: https://rstudio.github.io/cheatsheets/html/data-transformation.html" data-out-width="80%">
+<div id="fig-dplyrcheatsheet" class="quarto-float quarto-figure quarto-figure-center anchored" data-out-width="80%" alt="Extract from dplyr cheatsheet showing all the &quot;join&quot; functions. Screenreader friendly version can be found here: https://rstudio.github.io/cheatsheets/html/data-transformation.html">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-dplyrcheatsheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/dplyr_cheatsheet_extract.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;9.8: Extract of the data transformation with {dplyr} cheatsheet (CC BY SA Posit Software, PBC)"><img src="images/dplyr_cheatsheet_extract.png" class="img-fluid figure-img" data-out-width="80%" alt="Extract from dplyr cheatsheet showing all the &quot;join&quot; functions. Screenreader friendly version can be found here: https://rstudio.github.io/cheatsheets/html/data-transformation.html"></a>
@@ -2006,39 +2011,39 @@ Figure&nbsp;9.8: Extract of the <a href="https://rstudio.github.io/cheatsheets/d
 </div>
 <p>However, when we try to combine <code>L1.data</code> and <code>L2.data</code> using <code>bind_rows()</code>, we get an error message… 😢 Does this error remind you of Q10 from <a href="7_VariablesFunctions.html#sec-DataTypes" class="quarto-xref"><span>Section 7.2.3</span></a> by any chance?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(L1.data, L2.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(L1.data, L2.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre data-code-line-numbers=""><code>Error in `bind_rows()`:
 ! Can't combine `..1$Participant` &lt;character&gt; and `..2$Participant` &lt;integer&gt;.</code></pre>
 <p>What this error message tells us is that the <code>bind_rows()</code> function cannot combine the two <code>Participant</code> columns because in <code>L1.data</code> it is a string character vector, whereas in <code>L2.data</code> it is an integer vector. However, to avoid data loss, <code>bind_rows()</code> can only match columns of the same data type!</p>
 <p>We must therefore first convert the <code>Participant</code> variable in <code>L2.data</code> to a character vector.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb80" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Participant =</span> <span class="fu">as.character</span>(Participant))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Participant =</span> <span class="fu">as.character</span>(Participant))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now, we can combine the two data frames using <code>bind_rows()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb81" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(L1.data, L2.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(L1.data, L2.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The problem is that now that we have merged our two datasets into one, it’s not obvious which rows correspond to L1 participants and which to L2 participants! There are various ways to solve this, but here’s a simple <strong>three-step solution</strong> that relies exclusively on functions that you are already familiar with.</p>
 <p><strong>Step 1:</strong> We add a new column to <code>L1.data</code> called <code>Group</code> and fill this column with the value “L1” for all rows.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> L1.data <span class="sc">|&gt;</span> </span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Group =</span> <span class="st">"L1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> L1.data <span class="sc">|&gt;</span> </span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Group =</span> <span class="st">"L1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Step 2:</strong> We add a new column to <code>L2.data</code> also called <code>Group</code> and fill this column with the value “L2” for all rows.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Group =</span> <span class="st">"L2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Group =</span> <span class="st">"L2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Step 3:</strong> We use <code>bind_rows()</code> as above to combine the two datasets that now both include the extra <code>Group</code> column.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb85" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(L1.data, L2.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(L1.data, L2.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Verification step:</strong> The <code>combined.data</code> table now includes the column <code>Group</code>, which we can use to easily identify the observations that belong to L1 and L2 participants. As expected, our combined dataset includes 90 participants from the L1 group and 67 from the L2 group:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb86" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="sc">|&gt;</span> </span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="sc">|&gt;</span> </span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Group)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  Group  n
 1    L1 90
@@ -2048,7 +2053,7 @@ Figure&nbsp;9.8: Extract of the <a href="https://rstudio.github.io/cheatsheets/d
 <p>Our combined dataset contains all the columns that appear in either <code>L1.data</code> or <code>L2.data</code>. Check that this is the case by examining the structure of the new dataset with <code>str(combined.data)</code>.</p>
 <p>You will have noticed that, in some columns, there are lots of <code>NA</code> (“Not Available”) values. These represent <strong>missing data</strong>. <code>R</code> has inserted these <code>NA</code> values in the columns that only appear in one of the two datasets. For example, the L1 dataset does not include an <code>Arrival</code> variable (indicating the age when participants first arrived in an English-speaking country), presumably because they were all <em>born</em> in an English-speaking country! We only have this information for the L2 participants and this explains the 90 <code>NA</code> values in the <code>Arrival</code> column of the combined dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb88" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>combined.data<span class="sc">$</span>Arrival</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>combined.data<span class="sc">$</span>Arrival</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>  [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
  [26] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
@@ -2061,8 +2066,8 @@ Figure&nbsp;9.8: Extract of the <a href="https://rstudio.github.io/cheatsheets/d
 </div>
 <p>We can also check this by cross-tabulating the <code>Group</code> and the <code>Arrival</code> variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb90" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="sc">|&gt;</span> </span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Group, Arrival)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="sc">|&gt;</span> </span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Group, Arrival)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -2077,20 +2082,20 @@ Figure&nbsp;9.8: Extract of the <a href="https://rstudio.github.io/cheatsheets/d
 </div>
 <p>Run <code>View(combined.data)</code> to inspect the combined dataset and check in which other columns there are <code>NA</code> values.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-What if my data are not yet in tidy format? 🤨
+<span class="screen-reader-only">Note</span>What if my data are not yet in tidy format? 🤨
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>Combining the two datasets from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> was relatively easy because the data was already in tidy format. But, fear not: if you need to first convert your data to tidy format, the <a href="https://tidyr.tidyverse.org/">{tidyr}</a> package has got you covered! 😎</p>
 <p>The <code>pivot_longer()</code> and <code>pivot_wider()</code> functions allow you to easily convert tables from “long” to “wide” format and vice versa (see <a href="#fig-tidyrcheatsheet" class="quarto-xref">Figure&nbsp;<span>9.9</span></a>).</p>
-<div id="fig-tidyrcheatsheet" class="quarto-float quarto-figure quarto-figure-center anchored" alt="pivot_longer(data, cols, names_to = &quot;name&quot;, values_to = &quot;value&quot;, values_drop_na = FALSE) &quot;Lengthen&quot; data by collapsing several columns into two. Column names move to a new names_to column and values to a new values_to column. pivot_longer(table4a, cols = 2:3, names_to =&quot;year&quot;, values_to = &quot;cases&quot;) pivot_wider(data, names_from = &quot;name&quot;, values_from = &quot;value&quot;) The inverse of pivot_longer(). &quot;Widen&quot; data by expanding two columns into several. One column provides the new column names, the other the values. pivot_wider(table2, names_from = type, values_from = count)" data-out-width="60%">
+<div id="fig-tidyrcheatsheet" class="quarto-float quarto-figure quarto-figure-center anchored" data-out-width="60%" alt="pivot_longer(data, cols, names_to = &quot;name&quot;, values_to = &quot;value&quot;, values_drop_na = FALSE) &quot;Lengthen&quot; data by collapsing several columns into two. Column names move to a new names_to column and values to a new values_to column. pivot_longer(table4a, cols = 2:3, names_to =&quot;year&quot;, values_to = &quot;cases&quot;) pivot_wider(data, names_from = &quot;name&quot;, values_from = &quot;value&quot;) The inverse of pivot_longer(). &quot;Widen&quot; data by expanding two columns into several. One column provides the new column names, the other the values. pivot_wider(table2, names_from = type, values_from = count)">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tidyrcheatsheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="images/tidyr_cheatsheet_extract.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;9.9: Extract of the data tidying with tidyr cheatsheet (CC BY SA Posit Software, PBC)"><img src="images/tidyr_cheatsheet_extract.png" class="img-fluid figure-img" data-out-width="60%" alt="pivot_longer(data, cols, names_to = &quot;name&quot;, values_to = &quot;value&quot;, values_drop_na = FALSE) &quot;Lengthen&quot; data by collapsing several columns into two. Column names move to a new names_to column and values to a new values_to column. pivot_longer(table4a, cols = 2:3, names_to =&quot;year&quot;, values_to = &quot;cases&quot;) pivot_wider(data, names_from = &quot;name&quot;, values_from = &quot;value&quot;) The inverse of pivot_longer(). &quot;Widen&quot; data by expanding two columns into several. One column provides the new column names, the other the values. pivot_wider(table2, names_from = type, values_from = count)"></a>
@@ -2105,7 +2110,7 @@ Figure&nbsp;9.9: Extract of the <a href="https://github.com/rstudio/cheatsheets/
 </div>
 </div>
 </div>
-<div class="no-row-height column-margin column-container"><div class="callout-10-contents callout-collapse collapse callout-margin-content">
+<div class="no-row-height column-margin column-container"><div class="callout-10-contents callout-collapse collapse show callout-margin-content">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="images/hex_tidyr.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Hex sticker of the {tidyr} package"><img src="images/hex_tidyr.png" class="img-fluid figure-img" width="100" alt="Hex sticker of the {tidyr} package"></a></p>
@@ -2118,7 +2123,7 @@ Figure&nbsp;9.9: Extract of the <a href="https://github.com/rstudio/cheatsheets/
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Using AI tools for coding ⚠️
+<span class="screen-reader-only">Important</span>Using AI tools for coding ⚠️
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2138,19 +2143,19 @@ Figure&nbsp;9.10: The four main stages of the lifecycle of <code>R</code> packag
 </div>
 </div>
 </section>
-<section id="sec-filter" class="level2" data-number="9.8">
-<h2 data-number="9.8" class="anchored" data-anchor-id="sec-filter"><span class="header-section-number">9.8</span> A pre-processing pipeline</h2>
+<section id="sec-filter" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="sec-filter"><span class="header-section-number">9.7</span> A pre-processing pipeline</h2>
 <p>So far in this chapter, we have learnt how to pre-process data for future statistical analyses and data visualisation. In the process, we have learnt about lots of different functions, mostly from the tidyverse environment (see <a href="#sec-tidyverse" class="quarto-xref"><span>Section 9.1</span></a> 🪐). Now it’s time to put everything together and save our pre-processed combined dataset for future use.</p>
 <p>But, first, let’s recap all of the data wrangling operations that we performed in this chapter and combine them into one code chunk. Before running this code, we first reload the original data from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> to overwrite any changes that were made during this chapter. This will ensure that we all have exactly the same version of the dataset for the following chapters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb92" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>L1.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"L1_data.csv"</span>))</span>
-<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"L2_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"L2_data.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then, run the following lines of code to create a new <code>R</code> object called <code>combined.data</code> that contains the wrangled data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>L2.data <span class="ot">&lt;-</span> L2.data <span class="sc">|&gt;</span> </span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Participant =</span> <span class="fu">as.character</span>(Participant)) <span class="sc">|&gt;</span> </span>
 <span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Group =</span> <span class="st">"L2"</span>)  </span>
 <span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -2176,11 +2181,11 @@ Figure&nbsp;9.10: The four main stages of the lifecycle of <code>R</code> packag
 <span id="cb93-24"><a href="#cb93-24" aria-hidden="true" tabindex="-1"></a>    NativeLg <span class="sc">==</span> <span class="st">"Greek"</span> <span class="sc">~</span> <span class="st">"Hellenic"</span>,</span>
 <span id="cb93-25"><a href="#cb93-25" aria-hidden="true" tabindex="-1"></a>    NativeLg <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"French"</span>, <span class="st">"Italian"</span>, <span class="st">"Spanish"</span>) <span class="sc">~</span> <span class="st">"Romance"</span>,</span>
 <span id="cb93-26"><a href="#cb93-26" aria-hidden="true" tabindex="-1"></a>    NativeLg <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Polish"</span>, <span class="st">"Russian"</span>) <span class="sc">~</span> <span class="st">"Slavic"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb93-27"><a href="#cb93-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), factor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb93-27"><a href="#cb93-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), factor))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Don’t forgot to check the result by examining the output of <code>View(combined.data)</code> and <code>str(combined.data)</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb94" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(combined.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(combined.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -2216,7 +2221,7 @@ Figure&nbsp;9.10: The four main stages of the lifecycle of <code>R</code> packag
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2390,12 +2395,12 @@ all of them
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Click here to see the <code>R</code> code necessary to answer <span style="color:green;"><strong>Q9.15</strong></span>
+<span class="screen-reader-only">Tip</span>Click here to see the <code>R</code> code necessary to answer <span style="color:green;"><strong>Q9.15</strong></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2403,8 +2408,8 @@ Click here to see the <code>R</code> code necessary to answer <span style="color
 <div class="callout-body-container callout-body">
 <p>There are various ways to find the answer to Q5. Sticking to a function that we have looked at so far, you could cross-tabulate <code>Age</code> and <code>OccupGroup</code> using the <code>count()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb96" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="sc">|&gt;</span> </span>
-<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(OccupGroup, Age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="sc">|&gt;</span> </span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(OccupGroup, Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -2429,16 +2434,16 @@ Click here to see the <code>R</code> code necessary to answer <span style="color
 </div>
 <p>And then add up the frequencies listed in the rows that correspond to participants with clerical jobs who are 50.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span><span class="dv">1</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span><span class="dv">1</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 6</code></pre>
 </div>
 </div>
-<p>But, of course, this is method is rather error-prone! Instead, we can use <code>dplyr::filter()</code> (see <a href="#fig-filter" class="quarto-xref">Figure&nbsp;<span>9.11</span></a>) to filter the combined dataset according to our two criteria of interest and then count the number of rows (i.e., participants) remaining in the dataset once the filter has been applied.</p>
+<p>But, of course, this is method is rather error-prone! Instead, we can use <code>dplyr::filter()</code> (see <a href="#fig-filter" class="quarto-xref">Figure&nbsp;<span>9.11</span></a>) to filter the combined dataset according to our two criteria of interest and then count the number of rows (i.e.&nbsp;participants) remaining in the dataset once the filter has been applied.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb100" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="sc">|&gt;</span></span>
 <span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(OccupGroup <span class="sc">==</span> <span class="st">"C"</span> <span class="sc">&amp;</span> Age <span class="sc">&gt;</span> <span class="dv">50</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 6</code></pre>
 </div>
@@ -2457,8 +2462,8 @@ Figure&nbsp;9.11: Artwork explaining the <code>dplyr::filter()</code> function b
 </div>
 </div>
 </section>
-<section id="sec-ExportingRObjects" class="level2" data-number="9.9">
-<h2 data-number="9.9" class="anchored" data-anchor-id="sec-ExportingRObjects"><span class="header-section-number">9.9</span> Saving and exporting <code>R</code> objects</h2>
+<section id="sec-ExportingRObjects" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="sec-ExportingRObjects"><span class="header-section-number">9.8</span> Saving and exporting <code>R</code> objects</h2>
 <p>As a final step, we want to save the <code>R</code> object <code>combined.data</code> to a local file on our computer so that, when we continue our analyses in a new <code>R</code> session, we can immediately start working with the wrangled dataset. We can either save the wrangled dataset as an <code>R</code> object (<code>.rds</code>) or export it as a DSV file (e.g.&nbsp;<code>.csv</code>, see <a href="2_Data.html#sec-DSV" class="quarto-xref"><span>Section 2.5.1</span></a>). The pros and cons of the two solutions are summarised in <a href="#tbl-saving" class="quarto-xref">Table&nbsp;<span>9.1</span></a>.</p>
 <div id="tbl-saving" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -2473,8 +2478,7 @@ Table&nbsp;9.1: Pros and cons of saving DSV and <code>R</code> data files.
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">DSV files (e.g., <code>.csv</code>, <code>.tsv</code>, <code>.tab</code>)</th>
-<th style="text-align: left;"><code>R</code> data files (<code>.rds</code>)</th>
+<th colspan="2" style="text-align: left;">DSV files (e.g.&nbsp;<code>.csv</code>, <code>.tsv</code>, <code>.tab</code>) | <code>R</code> data files (<code>.rds</code>) |</th>
 </tr>
 </thead>
 <tbody>
@@ -2502,7 +2506,7 @@ Table&nbsp;9.1: Pros and cons of saving DSV and <code>R</code> data files.
 <p>We will save both a <code>.csv</code> and an <code>.rds</code> version of the wrangled data but in the following chapters, we will use the <code>.rds</code> file.</p>
 <p>We will save both files to a subfolder of our project “data” folder called “processed”. If we try to save the file to this subfolder before it has been created at this location we get an error message.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb102" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(combined.data, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"combined_L1_L2_data.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(combined.data, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"combined_L1_L2_data.rds"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre data-code-line-numbers=""><code>Error in gzfile(file, mode) : cannot open the connection</code></pre>
 <p>We first need to create the “processed” subfolder before we can save to this location! There are two ways of doing this:</p>
@@ -2511,15 +2515,15 @@ Table&nbsp;9.1: Pros and cons of saving DSV and <code>R</code> data files.
 <li><p>Alternatively, we can use the <code>dir.create()</code> function to create the subfolder from <code>R</code> itself. If the folder already exists at this location, we will get a warning.</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb104" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">file.path</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb104" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">file.path</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now that the subfolder exists, we can save <code>combined.data</code> as an <code>.rds</code> file. We will work with this file in the following chapters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb105" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(combined.data, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"combined_L1_L2_data.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(combined.data, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"combined_L1_L2_data.rds"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>If you want to share your wrangled dataset with a colleague who does not (yet? 😉) use <code>R</code>, you can use the tidyverse function <code>write_csv()</code>.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Your colleague will be able to open this file in any standard spreadsheet programme or text editor (but do warn them about the dangers of opening <code>.csv</code> file in spreadsheets, see <a href="2_Data.html#sec-ExcelWarning" class="quarto-xref"><span>Section 2.6</span></a>!).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(combined.data, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"combined_L1_L2_data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(combined.data, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"combined_L1_L2_data.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="check-your-progress" class="level2 unnumbered">
@@ -2536,10 +2540,10 @@ Table&nbsp;9.1: Pros and cons of saving DSV and <code>R</code> data files.
 <li><label><input type="checkbox">Use {stringr} functions to manipulate text values (<a href="#sec-stringR" class="quarto-xref"><span>Section 9.5.1</span></a>)</label></li>
 <li><label><input type="checkbox">Interpret <code>R</code> package cheatsheets</label></li>
 <li><label><input type="checkbox">Gain insights from the help file of <code>R</code> functions</label></li>
-<li><label><input type="checkbox">Use tidyverse functions to pre-process data in an readable and reproducible way (<a href="#sec-Preprocessing" class="quarto-xref"><span>Section 9.4</span></a>) and (<a href="#sec-filter" class="quarto-xref"><span>Section 9.8</span></a>)</label></li>
-<li><label><input type="checkbox">Save <code>R</code> objects as <code>.rds</code> and <code>.csv</code> files on your computer (<a href="#sec-ExportingRObjects" class="quarto-xref"><span>Section 9.9</span></a>)</label></li>
+<li><label><input type="checkbox">Use tidyverse functions to pre-process data in an readable and reproducible way (<a href="#sec-Preprocessing" class="quarto-xref"><span>Section 9.4</span></a>) and (<a href="#sec-filter" class="quarto-xref"><span>Section 9.7</span></a>)</label></li>
+<li><label><input type="checkbox">Save <code>R</code> objects as <code>.rds</code> and <code>.csv</code> files on your computer (<a href="#sec-ExportingRObjects" class="quarto-xref"><span>Section 9.8</span></a>)</label></li>
 </ul>
-<p>The <a href="@sec-DataViz">following chapter</a> stays in the tidyverse as we will learn how to use the popular tidyverse package {ggplot2} to visualise the pre-processed data from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>In <a href="10_Dataviz.html" class="quarto-xref"><span>Chapter 10</span></a> we continue to explore the tidyverse as we learn how to use the popular tidyverse package {ggplot2} to visualise the pre-processed data from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="99_references.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>. Are you ready to get creative? 🎨</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -2557,14 +2561,14 @@ Wickham, Hadley, Davis Vaughan &amp; Maximilian Girlich. Tidy messy data. <a hre
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Note that, throughout this chapter, long code output is shortened to save space. When you run this command on your own computer, however, you will see that the output is much longer that what is reprinted in this chapter. You will likely need to scroll up in your Console window to view it all.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Note that, throughout this chapter, long code output is shortened to save space. When you run this command on your own computer, however, you will see that the output is much longer than what is reprinted in this chapter. You will likely need to scroll up in your Console window to view it all.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>The equivalent base <code>R</code> function is <code>toupper()</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>We could also use the <code>full_join()</code> function since we want to retain all rows and all columns from both datasets.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Alternatively, you may have gathered from the cheatsheet (<a href="#fig-dplyrcheatsheet" class="quarto-xref">Figure&nbsp;<span>9.8</span></a>) that the <code>bind_rows()</code> function has an optional “.id” argument that can be used to create an additional column to disambiguate between the two combined datasets. In this case, we do not need to add a <code>Group</code> column to both datasets prior to combining them.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb84" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(<span class="at">L1 =</span> L1.data, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>combined.data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(<span class="at">L1 =</span> L1.data, </span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">L2 =</span> L2.data, </span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">.id =</span> <span class="st">"Group"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">.id =</span> <span class="st">"Group"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></li>
 <li id="fn5"><p>As usual, there is a base <code>R</code> alternative: <code>write.csv()</code> will work just as well but, for larger datasets, it is considerably slower than <code>write_csv()</code>. For finer differences, check out the functions’ respective help files.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -2586,7 +2590,7 @@ Wickham, Hadley, Davis Vaughan &amp; Maximilian Girlich. Tidy messy data. <a hre
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -2636,13 +2640,14 @@ Wickham, Hadley, Davis Vaughan &amp; Maximilian Girlich. Tidy messy data. <a hre
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

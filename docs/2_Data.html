@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.26">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -55,18 +55,19 @@ div.csl-indent {
 <link href="./1_OpenScholarship.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-3e3370d44295d9fa30cc16d77ad785c2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-53f539a478d6ecd1be31ce9fd30fd81c.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-540c66f2be59a33d43b8e94dc657d4ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-db8da973c8974479654007bb7dceba98.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-2dc7341fb0871247097a223aafd3766b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-eb07a8a0a194634ea538c19163fd1f0e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
@@ -127,7 +128,7 @@ div.csl-indent {
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -160,7 +161,7 @@ div.csl-indent {
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -200,7 +201,7 @@ div.csl-indent {
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -228,7 +229,7 @@ div.csl-indent {
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -251,20 +252,22 @@ div.csl-indent {
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -291,7 +294,9 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Analysis for the<br>Language Sciences</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -525,7 +530,7 @@ div.csl-indent {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -570,8 +575,8 @@ Figure&nbsp;2.1: Screenshot from the IRIS database search page (accessed on 17 A
 <section id="sec-ResearchData" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="sec-ResearchData"><span class="header-section-number">2.2</span> Types of research data</h2>
 <p>Given the wide range of methods used in language research, it is no surprise that they are so many different types of research data. Although the data types listed on the IRIS search page (see <a href="#fig-IRISDataTypes" class="quarto-xref">Figure&nbsp;<span>2.1</span></a> for extract) are very broad and the categories not clearly defined, the list illustrates the breadth of research data types typically analysed in language studies.</p>
-<p>The first data type category, “Oral production”, for instance, can equally refer to text transcriptions of language users’ oral production, audio, or video files. It can also refer to either raw data or to (more or less) processed data. For example, a transcript of a conversation could have been automatically annotated for part-of-speech, meaning that every word would be marked for their word class (e.g., <code>This_DT is_VBZ not_RB raw_JJ text_NN data_NN ._PUNC</code>), or it could have been manually anonymised by adding placeholders (e.g., <code>Is &lt;NAME&gt; going out with &lt;NAME&gt;?</code>) indicating that certain words have been retracted for data protection reasons.</p>
-<p>The second most frequent data type category, “Closed response format”, includes different kinds of questionnaires and tests. Questionnaires may ask study participants to disclose personal information relevant to the research questions using single or multiple-choice questions, such as what language(s) they use at home, how long they have studied a language for, or how old they are. Tests may be designed to assess participants’ language competences (e.g., in the form of a vocabulary or grammar test), as well as other aspects relevant to the research questions being investigated (e.g., short-term memory or baseline reaction times).</p>
+<p>The first data type category, “Oral production”, for instance, can equally refer to text transcriptions of language users’ oral production, audio, or video files. It can also refer to either raw data or to (more or less) processed data. For example, a transcript of a conversation could have been automatically annotated for part-of-speech, meaning that every word would be marked for their word class (e.g.&nbsp;<code>This_DT is_VBZ not_RB raw_JJ text_NN data_NN ._PUNC</code>), or it could have been manually anonymised by adding placeholders (e.g.&nbsp;<code>Is &lt;NAME&gt; going out with &lt;NAME&gt;?</code>) indicating that certain words have been retracted for data protection reasons.</p>
+<p>The second most frequent data type category, “Closed response format”, includes different kinds of questionnaires and tests. Questionnaires may ask study participants to disclose personal information relevant to the research questions using single or multiple-choice questions, such as what language(s) they use at home, how long they have studied a language for, or how old they are. Tests may be designed to assess participants’ language competences (e.g.&nbsp;in the form of a vocabulary or grammar test), as well as other aspects relevant to the research questions being investigated (e.g.&nbsp;short-term memory or baseline reaction times).</p>
 <p>In this book we will focus on the research processes that take place after the data have been collected. However, it is vital that we are aware of the conditions and context in which the data we are analysing were collected and pre-processed. It is no exaggeration to say that these steps in the research process can entirely change the results of the data analysis. Suppose we decide to compare the abilities of two groups of French L2 learners. To do this, we administered a language production test to two whole classes of secondary school students learning French as a second language using two different teaching methods. If one group had 15 minutes to complete the test and the other had up to 60 minutes, the results would not be comparable.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
@@ -579,7 +584,7 @@ Figure&nbsp;2.1: Screenshot from the IRIS database search page (accessed on 17 A
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -645,7 +650,7 @@ The two groups having different teachers.
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -777,7 +782,7 @@ Figure&nbsp;2.2: Demonstrating the importance of seeing file extensions.
 </section>
 <section id="sec-Sharing" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="sec-Sharing"><span class="header-section-number">2.4</span> Sharing research data and materials</h2>
-<p>In line with the principles of Open Science (see <a href="1_OpenScholarship.html" class="quarto-xref"><span>Chapter 1</span></a>), it is important to ensure that both the materials that were used to collect research data (e.g., questionnaire items, audio, image or video stimuli, language aptitude tests, etc.) and the data themselves are made openly available to the research community, whenever legally possible and ethically responsible. Sharing materials ensures that studies can be replicated, for example with new participants or in a different language. Sharing research data also allows independent researchers to reproduce the results of studies, allowing them to verify the reported results and to conduct additional analyses that may confirm, contradict, or extend the conclusions of the original studies.</p>
+<p>In line with the principles of Open Science (see <a href="1_OpenScholarship.html" class="quarto-xref"><span>Chapter 1</span></a>), it is important to ensure that both the materials that were used to collect research data (e.g.&nbsp;questionnaire items, audio, image or video stimuli, language aptitude tests, etc.) and the data themselves are made openly available to the research community, whenever legally possible and ethically responsible. Sharing materials ensures that studies can be replicated, for example with new participants or in a different language. Sharing research data also allows independent researchers to reproduce the results of studies, allowing them to verify the reported results and to conduct additional analyses that may confirm, contradict, or extend the conclusions of the original studies.</p>
 <p>You may be wondering how linguists and language education researchers can make their research data and materials publicly available. <a href="#tbl-RepoTable" class="quarto-xref">Table&nbsp;<span>2.1</span></a> provides a non-exhaustive list of public repositories where researchers can upload research data and materials (with figures collected in early June 2024<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>). Some are specific to the language sciences, while others cater to all research disciplines. If you completed the <span style="color:green;"><strong>Task 2.1</strong></span> in <a href="#sec-DataLanguageSciences" class="quarto-xref"><span>Section 2.1</span></a>, you should already be familiar with at least one of these! 😉 All of the examples, tasks, and exercises in this book are based on research data and materials that researchers have made available in open access on one or more of these repositories.</p>
 <div class="cell">
 <div id="tbl-RepoTable" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -957,7 +962,7 @@ Note&nbsp;2.1: How did the experiment work?
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -965,7 +970,7 @@ Your turn!
 <div class="callout-body-container callout-body">
 <p>Imagine that you want to run an experiment similar to the one carried out in <span class="citation" data-cites="schimkeFirstLanguageInfluence2018">Schimke et al. (<a href="99_references.html#ref-schimkeFirstLanguageInfluence2018" role="doc-biblioref">2018</a>)</span>. You can reuse the Playmobil image files created by the researchers as they helpfully uploaded them to the IRIS database.</p>
 <p>In which file format do you think the images are archived? To find out, click <a href="https://iris-database.org/search/?s_publicationAPAInlineReference=Schimke%20et%20al.%20(2018)">here</a> to go directly to the list of data and materials associated with the study. There are four entries in the IRIS database that are associated with this study. Select the “Pictorial” entry which contains the images. It allows you to download a ZIP file called <code>Images_online.zip</code>. ZIP is an archive file format that can contain one or more compressed files. Download this ZIP file.</p>
-<p>Once the download was successful, navigate to the folder where the file was saved on your computer and unzip the file, i.e., decompress it and extract its contents:</p>
+<p>Once the download was successful, navigate to the folder where the file was saved on your computer and unzip the file, i.e.&nbsp;decompress it and extract its contents:</p>
 <ul>
 <li>To unzip on Windows, double-click the <code>.zip</code> file
 <ul>
@@ -1017,7 +1022,7 @@ GIF
 </div>
 </div>
 <p>&nbsp;</p>
-<p>Image files typically contain metadata that is embedded in the image files themselves. This metadata may include the dimensions of the image and its colour profile. To view this metadata, right-click on one of the image files that you have extracted from the ZIP file and select the option to get more information about the file, e.g., “Get Info” or “Properties”.</p>
+<p>Image files typically contain metadata that is embedded in the image files themselves. This metadata may include the dimensions of the image and its colour profile. To view this metadata, right-click on one of the image files that you have extracted from the ZIP file and select the option to get more information about the file, e.g.&nbsp;“Get Info” or “Properties”.</p>
 <p><span style="color:green;"><strong>Q2.7</strong></span> How wide are these Playmobil images in pixel?</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1041,7 +1046,7 @@ GIF
 <section id="sec-TabularData" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="sec-TabularData"><span class="header-section-number">2.5</span> Working with tabular data</h2>
 <p>The measurements made by the eye-tracking device in <span class="citation" data-cites="schimkeFirstLanguageInfluence2018">Schimke et al. (<a href="99_references.html#ref-schimkeFirstLanguageInfluence2018" role="doc-biblioref">2018</a>)</span>’s eye-tracking experiments were stored in the form of tables. <a href="#tbl-EyeTrackingTable" class="quarto-xref">Table&nbsp;<span>2.2</span></a> is an extract of a table that contains processed eye-tracking data from <span class="citation" data-cites="schimkeFirstLanguageInfluence2018">Schimke et al. (<a href="99_references.html#ref-schimkeFirstLanguageInfluence2018" role="doc-biblioref">2018</a>)</span>. It forms part of the study’s supplementary materials and can also be downloaded from the <a href="https://iris-database.org/details/lYT9m-a75tV">IRIS database</a>.</p>
-<p>In this table, each row corresponds to the data associated with one participant’s eye movements while listening to a single stimulus sentence and looking at the corresponding Playmobil image (e.g., <a href="#fig-Playmobil" class="quarto-xref">Figure&nbsp;<span>2.4</span></a>). The extract displayed as <a href="#tbl-EyeTrackingTable" class="quarto-xref">Table&nbsp;<span>2.2</span></a> only shows the data associated with the first six stimulus sentences (<code>items</code>) that participant “s1”, a Spanish L2 learner, listened to. The columns <code>crit1</code>, <code>crit2</code> and <code>crit3</code> contain values derived from the measurements made using the eye-tracking device.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> From <a href="#tbl-EyeTrackingTable" class="quarto-xref">Table&nbsp;<span>2.2</span></a>, we can also see that participant “s1” was 19 years old when they started formally learning Spanish (<code>AoO</code> stands for “age of onset of formal instruction”) and that they were 20 when the experiment was conducted.</p>
+<p>In this table, each row corresponds to the data associated with one participant’s eye movements while listening to a single stimulus sentence and looking at the corresponding Playmobil image (e.g. <a href="#fig-Playmobil" class="quarto-xref">Figure&nbsp;<span>2.4</span></a>). The extract displayed as <a href="#tbl-EyeTrackingTable" class="quarto-xref">Table&nbsp;<span>2.2</span></a> only shows the data associated with the first six stimulus sentences (<code>items</code>) that participant “s1”, a Spanish L2 learner, listened to. The columns <code>crit1</code>, <code>crit2</code> and <code>crit3</code> contain values derived from the measurements made using the eye-tracking device.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> From <a href="#tbl-EyeTrackingTable" class="quarto-xref">Table&nbsp;<span>2.2</span></a>, we can also see that participant “s1” was 19 years old when they started formally learning Spanish (<code>AoO</code> stands for “age of onset of formal instruction”) and that they were 20 when the experiment was conducted.</p>
 <div class="cell">
 <div id="tbl-EyeTrackingTable" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -1152,12 +1157,12 @@ Table&nbsp;2.2: Extract of table containing eye-tracking data from Schimke et al
 </div>
 </div>
 <p>When working with data, tables are ubiquitous. Data stored in tables are called <strong>tabular data</strong>. Hence, learning to work with tabular data is a crucial data literacy skill.</p>
-<p>In the language sciences, the results of most studies (whether experimental or corpus studies) are stored in tables. For example, when researchers conduct an online survey, the data collected by the online survey platform (e.g., <a href="https://www.qualtrics.com">Qualtrics</a>, <a href="https://www.soscisurvey.de/">SoSci</a>, <a href="https://www.surveymonkey.com/">SurveyMonkey</a>) are automatically stored in the form of one or more table(s). These can then be exported from the survey platform in various tabular file formats (e.g., <code>.csv</code>, <code>.json</code>, <code>.xlsx</code>).</p>
-<p>In some cases, data may be collected by analogue means, e.g., by getting participants to answer a paper questionnaire or collecting school children’s work on paper. However, for quantitative analysis, analogue research data are first digitalised. Then, the data are typically stored as text files in file formats such as <code>.txt</code> or <code>.csv</code>.</p>
+<p>In the language sciences, the results of most studies (whether experimental or corpus studies) are stored in tables. For example, when researchers conduct an online survey, the data collected by the online survey platform (e.g.&nbsp;<a href="https://www.qualtrics.com">Qualtrics</a>, <a href="https://www.soscisurvey.de/">SoSci</a>, <a href="https://www.surveymonkey.com/">SurveyMonkey</a>) are automatically stored in the form of one or more table(s). These can then be exported from the survey platform in various tabular file formats (e.g.&nbsp;<code>.csv</code>, <code>.json</code>, <code>.xlsx</code>).</p>
+<p>In some cases, data may be collected by analogue means, e.g.&nbsp;by getting participants to answer a paper questionnaire or collecting school children’s work on paper. However, for quantitative analysis, analogue research data are first digitalised. Then, the data are typically stored as text files in file formats such as <code>.txt</code> or <code>.csv</code>.</p>
 <section id="sec-DSV" class="level3" data-number="2.5.1">
 <h3 data-number="2.5.1" class="anchored" data-anchor-id="sec-DSV"><span class="header-section-number">2.5.1</span> Delimiter-separated values (DSV) files</h3>
 <p>Tables can be stored in many data formats but the simplest and most widely used in linguistic research are <strong>text files with</strong> <strong>delimiter-separated values (DSV)</strong>. For sharing and archiving research data, DSV files are favoured over formats specific to propriety software such as <code>.xslx</code> (Microsoft Excel files) or <code>.numbers</code> (Apple Numbers files). This is because DSV files can be “understood” by many different programs and on all operating systems. The fact that they are simple text files means that we will also be able to reliably read them in the future, even if programs such as Excel or Numbers have evolved or have been discontinued. Reliability and compatibility are fundamental to maintaining the integrity of research data and ensuring that data can be reused, even in the distant future.</p>
-<p>In DSV files, each value (e.g., measurement or response) is separated by a specific <strong>separator</strong> character. In principle, any character can be used to separate values, but the most common separators are the comma (<code>,</code>), tab (<code>\t</code>), colon (<code>:</code>), and semicolon (<code>;</code>). Below is the <code>.csv</code> file corresponding to <a href="#tbl-RepoTable" class="quarto-xref">Table&nbsp;<span>2.1</span></a>.</p>
+<p>In DSV files, each value (e.g.&nbsp;measurement or response) is separated by a specific <strong>separator</strong> character. In principle, any character can be used to separate values, but the most common separators are the comma (<code>,</code>), tab (<code>\t</code>), colon (<code>:</code>), and semicolon (<code>;</code>). Below is the <code>.csv</code> file corresponding to <a href="#tbl-RepoTable" class="quarto-xref">Table&nbsp;<span>2.1</span></a>.</p>
 <pre data-code-line-numbers=""><code>Repository,Discipline,Nb. of entries,Provides DOI,Online since
 Dryad,All,60000,Yes,2008
 Figshare,All,8000000,Yes,2012
@@ -1168,8 +1173,8 @@ IRIS,Linguistics,3500,No,2011
 "Tromsø Repository of Language and Linguistics,TROLLing",Linguistics,4500,Yes,2014
 Vivil,Clinical research,7000,Yes,2013
 Zenodo,All,3750000,Yes,2013</code></pre>
-<p>As you can see, the values are separated by commas.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Additionally, some of the values are enclosed in, or <strong>delimited</strong> by, double quotation marks (<code>"</code>). This prevents any commas that may occur within an actual field value, e.g., the comma in the field <code>Open Science Repository, OSF</code>, from being interpreted as a separator character.</p>
-<p>Given that DSV files are text files, it is possible to open them in a free plain-text editor (e.g., <a href="https://notepad-plus-plus.org/">Notepad++</a> or <a href="http://www.barebones.com/products/bbedit/">BBEdit</a>) or a text-processing program (e.g., Microsoft Word or LibreOffice Writer). However, these programmes will typically display DSV files as in <a href="#fig-DSVinWord" class="quarto-xref">Figure&nbsp;<span>2.5</span></a>.</p>
+<p>As you can see, the values are separated by commas.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Additionally, some of the values are enclosed in, or <strong>delimited</strong> by, double quotation marks (<code>"</code>). This prevents any commas that may occur within an actual field value, e.g.&nbsp;the comma in the field <code>Open Science Repository, OSF</code>, from being interpreted as a separator character.</p>
+<p>Given that DSV files are text files, it is possible to open them in a free plain-text editor (e.g.&nbsp;<a href="https://notepad-plus-plus.org/">Notepad++</a> or <a href="http://www.barebones.com/products/bbedit/">BBEdit</a>) or a text-processing program (e.g.&nbsp;Microsoft Word or LibreOffice Writer). However, these programmes will typically display DSV files as in <a href="#fig-DSVinWord" class="quarto-xref">Figure&nbsp;<span>2.5</span></a>.</p>
 <div id="fig-DSVinWord" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A screenshot showing a CSV file opened in Microsoft Word. It looks like a long list of words separated by commas.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-DSVinWord-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1180,7 +1185,7 @@ Figure&nbsp;2.5: The <code>.csv</code> file corresponding to <a href="#tbl-RepoT
 </figcaption>
 </figure>
 </div>
-<p>We can probably agree that what we are seeing in <a href="#fig-DSVinWord" class="quarto-xref">Figure&nbsp;<span>2.5</span></a> is not a very reader-friendly way to display tabular data! This is why DSV files are more often opened in spreadsheet programs (e.g., LibreOffice Calc, Google Sheets, Microsoft Excel, Numbers) than in text-editing programs. Let’s find out how in the next section.</p>
+<p>We can probably agree that what we are seeing in <a href="#fig-DSVinWord" class="quarto-xref">Figure&nbsp;<span>2.5</span></a> is not a very reader-friendly way to display tabular data! This is why DSV files are more often opened in spreadsheet programs (e.g.&nbsp;LibreOffice Calc, Google Sheets, Microsoft Excel, Numbers) than in text-editing programs. Let’s find out how in the next section.</p>
 </section>
 <section id="sec-DSVLibreOffice" class="level3" data-number="2.5.2">
 <h3 data-number="2.5.2" class="anchored" data-anchor-id="sec-DSVLibreOffice"><span class="header-section-number">2.5.2</span> Opening DSV files in LibreOffice Calc</h3>
@@ -1215,7 +1220,7 @@ Figure&nbsp;2.7: CSV file opened in LibreOffice Calc
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1407,18 +1412,18 @@ A single participant's response to a single sentence gap.
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-What if I absolutely have to open a DSV file in Excel? 😧
+<span class="screen-reader-only">Important</span>What if I absolutely have to open a DSV file in Excel? 😧
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>If you absolutely must open a DSV file (e.g., a <code>.csv</code> or <code>.tsv</code> file) in Excel (for example because you do not have sufficient permissions to install LibreOffice on the computer that you are using), do <em>not</em> open the file by double clicking on the file as this will automatically trigger Excel’s problematic auto-formatting behaviour (see <a href="#sec-ExcelWarning" class="quarto-xref"><span>Section 2.6</span></a>)! Instead, first launch Excel and create a new blank workbook. Then navigate to the ‘Data’ tab, select the ‘Get Data’ option, and then ‘From Text/CSV’ (see <a href="#fig-ExcelGetData" class="quarto-xref">Figure&nbsp;<span>2.8</span></a>). In the following dialogue, you can specify how the data should be imported. The options are very similar to the ones offered in LibreOffice (see above).</p>
+<p>If you absolutely must open a DSV file (e.g.&nbsp;a <code>.csv</code> or <code>.tsv</code> file) in Excel (for example because you do not have sufficient permissions to install LibreOffice on the computer that you are using), do <em>not</em> open the file by double clicking on the file as this will automatically trigger Excel’s problematic auto-formatting behaviour (see <a href="#sec-ExcelWarning" class="quarto-xref"><span>Section 2.6</span></a>)! Instead, first launch Excel and create a new blank workbook. Then navigate to the ‘Data’ tab, select the ‘Get Data’ option, and then ‘From Text/CSV’ (see <a href="#fig-ExcelGetData" class="quarto-xref">Figure&nbsp;<span>2.8</span></a>). In the following dialogue, you can specify how the data should be imported. The options are very similar to the ones offered in LibreOffice (see above).</p>
 <p>Note that with this method it <em>may</em> be possible to prevent Excel from automatically (and irreversibly!) applying transformations to your data. However, sadly, this may not suffice. Read on to find out more…</p>
 <div id="fig-ExcelGetData" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Screenshot of the option to import data into excel from an Text/CSV file. It can be found under 'Get Data', 'From File', and 'From Text/CSV'. The info message for this option reads 'Import data from a text, comma-separated value or formatted text (space-delimited) file.'">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1438,7 +1443,7 @@ Figure&nbsp;2.8: Import data into excel
 <section id="sec-ExcelWarning" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="sec-ExcelWarning"><span class="header-section-number">2.6</span> A word of warning about spreadsheet programs ⚠️</h2>
 <p>You should be aware that opening DSV files in spreadsheet programs can corrupt the files! Once a file is corrupted, it is often not possible to retrieve the original data so this is very bad news, indeed. Such problems are particularly frequent when opening DSV files with Microsoft Excel and Google Sheets. This is because the default settings in these programs surreptitiously modify files upon opening.</p>
-<p>These ‘auto-format’ modifications include replacing certain values by dates (e.g., changing <code>3-4</code> to <code>March, 4th</code>) or numbers (e.g., changing <code>1.23E5</code> to <code>123000</code>)<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, removing leading zeros (e.g., changing <code>001</code> to <code>1</code>), or misinterpreting certain characters (e.g., the value <code>-ism</code> will generate an error because the hyphen is interpreted as minus sign).</p>
+<p>These ‘auto-format’ modifications include replacing certain values by dates (e.g.&nbsp;changing <code>3-4</code> to <code>March, 4th</code>) or numbers (e.g.&nbsp;changing <code>1.23E5</code> to <code>123000</code>)<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, removing leading zeros (e.g.&nbsp;changing <code>001</code> to <code>1</code>), or misinterpreting certain characters (e.g.&nbsp;the value <code>-ism</code> will generate an error because the hyphen is interpreted as minus sign).</p>
 <p>Not only can these auto-format modifications lead to inaccurate data analysis but, in the worst of cases, they can even cause data loss. The crux of the problem is that often users do not realise what the program has done in the background. How bad can this be? Find out by completing the <span style="color:green;"><strong>task</strong></span> below.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="true" aria-label="Toggle callout">
@@ -1446,7 +1451,7 @@ Figure&nbsp;2.8: Import data into excel
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Your turn!
+<span class="screen-reader-only">Tip</span>Your turn!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1552,18 +1557,18 @@ No, publications with problematic Excel files were found in more or less equal p
 </div>
 <p>It is worth noting that, for some Windows users, these auto-formatting issues can corrupt files that they have <em>never</em> actively opened in Excel! 🤯 This happens when Windows applies Excel’s default settings to all CSV files, regardless of what program they are actually opened with. To ensure that this does not happen to you, check that Excel is <em>definitely not</em> your default app to open <code>.csv</code> and <code>.tsv</code> files (see below for instructions).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Opening a <code>.csv</code> or <code>.tsv</code> file in LibreOffice from a File Finder/Explorer window
+<span class="screen-reader-only">Tip</span>Opening a <code>.csv</code> or <code>.tsv</code> file in LibreOffice from a File Finder/Explorer window
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Remember that to open a <code>.csv</code> or <code>.tsv</code> file on your computer, should <em>never ever</em> double-click on it and let the default program open it! As we saw in <a href="#sec-ExcelWarning" class="quarto-xref"><span>Section 2.6</span></a>, this can break or ‘corrupt’ the file. To avoid accidentally double-clicking on a <code>.csv</code> or <code>.tsv</code> file and having the file corrupted, I recommend making either <a href="https://www.libreoffice.org/">LibreOffice</a> or a plain-text editor (e.g., <a href="https://notepad-plus-plus.org/">Notepad++</a> or <a href="http://www.barebones.com/products/bbedit/">BBEdit</a>) your default application to open up such files.</p>
+<p>Remember that to open a <code>.csv</code> or <code>.tsv</code> file on your computer, should <em>never ever</em> double-click on it and let the default program open it! As we saw in <a href="#sec-ExcelWarning" class="quarto-xref"><span>Section 2.6</span></a>, this can break or ‘corrupt’ the file. To avoid accidentally double-clicking on a <code>.csv</code> or <code>.tsv</code> file and having the file corrupted, I recommend making either <a href="https://www.libreoffice.org/">LibreOffice</a> or a plain-text editor (e.g.&nbsp;<a href="https://notepad-plus-plus.org/">Notepad++</a> or <a href="http://www.barebones.com/products/bbedit/">BBEdit</a>) your default application to open up such files.</p>
 <p>On <strong>MacOS</strong>, you can change the default application used to open files of any file extensions by right-clicking a file name with this particular extension and than selecting ‘Get Info’ (<a href="#fig-ChangeDefaultAppMac01" class="quarto-xref">Figure&nbsp;<span>2.9 (a)</span></a>). In the example below, Numbers is the default application for all <code>.csv</code> files (see <a href="#fig-ChangeDefaultAppMac02" class="quarto-xref">Figure&nbsp;<span>2.9 (b)</span></a>). In the dropdown menu ‘Open with:’, you can then select LibreOffice (provided you have installed it beforehand!) and finally click on ‘Change All…’ (<a href="#fig-ChangeDefaultAppMac03" class="quarto-xref">Figure&nbsp;<span>2.9 (c)</span></a>). You will be asked to confirm your choice.</p>
 <div id="fig-DefaultExcelMac" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1698,7 +1703,7 @@ Ziemann, Mark, Yotam Eren &amp; Assam El-Osta. 2016. Gene name errors are widesp
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Note that, for some repositories, the number of entries includes other types of research outputs, e.g., preprints and figures.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Note that, for some repositories, the number of entries includes other types of research outputs, e.g.&nbsp;preprints and figures.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Details of what these values mean are not relevant here but, for those of you who are curious, they correspond to the “log odds of looks” that participant made towards one or the other Playmobil figure whilst listening to the experimental stimulus sentences at three time points, called “critical regions”. These critical regions include the time window between the onset of the pronoun and 480 milliseconds after the onset of the disambiguating information. <span class="citation" data-cites="schimkeFirstLanguageInfluence2018">Schimke et al. (<a href="99_references.html#ref-schimkeFirstLanguageInfluence2018" role="doc-biblioref">2018: 768–769</a>)</span> explain that “[a] positive value of the log odds indicates more looks to the subject than to the object antecedent, while a negative value indicates the reverse pattern.”<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Note that the file extension <code>.csv</code> stands for “comma-separated values”. Confusingly, however, DSV files are often given a <code>.csv</code> extension even when the separator character is not the comma. As a result, even though the <code>.tsv</code> extension stands for “tab-separated values”, <code>.csv</code> files are frequently separated by a tab (<code>\t</code>) rather than comma. Isn’t that fun? 🙃<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>In scientific notation, “E” stands for “exponent”, which refers to the number of times a number needs to be multiplied by 10. This notation is used as a shorthand way of writing very large or very small numbers. This is why “1.23E5” is interpreted by Excel as 1.23 multiplied by 10 to the power of 5, which is to say: 1.23 multiplied by 100,000. This operation shifts the decimal point five places to the right, resulting in the number 123000.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -1720,7 +1725,7 @@ Ziemann, Mark, Yotam Eren &amp; Assam El-Osta. 2016. Gene name errors are widesp
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1770,13 +1775,14 @@ Ziemann, Mark, Yotam Eren &amp; Assam El-Osta. 2016. Gene name errors are widesp
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
