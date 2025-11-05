@@ -524,7 +524,8 @@ The dataset from @DabrowskaExperienceAptitudeIndividual2019 includes a variable 
 
 [**Q13.1**]{style="color:green;"} For this task, you will fit a new multiple linear regression model that predicts `Vocab` scores among L1 and L2 speakers using all of the predictors that we used in `model4_c` plus `ART` scores. Which formula do you need to specify inside the `lm()`function to fit this model?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 #| label: "Q13.1"
 
 check_question("Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART",
@@ -542,7 +543,8 @@ check_question("Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTota
 
 [**Q13.2**]{style="color:green;"} Fit a model using the correct formula from above. Examine the summary of your new model. Which of these statements is/are true?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 #| label: "Q13.2"
 
 check_question(c("Recognising more real authors on the ART is associated with higher Vocab scores.",
@@ -608,7 +610,8 @@ Dabrowska.data |>
 
 [**Q13.3**]{style="color:green;"} What is the predicted `Vocab` score of a female L1 speaker aged 31 (the median age) with a manual occupation, who scored 16 on the Blocks test (the median score), spent 14 years in formal education (median time period), and scored 20 on the Author Recognition Test?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 #| label: "Q13.3"
 
 check_question("71.1133",
@@ -640,7 +643,8 @@ check_hint("The person described corresponds to the reference levels of all the 
 
 [**Q13.4**]{style="color:green;"} By default, the `visreg()` function displays a 95% confidence band around predicted values, corresponding to a significance level of 0.05. How can you change this default to display a 99% confidence band instead? Run the command `?visreg()` to find out how to achieve this from the function's help file.
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 #| label: "Q13.4"
 
 check_question("visreg(model.ART, xvar = \"ART\", alpha = 0.01)",
@@ -768,7 +772,8 @@ In the last [Your turn!]{style="color:green;"} section, you fitted a multiple li
 
 [**Q13.5**]{style="color:green;"} Calculate the relative importance of each of the predictors in this model using the {relaimpo} package. What is the relative importance of the predictor `ART` in this model as estimated by the lmg metric and rounded to two decimal places?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 #| label: "Q13.5"
 
 check_question(c("0.11", "0,11"),
@@ -917,7 +922,8 @@ In this task, we will explore the possibility of an interaction between particip
 
 [**Q13.6**]{style="color:green;"} To begin, generate a plot to visualise this interaction in the observed data: map the `EduTotal` variable onto the *x*-axis and `Vocab` onto the *y*-axis, and split the plot into two facets, one for L1 and the other for L2 participants. Based on your interpretation of your plot, which of these statements is/are correct?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 #| label: "Q13.6"
 
 check_question(c("For both L1 and L2 participants, the number of years that they spent in formal education is positively correlated with their Vocab scores."),
@@ -958,7 +964,8 @@ Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + Age_c:Grou
 
 What do you need to add to this formula to also model the interaction that you just visualised?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 #| label: "Q13.7"
 
 check_question("+ EduTotal_c:Group",
@@ -976,7 +983,8 @@ check_question("+ EduTotal_c:Group",
 
 [**Q13.8**]{style="color:green;"} Fit the model with the added interaction. Does the interaction make a statistically significant contribution to the model at the significance level of 0.05?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 #| label: "Q13.8"
 
 check_question("No, it does not.",
@@ -1002,7 +1010,8 @@ summary(model5.int)
 
 [**Q13.9**]{style="color:green;"} Use the {visreg} package to visualise the interaction effect `EduTotal_c:Group` as predicted by your model. Looking at your plot of predicted values and partial residuals, which conclusion can you draw?
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
 #| label: "Q13.9"
 
 check_question("Years in formal education is a statistically significant predictor of Vocab scores for both L1 and L2 speakers, and there is no striking difference in the strength of this association between the L1 and the L2 group.",
@@ -1287,9 +1296,11 @@ library(sjPlot)
 tab_model(L1.model.back2)
 ```
 
+:::: {.content-visible when-format="html"}
 ::: column-margin
 ![Hex sticker of the [{sjPlot}](https://strengejacke.github.io/sjPlot/) package](images/hex_sjPlot.png){width="100"}
 :::
+::::
 
 Check the documentation of the `tab_model()` function and the [sjPlot website](https://strengejacke.github.io/sjPlot/) to learn about its many useful formatting options:
 
@@ -1369,9 +1380,11 @@ There is only one additional assumption that is specific to models that include 
 
 In the following, we use the `check_model()` function from the {[performance](https://easystats.github.io/performance)} package [@ludeckePerformancePackageAssessment2021] to check these assumptions graphically. The `check_model()` function also requires the installation of the {[qqplotr](https://aloy.github.io/qqplotr/index.html)} [@almeidaGgplot2CompatibleQuantilequantile2018] and {[see](https://easystats.github.io/see/)} [@ludeckeSeePackageVisualizing2021] packages to work.
 
+:::: {.content-visible when-format="html"}
 ::: column-margin
 ![Hex sticker of the [{performance}](https://easystats.github.io/performance/) package](images/hex_performance.png){width="100"}
 :::
+::::
 
 ```{r}
 #| eval: false
@@ -1732,9 +1745,11 @@ visreg(fit = L2.model.b,
 ```
 :::
 
+:::: {.content-visible when-format="html"}
 ::: column-margin
 ![Hex sticker of the [{car}](https://www.john-fox.ca/Companion/index.html) package](images/hex_car.png){width="100" fig-alt="The hexagonal logo of the car package features a fun-looking yellow cartoon car."}
 :::
+::::
 
 ## Tapping into the potential of statistical modelling
 
