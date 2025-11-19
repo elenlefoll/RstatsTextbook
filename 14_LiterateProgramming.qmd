@@ -31,7 +31,7 @@ library(checkdown)
 
 The basic idea of literate programming is that we combine text, code, and code outputs (i.e. tables, statistics, and plots) within a single document that can be exported into different formats for sharing and publishing.
 
-Literate programming can be implemented in different authoring formats. Up until very recently, the most common format for `R` projects was **R Markdown**. For `Python` projects, **Jupyter Notebooks** remains the standard to date. In this chapter, we will focus on **Quarto**, a relatively new [open-source](https://en.wikipedia.org/wiki/Free_and_open-source "Free and open-source") scientific and technical authoring and publishing system that has the advantage of supporting many different programming languages. This means that code in `R`, `Python`, `Julia`, and other languages can be combined into one document, making project management and collaboration much easier. Quarto allows us to easily export (or **render**) our documents to HTML, PDF, Word, and many more formats (see @fig-QuartoFormats and @sec-PublishingFormats).
+Literate programming can be implemented in different authoring formats. Up until very recently, the most common format for `R` projects was [**R Markdown**](https://rmarkdown.rstudio.com/). For `Python` projects, [**Jupyter Notebooks**](https://jupyter.org/) remains the standard to date. In this chapter, we will focus on **Quarto**, a relatively new [open-source](https://en.wikipedia.org/wiki/Free_and_open-source "Free and open-source") scientific and technical authoring and publishing system that has the advantage of supporting many different programming languages. This means that code in `R`, `Python`, `Julia`, and other languages can be combined into one document, making project management and collaboration much easier. Quarto allows us to easily export (or **render**) our documents to HTML, PDF, Word, and many more formats (see @fig-QuartoFormats and @sec-PublishingFormats).
 
 ![A schematic representation showing Quarto can understand multi-language input and produce multi-format outputs (Artwork by [Allison Horst](https://allisonhorst.com/cetinkaya-rundel-lowndes-quarto-keynote) from the ["Hello, Quarto" keynote](https://mine.quarto.pub/hello-quarto/#/hello-quarto-title) by Julia Lowndes and Mine Çetinkaya-Rundel, first presented at the RStudio Conference 2022).](images/AHorst_Quarto.png){#fig-QuartoFormats fig-alt="A schematic representing the multi-language input (e.g. Python, R, Observable, Julia) and multi-format output (e.g. PDF, html, Word documents, and more) versatility of Quarto."}
 
@@ -64,7 +64,7 @@ To find out more about best practices for reproducible research, check out [The 
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-Watch this video from 2019, in which Garrett Grolemund (data scientist and instructor at RStudio) explains why **literate programming** is key to improving medical science, data science, and ultimately all empirical research endeavours. Be aware that everything that Garrett says about **R Markdown** is also true of **Quarto**. <!--# @Vishar, if you could find a way to center-align this video, this would make me very happy. -->
+Watch this video from 2019, in which Garrett Grolemund (data scientist and instructor at RStudio) explains why **literate programming** is key to improving medical science, data science, and ultimately all empirical research endeavours. Be aware that everything that Garrett says about **R Markdown** is also true of **Quarto**.
 
 {{< video "https://www.youtube.com/watch?v=s9aWmU0atlQ" width="500" height="300" title="Garrett Grolemund | R Markdown The bigger picture (2019)" >}}
 
@@ -124,11 +124,11 @@ check_question(c("The choice of research questions",
 #| echo: false
 #| label: "Q14.3"
 
-check_question(c("The raw data from the study",
+check_question(c("The original data from the study",
                  "The analysis code",
                  "The software used to run the code",
                  "The author's reasoning"),
-                 options = c("The raw data from the study",
+                 options = c("The original data from the study",
                  "The analysis code",
                  "The software used to run the code",
                  "Remote access to the author's computer",
@@ -384,11 +384,17 @@ The numbers are incremented automatically in the output.
 
 The best way to get the hang of Markdown is simply to try things out. You will also find a handy cheatsheet under *Help \> Markdown Quick Reference*. Remember that you can always go back to the **Visual** mode to format your text, if that's easier for you. When it comes to debugging any Quarto syntax errors, however, it's usually easier to catch these in plain text, so you'll typically want to use the **Source** mode for that.
 
+::: callout-note
+Markdown is widely supported across many platforms, from text editors to content management systems, ensuring that your formatting remains consistent and portable. Whether you're writing documentation, creating blog posts, or taking notes, Markdown's simplicity and versatility make it a valuable skill to have beyond academic writing and Quarto.
+
+You can learn more about Markdown here: <https://www.markdownguide.org/basic-syntax/>.
+:::
+
 ## Code chunks {#sec-Chunks}
 
 To run code inside a Quarto document, you need to insert a code chunk. There are three ways to do so:
 
-1.  Using the keyboard shortcut Cmd/Ctrl + Option + i
+1.  Using the keyboard shortcut ⌘/Ctrl + Option + i
 2.  Clicking on the green "Insert chunk" button icon in the editor toolbar
 3.  Manually typing the chunk delimiters ```` ```{r} ```` and ```` ``` ````
 
@@ -407,8 +413,8 @@ library(tidyverse)
 
 As you are working on your code within a Quarto document, you can either run:
 
--   each individual line of code using the keyboard shortcut ⌘/Ctrl ⏎ or
--   the entire code chunk either by clicking the "Run"![](https://d33wubrfki0l68.cloudfront.net/18153fb9953057ee5cff086122bd26f9cee8fe93/3aba9/images/notebook-run-chunk.png)icon or using the shortcut ⇧ ⌘/Ctrl ⏎.
+-   each individual line of code using the keyboard shortcut ⌘/Ctrl ⏎ or
+-   the entire code chunk either by clicking the "Run"![](https://d33wubrfki0l68.cloudfront.net/18153fb9953057ee5cff086122bd26f9cee8fe93/3aba9/images/notebook-run-chunk.png)icon or using the shortcut ⇧ ⌘/Ctrl ⏎.
 
 *RStudio* will execute the code and display the results either within your document (below each chunk) or in the Console, depending on your *RStudio* settings.[^14_literateprogramming-5]
 
@@ -424,14 +430,14 @@ Chunk output can be customised with **chunk options**. There are many options to
 
 -   `message: false` or `warning: false` prevents messages or warnings from appearing in the rendered document.
 
-It is also possible to **label** code chunks using the `label` option. This can help to navigate long Quarto documents and to quickly identify code chunks generating errors during rendering. Chunk labels should be short but meaningful. They should not contain spaces or any other special characters except hyphens (`-`).
+It is also possible to **label** code chunks using the `label` option (see @fig-QuartoEvalFalse). This can help to navigate long Quarto documents and to quickly identify code chunks generating errors during rendering. Chunk labels should be short but meaningful. They should not contain spaces or any other special characters except hyphens (`-`).
 
-The easiest way to choose a chunk option is by clicking the gear icon on the chunk you want to modify. This way, you can both choose a label and set up your chunk. If you want to write the code yourself, chunk options are placed at the top of the corresponding chunk following `#|`, as in the chunk below. As you can see, the `eval: false` chunk option means that the rendered document includes the mathematical operation `13 * 13`, but not the result because chunk was not executed during the rendering process.
+The easiest way to choose a chunk option is by clicking the gear icon on the chunk you want to modify. This way, you can both choose a label and set up your chunk. If you want to write the code yourself, chunk options are placed at the top of the corresponding chunk following `#|`, as in the chunk below. As you can see in @fig-EvalFalseRendered, the `eval: false` chunk option means that the rendered document includes the mathematical operation `13 * 13`, but not the result because chunk was not executed during the rendering process.
 
 ::: {layout-ncol="2"}
-![Quarto document in Source mode in Rstudio](images/Quarto_eval-false.png)
+![Quarto document in Source mode in Rstudio](images/Quarto_eval-false.png){#fig-QuartoEvalFalse fig-alt="Quarto document opened in Source mode in RStudio with the following lines of code (the lines are numbered here for clarity): 1) --- 2) title: \"Example Quarto Document\" 3) ---  5)```{r} 6) #| label: First operation 7) #| eval: false  9) 13 * 13 ```"}
 
-![Rendered HTML document opened in a browser](images/Quarto_rendered_eval-false.png)
+![Rendered HTML document opened in a browser](images/Quarto_rendered_eval-false.png){#fig-EvalFalseRendered fig-alt="The rendered document features the title of the Quarto doc in large bold font and a grey code chunk with the operation 13 * 13 written inside it, but no result for the operation."}
 :::
 
 ::: {.callout-tip collapse="false"}
@@ -590,7 +596,7 @@ Using the Source mode, add the following section to your Quarto document and ren
 ``` markdown
 ## Descriptive statistics about the participants
 
-`{{r}} nrow(L1.data)` native speakers and `{{r}} nrow(L2.data)` nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.
+ `{{r}} nrow(L1.data)` native speakers and `{{r}} nrow(L2.data)` nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.
 ```
 
 The rendered version should read like this (if you are obtaining different numbers, this either means that you have tempered with the original data files or that they have been corrupted)[^14_literateprogramming-6]:
@@ -634,7 +640,7 @@ L1.females <- L1.data |>
 The saved objects (`L1.males` and `L1.females`) each contain one number. They can therefore be directly called within the text as inline code.
 
 ``` markdown
-`{{r}} nrow(L1.data)` native speakers (`{{r}} L1.males` male and `{{r}} L1.females` female) and `{{r}} nrow(L2.data)` nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.
+ `{{r}} nrow(L1.data)` native speakers (`{{r}} L1.males` male and `{{r}} L1.females` female) and `{{r}} nrow(L2.data)` nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.
 ```
 
 When rendered, the paragraph will read:
@@ -1170,7 +1176,7 @@ wrong = "No, not quite. Citation styles can look very similar, but the devil is 
 ```
 :::
 
-:::: callout-tip
+::::: callout-tip
 #### Literature management {.unnumbered}
 
 One of the major challenges of doing research is actually managing the large number of references that you need to consult, read, and cite in your projects. The good news is that **reference management software** are there to help you overcome this challenge. Whether you are working on a term paper, your Master's dissertation, your PhD thesis, or a post-doctoral project, it is *always* worth investing the time to learn to use a reference manager!
@@ -1184,7 +1190,7 @@ One of the major challenges of doing research is actually managing the large num
 ::::
 
 What's more, Zotero can be integrated in RStudio, making it very easy to include BibTeX-formatted references in your Quarto documents. Find out more in the [*RStudio* documentation](https://rstudio.github.io/visual-markdown-editing/citations.html).
-::::
+:::::
 
 ## Computing environment {#sec-Packages}
 
@@ -1391,7 +1397,7 @@ Below is a screenshot of a Quarto document with the inline code chunks and its r
 
 ### PDF
 
-It is also possible to render Quarto documents to **PDF**; however, this requires you to have [LaTeX](https://en.wikipedia.org/wiki/LaTeX) installed on your computer. If you don't already have your favourite LaTex distribution, Quarto developers recommend that you use the [TinyTeX](https://yihui.org/tinytex/) distribution to render to PDF. To **install** (or update) TinyTeX, go to the Terminal pane in RStudio and run the following command:
+It is also possible to render Quarto documents to **PDF**; however, this requires you to have [LaTeX](https://en.wikipedia.org/wiki/LaTeX) installed on your computer (alternatively you can use [Typst](https://quarto.org/docs/output-formats/typst.html), a new open-source markup-based typesetting system designed to be as powerful as LaTeX but easier to use). If you don't already have your favourite LaTex distribution, Quarto developers recommend that you use the [TinyTeX](https://yihui.org/tinytex/) distribution to render to PDF. To **install** (or update) TinyTeX, go to the Terminal pane in RStudio and run the following command:
 
 ``` {.txt filename="Terminal"}
 quarto install tinytex
