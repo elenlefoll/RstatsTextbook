@@ -121,7 +121,7 @@ levels(Dabrowska.data$Group) # 'L1' is the first level.
 levels(Dabrowska.data$OccupGroup) # 'C' corresponding to a clerical professional occupation is the first level.
 ```
 
-The reference level of the **numeric predictors**, by contrast, corresponds to the value of **zero**. In `model4`, therefore, the estimated coefficient for the intercept corresponds to the predicted `Vocab` score of an adult English native speaker who belongs to the occupational group "C", is female, who is aged 0 (!), scored 0 on the Blocks test, and spent 0 years (!) in formal education. Needless to say that trying to interpret this value is utterly meaningless! This is why, in this case, it makes sense to **center** our numeric predictor variables before entering them into our model. Another way to go about this would be to standardise the predictors using a *z*-transformation [see e.g. @WinterStatisticsLinguistsIntroduction2019: Section 5.2].
+The reference level of the **numeric predictors**, by contrast, corresponds to the value of **zero**. In `model4`, therefore, the estimated coefficient for the intercept corresponds to the predicted `Vocab` score of an adult English native speaker who belongs to the occupational group "C", is female, who is aged 0 (!), scored 0 on the Blocks test, and spent 0 years (!) in formal education. Needless to say that trying to interpret this value is utterly meaningless! This is why, in this case, it makes sense to **center** our numeric predictor variables before entering them into our model. Another way to go about this would be to standardise the predictors using a *z*-transformation [see e.g. @winterStatisticsLinguistsIntroduction2020: Section 5.2].
 
 ## Centering numeric predictors
 
@@ -810,7 +810,7 @@ rel.imp.metric.df |>
 
 One of the strengths of multiple linear regression is that we can also model interactions between predictors. This is important because a predictor's relationship with the outcome variable may depend on another predictor. Consider `Age` as a predictor of `Vocab` scores. In `model4_c`, we saw that this predictor made a statistically significant contribution to the model. The coefficient was positive, which means that the model predicts that the older the participants, the higher their receptive English vocabulary.
 
-However, if you completed [**Task 11.1**]{style="color:green;"}, you might remember that `Age` correlates positively with `Vocab` scores among L1 participants, but does not among L2 participants (see @fig-CorVocabAge below). If anything, the correlation visualised in the right-hand panel of @fig-CorVocabAge is slightly negative. Moreover, the confidence band is wide enough to draw a horizontal line through it, which suggests that the data are also compatible with the null hypothesis of no correlation. As a result, we can conclude that this slightly negative correlation is not statistically significant.
+However, if you completed [**Q11.10**]{style="color:green;"}, you might remember that `Age` correlates positively with `Vocab` scores among L1 participants, but does not among L2 participants (see @fig-CorVocabAge below). If anything, the correlation visualised in the right-hand panel of @fig-CorVocabAge is slightly negative. Moreover, the confidence band is wide enough to draw a horizontal line through it, which suggests that the data are also compatible with the null hypothesis of no correlation. As a result, we can conclude that this slightly negative correlation is not statistically significant.
 
 ```{r}
 #| label: "fig-CorVocabAge"
@@ -1103,7 +1103,7 @@ visreg(model6,
 
 In order to interpret the output of a model featuring a significant interaction between two numeric predictors, we will now fit a simpler model predicting the `Vocab` scores of the L1 participants only (`L1.data`) using only two predictor variables: years in formal education (`EduTotal`) and Author Recognition Test (`ART`) scores.
 
-The Author Recognition Test [@acheson2008] is a measure of print exposure to literature, which is known to be a strong predictor of vocabulary knowledge (see [**Your turn!**]{style="color:green;"} in @sec-ModelPredictions above). This is confirmed in the L1 dataset as `ART` and `Vocab` scores are strongly correlated:
+The Author Recognition Test [@acheson2008] is a measure of print exposure to literature, which is known to be a strong predictor of vocabulary knowledge (see [Your turn!]{style="color:green;"} section in @sec-ModelPredictions above). This is confirmed in the L1 dataset as `ART` and `Vocab` scores are strongly correlated:
 
 ```{r}
 cor(L1.data$ART, L1.data$Vocab)
@@ -1217,11 +1217,21 @@ For low and mid-level ART scores, the model predicts a positive correlation betw
 
 ## Model selection
 
-Typically, the more predictors we enter in a model, the better the model fits the data. However, having predictors that contribute very little to the model and/or whose contributions are not statistically significant risks lowering the accuracy of the model's predictions on new data. In this case, we say that the model **overfits**. A model that overfits the sample data risks not generalising to other data. If the aim of our statistical modelling is to infer from our sample to the general population (see @sec-Inferential), it can sometimes make sense to try to find an 'optimal' model that accounts for as much of the variance in the outcome variable as possible whilst relying only on association effects that we can be fairly confident could not have occurred due to chance only. This is where model selection comes into play.
+Typically, the more predictors we enter in a model, the better the model fits the data. However, having predictors that contribute very little to the model and/or whose contributions are not statistically significant risks lowering the accuracy of the model's predictions on new data. In this case, we say that the model **overfits**. A model that overfits the sample data risks not generalising to other data. If the aim of our statistical modelling is to infer from our sample to the general population (see @sec-Inferential), it can sometimes make sense to try to find an 'optimal' model that accounts for as much of the variance in the outcome variable as possible, relying only on association effects that we can be fairly confident could not have occurred due to chance only. This is where model selection comes into play.
 
-Some people consider model selection to be a bit of an art. This chapter only aims to introduce the topic and does not cover — let alone compare or endorse — different model selection procedures. Ultimately, what really matters is that, *if* we intend to apply a model selection procedure, we decide on the method *before* analysing the data. This is because method selection bears the very real risk of (consciously or unconsciously) "fishing" for statistically significant results. Fishing is a highly Questionable Research Practice (QRP, see @sec-pHacking) that consists in trying out different methods until we arrive at findings that match our theory and/or hypotheses. For this reason, selection procedures in regression modelling have been heavily criticised over the years and there are very good arguments for not engaging in any model selection at all [@thompsonStepwiseRegressionStepwise1995; @smithStepAwayStepwise2018; @harrellRegressionModelingStrategies2015: Section 4.3].
+Some people consider model selection to be a bit of an art. This chapter only aims to introduce the topic and does not cover — let alone compare or endorse — different model selection procedures. Ultimately, what really matters is that, *if* we intend to apply a model selection procedure, we decide on the method *before* analysing the data. The most credible way to settle on a model selection procedure prior to data analysis is to **preregister** an analysis plan on an online platform such as [AsPredicted.org](https://aspredicted.org/), [Open Science Framework (OSF)](https://www.cos.io/initiatives/prereg), and [Zenodo](https://zenodo.org/) [see @harozComparisonPreregistrationPlatforms2022]:
 
-> A fundamental problem with stepwise regression is that some real explanatory variables that have causal effects on the dependent variable may happen to not be statistically significant, while nuisance variables may be coincidentally significant. As a result, the model may fit the data well in-sample, but do poorly out-of-sample. [@smithStepAwayStepwise2018: 1]
+> Preregistration \[or pre-registration\] is the practice of posting a time-stamped, read-only version of your study plan to a public repository before beginning data collection or analysis. This establishes a transparent record of your research intentions [@centerforopenscienceChoosingRightPreregistration2025].
+
+:::: {.content-visible when-format="html"}
+::: column-margin
+![[Preregistration Open Science badge](https://www.cos.io/initiatives/badges) ](images/hex_preregistered.png){width="100"}
+:::
+::::
+
+Model selection bears the very real risk of (consciously or unconsciously) "fishing" for statistically significant results. Fishing is a highly Questionable Research Practice (QRP, see @sec-pHacking) that consists in trying out different methods until we arrive at findings that match our theory and/or hypotheses. For this reason, selection procedures in regression modelling have been heavily criticised over the years and there are very good arguments for not engaging in any model selection at all [@thompsonStepwiseRegressionStepwise1995; @smithStepAwayStepwise2018; @harrellRegressionModelingStrategies2015: Section 4.3].
+
+> A fundamental problem with stepwise regression is that some real explanatory variables that have causal effects on the dependent variable may happen to not be statistically significant, while nuisance variables may be coincidentally significant. As a result, the model may fit the data well in-sample, but do poorly out-of-sample [@smithStepAwayStepwise2018: 1].
 
 Nonetheless, in the following section, we will see how we might - *if* we decide to narrow down predictor variables using model selection - arrive at an optimal model of `Vocab` scores among L1 and L2 speakers of English using the **adjusted R^2^** as our model selection decision criterion. Recall that R^2^ values correspond to the amount of variance in the outcome variable that a model can predict. The adjusted R^2^ is particularly useful because it is adjusted for the number of predictors entered in the model; models with more predictors are penalised.
 
@@ -1275,7 +1285,7 @@ summary(L1.model.back3)
 
 Indeed, `L1.model.back3` accounts for 49% of the variance (adjusted R^2^ = `0.4864`), which is considerably less than `L1.model.back2`. We will therefore report and interpret `L1.model.back2`.
 
-:::: callout-note
+::::: callout-note
 ## Reporting a multiple regression model
 
 There are many ways to report the **numerical** results of a statistical model. Researchers typically include a table reporting the model's coefficient estimates (sometimes referred to as β, "beta"), together with a measure of variability around these estimates (e.g. standard error or confidence intervals), as well as their associated *p*-values. In addition, it is important to report the accuracy of the model. Different so-called **goodness-of-fit measures** are used for this; one of the most common being the adjusted coefficient of determination, R^2^. The output of the `summary()` function includes all of these statistics and is therefore suitable for a research report.
@@ -1358,7 +1368,7 @@ visreg(fit = L1.model.back2,
 @fig-PredictedVocabEduLit shows the predicted effect of the number of years in formal education on `Vocab` scores for participants who scored 3, 10, and 31 points on the `ART`. The regression line shows a positive relation between `Vocab` scores and years in formal education for below-average and average `ART` scores, but the regression line is almost flat for above-average `ART` scores. This indicates that, for individuals who score very high on the `ART`, years in education is no longer a useful predictor of their `Vocab` scores.
 
 Finally, we should also report the outcome of our model assumption checks. This is covered in the following section.
-::::
+:::::
 
 ## Checking model assumptions {#sec-ModelAssumptions}
 
@@ -1421,7 +1431,7 @@ Then we can use the double square bracket operator to display a single diagnosti
 diagnostic.plots[[1]]
 ```
 
-This first plot (@fig-PosteriorPredictiveCheck) is another way to compare the model's predicted values (represented as here blue distributions) with the real-life (i.e observed) outcome variable (represented here in green). We can see that the center of the distribution of observed `Vocab` scores is slightly shifted to the right compared to most distributions of model-predicted data. That said, the simulated distributions are close to the real distribution and largely follow a similar shape. If they didn't, this would suggest that a linear regression model may not be suitable for our data.
+This first plot (@fig-PosteriorPredictiveCheck) is another way to compare the model's predicted values (represented here as blue distributions) with the real-life (i.e observed) outcome variable (represented here in green). We can see that the center of the distribution of observed `Vocab` scores is slightly shifted to the right compared to most distributions of model-predicted data. That said, the simulated distributions are close to the real distribution and largely follow a similar shape. If they didn't, this would suggest that a linear regression model may not be suitable for our data.
 
 The second plot (@fig-Linearity) is designed to check the assumption of **linearity**. If the predictors are linearly related, the green reference line should be flat and horizontal. Our reference line is slightly curved, but it remains possible to draw a horizontal line through the grey band, hence we can conclude that the assumption of linearity is not severely violated.
 
@@ -1470,7 +1480,7 @@ L1.modelback2.minus21 <-  L1.data |>
   slice(-21) |> 
   lm(formula = Vocab ~ ART + Blocks_c + Age_c + EduTotal_c + ART:EduTotal_c)
 
-summary(modelback2.minus21) # As expected, not much.
+summary(L1.modelback2.minus21) # As expected, not much.
 ```
 
 The fifth diagnostic plot output by the `check_model()` function (@fig-Collinearity) serves to check the assumption of a no **multicollinearity**. Multicollinearity, or **high collinearity**, refers to a strong linear dependence between predictors such that they do not contribute unique or independent information to the model. Multicollinearity should not be confused with a strong correlation between two individual predictors as measured using the `cor.test()` function (see @sec-Correlations). What matters here is the association between one or more predictor variables, conditional on the other variables in the model. This is considerably more complex to calculate, but luckily, there are several functions that allow us to do just that in `R`.
@@ -1765,15 +1775,15 @@ Does this mean that we should give up with quantitative data analysis and statis
 
 -   Perhaps the most obvious, yet one that we have not discussed so far, is that the **outcome variable** of a linear regression model must be **quantitative**, like the `Vocab` variable in `Dabrowska.data`, which ranges from -13.33 to 95.56 (see @sec-Variables). Other types of statistical models can be used to model other types of outcome variables, including:
 
-    -   **Binomial (or binary) logistic regression models** allow us to predict **binary** outcomes (e.g. whether or not a verb is negated) [to find out more, see e.g. @LevshinaHowlinguisticsData2015: Chapter 12; @sondereggerRegressionModelingLinguistic2023: Chapter 6; @WinterStatisticsLinguistsIntroduction2019: Chapter 12].
+    -   **Binomial (or binary) logistic regression models** allow us to predict **binary** outcomes (e.g. whether or not a verb is negated) [to find out more, see e.g. @LevshinaHowlinguisticsData2015: Chapter 12; @sondereggerRegressionModelingLinguistic2023: Chapter 6; @winterStatisticsLinguistsIntroduction2020: Chapter 12].
 
     -   **Multinomial logistic regression models** can be used to model **categorical** outcome variables with more than two levels (e.g. which modal verb is used in certain constructions) [to find out more, see e.g. @LevshinaHowlinguisticsData2015: Chapter 13].
 
-    -   **Poisson regression models** are used to model **count** variables, i.e. discrete numeric variables such as the frequency of fillers (such as *uh* and *oh*) in certain contexts [to find out more, see e.g. @WinterStatisticsLinguistsIntroduction2019: Chapter 13].
+    -   **Poisson regression models** are used to model **count** variables, i.e. discrete numeric variables such as the frequency of fillers (such as *uh* and *oh*) in certain contexts [to find out more, see e.g. @winterStatisticsLinguistsIntroduction2020: Chapter 13].
 
--   The observations (i.e. the data points) used to fit a **fixed-effect model** must be independent of each other. In the language sciences, such a situation is actually quite rare (see @sec-IndependenceSLR). To model interdependencies between observations, we can fit **mixed-effects models** (also called multilevel or hierarchical models) [to learn more, see e.g. @griesStatisticsLinguisticsPractical2021: Chapter 6; @sondereggerRegressionModelingLinguistic2023: Chapters 8-10; @WinterStatisticsLinguistsIntroduction2019: Chapters 14-15].
+-   The observations (i.e. the data points) used to fit a **fixed-effect model** must be independent of each other. In the language sciences, such a situation is actually quite rare (see @sec-IndependenceSLR). To model interdependencies between observations, we can fit **mixed-effects models** (also called multilevel or hierarchical models) [to learn more, see e.g. @griesStatisticsLinguisticsPractical2021: Chapter 6; @sondereggerRegressionModelingLinguistic2023: Chapters 8-10; @winterStatisticsLinguistsIntroduction2020: Chapters 14-15].
 
--   Linear regression models assume **linear** relationships between the predictors. There are different ways to circumvent this problem. In some cases, predictors can be **transformed** to meet this assumption [see @WinterStatisticsLinguistsIntroduction2019: Chapter 5]. In others, it may be wiser to model non-linear associations with other kinds of models such as Generalised Additive Mixed Models [GAMMs, see @soskuthyGeneralisedAdditiveMixed2017 and @wielingAnalyzingDynamicPhonetic2018].
+-   Linear regression models assume **linear** relationships between the predictors. There are different ways to circumvent this problem. In some cases, predictors can be **transformed** to meet this assumption [see @winterStatisticsLinguistsIntroduction2020: Chapter 5]. In others, it may be wiser to model non-linear associations with other kinds of models such as Generalised Additive Mixed Models [GAMMs, see @soskuthyGeneralisedAdditiveMixed2017 and @wielingAnalyzingDynamicPhonetic2018].
 
 -   Finally, we need not stick to the **frequentist** school of statistics. In fact, quantitative linguists are increasingly turning to **Bayesian** statistics and finding that Bayesian models help them work with the particularities of linguistic data [to learn more about Bayesian statistics, see e.g. @levshinaComparingBayesianFrequentist2022; @nicenboimIntroductionBayesianData2026].
 
@@ -1786,7 +1796,7 @@ In this textbook, we have only just scratched the surface of statistical modelli
 -   Levshina, Natalia. 2015. *How to do linguistics with R: Data exploration and statistical analysis*. John Benjamins.
 -   Nicenboim, Bruno, Daniel Schad & Shravan Vasishth. 2026. Introduction to Bayesian Data Analysis for cognitive science (Chapman & Hall/CRC Statistics in the Social and Behavioral Sciences Series). CRC Press. Open Access version: <https://bruno.nicenboim.me/bayescogsci/>.
 -   Sonderegger, Morgan. 2023. *Regression modeling for linguistic data*. Cambridge, Massachusetts: The MIT Press. Open Access version: <https://osf.io/pnumg/>.
--   Winter, Bodo. 2019. Statistics for Linguists: An Introduction Using R. Routledge.
+-   Winter, Bodo. 2020. Statistics for Linguists: An Introduction Using R. Routledge.
 
 Although they go further than the present textbook, you will also find that these resources begin by explaining many of the things already covered in this chapter and previous chapters, and that's actually a good thing. There's no harm in revising these complex topics from a different perspective, with different examples, `R` packages, and coding styles.
 :::
