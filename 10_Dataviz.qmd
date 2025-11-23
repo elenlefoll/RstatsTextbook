@@ -9,7 +9,7 @@ html:
 
 One of the advantages of working in `R` is that it allows us to create highly customised graphs for effective data visualisation. The **Grammar of Graphics** [@wilkinsonGrammarGraphics2005] is a theoretical framework that defines a structured approach to building and understanding statistical graphs. We will focus on using the tidyverse package [{ggplot2}](https://ggplot2.tidyverse.org/) [@Wickhamggplot2Elegantgraphics2016] to create effective data visualisations. The {ggplot2} is an implementation of the Grammar of Graphics (GG) syntax in `R`.
 
-This chapter is divided into two parts: the first explains the [**syntax**](https://elenlefoll.github.io/RstatsTextbook/10_Dataviz.html#sec-Syntax) of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] and how the {ggplot2} package works, while the second part focuses on the [**semantics**](https://elenlefoll.github.io/RstatsTextbook/10_Dataviz.html#sec-Semantics) of statistical graphics and provides an introduction to the many different types of data visualisations that can be created using the package.
+This chapter is divided into two parts: the first explains the [**syntax**] of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] and how the {ggplot2} package works, while the second part focuses on the [**semantics**] of statistical graphics and provides an introduction to the many different types of data visualisations that can be created using the package.
 
 ### Chapter overview {.unnumbered}
 
@@ -57,17 +57,17 @@ Check that your data are correctly imported by examining the output of `View(Dab
 
 ## The syntax of graphics {#sec-Syntax}
 
-:::: {.content-visible when-format="html"}
-::: column-margin
-![Hex sticker of the [{ggplot2}](https://ggplot2.tidyverse.org/) package](images/hex_ggplot2.png){width="100" fig-alt="The hexagonal logo of the ggplot2 package features a graph with dots that are connected by a line."}
-:::
-::::
-
 The syntax of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] is made up of **layers** (@fig-layers), which allow us to create highly effective and efficient data visualisations, while giving us lots of flexibility and control.
 
 ![The syntax of the Grammar of Graphics as visualised in the [QCBS R Workshop Series](https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html) (CC-BY-NC-SA).](images/gglayers.png){#fig-layers width="559" fig-alt="A layered diagram illustrating the key elements of data visualization: Data, Aesthetics, Geometries, Facets, Statistics, Coordinates, and Theme, each shown as a layer with a distinct colour."}
 
 The **data** layer and the **aesthetics** layer are compulsory as you cannot build a graph that does not map *some* data onto *some* visual aspect (= aesthetic) of a graph. The remaining layers are optional, but some are very important. In the following, we will explain how the **geometries**, **facet**, **scales**, **coordinates**, and **theme** layers are used to build and customise graphs using the {ggplot2} library in `R`.
+
+:::: {.content-visible when-format="html"}
+::: column-margin
+![Hex sticker of the [{ggplot2}](https://ggplot2.tidyverse.org/) package](images/hex_ggplot2.png){width="100" fig-alt="The hexagonal logo of the ggplot2 package features a graph with dots that are connected by a line."}
+:::
+::::
 
 ### Aesthetics {#sec-aes}
 
@@ -707,6 +707,7 @@ ggplot(data = Dabrowska.data,
 Pretty much all aspects of plot themes can be customised. To demonstrate this, @fig-SillyTheme displays a bar plot with some highly customised aesthetics. I will let you judge how meaningful these custom choices are and whether they genuinely help the reader to interpret the data... 🤨
 
 ```{r}
+#| eval: !expr 'knitr::is_html_output()'
 #| label: fig-SillyTheme
 #| fig-cap: "Illustration of some of the customisation options of `ggplot` objects"
 #| code-fold: true
@@ -730,6 +731,12 @@ ggplot(data = Dabrowska.data,
       )
 
 ```
+
+:::: {.content-visible when-format="pdf"}
+
+Add saved version of plot here.
+
+:::
 
 ### Coordinates {#sec-coordinates}
 
@@ -828,8 +835,7 @@ As we saw in @Sec-Syntax, bar plots (also called **bar charts**) are a great way
 
 [**Q10.2**]{style="color:green;"} Study @fig-NativeLanguagesBarplot and think about which {ggplot2} functions were used to generate it. 🤔
 
-Then, click on the "Show `R` code" button to compare your intuitions with the actual code. Note that there may well be more than one solution: So do try out your version and see if spot any differences!
-:::
+Then, click on the "Show `R` code" button to compare your intuitions with the actual code. Note that there may well be more than one solution: So do try out your version and see if you can spot any differences!
 
 ```{r}
 #| code-fold: true
@@ -853,6 +859,8 @@ Dabrowska.data |>
        title = "Native languages of L2 participants") +
   theme_minimal(base_size = 16)
 ```
+
+:::
 
 To create @fig-NativeLanguagesBarplot, we first reordered the factor levels of the `NativeLg` variable using two functions from the {forcats} package (see @sec-Factors): `fct_infreq()` is first used to order the factors according to their frequency (by default, they are sorted alphabetically), and then `fct_rev()` is used to reverse that order. The latter step is needed because the `coord_flip()` functions reverses everything. You can check the order of a factor's level using the function `levels()`. Note that, if two levels have the same number of occurrences, they are ordered alphabetically (as seen in @fig-NativeLanguagesBarplot).
 
@@ -2441,8 +2449,6 @@ library(plotly)
 
 Then, all you need to do is create and save a `ggplot` object, and call that object with the `ggplotly()` function. In RStudio, your interactive plot will be displayed in the Viewer pane. Hover your mouse over the data points of @fig-InteractivePlot to explore the data interactively. You will see that, in addition to the variables mapped onto the plot itself, the variable mapped onto the `label` aesthetics (`OccupGroup`) also appears when you hover the mouse over any single data point.
 
-::: {.content-visible when-format="html"}
-
 ```{r}
 #| eval: false
 #| source-line-numbers: "1,15"
@@ -2464,19 +2470,11 @@ myplot <- Dabrowska.data |>
 ggplotly(myplot)
 ```
 
-:::
-
-
-::: {.content-visible when-format="pdf"}
-
-![](images/IntPlotCh10a.png)
-:::
-
-
 
 ```{r}
 #| echo: false
 #| warning: false
+#| eval: !expr 'knitr::is_html_output()'
 #| fig-asp: 1
 #| fig-width: 5
 #| out-width: 80%
@@ -2510,9 +2508,12 @@ p$x$data[1] <- lapply(p$x$data[1], FUN = function(x){
 p
 ```
 
-If you want to display more than one additional variable on hover, you can do using the `text` mapping. Here you can customise which variables are displayed and how. As the interactive plot is coded in HTML, you need to use the "</br>" tag to add a new line.
+::: {.content-visible when-format="pdf"}
 
-::: {.content-visible when-format="html"}
+![](images/IntPlotCh10a.png)
+:::
+
+If you want to display more than one additional variable on hover, you can do using the `text` mapping. Here you can customise which variables are displayed and how. As the interactive plot is coded in HTML, you need to use the "</br>" tag to add a new line.
 
 ```{r}
 #| eval: false
@@ -2538,18 +2539,10 @@ myplot2 <- Dabrowska.data |>
 ggplotly(myplot2)
 ```
 
-:::
-
-::: {.content-visible when-format="pdf"}
-
-![](images/IntPlotCh10b.png)
-
-:::
-
-
 ```{r}
 #| echo: false
 #| warning: false
+#| eval: !expr 'knitr::is_html_output()'
 #| fig-asp: 1
 #| fig-width: 5
 #| out-width: 80%
@@ -2584,6 +2577,13 @@ ggplotly(myplot2)
 # 
 # p
 ```
+
+::: {.content-visible when-format="pdf"}
+
+![](images/IntPlotCh10b.png)
+
+:::
+
 
 ## Exporting plots 🚀 {#sec-ExploringPlots}
 
