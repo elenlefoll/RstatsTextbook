@@ -426,7 +426,7 @@ check_question("Polish",
                options = c("Cantonese", "Chinese", "German", "Italian", "Greek", "Lithuanian", "Mandarin", "Polish", "Russian", "Spanish"),
 button_label = "Check answer",
 q_id = "Q7.11", 
-right = "Brawo! 🎉",
+right = "Brawo! (I am told that's 'well done' in Polish)",
 wrong = "No, that's not it. Check the hint if you need some help.")
 check_hint("Use the command `L2.data$NativeLg[26]` to find out which it is.", hint_title = "🐭 Click on the mouse for a hint.")
 ```
@@ -784,7 +784,7 @@ wrong = "No, try again.")
 
  
 
-[**Q7.19**]{style="color:green;"} Unsurprisingly, in @DabrowskaExperienceAptitudeIndividual2019's study, English L1 participants, on average, scored higher in an English vocabulary test than L2 participants. Calculate the difference between L1 and L2 participants' mean `Vocab` test results and round off this means difference to two decimal places.
+[**Q7.19**]{style="color:green;"} Unsurprisingly, in @DabrowskaExperienceAptitudeIndividual2019's study, English L1 participants, on average, scored higher in the English vocabulary test than L2 participants. Calculate the difference between L1 and L2 participants' mean `Vocab` test results and round off this means difference to two decimal places.
 
 ```{r}
 #| echo: false
@@ -803,9 +803,9 @@ check_hint("There are several ways to solve this puzzle. It does not have to inv
 :::
 
 ::: {.callout-note collapse="true"}
-#### Click here for a detailed answer to [**Q7.18**]{style="color:green;"}
+#### Click here for a detailed answer to [**Q7.19**]{style="color:green;"}
 
-They are lots of ways to tackle question 16. Here is one approach:
+They are lots of ways to tackle this in `R`. Here is a first approach that involves the pipe operator:
 
 ```{r}
 (mean(L1.data$Vocab) - mean(L2.data$Vocab)) |> 
@@ -825,16 +825,15 @@ mean(L1.data$Vocab) - round(mean(L2.data$Vocab), digits = 2)
 
 ```
 
-Another solution would be to store the difference in means as an `R` object and pass this object to the round() function.
+An alternative approach would be to store the difference in means as an `R` object and, in a second line of code, pass this object to the `round()` function.
 
 ```{r}
-
 mean.diff.vocab <- mean(L1.data$Vocab) - mean(L2.data$Vocab)
-round(mean.diff.vocab, digits = 2)
 
+round(mean.diff.vocab, digits = 2)
 ```
 
-Or, if you want to use the pipe:
+Or, you could combine both approaches like this:
 
 ```{r}
 mean.diff.vocab <- mean(L1.data$Vocab) - mean(L2.data$Vocab)
@@ -842,6 +841,8 @@ mean.diff.vocab |>
   round(digits = 2)
 
 ```
+
+There is often more than one way to solve problems in `R`. Choose whichever way you are most comfortable with. As you long as you understand what your code does (see @sec-AI), it doesn't matter if it's particularly elegant or efficient.
 :::
 
 ### Check your progress 🌟 {.unnumbered}
