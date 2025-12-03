@@ -131,7 +131,11 @@ cor.test(~ N.correct + Accuracy,
          data = test.results)
 ```
 
-Now, we use the base `R` function `lm()` to fit a simple linear model to predict the percentage of questions that learners correctly answered based on the number of correct answers that they gave. Like the significance test functions that we saw in @sec-Inferential, `lm()` takes a **formula** as its first argument. We want to predict the proportion of questions that learners correctly answered as a percentage (`Accuracy`) so this variable comes *before* the tilde (`~`). In statistical modelling, the variable that we want to predict is referred to as the **outcome variable**. We want to use the number of correct answers that the learners gave to make our prediction, so we place the variable `N.correct` *after* the tilde. Variables used to predict the outcome are called **predictors**.
+Now, we use the base `R` function `lm()` to fit a simple linear model to predict the percentage of questions that learners correctly answered based on the number of correct answers that they gave. Like the significance test functions that we saw in @sec-Inferential, `lm()` takes a **formula** as its first argument. We want to predict the proportion of questions that learners correctly answered as a percentage (`Accuracy`) so this variable comes *before* the tilde (`~`). In statistical modelling, the variable that we want to predict is referred to as the **outcome variable**[^12_simplelinearregression-1]. We want to use the number of correct answers that the learners gave to make our prediction, so we place the variable `N.correct` *after* the tilde. Variables used to predict the outcome are called **predictors**[^12_simplelinearregression-2].
+
+[^12_simplelinearregression-1]: This variable is sometimes referred to as the **dependent variable** (see @sec-IntSummary).
+
+[^12_simplelinearregression-2]: These variables are also sometimes referred to as **independent variables** (see @sec-IntSummary).
 
 ```{r}
 test.model <- lm(formula = Accuracy ~ N.correct,
@@ -1208,13 +1212,13 @@ summary(model1$residuals)
 
 When the sample size is small and the model residuals are not normally distributed, the inferences that we can draw from the model are less trustworthy. However, with larger sample sizes, regression is relatively robust to the assumption of normally distributed residuals [@williamsAssumptionsMultipleRegression2013: 3].
 
-## Intermediary summary
+## Intermediary summary {#sec-IntSummary}
 
 In this chapter, we fitted simple linear regression models. These models demonstrate that we can -- to a greater or lesser degree -- predict (or **model**) participants' receptive vocabulary knowledge test scores on the basis of a single predictor such as the number of years that they spent in formal education or their occupational group.
 
-We have referred to the variable that we are trying to predict as the outcome variable. It is worth knowing that it is sometimes also called the **dependent variable** because we are attempting to model its 'dependence' on one or more **independent variables** (which we have called predictors). In @sec-MLR, we will continue to use the terminology of **outcome** and **predictor** variables, but you should be aware that some textbooks and researchers will speak of dependent and independent variables, instead.[^12_simplelinearregression-1]
+We have referred to the variable that we are trying to predict as the outcome variable. It is worth knowing that it is sometimes also called the **dependent variable** because we are attempting to model its 'dependence' on one or more **independent variables** (which we have called predictors). In @sec-MLR, we will continue to use the terminology of **outcome** and **predictor** variables, but you should be aware that some textbooks and researchers will speak of dependent and independent variables, instead.[^12_simplelinearregression-3]
 
-[^12_simplelinearregression-1]: This choice of terminology is largely a personal one but, in my experience, learners find this terminology less confusing as it is immediately obvious what is being predicted (the outcome or dependent variable) and what is used to make the prediction (the predictors or the independent variables). Another advantage is that the term predictor can be used by itself (i.e. without the word "variable"), which is handy because when we enter a categorical variable into a model, there are as many predictors as there are variable levels.
+[^12_simplelinearregression-3]: This choice of terminology is largely a personal one but, in my experience, learners find this terminology less confusing as it is immediately obvious what is being predicted (the outcome or dependent variable) and what is used to make the prediction (the predictors or the independent variables). Another advantage is that the term predictor can be used by itself (i.e. without the word "variable"), which is handy because when we enter a categorical variable into a model, there are as many predictors as there are variable levels.
 
 While our simple linear regression models did allow us to account for some of the variance in participants' `Vocab` test scores, like the statistical tests that we conducted in @sec-Inferential, they still only allow us to capture one aspect of receptive vocabulary knowledge at a time. What we really want to do is to be able to enter several predictor variables into a single model. For example, it would be interesting to know whether the number of years spent in formal education remains a significant predictor of `Vocab` scores when controlling for participants' occupational groups. This can be achieved with multiple linear regression, and that's coming up in the next chapter!
 
