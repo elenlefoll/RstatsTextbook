@@ -10,7 +10,7 @@ library(checkdown)
 ```
 
 # Getting sta`R`ted in `R` {#sec-GettingStaRted}
-
+  
 #### **Chapter overview** {.unnumbered}
 
 Now that you have installed and tested `R` and RStudio, in this chapter, you will learn how to:
@@ -27,7 +27,7 @@ If you are already familiar with the basics of `R` and are keen to learn more ab
 ## Using the Console {#sec-Console}
 
 ::: {.content-visible when-format="html"}
-[This is what you did in the previous chapter when you tested that *RStudio* was working properly (using the command: `plot(1:10)`).]{.aside}
+[This is what you did in @sec-installingR when you tested that *RStudio* was working properly (using the command: `plot(1:10)`).]{.aside}
 :::
 
 One way to write `R` code in *RStudio* is to use the Console. If you set up *RStudio* as recommended [here](https://elenlefoll.github.io/RstatsTextbook/InstallingR.html#global-options), the Console should be in your top-right pane. You can type a line of code immediately after the command prompt `>` and press "Enter".
@@ -38,11 +38,29 @@ Data input is the most basic operation in `R`. Try inputting a number by typing 
 
 `R` can handle not only numbers but also text data, known as "character strings" or just "strings". Strings must always be enclosed in quotation marks. You can choose to use either double quotation marks `" "` or single quotation marks `' '`, but it is important to be consistent. In this textbook, we will use double quotation marks throughout.
 
-Try first inputting a single word and then an entire sentence in the Console.
+Try first inputting a single word and then an entire sentence in the Console as in @fig-ConsoleInputStrings.
 
 ![Inputting strings in the Console](images/ConsoleInputStrings.png){#fig-ConsoleInputStrings fig-alt="RStudio screenshot showing the input of two strings in the console" width="450"}
+
+::: {.callout-warning collapse="false"}
+Word processors such as Microsoft Word, Pages, and LibreOffice Writer should *not* be used to write, edit, or share `R` scripts. Among other problems, such programmes frequently enable an automatic 'smart quotes' feature, which silently replaces straight quotation marks (`"`) with curly ones (“ and ”). These correspond to different Unicode characters, which `R` does not recognise as valid string delimiters. Hence, curly quotes result in broken code that returns errors, e.g.:
+
+```{r}
+#| eval: false
+text <- “This line of code was edited in Word.”
+```
+
+```{}
+Error: unexpected input in "text <- “"
+```
+
+Word processors are also known to introduce problematic line breaks and cause havoc with automatic capitalisation. To ensure reliability and portability, programming scripts therefore should always be written and edited in plain-text editors such as RStudio, textEdit, or Notepad++. They should be saved and shared in plain-text formats such as `.R` or `.txt` (see @sec-DSV and @sec-SavingRScripts). This also applies to any notes that you take from this textbook or any programming class that you attend.
+:::
+
+
 :::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="false"}
+
 #### Your turn! {.unnumbered}
 
 [**Q5.1**]{style="color:green;"} What happens if you enter a word without quotation marks?
@@ -60,9 +78,9 @@ check_question("R returns an error message because it interprets the word as an 
                right = "<br>That's right. Without quotation marks, a string of characters is interpreted by `R` as the name of an object or function.",
                wrong = "<br>No, this is not what happens. Have you tried it in your Console? What does the error message say?")
 ```
+
 :::
 ::::
-
 ## Doing maths in `R` {#sec-Maths}
 
 `R` can also be used as a very powerful calculator. The lines of code in @fig-ConsoleInputMathematicalOperations demonstrate mathematical operations involving addition (`+`), subtraction (`-`), division (`/`), and multiplication (`*`). Try out a few yourself!
@@ -103,7 +121,7 @@ check_question("There is no difference.",
                button_label = "Check answer", 
                q_id = "Q5.3",
                random_answer_order = TRUE,
-               right = "That's right. Adding spaces within operations makes no difference in R. However, it's good practice to keep things consistent.",
+               right = "That's right. Adding spaces within mathematical operations makes no difference in R. However, it's good practice to keep things consistent.",
                wrong = "No. Have you tried?")
 ```
 :::
@@ -136,7 +154,9 @@ my.favourite.word <- "empathy"
 
 Your Environment pane should now contain two objects. You can print the content of a stored object by entering the object name in the Console and then pressing "Enter" (see @fig-ShowObjects).
 
-[💡 Tip: If you're feeling lazy or simply want to avoid making a typo, you can type just the first few letters of an object name and then press the "Tab" key (`↹` or `⇥`). *RStudio* will then give you a drop-down menu with possible options. Select the one you want by clicking on it or pressing "Enter".]{.aside .content-visible when-format="html"}
+::: callout-tip
+If you're feeling lazy or simply want to avoid making a typo, you can type just the first few letters of an object name and then press the "Tab" key (`↹` or `⇥`). *RStudio* will then give you a drop-down menu with possible options. Select the one you want by clicking on it or pressing "Enter".
+:::
 
 ![Calling up stored objects in the Console to view their content](images/ShowObjects.png){#fig-ShowObjects fig-alt="RStudio screenshot showing two stored objects printed in the console." width="450"}
 
@@ -237,11 +257,16 @@ You will have noticed that when you pressed "Enter" after every line, nothing ha
 
 ![Writing code in an `.R` script](images/NewScript.png){#fig-NewScript2 fig-alt="RStudio window showing new R script with the following lines of code: 13*13 my.favourite.number <- 13 my.favourite.word <- \"empathy\". The script is currently unsaved. The environment pane is empty and so is the console output."}
 
-To send a line of code to the Console (also referred to as "running" a line of code), select the line that you want to excecute, or place your mouse cursor anywhere within that line and then click on the "Run" button (in the top-right corner of the pane, see @fig-NewScript) or use the keyboard shortcut `Ctrl/Cmd + Enter`.
+To send a line of code to the Console (also referred to as "executing" or "running" code), select the line that you want to execute, or place your mouse cursor anywhere within that line and then click on the "Run" button (in the top-right corner of the pane, see @fig-NewScript) or use the keyboard shortcut `Ctrl/Cmd + Enter`. This shortcut is worth learning, as it will save you a lot of time and effort in the long term.
 
-Try out these two options to run the three lines of code of your script and check that a) you are seeing the result of the mathematical operation in the Console output and b) two objects have been added to your environment.
+Try out these two options to run the three lines of code of your script, then check that:
 
-### Saving an `.R` script
+a.  you are seeing the result of the mathematical operation in the Console output and
+b.  two objects have been added to your environment.
+
+You can also select several lines of code and run them all with a single click or shortcut. `R` will interpret the lines in the order that they are listed in your script.
+
+### Saving an `.R` script {#sec-SavingRScripts}
 
 It is now very easy to rerun this script any time we want to redo this calculation and recreate these two `R` objects. However, our `.R` script is not yet saved! *RStudio* is warning us about this by highlighting the file name "Untitled1\*" in red (see @fig-NewScript). Just like with any unsaved computer file, if we were to shut *RStudio* down now, we would lose our work. So, let us save this `.R` script locally, that is on our own computer. To do so either:
 
@@ -523,8 +548,6 @@ This second method is the one you should use when you are documenting your code 
 
 Learning to make sense of error messages is a very important skill that, like all skills, takes practice. Most errors are very easy to fix, if you keep your cool. In fact, 90% of errors are simply typos[^5_gettingstarted-1], so really nothing worth stressing about!
 
-[^5_gettingstarted-1]: I must confess that I made this number up. I don't have any reliable number, but it's fair to say that it's a very large proportion!
-
 :::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
@@ -618,3 +641,5 @@ Are you confident that you can...?
 -   [ ] Keep your calm when dealing with error messages in `R` (@sec-Errors)
 
 If that's the case, you're ready to go through [Chapter 6](https://elenlefoll.github.io/RstatsTextbook/6_ImpoRtingData.html) to learn how to import research data into `R` so that, in the following chapters, you can analyse real-life linguistics data!
+
+[^5_gettingstarted-1]: I must confess that I made this number up. I don't have any reliable number, but it's fair to say that it's a very large proportion!

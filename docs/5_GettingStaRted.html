@@ -493,7 +493,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#creating-a-new-.r-script" id="toc-creating-a-new-.r-script" class="nav-link" data-scroll-target="#creating-a-new-.r-script"><span class="header-section-number">5.4.1</span> Creating a new <code>.R</code> script</a></li>
   <li><a href="#running-code-from-an-.r-script" id="toc-running-code-from-an-.r-script" class="nav-link" data-scroll-target="#running-code-from-an-.r-script"><span class="header-section-number">5.4.2</span> Running code from an <code>.R</code> script</a></li>
-  <li><a href="#saving-an-.r-script" id="toc-saving-an-.r-script" class="nav-link" data-scroll-target="#saving-an-.r-script"><span class="header-section-number">5.4.3</span> Saving an <code>.R</code> script</a></li>
+  <li><a href="#sec-SavingRScripts" id="toc-sec-SavingRScripts" class="nav-link" data-scroll-target="#sec-SavingRScripts"><span class="header-section-number">5.4.3</span> Saving an <code>.R</code> script</a></li>
   <li><a href="#sec-Comments" id="toc-sec-Comments" class="nav-link" data-scroll-target="#sec-Comments"><span class="header-section-number">5.4.4</span> Writing comments in scripts</a></li>
   </ul></li>
   <li><a href="#sec-RelationalOperators" id="toc-sec-RelationalOperators" class="nav-link" data-scroll-target="#sec-RelationalOperators"><span class="header-section-number">5.5</span> Using relational operators</a></li>
@@ -542,7 +542,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="sec-Console" class="level2 page-columns page-full" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="sec-Console"><span class="header-section-number">5.1</span> Using the Console</h2>
-<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside">This is what you did in the previous chapter when you tested that <em>RStudio</em> was working properly (using the command: <code>plot(1:10)</code>).</span></div></div>
+<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside">This is what you did in <a href="4_InstallingR.html#sec-installingR" class="quarto-xref"><span>Section 4.2.2</span></a> when you tested that <em>RStudio</em> was working properly (using the command: <code>plot(1:10)</code>).</span></div></div>
 <p>One way to write <code>R</code> code in <em>RStudio</em> is to use the Console. If you set up <em>RStudio</em> as recommended <a href="https://elenlefoll.github.io/RstatsTextbook/InstallingR.html#global-options">here</a>, the Console should be in your top-right pane. You can type a line of code immediately after the command prompt <code>&gt;</code> and press “Enter”.</p>
 <p>Data input is the most basic operation in <code>R</code>. Try inputting a number by typing it out in the Console and then pressing “Enter”. <code>R</code> will interpret the number and return it. You can input both integers (whole numbers, e.g.&nbsp;<code>13</code>) and decimal numbers (e.g.&nbsp;<code>0.5</code>).</p>
 <div id="fig-ConsoleInputNumbers" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Screenshot of RStudio showing the Console with the equation 13 + 0.5 = 13.5.">
@@ -556,7 +556,7 @@ Figure&nbsp;5.1: Inputting numbers in the Console
 </figure>
 </div>
 <p><code>R</code> can handle not only numbers but also text data, known as “character strings” or just “strings”. Strings must always be enclosed in quotation marks. You can choose to use either double quotation marks <code>" "</code> or single quotation marks <code>' '</code>, but it is important to be consistent. In this textbook, we will use double quotation marks throughout.</p>
-<p>Try first inputting a single word and then an entire sentence in the Console.</p>
+<p>Try first inputting a single word and then an entire sentence in the Console as in <a href="#fig-ConsoleInputStrings" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>.</p>
 <div id="fig-ConsoleInputStrings" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RStudio screenshot showing the input of two strings in the console">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ConsoleInputStrings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -567,8 +567,29 @@ Figure&nbsp;5.2: Inputting strings in the Console
 </figcaption>
 </figure>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>Word processors such as Microsoft Word, Pages, and LibreOffice Writer should <em>not</em> be used to write, edit, or share <code>R</code> scripts. Among other problems, such programmes frequently enable an automatic ‘smart quotes’ feature, which silently replaces straight quotation marks (<code>"</code>) with curly ones (“ and ”). These correspond to different Unicode characters, which <code>R</code> does not recognise as valid string delimiters. Hence, curly quotes result in broken code that returns errors, e.g.:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>text <span class="ot">&lt;-</span> “This line of code was edited <span class="cf">in</span> Word.”</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<pre data-code-line-numbers=""><code>Error: unexpected input in "text &lt;- “"</code></pre>
+<p>Word processors are also known to introduce problematic line breaks and cause havoc with automatic capitalisation. To ensure reliability and portability, programming scripts therefore should always be written and edited in plain-text editors such as RStudio, textEdit, or Notepad++. They should be saved and shared in plain-text formats such as <code>.R</code> or <code>.txt</code> (see <a href="2_Data.html#sec-DSV" class="quarto-xref"><span>Section 2.5.1</span></a> and <a href="#sec-SavingRScripts" class="quarto-xref"><span>Section 5.4.3</span></a>). This also applies to any notes that you take from this textbook or any programming class that you attend.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -577,7 +598,7 @@ Figure&nbsp;5.2: Inputting strings in the Console
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><span style="color:green;"><strong>Q5.1</strong></span> What happens if you enter a word without quotation marks?</p>
 <div class="cell">
@@ -631,7 +652,7 @@ Figure&nbsp;5.3: Using the <code>R</code> Console as a calculator
 </figure>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -640,7 +661,7 @@ Figure&nbsp;5.3: Using the <code>R</code> Console as a calculator
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><span style="color:green;"><strong>Q5.2</strong></span> Try entering <code>13^2</code> in the Console. What does the <code>^</code> (caret) operator do?</p>
 <div class="cell">
@@ -694,9 +715,9 @@ There is no difference.
 <input type="submit" value="Check answer">
 <div id="result_Q5_3"></div>
 </form>
-<script>function validate_form_Q5_3() {var x, text; var x = document.forms['form_Q5_3']['answer_Q5_3'].value;if (x == 'There is no difference.'){text = 'That’s right. Adding spaces within operations makes no difference in R. However, it’s good practice to keep things consistent.';} else {text = 'No. Have you tried?';} document.getElementById('result_Q5_3').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q5_3() {var x, text; var x = document.forms['form_Q5_3']['answer_Q5_3'].value;if (x == 'There is no difference.'){text = 'That’s right. Adding spaces within mathematical operations makes no difference in R. However, it’s good practice to keep things consistent.';} else {text = 'No. Have you tried?';} document.getElementById('result_Q5_3').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_Q5_1').innerText == 'That’s right. Without quotation marks, a string of characters is interpreted by R as the name of an object or function.'; res2 = document.getElementById('result_Q5_2').innerText == 'That’s right. Raising 13 to the power of 2 gives us the square of 13. Which is why the output is the same as for 13*13!'; res3 = document.getElementById('result_Q5_3').innerText == 'That’s right. Adding spaces within operations makes no difference in R. However, it’s good practice to keep things consistent.';text = res1 + res2 + res3;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_Q5_3').innerText == 'That’s right. Adding spaces within mathematical operations makes no difference in R. However, it’s good practice to keep things consistent.';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -705,15 +726,15 @@ There is no difference.
 </div>
 </div>
 </section>
-<section id="sec-WorkingRObjects" class="level2 page-columns page-full" data-number="5.3">
+<section id="sec-WorkingRObjects" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="sec-WorkingRObjects"><span class="header-section-number">5.3</span> Working with <code>R</code> objects</h2>
 <p>So far, we have used the Console like a calculator. It’s important to understand that, just like with a standard calculator, the output of all of our operations was not saved anywhere. If we want to store values, sequences of values, and the results of computations for later use, <code>R</code> allows us to store these as “<code>R</code> objects”.</p>
-<section id="creating-objects" class="level3 page-columns page-full" data-number="5.3.1">
+<section id="creating-objects" class="level3" data-number="5.3.1">
 <h3 data-number="5.3.1" class="anchored" data-anchor-id="creating-objects"><span class="header-section-number">5.3.1</span> Creating objects</h3>
 <p>We use the assignment operator (<code>&lt;-</code>) to assign a value or sequence of values to an object name.</p>
 <p>Write out the following line to create an object called <code>my.favourite.number</code> that contains your own favourite number.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="ot">&lt;-</span> <span class="dv">13</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="ot">&lt;-</span> <span class="dv">13</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>When you enter this line in the Console and press “Enter”, it should look like nothing happened: <code>R</code> does not return anything in the Console. Instead, it saves the output in an object called <code>my.favourite.number</code>. However, if you look in your Environment pane, you should see that an object has appeared (<a href="#fig-ObjectCreation" class="quarto-xref">Figure&nbsp;<span>5.4</span></a>).</p>
 <div id="fig-ObjectCreation" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RStudio screenshot showing that an object is now stored in the session environment in the left-hand pane.">
@@ -728,10 +749,22 @@ Figure&nbsp;5.4: Created object in the Environment pane
 </div>
 <p>To save an object containing a character string, we use quotation marks. Create an object called <code>my.favourite.word</code> containing your favourite word (in any written language of your choice).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my.favourite.word <span class="ot">&lt;-</span> <span class="st">"empathy"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my.favourite.word <span class="ot">&lt;-</span> <span class="st">"empathy"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Your Environment pane should now contain two objects. You can print the content of a stored object by entering the object name in the Console and then pressing “Enter” (see <a href="#fig-ShowObjects" class="quarto-xref">Figure&nbsp;<span>5.5</span></a>).</p>
-<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside">💡 Tip: If you’re feeling lazy or simply want to avoid making a typo, you can type just the first few letters of an object name and then press the “Tab” key (<code>↹</code> or <code>⇥</code>). <em>RStudio</em> will then give you a drop-down menu with possible options. Select the one you want by clicking on it or pressing “Enter”.</span></div></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you’re feeling lazy or simply want to avoid making a typo, you can type just the first few letters of an object name and then press the “Tab” key (<code>↹</code> or <code>⇥</code>). <em>RStudio</em> will then give you a drop-down menu with possible options. Select the one you want by clicking on it or pressing “Enter”.</p>
+</div>
+</div>
 <div id="fig-ShowObjects" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RStudio screenshot showing two stored objects printed in the console.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ShowObjects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -762,10 +795,10 @@ Figure&nbsp;5.6: Using the <code>class()</code> function
 <h3 data-number="5.3.3" class="anchored" data-anchor-id="sec-NamingObjects"><span class="header-section-number">5.3.3</span> Naming objects</h3>
 <p>Object naming conventions in <code>R</code> are fairly flexible. We can use dots (<code>.</code>), underscores (<code>_</code>) and capital letters to make our object names maximally informative and easy for us humans to read. However, spaces and other symbols are not allowed. All of these options work:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>word2 <span class="ot">&lt;-</span> <span class="st">"cheerful"</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>my.second.word <span class="ot">&lt;-</span> <span class="st">"cheerful"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>my_second_word <span class="ot">&lt;-</span> <span class="st">"cheerful"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>MySecondWord <span class="ot">&lt;-</span> <span class="st">"cheerful"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>word2 <span class="ot">&lt;-</span> <span class="st">"cheerful"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>my.second.word <span class="ot">&lt;-</span> <span class="st">"cheerful"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>my_second_word <span class="ot">&lt;-</span> <span class="st">"cheerful"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>MySecondWord <span class="ot">&lt;-</span> <span class="st">"cheerful"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="fig-MultipleObjectsEnvironmentPane" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RStudio screenshot showing the environment pane with six stored objects.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -778,7 +811,7 @@ Figure&nbsp;5.7: Environment pane showing all of the objects currently stored in
 </figure>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -787,7 +820,7 @@ Figure&nbsp;5.7: Environment pane showing all of the objects currently stored in
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><span style="color:green;"><strong>Q5.4</strong></span> Which of these object names are <em>not</em> allowed in <code>R</code>? Try to create an object with each of these names and see if you get an error message or not.</p>
 <div class="cell">
@@ -847,13 +880,13 @@ top word
 <h3 data-number="5.3.4" class="anchored" data-anchor-id="overwriting-and-deleting-objects"><span class="header-section-number">5.3.4</span> Overwriting and deleting objects</h3>
 <p>Object names are unique. If you create a new object with an existing object name, it will overwrite the existing object with the new one. In other words, you will lose the values that you saved in the original object. Try it out by running this line and observing what happens in your Environment pane:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>word2 <span class="ot">&lt;-</span> <span class="st">"surprised"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>word2 <span class="ot">&lt;-</span> <span class="st">"surprised"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Earlier on, you created an object called <code>word2</code> which contained the string “cheerful”. But, by running this new line of code, “cheerful” has been replaced by the string “surprised” - with no warning that you were about to permanently delete “cheerful”! 😲</p>
 <p>The command to delete a single object from your environment is <code>remove()</code> or <code>rm()</code>. Hence, to permanently delete the object <code>MySecondWord</code>, you can use either of these commands:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove</span>(MySecondWord)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(MySecondWord)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove</span>(MySecondWord)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(MySecondWord)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
@@ -885,9 +918,9 @@ Figure&nbsp;5.8: <em>RStudio</em> window showing a new, empty <code>.R</code> sc
 <h3 data-number="5.4.2" class="anchored" data-anchor-id="running-code-from-an-.r-script"><span class="header-section-number">5.4.2</span> Running code from an <code>.R</code> script</h3>
 <p>We can now type our code in this empty <code>.R</code> script in the Source pane, just like we did in the Console. Type the following lines of code in the script (see <a href="#fig-NewScript2" class="quarto-xref">Figure&nbsp;<span>5.9</span></a>):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dv">13</span><span class="sc">*</span><span class="dv">13</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="ot">&lt;-</span> <span class="dv">13</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>my.favourite.word <span class="ot">&lt;-</span> <span class="st">"empathy"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dv">13</span><span class="sc">*</span><span class="dv">13</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="ot">&lt;-</span> <span class="dv">13</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>my.favourite.word <span class="ot">&lt;-</span> <span class="st">"empathy"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You will have noticed that when you pressed “Enter” after every line, nothing happened: Nowhere can we see the result of <code>13*13</code>, nor have our two objects been saved to the environment as the Environment pane remains empty (see <a href="#fig-NewScript2" class="quarto-xref">Figure&nbsp;<span>5.9</span></a>). Just like a recipe for a cake is not an actual, delicious cake, but simply a set of instructions, a script is only a text file that contains lines of code as instructions. For these instructions to be executed, we need to send them to the <code>R</code> Console where they will be interpreted as <code>R</code> code.</p>
 <div id="fig-NewScript2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RStudio window showing new R script with the following lines of code: 13*13 my.favourite.number <- 13 my.favourite.word <- &quot;empathy&quot;. The script is currently unsaved. The environment pane is empty and so is the console output.">
@@ -900,11 +933,16 @@ Figure&nbsp;5.9: Writing code in an <code>.R</code> script
 </figcaption>
 </figure>
 </div>
-<p>To send a line of code to the Console (also referred to as “running” a line of code), select the line that you want to excecute, or place your mouse cursor anywhere within that line and then click on the “Run” button (in the top-right corner of the pane, see <a href="#fig-NewScript" class="quarto-xref">Figure&nbsp;<span>5.8</span></a>) or use the keyboard shortcut <code>Ctrl/Cmd + Enter</code>.</p>
-<p>Try out these two options to run the three lines of code of your script and check that a) you are seeing the result of the mathematical operation in the Console output and b) two objects have been added to your environment.</p>
+<p>To send a line of code to the Console (also referred to as “executing” or “running” code), select the line that you want to execute, or place your mouse cursor anywhere within that line and then click on the “Run” button (in the top-right corner of the pane, see <a href="#fig-NewScript" class="quarto-xref">Figure&nbsp;<span>5.8</span></a>) or use the keyboard shortcut <code>Ctrl/Cmd + Enter</code>. This shortcut is worth learning, as it will save you a lot of time and effort in the long term.</p>
+<p>Try out these two options to run the three lines of code of your script, then check that:</p>
+<ol type="a">
+<li>you are seeing the result of the mathematical operation in the Console output and</li>
+<li>two objects have been added to your environment.</li>
+</ol>
+<p>You can also select several lines of code and run them all with a single click or shortcut. <code>R</code> will interpret the lines in the order that they are listed in your script.</p>
 </section>
-<section id="saving-an-.r-script" class="level3" data-number="5.4.3">
-<h3 data-number="5.4.3" class="anchored" data-anchor-id="saving-an-.r-script"><span class="header-section-number">5.4.3</span> Saving an <code>.R</code> script</h3>
+<section id="sec-SavingRScripts" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="sec-SavingRScripts"><span class="header-section-number">5.4.3</span> Saving an <code>.R</code> script</h3>
 <p>It is now very easy to rerun this script any time we want to redo this calculation and recreate these two <code>R</code> objects. However, our <code>.R</code> script is not yet saved! <em>RStudio</em> is warning us about this by highlighting the file name “Untitled1*” in red (see <a href="#fig-NewScript" class="quarto-xref">Figure&nbsp;<span>5.8</span></a>). Just like with any unsaved computer file, if we were to shut <em>RStudio</em> down now, we would lose our work. So, let us save this <code>.R</code> script locally, that is on our own computer. To do so either:</p>
 <ol type="1">
 <li>Navigate to the top menu item “File” and then click on “Save”,</li>
@@ -918,13 +956,13 @@ Figure&nbsp;5.9: Writing code in an <code>.R</code> script
 <p>Just like in a recipe book, in addition to writing the actual instructions, we can also write some notes, for example to remind ourselves of why we did things in a particular way or for what occasion we created a special dish. In programming, notes are called “comments” and they are typically preceded by the <code>#</code> symbol.</p>
 <p>Thus, if a line starts with a <code>#</code> symbol, we say that it is “commented out”. <em>RStudio</em> helpfully displays lines that are commented out in a different colour. These lines will not be interpreted as code even if you send them to the Console. Write the following lines in your script and then try to run them.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#13^13</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#StringObject3 &lt;- "This line has been commented out so the object will not be saved in the environment even if you try to run it."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#13^13</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#StringObject3 &lt;- "This line has been commented out so the object will not be saved in the environment even if you try to run it."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>As you can see, nothing happens. You can also add comments next to a line of interpretable code. In this case, the code is interpreted up until the <code>#</code>. This can be helpful to make a note of what a line of code does, e.g.:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">169</span>) <span class="co"># Here the sqrt() function will compute the square root of 169.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">169</span>) <span class="co"># Here the sqrt() function will compute the square root of 169.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 13</code></pre>
 </div>
@@ -937,26 +975,26 @@ Figure&nbsp;5.9: Writing code in an <code>.R</code> script
 <h2 data-number="5.5" class="anchored" data-anchor-id="sec-RelationalOperators"><span class="header-section-number">5.5</span> Using relational operators</h2>
 <p>Now that we have saved some objects in our environment, we can use them in calculations. Try out the following operations (and any other that take your fancy) with your own favourite number:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">/</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">/</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 6.5</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">*</span> my.favourite.number</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">*</span> my.favourite.number</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 169</code></pre>
 </div>
 </div>
 <p>In additional to the mathematical operations that we saw in <a href="#sec-Maths" class="quarto-xref"><span>Section 5.2</span></a>, we can also use relational operators such <code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>==</code> and <code>!=</code> to make all kinds of comparisons. Try out the following commands to understand how these relational operators work and then have a go at the quiz questions.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">&gt;</span> <span class="dv">10</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">&lt;</span> <span class="dv">10</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">==</span> <span class="dv">25</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">&gt;=</span> <span class="dv">13</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">13</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">!=</span> <span class="dv">25</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">&gt;</span> <span class="dv">10</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">&lt;</span> <span class="dv">10</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">==</span> <span class="dv">25</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">&gt;=</span> <span class="dv">13</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">13</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">!=</span> <span class="dv">25</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -965,7 +1003,7 @@ Figure&nbsp;5.9: Writing code in an <code>.R</code> script
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><span style="color:green;"><strong>Q5.5</strong></span> What is the relational operator that checks whether a value is “more than or equal to” another value?</p>
 <div class="cell">
@@ -1013,16 +1051,16 @@ Figure&nbsp;5.9: Writing code in an <code>.R</code> script
 </div>
 <p>The relational operators <code>==</code> and <code>!=</code> can also be used with character objects. Find out how they work by first creating a new character object with a word that was added to the 2025 edition of the popular French dictionary <em>Petit Larousse</em>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="ot">&lt;-</span> <span class="st">"écogeste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="ot">&lt;-</span> <span class="st">"écogeste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then copy these lines of code to test how these relational operators work with string characters.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="sc">==</span> <span class="st">"écogeste"</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="sc">!=</span> <span class="st">"trottinettiste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="sc">==</span> <span class="st">"écogeste"</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="sc">!=</span> <span class="st">"trottinettiste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You will have noticed that the relational operator <code>==</code> tests whether two strings are the same and returns <code>TRUE</code> if that’s the case. In contrast, <code>!=</code> tests whether two strings are different and will therefore return <code>FALSE</code> if they are not different.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1031,15 +1069,15 @@ Figure&nbsp;5.9: Writing code in an <code>.R</code> script
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>Above, we created the following <code>R</code> character string object:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="ot">&lt;-</span> <span class="st">"écogeste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="ot">&lt;-</span> <span class="st">"écogeste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><span style="color:green;"><strong>Q5.7</strong></span> Why does this line of code return <code>FALSE</code> even though <code>New.French.Word</code> was assigned the character string “écogeste”?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="sc">==</span> <span class="st">"ecogeste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="sc">==</span> <span class="st">"ecogeste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -1072,7 +1110,7 @@ Because R automatically removed the accent as object names must be in English.
 <p>&nbsp;</p>
 <p><span style="color:green;"><strong>Q5.8</strong></span> Why does this line of code return <code>FALSE</code>?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="sc">==</span> <span class="st">" écogeste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="sc">==</span> <span class="st">" écogeste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -1105,7 +1143,7 @@ Because string objects cannot include any special characters. This includes spac
 <p>&nbsp;</p>
 <p><span style="color:green;"><strong>Q5.9</strong></span> Why does this line of code return <code>FALSE</code>?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="sc">==</span> <span class="st">"Écogeste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="sc">==</span> <span class="st">"Écogeste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -1138,7 +1176,7 @@ Because R is case-sensitive.
 <p>&nbsp;</p>
 <p><span style="color:green;"><strong>Q5.10</strong></span> Why does this line of code return <code>FALSE</code>?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="sc">!=</span> <span class="st">"écogeste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>New.French.Word <span class="sc">!=</span> <span class="st">"écogeste"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -1187,7 +1225,7 @@ Figure&nbsp;5.10: The joys of debugging by <a href="https://allisonhorst.com/all
 </div>
 <p>In <code>R</code>, you will regularly encounter one particular problem that we will call the “plus-situation”. Let’s take a closer look at this error. Copy and paste this exact line of code in your <code>R</code> Console and hit “Enter” to run it:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(my.favourite.number</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(my.favourite.number</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Notice that, in this erroneous line of code, we have (intentionally) forgotten to include the final bracket. As a result, after you hit “Enter”, the Console output shows a “<code>+</code>” instead of the result of the mathematical operation (see <a href="#fig-ConsoleIncompleteFunction" class="quarto-xref">Figure&nbsp;<span>5.11</span></a>). The “<code>+</code>” indicates that the line is incomplete and therefore cannot be interpreted yet. Whenever you see a “<code>+</code>” at the start of a command in the Console, <code>R</code> is asking you to complete your line of code.</p>
 <div id="fig-ConsoleIncompleteFunction" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RStudio screenshot showing the console with an incomplete function and a red ellipse around the +-symbol.">
@@ -1204,11 +1242,11 @@ Figure&nbsp;5.11: Incomplete function in console
 <p>If you are running a line of code just once, from the Console, this first method is fine. As we have seen above, however, most of the time, you will write your code in a script rather than in the Console. So this first, on-the-fly method is only recommendable for lines of code that you will genuinely only need once. These include commands to install packages, like <code>install.packages("janeaustenr")</code>, or to consult documentation files, e.g.&nbsp;<code>help(janeaustenr)</code>.</p>
 <p>Given that we will mostly be working in scripts to ensure that our analyses are reproducible (see <a href="14_LiterateProgramming.html" class="quarto-xref"><span>Chapter 14</span></a>), let’s now generate this error from an <code>.R</code> script. To do so, copy and paste the erroneous line of code in your <code>.R</code> script and try to run it by either clicking on the “Run” icon or using the shortcut <code>Ctrl/Cmd + Enter</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(my.favourite.number</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(my.favourite.number</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Again, our incomplete line of code cannot be interpreted and this generates a “plus-situation” appears in the Console. Now, correct the error in your script by adding the missing closing bracket and try to run the command again.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(my.favourite.number)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(my.favourite.number)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>As shown in <a href="#fig-ConsoleError" class="quarto-xref">Figure&nbsp;<span>5.12</span></a>, even though we have corrected the problem, we now get an error! 🤯 At first sight, this does not make sense, but look carefully at what happened in the Console: The line of code that <code>R</code> tried to interpret (in blue) is <code>sqrt(my.favourite.number + sqrt(my.favourite.number)</code>, i.e.&nbsp;the combination of the incomplete version of the command <em>plus</em> the complete one. This is obviously nonsense and <code>R</code> tells us so by outputting an error message (see <a href="#fig-ConsoleError" class="quarto-xref">Figure&nbsp;<span>5.12</span></a>)!</p>
 <div id="fig-ConsoleError" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RStudio screenshot showing the console with an error.">
@@ -1223,13 +1261,13 @@ Figure&nbsp;5.12: Error message in console
 </div>
 <p>To run a new line of code, we must see the command prompt <code>&gt;</code> in the Console. So, let’s generate the error again and learn how to fix it with the second method. Add this erroneous line to your script again and run it:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(my.favourite.number</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(my.favourite.number</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The plus-situation arises again, but we will now solve it using the second method. Head over to the Console and place your cursor next to the <code>+</code>. This time, instead of completing the line by adding a closing bracket, press the Escape key (“Esc”) on your keyboard. This will cancel the incomplete line of code. Then, you can add the missing <code>)</code> in your script and rerun the newly completed line of code from the Source pane.</p>
 <p>This second method is the one you should use when you are documenting your code in a script. If you don’t make the changes immediately in your script, you will forget and you will run into this error again in the future. Think of it like a pastry chef who realises that they need to put a little more baking powder in a cake batter for the texture to be just right, but does not make a note of that change in their recipe book. It’s quite likely that the chef will forget the next time they bake the cake. If it is one of their assistants who prepares the batter, they will will have no way of knowing that the chef made that change!</p>
 <p>Learning to make sense of error messages is a very important skill that, like all skills, takes practice. Most errors are very easy to fix, if you keep your cool. In fact, 90% of errors are simply typos<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, so really nothing worth stressing about!</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1238,43 +1276,43 @@ Figure&nbsp;5.12: Error message in console
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><span style="color:green;"><strong>Q5.11</strong></span> Copy and paste the following lines of code in a new <code>.R</code> script. Try to run each line individually. Each line will generate an error of some kind. In some cases, <em>RStudio</em> will warn you in advance that a line of code is likely wrong by displaying a red cross icon to the left of the erroneous line. If you hover over the red cross icon, <em>RStudio</em> will display a message that may help you to fix the error.</p>
 <p>Can you decode the error messages to find out what is causing these errors and fix these ten erroneous commands?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>my.favourite.word <span class="ot">&lt;-</span> <span class="st">"empathy"</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="ot">&lt;-</span> <span class="dv">13</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 1:</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">+</span> my.favorite.number</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 2:</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>Negin<span class="sc">-</span>Fav<span class="sc">-</span>Word <span class="ot">&lt;-</span> <span class="st">"Ach so!"</span> </span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 3:</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>my.favourite.numbers<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 4:</span></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>ömers_favourite_ number <span class="ot">&lt;-</span> <span class="dv">52</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 5:</span></span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    ömers_favorite_number <span class="ot">=</span>   my.favourite..number</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 6:</span></span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>my.favourite.number<span class="sc">*</span><span class="dv">2</span> <span class="ot">-&gt;</span> half.my.fav.number</span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 7:</span></span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>rose<span class="st">'s.favourite.number &lt;- 5</span></span>
-<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="st"># Error 8:</span></span>
-<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a><span class="st">BestWordEver &lt;- "supercalifragilisticexpialidocious</span></span>
-<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a><span class="st"># Error 9:</span></span>
-<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a><span class="st">2FavNumbers &lt;- my.favourite.number + ömers_favourite_number</span></span>
-<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="st"># Error 10:</span></span>
-<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a><span class="st">good.luck &lt;- موفق باشيد"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>my.favourite.word <span class="ot">&lt;-</span> <span class="st">"empathy"</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="ot">&lt;-</span> <span class="dv">13</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 1:</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>my.favourite.number <span class="sc">+</span> my.favorite.number</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 2:</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>Negin<span class="sc">-</span>Fav<span class="sc">-</span>Word <span class="ot">&lt;-</span> <span class="st">"Ach so!"</span> </span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 3:</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>my.favourite.numbers<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 4:</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>ömers_favourite_ number <span class="ot">&lt;-</span> <span class="dv">52</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 5:</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    ömers_favorite_number <span class="ot">=</span>   my.favourite..number</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 6:</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>my.favourite.number<span class="sc">*</span><span class="dv">2</span> <span class="ot">-&gt;</span> half.my.fav.number</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Error 7:</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>rose<span class="st">'s.favourite.number &lt;- 5</span></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a><span class="st"># Error 8:</span></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a><span class="st">BestWordEver &lt;- "supercalifragilisticexpialidocious</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a><span class="st"># Error 9:</span></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a><span class="st">2FavNumbers &lt;- my.favourite.number + ömers_favourite_number</span></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a><span class="st"># Error 10:</span></span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a><span class="st">good.luck &lt;- موفق باشيد"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -1287,7 +1325,7 @@ Figure&nbsp;5.12: Error message in console
 </figure>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1296,7 +1334,7 @@ Figure&nbsp;5.12: Error message in console
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><p>The first error was <code>object 'my.favorite.number' not found</code>. This means that the object <code>my.favorite.number</code> is not stored in your environment. If you think it is, the problem is most likely due to a typo. Here, <code>my.favorite.number</code> uses American English spelling, whereas we used British English spelling (with a “u”) when we created the object. To correct the error, you need to use exactly the same spelling as when you created the object.</p></li>
