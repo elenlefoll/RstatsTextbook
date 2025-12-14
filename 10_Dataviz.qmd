@@ -9,7 +9,7 @@ html:
 
 One of the advantages of working in `R` is that it allows us to create highly customised graphs for effective data visualisation. The **Grammar of Graphics** [@wilkinsonGrammarGraphics2005] is a theoretical framework that defines a structured approach to building and understanding statistical graphs. We will focus on using the tidyverse package [{ggplot2}](https://ggplot2.tidyverse.org/) [@Wickhamggplot2Elegantgraphics2016] to create effective data visualisations. The {ggplot2} is an implementation of the Grammar of Graphics (GG) syntax in `R`.
 
-This chapter is divided into two parts: the first explains the [**syntax**] of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] and how the {ggplot2} package works, while the second part focuses on the [**semantics**] of statistical graphics and provides an introduction to the many different types of data visualisations that can be created using the package.
+This chapter is divided into two parts: the first explains the **syntax** of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] and how the {ggplot2} package works, while the second part focuses on the **semantics** of statistical graphics and provides an introduction to the many different types of data visualisations that can be created using the package.
 
 ### Chapter overview {.unnumbered}
 
@@ -35,7 +35,7 @@ All examples and quiz questions are based on data from:
 
 > Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72-100. <https://doi.org/10.1111/lang.12323>.
 
-Our starting point for this chapter is the wrangled combined dataset that we created and saved in @sec-DataWrangling. Follow the instructions in @sec-filter to create this `R` object. 
+Our starting point for this chapter is the wrangled combined dataset that we created and saved in @sec-DataWrangling. Follow the instructions in @sec-filter to create this `R` object.
 
 Alternatively, you can download `Dabrowska2019.zip` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/raw/69d1e31be7394f2b612825f031ebffeb75886390/Dabrowska2019.zip){.uri}. To launch the project correctly, first unzip the file and then double-click on the `Dabrowska2019.Rproj` file.
 :::
@@ -192,7 +192,6 @@ check_hint("Check out the function's help file to find out more about its possib
 **Alt-text**, or alternative text, is a concise description of an image used to make its informational content accessible to people with visual impairments. Using a screenreader programme, blind and visually impaired individuals can have the alt-text associated with an image read out to them.
 
 A good alt-text aims to convey the main message and insights of the graph, allowing someone who cannot see it to understand the information being presented. In the context of online publications, alt-text is also useful in regions with low bandwidth as images may take a very long time to load. By including alt-text, we can therefore make our work more accessible and inclusive, enabling more people to engage with and understand our data and analyses.
-
 :::
 
 ### Data {#sec-ggplotData}
@@ -732,9 +731,8 @@ ggplot(data = Dabrowska.data,
 
 ```
 
-:::: {.content-visible when-format="pdf"}
-
-![](images/SillyTheme.png)
+::: {#fig-SillyTheme .content-visible when-format="pdf"}
+![Illustration of some of the customisation options of `ggplot` objects](images/SillyTheme.png)
 :::
 
 ### Coordinates {#sec-coordinates}
@@ -801,7 +799,7 @@ But, first, let's think about **why** we visualise data. Data visualisation is a
 -   To detect data processing errors and outliers
 -   To check assumptions of statistical tests or models (see @sec-Assumptions and @sec-AssumptionsLR)
 -   To examine variation across different subsets of the data
--   To better interpret the results of statistical tests (see @sec-Inferential) and models (see @sec-SLR and -@sec-MLR)
+-   To better interpret the results of statistical tests (see @sec-Inferential) and models (see @sec-SLR and [-@sec-MLR])
 :::
 
 ::: {.column width="10%"}
@@ -858,7 +856,6 @@ Dabrowska.data |>
        title = "Native languages of L2 participants") +
   theme_minimal(base_size = 16)
 ```
-
 :::
 
 To create @fig-NativeLanguagesBarplot, we first reordered the factor levels of the `NativeLg` variable using two functions from the {forcats} package (see @sec-Factors): `fct_infreq()` is first used to order the factors according to their frequency (by default, they are sorted alphabetically), and then `fct_rev()` is used to reverse that order. The latter step is needed because the `coord_flip()` functions reverses everything. You can check the order of a factor's level using the function `levels()`. Note that, if two levels have the same number of occurrences, they are ordered alphabetically (as seen in @fig-NativeLanguagesBarplot).
@@ -871,7 +868,7 @@ levels(fct_infreq(Dabrowska.data$NativeLg))
 levels(fct_rev(fct_infreq(Dabrowska.data$NativeLg)))
 ```
 
-::: {.callout-tip collapse="false"}
+::::::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
 [**Q10.3**]{style="color:green;"} Compare the two plots below. Which one makes it easier to see which occupational group has the fewest participants and why?
@@ -1197,7 +1194,7 @@ ggplot(data = Dabrowska.data,
 ```
 :::
 
-::: {.callout-tip collapse="false"}
+::::::::::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
 [**Q10.8**]{style="color:green;"} How many different scores did participants obtain on the English grammar test (as stored in the `Grammar` variable).
@@ -2213,7 +2210,7 @@ Word clouds are widely used in the media and corporate world, but they are much 
 -   Longer words appear larger simply due to their length.
 -   The human eye is not good at discerning small differences in font sizes.
 
-:::: {.callout-note collapse="true"}
+::::: {.callout-note collapse="true"}
 #### Going further: Using `geom_text()`
 
 We have seen that, on a scatter plot, each point represents an observation, in our case, a participant. For instance, in @fig-ColourScatterPlot, each point represents an L2 participant and displays their age and grammar comprehension test score. In addition, we can colour the points according to their native language family.
@@ -2321,7 +2318,7 @@ ggplot(aes(x = Age,
        caption = "(Subgroup analysis of female L2 participants with grammar scores below 90.)") +
   theme_bw(base_size = 14)
 ```
-::::
+:::::
 
 ### Complex plots {#sec-CombiningGeoms}
 
@@ -2469,7 +2466,6 @@ myplot <- Dabrowska.data |>
 ggplotly(myplot)
 ```
 
-
 ```{r}
 #| echo: false
 #| warning: false
@@ -2508,7 +2504,6 @@ p
 ```
 
 ::: {.content-visible when-format="pdf"}
-
 ![](images/IntPlotCh10a.png)
 :::
 
@@ -2578,11 +2573,8 @@ ggplotly(myplot2)
 ```
 
 ::: {.content-visible when-format="pdf"}
-
 ![](images/IntPlotCh10b.png)
-
 :::
-
 
 ## Exporting plots 🚀 {#sec-ExploringPlots}
 
