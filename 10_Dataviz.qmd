@@ -59,7 +59,7 @@ Check that your data are correctly imported by examining the output of `View(Dab
 
 The syntax of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] is made up of **layers** (@fig-layers), which allow us to create highly effective and efficient data visualisations, while giving us lots of flexibility and control.
 
-![The syntax of the Grammar of Graphics as visualised in the [QCBS R Workshop Series](https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html) (CC-BY-NC-SA).](images/gglayers.png){#fig-layers width="559" fig-alt="A layered diagram illustrating the key elements of data visualization: Data, Aesthetics, Geometries, Facets, Statistics, Coordinates, and Theme, each shown as a layer with a distinct colour."}
+![The syntax of the Grammar of Graphics as visualised in the [QCBS R Workshop Series](https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html) ([CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/))(images/gglayers.png){#fig-layers width="559" fig-alt="A layered diagram illustrating the key elements of data visualization: Data, Aesthetics, Geometries, Facets, Statistics, Coordinates, and Theme, each shown as a layer with a distinct colour."}
 
 The **data** layer and the **aesthetics** layer are compulsory as you cannot build a graph that does not map *some* data onto *some* visual aspect (= aesthetic) of a graph. The remaining layers are optional, but some are very important. In the following, we will explain how the **geometries**, **facet**, **scales**, **coordinates**, and **theme** layers are used to build and customise graphs using the {ggplot2} library in `R`.
 
@@ -713,6 +713,7 @@ Pretty much all aspects of plot themes can be customised. To demonstrate this, @
 #| fig-cap: "Illustration of some of the customisation options of `ggplot` objects"
 #| code-fold: true
 #| code-summary: "See {ggplot2} code to generate plot."
+#| fig-alt: "A bar plot showing the number of participants by occupational group. The plot features unconventional styling including a peach background, bright yellow grid lines, vertical axis labels, and bold colored text."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup, fill = Gender)) +
@@ -748,6 +749,7 @@ For example, if we want to display the full names of the four occupational group
 #| fig-asp: 0.3
 #| fig-width: 8
 #| label: "fig-FlippedBarplot"
+#| fig-alt: "A horizontal bar plot showing the number of participants by occupational group and gender. The chart shows four occupational categories on the y-axis with their full names: Professional-level job/student, Manual profession, Professionally inactive, and Clerical profession."
 
 Dabrowska.data |> 
   mutate(OccupGroup = fct_recode(OccupGroup,
@@ -772,6 +774,7 @@ The vast majority of statistical graphs use the Cartesian coordinate system. Pie
 #| source-line-numbers: "8-13"
 #| fig-height: 4
 #| label: "fig-OccupGroupPieChart"
+#| fig-alt: "This is a pie chart of the data above. A legend on the right identifies each occupational group with its corresponding color."
 
 Dabrowska.data |> 
   mutate(OccupGroup = fct_recode(OccupGroup,
@@ -842,6 +845,7 @@ Then, click on the "Show `R` code" button to compare your intuitions with the ac
 #| code-summary: "Show `R` code."
 #| fig-width: 9
 #| label: "fig-NativeLanguagesBarplot"
+#| fig-alt: "A horizontal bar plot titled showing the distribution of native languages among second language learners, with bars colored by language family."
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
