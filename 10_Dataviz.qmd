@@ -59,7 +59,7 @@ Check that your data are correctly imported by examining the output of `View(Dab
 
 The syntax of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] is made up of **layers** (@fig-layers), which allow us to create highly effective and efficient data visualisations, while giving us lots of flexibility and control.
 
-![The syntax of the Grammar of Graphics as visualised in the [QCBS R Workshop Series](https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html) ([CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/))(images/gglayers.png){#fig-layers width="559" fig-alt="A layered diagram illustrating the key elements of data visualization: Data, Aesthetics, Geometries, Facets, Statistics, Coordinates, and Theme, each shown as a layer with a distinct colour."}
+![The syntax of the Grammar of Graphics as visualised in the [QCBS R Workshop Series](https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html) ([CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/))](images/gglayers.png){#fig-layers width="559" fig-alt="A layered diagram illustrating the key elements of data visualization: Data, Aesthetics, Geometries, Facets, Statistics, Coordinates, and Theme, each shown as a layer with a distinct colour."}
 
 The **data** layer and the **aesthetics** layer are compulsory as you cannot build a graph that does not map *some* data onto *some* visual aspect (= aesthetic) of a graph. The remaining layers are optional, but some are very important. In the following, we will explain how the **geometries**, **facet**, **scales**, **coordinates**, and **theme** layers are used to build and customise graphs using the {ggplot2} library in `R`.
 
@@ -191,9 +191,25 @@ check_hint("Check out the function's help file to find out more about its possib
 ::: {.callout-note collapse="false"}
 #### What is alt-text and why is it important?
 
-**Alt-text**, or alternative text, is a concise description of an image used to make its informational content accessible to people with visual impairments. Using a screenreader programme, blind and visually impaired individuals can have the alt-text associated with an image read out to them.
+Alternative text, or **alt-text**, is a concise description of an image used to make its informational content accessible to people with visual impairments. Using a screen reader programme, blind and low-vision readers can have the alt-text associated with an image read out to them.
 
-A good alt-text aims to convey the main message and insights of the graph, allowing someone who cannot see it to understand the information being presented. In the context of online publications, alt-text is also useful in regions with low bandwidth as images may take a very long time to load. By including alt-text, we can therefore make our work more accessible and inclusive, enabling more people to engage with and understand our data and analyses.
+A good alt-text aims to convey the main message and insights of the graph, allowing someone who cannot see it to understand the information being presented [see @universityofsouthcarolinaAlternativeText and @w3cwebaccessibilityinitiativewaiImages2022 for concise tutorials on how to write good alt-texts for all kinds of images]. In the context of online publications, alt-text is also useful in regions with low bandwidth as images may take a very long time to load. By including alt-text, we can therefore make our work more accessible and inclusive, enabling more people to engage with and understand our data and analyses.
+
+@sec-QuartoFigures explains how to add alt-text to plots and figures in Quarto documents. Whilst many so-called "AI" tools will now automatically generate alt-text for us, it is best to write alt-text ourselves. This is because auto-generated alt-text often does not focus on the visual information that we want to convey, misses out on important aspects, and/or overwhelms the user with redundant information.
+
+Blind and low-vision readers may also want to check out the [{BrailleR}](https://ajrgodfrey.github.io/BrailleR/articles/BrailleR.html) package [@godfreyBrailleRImprovedAccess2025], which converts plots generated in `R` into a textual form that can be interpreted by blind and low-vision `R` users who cannot access the graphs without printing the image to a tactile embosser, or who need the extra text to support any tactile images that they do create.
+
+```{r}
+#| include: false
+#| eval: false
+
+# https://github.com/ajrgodfrey/BrailleR
+install.packages("remotes")
+remotes::install_github("ajrgodfrey/BrailleR", upgrade=TRUE, quiet=TRUE)
+
+library(BrailleR)
+BrailleR::Describe()
+```
 :::
 
 ### Data {#sec-ggplotData}
@@ -205,7 +221,6 @@ Instead of using the **data** argument of the `ggplot()` function as we did abov
 **Using the data argument of `ggplot()`**
 
 ```{r}
-#| source-line-numbers: "1"
 #| fig-alt: "This is the same bar plot as above."
 
 ggplot(data = Dabrowska.data,
@@ -224,7 +239,6 @@ ggplot(data = Dabrowska.data,
 **Piping the data into `ggplot()`**
 
 ```{r}
-#| source-line-numbers: "1"
 #| fig-alt: "This is the same bar plot as above."
 
 Dabrowska.data |> 
@@ -286,6 +300,20 @@ Dabrowska.data |>
        title = "Occupational groups of participants")
 ```
 
+::: {.callout-warning collapse="false"}
+#### Error message: "seq.default(from, to, by) : invalid" {.unnumbered}
+
+If you get the error message
+
+```         
+Error in seq.default(from, to, by) : invalid '(to - from)/by' 
+```
+
+when trying to run a chunk of code that generates a plot, this is most likely due to your Plots pane in *RStudio* not being large enough to accommodate the plot. If you increase its size and rerun the chunk, your plot should appear in the Plots pane as expected.
+
+If you have a small screen, you can also click on the "🔎 Zoom" button at the top of the Plots pane to view your plot in a separate *RStudio* window, which you can resize according to your needs.
+:::
+
 To compare the distributions of occupations of the male and female L2 participants, we can combine a `filter()` operation to select only the L2 participants, with a `facet_wrap()` layer (see @fig-BarOccupGroupL2Facet).
 
 ```{r}
@@ -307,7 +335,7 @@ To explore potential gender differences in occupational groups across both L1 an
 
 ```{r}
 #| source-line-numbers: "4"
-#| fig-height: 6
+#| fig-asp: 1
 #| label: "fig-TwoFacetsBarplot"
 #| fig-alt: "Bar plot showing the number of participants across four occupational groups, split by language group (L1 and L2) and gender (F and M). The plot has four panels. L1 Female participant counts are relatively even across groups, with the highest in PS. In L2 Female panel a large number of participants are in the PS group, in L1 Male panel all occupational groups have similar participant counts, and in L2 Male panel PS and M have the highest counts."
 
@@ -325,7 +353,7 @@ Dabrowska.data |>
 
 ```{r}
 #| source-line-numbers: "3"
-#| fig-height: 6
+#| fig-asp: 1
 #| label: "fig-ColourBarplot"
 #| fig-alt: "This is the same plot as above. The only difference is that the bars in the two F panels are in the colour light red, and the bars in the two M panels are in the colour blue. There is a legend titled Gender on the right side of the plot that shows which colour shows which category."
 
@@ -346,7 +374,7 @@ One way to do this is to use `scale_fill_manual()` to manually pick our own colo
 #| fig-cap: "A facetted bar plot with hand-picked colours"
 #| label: "fig-PurpleBarplot"
 #| source-line-numbers: "3,8"
-#| fig-height: 6
+#| fig-asp: 1
 #| fig-alt: "This is the same plot as above. The only difference is that the bars in the two F panels are in the colour light purple, and the bars in the two M panels are in the dark purple."
 
 Dabrowska.data |> 
@@ -397,7 +425,7 @@ Dabrowska.data |>
                      limits = c(0,60))  
 ```
 
-:::: {.callout-note collapse="true"}
+::: {.callout-note collapse="false"}
 #### A note on colours and colour blindness 🌈
 
 Colour blindness is a condition that results in a decreased ability to see colours and perceive differences in colour. There are different types of colour blindness but, in general, it is best to avoid red-green contrasts. To ensure that your data visualisations are accessible to as many people as possible, you may want to use the [{colorBlindness}](https://cran.r-project.org/web/packages/colorBlindness/vignettes/colorBlindness.html) package [@ouColorBlindnessSafeColor2021] to simulate the appearance of a set of colours for people with different forms of colour blindness.
@@ -428,42 +456,8 @@ But you need not manually pick colours, as many people have developed and shared
 colorBlindness::displayAllColors(viridis::viridis(6))
 ```
 
-Choosing an appropriate palette is not the only way to make your visualisations accessible to colour-blind readers. Another way is to provide redundant mappings to other aesthetics such as size, line type, shape, or pattern (see @fig-PatternBarplot).
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show {ggplot2} code to generate patterned barplot."
-#| fig-height: 5
-#| label: "fig-PatternBarplot"
-#| fig-alt: "This is the same plot as above. The only difference is that the two different shades of purple representing female and male participants are marked with a distinct pattern as well."
-
-#install.packages("ggpattern")
-library(ggpattern)
-
-Dabrowska.data |> 
-  ggplot(mapping = aes(x = OccupGroup, 
-                       fill = Gender,
-                       pattern = Gender)) +
-  geom_bar_pattern(pattern_density = 0.001,  # adjust for better visibility
-                   pattern_fill = "transparent",  # keeps pattern visible
-                   pattern_colour = "white") +  # pattern lines color
-  facet_wrap(~ Group) +
-  labs(x = "Occupational group",
-       y = "Participants") +
-  scale_y_continuous(expand = c(0,0),
-                     limits = c(0,35)) +
-  scale_fill_manual(values = c("purple", "#34027d")) +
-  scale_pattern_manual(values = c("stripe", "crosshatch")) # specify types of patterns
-```
-
-::: {.callout-warning collapse="true"}
-#### "What to do if you get the error message: seq.default(from, to, by) : invalid" {.unnumbered}
-
-If you get the error message "Error in seq.default(from, to, by) : invalid '(to - from)/by'" when trying to run this chunk of code, this is because your Plots pane in *RStudio* is not large enough to accommodate the plot. Increase its size and it should work (see also <https://stackoverflow.com/questions/73960726/error-in-seq-defaultfrom-to-by-invalid-to-from-by-ggpattern>).
+Choosing an appropriate palette is not the only way to make your visualisations accessible to colour-blind readers. Another way is to provide redundant mappings to other aesthetics such as size, line type, shape, or pattern. Finally, it is important to remember that colour blindness is by no means the only type of visual impairment you should consider when creating visualisations. Worldwide, far more people are affected by **blindness** and **low vision**. @sec-QuartoFigures explains how to add **alternative texts** (alt-text) to plots and images. Many people with visual impairments rely on screen readers that use these alternative texts to provide audio descriptions of images and plots. These alternative texts can also improve the experience of users facing internet connection issues resulting in images that do not load properly or quickly enough.
 :::
-
-Finally, it is important to remember that colour blindness is by no means the only type of visual impairment you should consider when creating visualisations. Wordlwide, far more people are affected by **blindness** and **low vision**. @sec-LiteRateProgramming explains how to add **alternative texts** (alt-text) to plots and images. Many people with visual impairments rely on screen readers that use these alternative texts to provide audio descriptions of images and plots. These alternative texts can also improve the user experience when there are internet connection issues and images do not load properly or quickly enough.
-::::
 
 Some academic publishers still require grey-scale plots, in which case you will want to use the **scale** layer `scale_fill_grey()`. Alternatively, the colour palettes of the {viridis} package (see information box on colour blindness) render well in grey, too. The {viridis} function for a discrete colour scale (as needed for a categorical variable such as `Gender`) can be called up using the `scale_fill_viridis_d()` function. With the "option" argument, you can switch between eight different viridis palettes ("magma", "inferno", "plasma", "cividis", "rocket", "turbo").
 
@@ -710,7 +704,6 @@ Pretty much all aspects of plot themes can be customised. To demonstrate this, @
 ```{r}
 #| eval: !expr 'knitr::is_html_output()'
 #| label: fig-SillyTheme
-#| fig-cap: "Illustration of some of the customisation options of `ggplot` objects"
 #| code-fold: true
 #| code-summary: "See {ggplot2} code to generate plot."
 #| fig-alt: "A bar plot showing the number of participants by occupational group. The plot features unconventional styling including a peach background, bright yellow grid lines, vertical axis labels, and bold colored text."
@@ -735,7 +728,7 @@ ggplot(data = Dabrowska.data,
 ```
 
 ::: {#fig-SillyTheme .content-visible when-format="pdf"}
-![Illustration of some of the customisation options of `ggplot` objects](images/SillyTheme.png)
+![](images/SillyTheme.png)
 :::
 
 ### Coordinates {#sec-coordinates}
@@ -765,7 +758,7 @@ Dabrowska.data |>
   scale_fill_viridis_d() +
   coord_flip() +
   theme_minimal() +
-  theme(axis.text = element_text(size = 14))
+  theme(axis.text = element_text(size = 12))
 ```
 
 The vast majority of statistical graphs use the Cartesian coordinate system. Pie charts and other circular plots, however, use the **polar coordinate system** (`coord_polar`), whereby quantities are mapped onto angles rather than distances. In general, humans are much better at judging lengths than angles or areas [@clevelandGraphicalPerceptionVisual1987], which is why circular graphs such as pie charts are typically *not* recommended forms of good data visualisations [see, e.g. @fewPiesDessert]. That said, they *can* be produced using the {ggplot2} library by adding the **coordinate** layer `coord_polar("y")` and modifying a few parameters.
@@ -838,7 +831,9 @@ As we saw in @Sec-Syntax, bar plots (also called **bar charts**) are a great way
 
 [**Q10.2**]{style="color:green;"} Study @fig-NativeLanguagesBarplot and think about which {ggplot2} functions were used to generate it. 🤔
 
-Then, click on the "Show `R` code" button to compare your intuitions with the actual code. Note that there may well be more than one solution: So do try out your version and see if you can spot any differences!
+Then, click on the "Show `R` code" button to compare your intuitions with the actual code. Note that there may well be more than one solution, so do try out your version and see if you can spot any differences!
+:::
+::::
 
 ```{r}
 #| code-fold: true
@@ -863,8 +858,6 @@ Dabrowska.data |>
        title = "Native languages of L2 participants") +
   theme_minimal(base_size = 16)
 ```
-:::
-::::
 
 To create @fig-NativeLanguagesBarplot, we first reordered the factor levels of the `NativeLg` variable using two functions from the {forcats} package (see @sec-Factors): `fct_infreq()` is first used to order the factors according to their frequency (by default, they are sorted alphabetically), and then `fct_rev()` is used to reverse that order. The latter step is needed because the `coord_flip()` functions reverses everything. You can check the order of a factor's level using the function `levels()`. Note that, if two levels have the same number of occurrences, they are ordered alphabetically (as seen in @fig-NativeLanguagesBarplot).
 
@@ -876,8 +869,8 @@ levels(fct_infreq(Dabrowska.data$NativeLg))
 levels(fct_rev(fct_infreq(Dabrowska.data$NativeLg)))
 ```
 
-:::: {.content-visible when-format="html"}
-::: {.callout-tip collapse="false"}
+:::::::: {.content-visible when-format="html"}
+::::::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
 [**Q10.3**]{style="color:green;"} Compare the two plots below. Which one makes it easier to see which occupational group has the fewest participants and why?
@@ -964,7 +957,7 @@ check_hint("Two reasons are correct.",
 
 ```
 :::::::
-::::
+::::::::
 
 :::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="false"}
@@ -1020,14 +1013,14 @@ check_question("No, it only adds clutter.",
                type = "radio",
                q_id = "Q10.5", 
                button_label = "Check answer",
-               right = "That's right: the legend is redundant and does not make the plot easier to interpret. We can remove the legend by adding a theme layer that changes the position of the legend to \"none\". Click on the link below to find out more.",
+               right = "That's right: the legend is redundant and does not make the plot easier to interpret. We can remove the legend by adding a theme layer that changes the position of the legend to \"none\". Click below to find out how to integrate this in ggplot2 code.",
                wrong = "Are you sure?")
 
 ```
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show code to answer Q10.5"
+#| code-summary: "See code."
 #| eval: false
 #| source-line-numbers: "7"
 
@@ -1129,6 +1122,7 @@ Dabrowska.data |>
 In @sec-DistributionsNumeric, we visually examined the distribution of participants' ages in a **bar plot**. This was possible because the age variable in @DabrowskaExperienceAptitudeIndividual2019 was recorded as a discrete numeric variable (i.e. either as 18 or 19, but not 18.4 years of age).
 
 ```{r}
+#| label: "fig-AgeBarPlot"
 ggplot(data = Dabrowska.data,
        mapping = aes(Age)) +
   geom_bar() +
@@ -1136,17 +1130,19 @@ ggplot(data = Dabrowska.data,
   theme_minimal()
 ```
 
-Bar charts are best suited for categorical data and should only be used to visualise discrete numeric variables that have a fairly limited number of possible values. As we can see from the output of the `unique()` function, this is not the case for the `Age` variable in `Dabrowska.data`, as it includes `r length(unique(Dabrowska.data$Age))` different age values, ranging from `r min(Dabrowska.data$Age)` to `r max(Dabrowska.data$Age)`.
+Bar plots are best suited for categorical data and should only be used to visualise discrete numeric variables that have a fairly limited number of possible values. As we can see from the output of the `unique()` function, this is not the case for the `Age` variable in `Dabrowska.data`, as it includes `r length(unique(Dabrowska.data$Age))` different age values, ranging from `r min(Dabrowska.data$Age)` to `r max(Dabrowska.data$Age)`.
 
 ```{r}
 unique(Dabrowska.data$Age) |> 
   sort()
 ```
 
-The distribution of participants' ages is therefore better visualised as a histogram or density plot. To visualise participants' age as **histogram** rather than as a bar plot, all we need to do is change the plot geometry (see @sec-geoms) from `geom_bar()` to `geom_histogram()`.
+The distribution of participants' ages is therefore better visualised as a histogram or density plot. To visualise participants' age as **histogram** (\@fig-AgeHistogram) rather than as a bar plot (\@fig-AgeBarPlot), change the plot geometry (see @sec-geoms) from `geom_bar()` to `geom_histogram()`.
 
 ```{r}
 #| message: true
+#| label: "fig-AgeHistogram"
+#| source-line-numbers: "3"
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = Age)) +
@@ -1163,7 +1159,7 @@ As indicated in the message, to change this behaviour, we can adjust the value o
 Compare the three histograms below. In your opinion, which binwidth provides the most effective way to visualise the distribution of participants' ages? 🤔
 
 ::: panel-tabset
-##### `geom_histogram()`
+##### `default bin width`
 
 ```{r}
 #| source-line-numbers: "3"
@@ -1177,7 +1173,7 @@ ggplot(data = Dabrowska.data,
   theme_minimal()
 ```
 
-##### `geom_histogram(binwidth = 2)`
+##### `binwidth = 2`
 
 ```{r}
 #| source-line-numbers: "3"
@@ -1191,7 +1187,7 @@ ggplot(data = Dabrowska.data,
   theme_minimal()
 ```
 
-##### `geom_histogram(binwidth = 4)`
+##### `binwidth = 4`
 
 ```{r}
 #| source-line-numbers: "3"
@@ -1206,8 +1202,26 @@ ggplot(data = Dabrowska.data,
 ```
 :::
 
-:::: {.content-visible when-format="html"}
-::: {.callout-tip collapse="false"}
+The distribution of two continuous variables can also be compared by superimposing two histograms as in \@fig-OverlappingHisto. This requires the addition of a `fill` aesthetics (see @sec-scales) and the argument `position = "identity"`. For both distributions to be visible, it is also necessary to add some transparency to the fill colour of the bars. This is achieved using the `alpha` argument of the `geom_histogram()` function. An alpha value of `0` corresponds to full transparency (e.g. no colour), whilst an alpha value of `1` corresponds to complete opacity.
+
+```{r}
+#| label: "fig-OverlappingHisto"
+#| source-line-numbers: "3:4,5:6"
+
+ggplot(data = Dabrowska.data,
+       mapping = aes(x = Age,
+                     fill = Group)) + 
+  geom_histogram(binwidth = 5,
+                 position = "identity",
+                 alpha = 0.5) +
+  scale_fill_viridis_d() +
+  labs(x = "Age (in years)",
+       y = "Number of participants") +
+  theme_minimal()
+```
+
+:::::::::::: {.content-visible when-format="html"}
+::::::::::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
 [**Q10.8**]{style="color:green;"} How many different scores did participants obtain on the English grammar test (as stored in the `Grammar` variable).
@@ -1457,8 +1471,8 @@ ggplot(data = Dabrowska.data,
   theme(legend.position = "none")
 ```
 ::::::
-::::
-:::
+:::::::::::
+::::::::::::
 
 ### Density plots {#sec-Density}
 
@@ -1574,15 +1588,15 @@ The help file of each `geom_` function provides a list of the **aesthetics** arg
 >
 > `geom_density()` understands the following aesthetics (required aesthetics are in bold):
 >
-> -   [**`x`**](http://127.0.0.1:19837/help/library/ggplot2/help/aes_position)
-> -   [**`y`**](http://127.0.0.1:19837/help/library/ggplot2/help/aes_position)
-> -   [`alpha`](http://127.0.0.1:19837/help/library/ggplot2/help/aes_colour_fill_alpha)
-> -   [`colour`](http://127.0.0.1:19837/help/library/ggplot2/help/aes_colour_fill_alpha)
-> -   [`fill`](http://127.0.0.1:19837/help/library/ggplot2/help/aes_colour_fill_alpha)
-> -   [`group`](http://127.0.0.1:19837/help/library/ggplot2/help/aes_group_order)
-> -   [`linetype`](http://127.0.0.1:19837/help/library/ggplot2/help/aes_linetype_size_shape)
-> -   [`linewidth`](http://127.0.0.1:19837/help/library/ggplot2/help/aes_linetype_size_shape)
-> -   `weight`
+> -   [**`x`**](https://ggplot2.tidyverse.org/reference/aes_position.html)
+> -   [**`y`**](https://ggplot2.tidyverse.org/reference/aes_position.html)
+> -   [`alpha`](https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html) → `NA`
+> -   [`colour`](https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html) → via [`theme()`](https://ggplot2.tidyverse.org/reference/theme.html)
+> -   [`fill`](https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html) → via [`theme()`](https://ggplot2.tidyverse.org/reference/theme.html)
+> -   [`group`](https://ggplot2.tidyverse.org/reference/aes_group_order.html) → inferred
+> -   [`linetype`](https://ggplot2.tidyverse.org/reference/aes_linetype_size_shape.html) → via [`theme()`](https://ggplot2.tidyverse.org/reference/theme.html)
+> -   [`linewidth`](https://ggplot2.tidyverse.org/reference/aes_linetype_size_shape.html) → via [`theme()`](https://ggplot2.tidyverse.org/reference/theme.html)
+> -   `weight` → `1`
 >
 > Learn more about setting these aesthetics in `vignette("ggplot2-specs")`. \[...\]
 
@@ -1804,7 +1818,7 @@ check_hint("This boxplot requires a total of four data mappings.",
 :::
 ::::
 
-::::::::::::::: {.callout-note collapse="true"}
+::::::::::::::: {.callout-note collapse="false"}
 #### Going further: Dot plots and violin plots
 
 The {ggplot2} library offers many more `geom_` functions for you to explore. Here are two more types of graphs that are currently only rarely used in the language sciences, but which can be very effective ways to visualise the distribution of a numeric variable across different levels of a categorical variable.
@@ -2230,7 +2244,7 @@ Word clouds are widely used in the media and corporate world, but they are much 
 -   Longer words appear larger simply due to their length.
 -   The human eye is not good at discerning small differences in font sizes.
 
-::::: {.callout-note collapse="true"}
+::::: {.callout-note collapse="false"}
 #### Going further: Using `geom_text()`
 
 We have seen that, on a scatter plot, each point represents an observation, in our case, a participant. For instance, in @fig-ColourScatterPlot, each point represents an L2 participant and displays their age and grammar comprehension test score. In addition, we can colour the points according to their native language family.
@@ -2365,7 +2379,7 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-When there are too many points overlapping, even adding some transparency to the points with the `alpha` option (`alpha = 0` means fully transparent; `alpha = 1` means no transparency at all) may not suffice to tell the points apart. An alternative is to add a little bit of randomness to the position of the dots using the `geom_jitter()` function to ensure that there are fewer overlaps.
+When there are too many points overlapping, even adding some transparency to the points with the `alpha` option may not suffice to tell the points apart. An alternative is to add a little bit of randomness to the position of the dots using the `geom_jitter()` function to ensure that there are fewer overlaps.
 
 ```{r}
 #| fig-asp: 1.2
@@ -2453,13 +2467,7 @@ The good news is that now that you know how to create a plot using {ggplot2}, yo
 The [{plotly}](https://plotly-r.com) package provides access to a popular javascript visualisation toolkit within `R`. You will first need to install the package and load it.
 
 ```{r}
-#| eval: false
-install.packages("plotly")
-library(plotly)
-```
-
-```{r}
-#| echo: false
+#install.packages("plotly")
 library(plotly)
 ```
 
@@ -2538,9 +2546,7 @@ myplot2 <- Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
                        x = Group, 
                        colour = Gender,
-                       text = paste("Age:", Age,
-                                    "</br>Years in formal education:", EduTotal,
-                                     "</br>Job:", Occupation))) +
+                       text = paste("Age:", Age, "</br>Years in formal education:", EduTotal, "</br>Job:", Occupation))) +
   geom_jitter(alpha = 0.8, 
               width = 0.1) +
   geom_boxplot(alpha = 0, 
@@ -2604,7 +2610,7 @@ If you run the `ggsave()` function without specifying which plot should be saved
 
 ```{r}
 #| eval: false
-#| source-line-numbers: "9-12"
+#| source-line-numbers: "11-14"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = Blocks,
@@ -2647,9 +2653,13 @@ Are you confident that you can...?
 If so, you are ready to move out on inferential statistics in @sec-Inferential!
 
 ::: callout-note
-### Going further: Plotting your way to success 🗺️ {.unnumbered collapse="TRUE"}
+### Charting your way to success 🗺️ {.unnumbered collapse="TRUE"}
 
-If you have completed this chapter, you can now produce some of the most widely used graphs in the language sciences: Congratulations!
+If you have completed this chapter, you can now produce some of the most widely used plots in the language sciences: Congratulations!
 
-Bar plots, boxplots, scatter plots, density plots and histograms may well be all that you need for now. But you should know that the possibilities with `R`, the {ggplot2} library, and its many extensions are pretty much limitless: The [`R` Graph Gallery](https://r-graph-gallery.com/) lists some 50 different types of charts with over 400 examples with code! Another great resource is [The R Graphics Cookbook](https://r-graphics.org) by Winston Chang. To go beyond the basics and to find out more information about the theoretical underpinnings of the {ggplot2} package, I recommend [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org). There are also great `R` packages to produce more specialised types of graphs frequently used in linguistics such as [vowel charts](https://joeystanley.com/blog/making-vowel-plots-in-r-part-1/) and [dialectal maps](https://doi.org/10.1017/jlg.2024.11) (see list of [next-step resources](https://elenlefoll.github.io/RstatsTextbook/A_FurtherResources.html)).
+Bar plots, boxplots, scatter plots, density plots and histograms may well be all that you need for now. But you should know that the possibilities with `R`, the {ggplot2} library, and its many extensions are pretty much limitless: The [`R` Graph Gallery](https://r-graph-gallery.com/) lists some 50 different types of charts with over 400 examples with code!
+
+Another great resource is [The R Graphics Cookbook](https://r-graphics.org) by Winston Chang. To go beyond the basics and to find out more information about the theoretical underpinnings of the {ggplot2} package, I recommend [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org).
+
+There are also great `R` packages to produce more specialised types of graphs frequently used in linguistics such as [vowel charts](https://joeystanley.com/blog/making-vowel-plots-in-r-part-1/) and [dialectal maps](https://doi.org/10.1017/jlg.2024.11) (see list of [next-step resources](https://elenlefoll.github.io/RstatsTextbook/A_FurtherResources.html)).
 :::
