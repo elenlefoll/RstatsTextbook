@@ -126,7 +126,7 @@ The reference level of the **numeric predictors**, by contrast, corresponds to t
 
 ## Centering numeric predictors
 
-Centering involves subtracting a variable's average from each value in the variable. Typically, we subtract the mean from each value but, given that we know that many of the numeric variables in our dataset are not normally distributed (see @sec-DistributionsNumeric), here, we will subtract the median instead.
+Centering involves subtracting a variable's average from each value in the variable. Typically, we subtract the mean from each value but, given that we saw that many of the numeric variables in our dataset are not at all normally distributed (see @sec-DistributionsNumeric), here, we will subtract the median instead.
 
 To this end, we use the `mutate()` function to add three columns to the `R` data object `Dabrowska.data`. These new columns contain **transformed** versions of the predictor variables that we previously entered into our model:
 
@@ -207,7 +207,7 @@ Let's decipher the summary of `model4_c` step-by-step:
     70.5852 + -22.2896
     ```
 
--   Since very few people are perfectly average, let us now calculate the predicted `Vocab` score of an actual person: the 154^th^ participant in our dataset. As shown below using the {tidyverse} function `slice()`, the 154^th^ participant is a 46-year-old Polish male driver who scored 23 points on the Blocks test and attended formal education for 10 years.
+-   Since very few people are perfectly average, let us now calculate the predicted `Vocab` score of an actual, randomly chosen person: the 154^th^ participant in our dataset. As shown below using the {tidyverse} function `slice()`, the 154^th^ participant is a 46-year-old Polish male driver who scored 23 points on the Blocks test and attended formal education for 10 years.
 
     ```{r}
     Dabrowska.data |> 
@@ -540,7 +540,9 @@ check_question("Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTota
                q_id = "Q13.1",
                button_label = "Check answer",
                right = "That's right, well done!",
-               wrong = "No, try it out for yourself and see which formula generates the right model.")  
+               wrong = "No, try it out for yourself and see which formula generates the right model.") 
+check_hint("Watch out: Although they are easily confused, the plus sign (`+`) and the asterisk sign (`*`) have different meanings in model formulas.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
 ```
 
 [**Q13.2**]{style="color:green;"} Fit a model using the correct formula from above and save it as `model.ART`. Examine the summary of your new model. Which of these statements is/are true?
@@ -977,7 +979,6 @@ What do you need to add to this formula to also model the interaction that you j
 check_question("+ EduTotal_c:Group",
                  options = c("+ Vocab ~ EduTotal_c:Group",
                            "+ EduTotal_c:Group",
-                           "+ EduTotal:Group",
                            "+ EduTotal_c:Group:Vocab"),
                random_answer_order = TRUE,
                type = "radio",

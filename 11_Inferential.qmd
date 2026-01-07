@@ -341,8 +341,8 @@ check_question("Across the entire adult UK population, there is no difference in
 #| echo: false
 #| label: "Q11.4"
 
-check_question("4.68",
-               options = c("4.68",
+check_question("4.6768",
+               options = c("4.6768",
                            "133.83",
                            "0.000007032",
                            "9.425801",
@@ -646,16 +646,16 @@ check_question(c("The effect size is negative, which means that the single male 
                            "The effect size is negative, which means that the single male participant performed better on the grammar test than the five female participants.",
                            "According to Cohen's rule of thumb, the effect size is very large.",
                            "According to Cohen's rule of thumb, the effect size is very small.",
-                           "The 95% CI around Cohen's d includes zero, which means that there is no practical difference in the performance of male and female participants on the grammar test.",
+                           "The 95% CI around Cohen's d includes zero, which means that there is no practical difference between the performance of male and female participants on the grammar test.",
                            "We cannot reject the null hypothesis that there is no difference between male and female performance on the grammar test.",
                            "The difference in mean grammar test scores across the two genders is not statistically significant at the α-level of 0.05."),
                random_answer_order = TRUE,
                q_id = "Q11.9", 
                type = "check",
                button_label = "Check answer",
-               right = "That's right, very well done! The results of this test show the value of statistical significance testing: Here, the difference between the male and female participants is very large, but because we have such a small sample size, the test warns us that this large difference could very well be due to chance and not actually correspond to a real difference in the population.",
+               right = "That's right, very well done! The results of this test demonstrate the value of statistical significance testing: Here, the difference between the male and female participants is very large but, because we have such a small sample size, the confidence interval of the effect size includes zero. This informs us that this large difference could very well be due to chance and not actually correspond to a real difference in the population.",
                wrong = "No, not quite. To get this question right, you need to select all four correct statements.")
-check_hint("Here we have an interesting case of a large effect size, but with a very wide confidence interval that includes zero. What does this mean?", 
+check_hint("Here we have an interesting case of a large effect size, but with a very wide 95% confidence interval that includes zero. What does this mean?", 
            hint_title = "🦉 Hover over the owl for a first hint.",
            type = "onmouseover")
 check_hint("Four of these statements are correct. And remember that no statistical significance test can tell us anything about whether an effect is \"meaningful\" or \"practical\". To make such a statement would require a lot of additional contextual information that we do not have access to.", 
@@ -890,7 +890,7 @@ Dabrowska.data |>
 
 Now use the `cor.test()` function to find out how strong the correlations are in both the L1 and the L2 groups. Use the default α-level of 0.05.
 
-[**Q11.11**]{style="color:green;"} Based on the outputs of the `cor.test()` function, which of these statements can you confidently say is/are true?
+[**Q11.11**]{style="color:green;"} Based on the outputs of the `cor.test()` function, which of these statements can you confidently say is/are true? Note that, in this question and the next one, values are reported to two decimal places.
 
 ```{r}
 #| echo: false
@@ -955,6 +955,9 @@ check_question(c("-0.31", "- 0.31", "-0.30", "- 0.30"),
                button_label = "Check answer",
                right = "That's right, very well done!",
                wrong = "No. Are you perhaps looking at the wrong dataset (we are interested in L2 speakers only here) or the wrong variables (we are now looking at the association between Vocab and Arrival)?")
+check_hint("Remember to round the correlation to two decimal places and to use a decimal point, not a comma.", 
+           hint_title = "🦉 Hover over the owl for a hint.",
+           type = "onmouseover")
 ```
 
 ```{r}
@@ -1174,7 +1177,7 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-In other words, these data do not meet the assumption of homoscedasticity. In this case, we should therefore use a non-pamametric correlation statistic, such as Spearman's ρ ('rho') and Kendall's τ ('tau'). As we are looking at a relatively small dataset here (only L1 speakers) and some speakers performed equally well on the `Vocab` test (in other words, we have some ties in the ranks), Kendall's τ is recommended:
+In other words, these data do not meet the assumption of homoscedasticity. In this case, we should therefore use a non-parametric correlation statistic, such as Spearman's ρ ('rho') and Kendall's τ ('tau'). As we are looking at a relatively small dataset here (only L1 speakers) and some speakers performed equally well on the `Vocab` test (in other words, we have some ties in the ranks), Kendall's τ is recommended:
 
 ```{r}
 cor.test(formula = ~ Vocab + EduTotal,
@@ -1278,13 +1281,13 @@ Clearly, if we had only used correlation statistics to describe the relationship
 
 In @sec-PValues we saw that conducting a statistical test with an α-level of 0.05 means that we accept a 5% risk of falsely rejecting the null hypothesis when it is actually true. Falsely rejecting the null hypothesis leads to a **false positive** result, also referred to as making a **Type I error**. It is crucial to understand that if we perform multiple tests on the same data, we dramatically increase the risk of reporting such false positive results. This is known as the multiple testing or multiple comparisons problem.
 
-Imagine that we want to test 20 independent null hypotheses on a single dataset using α = 0.05 as our significance threshold. Even if all null hypotheses are actually true, the probability of obtaining at least one significant result, i.e. at least one *p*-value \<  0.05, by chance is equal to 64%.
+Imagine that we want to test 20 independent null hypotheses on a single dataset using α = 0.05 as our significance threshold. Even if all null hypotheses are actually true, the probability of obtaining at least one significant result, i.e. at least one *p*-value \<  0.05, by chance is equal to 64%, as shown below:
 
 ```{r}
 1 - (1 - 0.05)^20
 ```
 
-Thus, having conducted 20 independent tests, we have a 64% chance of finding at least one statistically significant result purely by chance! As the number of tests increases, this probability approaches certainty [see also @BaayenAnalyzinglinguisticdata2008: 106-107]. With 100 tests, we are at 99%:
+Thus, having conducted 20 independent tests, we have a 64% chance of finding at least one statistically significant result purely by chance. As the number of tests increases, this probability approaches certainty [see also @BaayenAnalyzinglinguisticdata2008: 106-107]. With 100 tests, we reach 99%!
 
 ```{r}
 1 - (1 - 0.05)^100
@@ -1296,34 +1299,37 @@ To avoid reporting false positive results, it is therefore recommended that we c
 0.05 / 20
 ```
 
-This means that we would now only report the outcome of statistical test as "statistically significant" if its *p*-value is \< 0.0025.
+This means that we would now only report the outcome of statistical test as "statistically significant" if its *p*-value is \< 0.0025. Other correction methods for multiple testing exist. **Holm's** method, for example, is a popular, slightly less conservative alternative to the Bonferroni correction. The base `R` function `p.adjust()` can be used to automatically adjust *p*-values using different methods including Bonferroni's and Holm's.
 
-Other correction methods for multiple testing exist. **Holm's** method, for example, is a popular, slightly less conservative alternative to the Bonferroni correction. The base `R` function `p.adjust()` can be used to automatically adjust *p*-values using different methods including Bonferroni's and Holm's.
-
-Here are the seven *p*-values that we obtained from the seven independent statistical tests that we performed on the @DabrowskaExperienceAptitudeIndividual2019 data as part of this chapter:
+The following line of code creates an `R` object that contains seven *p*-values. These are the *p*-values that we obtained from the seven independent statistical tests that we performed on the @DabrowskaExperienceAptitudeIndividual2019 data as part of this chapter:
 
 ```{r}
 p_values <- c(1.956e-05, 0.000007032, 0.5525, 0.0005581, 0.2782, 0.026, 0.0003992)
 ```
 
-At our chosen α-level of 0.05, five of these *p*-values were statistically significant, leading us to reject the corresponding five null hypotheses. However, if we apply Holm's correction using `p.adjust()`, we find that we can only reject four of these null hypotheses.
+At our chosen α-level of 0.05, five of these *p*-values were statistically significant, leading us to reject the corresponding five null hypotheses. However, if we apply Holm's correction using the `p.adjust()` function, we find that we can only reject four of these null hypotheses.
 
 ```{r}
 p_values.adjusted <- p.adjust(p_values, method = "holm")
 
-# The adjusted p-values in scientific notation:
 p_values.adjusted
+```
 
-# The adjusted p-values in standard notation:
+It can be difficult to interpret numbers displayed in scientific notation, so here they are in standard notation:
+
+```{r}
 format(p_values.adjusted, scientific = FALSE)
+```
 
-# Which adjusted p-values are below 0.05, indicating that we can reject the corresponding null hypothesis:
+To find out which of these corrected *p*-values are below 0.05, we can use the `<` operator like this:
+
+```{r}
 p_values.adjusted < 0.05
 ```
 
-It is crucial to understand that every *p*-value represents a probabilistic finding, not a definitive statement about reality. A *p*-value of 0.03 does *not* mean there is a 97% chance that the alternative hypothesis is true. Instead, it indicates that, if the null hypothesis were true, we would observe data at least as extreme as our sample only 3% of the time. Given the probabilistic nature of statistical inference and the multiple testing problem, **replication** of findings across independent studies is essential for building scientific knowledge (see @sec-Reproducibility). No single study, regardless of its sample size or *p*-value, can ever provide us with definitive evidence.
+It is crucial to understand that every *p*-value represents a probabilistic finding, not a definitive statement about reality. A *p*-value of 0.03 does *not* mean that there is a 97% chance that the alternative hypothesis is true. Rather it indicates that, if the null hypothesis were true and we were to run this experiment many times, we would observe data at least as extreme as in our sample only 3% of the time. Given the probabilistic nature of statistical inference and the multiple testing problem, the **replication** of findings across independent studies is essential for building scientific knowledge (see @sec-Reproducibility). No single study, regardless of its sample size or *p*-value, can ever provide us with definitive evidence.
 
-Because of the multiple testing problem, only reporting statistically significant results and failing to report the number of tests conducted to find them is considered a **Questionable Research Practice (QRP)**. It is one way to [*p*-hack](https://forrt.org/glossary/english/p_hacking/) results. A great resource for definitions and links to further literature related to conducting research is the [FORRT Glossary](https://forrt.org/glossary) — a community-sourced glossary of Open Scholarship terms [@parsonsCommunitysourcedGlossaryOpen2022]. Below is the FORRT Glossary's entry for QRPs.
+Because of the multiple testing problem, only reporting statistically significant results and failing to report the number of tests conducted to find them is considered a **Questionable Research Practice (QRP)**. It is one way to [*p*-hack](https://forrt.org/glossary/english/p_hacking/) results, along with not correcting for multiple comparisons. A great resource for definitions and links to further literature on good research practices is the [FORRT Glossary](https://forrt.org/glossary) — a community-sourced glossary of Open Scholarship terms [@parsonsCommunitysourcedGlossaryOpen2022]. Below is the FORRT Glossary's entry for QRPs.
 
 > #### Questionable Research Practices or Questionable Reporting Practices (QRPs) {.unnumbered}
 >

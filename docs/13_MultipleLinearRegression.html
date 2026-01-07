@@ -692,7 +692,7 @@ F-statistic:  10.5 on 8 and 148 DF,  p-value: 1.327e-11</code></pre>
 </section>
 <section id="centering-numeric-predictors" class="level2" data-number="13.3">
 <h2 data-number="13.3" class="anchored" data-anchor-id="centering-numeric-predictors"><span class="header-section-number">13.3</span> Centering numeric predictors</h2>
-<p>Centering involves subtracting a variable’s average from each value in the variable. Typically, we subtract the mean from each value but, given that we know that many of the numeric variables in our dataset are not normally distributed (see <a href="8_DescriptiveStats.html#sec-DistributionsNumeric" class="quarto-xref"><span>Section 8.2.2</span></a>), here, we will subtract the median instead.</p>
+<p>Centering involves subtracting a variable’s average from each value in the variable. Typically, we subtract the mean from each value but, given that we saw that many of the numeric variables in our dataset are not at all normally distributed (see <a href="8_DescriptiveStats.html#sec-DistributionsNumeric" class="quarto-xref"><span>Section 8.2.2</span></a>), here, we will subtract the median instead.</p>
 <p>To this end, we use the <code>mutate()</code> function to add three columns to the <code>R</code> data object <code>Dabrowska.data</code>. These new columns contain <strong>transformed</strong> versions of the predictor variables that we previously entered into our model:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="ot">&lt;-</span> Dabrowska.data <span class="sc">|&gt;</span> </span>
@@ -872,7 +872,7 @@ F-statistic:  10.5 on 8 and 148 DF,  p-value: 1.327e-11</code></pre>
 <pre data-code-line-numbers=""><code>[1] 48.2956</code></pre>
 </div>
 </div></li>
-<li><p>Since very few people are perfectly average, let us now calculate the predicted <code>Vocab</code> score of an actual person: the 154<sup>th</sup> participant in our dataset. As shown below using the {tidyverse} function <code>slice()</code>, the 154<sup>th</sup> participant is a 46-year-old Polish male driver who scored 23 points on the Blocks test and attended formal education for 10 years.</p>
+<li><p>Since very few people are perfectly average, let us now calculate the predicted <code>Vocab</code> score of an actual, randomly chosen person: the 154<sup>th</sup> participant in our dataset. As shown below using the {tidyverse} function <code>slice()</code>, the 154<sup>th</sup> participant is a 46-year-old Polish male driver who scored 23 points on the Blocks test and attended formal education for 10 years.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">154</span>) <span class="sc">|&gt;</span> </span>
@@ -1096,8 +1096,8 @@ Figure&nbsp;13.2: <code>Vocab</code> scores as predicted by <code>model4_c</code
 <div class="cell-output-display">
 <form name="form_Q13_1" onsubmit="return validate_form_Q13_1()" method="post">
 <label>
-<input type="radio" name="answer_Q13_1" id="answer_Q13_1_1" value="Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART">
-Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART
+<input type="radio" name="answer_Q13_1" id="answer_Q13_1_1" value="Vocab ~ model4_c + ART">
+Vocab ~ model4_c + ART
 </label>
 <br>
 <label>
@@ -1111,8 +1111,8 @@ ART ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q13_1" id="answer_Q13_1_4" value="Vocab ~ model4_c + ART">
-Vocab ~ model4_c + ART
+<input type="radio" name="answer_Q13_1" id="answer_Q13_1_4" value="Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART">
+Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART
 </label>
 <br>
 <input type="submit" value="Check answer">
@@ -1123,6 +1123,11 @@ Vocab ~ model4_c + ART
          if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!';text = res1;element.innerHTML = text;
          return false;
          }}</script>
+</div>
+<div class="cell-output-display">
+<div id="hint_85207" onclick="return show_hint_85207()">🐭 Click on the mouse for a hint.</div>
+<div id="result_85207" onclick="return show_hint_85207()"></div>
+<script>function show_hint_85207(){var x = document.getElementById('result_85207').innerHTML; if(!x){document.getElementById('result_85207').innerHTML = 'Watch out: Although they are easily confused, the plus sign (<code>+</code>) and the asterisk sign (<code>*</code>) have different meanings in model formulas.';} else {document.getElementById('result_85207').innerHTML = '';}}</script>
 </div>
 </div>
 <p><span style="color:green;"><strong>Q13.2</strong></span> Fit a model using the correct formula from above and save it as <code>model.ART</code>. Examine the summary of your new model. Which of these statements is/are true?</p>
@@ -1632,8 +1637,8 @@ The number of years that L1 participants spent in formal education is positively
 <div class="cell-output-display">
 <form name="form_Q13_7" onsubmit="return validate_form_Q13_7()" method="post">
 <label>
-<input type="radio" name="answer_Q13_7" id="answer_Q13_7_1" value="+ EduTotal:Group">
-+ EduTotal:Group
+<input type="radio" name="answer_Q13_7" id="answer_Q13_7_1" value="+ EduTotal_c:Group:Vocab">
++ EduTotal_c:Group:Vocab
 </label>
 <br>
 <label>
@@ -1646,17 +1651,12 @@ The number of years that L1 participants spent in formal education is positively
 + EduTotal_c:Group
 </label>
 <br>
-<label>
-<input type="radio" name="answer_Q13_7" id="answer_Q13_7_4" value="+ EduTotal_c:Group:Vocab">
-+ EduTotal_c:Group:Vocab
-</label>
-<br>
 <input type="submit" value="Check answer">
 <div id="result_Q13_7"></div>
 </form>
 <script>function validate_form_Q13_7() {var x, text; var x = document.forms['form_Q13_7']['answer_Q13_7'].value;if (x == '+ EduTotal_c:Group'){text = 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!';} else {text = 'No, that’s not it.';} document.getElementById('result_Q13_7').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'Excellent!'; res3 = document.getElementById('result_Q13_3').innerText == 'Absolutely, well done!'; res4 = document.getElementById('result_Q13_4').innerText == 'That’s right, well done!'; res5 = document.getElementById('result_Q13_5').innerText == 'That’s right! Note that entering this predictor in the model changes the relative importance of all the other predictors, too.'; res6 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done!'; res7 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>
