@@ -7,6 +7,7 @@ bibliography: references.bib
 library(checkdown)
 library(tidyverse)
 ```
+{{< include emoji_script.md >}}
 
 # Impo`R`ting data {#sec-ImportingData}
 
@@ -138,7 +139,7 @@ You may have noticed that the datasets were published in 2018, whereas the artic
 Click on the two links listed in Appendix S4 and download the two datasets. Note that the URL may take a few seconds to redirect and load. Save the two datasets in an appropriate place on your computer (see @sec-FoldersPaths), as we will continue to work with these two files in the following chapters.
 
 ::: {.callout-note collapse="true"}
-#### What's a good place to save these files? 🤔
+#### What's a good place to save these files? `r emoji("thinking-face")`
 
 If you haven't already done so, I suggest that you create a folder in which you save everything that you create whilst learning from this textbook. This folder could be called something along the lines of `DataLiteracyTextbook`, `2024_data_literacy`, or `LeFoll_2024_DataLiteracy` (see @sec-FileNaming). Then, within this folder, I recommend that you create another folder called `Dabrowska2019` (note how I have not included the "ą" character in the folder name as this could cause problems), and within this folder, create another folder called `data`. This is the folder in which you can save these two files.
 :::
@@ -301,7 +302,7 @@ In the command above, `header = TRUE`, explicitly tells `R` to import the first 
 The arguments `sep` and `quote` specify the characters that, in this `.csv` file are used to separate the values on the one hand, and delineate them, on the other (see @sec-DSV). As we saw above, @DabrowskaExperienceAptitudeIndividual2019's `.csv` files use the comma as the separator and the double quotation mark as the quoting character. Note that the `"` character needs to be preceded by a backslash (`\`) (we say it needs to be "escaped") because otherwise `R` will interpret it as part of the command syntax, which would lead to an error. Finally, the argument `dec = "."` explicitly tells `R` that this `.csv` file uses the dot as the decimal point. In some countries, e.g. Germany and France, the comma is used to represent decimal places so, if you obtain data from a German or French colleague, this setting may need to be changed to `dec = ","` for the data to be imported correctly.
 
 ::: {.callout-important collapse="false"}
-#### "Hell is empty, and all the devils are {here}." 😈
+#### "Hell is empty, and all the devils are {here}." `r emoji("smiling-face-with-horns")`
 
 This section title borrows a quote from The Tempest by William Shakespeare to reflect the fact that file paths are perhaps the most frequent source of frustration among (beginner) coders. @sec-ImportingErrors explains how to deal with the most frequent error messages. Ultimately, however, these errors are typically due to poor data management (see @sec-DataManagement). That's because the devil's in the detail (remember: no spaces, special characters, differences between different operating systems, etc.). As a result, even advanced users of `R` and other programming languages frequently find that file path issues continue to plague their work, if they fail to take file management seriously.
 
@@ -339,7 +340,7 @@ Much like wearing a helmet for extra safety (@fig-HelmetHere), {here} makes the 
 ![Although a fairly common way of working with data in `R`, using `setwd()` (see @sec-HardcodingFilePaths) is dangerous and will, sooner or later, cause you and/or your colleagues some nasty accidents. A combination of using RProj and {here} as described above is much safer!](images/AHorst_RProjHere.png){#fig-HelmetHere fig-alt="A cartoon of a cracked glass cube looking frustrated with casts on its arm and leg, with bandaids on it, containing “setwd”, looks on at a metal riveted cube labeled “R Proj” holding a skateboard looking sympathetic, and a smaller cube with a helmet on labeled “here” doing a trick on a skateboard." width="600"}
 :::
 
-## Import errors and issues 🥺 {#sec-ImportingErrors}
+## Import errors and issues `r emoji("pleading-face")` {#sec-ImportingErrors}
 
 It is crucial that you check whether your data have genuinely been correctly imported. Here's a list of things to check (in that order):
 
@@ -504,7 +505,7 @@ For the command above to work, you will first need to save the file `offlinedata
 
 ![Extract of data file AJT_raw_scores_L2.csv from](images/BusterudEA2023_data_snapshot.png){#fig-BusterudEAData fig-alt="The image shows a table from the data file AJT_raw_scores_L2.csv by Busterud et al. It includes rows numbered 261 to 274 with columns for ID, L3, Years of L3, Gender, L3 selfasses, L3 grade, L2 selfasses, and L2 grade. All entries in L3, Years of L3, and Gender are 2, 4, and 4, respectively. Values for L3 selfasses range from 1 to 2,5, L3 grade from 2 to 5, L2 selfasses from 2 to 6, and L2 grade from 3 to 6."}
 
-If you look carefully, you will also see that this dataset has some empty cells. These data can be downloaded from <https://doi.org/10.18710/JBMAPT>. It is delivered with a README text file. It is good practice to include a README file when publishing datasets or code and, as the name suggests, it is always a good idea to actually read README files! 🙃 Among other things, this particular README explains that, in this dataset: "Missing data are represented by empty cells."
+If you look carefully, you will also see that this dataset has some empty cells. These data can be downloaded from <https://doi.org/10.18710/JBMAPT>. It is delivered with a README text file. It is good practice to include a README file when publishing datasets or code and, as the name suggests, it is always a good idea to actually read README files! `r emoji("upside-down-face")` Among other things, this particular README explains that, in this dataset: "Missing data are represented by empty cells."
 
 If you call up the help file for the `read.table()` function again, you will see that there is an argument called `na.strings`. The default value is `NA`. When we import this dataset `AJT_raw_scores_L2.csv` from @busterudVerbPlacementL32023, we will therefore need to change this argument to ensure that empty cells are recognised as missing values.
 
@@ -759,7 +760,7 @@ In addition, fellow linguists are constantly developing new packages to work wit
 
 Feel free to skip this section if you got on just fine with the importing method introduced above as the following two methods are problematic for a number of reasons. However, they may come in useful in special cases, which is why both are briefly explained below.
 
-### Hardcoding file paths in `R` scripts 🥴 {#sec-HardcodingFilePaths}
+### Hardcoding file paths in `R` scripts `r emoji("woozy-face")` {#sec-HardcodingFilePaths}
 
 Whilst it is certainly not recommended [see e.g. @bryanProjectorientedWorkflow2017], it is nonetheless worth understanding this method of working with file paths in `R` as you may well come across it in other people's code.
 
@@ -804,7 +805,7 @@ L1.data <- read.csv(file = "/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabr
 
 The only way to fix this issue is to remove the space in the name of the folder (in your File Finder or Navigator window) and then amend the file path in your `R` script accordingly.
 
-### Importing data using RStudio's GUI 🫤 {#sec-ImportingGUI}
+### Importing data using RStudio's GUI `r emoji("face-with-rolling-eyes")` {#sec-ImportingGUI}
 
 You may have noticed that, if you click on a data file from the Files pane in *RStudio* (@fig-RStudioImportDataset), *RStudio* will offer to import the dataset for you. This looks like (and genuinely is) a very convenient way to import data in an `R` session using RStudio's GUI (graphical user interface).
 

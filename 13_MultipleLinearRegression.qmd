@@ -3,6 +3,8 @@ bibliography: references.bib
 code-annotations: hover
 ---
 
+{{< include emoji_script.md >}}
+
 # Multiple linear reg`R`ession modelling {#sec-MLR}
 
 ::: callout-warning
@@ -83,7 +85,7 @@ L2.data <- Dabrowska.data |>
   filter(Group == "L2")
 ```
 
-Once you are satisfied that the data have been correctly imported and that you are familiar with the dataset, you are ready to tap into the potential of multiple linear regression modelling! 🚀
+Once you are satisfied that the data have been correctly imported and that you are familiar with the dataset, you are ready to tap into the potential of multiple linear regression modelling! `r emoji("rocket")`
 :::
 
 ## Combining multiple predictors {#sec-MultipleLM}
@@ -297,7 +299,7 @@ Let's decipher the summary of `model4_c` step-by-step:
 
 Whilst it is important to understand how to interpret the coefficients of a multiple linear regression model from the model summary, in practice, it is also always a very good idea to visualise model predictions. On the one hand, this reduces the risk of making any obvious interpretation errors and, on the other, it is much easier to interpret the residuals of a model when they are visualised alongside model predictions.
 
-To fully visualise the predictions of a multiple linear model, we would need to be able to plot as many dimensions as there are predictors in the model. The trouble is that, as humans, we find it difficult to interpret data visualisations with more than two dimensions. Indeed, although 3D plots can sometimes be useful (and can easily be generated in `R`), we are much better at interpreting two-dimensional plots. To bypass this inherent human weakness, we will plot the values predicted by our model on several plots: one for each predictor variable (see @fig-VisregVocab). Run the following command and then follow the instructions displayed in the Console pane to view the plots one by one. You may need to resize your Plot pane for the plots to be displayed. If you have a small screen, you may find the "🔎 Zoom" option in RStudio's Plots pane useful as it allows you to view the plots in a separate window.
+To fully visualise the predictions of a multiple linear model, we would need to be able to plot as many dimensions as there are predictors in the model. The trouble is that, as humans, we find it difficult to interpret data visualisations with more than two dimensions. Indeed, although 3D plots can sometimes be useful (and can easily be generated in `R`), we are much better at interpreting two-dimensional plots. To bypass this inherent human weakness, we will plot the values predicted by our model on several plots: one for each predictor variable (see @fig-VisregVocab). Run the following command and then follow the instructions displayed in the Console pane to view the plots one by one. You may need to resize your Plot pane for the plots to be displayed. If you have a small screen, you may find the "`r emoji("magnifying-glass-tilted-right")` Zoom" option in RStudio's Plots pane useful as it allows you to view the plots in a separate window.
 
 ```{r}
 #| eval: false
@@ -694,7 +696,7 @@ When interpreting a model summary, it is important to remember that the coeffici
 
 Because they are in different units that represent different quantities or levels, the raw coefficient estimates of a model cannot be compared to each other. Indeed, depending on the predictor, a one-unit change may correspond to either a big or a small change. This is where measures of the relative importance of predictors come in handy. In this chapter, we will use the **lmg** metric [that was first proposed by **L**indeman, **M**erenda & **G**old in -@lindemanIntroductionBivariateMultivariate1980: 119 ff.] to compare the importance of predictors within a single multiple linear regression model.
 
-Although not currently widely used in the language sciences [but see, e.g. @DabrowskaExperienceAptitudeIndividual2019: 14], lmg has a number of advantages. Its interpretation is fairly intuitive because it is similar to a coefficient of determination (R^2^): a value of 0 means that, in this model, a predictor accounts for 0% of the variance in the outcome variable, while a value of 1 would mean that it can be used to perfectly predict the outcome variable. Calculating lmg values is computationally involved because the metric includes both direct effects and is adjusted for all the other predictors of the model. But this need not worry us because a researcher and statistician, Ulrike Grömping, has developed and published an `R` package that will do the computation for us. 😊
+Although not currently widely used in the language sciences [but see, e.g. @DabrowskaExperienceAptitudeIndividual2019: 14], lmg has a number of advantages. Its interpretation is fairly intuitive because it is similar to a coefficient of determination (R^2^): a value of 0 means that, in this model, a predictor accounts for 0% of the variance in the outcome variable, while a value of 1 would mean that it can be used to perfectly predict the outcome variable. Calculating lmg values is computationally involved because the metric includes both direct effects and is adjusted for all the other predictors of the model. But this need not worry us because a researcher and statistician, Ulrike Grömping, has developed and published an `R` package that will do the computation for us. `r emoji("smiling-face-with-smiling-eyes")`
 
 Once we have installed and loaded the {[relaimpo](https://cran.r-universe.dev/relaimpo/doc/manual.html)} package[^13_multiplelinearregression-1] [@grömping2006], we can use its `calc.relimp()` function to calculate a range of relative importance metrics for linear models. With the argument "type", we specify that we are interested in the lmg metric:
 
@@ -1425,7 +1427,7 @@ Running the function on the saved model object should generate a large figure co
 check_model(L1.model.back2)
 ```
 
-By default, `check_model()` outputs a single figure that allows us to check the most important model assumptions. This large figure is useful for reporting purposes, but it is rather unwieldy for interpretation. Changing the "panel" argument of the `check_model()` function to `FALSE` returns a list of {ggplot} objects that we can save to our local environment as `diagnostic.plots`:
+By default, `check_model()` outputs a single figure that allows us To check the most important model assumptions. This large figure is useful for reporting purposes, but it is rather unwieldy for interpretation. Changing the "panel" argument of the `check_model()` function to `FALSE` returns a list of {ggplot} objects that we can save to our local environment as `diagnostic.plots`:
 
 ```{r}
 diagnostic.plots <- plot(check_model(L1.model.back2, panel = FALSE))
@@ -1441,7 +1443,7 @@ diagnostic.plots[[1]]
 
 This first plot (@fig-PosteriorPredictiveCheck) is another way to compare the model's predicted values (represented here as blue distributions) with the real-life (i.e observed) outcome variable (represented here in green). We can see that the center of the distribution of observed `Vocab` scores is slightly shifted to the right compared to most distributions of model-predicted data. That said, the simulated distributions are close to the real distribution and largely follow a similar shape. If they didn't, this would suggest that a linear regression model may not be suitable for our data.
 
-The second plot (@fig-Linearity) is designed to check the assumption of **linearity**. If the predictors are linearly related, the green reference line should be flat and horizontal. Our reference line is slightly curved, but it remains possible to draw a horizontal line through the grey band, hence we can conclude that the assumption of linearity is not severely violated.
+The second plot (@fig-Linearity) is designed To check the assumption of **linearity**. If the predictors are linearly related, the green reference line should be flat and horizontal. Our reference line is slightly curved, but it remains possible to draw a horizontal line through the grey band, hence we can conclude that the assumption of linearity is not severely violated.
 
 ```{r}
 #| label: "fig-Linearity"
@@ -1625,7 +1627,7 @@ library(car)
 vif(L2.model)
 ```
 
-From this list of VIF values, we can see that three predictors display high collinearity: `Age_c`, `Arrival_c`, and `LoR_c`. This makes sense because, for most L2 participants recruited in the UK, if we know how old they were when they arrived in the UK (`Arrival`), and their length of residence in the country in years (`LoR`), then we can probably almost predict their age (`Age`) to a high degree of accuracy. We can easily check this hypothesis in a random sample of six participants from our `L2.data`:
+From this list of VIF values, we can see that three predictors display high collinearity: `Age_c`, `Arrival_c`, and `LoR_c`. This makes sense because, for most L2 participants recruited in the UK, if we know how old they were when they arrived in the UK (`Arrival`), and their length of residence in the country in years (`LoR`), then we can probably almost predict their age (`Age`) to a high degree of accuracy. We can easily `r emoji("check-mark-button")` this hypothesis in a random sample of six participants from our `L2.data`:
 
 ```{r}
 #| include: false
@@ -1728,7 +1730,7 @@ check_question("None of them",
                button_label = "Check answer",
                q_id = "Q13.15",
                right = "That's right, none of them make a statistically significant contribution to the model. However, that doesn't necessarily mean that their coefficients do not point to any real associations: we may not have enough data to observe any statistically significant interactions.",
-               wrong = "Hummm, are you sure? Check the model summary again.")
+               wrong = "Hummm, are you sure? check the model summary again.")
 ```
 
 [**Q13.16**]{style="color:green;"} Use the {visreg} library to visualise the model's predicted `Vocab` scores (on the *y*-axis) as a function of all possible `ReadEng` values (on the *x*-axis) and subdivide the figure into three panels corresponding to low, mid-level, and high ART scores. Which arguments do you have to use inside the `visreg()` function to achieve this?
@@ -1798,7 +1800,7 @@ Does this mean that we should give up with quantitative data analysis and statis
 -   Finally, we need not stick to the **frequentist** school of statistics. In fact, quantitative linguists are increasingly turning to **Bayesian** statistics and finding that Bayesian models help them work with the particularities of linguistic data [to learn more about Bayesian statistics, see e.g. @levshinaComparingBayesianFrequentist2022; @nicenboimIntroductionBayesianData2026].
 
 ::: callout-note
-## Recommended further reading 📚
+## Recommended further reading `r emoji("books")`
 
 In this textbook, we have only just scratched the surface of statistical modelling. We can do much, much more with these kinds of models, and there are lots of additional things to take into account. The good news is that there are lots of excellent resources to help you continue your statistical modelling journey. Here are some good places to get started (in alphabetical order):
 

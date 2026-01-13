@@ -9,6 +9,8 @@ bibliography:
    # prefer-html: true
 ---
 
+{{< include emoji_script.md >}}
+
 # Rep`R`oducible research and academic w`R`iting in Quarto {#sec-LiteRateProgramming}
 
 ### Chapter overview {.unnumbered}
@@ -31,11 +33,21 @@ library(checkdown)
 
 The basic idea of literate programming is that we combine text, code, and code outputs (i.e. tables, statistics, and plots) within a single document that can be exported into different formats for sharing and publishing.
 
-Literate programming can be implemented in different authoring formats. Up until very recently, the most common format for `R` projects was [R Markdown](https://rmarkdown.rstudio.com/). For `Python` projects, [Jupyter Notebooks](https://jupyter.org/) remains the standard to date. In this chapter, we will focus on **Quarto**, a relatively new [open-source](https://en.wikipedia.org/wiki/Free_and_open-source "Free and open-source") scientific and technical authoring and publishing system that has the advantage of supporting many different programming languages. This means that code in `R`, `Python`, `Julia`, and other languages can be combined into one document, making project management and collaboration much easier. Quarto also allows us to readily export (or **render**) our documents to multiple formats such as HTML, PDF, and Word (see @fig-QuartoFormats and @sec-PublishingFormats).
+Literate programming can be implemented in different authoring formats. Up until very recently, the most common format for `R` projects was [R Markdown](https://rmarkdown.rstudio.com/). For `Python` projects, [Jupyter Notebooks](https://jupyter.org/) remains the standard to date. In this chapter, we will focus on Quarto, a relatively new [open-source](https://en.wikipedia.org/wiki/Free_and_open-source "Free and open-source") scientific and technical authoring and publishing system that has the advantage of supporting many different programming languages. This means that code in `R`, `Python`, `Julia`, and other languages can be combined into one document, making project management and collaboration much easier. Quarto also allows us to readily export (or **render**) our documents to multiple formats such as HTML, PDF, and Word (see @fig-QuartoFormats and @sec-PublishingFormats).
 
-![A schematic representation showing Quarto can understand multi-language input and produce multi-format outputs (Artwork by [Allison Horst](https://allisonhorst.com/cetinkaya-rundel-lowndes-quarto-keynote) from the ["Hello, Quarto" keynote](https://mine.quarto.pub/hello-quarto/#/hello-quarto-title) by Julia Lowndes and Mine Çetinkaya-Rundel, first presented at the RStudio Conference 2022).](images/AHorst_Quarto.png){#fig-QuartoFormats fig-alt="A schematic representing the multi-language input (e.g. Python, R, Observable, Julia) and multi-format output (e.g. PDF, html, Word documents, and more) versatility of Quarto."}
+![A schematic representation showing Quarto can understand multi-language input and produce multi-format outputs (Artwork [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) [Allison Horst](https://allisonhorst.com/cetinkaya-rundel-lowndes-quarto-keynote) from the ["Hello, Quarto" keynote](https://mine.quarto.pub/hello-quarto/#/hello-quarto-title) by Julia Lowndes and Mine Çetinkaya-Rundel, first presented at the RStudio Conference 2022).](images/AHorst_Quarto.png){#fig-QuartoFormats fig-alt="A schematic representing the multi-language input (e.g. Python, R, Observable, Julia) and multi-format output (e.g. PDF, html, Word documents, and more) versatility of Quarto."}
 
 Literate programming is particularly useful for **academic research** and **data science**. Did you know that this entire textbook was written in Quarto? I chose this format because it allows for the seamless combination of explanations with nicely formatted `R` code and code outputs (i.e. all of the textbook's tables, data visualisations, quiz questions, etc.). It also automatically generates consistent section and figure numbers, cross-references, bibliographic references, and much more. By the end of this chapter, you'll be ready to start writing your own term paper, dissertation, thesis, journal article, blog, or presentation slides in Quarto.
+
+::: callout-note
+Quarto documents are designed to:
+
+1.  Help you **collaborate** with other researchers (including your future self!) who are interested in both reproducing your results and understanding how you reached them (i.e. the code).
+
+2.  Provide you with a convenient **environment** in which to do research - a kind of "modern-day lab notebook where you can capture not only what you did, but also what you were thinking" [@wickhamDataScienceImport2023].
+
+3.  **Communicate** your analyses to others, including those who are not familiar with any programming language.
+:::
 
 ## Reproducible research {#sec-Reproducibility}
 
@@ -49,14 +61,14 @@ Not only is using Quarto (or any other literate programming format, see @sec-Lit
 
 This is in contrast to **replicability**, where the same methods, but different data are used; and **robustness**, where the same data, but different methods are used. Finally, if a finding can be reliably observed across different datasets with different methods, then we can say that the finding is **generalisable**.
 
-![Defining *reproducibility* and related terms ([The Turing Way Community](https://book.the-turing-way.org/reproducible-research/overview/overview-definitions) [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) )](images/TuringWay_reproducible-matrix.jpg){#fig-reproducibility-terminology width="444"}
+![Defining *reproducibility* and related terms ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) [The Turing Way Community](https://book.the-turing-way.org/reproducible-research/overview/overview-definitions) )](images/TuringWay_reproducible-matrix.jpg){#fig-reproducibility-terminology width="444"}
 
 Given this definition, reproducibility might seem like a low bar to pass. You might be thinking: shouldn't it be obvious that we'll get the same results if we repeat a study using exactly the same data and method? Well, yes, it should be. But it very often isn't! For a start, to be able to even attempt to reproduce the results of a study, the underlying data must be available. Linguists that share their primary data as Ewa Dąbrowska did as part of her 2019 publication [@DabrowskaExperienceAptitudeIndividual2019] remain the exception rather than the norm [see @bochynskaReproducibleResearchPractices2023a][^14_literateprogramming-1]. Second, the data must be available in an accessible format and must be published together with enough documentation to be understandable to an independent researcher. Third, the author(s) of the original study need to have very diligently documented all their data wrangling and analyses steps. The best way to do this is undoubtedly to use code that does not require closed-source software (e.g. a researcher without a license for SPSS or Stata will not be able to run SPSS or Stata scripts, see @sec-OpenSource). This open code must be shared in an accessible format, too. Fourth, independent researchers need to be able to run these scripts. To this end, it is important that they know exactly which tools were used. Thus, if the analyses were conducted in `R`, they need to know which `R` version and which packages and package versions were used (@sec-Packages). They also need to know in which order the scripts were run and, finally, the scripts must run on their own computers without any errors. So now, reproducibility doesn't sound quite so easy, right? Luckily, if we apply the principles of literate programming in **Quarto**, we can go a long way towards ensuring that our research is reproducible.
 
 [^14_literateprogramming-1]: Although there is ground for optimism here as more and more linguists and language education scholars are beginning to make their data open in repositories such as [IRIS](https://www.iris-database.org/), [TROLLing](https://dataverse.no/dataverse/trolling), and the [Open Science Framework (OSF)](https://osf.io/) (see @sec-Sharing).
 
 ::: callout-note
-### Going further️ 🚀 {.unnumbered collapse="TRUE"}
+### Going further️ `r emoji("rocket")` {.unnumbered collapse="TRUE"}
 
 To find out more about best practices for reproducible research, check out [The Turing Way](https://book.the-turing-way.org/)'s excellent [Guide for Reproducible Research](https://book.the-turing-way.org/reproducible-research/reproducible-research).
 :::
@@ -150,39 +162,32 @@ check_hint("If you're unsure, re-watch the video from minute 13' onwards.", hint
 
 ## Getting started with Quarto {#sec-StartQuarto}
 
-Quarto documents are designed to:
-
-1.  Help you **collaborate** with other researchers (including your future self!) who are interested in both reproducing your results and understanding how you reached them (i.e. the code).
-
-2.  Provide you with a convenient **environment** in which to do research - a kind of "modern-day lab notebook where you can capture not only what you did, but also what you were thinking" [@wickhamDataScienceImport2023].
-
-3.  **Communicate** your analyses to others, including those who are not familiar with any programming language.
-
-### Installation
-
 :::: {.content-visible when-format="html"}
 ::: column-margin
 ![](images/hex_Quarto.png){width="100" alt-text="The Quarto logo is a circle divided into four quarters."}
 :::
 ::::
 
-We will be writing Quarto documents from the *RStudio* IDE[^14_literateprogramming-3]; however, Quarto itself requires a separate installation. Follow these steps to **install** Quarto and check that everything is working as expected:
+We will be writing Quarto documents from the *RStudio* IDE[^14_literateprogramming-3], which conveniently ships with a version of Quarto, meaning that no additional installation[^14_literateprogramming-4] is required for you to use Quarto on your computer.
 
 [^14_literateprogramming-3]: Many other IDEs (Integrated Developer Environments, see @sec-IDE) support Quarto, including [VS Code](https://code.visualstudio.com/download), [JupyterLab](https://jupyter.org/), and [Neovim](https://neovim.io/). Feel free to pick the IDE that you are most comfortable with!
 
-1.  Go to <https://quarto.org/docs/get-started/> and download the latest Quarto version that is compatible with your operating system.
+[^14_literateprogramming-4]: If you need to install Quarto, go to <https://quarto.org/docs/get-started/> and download the latest Quarto version that is compatible with your operating system. Once the download is completed (which may take several minutes), double-click on the installer file that you downloaded and click your way through the installation process.
 
-2.  Once the download is completed (which may take several minutes), double-click on the installer file that you downloaded and click your way through the installation process.
+To get started with Quarto:
 
-3.  In *RStudio*, create a new Project by selecting *File \> New Project...* in the main menu, or by clicking on the "new project" button (see @sec-RProject). You can choose to first option to create a new project directory if you've not yet got one or the second option to select an existing project directory.
+1.  In *RStudio*, create a new Project by selecting *File \> New Project...* in the main menu, or by clicking on the "new project" button.
 
-4.  Then, create a new Quarto document by navigating to *File \> New File \> Quarto Document...*, or clicking on the "new document" button and selecting "*Quarto Document..."*. A dialogue menu will appear (@fig-QuartoNew). Leave everything as is and simply click on "Create" at the bottom.
+    i.  You can choose the first option to create a new folder for your project if you've not yet got one,
+    ii. or the second option to select an existing project directory.
+
+2.  Then, create a new Quarto document by navigating to *File \> New File \> Quarto Document...*, or clicking on the "new document" button and selecting "*Quarto Document..."*. A dialogue menu will appear (@fig-QuartoNew). Leave everything as is and simply click on "Create" at the bottom.
 
 ![Creating a new Quarto document](images/Quarto_new.png){#fig-QuartoNew width="401"}
 
-4.  *RStudio* has now opened a new, untitled Quarto file (`.qmd`). Change the title of the document (which is not the same as its filename!) and add the following three lines in the **document header** by copying and pasting the following lines at the top of the document.[^14_literateprogramming-4] Quarto document headers are written in **YAML** which, I kid you not, stands for *Yet Another Markup Language*! 😅
+3.  *RStudio* has now opened a new, untitled Quarto file (`.qmd`). Change the title of the document (which is not the same as its filename!) and add the following three lines to the **document header** by copying and pasting the following lines at the top of the document. Quarto document headers[^14_literateprogramming-5] are written in **YAML** which, I kid you not, stands for *Yet Another Markup Language*! `r emoji("grinning-face-with-sweat")`
 
-[^14_literateprogramming-4]: Note that, in YAML syntax, character strings such as the document title and your name must be enclosed in quotation marks. By contrast, the date is not enclosed in quotation marks because it is a dynamic variable that will be adjusted to your computer's system date so that, every time you render the document, the date will be updated.
+[^14_literateprogramming-5]: Note that, in YAML syntax, character strings such as the document title and your name must be enclosed in quotation marks. By contrast, the date is not enclosed in quotation marks because it is a dynamic variable that will be adjusted to your computer's system date so that, every time you render the document, the date will be updated.
 
 ```{yaml}
 ---
@@ -193,9 +198,11 @@ date: last-modified
 ---
 ```
 
-5.  To check your Quarto installation, render your document by either selecting *File \> Render Document* in the main menu, or clicking on "Render" button in the Quarto menu bar (see @fig-QuartoRender). You will first be prompted to give your `.qmd` file a name (e.g. `LearningQuarto.qmd`) and save it. Once you have saved your Quarto document, your `.qmd` file will automatically be rendered to HTML (Quarto's default rendering format).
+4.  Click on the "save" button in the menu bar or navigate to *File \> Save* to save your `.qmd` file. You will be prompted to give it a name. This could be `LearningQuarto.qmd` (see @sec-FileNaming for tips on how to name files).
 
-6.  Navigate to the folder where you saved your `.qmd` file to find the rendered HTML file. It will have the same filename as your Quarto document but with the file extension `.html` (e.g. `LearningQuarto.html`). If you double-click on the file, it will open up in your default web browser (e.g. Firefox, Google Chrome, Safari). You should see that the HTML document features the title of your document, your name as the author, and today's date (see @fig-QuartoHTML).
+5.  To check your Quarto installation, render your document by either selecting *File \> Render Document* in the main menu, or clicking on "Render" button in the Quarto menu bar (see @fig-QuartoRender). Your `.qmd` file will automatically be rendered to HTML (Quarto's default rendering format).
+
+6.  Navigate to the folder where you saved your `.qmd` file to find the rendered HTML file. You can use a Finder (on macOS) or File Explorer window (on Windows) or go to the "Files" pane in *RStudio* to do this. The rendered version of your file will have the same filename as your Quarto document, but with the file extension `.html` (e.g. `LearningQuarto.html`). If you open on the file, it will appear in your default web browser (e.g. Firefox, Chrome, Safari). You should see that the HTML document features the title of your document, your name as the author, and today's date (see @fig-QuartoHTML).
 
 ::: {layout-ncol="2"}
 ![The `.qmd` file as opened in RStudio](images/LearningQuarto_qmd.png){#fig-QuartoRender}
@@ -238,6 +245,27 @@ The L1 participants were all born and raised in the United Kingdom and were sele
 ```
 
 ![*RStudio*'s Visual mode](images/LearningQuarto_intro.png){#fig-QuartoIntro}
+
+In *RStudio*'s visual mode, what is the name of the formatting option that indents and adds a grey line to the left of a quoted paragraph as in @fig-QuartoIntro?
+
+```{r}
+#| echo: false
+#| label: "Q14.4"
+
+check_question("Blockquote",
+                 options = c("Blockquote",
+                 "Line Block",
+                 "Code Block", 
+                 "Div",
+                 "Span"), 
+               random_answer_order = TRUE,
+               q_id = "Q14.4", 
+               type = "radio",
+               button_label = "Check answer",
+               right = "The other options can also be found in the \"Format\" drop-down menu, but blockquote is correct.",
+               wrong = "No, that's not it. Try these options out and these what effect they have.")
+check_hint("All of these options can be found in RStudio's in the \"Format\" drop-down menu in the Visual mode.", hint_title = "🐭 Click on the mouse for a hint.")
+```
 :::
 ::::
 
@@ -253,9 +281,9 @@ In the Visual mode (see @fig-QuartoVisual (a)), click on the "Normal" drop-down 
 
 ## Markdown text {#sec-Markdown}
 
-Writing and formatting text in RStudio's Visual editor is very similar to writing in a word-processing software such as LibreOffice Writer or Microsoft Word. In the background, however, *RStudio* automatically converts your formatted text to **Markdown** in the underlying source code of your `.qmd` file. Markdown is a **plain-text format**. For example, in Markdown, words in italics are enclosed in asterisks like this: `*italics*`. @tbl-markdown displays the markdown syntax for other formatting options commonly used in academic writing.
+Writing and formatting text in *RStudio*'s Visual editor is very similar to writing in a word-processing software such as LibreOffice Writer or Microsoft Word. In the background, however, *RStudio* automatically converts your formatted text to **Markdown** in the underlying source code of your `.qmd` file. Markdown is a **plain-text format**. For example, in Markdown, words in italics are enclosed in asterisks like this: `*italics*`. @tbl-markdown displays the Markdown syntax for other formatting options commonly used in academic writing.
 
-The best way to get the hang of Markdown is simply to try things out. You will also find a handy cheatsheet under *Help \> Markdown Quick Reference*. Remember that you can always go back to the **Visual** mode to format your text, if that's easier for you. When it comes to debugging any Quarto syntax errors, however, it's usually easier to catch these in plain text, so you'll typically want to use the **Source** mode for that.
+The best way to get the hang of Markdown is simply to try things out. You will also find a handy cheatsheet under *Help \> Markdown Quick Reference*. Remember that you can always go back to the **Visual** mode to format your text if that's easier for you. When it comes to debugging any Quarto syntax errors, however, it's usually easier to catch these in plain text, so you'll typically want to switch to the **Source** mode for that.
 
 :::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="false"}
@@ -293,7 +321,7 @@ wrong = "Hummm, are you sure? Go back to the Visual editor and format a word in 
 
 check_question("# Heading 1",
                options = c("**Heading 1**", 
-                           "*Heading 1*", 
+                           "[*Heading 1*]", 
                            "# Heading 1", 
                            "<h1>Heading 1</h1>",
                            "HEADING 1"), 
@@ -302,7 +330,7 @@ check_question("# Heading 1",
 button_label = "Check answer",
 random_answer_order = TRUE,
 right = "That's right! 🎉",
-wrong = "Hummm, are you sure? How is the word \"Introduction\" formatted?")
+wrong = "Hummm, are you sure? How is the word \"Introduction\" formatted in your text?")
 ```
 
  
@@ -323,7 +351,7 @@ check_question("Every line begins with > followed by a space",
 button_label = "Check answer",
 random_answer_order = TRUE,
 right = "That's right! 🎉",
-wrong = "Hummm, are you sure? Go back to the Source code of your Quarto format and check out the formatting of a block quote.")
+wrong = "Hummm, are you sure? Go back to the Source code of your Quarto document and check out the formatting of a block quote.")
 ```
 
  
@@ -345,7 +373,7 @@ check_question("crossed-out",
 button_label = "Check answer",
 random_answer_order = TRUE,
 right = "That's right! 🎉",
-wrong = "Hummm, are you sure? Have you tried inserting `~~mystery~~` in the Source code of your Quarto format and then switching to the Visual editor to see what happens?")
+wrong = "Hummm, are you sure? Have you tried inserting `~~mystery~~` in the Source code of your Quarto document and then switching to the Visual editor to see what happens?")
 ```
 
  
@@ -353,74 +381,74 @@ wrong = "Hummm, are you sure? Have you tried inserting `~~mystery~~` in the Sour
 ::::
 
 ::: callout-note
-Markdown is widely supported across many platforms, from text editors to content management systems, ensuring that your formatting remains consistent and portable. Whether you're writing documentation, creating blog posts, or taking notes, Markdown's simplicity and versatility make it a valuable skill to have beyond academic writing and Quarto.
+Markdown is gaining in popularity and is now widely supported across many platforms, from text editors to content management systems, ensuring that your formatting remains consistent and portable. Whether you're writing documentation, creating blog posts, or taking notes, Markdown's simplicity and versatility make it a valuable skill to have beyond academic writing and Quarto.
 
 You can learn more about Markdown here: <https://www.markdownguide.org/basic-syntax/>.
 :::
 
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
-| Markdown syntax                                                                       | Rendered output                                                                                    |
-+=======================================================================================+====================================================================================================+
-| ``` markdown                                                                          | *italics*, **bold**, ***bold italics***                                                            |
-| *italics*, **bold**, ***bold italics***                                               |                                                                                                    |
-| ```                                                                                   |                                                                                                    |
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
-| ``` markdown                                                                          | superscript^2^ / subscript~2~                                                                      |
-| superscript^2^ / subscript~2~                                                         |                                                                                                    |
-| ```                                                                                   |                                                                                                    |
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
-| ``` markdown                                                                          | ~~strikethrough~~                                                                                  |
-| ~~strikethrough~~                                                                     |                                                                                                    |
-| ```                                                                                   |                                                                                                    |
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
-| ``` markdown                                                                          | `verbatim code`                                                                                    |
-| `verbatim code`                                                                       |                                                                                                    |
-| ```                                                                                   |                                                                                                    |
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
-| ``` markdown                                                                          | # Heading 1 {.unnumbered}                                                                          |
-| # Heading 1                                                                           |                                                                                                    |
-| ```                                                                                   |                                                                                                    |
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
-| ``` markdown                                                                          | ## Heading 2 {.unnumbered}                                                                         |
-| ## Heading 2                                                                          |                                                                                                    |
-| ```                                                                                   |                                                                                                    |
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
-| ``` markdown                                                                          | ### Heading 3 {.unnumbered}                                                                        |
-| ### Heading 3                                                                         |                                                                                                    |
-| ```                                                                                   |                                                                                                    |
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
-| ``` markdown                                                                          | #### Heading 4 {.unnumbered}                                                                       |
-| #### Heading 4                                                                        |                                                                                                    |
-| ```                                                                                   |                                                                                                    |
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
-| ``` markdown                                                                          | <https://quarto.org>                                                                               |
-| <https://quarto.org>                                                                  |                                                                                                    |
-| ```                                                                                   |                                                                                                    |
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
-| ``` markdown                                                                          | [Quarto guide](https://quarto.org)                                                                 |
-| [Quarto guide](https://quarto.org)                                                    |                                                                                                    |
-| ```                                                                                   |                                                                                                    |
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
-| ``` markdown                                                                          | ![The Quarto logo](https://elenlefoll.github.io/RstatsTextbook/images/hex_Quarto.png){width="117"} |
-| ![The Quarto logo](https://elenlefoll.github.io/RstatsTextbook/images/hex_Quarto.png) |                                                                                                    |
-| ```                                                                                   |                                                                                                    |
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
-| ``` markdown                                                                          | -   bullet-point list                                                                              |
-| * bullet-point list                                                                   |                                                                                                    |
-|   + sub-item 1                                                                        |     -   sub-item 1                                                                                 |
-|   + sub-item 2                                                                        |     -   sub-item 2                                                                                 |
-|     - sub-sub-item 1                                                                  |         -   sub-sub-item 1                                                                         |
-| ```                                                                                   |                                                                                                    |
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
-| ``` markdown                                                                          | 1.  numbered list                                                                                  |
-| 1. numbered list                                                                      | 2.  item 2                                                                                         |
-| 2. item 2                                                                             |     i.  sub-item 1                                                                                 |
-|    i. sub-item 1                                                                      |         A.  sub-sub-item 1                                                                         |
-|       A.  sub-sub-item 1                                                              |                                                                                                    |
-| ```                                                                                   |                                                                                                    |
-+---------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
+\newpage
+
+::: {.content-visible when-format="html"}
++-----------------------------------------+-----------------------------------------+
+| Markdown syntax                         | Rendered output                         |
++=========================================+=========================================+
+| ``` markdown                            | *italics*, **bold**, ***bold italics*** |
+| *italics*, **bold**, ***bold italics*** |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | superscript^2^ / subscript~2~           |
+| superscript^2^ / subscript~2~           |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | ~~strikethrough~~                       |
+| ~~strikethrough~~                       |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | `verbatim code`                         |
+| `verbatim code`                         |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | # Heading 1 {.unnumbered}               |
+| # Heading 1                             |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | ## Heading 2 {.unnumbered}              |
+| ## Heading 2                            |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | ### Heading 3 {.unnumbered}             |
+| ### Heading 3                           |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | #### Heading 4 {.unnumbered}            |
+| #### Heading 4                          |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | <https://quarto.org>                    |
+| <https://quarto.org>                    |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | [Quarto guide](https://quarto.org)      |
+| [Quarto guide](https://quarto.org)      |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | -   bullet-point list                   |
+| * bullet-point list                     |                                         |
+|   + sub-item 1                          |     -   sub-item 1                      |
+|   + sub-item 2                          |     -   sub-item 2                      |
+|     - sub-sub-item 1                    |         -   sub-sub-item 1              |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
+| ``` markdown                            | 1.  numbered list                       |
+| 1. numbered list                        | 2.  item 2                              |
+| 2. item 2                               |     i.  sub-item 1                      |
+|    i. sub-item 1                        |         A.  sub-sub-item 1              |
+|       A.  sub-sub-item 1                |                                         |
+| ```                                     |                                         |
++-----------------------------------------+-----------------------------------------+
 
 : Commonly used formatting options and their markdown syntax {#tbl-markdown tbl-colwidths="\[50,50\]"}
+:::
 
 ::: callout-note
 To make writing in Quarto more convenient and less error-prone, you can switch on a **spell-checker** within *RStudio*. To do so, go to *Tools \> Global Options... \> Spelling*.
@@ -440,21 +468,20 @@ In the code chunk below, `{r}` tells Quarto that this chunk is written in the pr
 
 Using one of the three aforementioned options, insert the following `R` code chunk in your document.
 
-```` markdown
-```{{r}}
+```{r}
+#| echo: fenced
 library(here)
 library(tidyverse)
 ```
-````
 
 As you are working on your code within a Quarto document, you can either run:
 
 -   each individual line of code using the keyboard shortcut ⌘/Ctrl ⏎ or
 -   the entire code chunk either by clicking the "Run"![](https://d33wubrfki0l68.cloudfront.net/18153fb9953057ee5cff086122bd26f9cee8fe93/3aba9/images/notebook-run-chunk.png)icon or with shortcut ⇧ ⌘/Ctrl ⏎.
 
-*RStudio* will execute the code and display the results either within your document (below each chunk) or in the Console, depending on your *RStudio* settings.[^14_literateprogramming-5]
+*RStudio* will execute the code and display the results either within your document (below each chunk) or in the Console, depending on your *RStudio* settings.[^14_literateprogramming-6]
 
-[^14_literateprogramming-5]: You can change this behaviour in your *RStudio* preferences under *Tools \> Global Options \>* R Markdown by selecting or unselecting the option: "Show output inline for all R Markdown documents".
+[^14_literateprogramming-6]: You can change this behaviour in your *RStudio* preferences under *Tools \> Global Options \>* R Markdown by selecting or unselecting the option: "Show output inline for all R Markdown documents".
 
 Chunk output can be customised with **chunk options**. There are many options to choose from but, the most important options control whether your code block should be executed when you render your Quarto document and what results are inserted in the rendered version:
 
@@ -482,14 +509,13 @@ In *RStudio* the simplest way to set a chunk option is by clicking the gear icon
 
 In your Quarto document, add a label to your first `R` chunk and render your document to HTML.
 
-```` markdown
-```{{r}}
+```{r}
+#| echo: fenced
 #| label: setup
 
 library(here)
 library(tidyverse)
 ```
-````
 
 [**Q14.9**]{style="color:green;"} What is the output of the `setup` chunk in your rendered `.html` document?
 
@@ -600,15 +626,8 @@ library(tidyverse)
 library(xfun)
 ```
 
-```{{r}}
-#| label: import-data
-#| include: false
-  
-L1.data <- read.csv(file = here("data", "L1_data.csv"))
-L2.data <- read.csv(file = here("data", "L2_data.csv"))
-```
-
 ```{r}
+#| echo: fenced
 #| label: import-data
 #| include: false
   
@@ -635,9 +654,9 @@ In Quarto, we can use **inline code** to dynamically insert these numbers in our
  `{{r}} nrow(L1.data)` native speakers and `{{r}} nrow(L2.data)` nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.
 ```
 
-The rendered version should read like this (if you are obtaining different numbers, this either means that you have tempered with the original data files or that they have been corrupted)[^14_literateprogramming-6]:
+The rendered version should read like this (if you are obtaining different numbers, this either means that you have tempered with the original data files or that they have been corrupted)[^14_literateprogramming-7]:
 
-[^14_literateprogramming-6]: Using Microsoft Excel to open these `.csv` files can corrupt the files and can happen even if you did not use Excel yourself (e.g. on some Windows computers, this is sometimes done automatically as part of the download process). To find out more, see @sec-ExcelWarning.
+[^14_literateprogramming-7]: Using Microsoft Excel to open these `.csv` files can corrupt the files and can happen even if you did not use Excel yourself (e.g. on some Windows computers, this is sometimes done automatically as part of the download process). To find out more, see @sec-ExcelWarning.
 
 > ### Descriptive statistics about the participants {.unnumbered}
 >
@@ -645,22 +664,8 @@ The rendered version should read like this (if you are obtaining different numbe
 
 Inline code should only be used for very simple code, ideally with no more than one function, as in `` `{{r}} nrow(L1.data)` ``. To insert the output of more complex operations, it is best to write the code and save its output(s) to the local environment in a **hidden code chunk** (using the option `#| include: false`, see @sec-Chunks).
 
-```` markdown
-```{{r}}
-#| label: L1-gender
-#| include: false
-
-L1.males <- L1.data |>
-  filter(Gender == "M") |>
-  count()
-
-L1.females <- L1.data |>
-  filter(Gender == "F") |>
-  count()
-```
-````
-
 ```{r}
+#| echo: fenced
 #| label: L1-gender
 #| include: false
 
@@ -745,7 +750,7 @@ L2.allfemales <- L2.data |>
 
 ```
 
-Some of these methods are perhaps more elegant than others, but they are all acceptable. After all, they all work! 🙃
+Some of these methods are perhaps more elegant than others, but they are all acceptable. After all, they all work! `r emoji("upside-down-face")`
 
 Once they are saved to the local environment, the values can be inserted inline in the usual way:
 
@@ -756,11 +761,12 @@ Once they are saved to the local environment, the values can be inserted inline 
 :::
 ::::
 
-If we want to start our paragraph with 90 written in as a word rather than in digits, we can use the `numbers_to_words function()` function from the {xfun} package. First, you'll need to install the {xfun} package and then add a line to your `setup` chunk to load it.[^14_literateprogramming-7]
+If we want to start our paragraph with 90 written in as a word rather than in digits, we can use the `numbers_to_words function()` function from the {xfun} package. First, you'll need to install the {xfun} package and then add a line to your `setup` chunk to load it.[^14_literateprogramming-8]
 
-[^14_literateprogramming-7]: To make your Quarto document even more reproducible, you can replace your `setup` chunk with the following function that will automatically check if a package needs to be installed before it is loaded:
+[^14_literateprogramming-8]: To make your Quarto document even more reproducible, you can replace your `setup` chunk with the following function that will automatically check if a package needs to be installed before it is loaded:
 
-    ```{{r}}
+    ```{r}
+    #| echo: fenced
     #| label: improved-setup
     # List of packages necessary in this Quarto document:
     packages <- c("here", "tidyverse", "xfun")
@@ -773,13 +779,13 @@ If we want to start our paragraph with 90 written in as a word rather than in di
     invisible(lapply(packages, library, character.only = TRUE))
     ```
 
-    Alternatively, consider using {renv} or {rix} for your project (see @sec-Packages).
+    To ensure that the correct package version is installed, consider using {renv} or {rix} for your project (see @sec-Packages).
 
-```` markdown
-```{{r}}
+```{r}
+#| echo: fenced
+#install.packages("xfun")
 library(xfun)
 ```
-````
 
 First, you can test that it works by running this code:
 
@@ -870,7 +876,7 @@ The values saved to the local environment as `R` objects can then be inserted in
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-🧑‍💻 Copy the code and text sections corresponding to the description of participants' professional occupations and education displayed @sec-Inline (in the textbox "More complex inline computations") into your Quarto document and render it to HTML. Compare the values in your rendered document with the original ones from the published study (see below).
+`r emoji("woman-technologist-medium-skin-tone")` Copy the code and text sections corresponding to the description of participants' professional occupations and education displayed @sec-Inline (in the textbox "More complex inline computations") into your Quarto document and render it to HTML. Compare the values in your rendered document with the original ones from the published study (see below).
 
 > Twenty-two percent of the participants held manual jobs, 24% held clerical positions, and 28% had professional-level jobs or were studying for a degree; the remaining 26% were occupationally inactive (i.e. unemployed, retired, or homemakers). In terms of education, participants' backgrounds ranged from no formal qualifications to Ph.D., with corresponding differences in the number of years spent in full-time education (from 10 to 21; M = 14, SD = 2). Six participants reported a working knowledge of another language; the rest described themselves as monolinguals [@DabrowskaExperienceAptitudeIndividual2019: 6].
 
@@ -981,7 +987,7 @@ The Quarto guide provides further information about formatting tables: <https://
 
 ## Figures {#sec-QuartoFigures}
 
-In Quarto documents, figures can either be inserted from image files (e.g. `.png` or `.jpeg` files, see @sec-FileExtensions) or from the output of a code chunk (e.g. a plot, see @sec-Dataviz).
+In Quarto documents, figures can either be inserted from image files (e.g. `.png` or `.jpeg` files, see @sec-FileExtensions) or from the output of a code chunk (e.g. a plot, see @sec-DataViz).
 
 ### Images {#sec-QuartoImages}
 
@@ -1268,12 +1274,19 @@ bibliography:
 Having first installed the package, load the {grateful} library and call the `cite_packages(output = "paragraph")` function. This will generate a paragraph that mentions all the packages used in the document and add their references to the bibliography (either at the bottom of your rendered Quarto document or, in the case of this textbook, in the corresponding chapter, see @sec-References).
 
 ```{r}
-#| echo: fenced
+#| include: false
+options(renv.config.dependencies.limit = 10000)
+```
 
+```{r}
+#| message: false
+#| warning: false
 #install.packages("grateful")
 library(grateful)
 
-cite_packages(output = "paragraph", out.dir = ".")
+cite_packages(output = "paragraph", 
+              out.dir = tempdir(), 
+              omit = NULL)
 ```
 
 Alternatively, `cite_packages()` can generate a table with all the package names, versions, and references. @tbl-packages lists all of the packages used in the making of this textbook. To display functioning links and references, the table is rendered using the `kable()` function from the {knitr} package.
@@ -1281,7 +1294,9 @@ Alternatively, `cite_packages()` can generate a table with all the package names
 ```{r}
 #| eval: false
 #install.packages("knitr")
-pkgs <- cite_packages(output = "table", out.dir = ".")
+pkgs <- cite_packages(output = "table", 
+                      out.dir = tempdir(), 
+                      omit = NULL)
 knitr::kable(pkgs)
 ```
 
@@ -1291,7 +1306,8 @@ knitr::kable(pkgs)
 #| warning: false
 #| message: false
 
-pkgs <- cite_packages(output = "table", out.dir = ".")
+pkgs <- cite_packages(output = "table", 
+                      out.dir = tempdir())
 knitr::kable(pkgs)
 ```
 
@@ -1312,7 +1328,7 @@ The [{renv}](https://rstudio.github.io/renv/index.html) library keeps track of t
 ::::
 
 ::: callout-note
-#### Going further 📚
+#### Going further `r emoji("books")`
 
 Accessible introductions to stabilising your computing environment can be found at <https://berd-nfdi.github.io/BERD-reproducible-research-course/3-3-stabilize.html> and <https://the-turing-way.netlify.app/reproducible-research/renv.html>.
 :::
@@ -1349,7 +1365,7 @@ format:
 
 So far, we have only tried rendering our Quarto document to **HTML**, which is the default publishing format for Quarto documents. HTML has many advantages and is great for publishing online, but the beauty of Quarto is that you can share and publish your research in many other formats, too.
 
-![Artwork ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) Allison Horst from the ["Hello, Quarto" keynote](https://mine.quarto.pub/hello-quarto/) by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022.](images/AHorst_many-qmd-to-output.png){#fig-Penguin fig-alt="A schematic showing many qmd files, going through Quarto, to generate an HTML, PDF, or Word document or more. The Quarto logo is depicted as a baseball a penguin is spinning." width="467"}
+![Artwork ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) Allison Horst from the ["Hello, Quarto" keynote](https://mine.quarto.pub/hello-quarto/) by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022.](images/AHorst_many-qmd-to-output.png){#fig-Penguin fig-alt="A schematic showing many qmd files, going through Quarto, to generate an HTML, PDF, or Word document or more. The Quarto logo is depicted as a baseball a penguin is spinning." width="467"}
 
 ### Word, LibreOffice & co.
 
@@ -1389,9 +1405,9 @@ Please change the output type of this document to HTML.
 
 To fix this, add the following options to any code chunk that generates content that only works in HTML:
 
-```{{r}}
+```{r}
+#| echo: fenced
 #| eval: !expr 'knitr::is_html_output()'
-#| echo: FALSE
 
 ggplotly(L2.scatter2)
 ```
@@ -1417,7 +1433,7 @@ format: odt
 ---
 ```
 
-By default, the quality of the images and graphs in rendered `.docx` and `.odt` files is low. This is to keep the file size reasonable. You can improve the quality of the rendered images by specifying the **image definition** in the YAML option. To do so, replace the format line that you added above with the following lines. Make sure that you indent each line correctly as shown below; otherwise, you will get an error when you try to render your document. 
+By default, the quality of the images and graphs in rendered `.docx` and `.odt` files is low. This is to keep the file size reasonable. You can improve the quality of the rendered images by specifying the **image definition** in the YAML option. To do so, replace the format line that you added above with the following lines. Make sure that you indent each line correctly as shown below; otherwise, you will get an error when you try to render your document.
 
 ```{yaml}
 ---
@@ -1431,7 +1447,7 @@ format:
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-[**Q14.15**]{style="color:green;"} If you completed [**Q8.15**]{style="color:green;"} (@sec-Range), you copied-and-pasted a paragraph with gaps into LibreOffice Writer or Microsoft Word and then manually inserted descriptive statistics that you had calculated in `R`. This method of copying-and-pasting across different programmes is very error-prone: What if you accidentally pasted the wrong number in the wrong place? And what if there was an update to the dataset or you made some changes to the data cleaning procedure? You'd have to manually change all the numbers again! 🤯 This is time-consuming and, more worryingly, very likely to result in errors!
+[**Q14.15**]{style="color:green;"} If you completed [**Q8.15**]{style="color:green;"} (@sec-Range), you copied-and-pasted a paragraph with gaps into LibreOffice Writer or Microsoft Word and then manually inserted descriptive statistics that you had calculated in `R`. This method of copying-and-pasting across different programmes is very error-prone: What if you accidentally pasted the wrong number in the wrong place? And what if there was an update to the dataset or you made some changes to the data cleaning procedure? You'd have to manually change all the numbers again! `r emoji("exploding-head")` This is time-consuming and, more worryingly, very likely to result in errors!
 
 Now that you know about **literate programming** in Quarto, rewrite the following paragraph describing the `GrammarR` variable in `L1.data` and `L2.data` in Quarto. Use **in-text code chunks** to fill the gaps and then render your paragraph to `.docx` or `.odt` format to check the results.
 
@@ -1490,13 +1506,11 @@ format:
 
 In research, it's quite common that you will be working on a project that will be submitted as a paper or thesis (e.g. in PDF format) *and* that you'll also want to **present** in class, to your research group, or at a conference. Conveniently, we can turn any Quarto document into **presentation slides**. There are currently three presentation formats to choose from:
 
-+----------------------------------------------------------------------+-------------------------------------------------------------------------------+--------------------+
-| [Revealjs](https://quarto.org/docs/presentations/revealjs/)          | An open-source HTML presentation framework.                       | `format: revealjs` |
-+----------------------------------------------------------------------+-------------------------------------------------------------------------------+--------------------+
-| [Power-Point](https://quarto.org/docs/presentations/powerpoint.html) | Microsoft Office's presentation editing software.               | `format: pptx`     |
-+----------------------------------------------------------------------+-------------------------------------------------------------------------------+--------------------+
-| [Beamer](https://quarto.org/docs/presentations/beamer.html)          | A LaTeX class for producing presentations and slides in PDF format. | `format: beamer`   |
-+----------------------------------------------------------------------+-------------------------------------------------------------------------------+--------------------+
+|  |  |  |
+|----|----|----|
+| [Revealjs](https://quarto.org/docs/presentations/revealjs/) | An open-source HTML presentation framework. | `format: revealjs` |
+| [Power-Point](https://quarto.org/docs/presentations/powerpoint.html) | Microsoft Office's presentation editing software. | `format: pptx` |
+| [Beamer](https://quarto.org/docs/presentations/beamer.html) | A LaTeX class for producing presentations and slides in PDF format. | `format: beamer` |
 
 I recommend using **Revealjs**. The best way to get a sense of what is possible is to explore the [demo](https://quarto.org/docs/presentations/revealjs/demo/){target="_blank"} presentation from the [Quarto Guide](https://quarto.org/docs/presentations/revealjs/).
 
@@ -1512,10 +1526,9 @@ I recommend using **Revealjs**. The best way to get a sense of what is possible 
 To view the demo in a standalone browser tab, head to the [Quarto Guide](https://quarto.org/docs/presentations/revealjs/demo/){target="_blank"}. You can also out the [source code](https://github.com/quarto-dev/quarto-web/blob/main/docs/presentations/revealjs/demo/index.qmd) to see how the slides were created.
 ::::
 
-
 ## Conclusion
 
-This chapter only just scratched the surface of what's possible in Quarto. The Quarto documentation is very detailed and well worth exploring to find out what else you can do in Quarto: <https://quarto.org/docs/guide/>. From books to blogs and interactive dashboards, the world's your oyster! 🚀
+This chapter only just scratched the surface of what's possible in Quarto. The Quarto documentation is very detailed and well worth exploring to find out what else you can do in Quarto: <https://quarto.org/docs/guide/>. From books to blogs and interactive dashboards, the world's your oyster! `r emoji("rocket")`
 
 ::: callout-note
 #### Going further with Quarto
@@ -1524,7 +1537,7 @@ This chapter only just scratched the surface of what's possible in Quarto. The Q
 
 ➡️ Quarto has many functionalities that are particularly attractive to those of us involved in higher education teaching and academic research. Watch [Quarto for Academics](https://www.youtube.com/embed/EbAAmrB0luA?si=AwJ3szmUKECHfwuS) (20 minutes) by Mine Çetinkaya-Rundel to find out more.
 
-➡️ Thinking of writing an entire M.A./PhD thesis or book in Quarto? Cameron Patrick wrote his PhD thesis in Quarto and has helpfully put together some great tips so that his "pain and suffering can help reduce yours". Well worth reading if you're thinking of rendering a complex (set of) Quarto document(s) to PDF: <https://cameronpatrick.com/post/2023/07/quarto-thesis-formatting/>.
+➡️ Thinking of writing an entire M.A./PhD thesis or book in Quarto? Cameron Patrick wrote his PhD thesis in Quarto and has helpfully put together some great tips so that his "pain and suffering can help reduce yours". Well worth reading if you're thinking of rendering a complex (set of) Quarto document(s) to PDF: [https://cameronpatrick.com/post/2023/07/quarto-thesis-formatting/](#0){.uri}.
 
 ➡️ Last but not least, the latest edition of "R for Data Science" also has a great chapter on communicating the results of data science projects using Quarto: <https://r4ds.hadley.nz/communicate>.
 :::

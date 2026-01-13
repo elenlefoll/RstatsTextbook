@@ -3,6 +3,8 @@ engine: knitr
 bibliography: references.bib
 ---
 
+{{< include emoji_script.md >}}
+
 # Data w`R`angling {#sec-DataWrangling}
 
 ### Chapter overview {.unnumbered}
@@ -19,7 +21,7 @@ In this chapter, you will learn how to:
 -   Reshape and combine tables
 -   Save and export `R` objects in different formats
 
-## Welcome to the tidyverse! 🪐 {#sec-tidyverse}
+## Welcome to the tidyverse! `r emoji("ringed-planet")` {#sec-tidyverse}
 
 This chapter explains how to examine, clean, and manipulate data mostly using functions from the [{tidyverse}](https://www.tidyverse.org): a collection of useful `R` packages increasingly used for all kinds of data analysis projects. Tidyverse functions are designed to work with **tidy data** (see @fig-tidydata) and, as a result, they are often easier to combine.
 
@@ -310,7 +312,7 @@ wrong = "No")
 
 ```{r}
 #| code-fold: true
-#| code-summary: "🐭 Click on the mouse to view `R` code to help you answer **c.**"
+#| code-summary: "Click here to view `R` code to help you answer **c.**"
 #| echo: true
 #| results: "hide"
 
@@ -467,7 +469,7 @@ wrong = "No, that's not the reason. Have you noticed that, in the output of the 
 
 ```{r collapse=TRUE}
 #| code-fold: true
-#| code-summary: "🐭 Click on the mouse to help you answer **a.**"
+#| code-summary: "Click here to help you answer **a.**"
 #| echo: true
 
 summary(L1.data.fct$OccupGroup)
@@ -647,7 +649,7 @@ L2.data$NativeLg |>
 ```
 
 ::: {.callout-note collapse="true"}
-#### Going further: Using regular expressions (regex) 🤓
+#### Going further: Using regular expressions (regex) `r emoji("nerd-face")`
 
 Many functions of the {stringr} package involve **regular expressions** (short: **regex**). The second page of the [{stringr} cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) provides a nice overview of how regular expressions can be used to manipulate character strings in `R`.
 
@@ -663,7 +665,7 @@ L2.data$NativeLg |>
 
 Regular expressions provide incredibly powerful and versatile ways to work with text in all kinds of programming languages. When conducting **corpus linguistics** research, they also allow us to conduct complex corpus queries.
 
-Each programming language/software has a slightly different flavour of regex but the basic principles are the same across all languages/software and are well worth learning. To get started, I highly recommend this beautifully designed interactive regex tutorial for beginners: <https://regexlearn.com/learn/regex101>. Have fun! 🤓
+Each programming language/software has a slightly different flavour of regex but the basic principles are the same across all languages/software and are well worth learning. To get started, I highly recommend this beautifully designed interactive regex tutorial for beginners: <https://regexlearn.com/learn/regex101>. Have fun! `r emoji("nerd-face")`
 :::
 
 ### Using `case_when()` {#sec-casewhen}
@@ -942,7 +944,7 @@ L2.data |>
 
 The `relocate()` function has moved `NativeLgFamily` to the first column (the function's default position) and has also moved `NativeLg` to the second position, but it has renamed the column `after`.
 
-This is a reminder to *always* check whether your data wrangling operations have gone as planned. Just because you didn't get an error message doesn't mean that your code did what you wanted! ⚠️
+This is a reminder to *always* check whether your data wrangling operations have gone as planned. Just because you didn't get an error message doesn't mean that your code did what you wanted! `r emoji("warning")`️
 :::
 ::::
 
@@ -1074,9 +1076,9 @@ combined.data |>
 Run `View(combined.data)` to inspect the combined dataset and check in which other columns there are `NA` values.
 
 :::: {.callout-note collapse="false"}
-#### What if my data are not yet in tidy format? 🤨
+#### What if my data are not yet in tidy format? `r emoji("face-with-raised-eyebrow")`
 
-Combining the two datasets from @DabrowskaExperienceAptitudeIndividual2019 was relatively easy because the data was already in tidy format. But, fear not: if you need to first convert your data to tidy format, the [{tidyr}](https://tidyr.tidyverse.org/) package has got you covered! 😎
+Combining the two datasets from @DabrowskaExperienceAptitudeIndividual2019 was relatively easy because the data was already in tidy format. But, fear not: if you need to first convert your data to tidy format, the [{tidyr}](https://tidyr.tidyverse.org/) package has got you covered! `r emoji("smiling-face-with-sunglasses")`
 
 The `pivot_longer()` and `pivot_wider()` functions allow you to easily convert tables from "long" to "wide" format and vice versa (see @fig-tidyrcheatsheet).
 
@@ -1092,7 +1094,7 @@ Remember to carefully check the output of any data manipulation that you do *bef
 ::::
 
 ::: callout-important
-### Using AI tools for coding ⚠️
+### Using AI tools for coding `r emoji("warning")`️
 
 Note that older textbooks/tutorials, and especially AI tools such as ChatGPT that have been trained on older web data, will frequently suggest **superseded** (i.e. outdated) functions for data manipulation such as `spread()`, `gather()`, `select_all()`, and `mutate_if()`. If you use superseded functions, your code will still work, but `R` will print a warning in the Console and usually suggest a modern alternative.
 
@@ -1119,7 +1121,6 @@ L2.data <- read.csv(file = here("data", "L2_data.csv"))
 Then, run the following lines of code to create a new `R` object called `combined.data` that contains the wrangled data.
 
 ```{r}
-
 L2.data <- L2.data |> 
   mutate(Participant = as.character(Participant)) |> 
   mutate(Group = "L2")  
@@ -1149,7 +1150,7 @@ combined.data <- bind_rows(L1.data, L2.data) |>
   mutate(across(where(is.character), factor))
 ```
 
-Don't forgot to check the result by examining the output of `View(combined.data)` and `str(combined.data)`.
+Don't forgot To check the result by examining the output of `View(combined.data)` and `str(combined.data)`.
 
 ```{r}
 #| eval: false
@@ -1222,7 +1223,7 @@ check_question(c("6"),
                options = c("none", "1", "2", "6", "all of them"),
                button_label = "Check answer",
                q_id = "Q9.15", 
-               right = "That's right! Check the solution below to see different ways to find the answer to this question. 😎",
+               right = "That's right! Check the solution below to see different ways to find the answer to this question. `r emoji(\"smiling-face-with-sunglasses\")`",
                wrong = "That's not the correct answer. Check the hint below.",
 type = "radio")
 check_hint("One way to answer find the answer to this question is to cross-tabulate the `Age` and `OccupGroup` variables of `combined.data` using the count() function and then add up the numbers in your head. Check the solution below if you're stuck.", hint_title = "🐭 Click on the mouse for a hint.")
@@ -1277,13 +1278,13 @@ As a final step, we want to save the `R` object `combined.data` to a local file 
 +-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
 | DSV files (e.g. `.csv`, `.tsv`, `.tab`)                                                        | `R` data files (`.rds`)                                                                                                                 |
 +:================================================================================================+:========================================================================================================================================+
-| ✅ Highly portable (i.e., can be opened in all standard spreadsheet software and text editors). | ❌ Specific to `R` and cannot be opened in standard spreadsheet software or text editors.                                               |
+| `r emoji("check-mark-button")` Highly portable (i.e., can be opened in all standard spreadsheet software and text editors). | `r emoji("cross-mark")` Specific to `R` and cannot be opened in standard spreadsheet software or text editors.                                               |
 +-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-| ❌ Inefficient for very large datasets.                                                         | ✅ Efficient memory usage for more compact data storage and faster loading times in `R`.                                                |
+| `r emoji("cross-mark")` Inefficient for very large datasets.                                                         | `r emoji("check-mark-button")` Efficient memory usage for more compact data storage and faster loading times in `R`.                                                |
 +-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-| ✅ Universal, language-independent format and therefore suitable for long-term archiving.       | ❌ No guarantee that older `.rds` files will be compatible with newer versions of `R` and therefore unsuitable for long-term archiving. |
+| `r emoji("check-mark-button")` Universal, language-independent format and therefore suitable for long-term archiving.       | `r emoji("cross-mark")` No guarantee that older `.rds` files will be compatible with newer versions of `R` and therefore unsuitable for long-term archiving. |
 +-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
-| ❌ Loss of metadata.                                                                            | ✅ Preserve `R` data structures (e.g., factor variables remain stored as factors).                                                      |
+| `r emoji("cross-mark")` Loss of metadata.                                                                            | `r emoji("check-mark-button")` Preserve `R` data structures (e.g., factor variables remain stored as factors).                                                      |
 +-------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
 
 : Pros and cons of saving DSV and `R` data files. {#tbl-saving}
@@ -1293,9 +1294,7 @@ We will save both a `.csv` and an `.rds` version of the wrangled data but in the
 We will save both files to a subfolder of our project "data" folder called "processed". If we try to save the file to this subfolder before it has been created at this location we get an error message.
 
 ```{r eval = FALSE}
-
 saveRDS(combined.data, file = here("data", "processed", "combined_L1_L2_data.rds"))
-
 ```
 
 ```         
@@ -1315,19 +1314,15 @@ dir.create(file.path(here("data", "processed")))
 Now that the subfolder exists, we can save `combined.data` as an `.rds` file. We will work with this file in the following chapters.
 
 ```{r}
-
 saveRDS(combined.data, file = here("data", "processed", "combined_L1_L2_data.rds"))
-
 ```
 
-If you want to share your wrangled dataset with a colleague who does not (yet? 😉) use `R`, you can use the tidyverse function `write_csv()`.[^9_datawrangling-5] Your colleague will be able to open this file in any standard spreadsheet programme or text editor (but do warn them about the dangers of opening `.csv` file in spreadsheets, see @sec-ExcelWarning!).
+If you want to share your wrangled dataset with a colleague who does not (yet? `r emoji("winking-face")`) use `R`, you can use the tidyverse function `write_csv()`.[^9_datawrangling-5] Your colleague will be able to open this file in any standard spreadsheet programme or text editor (but do warn them about the dangers of opening `.csv` file in spreadsheets, see @sec-ExcelWarning!).
 
 [^9_datawrangling-5]: As usual, there is a base `R` alternative: `write.csv()` will work just as well but, for larger datasets, it is considerably slower than `write_csv()`. For finer differences, check out the functions' respective help files.
 
 ```{r}
-
 write_csv(combined.data, file = here("data", "processed", "combined_L1_L2_data.csv"))
-
 ```
 
 ## Check your progress 🌟 {.unnumbered}
@@ -1349,4 +1344,4 @@ Are you confident that you can...?
 -   [ ] Use tidyverse functions to pre-process data in an readable and reproducible way (@sec-Preprocessing) and (@sec-filter)
 -   [ ] Save `R` objects as `.rds` and `.csv` files on your computer (@sec-ExportingRObjects)
 
-In @sec-DataViz we continue to explore the tidyverse as we learn how to use the popular tidyverse package {ggplot2} to visualise the pre-processed data from @DabrowskaExperienceAptitudeIndividual2019. Are you ready to get creative? 🎨
+In @sec-DataViz we continue to explore the tidyverse as we learn how to use the popular tidyverse package {ggplot2} to visualise the pre-processed data from @DabrowskaExperienceAptitudeIndividual2019. Are you ready to get creative? `r emoji("artist-palette")`
