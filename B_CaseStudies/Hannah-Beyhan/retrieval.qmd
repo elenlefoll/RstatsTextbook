@@ -3,11 +3,12 @@ title: "Lea`R`ning Direction Effects in Retrieval Practice on EFL Vocabulary Lea
 author: "Hannah Boxleitner & Beyhan Aliy"
 language: 
   title-block-author-single: "Authors"
-date: "2025-12-16"
+date: "2026-01-31"
 bibliography: 
 - CS_Hannah-Beyhan_references.bib
 - CS_Hannah-Beyhan_packages.bib
 csl: unified-style-sheet-for-linguistics.csl
+code-annotations: hover
 ---
 
 ::: {.callout-note collapse="true"}
@@ -366,7 +367,7 @@ These reliability analyses compute Cronbach’s α, a measure of internal consis
 
 ### Accuracy
 
-To investigate accuracy, @2021 processed the collected results for each participant — their ID, how many items they answered, and how many they got right — and visualized them in a boxplot. In the original code, the authors loaded the dataset for this section again and stored it under a different object name `dat.acc`. We skipped that step and simply used `dat` instead as it is already available as an `R` object in our local environment.
+To investigate accuracy, @2021 processed the collected results for each participant — their ID, how many items they answered, and how many they got right — and visualized them as boxplots. In the original code, the authors loaded the dataset for this section again and stored it under a different object name `dat.acc`. We skipped that step and simply used `dat` instead as it is already available as an `R` object in our local environment.
 
 The following code chunk, which analyses data pertaining to L2 -\> L1 direction of the L1 production set, processes the results for each participant — their ID, answered items, correct answers — and puts them into a clean table. Therefore, it gives us the core numbers necessary to describe and analyze learners' vocabularly retrieval accuracy.
 
@@ -438,7 +439,7 @@ names(accu_L1L2_L1Pro) <- c("ID", "Try", "Score")
 accu_L1L2_L1Pro
 ```
 
-While accuracy did not play a very big role in the published paper, the authors did a bit more with it in their code. Aside from using the `describe()` function on the final data frames, which returns a rich set of descriptive statistics, they visualized the results in a boxplot. Since we found them to be quite nice for understanding the descriptive statistics of the tests, we decided to include these in this chapter, too.
+While accuracy did not play a very big role in the published paper, the authors did a bit more with it in their code. Aside from using the `describe()` function on the final data frames, which returns a rich set of descriptive statistics, they visualized the results as boxplots. Since we found them to be quite nice for understanding the descriptive statistics of the tests, we decided to include these in this chapter, too.
 
 ```{r}
 #| warning: false
@@ -453,7 +454,7 @@ describe(accu_L2L1_L1Pro$Score)
 describe(accu_L1L2_L1Pro$Score)
 ```
 
-To visualize descriptive statistics for the L1 production set, the authors generated boxplots comparing the two learning directions. For this to work, the {beeswarm} package has to be installed and loaded. The authors assigned a data frame `L1pro` that contains the scores from both learning directions in the L1 production test. After changing the names of the columns to how they shall appear on the *x*-axis, the authors created a side-by-side boxplot for the two learning conditions. Finally, they added the `beeswarm()` function specifying `add = T`, which lets individual scores appear as jittered dots so that they don't overlap.
+To visualize descriptive statistics for the L1 production set, the authors generated boxplots comparing the two learning directions. For this to work, the {beeswarm} package has to be installed and loaded. The authors assigned a data frame `L1pro` that contains the scores from both learning directions in the L1 production test. After changing the names of the columns to how they shall appear on the *x*-axis, the authors created side-by-side boxplots for the two learning conditions. Finally, they added the `beeswarm()` function specifying `add = T`, which lets individual scores appear as jittered dots so that they don't overlap.
 
 ```{r}
 #| label: fig-L1-prod
@@ -548,7 +549,7 @@ describe(accu_L2L1_L2Pro$Score)
 describe(accu_L1L2_L2Pro$Score)
 ```
 
-**As with L1,** @2021 created a similar boxplot comparing the two learning directions in L2 production using the beeswarm package.
+**As with L1,** @2021 created similar boxplots comparing the two learning directions in L2 production using the beeswarm package.
 
 ```{r}
 #| label: fig-L2-prod
@@ -556,6 +557,7 @@ describe(accu_L1L2_L2Pro$Score)
 #| code-summary: "Show R code to generate boxplots"
 #| fig-cap: "L2 Production Test scores across the two learning directions"
 #| fig-cap-location: bottom
+#| fig-asp: 1
 
 # Plot (L2 production)
 
