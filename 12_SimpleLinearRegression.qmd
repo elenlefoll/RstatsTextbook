@@ -856,18 +856,39 @@ library(emmeans)
 emmeans(model3, ~ OccupGroup)
 ```
 
+```{r}
+#| eval: false
+#| include: false
+library(marginaleffects)
+
+estimate_means(model3, "OccupGroup") 
+```
+
 The [{visreg}](https://pbreheny.github.io/visreg/index.html) package [@brehenyVisualizationRegressionModels2017] provides an efficient way of visualising model predictions and residuals. In @fig-PredictedVocabByOccupation we visualise the model's predicted values (as blue lines) and the confidence intervals output by the `emmeans()` function (as grey bands), together with the model's residuals (as grey dots).
 
 ```{r}
 #| label: "fig-PredictedVocabByOccupation"
 #| fig-cap: "Distribution of predicted vocabulary test scores across four occupational groups"
-#| fig-alt: "Box plot showing predicted vocabulary scores across four occupational groups (C, I, M, and PS). Individual data points are shown as gray dots overlaid on gray box plots with blue median lines."
+#| fig-alt: "Box plot showing predicted vocabulary scores across four occupational groups (C, I, M, and PS). Individual residual points are shown as gray dots overlaid on gray box plots with blue median lines."
 
 library(visreg)
 
 visreg(model3, gg = TRUE) +
   labs(x = "Occupational groups",
        y = "Predicted Vocab scores") +
+  theme_bw()
+```
+
+```{r}
+#| eval: false
+#| include: false
+library(marginaleffects)
+library(modelbased)
+
+estimate_means(model3, "OccupGroup") |> 
+  plot(show_residuals = TRUE) +
+  labs(x = "Occupational groups",
+       y = "Predicted Vocab scores") +  
   theme_bw()
 ```
 
@@ -1172,22 +1193,17 @@ In @fig-Nonlinear, by contrast, the data points follow a curved pattern. The reg
 ```{r}
 #| echo: false
 #| label: fig-Nonlinear
+#| fig-cap: "Non-linear distribution of word frequencies in the Brown corpus (Kucera & Francis 1967)"
 
-#### To do: Find suitable real data to create such a plot! @Vishar: Do not bother adding alt-text or a caption for this plot as I will change it.
+library(zipfR)
 
-# Data following Zipf's Law 
-set.seed(123)
-word_rank_zipf <- 1:200
-# Zipf's Law: frequency is inversely proportional to rank
-word_frequency_zipf <- 80000 / word_rank_zipf^1.1 + rnorm(200, sd = 100)
-
-zipf_data_curved <- data.frame(
-  word_rank = word_rank_zipf,
-  frequency = pmax(word_frequency_zipf, 1)
-)
-
-ggplot(zipf_data_curved, aes(x = word_rank, y = frequency)) +
+Brown.spc |> # Data taken from the Brown corpus (Kucera and Francis 1967)
+  filter(m < 1000) |> # Filtered to be able see the curvature
+  slice_sample(n = 500) |> # Sampled to obtain a readable plot
+  ggplot(aes(x = m, y = Vm)) +
   geom_point(alpha = 0.6) +
+  scale_y_log10(labels = scales::label_number(),
+                limits = c(1, max(Brown.spc$m))) +  
   geom_smooth(method = "lm", color = "blue", se = FALSE) +
   labs(x = "Word rank", 
        y = "Word frequency") +
