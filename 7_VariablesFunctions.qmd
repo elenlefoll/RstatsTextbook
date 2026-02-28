@@ -1,6 +1,7 @@
 ---
 engine: knitr
 bibliography: references.bib
+code-annotations: hover
 format:
   html:
     df-print: default
@@ -92,8 +93,6 @@ right = "That's right. The printed message \"[ reached 'max' / getOption(\"max.p
 wrong = "No, that's not what is happening. Try scrolling up within the Console window to better understand what is going on. Can you find the column headers? Check the hint below if you're stuck.")
 check_hint("What happens when you increase or decrease the width of the Console pane in *RStudio* and then try to print the table again?", hint_title = "😇 Hover for a hint", type = "onmouseover")
 ```
-
- 
 :::
 ::::
 
@@ -128,8 +127,6 @@ right = "That's right! In fact, three of the above options will work. Try them o
 wrong = "Humm, have you tried whether this really does display the first 10 rows of the dataset? Is the name of the argument that controls the number of rows to be printed correct? Are the arguments within the command separated by a comma?")
 check_hint("You can find the correct command argument in the help file of the `head()` function. Remember that you can access a function's help file using the commands `?` or `help`.", hint_title = "😇 Hover for a hint", type = "onmouseover")
 ```
-
- 
 :::
 ::::
 
@@ -214,8 +211,6 @@ type = "radio",
 right = "That's right. These are participants' score on a vocabularly test. The more items they got right, the more points they got.",
 wrong = "No, re-read the definitions above.")
 ```
-
- 
 :::
 ::::
 
@@ -342,8 +337,6 @@ wrong = "No, that's not it. Have you had a look at the full set of participant I
 check_hint("Print the full list of values in both columns using the commands `L1.data$Participant` and `L2.data$Participant` to work it out.", hint_title = "😇 Hover for a hint", type = "onmouseover")
 
 ```
-
- 
 :::
 ::::
 
@@ -465,8 +458,6 @@ check_hint("Three of these will work. You'll need to find all three!",
            hint_title = "🐭 Click on the mouse for a second hint.")
 
 ```
-
- 
 :::
 ::::
 
@@ -534,8 +525,6 @@ random_answer_order = TRUE,
 right = "That's right!",
 wrong = "No, this is incorrect. Compare the results of the commands `mean(L2.data$Age)` and `mean(L1.data$Age)`.")
 ```
-
- 
 :::
 ::::
 
@@ -575,36 +564,59 @@ summary()
 ::: {.callout-note collapse="true"}
 #### Click here for the solutions to [**Q7.14**]{style="color:green;"}—[**Q7.15**]{style="color:green;"}.
 
-As you will have seen, often the clue is in the name of the function - but not always! `r emoji("winking-face")`
+As you will have seen, often the clue is in the name of the function - but not always! `r emoji("wink")`
 
-```{r eval = FALSE}
-mean(L1.Age) # The mean() function returns the mean average of a set of number.
-mean(L1.Occupation) # It does not make sense to calculate a mean average value of a set of words, therefore R returns an 'NA' (not applicable) and a warning in red explaining that the mean() function expects a numeric or logical argument.
+Hover your mouse over the numbers on the right for the solutions to appear.
 
-min(L1.Age) # For a numeric variable, min() returns the lowest numeric value.
-min(L1.Occupation) # For a string variable, min() returns the first value sorted alphabetically.
+```{r}
+#| eval: false
 
-max(L1.Age) # For a numeric variable, min() returns the highest numeric value.
-max(L1.Occupation) # For a string variable, max() returns the last value sorted alphabetically.
+mean(L1.Age) # <1>
+mean(L1.Occupation) # <2>
 
-sort(L1.Age) # For a numeric variable, sort() returns all of the values of the variable ordered from the smallest to the largest.
-sort(L1.Occupation) # For a string variable, sort() returns of all of the values of the variable in alphabetical order.
+min(L1.Age) # <3>
+min(L1.Occupation) # <4>
 
-length(L1.Age) # The function length() returns the number of values in the variable.
-length(L1.Occupation) # The function length() returns the number of values in the variable.
+max(L1.Age) # <5>
+max(L1.Occupation) # <6>
 
-mode(L1.Age) # The function mode() returns the R data type that the variable is stored as.
-mode(L1.Occupation) # The function mode() returns the R data type that the variable is stored as.
+sort(L1.Age) # <7>
+sort(L1.Occupation) # <8>
 
-class(L1.Age) # The function mode() returns the R object class that the variable is stored as.
-class(L1.Occupation) # The function mode() returns the R object class that the variable is stored as.
+length(L1.Age) # <9>
+length(L1.Occupation) # <10>
 
-table(L1.Age) # For a numeric variable, the function table() outputs a table that tallies the number of occurrences of each unique value in a set of values and sorts them in ascending order.
-table(L1.Occupation) # For a string variable, the function table() outputs a table that tallies the number of occurrences of each unique value in a set of values and sorts them alphabetically.
+mode(L1.Age) # <11>
+mode(L1.Occupation) # <12>
 
-summary(L1.Age) # For a numeric variable, the function summary() outputs six values that, together, summarise the set of values contained in this variable: the minimum and maximum values, the first and third quartiles (more on this in Chapter *), and the mean and median (more on this in Chapter *).
-summary(L1.Occupation) # For a string variable, the summary() function only outputs the length of the string vector, its object class and data mode. 
+class(L1.Age) # <13>
+class(L1.Occupation) # <14>
+
+table(L1.Age) # <15>
+table(L1.Occupation) # <16>
+
+summary(L1.Age) # <17>
+summary(L1.Occupation) # <18>
 ```
+
+1.  The `mean()` function returns the mean average of a set of number.
+2.  It does not make sense to calculate a mean average value of a set of words, therefore `R` returns an `NA` (not applicable) and a warning in red explaining that the `mean()` function expects a numeric or logical argument.
+3.  For a numeric variable, `min()` returns the lowest numeric value.
+4.  For a string variable, `min()` returns the first value sorted alphabetically.
+5.  For a numeric variable, `min()` returns the highest numeric value.
+6.  For a string variable, `max()` returns the last value sorted alphabetically.
+7.  For a numeric variable, `sort()` returns all of the values of the variable ordered from the smallest to the largest.
+8.  For a string variable, `sort()` returns of all of the values of the variable in alphabetical order.
+9.  The function `length()` returns the number of values in the variable.
+10. The function `length()` returns the number of values in the variable.
+11. The function `mode()` returns the `R` data type that the variable is stored as.
+12. The function `mode()` returns the `R` data type that the variable is stored as.
+13. The function `mode()` returns the `R` object class that the variable is stored as.
+14. The function `mode()` returns the `R` object class that the variable is stored as.
+15. For a numeric variable, the function `table()` outputs a table that tallies the number of occurrences of each unique value in a set of values and sorts them in ascending order.
+16. For a string variable, the function `table()` outputs a table that tallies the number of occurrences of each unique value in a set of values and sorts them alphabetically.
+17. For a numeric variable, the function `summary()` outputs six values that, together, summarise the set of values contained in this variable: the minimum and maximum values, the first and third quartiles, and the mean and median (see Chapter 8).
+18. For a string variable, the `summary()` function only outputs the length of the string vector, its object class and data mode.
 :::
 ::::
 
@@ -694,8 +706,6 @@ wrong = "Not quite. Try out these commands to find out which ones work as expect
 check_hint("Two options are correct because, as long as the arguments are listed in the correct order, we do not have to specify the names of the arguments.", hint_title = "😇 Hover for a hint", type = "onmouseover")
 
 ```
-
- 
 :::
 ::::
 
@@ -819,8 +829,6 @@ right = "That's right. Very well done!",
 wrong = "That's not it. Check the code chunk below if you are unsure how to proceed.")
 check_hint("There are several ways to solve this puzzle. It does not have to involve the pipe operator. Don't hesitate to work in several steps by saving an intermediary result as an `R` object.", hint_title = "😇 Hover for a hint", type = "onmouseover")
 ```
-
- 
 :::
 ::::
 
