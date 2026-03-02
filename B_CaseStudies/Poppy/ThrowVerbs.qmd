@@ -384,7 +384,8 @@ Finally, we use `rbind()` to append the `total_row` vector to `token.data`, crea
 #| tbl-cap: Absolute token frequency of Spanish 'throw' verbs based on dataset
 token.table.totals <- rbind(token.data.rowSums, total_row)
 
-token.table.totals
+token.table.totals |> 
+  kable()
 ```
 
 If we now compare the values of the table in the published study (reproduced as @tbl-absPaper) with @tbl-absData based on the authors' archived data, we can see that the total number of 'throw' verbs is only `r sum(absolute.paper$n, na.rm=FALSE)`, suggesting that ten verb occurrences are somehow missing in the summary table printed in the published paper. In the data frame `spanish.data`, these missing data points correspond to occurrences of the verb *tirar*, specifically two tokens from the 15^th^ century and eight tokens from the 18^th^ century (@tbl-absData).
@@ -429,7 +430,8 @@ verbs.corpus.wide <- verbs.corpus |>
   mutate(across(everything(), ~ replace_na(., 0))) |>
   arrange(AUX)
 
-verbs.corpus.wide
+verbs.corpus.wide |> 
+  kable()
 
 ```
 
@@ -504,7 +506,8 @@ corpus_sizes <- tibble(Century = c(13, 14, 15, 16, 17, 18, 19, 20, 21),
 #| label: tbl-corpusSizes
 #| tbl-cap: Total numbers of words in the corpora
 
-corpus_sizes
+corpus_sizes |> 
+  kable()
 ```
 
 We will apply this formula to each verb for every century. First, we use the `left_join` function from {dplyr} to combine two data frames, i.e. `verbs.corpus`, which we used to create @tbl-absCorpus, and `corpus_sizes`, which we just created (@tbl-corpusSizes), based on the common `Century` column.
@@ -537,7 +540,8 @@ verb.normalized <- left_join(verbs.corpus,
                           digits = 2)) |> 
   select(-c(n, Words))
 
-verb.normalized
+verb.normalized |> 
+  kable()
 ```
 
 We reshape the data frame `verb.normalized` from **long format** to **wide format** by replicating the `pivot_wider()` function, which we used to create @tbl-absPaper and @tbl-absCorpus. The new column names will be taken from `Century`. The values in the new column will come from `normalized`. As earlier, we sort the rows of the data frame according to the alphabetical order of `AUX` using `arrange()`. We convert the output into a data frame format with the `as.data.frame()` command and assign the output to `normalized.wide`.
@@ -584,7 +588,8 @@ normalized.wide <- verb.normalized |>
 # replace NA with "-"
 normalized.wide[is.na(normalized.wide)] <- "-"
 
-normalized.wide
+normalized.wide |> 
+  kable()
 ```
 
 At this stage, it is important to note some differences between @tbl-normData and @tbl-normPaper. @vanhulleCategoryThrowVerbs2024 provided normalized frequencies for the three verbs *arrojar*, *disparar* and *tirar* only from the 16^th^ until the 21^st^ centuries, with no data for the 13^th^ to 15^th^ centuries. However, @tbl-normData shows the normalized frequency of *tirar* at 0.09 for the 15^th^ century and 0.55 for the 18^th^ century, filling in some missing data found in the dataset (@tbl-absData). Additionally, there are slight differences in the normalized frequencies of *lanzar* for the 19^th^ and 20^th^ centuries, calculated as 1.29 and 2.13 based on TROLLing data and displayed in @tbl-normData, compared to 1.31 and 2.15 in reported by @vanhulleCategoryThrowVerbs2024 and displayed in @tbl-normPaper.
@@ -723,7 +728,8 @@ types.wide <- verb.types |>
   arrange(AUX)
 
 # Printing the table in elegantly formatted HTML format
-types.wide
+types.wide |> 
+  kable()
 ```
 
 Here, too, we observe several discrepancies between @tbl-typeData and [@tbl-typePaper; a reproduction of @vanhulleCategoryThrowVerbs2024: 227]. The discrepancies involve the type frequencies of *echar* for the 19^th^ and 20^th^ centuries, reported as 19 and 20 in the original paper, and of *lanzar* for the 19^th^ century, originally reported as 45 (@tbl-typePaper). Other discrepancies include the type frequencies of the verb *tirar* in the 15^th^ and 18^th^ centuries, which are two and seven according to the TROLLing data, but both reported as zero in the published study (see also @tbl-absPaper).
@@ -914,7 +920,8 @@ The result is saved as `type.token1` and is displayed below as @tbl-typeTokenDat
 #| tbl-cap: Type/token ratio of Spanish 'throw' verbs over time based on data
 #| echo: false
 
-type.token1
+type.token1 |> 
+  kable()
 
 ```
 
