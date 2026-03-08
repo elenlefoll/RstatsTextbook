@@ -2,11 +2,6 @@
 bibliography: 
   - references.bib
   - grateful-refs.bib
-#format:
-#  pdf:
- #   toc: true
-  #  colorlinks: true
-   # prefer-html: true
 ---
 
 {{< include emoji_script.md >}}
@@ -832,6 +827,7 @@ The rendered document will read:
 
 > The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from `{r} min(L1.data$Age)` to `{r} max(L1.data$Age)` years (*M* = `{r} round(mean(L1.data$Age))`, *SD* = `{r} round(sd(L1.data$Age))`).
 
+::::: {.content-visible when-format="html"}
 ::: {.callout-note collapse="false"}
 ### More complex inline computations
 
@@ -880,6 +876,7 @@ The values saved to the local environment as `R` objects can then be inserted in
  `{{r}} numbers_to_words((L1.manualjobs*100), cap = TRUE)` percent of the participants held manual jobs, `{{r}} L1.clerical*100`% held clerical positions, and `{{r}} L1.pro*100`% had professional-level jobs or were studying for a degree; the remaining `{{r}} L1.inactive*100`% were occupationally inactive (i.e. unemployed, retired, or homemakers). In terms of education, participants’ backgrounds ranged from no formal qualifications to Ph.D., with corresponding differences in the number of years spent in full-time education (from `{{r}} min(L1.data$EduYrs)` to `{{r}} max(L1.data$EduYrs)`; *M* = `{{r}} round(mean(L1.data$EduYrs))`, *SD* = `{{r}} round(sd(L1.data$EduYrs))`). `{{r}} L1.otherlgs` participants reported a working knowledge of another language; the rest described themselves as monolinguals.
 ```
 :::
+::::: 
 
 :::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="false"}
@@ -931,6 +928,15 @@ Reproduce the following paragraph containing descriptive statistics about the L2
 ```
 
 The nonnative participants ranged in age from ... to ... years (*M* = ..., *SD* = ...). AoA ranged from ... to ... (*M* = ..., *SD* = ...) and LoR from ... to ... years (*M* = ..., *SD* = ...). They came from a variety of language backgrounds, including Polish, Russian, Lithuanian, Mandarin/Cantonese, German, Greek, French, Italian, Spanish, and Malaysian. The participants varied widely in terms of educational attainment (from ... to ... years spent in full-time education), although as a group they had more schooling than the native participants (*M* = ... years, *SD* = ...). ... percent of the participants obtained all of their educational qualifications in their home country; ...% had up to 3 years of education in the United Kingdom or another English-speaking country; and ...% had studied in an English-speaking country for 4 or more years. ... percent of the sample held various manual jobs, ...% had professional-level jobs or were full-time students, and ...% held clerical posts; the remaining ...% were retired, unemployed, or homemakers.
+:::
+
+
+::: callout-note
+### Counting words {.unnumbered}
+
+If you need to adhere to a specific word count, *RStudio* has a useful function to count the number of words you have written, excluding the YAML header and all code chunks. In *RStudio*'s top menu, click on "Edit" and select "Word Count" to find out how many words you've written so far. 
+
+You may also want to check out Andrew Heiss' [Quarto extension](https://github.com/andrewheiss/quarto-wordcount) that computes different types of word counts (e.g. including or excluding references) and optionally prints them in the rendered versions of your Quarto documents.
 :::
 
 ## Tables {#sec-QuartoTables}
@@ -1259,6 +1265,8 @@ Managing the large number of references that we need to consult, read, and cite 
 ::::
 
 What's more, Zotero can be integrated in RStudio, making it very easy to include BibTeX-formatted references in your Quarto documents. Find out more in the [*RStudio* documentation](https://rstudio.github.io/visual-markdown-editing/citations.html).
+
+Combining Zotero and Quarto also allows you to generate annotated bibliographies. Benjamin Tjepkes explains how to do this in a detailed [blog post](https://btjepkes.github.io/posts/building-annotated-bibliographies-with-quarto/).
 :::::
 
 ## Computing environment {#sec-Packages}
@@ -1364,6 +1372,23 @@ To create project-specific environments that additionally include system depende
 
 Accessible introductions to stabilising your computing environment can be found in the [BERD course "Make Your Research Reproducible"](https://berd-nfdi.github.io/BERD-reproducible-research-course/3-3-stabilize.html) [@seiboldBERDCourseMake2023] and [The Turing Way's guide to reproducible environments](https://the-turing-way.netlify.app/reproducible-research/renv.html) [@theturingwaycommunityTuringWayHandbook2022].
 :::
+
+## Version control
+
+Another powerful tool very much worth learning to improve your research workflows is version control with [Git](https://git-scm.com/learn). Git can track changes to all our project documents over time, allowing us revert to previous versions whenever needed. For example, if we make a mistake or want to compare different versions of a Quarto document, Git can show us exactly what changes were made and when.
+
+:::: {.content-visible when-format="html"}
+::: column-margin
+![](images/logo_git.png){width="100" fig-alt="The git logo is orange and shows part of tree diagram with a fork."}
+:::
+::::
+
+Git is essential when it comes to collaboration. It allows multiple project contributors to simultaneously work on the same document(s) without overwriting each other's edits. For instance, if you and a colleague are both editing a Quarto document, Git can help you merge your changes seamlessly. Conveniently, *RStudio* has [built-in Git integration](https://docs.posit.co/ide/user/ide/guide/tools/version-control.html), facilitating the use of version control directly within our workflow. While a full hands-on introduction to Git is beyond the scope of this tutorial, learning Git has the potential to greatly improve your ability to manage and share your research effectively. There are many great resources to help you get started, e.g. the [Software Carpertry' guide to Git for novices](https://swcarpentry.github.io/git-novice/), [Reproducibility with Git and Quarto](https://genomicsaotearoa.github.io/reproducibility_with_git_and_quarto/git_overview.html), and [Happy Git and GitHub for the useR](https://happygitwithr.com/).
+
+::: callout-note
+[Git](https://git-scm.com/learn) and [GitHub](https://github.com/) are often confused. Git is an open-source version control system. GitHub, by contrast, is a popular, proprietary web-based hosting service for Git repositories owned by Microsoft. In addition to easing collaboration, storing version-controlled projects in a (public or private) online repository is an excellent additional backup strategy for many research projects. Alternatives to GitHub include [Codeberg](https://codeberg.org/) and [GitLab](https://about.gitlab.com/).
+:::
+
 
 ## Sharing HTML documents {#sec-EmbedResources}
 
@@ -1568,11 +1593,15 @@ This chapter only just scratched the surface of what's possible in Quarto. The Q
 
 -   For those of you who want to dive a little deeper, I heartily recommend the final chapter of "[An Introduction to Quantitative Text Analysis for Linguistics: Reproducible Research Using R](https://qtalr.com/book/part_5/11_contribute.html)" by Jerid Francom.
 
+-   The latest edition of "[R for Data Science](https://r4ds.hadley.nz/communicate)" also has a great chapter on communicating the results of data science projects using Quarto.
+
+-   [Quarto for Scientists](https://qmd4sci.njtierney.com/) by Nicholas Tierney has many overlaps with this chapter but, as a "living book", it is being regularly updated and expanded. The section on [Common Problems with Quarto (and some solutions)](https://qmd4sci.njtierney.com/common-problems.html) is particularly useful.
+
 -   Quarto has many functionalities that are particularly attractive to those of us involved in higher education teaching and academic research. Watch [Quarto for Academics](https://www.youtube.com/embed/EbAAmrB0luA?si=AwJ3szmUKECHfwuS) (20 minutes) by Mine Çetinkaya-Rundel to find out more.
 
--   Thinking of writing an entire M.A./PhD thesis or book in Quarto? Cameron Patrick wrote his PhD thesis in Quarto and has helpfully put together some [great tips](https://cameronpatrick.com/post/2023/07/quarto-thesis-formatting/.) so that his "pain and suffering can help reduce yours". Well worth reading if you're thinking of rendering a complex (set of) Quarto document(s) to PDF.
+-   Thinking of writing a term paper, thesis, dissertation, or book in Quarto? Cameron Patrick wrote his doctoral thesis in Quarto and has helpfully put together some [great tips](https://cameronpatrick.com/post/2023/07/quarto-thesis-formatting/) so that his "pain and suffering can help reduce yours". Similarly, Gina Reinhard wrote her M.A. thesis as a single Quarto document and has made her [Quarto template for term papers and theses](https://github.com/ginareinhard/thesisTemplate) available to all in open access.
 
--   Last but not least, the 2^nd^ edition of "[R for Data Science](https://r4ds.hadley.nz/communicate)" also has a great chapter on communicating the results of data science projects using Quarto.
+-   Last but not least, [Awesome Quarto](https://github.com/mcanouil/awesome-quarto) provides a curated and regularly updated list of the many Quarto-related docs, talks, tools, examples, and articles that the internet has to offer.
 :::
 
 ### Check your progress `r emoji("star2")` {.unnumbered}
