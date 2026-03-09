@@ -144,6 +144,7 @@ We have centred the values of the three numeric predictor variables so that a va
 ```{r}
 #| echo: false
 #| label: "tbl-Untransformed"
+#| eval: !expr 'knitr::is_html_output()'
 #| tbl-cap: "Comparison of the original, untransformed variables with the new, centered ones in a random sample of observations from the data"
 
 library(kableExtra)
@@ -164,12 +165,18 @@ Dabrowska.data |>
          EduTotal   = highlight_cell(EduTotal, median(Dabrowska.data$EduTotal)),
          EduTotal_c = highlight_cell(EduTotal_c, 0)) |> 
   kable("html", escape = FALSE, align = "c") |> 
-  column_spec(1, background = "#F8F8F8") |> 
-  column_spec(2, background = "#F8F8F8") |> 
-  column_spec(5, background = "#F8F8F8") |> 
-  column_spec(6, background = "#F8F8F8") |>
+  column_spec(1, background = "rgba(248, 248, 248, 0.8)") |> 
+  column_spec(2, background = "rgba(248, 248, 248, 0.8)") |> 
+  column_spec(5, background = "rgba(248, 248, 248, 0.8)") |> 
+  column_spec(6, background = "rgba(248, 248, 248, 0.8)") |> 
+  column_spec(3, background = "rgba(240, 240, 240, 0.8)") |> 
+  column_spec(4, background = "rgba(240, 240, 240, 0.8)") |>
   column_spec(1:6, width = "16%") 
 ```
+
+::: {.content-visible when-format="pdf"}
+![Comparison of the original, untransformed variables with the new, centered ones in a random sample of observations from the data](images/tbl-centering.png){#tbl-Untransformed}
+:::
 
 For each pair of variables, the value of 0 in the centered variable corresponds to the median value of the untransformed variable. As a result, in the centered variables, each data point is expressed in terms of how much it is either above the median (positive score) or below the median (negative score).
 
@@ -354,7 +361,7 @@ If you have version 2.8.0, begin by deleting your current installation:
 remove.packages("visreg")
 ```
 
-Then, install the {remotes} package, which allows you to install older versions of packages (if they are compatible with your `R` version). You will likely get a message notifying you that it is necessary to restart your `R` session. Click "yes". 
+Then, install the {remotes} package, which allows you to install older versions of packages (if they are compatible with your `R` version). You will likely get a message notifying you that it is necessary to restart your `R` session. Click "yes".
 
 ```{r}
 #| eval: false
@@ -1244,7 +1251,7 @@ Some people consider model selection to be a bit of an art. This chapter only ai
 
 :::: {.content-visible when-format="html"}
 ::: column-margin
-![[Preregistration Open Science badge](https://www.cos.io/initiatives/badges) ](images/hex_preregistered.png){width="100"}
+![[Preregistration Open Science badge](https://www.cos.io/initiatives/badges)](images/hex_preregistered.png){width="100"}
 :::
 ::::
 
@@ -1822,15 +1829,15 @@ In this textbook, we have only just scratched the surface of statistical modelli
 Although they go further than the present textbook, you will also find that these resources begin by explaining many of the things already covered in this chapter and previous chapters, and that's actually a good thing. There's no harm in revising these complex topics from a different perspective, with different examples, `R` packages, and coding styles.
 :::
 
-:::: {.content-visible when-format="html"}
+::: {.content-visible when-format="html"}
 ### Check your progress `r emoji("star2")` {.unnumbered}
 
 Congratulations: you have successfully completed the most difficult chapter of this textbook! 💪 You have answered [`r checkdown::insert_score()` out of 16 questions]{style="color:green;"} correctly.
-::::
+:::
 
-:::: {.content-visible when-format="pdf"}
+::: {.content-visible when-format="pdf"}
 ### Check your progress {.unnumbered}
-::::
+:::
 
 Are you confident that you can...?
 
