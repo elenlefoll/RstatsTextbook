@@ -4,6 +4,7 @@ bibliography: references.bib
 html:
   code-link: true
 ---
+
 {{< include emoji_script.md >}}
 
 # The Gramma`R` of Graphics {#sec-DataViz}
@@ -23,7 +24,7 @@ In this chapter, you will learn how to:
 -   Create and interpret facetted plots to explore the relationship between three or more variables at once.
 -   Create interactive plots for data exploration.
 
-![Building a data masterpiece with {ggplot2} (artwork by [\@allison_horst](https://allisonhorst.com/))](images/AHorst_ggplot2.png){#fig-DataArtists fig-alt="A fuzzy monster in a beret and scarf, critiquing their own column graph on a canvas in front of them while other assistant monsters (also in berets) carry over boxes full of elements that can be used to customize a graph (like themes and geometric shapes). In the background is a wall with framed data visualizations. Stylized text reads: ggplot2: build a data masterpiece."}
+![Building a data masterpiece with {ggplot2} (artwork by [Allison Horst](https://twitter.com/allison_horst) CC BY 4.0)](images/AHorst_ggplot2.png){#fig-DataArtists fig-alt="A fuzzy monster in a beret and scarf, critiquing their own column graph on a canvas in front of them while other assistant monsters (also in berets) carry over boxes full of elements that can be used to customize a graph (like themes and geometric shapes). In the background is a wall with framed data visualizations. Stylized text reads: ggplot2: build a data masterpiece."}
 
 ### Set-up and data import {.unnumbered .unlisted}
 
@@ -126,12 +127,23 @@ ggplot(data = Dabrowska.data,
   geom_bar()
 ```
 
+::: {.content-visible when-format="html"}
 ```         
 Error in `geom_bar()`: 
 ! `mapping` must be created by `aes()`. 
 ℹ Did you use `%>%` or `|>` instead of `+`? 
 Run `rlang::last_trace()` to see where the error occurred.
 ```
+:::
+
+::: {.content-visible when-format="pdf"}
+```         
+Error in `geom_bar()`: 
+! `mapping` must be created by `aes()`. 
+i Did you use `%>%` or `|>` instead of `+`? 
+Run `rlang::last_trace()` to see where the error occurred.
+```
+:::
 
 ### Statistics and labels {#sec-StatsLabs}
 
@@ -184,7 +196,6 @@ check_question(c("x-axis label",
                wrong = "No, there are more labels that can be ammended.")
 check_hint("Check out the function's help file to find out more about its possibilities by entering ?labs in the Console.", hint_title = "🐭 Click on the mouse for a hint.")
 ```
-
 :::
 ::::
 
@@ -426,7 +437,7 @@ Dabrowska.data |>
 ```
 
 ::: {.callout-note collapse="false"}
-#### A note on colours and colour blindness 🌈
+#### A note on colours and colour blindness `r emoji("rainbow")`
 
 Colour blindness is a condition that results in a decreased ability to see colours and perceive differences in colour. There are different types of colour blindness but, in general, it is best to avoid red-green contrasts. To ensure that your data visualisations are accessible to as many people as possible, you may want to use the [{colorBlindness}](https://cran.r-project.org/web/packages/colorBlindness/vignettes/colorBlindness.html) package [@ouColorBlindnessSafeColor2021] to simulate the appearance of a set of colours for people with different forms of colour blindness.
 
@@ -815,7 +826,7 @@ But, first, let's think about **why** we visualise data. Data visualisation is a
 :::
 ::::::
 
-![Using the {ggplot2} package for data exploration (artwork by [\@allison_horst](https://allisonhorst.com/))](images/AHorst_ggplot2_explore.png){#fig-ExplorerMonster fig-alt="A group of fuzzy round monsters with binoculars, backpacks and guide books looking up a graphs flying around with wings (like birders, but with exploratory data visualizations). Stylized text reads “ggplot2: visual data exploration.”"}
+![Using the {ggplot2} package for data exploration (artwork by [Allison Horst](https://twitter.com/allison_horst) CC BY 4.0)](images/AHorst_ggplot2_explore.png){#fig-ExplorerMonster fig-alt="A group of fuzzy round monsters with binoculars, backpacks and guide books looking up a graphs flying around with wings (like birders, but with exploratory data visualizations). Stylized text reads “ggplot2: visual data exploration.”"}
 
 Depending on the type of data that we want to visualise and why, we can choose different types of plots. A great resource to choose a graphic that is suitable for your data is [the `R` Graph Gallery](https://r-graph-gallery.com/).
 
@@ -1112,7 +1123,6 @@ Dabrowska.data |>
   labs(fill = "Occupational group") # This last line of code changes the title of the legend, which is the label for the variable associated with the `fill` aestetics. 
   
 ```
-
 :::
 ::::
 
@@ -1818,7 +1828,7 @@ check_hint("This boxplot requires a total of four data mappings.",
 ::::
 
 ::::::::::::::: {.callout-note collapse="false"}
-#### Going further: Dot plots and violin plots
+#### Going further: Dot plots and violin plots `r emoji("violin")`
 
 The {ggplot2} library offers many more `geom_` functions for you to explore. Here are two more types of graphs that are currently only rarely used in the language sciences, but which can be very effective ways to visualise the distribution of a numeric variable across different levels of a categorical variable.
 
@@ -2321,7 +2331,7 @@ Note that we had to expand the limits of the *x*-axis in order for labels of the
 
 :::: {.content-visible when-format="html"}
 ::: column-margin
-![Hex sticker of the {[ggrepel](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html)} package featuring a red pin attaching a label](images/hex_ggrepel.svg){width="95"}
+![Hex sticker of the ggrepel package featuring a red pin attaching a label](images/hex_ggrepel.svg){width="95"}
 :::
 ::::
 
@@ -2638,9 +2648,15 @@ ggsave("figures/BlocksDensityPlot.svg",
        units = "px")
 ```
 
+:::: {.content-visible when-format="html"}
 ### Check your progress `r emoji("star2")` {.unnumbered}
 
 Well done! You have successfully completed this chapter on data visualisation using the Grammar of Graphics approach. You have answered [`r checkdown::insert_score()` out of 21 questions]{style="color:green;"} correctly.
+::::
+
+:::: {.content-visible when-format="pdf"}
+### Check your progress {.unnumbered}
+::::
 
 Are you confident that you can...?
 
@@ -2652,7 +2668,7 @@ Are you confident that you can...?
 If so, you are ready to move out on inferential statistics in @sec-Inferential!
 
 ::: callout-note
-### Charting your way to success `r emoji("world_️map")` {.unnumbered collapse="TRUE"}
+### Charting your way to success `r emoji("compass")` {.unnumbered collapse="TRUE"}
 
 If you have completed this chapter, you can now produce some of the most widely used plots in the language sciences: Congratulations!
 
