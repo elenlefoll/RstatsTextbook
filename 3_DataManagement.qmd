@@ -3,10 +3,6 @@ engine: knitr
 bibliography: references.bib
 ---
 
-```{r include=FALSE}
-library(checkdown)
-```
-
 {{< include emoji_script.md >}}
 
 # Project organisation {#sec-DataManagement}
@@ -53,7 +49,7 @@ Another reason for not including Thai characters in your file name is that it wo
 
 Hence, whilst `Thai Bird's Eye Chilli 31 Jan 2028` is human-friendly, it is not computer-friendly. To make it a computer-friendly label, we need to remove the apostrophe. Whilst spaces are not strictly forbidden, they can cause all kinds of issues and are therefore also best avoided. Space characters can be replaced by hyphens (`-`) and underscores (`_`) and the two can be combined in a meaningful way. For example, in the label `Thai-Birds-Eye-Chilli_31-Jan-2028`, the `_` distinguishes between two different pieces of information, whilst the `-` helps humans to parse individual words within a piece of information. Using such patterns consistently not only helps humans to read file names efficiently, it also means that computers can easily 'parse', i.e. break down such names into meaningful items. This can be very useful to search for files or automatically extract metadata from file names.
 
-![To help us remember the different, systematic ways to use letter case, hyphens, and underscores in naming conventions, these patterns have fun names (art work by [\@allison_horst](https://allisonhorst.com/allison-horst)).](images/AHorst_InThatCase.png){#fig-InThatCase fig-alt="Cartoon representations of common cases in coding. A snake screams \"SCREAMING_SNAKE_CASE\" into the face of a camel (wearing ear muffs) with \"camelCase\" written along its back. Vegetables on a skewer spell out \"kebab-case\" (words on a skewer). A mellow, happy looking snake has text \"snake_case\" along it."}
+![To help us remember the different, systematic ways to use letter case, hyphens, and underscores in naming conventions, these patterns have fun names (artwork [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) [Allison Horst](https://twitter.com/allison_horst)).](images/AHorst_InThatCase.png){#fig-InThatCase fig-alt="Cartoon representations of common cases in coding. A snake screams \"SCREAMING_SNAKE_CASE\" into the face of a camel (wearing ear muffs) with \"camelCase\" written along its back. Vegetables on a skewer spell out \"kebab-case\" (words on a skewer). A mellow, happy looking snake has text \"snake_case\" along it."}
 
 It is fine to use both lower-case and upper-case letters in file and folder names. However, some operating systems will treat upper-case and lower-case letters as the same, whilst others will not. This means that you should avoid having file names that are only distinguishable by case.
 
@@ -61,7 +57,7 @@ Finally, it is worth noting that file names cannot be infinitely long! The maxim
 
 [^3_datamanagement-1]: For example, many Windows applications have a maximum file path length of 260 characters [@alvinashcraftMaximumPathLength2022].
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -70,7 +66,7 @@ Finally, it is worth noting that file names cannot be infinitely long! The maxim
 ```{r}
 #| echo: false
 #| label: "Q3.1"
-
+library(checkdown)
 check_question("lower_snake", options = c("UPPER_SNAKE", "camelCase", "kebab-case", "lower_snake", "UpperCamel"), type = "radio", 
 random_answer_order = TRUE,
 button_label = "Check answer", q_id = "Q3.1",
@@ -153,13 +149,13 @@ There are many ways to find out where your files are stored on your computer. Le
 
 Then, open any text-editing programme (e.g. LibreOffice Writer, Microsoft Word, TextEdit, or NotePad++) and use the shortcut `Ctrl/Cmd + V` to paste your file's path in the empty document. If you are on Windows, your path should have backslashes, whereas if you are on Linux or macOS, your path should have forward slashes.
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-![Screenshot of a Finder window showing a hierarchical folder structure](images/FinderWindowPaths.png){#fig-FinderWindowPath fig-alt="Screenshot of a Finder Window showing path to a highlighted file. These next few quiz questions are not suitable for users of screenreaders."}
+![Screenshot of a Finder window showing a hierarchical folder structure](images/FinderWindowPaths.png){fig-alt="Screenshot of a Finder Window showing path to a highlighted file. These next few quiz questions are not suitable for users of screenreaders."}
 
-[**Q3.4**]{style="color:green;"} What is the absolute path to the highlighted file in @fig-FinderWindowPath?
+[**Q3.4**]{style="color:green;"} What is the absolute path to the file highlighted in the screenshot above?
 
 ```{r}
 #| echo: false
@@ -170,10 +166,11 @@ random_answer_order = TRUE,
 button_label = "Check answer", q_id = "Q3.4",
 right = "That's right! As suggested in the bottom-left of the screenshot, this computer is running macOS so forward slashes are used and the absolute path begins at the root which is higher up the folder hierarchy than the UzK folder.",
 wrong = "No, not quite. Look at the very bottom of the screenshot to find out where root is on this computer.")
-check_hint("This screenshot was taken on a computer running macOS as its operating system.", hint_title = "🐭 Click on the mouse for a hint.")
+check_hint("This screenshot was taken on a computer running macOS as its operating system.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
 ```
 
-[**Q3.5**]{style="color:green;"} From the "UzK" folder, what is the relative path to the highlighted file in @fig-FinderWindowPath?
+[**Q3.5**]{style="color:green;"} From the `UzK` folder, what is the relative path to the file highlighted in screenshot above?
 
 ```{r}
 #| echo: false
@@ -186,7 +183,7 @@ right = "That's right!",
 wrong = "No, not quite. If you are already in the UzK folder, where do you need to go next to reach this file?")
 ```
 
-[**Q3.6**]{style="color:green;"} From the "Rscripts" folder, what is the relative path to the folder "2023_SoSe_CADS" (see @fig-FinderWindowPath)?
+[**Q3.6**]{style="color:green;"} From the `Rscripts` folder, what is the relative path to the folder `2023_SoSe_CADS` (see screenshot above)?
 
 ```{r}
 #| echo: false
@@ -197,13 +194,13 @@ random_answer_order = TRUE,
 button_label = "Check answer", q_id = "Q3.6",
 right = "That's right!",
 wrong = "No, not quite.")
+check_hint("From the `Rscript` folder, you will need to go \"back up the path\" twice: once to get to the course folder `2024_SoSe_Stats` and a second time to get to the `UzK` folder, before you can move to the `2023_SoSe_CADS` folder. Going back up the path is achieved with `../`.", hint_title = "🐭 Click on the mouse for a hint.")
 ```
 
-Hint: From the `Rscript` folder, you will need to go "back up the path" twice: once to get to the course folder `2024_SoSe_Stats` and a second time to get to the `UzK` folder, before you can move to the `2023_SoSe_CADS` folder. Going back up the path is achieved with `../`.
 :::
 ::::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -323,8 +320,8 @@ To go further, here are some great, open-access resources to dive deeper into da
 -   Lewis, Crystal. *Data Management in Large-Scale Education Research*. <https://datamgmtinedresearch.com/>. (14 May, 2024).
 :::
 
-:::: {.content-visible when-format="html"}
-### Check your progress `r emoji("star2")` {.unnumbered}
+:::: {.content-visible when-profile="OER"}
+### Check your progress 🌟 {.unnumbered}
 
 You have successfully completed [`r checkdown::insert_score()` out of 10 questions]{style="color:green;"} in this chapter.
 ::::

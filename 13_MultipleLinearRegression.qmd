@@ -7,15 +7,8 @@ code-annotations: hover
 
 # Multiple linear reg`R`ession modelling {#sec-MLR}
 
-::: callout-warning
-## Warning
-
-As with the rest of this textbook (see [Preface](https://elenlefoll.github.io/RstatsTextbook/)), this chapter is very much **work in progress**. Feedback is very welcome.
-:::
-
 ```{r}
 #| include: false
-library(checkdown)
 library(performance)
 library(qqplotr)
 library(visreg)
@@ -532,22 +525,47 @@ vr +
 
 ```
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-The dataset from @DabrowskaExperienceAptitudeIndividual2019 includes a variable that we have not explored yet: `ART`. It stands for Author Recognition Test [@acheson2008] and is a measure of print exposure to (almost exclusively Western, English-language) literature. Dąbrowska [-@DabrowskaExperienceAptitudeIndividual2019: 9] explains the testing instrument and her motivation for including it in her battery of tests as follows:
+The dataset from @DabrowskaExperienceAptitudeIndividual2019 includes a variable that we have not explored yet: `ART`. It stands for Author Recognition Test [@acheson2008] and is a measure of print exposure to (almost exclusively Western, English-language) literature. @DabrowskaExperienceAptitudeIndividual2019[: 9] explains the testing instrument and her motivation for including it in her battery of tests as follows:
 
 > The test consists of a list of 130 names, half of which are names of real authors. The participants’ task is to mark the names that they know to be those of published authors. To penalize guessing, the score is computed by subtracting the number of foils \[wrong guesses\] from the number of real authors selected. Thus, the maximum possible score is 65, and the minimum score could be negative if a participant selects more foils than real authors. When this happened, the negative number was replaced with 0.
 >
 > The ART has been shown to be a valid and reliable measure of print exposure, which, unlike questionnaire-based measures, is not contaminated by socially desirable responses and assesses lifetime reading experience as opposed to current reading (see Acheson et al., 2008; Stanovich & Cunningham, 1992).
+
+```{r}
+#| include: false
+library(performance)
+library(here)
+library(qqplotr)
+library(visreg)
+library(tidyverse)
+
+select <- dplyr::select
+
+Dabrowska.data <- readRDS(file = here("data", "processed", "combined_L1_L2_data.rds"))
+
+L1.data <- Dabrowska.data |> 
+  filter(Group == "L1")
+
+L2.data <- Dabrowska.data |> 
+  filter(Group == "L2")
+
+Dabrowska.data <- Dabrowska.data |> 
+  mutate(Age_c = Age - median(Age),
+         Blocks_c = Blocks - median(Blocks),
+         EduTotal_c = EduTotal - median(EduTotal))
+
+```
 
 [**Q13.1**]{style="color:green;"} For this task, you will fit a new multiple linear regression model that predicts `Vocab` scores among L1 and L2 speakers using all of the predictors that we used in `model4_c` plus `ART` scores. Which formula do you need to specify inside the `lm()`function to fit this new model (which we will name `model.ART`)?
 
 ```{r}
 #| echo: false
 #| label: "Q13.1"
-
+library(checkdown)
 check_question("Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART",
                options = c("Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART",
                            "ART ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c",
@@ -613,12 +631,11 @@ summary(model4_c)
 summary(model.ART)
 ```
 
-Have you noticed how, having added `ART` as a predictor to your model, `Age` no longer makes a statistically significant contribution to the model (*p* = 0.070994)? How come? Well, it turns out that `ART` and `Age` are correlated (*r* = 0.32, see @fig-AgeArtPlot). This moderate positive correlation makes intuitive sense: the older you are, the more likely you are to have come across more authors and therefore be able to correctly identify them in the Author Recognition Test. Of the two predictors, our model suggests that ART scores are a more useful predictor of `Vocab` scores than age. In other words, if we know the ART score of a participant from the @DabrowskaExperienceAptitudeIndividual2019 dataset, their age does not provide additional information that can help us to better predict their `Vocab` score.
+Have you noticed how, having added `ART` as a predictor to your model, `Age` no longer makes a statistically significant contribution to the model (*p* = 0.070994)? How come? Well, it turns out that `ART` and `Age` are correlated (*r* = 0.32, see scatter plot below). This moderate positive correlation makes intuitive sense: the older you are, the more likely you are to have come across more authors and therefore be able to correctly identify them in the Author Recognition Test. Of the two predictors, our model suggests that ART scores are a more useful predictor of `Vocab` scores than age. In other words, if we know the ART score of a participant from the @DabrowskaExperienceAptitudeIndividual2019 dataset, their age does not provide additional information that can help us to better predict their `Vocab` score.
 
 ```{r}
 #| echo: false
 #| fig-asp: 0.8
-#| label: "fig-AgeArtPlot"
 #| fig-cap: "Observed relationship between participants' age and their Author Recognition Test (ART) scores. The blue line shows that there is a moderate positive correlation between these two variables."
 #| fig-alt: "Scatter plot showing the relationship between age on the x-axis and Author Recognition Test (ART) scores on the y-axis, with data points scattered throughout. A blue regression line with gray confidence band shows a moderate positive correlation."
 
@@ -788,7 +805,7 @@ It is also worth noting that the second most important predictor is `OccupGroup`
 
 Many studies will compare the coefficient estimates of multiple regression models using **standardised coefficients** [see e.g. @winterStatisticsLinguistsIntroduction2020: Section 6.2]; however, this approach can lead to misleading conclusions [see e.g. @mizumotoCalculatingRelativeImportance2023].
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -940,7 +957,7 @@ If we compare @fig-PredictedVocabAgeInteraction (in which the points represent t
 
 Comparing the model summaries of `model4_c` and `model5`, we can see that adding the interaction term between age and native-speaker status considerably boosted the amount of variance in `Vocab` scores that our model now accounts for: whereas the adjusted R^2^ of the model without the interaction was `0.3276` (33%), it has now reached `0.3654` (37%) thanks to the added interaction.
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -1533,7 +1550,7 @@ In @fig-Normality, we see that most residuals follow a normal distribution, exce
 The `check_model()` vignette provides more detailed information on these diagnostic plots, how to interpret them, and what to do if the assumptions are not met: <https://easystats.github.io/performance/articles/check_model.html>.
 :::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -1643,7 +1660,7 @@ library(car)
 vif(L2.model)
 ```
 
-From this list of VIF values, we can see that three predictors display high collinearity: `Age_c`, `Arrival_c`, and `LoR_c`. This makes sense because, for most L2 participants recruited in the UK, if we know how old they were when they arrived in the UK (`Arrival`), and their length of residence in the country in years (`LoR`), then we can probably almost predict their age (`Age`) to a high degree of accuracy. We can easily `r emoji("check-mark-button")` this hypothesis in a random sample of six participants from our `L2.data`:
+From this list of VIF values, we can see that three predictors display high collinearity: `Age_c`, `Arrival_c`, and `LoR_c`. This makes sense because, for most L2 participants recruited in the UK, if we know how old they were when they arrived in the UK (`Arrival`), and their length of residence in the country in years (`LoR`), then we can probably almost predict their age (`Age`) to a high degree of accuracy. We can easily check this hypothesis in a random sample of six participants from our `L2.data`:
 
 ```{r}
 #| include: false
@@ -1829,11 +1846,11 @@ In this textbook, we have only just scratched the surface of statistical modelli
 Although they go further than the present textbook, you will also find that these resources begin by explaining many of the things already covered in this chapter and previous chapters, and that's actually a good thing. There's no harm in revising these complex topics from a different perspective, with different examples, `R` packages, and coding styles.
 :::
 
-::: {.content-visible when-format="html"}
-### Check your progress `r emoji("star2")` {.unnumbered}
+:::: {.content-visible when-profile="OER"}
+### Check your progress 🌟 {.unnumbered}
 
 Congratulations: you have successfully completed the most difficult chapter of this textbook! 💪 You have answered [`r checkdown::insert_score()` out of 16 questions]{style="color:green;"} correctly.
-:::
+::::
 
 ::: {.content-visible when-format="pdf"}
 ### Check your progress {.unnumbered}

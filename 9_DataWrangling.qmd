@@ -49,7 +49,6 @@ In this chapter, we will explore functions from {[dplyr](https://dplyr.tidyverse
 
 ```{r}
 #| eval: false
-
 library(tidyverse)
 ```
 
@@ -57,7 +56,6 @@ library(tidyverse)
 
 ```{r include=FALSE}
 library(here)
-library(checkdown)
 library(tidyverse)
 
 L1.data <- read.csv(file = here("data", "L1_data.csv"))
@@ -155,9 +153,18 @@ The tidyverse package [{forcats}](https://forcats.tidyverse.org/) has a lot of v
 :::
 ::::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
+
+```{r include=FALSE}
+library(checkdown)
+library(here)
+library(tidyverse)
+
+L1.data <- read.csv(file = here("data", "L1_data.csv"))
+L2.data <- read.csv(file = here("data", "L2_data.csv"))
+```
 
 [**Q9.1**]{style="color:green;"} Type `?fct_` in an `R` script or directly in the Console and then press the tab key (↹ or ⇥ on your keyboard). A list of all loaded functions that start with `fct_` should pop up. Which of these is *not* listed?
 
@@ -199,8 +206,7 @@ check_question(c("fct_relevel(L1.Gender.fct, \"M\")",
                right = "Correct, well done!",
                wrong = "No, not quite. Note that two of these commands will yield the desired outcome! Check out the functions' descriptions in the help files, as some of these function names may be misleading.")
 check_hint("Use the `?` function to access the help files of each function and then try the above commands out! When you print an entire factor variable in the Console, the order of the levels is displayed at the bottom of the output. If the last line of your output reads \"Levels: M F\", then the operation was successful.", 
-           hint_title = "😇 Hover for a hint", 
-           type = "onmouseover")
+           hint_title = "🐭 Click on the mouse for a hint")
 
 ```
 :::
@@ -265,13 +271,19 @@ summary(L1.data.fct)
 summary(L1.data.fct[,c(1:12)])
 ```
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
 In this [**task**]{style="color:green;"}, you will do some data wrangling on the L2 dataset from @DabrowskaExperienceAptitudeIndividual2019.
 
 [**Q9.3**]{style="color:green;"} Which of these columns from `L2.data` represent categorical variables and therefore ought to be converted to factors?
+
+```{r include=FALSE}
+L1.data.fct <- L1.data |> 
+  mutate(across(where(is.character), factor))
+```
+
 
 ```{r}
 #| echo: false
@@ -421,7 +433,7 @@ Now the `summary()` function provides a tally of male and female participants th
 summary(L2.data.cleaned$Gender)
 ```
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -651,7 +663,7 @@ L2.data$NativeLg |>
   sort()
 ```
 
-::: {.callout-note collapse="true"}
+::: {.callout-note collapse="false"}
 #### Going further: Using regular expressions (regex) `r emoji("rocket")`
 
 Many functions of the {stringr} package involve **regular expressions** (short: **regex**). The second page of the [{stringr} cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) provides a nice overview of how regular expressions can be used to manipulate character strings in `R`.
@@ -715,7 +727,7 @@ L2.data |>
 
 To save space, only the first six rows of the table are displayed above. Run the code yourself to check the remaining rows.
 
-::: {.callout-note collapse="true"}
+::: {.callout-note collapse="false"}
 #### Using base `R` functions instead
 
 This chapter focuses on {tidyverse} functions, however all of the above data wrangling and cleaning operations can equally be achieved using base `R` functions. For example, the `mutate()` code chunk above could be replaced by the following lines of base `R` code.
@@ -764,7 +776,7 @@ L2.data <- L2.data |>
 ```
 :::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -847,13 +859,27 @@ check_question(c("L2.data <- L2.data |> relocate(NativeLgFamily, .after = Native
 :::
 ::::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-note collapse="true"}
 #### Click here for solutions to [**Q9.9**]{style="color:green;"}—[**Q9.12**]{style="color:green;"}.
 
 As is often the case, there are several ways to solve these [**Your turn!**]{style="color:green;"} tasks. Here is one solution based on what we have covered so far in this chapter.
 
 [**Q9.9**]{style="color:green;"} Note that the following code will only work if you followed the instructions in the section above to create the `NativeLg.cleaned` variable as it relies on this variable to create the new `NativeLgFamily` variable.
+
+```{r}
+#| include: false
+L2.data <- L2.data |>
+  mutate(
+    NativeLg.cleaned = str_to_title(NativeLg) |> 
+      word(start = 1) |> 
+      word(start = 1, sep = fixed("/")),
+    NativeLg.cleaned = case_when(
+      NativeLg.cleaned == "Mandarine" ~ "Mandarin",
+      NativeLg.cleaned %in% c("Lithunanina", "Lituanian") ~ "Lithuanian",
+      TRUE ~ NativeLg.cleaned)
+    )
+```
 
 ```{r}
 L2.data <- L2.data |> 
@@ -909,7 +935,7 @@ L2.data |> # <1>
 5.  We round the percentages to two decimal places.
 6.  We reorder the table so that the most represented group is at the top. To do so, we pipe our table into the `dplyr::arrange()`. By default, `arrange()` orders values in ascending order (from smallest to largest); hence, we add the `desc()` function to sort the table in descending order of frequency.
 
-`r emoji("ringed_planet")` Note that this a {tidyverse} approach to working out percentages, see @sec-Mode for a base `R` approach.
+🪐 Note that this a {tidyverse} approach to working out percentages, see @sec-Mode for a base `R` approach.
 
 [**Q9.12**]{style="color:green;"} At the time of writing, the help file of the `relocate()` function still featured examples using the {magrittr} pipe (`%>%`) rather than the native `R` pipe (`|>`) (see @sec-Piping), but the syntax remains the same. The first argument is the data which we are piping into the function, the second argument is the column that we want to move. Then, we need to specify where to with either the ".after" or the ".before" argument.
 
@@ -939,7 +965,7 @@ L2.data |>
 
 The `relocate()` function has moved `NativeLgFamily` to the first column (the function's default position) and has also moved `NativeLg` to the second position, but it has renamed the column `after`.
 
-This is a reminder to *always* check whether your data wrangling operations have gone as planned. Just because you didn't get an error message doesn't mean that your code did what you wanted! `r emoji("warning")`️
+This is a reminder to *always* check whether your data wrangling operations have gone as planned. Just because you didn't get an error message doesn't mean that your code did what you wanted! ⚠️
 :::
 ::::
 
@@ -1160,7 +1186,7 @@ summary(combined.data[,c(1:12)])
 
 ```
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -1222,11 +1248,46 @@ check_hint("One way to answer find the answer to this question is to cross-tabul
 :::
 ::::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="true"}
 #### Click here to see the `R` code to answer [**Q9.15**]{style="color:green;"}
 
 There are various ways to find the answer to Q5. Sticking to a function that we have looked at so far, you could cross-tabulate `Age` and `OccupGroup` using the `count()` function.
+
+```{r}
+#| include: false
+
+L1.data <- read.csv(file = here("data", "L1_data.csv"))
+L2.data <- read.csv(file = here("data", "L2_data.csv"))
+
+L2.data <- L2.data |> 
+  mutate(Participant = as.character(Participant)) |> 
+  mutate(Group = "L2")  
+
+L1.data <- L1.data |> 
+  mutate(Group = "L1") |> 
+  rename(EduTotal = EduYrs)
+
+combined.data <- bind_rows(L1.data, L2.data) |>
+  mutate(across(where(is.character), str_to_title)) |>
+  mutate(across(where(is.character), str_trim)) |>
+  mutate(OccupGroup = str_to_upper(OccupGroup)) |> 
+  mutate(
+    NativeLg = word(NativeLg, start = 1),
+    NativeLg = word(NativeLg, start = 1, sep = fixed("/")),
+    NativeLg = case_when(
+      NativeLg == "Mandarine" ~ "Mandarin",
+      NativeLg %in% c("Lithunanina", "Lithunanina", "Lituanian") ~ "Lithuanian",
+      TRUE ~ NativeLg)) |> 
+  mutate(NativeLgFamily = case_when(
+    NativeLg == "Lithuanian" ~ "Baltic",
+    NativeLg %in% c("Cantonese", "Mandarin", "Chinese") ~ "Chinese",
+    NativeLg == "German" ~ "Germanic",
+    NativeLg == "Greek" ~ "Hellenic",
+    NativeLg %in% c("French", "Italian", "Spanish") ~ "Romance",
+    NativeLg %in% c("Polish", "Russian") ~ "Slavic")) |> 
+  mutate(across(where(is.character), factor))
+```
 
 ```{r}
 #| eval: false
@@ -1311,8 +1372,8 @@ If you want to share your wrangled dataset with a colleague who does not (yet? `
 write_csv(combined.data, file = here("data", "processed", "combined_L1_L2_data.csv"))
 ```
 
-:::: {.content-visible when-format="html"}
-### Check your progress `r emoji("star2")` {.unnumbered}
+:::: {.content-visible when-profile="OER"}
+### Check your progress 🌟 {.unnumbered}
 
 You have successfully completed [`r checkdown::insert_score()` out of 15 questions]{style="color:green;"} in this chapter.
 ::::

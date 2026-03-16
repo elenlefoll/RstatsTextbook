@@ -9,17 +9,9 @@ html:
 
 # Infe`R`ential statistics {#sec-Inferential}
 
-::: callout-warning
-## Warning
-
-As with the rest of this textbook (see [Preface](https://elenlefoll.github.io/RstatsTextbook/)), this chapter is very much **work in progress**. All feedback is very welcome.
-:::
-
 ```{r}
 #| include: false
-library(checkdown)
 library(effectsize)
-library(datasauRus)
 ```
 
 ### Chapter overview {.unnumbered}
@@ -124,7 +116,7 @@ Though by no means the only framework available to us, the most common approach 
 
 A promising alternative framework that is gaining traction in many disciplines — including in the language sciences — is **Bayesian statistics** (see [Next-step resources](https://elenlefoll.github.io/RstatsTextbook/A_FurtherResources.html) for recommended readings). In this textbook, however, we will focus on the basic principles of statistical inference within the **frequentist framework** — not because it is easier than Bayesian statistics, but rather because it remains the most widely used framework to date. Hence, even if you decide not to use frequentist statistics for your own research, you will certainly need to understand its principles in order to correctly interpret the results of published studies.
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -133,6 +125,8 @@ A promising alternative framework that is gaining traction in many disciplines �
 ```{r}
 #| echo: false
 #| label: "Q11.1"
+
+library(checkdown)
 
 check_question("Each individual in the population has the same known probability of being chosen (e.g. 0.001%).",
   options = c(
@@ -311,7 +305,7 @@ Unfortunately, **confidence intervals (CI)** are a bit of a misnomer, which freq
 In other words, a 95% confidence interval does not tell us how confident we can be about any specific value, but rather that, in the long-run, if the study were to be repeated many times, 95% of the time, the 95% confidence interval would contain the true value.
 :::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -357,6 +351,21 @@ check_question("4.6768",
                wrong = "Incorrect.")
 check_hint("As a reminder, the results of the English receptive vocabulary test are stored in the `Vocab` variable amd the distinction between the L1 and the L2 participants' results is made in the `Group` variable so these are the two variables that will need to be entered in the `t.test()` formula.", 
            hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+```{r}
+#| include: false
+library(here)
+library(tidyverse)
+library(effectsize)
+
+Dabrowska.data <- readRDS(file = here("data", "processed", "combined_L1_L2_data.rds"))
+
+L1.data <- Dabrowska.data |> 
+  filter(Group == "L1")
+
+L2.data <- Dabrowska.data |> 
+  filter(Group == "L2")
 ```
 
 ```{r}
@@ -531,7 +540,7 @@ cohens_d(Blocks ~ Gender,
 
 As you can see, this increases the size of the interval and hence makes it harder to obtain a statistically significant result. This is because lowering the α-level means that we are less willing to risk reporting a false positive result, i.e. reporting a difference based on our data where no real difference exists.
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -846,7 +855,7 @@ Dabrowska.data |>
   theme_bw()
 ```
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -958,8 +967,7 @@ check_question(c("-0.31", "- 0.31", "-0.30", "- 0.30"),
                right = "That's right, very well done! ✅",
                wrong = "No. Are you perhaps looking at the wrong dataset (we are interested in L2 speakers only here) or the wrong variables (we are now looking at the association between Vocab and Arrival)?")
 check_hint("Remember to round the correlation to two decimal places and to use a decimal point, not a comma.", 
-           hint_title = "🦉 Hover over the owl for a hint.",
-           type = "onmouseover")
+           hint_title = "🐭 Click on the mouse for a hint.")
 ```
 
 ```{r}
@@ -1189,7 +1197,7 @@ cor.test(formula = ~ Vocab + EduTotal,
 
 It returns a correlation coefficient τ of `0.28` and a *p*-value of \< 0.05, which allows us to reject the null hypothesis of no association between `Vocab` and `EduTotal` scores among L1 English speakers.
 
-::::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-caution collapse="true"}
 #### [Optional (fun) task]{.unnumbered style="color:green;"} 🦖
 
@@ -1202,6 +1210,8 @@ Inspired by the Anscombe Quartet, @matejkaSameStatsDifferent2017 created a set o
 #| label: "fig-DinoPLot"
 #| fig-cap: "Scatter plot depicting a tyrannosaurus (originally created by [Alberto Cairo](https://web.archive.org/web/20240620205540/http://www.thefunctionalart.com/2016/08/download-datasaurus-never-trust-summary.html))"
 #| fig-alt: "A scatter plot with the x-axis ranging from 20 to 100, and the y-axis ranging from 0 to 100. The data points form a pattern that looks like a tyrannosaurus."
+
+library(datasauRus)
 
 datasaurus_dozen |> 
   filter(dataset == "dino") |> 
@@ -1271,7 +1281,7 @@ ggplot(datasaurus_dozen,
 
 Clearly, if we had only used correlation statistics to describe the relationships between these 13 pairs of variables, we would have missed some literally dinosaur-sized patterns! 🤯
 :::
-:::::
+::::
 
 :::: {.content-visible when-format="html"}
 ::: column-margin
@@ -1347,7 +1357,7 @@ Because of the multiple testing problem, only reporting statistically significan
 >
 > **Drafted and Reviewed by:** Mahmoud Elsherif, Tamara Kalandadze, William Ngiam, Sam Parsons, Mariella Paul, Eike Mark Rinke, Timo Roettger, Flávio Azevedo
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -1531,8 +1541,8 @@ In the following two chapters, we will move from single statistical tests to mul
 -   Lakens, Daniël. 2022. Improving Your Statistical Inferences. <https://doi.org/10.5281/ZENODO.6409077>. An Open Educational Resource: <https://lakens.github.io/statistical_inferences/>
 :::
 
-:::: {.content-visible when-format="html"}
-### Check your progress `r emoji("star2")` {.unnumbered}
+:::: {.content-visible when-profile="OER"}
+### Check your progress 🌟 {.unnumbered}
 
 Well done! You have successfully completed this chapter introducing the complex topic of inferential statistics. You have answered [`r checkdown::insert_score()` out of 17 questions]{style="color:green;"} correctly.
 ::::

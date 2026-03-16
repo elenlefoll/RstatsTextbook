@@ -4,7 +4,6 @@ bibliography: references.bib
 ---
 
 ```{r include=FALSE}
-library(checkdown)
 library(tidyverse)
 ```
 {{< include emoji_script.md >}}
@@ -39,7 +38,7 @@ Follow the DOI[^6_importingdata-1] link above and read the abstract to find out 
 
 [^6_importingdata-1]: "Digital Object Identifiers (DOI) are alpha-numeric strings that can be assigned to any entity, including: publications (including preprints), materials, datasets, and feature films - the use of DOIs is not restricted to just scholarly or academic material. DOIs"provides a system for persistent and actionable identification and interoperable exchange of managed information on digital networks." ([https://doi.org/hb.html)](https://doi.org/hb.html%29). There are many different DOI registration agencies that operate DOIs, but the two that researchers would most likely encounter are Crossref and Datacite." [@parsonsCommunitysourcedGlossaryOpen2022]
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -48,7 +47,7 @@ Follow the DOI[^6_importingdata-1] link above and read the abstract to find out 
 ```{r}
 #| echo: false
 #| label: "Q6.1"
-
+library(checkdown)
 check_question(c("Participants' results on a grammar test", "Participants' results on a vocabulary test", "Participants' results on a collocations test", "Sociodemographic information about the participants including their age and level of education", "Participants' results on a language analytic ability test", "Participants' results on a nonverbal intelligence test"), 
                options = c("Participants' results on a grammar test", "Participants' results on a vocabulary test", "Participants' results on a collocations test", "Sociodemographic information about the participants including their age and level of education", "Participants' results on a language analytic ability test", "Participants' results on a nonverbal intelligence test"), 
                type = "check",
@@ -102,7 +101,7 @@ The author, Ewa Dąbrowska, has made the data used in this study available on an
 >
 > Dąbrowska, E. (2018). L2 data \[Data set\]. Retrieved from [https://www.iris-database.org/iris/app/home/detail?id=york:935514](https://www.iris-database.org/details/L8w1U-ZDgnH)
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -120,7 +119,8 @@ random_answer_order = FALSE,
 q_id = "Q6.4", 
 right = "That's right!",
 wrong = "Are you sure?")
-check_hint("Check the links listed in Appendix S4.", hint_title = "<br>🐭 Click on the mouse for a hint.")
+check_hint("Check the links listed in Appendix S4.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
 
 ```
 
@@ -139,7 +139,7 @@ Click on the two links listed in Appendix S4 and download the two datasets. Note
 If you haven't already done so, I suggest that you create a folder in which you save everything that you create whilst learning from this textbook. This folder could be called something along the lines of `DataLiteracyTextbook`, `2024_data_literacy`, or `LeFoll_2024_DataLiteracy` (see @sec-FileNaming). Then, within this folder, I recommend that you create another folder called `Dabrowska2019` (note how I have not included the "ą" character in the folder name as this could cause problems), and within this folder, create another folder called `data`. This is the folder in which you can save these two files.
 :::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -172,7 +172,7 @@ Participant,Age,Gender,Occupation,OccupGroup,OtherLgs,Education,EduYrs,ReadEng1,
 3,55,M,Retired,I,None,No formal (City and Guilds),11,3,3,4,10,8,8,8,8,8,7,8,8,8,8,79,97.5,58,95.55555556,31,71.875,5,38,5
 4,26,F,Web designer,PS,None,BA Fine Art,17,3,3,3,9,8,8,8,8,8,8,8,8,8,8,80,100,53,84.44444444,37,90.625,20,26,15
 ```
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -351,7 +351,7 @@ It is crucial that you check whether your data have genuinely been correctly imp
 
 [^6_importingdata-2]: Note that, unlike the functions that we have used so far, the `View()` function begins with a capital letter. `R` is a case-sensitive programming language, which means that `view()` and `View()` are not the same thing!
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -371,7 +371,8 @@ random_answer_order = TRUE,
 q_id = "Q6.8", 
 right = "That's right!",
 wrong = "Hummm, are you sure?")
-check_hint("Use the command `View(L1.data)` to display the full dataset in a new tab.", hint_title = "<br>🐭 Click on the mouse for a hint.")
+check_hint("Use the command `View(L1.data)` to display the full dataset in a new tab.",
+           hint_title = "🐭 Click on the mouse for a hint.")
 
 ```
 
@@ -389,9 +390,8 @@ random_answer_order = TRUE,
 q_id = "Q6.9", 
 right = "That's right!",
 wrong = "Hummm, are you sure?")
-check_hint("How many rows does the dataframe `L2.data` contain?", hint_title = "<br>🐭 Click on the mouse for a hint.")
-
-
+check_hint("How many rows does the dataframe `L2.data` contain?", 
+           hint_title = "🐭 Click on the mouse for a hint.")
 ```
 
 [**Q6.10**]{style="color:green;"} Compare the data frames containing the L1 and L2 data. Which dataset contains more variables?
@@ -408,7 +408,8 @@ random_answer_order = FALSE,
 q_id = "Q6.10", 
 right = "That's right! The L2 dataset includes additional information such as the participants' native language(s) and the age they were when they first moved to an English-speaking country.",
 wrong = "Hummm, are you sure?")
-check_hint("Remember that, in these two data frames, each colum represents a variable. Use the `View()` function to display the data frames and compare them.", hint_title = "<br>🐭 Click on the mouse for a hint.")
+check_hint("Remember that, in these two data frames, each colum represents a variable. Use the `View()` function to display the data frames and compare them.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
 
 ```
 
@@ -426,7 +427,7 @@ q_id = "Q6.11",
 random_answer_order = TRUE,
 right = "That's right!",
 wrong = "That's incorrect.")
-check_hint("Use the command `class(L1.data)` to find out which type of `R` object `L1.data` is.", hint_title = "<br>🐭 Click on the mouse for a hint.")
+check_hint("Use the command `class(L1.data)` to find out which type of `R` object `L1.data` is.", hint_title = "🐭 Click on the mouse for a hint.")
 
 ```
 
@@ -801,8 +802,8 @@ Whilst there is no way of remedying the first issue, the second can easily be fi
 
 If you are running into errors due to incorrect file paths, it can be useful to try to import your data using RStudio's GUI to see where you are going wrong by comparing your own attempts with the import commands that *RStudio* generated.
 
-:::: {.content-visible when-format="html"}
-### Check your progress `r emoji("star2")` {.unnumbered}
+:::: {.content-visible when-profile="OER"}
+### Check your progress 🌟 {.unnumbered}
 
 You have successfully completed [`r checkdown::insert_score()` out of 12 questions]{style="color:green;"} in this chapter.
 ::::

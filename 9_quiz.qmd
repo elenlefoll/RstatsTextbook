@@ -1,0 +1,579 @@
+# Ch. 9: Tasks & Quizzes {.unnumbered}
+---
+
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+```{r include=FALSE}
+library(checkdown)
+library(here)
+library(tidyverse)
+
+L1.data <- read.csv(file = here("data", "L1_data.csv"))
+L2.data <- read.csv(file = here("data", "L2_data.csv"))
+```
+
+[**Q9.1**]{style="color:green;"} Type `?fct_` in an `R` script or directly in the Console and then press the tab key (↹ or ⇥ on your keyboard). A list of all loaded functions that start with `fct_` should pop up. Which of these is *not* listed?
+
+```{r}
+#| echo: false
+#| label: "Q9.1"
+
+check_question("fct_mutate",
+               options = c("fct_count",
+                           "fct_mutate",
+                           "fct_na_level_to_value",
+                           "fct_rev",
+                           "fct_reorder"),
+               type = "radio",
+               q_id = "Q9.1", 
+               button_label = "Check answer",
+               right = "That's right! 🎉",
+               wrong = "No, if you call the help file of this function using `?` or `help()`, you will see that this function is part of the {forcats} package. You should have loaded it when you loaded the {tidyverse} collection of packages using `library(tidyverse)` at the beginning of the chapter.")
+
+```
+
+[**Q9.2**]{style="color:green;"} In the factor object `L1.Gender.fct` (which we created above), the first level is "F" because it comes first in the alphabet. Which of these commands will make "M" the first level instead? Check out the help files of the following [{forcats}](https://forcats.tidyverse.org/) functions to understand what they do and try them out.
+
+```{r}
+#| echo: false
+#| label: "Q9.2"
+
+check_question(c("fct_relevel(L1.Gender.fct, \"M\")",
+                           "fct_rev(L1.Gender.fct)"),
+               options = c("fct_relevel(L1.Gender.fct, \"M\")",
+                           "fct_rev(L1.Gender.fct)",
+                           "fct_recode(L1.Gender.fct, first = \"M\", second = \"F\")",
+                           "fct_reorder(L1.Gender.fct, c(\"M\", \"F\"))",
+                           "fct_match(L1.Gender.fct, c(\"M\", \"F\"))"),
+               random_answer_order = TRUE,
+               q_id = "Q9.2", 
+               type = "check",
+               button_label = "Check answer",
+               right = "Correct, well done!",
+               wrong = "No, not quite. Note that two of these commands will yield the desired outcome! Check out the functions' descriptions in the help files, as some of these function names may be misleading.")
+check_hint("Use the `?` function to access the help files of each function and then try the above commands out! When you print an entire factor variable in the Console, the order of the levels is displayed at the bottom of the output. If the last line of your output reads \"Levels: M F\", then the operation was successful.", 
+           hint_title = "🐭 Click on the mouse for a hint")
+
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+In this [**task**]{style="color:green;"}, you will do some data wrangling on the L2 dataset from @DabrowskaExperienceAptitudeIndividual2019.
+
+[**Q9.3**]{style="color:green;"} Which of these columns from `L2.data` represent categorical variables and therefore ought to be converted to factors?
+
+```{r include=FALSE}
+L1.data.fct <- L1.data |> 
+  mutate(across(where(is.character), factor))
+```
+
+
+```{r}
+#| echo: false
+#| label: "Q9.3"
+
+check_question(c("OccupGroup", "NativeLg", "EdNative"),
+               options = c("OccupGroup", "NativeLg", "EdNative", "Arrival", "FirstExp", "UseEngC"),
+button_label = "Check answer",
+random_answer_order = TRUE,
+q_id = "Q9.3", 
+type = "check",
+right = "That's right! 🎉",
+wrong = "Not quite. Three of the above are categorical variables.")
+check_hint("Run the `str(L2.data)` command to examine the structure of the L2 dataset.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+[**Q9.4**]{style="color:green;"} Convert all character vectors of `L2.data` to factors and save the new table as `L2.data.fct`. Use the `str()` function to check that your conversion has worked as planned. How many different factor levels are there in the categorical variable `Occupation`?
+
+```{r}
+#| echo: false
+#| label: "Q9.4"
+
+check_question("48",
+               options = c("48", "44", "27", "4", "45", "67"),
+button_label = "Check answer",
+q_id = "Q9.4", 
+random_answer_order = TRUE,
+type = "radio",
+right = "Yes, well done!.",
+wrong = "No. Check the code below if you're unsure how to proceed.")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Click here to view `R` code to help you answer **c.**"
+#| echo: true
+#| results: "hide"
+
+L2.data.fct <- L2.data |> 
+  mutate(across(where(is.character), factor))
+
+str(L2.data.fct)
+```
+
+[**Q9.5**]{style="color:green;"} Use the `summary()` and `str()` functions to inspect the sanity of L2 dataset now that you have converted all the character vectors to factors. Have you noticed that there are three factor levels in the `Gender` variable of the L2 dataset whereas there are only two in the L1 dataset? What is the most likely reason for this?
+
+```{r}
+#| echo: false
+#| label: "Q9.5"
+
+check_question("Because sometimes \"female\" was recorded as lower-case \"f\" rather than upper-case \"F\".",
+               options = c("Because sometimes \"female\" was recorded as lower-case \"f\" rather than upper-case \"F\".",
+                           "Because these six participants were under 18 at the time of data collection.",
+                           "Because these six participants identify as non-binary.",
+                           "Because these six participants declined to answer the question about their gender."),
+button_label = "Check answer",
+q_id = "Q9.5", 
+random_answer_order = TRUE,
+type = "radio",
+right = "Your intuition is correct (and this is confirmed by the author in the description of the L2 participants in the published paper).",
+wrong = "No, it turns out that this is not the reason.")
+check_hint("Once you have converted all the character vectors to factors in both `L1.data` and `L2.data`, compare the outputs of `summary(L1.data$Gender)` and `summary(L2.data$Gender)`.", hint_title = "🐭 Click on the mouse for a hint.")
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+This [**task**]{style="color:green;"} focuses on the `OccupGroup` variable, which is found in both the L1 and L2 datasets.
+
+`OccupGroup` is a categorical variable that groups participants' professional occupations into different categories. In the L2 dataset, there are four occupational categories.
+
+```{r}
+L2.data.fct |> 
+  count(OccupGroup)
+```
+
+@DabrowskaExperienceAptitudeIndividual2019 [p. 6] explains that these abbreviations correspond to:
+
+> **C**: Clerical positions\
+> **I**: Occupationally inactive (i.e. unemployed, retired, or homemakers)\
+> **M**: Manual jobs\
+> **PS**: Professional-level jobs or studying for a degree
+
+[**Q9.6**]{style="color:green;"} Examine the `OccupGroup` variable in the L1 dataset (`L1.data`). What do you notice? Why are L1 participants grouped into five rather than four occupational categories?
+
+```{r}
+#| echo: false
+#| label: "Q9.6"
+
+check_question("Because an extra space character was accidentally added after one \"PS\" value.",
+               options = c("Because this study has more L1 participants than L2 participants.",
+                           "Because one L1 participant had an occupation that did not fit any of the other four categories.",
+                           "Because an extra space character was accidentally added after one \"PS\" value.",
+                           "Because the original data file was saved in a format incompatible with R."),
+               type = "radio",
+               q_id = "Q9.6", 
+button_label = "Check answer",
+right = "That's right, well done! This **trailing space** needs to be removed otherwise `R` (and most other data analysis programmes) will consider this value to represent a fifth occupational category.",
+wrong = "No, that's not the reason. Have you noticed that, in the output of the `summary(L1.data.fct$OccupGroup)` command, the last category does not appear to be right-aligned like the others? Why might that be?")
+
+```
+
+```{r collapse=TRUE}
+#| code-fold: true
+#| code-summary: "Click here for `R` code to help you Q9.6."
+#| echo: true
+
+summary(L1.data.fct$OccupGroup)
+
+L1.data.fct |> 
+  count(OccupGroup)
+```
+
+[**Q9.7**]{style="color:green;"} Which {stringr} function removes trailing spaces from character strings? Find the appropriate function on the [{stringr} cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf).
+
+```{r}
+#| echo: false
+#| label: "Q9.7"
+
+check_question("str_trim()",
+               options = c("str_trim()",
+                           "str_ends()",
+                           "str_flatten()",
+                           "str_glue()",
+                           "str_squish()",
+                           "str_extract()"
+                          ),
+               button_label = "Check answer",
+               random_answer_order = TRUE,
+               q_id = "Q9.7", 
+               type = "radio",
+               right = "That's right! Now, use `str_trim()` to remove all trailing spaces in the `OccupGroup` variable. Check that you then have an L1 dataset with only four occupational categories.",
+               wrong = "No, this function won't help us for this task. You can use the `?` command to find out more about each of these functions if you're struggling to interpret the [{stringr} cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf).")
+check_hint("The function can be found in the \"Manage Lengths\" section of the [{stringr} cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf).", hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show `R` code to use the function and check that it worked as expected."
+#| echo: true
+#| results: "hide"
+
+L1.data.cleaned <- L1.data.fct |> 
+  mutate(OccupGroup = str_trim(OccupGroup))
+
+L1.data.cleaned |> 
+  count(OccupGroup)
+```
+
+[**Q9.8**]{style="color:green;"} Following the removal of trailing whitespaces, what percentage of L1 participants have a professional-level jobs/are studying for a degree?
+
+```{r}
+#| echo: false
+#| label: "Q9.8"
+
+check_question("28%",
+               options = c("20%",
+                           "22.22%",
+                           "24.44%",
+                           "25%",
+                           "26%",
+                           "28%"
+                          ),
+               button_label = "Check answer",
+               q_id = "Q9.8",
+               type = "radio",
+               right = "That's right, well done! 🎉",
+               wrong = "No, check the hint or look at the `R` code below if you're stuck.")
+check_hint("We are looking for the proportion of L1 participants assigned the occupational group \"PS\". You will need to use the `count()` and the `mutate()` functions to be able to answer this question.", hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show `R` code to help you answer Q9.8."
+#| echo: true
+#| results: "hide"
+
+L1.data.cleaned |> 
+  count(OccupGroup) |> 
+  mutate(percent = n / sum(n),
+         percent = percent*100, 
+         percent = round(percent, digits = 2)
+         )
+
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+For some analyses, it may be useful to group together participants whose native languages come from the same family of languages. For example, French, Spanish and Italian L1 speakers, may be considered as a one group of participants whose native language is a Romance language.
+
+Use `mutate()` and `case_when()` to add a new variable to `L2.data` that corresponds to the L2 participant's native language family. Call this new variable `NativeLgFamily`. Use the following language family categories:
+
+-   Baltic
+-   Chinese
+-   Germanic
+-   Hellenic
+-   Romance
+-   Slavic
+
+If you're not sure which language family a language belongs to, look it up on Wikipedia (e.g. the Wikipedia page on the [German language](https://en.wikipedia.org/wiki/German_language) informs us in a text box at the top of the article that German is a Germanic language).
+
+[**Q9.9**]{style="color:green;"} Which language family is the *second* most represented among L2 participants' native languages in @DabrowskaExperienceAptitudeIndividual2019?
+
+```{r}
+#| echo: false
+#| label: "Q9.9"
+
+check_question("Chinese",
+               options = c("Baltic", "Chinese", "Germanic", "Hellenic", "Romance", "Slavic"),
+               type = "radio",
+               q_id = "Q9.9", 
+button_label = "Check answer",
+right = "✅ That's right, well done!",
+wrong = "No, have you checked that you have correctly classified all participants' native languages?")
+check_hint("Once you have created your new variable, use the `table()` or `count()` function to see the distribution of language families omong L2 participants.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+[**Q9.10**]{style="color:green;"} How many L2 participants are native speakers of a language that belongs to the family of Romance languages?
+
+```{r}
+#| echo: false
+#| label: "Q9.10"
+
+check_question(c("6", "six"),
+               button_label = "Check answer",
+               q_id = "Q9.10", 
+               right = "✅ Très bien! ¡Muy bien hecho! Ottimo!",
+               wrong = "No, that's incorrect. Check out the hint or, if you're really stuck, the solution below.")
+check_hint("Use the `count()` function as explained above to obtain a tally of the number of participants in each language family.", hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+[**Q9.11**]{style="color:green;"} What percentage of L2 participants have a Slavic native language? Round your answer to the nearest percent.
+
+```{r}
+#| echo: false
+#| label: "Q9.11"
+
+check_question(c("58", "fifty-eight", "fifty eight", "58%", "58 %", "58 percent", "fifty-eight percent", "fifty eight percent"),
+               q_id = "Q9.11", 
+               button_label = "Check answer",
+               right = "✅ Nice data wrangling job!",
+               wrong = "No, that's incorrect. First check the hint and, if you're still stuck, take a look at the solution below.")
+check_hint("You can copy the code from the previous section to add a \"percent\" column. Ensure that you adjust the correct argument in the `round()` function to obtain percentages rounded off the nearest percent.", hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+[**Q9.12**]{style="color:green;"} If you check the output of `colnames(L2.data)` or `View(L2.data)`, you will see that the new variable that you created is now the last column in the table. Consult the help file of the {dplyr} function `relocate()` to work out how to place this column immediately after `NativeLg`.
+
+```{r}
+#| echo: false
+#| label: "Q9.12"
+
+check_question(c("L2.data <- L2.data |> relocate(NativeLgFamily, .after = NativeLg)"),
+               options = c("L2.data <- L2.data |> relocate(NativeLgFamily, .after = NativeLg)",
+                           "L2.data <- L2.data |> relocate(f, .after = NativeLg)", 
+                           "L2.data <- L2.data |> relocate(NativeLgFamily, after = NativeLg)",
+                           "L2.data <- L2.data |> relocate(NativeLgFamily, .before = NativeLg)",
+                           "L2.data <- L2.data |> relocate(NativeLgFamily, .after = NULL)"),
+               random_answer_order = TRUE,
+               q_id = "Q9.12", 
+               button_label = "Check answer",
+               right = "✅ Nice work!",
+               wrong = "No, that's incorrect. If you're stuck, have a little look at the solution below.")
+```
+:::
+::: {.callout-note collapse="true"}
+#### Click here for solutions to [**Q9.9**]{style="color:green;"}—[**Q9.12**]{style="color:green;"}.
+
+As is often the case, there are several ways to solve these [**Your turn!**]{style="color:green;"} tasks. Here is one solution based on what we have covered so far in this chapter.
+
+[**Q9.9**]{style="color:green;"} Note that the following code will only work if you followed the instructions in the section above to create the `NativeLg.cleaned` variable as it relies on this variable to create the new `NativeLgFamily` variable.
+
+```{r}
+#| include: false
+L2.data <- L2.data |>
+  mutate(
+    NativeLg.cleaned = str_to_title(NativeLg) |> 
+      word(start = 1) |> 
+      word(start = 1, sep = fixed("/")),
+    NativeLg.cleaned = case_when(
+      NativeLg.cleaned == "Mandarine" ~ "Mandarin",
+      NativeLg.cleaned %in% c("Lithunanina", "Lituanian") ~ "Lithuanian",
+      TRUE ~ NativeLg.cleaned)
+    )
+```
+
+```{r}
+L2.data <- L2.data |> 
+  mutate(NativeLgFamily = case_when(
+    NativeLg.cleaned == "Lithuanian" ~ "Baltic",
+    NativeLg.cleaned %in% c("Cantonese", "Mandarin", "Chinese") ~ "Chinese",
+    NativeLg.cleaned == "German" ~ "Germanic",
+    NativeLg.cleaned == "Greek" ~ "Hellenic",
+    NativeLg.cleaned %in% c("French", "Italian", "Spanish") ~ "Romance",
+    NativeLg.cleaned %in% c("Polish", "Russian") ~ "Slavic"))
+```
+
+As always, it is important to check that things have gone to plan.
+
+```{r eval=FALSE}
+L2.data |> 
+  select(NativeLg.cleaned, NativeLgFamily)
+```
+
+```{r}
+#| echo: false
+# Printing all rows takes up too much space, therefore I only print the first six rows with this chunk, but show the code in the chunk above that displays all values so that the reader can examine all rows.
+L2.data |> 
+  select(NativeLg.cleaned, NativeLgFamily) |> 
+  head()
+```
+
+[**Q9.10**]{style="color:green;"} We can display the distribution of language families using either the base `R` `table()` function or the {tidyverse} `count()` function.
+
+```{r}
+table(L2.data$NativeLgFamily)
+
+L2.data |> 
+  count(NativeLgFamily)
+```
+
+[**Q9.11**]{style="color:green;"} We can add a column to show the distribution in percentages by adding a new "percent" column to the `count()` table using `mutate()`:
+
+```{r}
+L2.data |> # <1>
+  count(NativeLgFamily) |> # <2>
+  mutate(percent = n / sum(n), # <3>
+         percent = percent*100, # <4>
+         percent = round(percent, digits = 0) # <5>
+         ) |> 
+  arrange(desc(n)) # <6>
+```
+
+1.  We start with the dataset that contains the new `NativeLgFamily` variable.
+2.  We pipe it into the `count()` function. As shown above, this function produces a frequency table with counts stored in the variable `n`.
+3.  We divide the number of participant with each native language (`n`) by the total number of participants (`sum(n)`). We obtain proportions ranging from 0 to 1.
+4.  We multiply these by 100 to get percentages.
+5.  We round the percentages to two decimal places.
+6.  We reorder the table so that the most represented group is at the top. To do so, we pipe our table into the `dplyr::arrange()`. By default, `arrange()` orders values in ascending order (from smallest to largest); hence, we add the `desc()` function to sort the table in descending order of frequency.
+
+🪐 Note that this a {tidyverse} approach to working out percentages, see @sec-Mode for a base `R` approach.
+
+[**Q9.12**]{style="color:green;"} At the time of writing, the help file of the `relocate()` function still featured examples using the {magrittr} pipe (`%>%`) rather than the native `R` pipe (`|>`) (see @sec-Piping), but the syntax remains the same. The first argument is the data which we are piping into the function, the second argument is the column that we want to move. Then, we need to specify where to with either the ".after" or the ".before" argument.
+
+```{r}
+L2.data <- L2.data |> 
+  relocate(NativeLgFamily, .after = NativeLg)
+```
+
+![Artwork explaining the `dplyr::relocate()` function by [\@allison_horst](https://allisonhorst.com/allison-horst).](images/AHorst_relocate.png){#fig-relocate fig-alt="Cartoon of fuzzy monsters moving columns around in fork lifts, while one supervises. Stylized text reads “dplyr::relocate() - move columns around! Default: move to FRONT , or move to .before or .after a specified column.”"}
+
+Note that the help file specifies that both ".after" and ".before" begin with a dot. If you leave the dot out, the function will not work as expected! Can you spot what has happened here?
+
+```{r}
+#| eval: false
+L2.data |> 
+  relocate(NativeLgFamily, after = NativeLg) |> 
+  str()
+```
+
+```{r}
+#| echo: false
+L2.data |> 
+  relocate(NativeLgFamily, .after = NativeLg) |> 
+  select(1:6) |> 
+  str()
+```
+
+The `relocate()` function has moved `NativeLgFamily` to the first column (the function's default position) and has also moved `NativeLg` to the second position, but it has renamed the column `after`.
+
+This is a reminder to *always* check whether your data wrangling operations have gone as planned. Just because you didn't get an error message doesn't mean that your code did what you wanted! ⚠️
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+[**Q9.13**]{style="color:green;"} The following operations describe the steps performed by the data wrangling code chunk above. In which order are the operations performed?
+
+```{r}
+#| echo: false
+#| label: "Q9.13"
+
+check_question(c("Convert one variable to a character variable.",
+                 "Add two new variables that each have all the same values.",
+                 "Change the name of one variable",
+                 "Merge data from the two datasets into one.", 
+                 "Convert the values of all character variables to title case.",
+                 "Remove whitespace at the start and end of all values in all character variables.",
+                 "Convert all the values of one variable to upper case.",
+                 "Shorten and correct typos in the values of one variable.",
+                 "Add a new variable based on another variable.",
+                 "Convert all character string vectors to factors."), 
+               type = "in_order", 
+               q_id = "Q9.13", 
+               alignment = "vertical",
+               button_label = "Check answer",
+               right = "Perfect! 🎉",
+               wrong = "No, not quite.")
+check_hint("Use the up and down arrows to swap the order of any two labels in the list. \nThe first three operations are: \n1) Convert one variable to a character variable.\n2) Add two new variables that each have all the same values.\n3) Change the name of one variable.", hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+[**Q9.14**]{style="color:green;"} In the combined dataset, how many participants have a clerical occupation?
+
+```{r}
+#| echo: false
+#| label: "Q9.14"
+
+check_question(c("32", "thirty-two", "thirty two"),
+               button_label = "Check answer",
+               q_id = "Q9.14", 
+               right = "✅",
+               wrong = "❌")
+check_hint("Have you tried using the `summary()` function to look into the `OccupGroup` variable of `combined.data`?", hint_title = "🐭 Click on the mouse for a hint.")
+  
+```
+
+[**Q9.15**]{style="color:green;"} Of the participants who have a clerical occupation, how many were over 50 years old at the time of the data collection?
+
+```{r}
+#| echo: false
+#| label: "Q9.15"
+
+check_question(c("6"),
+               options = c("none", "1", "2", "6", "all of them"),
+               button_label = "Check answer",
+               q_id = "Q9.15", 
+               right = "That's right! Check the solution below to see different ways to find the answer to this question. 😎",
+               wrong = "That's not the correct answer. Check the hint below.",
+type = "radio")
+check_hint("One way to answer find the answer to this question is to cross-tabulate the `Age` and `OccupGroup` variables of `combined.data` using the count() function and then add up the numbers in your head. Check the solution below if you're stuck.", hint_title = "🐭 Click on the mouse for a hint.")
+```
+:::
+::: {.callout-tip collapse="true"}
+#### Click here to see the `R` code to answer [**Q9.15**]{style="color:green;"}
+
+There are various ways to find the answer to Q5. Sticking to a function that we have looked at so far, you could cross-tabulate `Age` and `OccupGroup` using the `count()` function.
+
+```{r}
+#| include: false
+
+L1.data <- read.csv(file = here("data", "L1_data.csv"))
+L2.data <- read.csv(file = here("data", "L2_data.csv"))
+
+L2.data <- L2.data |> 
+  mutate(Participant = as.character(Participant)) |> 
+  mutate(Group = "L2")  
+
+L1.data <- L1.data |> 
+  mutate(Group = "L1") |> 
+  rename(EduTotal = EduYrs)
+
+combined.data <- bind_rows(L1.data, L2.data) |>
+  mutate(across(where(is.character), str_to_title)) |>
+  mutate(across(where(is.character), str_trim)) |>
+  mutate(OccupGroup = str_to_upper(OccupGroup)) |> 
+  mutate(
+    NativeLg = word(NativeLg, start = 1),
+    NativeLg = word(NativeLg, start = 1, sep = fixed("/")),
+    NativeLg = case_when(
+      NativeLg == "Mandarine" ~ "Mandarin",
+      NativeLg %in% c("Lithunanina", "Lithunanina", "Lituanian") ~ "Lithuanian",
+      TRUE ~ NativeLg)) |> 
+  mutate(NativeLgFamily = case_when(
+    NativeLg == "Lithuanian" ~ "Baltic",
+    NativeLg %in% c("Cantonese", "Mandarin", "Chinese") ~ "Chinese",
+    NativeLg == "German" ~ "Germanic",
+    NativeLg == "Greek" ~ "Hellenic",
+    NativeLg %in% c("French", "Italian", "Spanish") ~ "Romance",
+    NativeLg %in% c("Polish", "Russian") ~ "Slavic")) |> 
+  mutate(across(where(is.character), factor))
+```
+
+```{r}
+#| eval: false
+
+combined.data |> 
+  count(OccupGroup, Age)
+```
+
+```{r}
+#| echo: false
+
+combined.data |> 
+  count(OccupGroup, Age) |> 
+  head(16)
+  
+```
+
+And then add up the frequencies listed in the rows that correspond to participants with clerical jobs who are 50.
+
+```{r}
+2 + 1 + 1 + 1 +1 
+```
+
+But, of course, this is method is rather error-prone! Instead, we can use `dplyr::filter()` (see below) to filter the combined dataset according to our two criteria of interest and then count the number of rows (i.e. participants) remaining in the dataset once the filter has been applied.
+
+```{r}
+combined.data |>
+  filter(OccupGroup == "C" & Age > 50) |> 
+  nrow()
+```
+
+![Artwork explaining the `dplyr::filter()` function by [\@allison_horst](https://allisonhorst.com/allison-horst).](images/AHorst_filter.png){fig-alt="Cartoon showing three fuzzy monsters either selecting or crossing out rows of a data table. If the type of animal in the table is “otter” and the site is “bay”, a monster is drawing a purple rectangle around the row. If those conditions are not met, another monster is putting a line through the column indicating it will be excluded. Stylized text reads “dplyr::filter() - keep rows that satisfy your conditions.”"}
+:::
+### Check your progress 🌟 {.unnumbered}
+
+You have successfully completed [`r checkdown::insert_score()` out of 15 questions]{style="color:green;"} in this chapter.
