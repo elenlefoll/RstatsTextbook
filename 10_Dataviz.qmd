@@ -51,10 +51,6 @@ library(tidyverse)
 Dabrowska.data <- readRDS(file = here("data", "processed", "combined_L1_L2_data.rds"))
 ```
 
-```{r include=FALSE}
-library(checkdown)
-```
-
 Check that your data are correctly imported by examining the output of `View(Dabrowska.data)` and `str(Dabrowska.data)`. Once you are satisfied that that's the case, we ready to get creative! `r emoji("art")`
 
 ## The syntax of graphics {#sec-Syntax}
@@ -165,7 +161,7 @@ ggplot(data = Dabrowska.data,
        y = "Number of participants")
 ```
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -174,7 +170,7 @@ ggplot(data = Dabrowska.data,
 ```{r}
 #| echo: false
 #| label: "Q10.1"
-
+library(checkdown)
 check_question(c("x-axis label",
                  "y-axis label",
                  "plot title",
@@ -836,11 +832,11 @@ In the following, we will first look at how we can plot **categorical variables*
 
 As we saw in @Sec-Syntax, bar plots (also called **bar charts**) are a great way to visualise **categorical variables**. We also saw that, when using horizontal writing systems, it is often easier to interpret a bar plot if its coordinates are flipped so that longer labels can be read more readily.
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-[**Q10.2**]{style="color:green;"} Study @fig-NativeLanguagesBarplot and think about which {ggplot2} functions were used to generate it. `r emoji("thinking")`
+[**Q10.2**]{style="color:green;"} Study @fig-NativeLanguagesBarplot and think about which {ggplot2} functions were used to generate it. 🤔
 
 Then, click on the "Show `R` code" button just above the figure to compare your intuitions with the actual code. Note that there may well be more than one solution, so do try out your version and see if you can spot any differences!
 :::
@@ -880,11 +876,19 @@ levels(fct_infreq(Dabrowska.data$NativeLg))
 levels(fct_rev(fct_infreq(Dabrowska.data$NativeLg)))
 ```
 
-:::::::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::::::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
 [**Q10.3**]{style="color:green;"} Compare the two plots below. Which one makes it easier to see which occupational group has the fewest participants and why?
+
+```{r}
+#| include: false
+library(here)
+library(tidyverse)
+
+Dabrowska.data <- readRDS(file = here("data", "processed", "combined_L1_L2_data.rds"))
+```
 
 :::::: columns
 ::: {.column width="45%"}
@@ -893,7 +897,6 @@ levels(fct_rev(fct_infreq(Dabrowska.data$NativeLg)))
 ```{r}
 #| code-fold: true
 #| code-summary: "Show `R` code for the bar plot"
-#| label: "fig-Barplot"
 
 Dabrowska.data |> 
   mutate(OccupGroup = fct_recode(OccupGroup,
@@ -925,7 +928,6 @@ Dabrowska.data |>
 ```{r}
 #| code-fold: true
 #| code-summary: "Show `R` code for the pie chart"
-#| label: "fig-PieChart"
 
 Dabrowska.data |> 
   mutate(OccupGroup = fct_recode(OccupGroup,
@@ -968,9 +970,9 @@ check_hint("Two reasons are correct.",
 
 ```
 :::::::
-::::::::
+::::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -1229,7 +1231,7 @@ ggplot(data = Dabrowska.data,
   theme_minimal()
 ```
 
-:::::::::::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::::::::::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -1481,7 +1483,7 @@ ggplot(data = Dabrowska.data,
 ```
 ::::::
 :::::::::::
-::::::::::::
+::::
 
 ### Density plots {#sec-Density}
 
@@ -1504,11 +1506,11 @@ ggplot(data = Dabrowska.data,
 
 Density plots are particularly useful to examine distribution shapes visually. Looking at @fig-GrammarDensity, we can immediately see that the values of the `Grammar` variable are not normally distributed (see @sec-DistributionsNumeric).
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-[**Q10.13**]{style="color:green;"} Which line of code needs to be added to the code used to generate @fig-GrammarDensity to produce a two-panel density plot like @fig-GrammarTwoPanelDensity?
+[**Q10.13**]{style="color:green;"} Which line of code needs to be added to the code used to generate @fig-GrammarDensity to produce a two-panel density plot as in the figure below?
 
 ```{r}
 #| echo: false
@@ -1531,7 +1533,6 @@ check_question("facet_wrap(~ Group)",
 ```{r}
 #| code-fold: true
 #| code-summary: "Show sample code to help you answer Q10.13."
-#| label: "fig-GrammarTwoPanelDensity"
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = Grammar)) +
@@ -1703,7 +1704,7 @@ The meaning conveyed by @fig-GrammarBoxPlotGroup is clear: there is hardly any d
 
 What are some of the possible reasons that you can think of? `r emoji("thinking")` Make a note of them as we will explore these hypotheses further in @sec-Scatterplots.
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -2024,7 +2025,7 @@ The regression lines added by the `geom_smooth(method = "lm")` function are **li
 
 So far, all of our data visualisations have only displayed the characteristics of the collected data. In other words, they display **descriptive statistics** (see @sec-DescRiptiveStats) that do not allow us to make inferences about other participants who were not tested as part of @DabrowskaExperienceAptitudeIndividual2019's study. Tests of statistical significance, including of correlations, are introduced in @sec-Inferential.
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -2648,8 +2649,8 @@ ggsave("figures/BlocksDensityPlot.svg",
        units = "px")
 ```
 
-:::: {.content-visible when-format="html"}
-### Check your progress `r emoji("star2")` {.unnumbered}
+:::: {.content-visible when-profile="OER"}
+### Check your progress 🌟 {.unnumbered}
 
 Well done! You have successfully completed this chapter on data visualisation using the Grammar of Graphics approach. You have answered [`r checkdown::insert_score()` out of 21 questions]{style="color:green;"} correctly.
 ::::

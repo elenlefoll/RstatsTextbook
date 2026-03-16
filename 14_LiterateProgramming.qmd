@@ -20,10 +20,6 @@ In this chapter, you will learn:
 -   how to use Quarto to write research reports, theses, and academic papers
 -   how to export and share your research in different formats including HTML, PDF, LibreOffice Writer, and Microsoft Word.
 
-```{r include=FALSE}
-library(checkdown)
-```
-
 Note that a standalone version of this chapter can be found at <https://elenlefoll.quarto.pub/quarto4research>.
 
 ## Literate programming {#sec-LitProgramming}
@@ -70,7 +66,7 @@ Given this definition, reproducibility might seem like a low bar to pass. You mi
 To find out more about best practices for reproducible research, check out [The Turing Way](https://book.the-turing-way.org/)'s excellent [Guide for Reproducible Research](https://book.the-turing-way.org/reproducible-research/reproducible-research).
 :::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -83,7 +79,7 @@ Watch this video from 2019, in which Garrett Grolemund (data scientist and instr
 ```{r}
 #| echo: false
 #| label: "Q14.1"
-
+library(checkdown)
 check_question("The finding, and related shift in academic culture and thinking, that a large proportion of scientific studies published across different disciplines do not replicate.",
                  options = c("The finding, and related shift in academic culture and thinking, that a large proportion of scientific studies published across different disciplines do not replicate.",
                  "A set of good research practices based on fundamental principles: honesty, reliability, respect and accountability.",
@@ -153,9 +149,8 @@ check_question(c("The original data from the study",
 check_hint("If you're unsure, re-watch the video from minute 13' onwards.", hint_title = "🐭 Click on the mouse for a hint.")
 ```
 :::
-::::
-
 [^14_literateprogramming-2]: The above definitions are all from the community-sourced FORRT glossary [@parsonsCommunitysourcedGlossaryOpen2022].
+::::
 
 ## Getting started with Quarto {#sec-StartQuarto}
 
@@ -217,14 +212,14 @@ You may have noticed that *RStudio* proposes two different modes in which Quarto
 
 The Visual mode offers a [WYSIWYM](https://en.wikipedia.org/wiki/WYSIWYM) (What You See Is What You Mean) authoring experience. This means that, in Visual model, you will immediately see the effect of your formatting on screen. For example, to format a word in italics, you can click on the corresponding button in the toolbar (see @fig-QuartoModes) or use the keyboard shortcut (Cmd/Ctrl + I) — just like you would in text-processing software — and this will immediately display the text in italics.
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
 [**Q14.4**]{style="color:green;"} In this task, you will practice using *RStudio*'s Visual model to format text in a Quarto document.
 
 -   In a new line beginning after the final `---` of the YAML header, paste the introduction text below.
--   Using the Quarto editing toolbar, format the text so that, in the Visual mode, it looks like the text displayed in @fig-QuartoIntro.
+-   Using the Quarto editing toolbar, format the text so that, in the Visual mode, it looks like the text displayed in the screenshot below.
 -   Render the document and compare how it is formatted in the HTML version.
 
 ```{markdown}
@@ -241,9 +236,9 @@ Ninety native speakers (42 male and 48 female) and 67 nonnative speakers of Engl
 The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from 17 to 65 years (M = 38, SD = 16). Twenty-two percent of the participants held manual jobs, 24% held clerical positions, and 28% had professional-level jobs or were studying for a degree; the remaining 26% were occupationally inactive (i.e. unemployed, retired, or homemakers). In terms of education, participants’ backgrounds ranged from no formal qualifications to Ph.D., with corresponding differences in the number of years spent in full-time education (from 10 to 21; M = 14, SD = 2). Six participants reported a working knowledge of another language; the rest described themselves as monolinguals.
 ```
 
-![*RStudio*'s Visual mode](images/LearningQuarto_intro.png){#fig-QuartoIntro}
+![*RStudio*'s Visual mode](images/LearningQuarto_intro.png)
 
-In *RStudio*'s visual mode, what is the name of the formatting option that indents and adds a grey line to the left of a quoted paragraph as in @fig-QuartoIntro?
+In *RStudio*'s visual mode, what is the name of the formatting option that indents and adds a grey line to the left of a quoted paragraph as in the screenshot above?
 
 ```{r}
 #| echo: false
@@ -266,7 +261,7 @@ check_hint("All of these options can be found in RStudio's in the \"Format\" dro
 :::
 ::::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-note collapse="true"}
 #### Click here for the full solution to [**Q14.4**]{style="color:green;"}
 
@@ -282,7 +277,7 @@ Writing and formatting text in *RStudio*'s Visual editor is very similar to writ
 
 The best way to get the hang of Markdown is simply to try things out. You will also find a handy cheatsheet under *Help \> Markdown Quick Reference*. Remember that you can always go back to the **Visual** mode to format your text if that's easier for you. When it comes to debugging any Quarto syntax errors, however, it's usually easier to catch these in plain text, so you'll typically want to switch to the **Source** mode for that.
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -478,7 +473,7 @@ In *RStudio* the easiest way to set a chunk option is by clicking the gear icon 
 ![Rendered HTML document opened in a browser](images/Quarto_rendered_echo-false.png){#fig-EchoFalseRendered fig-alt="The rendered version of the Quarto document shown in the previous figure. It includes the elements of the header and a simple line graph, but not the code to produce the graph."}
 :::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -595,8 +590,15 @@ library(tidyverse)
 library(xfun)
 ```
 
+```{{r}}
+#| label: import-data
+#| include: false
+  
+L1.data <- read.csv(file = here("data", "L1_data.csv"))
+L2.data <- read.csv(file = here("data", "L2_data.csv"))
+```
+
 ```{r}
-#| echo: fenced
 #| label: import-data
 #| include: false
   
@@ -634,7 +636,19 @@ The rendered version should read like this (if you are obtaining different numbe
 Inline code should only be used for very simple code, ideally with no more than one function, as in `` `{{r}} nrow(L1.data)` ``. To insert the output of more complex operations, it is best to write the code and save its output(s) to the local environment in a **hidden code chunk** (using the option `#| include: false`, see @sec-Chunks).
 
 ```{r}
-#| echo: fenced
+#| label: L1-gender
+#| include: false
+
+L1.males <- L1.data |>
+  filter(Gender == "M") |>
+  count()
+
+L1.females <- L1.data |>
+  filter(Gender == "F") |>
+  count()
+```
+
+```{{r}}
 #| label: L1-gender
 #| include: false
 
@@ -657,7 +671,7 @@ When rendered, the paragraph will read:
 
 > `{r} nrow(L1.data)` native speakers (`{r} L1.males` male and `{r} L1.females` female) and `{r} nrow(L2.data)` nonnative speakers of English were recruited through personal contacts, church and social clubs, and advertisements in local newspapers.
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -686,9 +700,17 @@ check_hint("Check ", hint_title = "🐭 Click on the mouse for a hint.")
 :::
 ::::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-note collapse="true"}
 #### Click here for the solution to [**Q14.12**]{style="color:green;"}
+
+```{r}
+#| include: false
+library(here)
+library(tidyverse)
+L1.data <- read.csv(file = here("data", "L1_data.csv"))
+L2.data <- read.csv(file = here("data", "L2_data.csv"))
+```
 
 To save the number of male L2 participants as an R object, we can follow the same procedure as above.
 
@@ -736,7 +758,7 @@ L2.allfemales <- L2.data |>
 
 ```
 
-Some of these methods are perhaps more elegant than others, but they are all acceptable. After all, they all work! `r emoji("upside-down-face")`
+Some of these methods are perhaps more elegant than others, but they are all acceptable. After all, they all work! 🙃
 
 Once they are saved to the local environment, the values can be inserted inline in the usual way:
 
@@ -809,7 +831,7 @@ The rendered document will read:
 
 > The L1 participants were all born and raised in the United Kingdom and were selected to ensure a range of ages, occupations, and educational backgrounds. The age range was from `{r} min(L1.data$Age)` to `{r} max(L1.data$Age)` years (*M* = `{r} round(mean(L1.data$Age))`, *SD* = `{r} round(sd(L1.data$Age))`).
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="html"}
 ::: {.callout-note collapse="false"}
 ### More complex inline computations
 
@@ -860,7 +882,7 @@ The values saved to the local environment as `R` objects can then be inserted in
 :::
 ::::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -1176,7 +1198,7 @@ For example, if you wanted to submit your paper to the [International Journal of
 >
 > Wickham, H., Çetinkaya-Rundel, M., & Grolemund, G. (2023). *R for data science: Import, tidy, transform, visualize, and model data* (2nd ed.). O'Reilly. Retrieved from <https://r4ds.hadley.nz/>.
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -1481,11 +1503,11 @@ format:
 ---
 ```
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-[**Q14.15**]{style="color:green;"} If you completed [**Q8.15**]{style="color:green;"} (@sec-Range), you copied-and-pasted a paragraph with gaps into LibreOffice Writer or Microsoft Word and then manually inserted descriptive statistics that you had calculated in `R`. This method of copying-and-pasting across different programmes is very error-prone: What if you accidentally pasted the wrong number in the wrong place? And what if there was an update to the dataset or you made some changes to the data cleaning procedure? You'd have to manually change all the numbers again! `r emoji("exploding-head")` This is time-consuming and, more worryingly, very likely to result in errors!
+[**Q14.15**]{style="color:green;"} If you completed [**Q8.15**]{style="color:green;"} (@sec-Range), you copied-and-pasted a paragraph with gaps into LibreOffice Writer or Microsoft Word and then manually inserted descriptive statistics that you had calculated in `R`. This method of copying-and-pasting across different programmes is very error-prone: What if you accidentally pasted the wrong number in the wrong place? And what if there was an update to the dataset or you made some changes to the data cleaning procedure? You'd have to manually change all the numbers again! 🤯 This is time-consuming and, more worryingly, very likely to result in errors!
 
 Now that you know about **literate programming** in Quarto, rewrite the following paragraph describing the `GrammarR` variable in `L1.data` and `L2.data` in Quarto. Use **in-text code chunks** to fill the gaps and then render your paragraph to `.docx` or `.odt` format to check the results.
 
@@ -1495,19 +1517,19 @@ Now that you know about **literate programming** in Quarto, rewrite the followin
 :::
 ::::
 
-::::: {.content-visible when-format="html"}
-:::: {.callout-note collapse="true"}
+:::: {.content-visible when-profile="OER"}
+::: {.callout-note collapse="true"}
 #### Click here for the solution to [**Q14.15**]{style="color:green;"}
 
 Below is a screenshot of a Quarto document with the inline code chunks and its rendered `.odt` version as opened in LibreOffice Writer. You can click on the images to zoom in.
 
 ::: {layout-ncol="2"}
-![Quarto source code](images/Quarto_TaskSolution.png){#fig-SourceCode fig-alt="The paragraph with inline code in Quarto reads: On average, English native speakers performed only marginally better in the English grammatical comprehension test (median = `r median(L1.data$GrammarR)`) than English L2 learners (median = `r median(L2.data$GrammarR)`). L1 participants' grammatical comprehension test results ranged from `r min(L1.data$GrammarR)` to `r max(L1.data$GrammarR)`. In this same test, L2 participants' results ranged `r min(L2.data$GrammarR)` to `r max(L2.data$GrammarR)`."}
+![Quarto source code](images/Quarto_TaskSolution.png){fig-alt="The paragraph with inline code in Quarto reads: On average, English native speakers performed only marginally better in the English grammatical comprehension test (median = `r median(L1.data$GrammarR)`) than English L2 learners (median = `r median(L2.data$GrammarR)`). L1 participants' grammatical comprehension test results ranged from `r min(L1.data$GrammarR)` to `r max(L1.data$GrammarR)`. In this same test, L2 participants' results ranged `r min(L2.data$GrammarR)` to `r max(L2.data$GrammarR)`."}
 
-![Rendered document as opened in LibreOffice Writer](images/LibreOffice_TaskSolution.png){#fig-LibreOfficeScreenshot}
+![Rendered document as opened in LibreOffice Writer](images/LibreOffice_TaskSolution.png)
+:::
 :::
 ::::
-:::::
 
 ### PDF
 
@@ -1552,7 +1574,7 @@ In research, it's quite common that you will be working on a project that will b
 
 I recommend using **Revealjs**. The best way to get a sense of what is possible is to explore the [demo](https://quarto.org/docs/presentations/revealjs/demo/){target="_blank"} presentation from the [Quarto Guide](https://quarto.org/docs/presentations/revealjs/).
 
-:::: {.content-visible when-profile="OER"}
+:::: {.content-visible when-profile="html"}
 <div>
 
 ```{=html}
@@ -1584,11 +1606,11 @@ This chapter only just scratched the surface of what's possible in Quarto. The Q
 -   Last but not least, [Awesome Quarto](https://github.com/mcanouil/awesome-quarto) provides a curated and regularly updated list of the many Quarto-related docs, talks, tools, examples, and articles that the internet has to offer.
 :::
 
-::: {.content-visible when-format="html"}
-### Check your progress `r emoji("star2")` {.unnumbered}
+:::: {.content-visible when-profile="OER"}
+### Check your progress 🌟 {.unnumbered}
 
 Well done! You have successfully completed this chapter on literate programming using Quarto. You have answered [`r checkdown::insert_score()` out of 16 questions]{style="color:green;"} correctly.
-:::
+::::
 
 ::: {.content-visible when-format="pdf"}
 ### Check your progress {.unnumbered}

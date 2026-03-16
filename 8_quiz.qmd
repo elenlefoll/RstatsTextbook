@@ -1,0 +1,583 @@
+# Ch. 8: Tasks & Quizzes {.unnumbered}
+---
+
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+```{r include=FALSE}
+library(checkdown)
+library(here)
+library(tidyverse)
+
+L1.data <- read.csv(file = here("data", "L1_data.csv"))
+L2.data <- read.csv(file = here("data", "L2_data.csv"))
+```
+
+[**Q8.1**]{style="color:green;"} What was the mean English collocation test score (`Colloc`) of the L1 participants in @DabrowskaExperienceAptitudeIndividual2019?
+
+```{r}
+#| echo: false
+#| label: "Q8.1"
+
+check_question(c("66.31944", "66.31", "66.32", "66", "66.3"),
+button_label = "Check answer",
+q_id = "Q8.1", 
+right = "That's right, well done! 🎉",
+wrong = "No, that's not it. Are you using the command `mean(L1.data$Colloc)` to obtain the value?")
+check_hint("Ensure that you have loaded the L1 data before using the `mean()` function to work out L1 participants' mean `Colloc` score", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+[**Q8.2**]{style="color:green;"} What was the mean English collocation test score (`Colloc`) of the L2 participants?
+
+```{r}
+#| echo: false
+#| label: "Q8.2"
+
+check_question(c("29.47761", "29.47", "29.48", "29", "29.478"),
+button_label = "Check answer",
+q_id = "Q8.2", 
+right = "Perfect!",
+wrong = "No, that's not it. Are you using the command `mean(L2.data$Colloc)` to obtain the value?")
+check_hint("Ensure that you have loaded the L2 data before using the `mean()` function to work out L2 participants' mean `Colloc` score", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+[**Q8.3**]{style="color:green;"} What was the median English collocation test score (`Colloc`) of the L1 participants in Dąbrowska (2019)?
+
+```{r}
+#| echo: false
+#| label: "Q8.3"
+
+check_question(c("68.75", "68.7", "68.8", "69"),
+button_label = "Check answer",
+q_id = "Q8.3", 
+right = "That's right, well done!",
+wrong = "No, that's not it. Are you using the command `median(L1.data$Colloc)` to obtain the value?")
+check_hint("Ensure that you have loaded the L1 data before using the `median()` function to work out L1 participants' median `Colloc` score", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+[**Q8.4**]{style="color:green;"} What was the median English collocation test score (`Colloc`) of the L2 participants in @DabrowskaExperienceAptitudeIndividual2019?
+
+```{r}
+#| echo: false
+#| label: "Q8.4"
+
+check_question(c("18.75", "18.7", "18.8", "19"),
+button_label = "Check answer",
+q_id = "Q8.4", 
+right = "Excellent, well done! 🎉",
+wrong = "No, that's not it. Are you using the command `median(L2.data$Colloc)` to obtain the value?")
+check_hint("Ensure that you have loaded the L2 data before using the `median()` function to work out L2 participants' median `Colloc` score", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+In comparative studies, it is important to ensure that comparisons are fair and meaningful. For example, it would probably not be very meaningful to compare the linguistic knowledge of a group of undergraduate student learners of English with a group of retired native speakers. In this quiz, you will examine how similar the L1 and the L2 participants in @DabrowskaExperienceAptitudeIndividual2019 were in terms of age.
+
+[**Q8.5**]{style="color:green;"} What was the mean age of the L1 participants in @DabrowskaExperienceAptitudeIndividual2019? Use the `round()` function to round off the mean value to two decimal places (see @sec-Piping for a reminder as to how to combine two functions).
+
+```{r}
+#| echo: false
+#| label: "Q8.5"
+
+check_question("37.54",
+button_label = "Check answer",
+q_id = "Q8.5", 
+right = "Perfect! 🌟",
+wrong = "No, try again (remember to round off the value to two decimal places and use a decimal point not a comma).")
+check_hint("Combine the command `mean(L1.data$Age)` with the `round()` function", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+[**Q8.6**]{style="color:green;"} On average, were the L1 participants older or younger than the L2 participants in @DabrowskaExperienceAptitudeIndividual2019?
+
+```{r}
+#| echo: false
+#| label: "Q8.6"
+
+check_question("On average, the L1 participants were older.",
+               options = c("On average, the L1 participants were older.",
+                         "On average, the L2 participants were older.",
+                         "It depends whether you base the comparison on mean or median values.",
+                         "It's impossible to tell based on the available data."),
+               type = "radio",
+               random_answer_order = TRUE,
+               q_id = "Q8.6",
+               button_label = "Check answer",
+               right = "Correct! 🎉",
+               wrong = "No, that's incorrect. Check the hint if you're stuck.")
+check_hint("In some cases, comparing mean or median values *can* lead to different conclusions. But is it the case here? Compare the outputs of `mean(L1.data$Age)` and `mean(L2.data$Age)` and then `median(L1.data$Age)` and `median(L2.data$Age)` to see if the trend changes when comparing L1 and L2 participants' median ages as opposed to mean ages.", hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+[**Q8.7**]{style="color:green;"} Which of the following statements is true about the L1 and L2 participants in @DabrowskaExperienceAptitudeIndividual2019?
+
+```{r}
+#| echo: false
+#| label: "Q8.7"
+
+check_question("The difference between the average ages of the two groups is greater when comparing mean than median ages.",
+               options = c("The difference between the average ages of the two groups is greater when comparing mean than median ages.",
+                           "The difference between the average ages of the two groups is greater when comparing median than mean ages.",
+                           "The difference remains the same no matter what type of central tendency measure we use."),
+               type = "radio",
+               q_id = "Q8.7", 
+               button_label = "Check answer",
+               right = "That's right! The difference in median age is just one year, whereas it is almost five years when comparing the means.",
+               wrong = "No, check again.")
+
+check_hint("You can work out the difference in average mean values using the minus operator, i.e. `mean(L1.data$Age) - mean(L2.data$Age)`. Then do the same thing with the median values.",
+           hint_title = "😇 Hover for a hint", 
+           type = "onmouseover")
+```
+
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+Does the distribution of L1 participants' ages follow a similar shape? Are we dealing with a distribution that is normal, left or right skewed, or something entirely different?
+
+[**Q8.8**]{style="color:green;"} What were the modal ages of the L1 and L2 participants in @DabrowskaExperienceAptitudeIndividual2019?
+
+```{r}
+#| echo: false
+#| label: "Q8.8"
+
+check_question("17 (for L1 participants) and 28 (L2 participants)",
+               options = c("17 (for L1 participants) and 28 (L2 participants)",
+                           "29 (for L1 participants) and 28 (L2 participants)",
+                           "28 (for L1 participants) and 29 (L2 participants)",
+                           "32 (for L1 participants) and 31 (L2 participants)"),
+               type = "radio",
+               q_id = "Q8.8", 
+               button_label = "Check answer",
+               right = "That's correct but, as you can see from these data, the mode is not a very meaningful measure of central tendency for numeric variables with so many possible values.",
+               wrong = "No, carefully examine the output of the `table()` function again.")
+
+check_hint("Use the `table()` function to examine each variable and find the most frequent age value in each dataset.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+[**Q8.9**]{style="color:green;"} Which of the following statements is true?
+
+```{r}
+#| echo: false
+#| label: "Q8.9"
+
+check_question("The difference between the mean and median age is greater in the L1 group than in the L2 group.",
+               options = c("The difference between mean and median age is smaller in the L1 group than in the L2 group.",
+                         "The mean and median age of the L1 group are almost the same.",
+                         "The difference between the mean and median age is greater in the L1 group than in the L2 group."),
+               random_answer_order = TRUE,
+               q_id = "Q8.9", 
+               type = "check",
+               button_label = "Check answer",
+               right = "Correct!",
+               wrong = "No, that's incorrect. Note that only one statement is correct.")
+```
+
+[**Q8.10**]{style="color:green;"} Which measure of central tendency best describes L1 participants' ages?
+
+```{r}
+#| echo: false
+#| label: "Q8.10"
+
+check_question("None of them.",
+               options = c("The mean.",
+                         "The median.",
+                         "The mode.",
+                         "None of them."),
+               type = "radio",
+               q_id = "Q8.10", 
+               button_label = "Check answer",
+               right = "Yes, none of these measures appear to describe the central tendency very well. Read on to find out why that's the case...",
+               wrong = "Humm... Are you sure? Read the next section to find out more.")
+```
+
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+[**Q8.11**]{style="color:green;"} What can we reasonably deduce from the distribution of L1 participants' ages visualised in @fig-L1AgeDensityPlot?
+
+```{r}
+#| echo: false
+#| label: "Q8.11"
+
+check_question(c("It was easier to recruit adults in their 50s and 60s to participate in this study.",
+                 "It was easier to recruit teenagers to participate in this study."),
+               options = c("It was easier to recruit adults in their 50s and 60s to participate in this study.",
+                 "It was easier to recruit teenagers to participate in this study.",
+               "People in their 40s are most likely to be willing to participate in linguistic studies.",
+               "The researcher excluded 34 year-olds from this study.",
+               "For this study, the researcher specifically targeted 17 and 60 year-olds."),
+type = "check",
+q_id = "Q8.11", 
+random_answer_order = TRUE,
+button_label = "Check answer",
+right = "Yes, these are reasonable assumptions that we can make based on the available data.",
+wrong = "No, not quite.")
+check_hint("Two of the above statements are reasonable assumptions that we can make based on the available data.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+[**Q8.12**]{style="color:green;"} What are the pros of reporting the median rather than the mean to describe the central tendency of a variable?
+
+```{r}
+#| echo: false
+#| label: "Q8.12"
+
+check_question(c("The median is less susceptible to skew.",
+                 "The median is less susceptible to outliers.",
+                 "As the middle value, the median is fairly easy to interpret."),
+               options = c("The median is less susceptible to skew.",
+                 "The median is less susceptible to outliers.",
+                 "The median is the most widely used measure of central tendency.",
+                 "As the middle value, the median is fairly easy to interpret.",
+                 "The median also works well with nominal variables.",
+                 "The median has the highest probability of being the true central value.",
+                 "The median is ideal for very small datasets."),
+type = "check",
+q_id = "Q8.12", 
+random_answer_order = TRUE,
+button_label = "Check answer",
+right = "That's right, well done! 🎉",
+wrong = "No, not quite.")
+check_hint("Three of the above statements are advantages of reporting median values.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+[**Q8.13**]{style="color:green;"} What are the cons of reporting the median rather than the mean to describe the central tendency of a variable?
+
+```{r}
+#| echo: false
+#| label: "Q8.13"
+
+check_question(c("The median is often less meaningful with small sample sizes.",
+                 "The median does not take all values into account."),
+               options = c("The median is more susceptible to skew.",
+                 "The median is more susceptible to outliers.",
+                 "The median is often less meaningful with small sample sizes.",
+                 "The median does not take all values into account.",
+                 "The median can be misleading if it is not a value in the dataset.",
+                 "The median only works with odd numbers of values."),
+type = "check",
+q_id = "Q8.13", 
+random_answer_order = TRUE,
+button_label = "Check answer",
+right = "Great stuff! Now, it's time to move on to measures of variability. 🤓",
+wrong = "No, not quite.")
+check_hint("Two of the above statements are disadvantages of using the median.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+[**Q8.14**]{style="color:green;"} Complete the description of the `GrammarR` variable in `L1.data` and `L2.data` below.
+
+Copy and paste the following paragraph into a text processor (e.g. LibreOffice Writer or Microsoft Word) and fill in the six blanks using figures that you calculated in `R`. If necessary, round off values to two decimal places.
+
+> On average, English native speakers performed only marginally better in the English grammatical comprehension test (median = \_\_\_\_\_\_) than English L2 learners (median = \_\_\_\_\_\_). However, L1 participants' grammatical comprehension test results ranged from \_\_\_\_\_\_to \_\_\_\_\_\_, whereas L2 participants' results ranged from \_\_\_\_\_\_to \_\_\_\_\_\_.
+
+:::
+::: {.callout-note collapse="true"}
+#### Click here for the solution to [**Q8.14**]{style="color:green;"}
+
+Your paragraph should read as follows:
+
+> On average, English native speakers performed only marginally better in the English grammatical comprehension test (median = `r median(L1.data$GrammarR)`) than English L2 learners (median = `r median(L2.data$GrammarR)`). L1 participants' grammatical comprehension test results ranged from `r min(L1.data$GrammarR)` to `r max(L1.data$GrammarR)`. In this same test, L2 participants' results ranged `r min(L2.data$GrammarR)` to `r max(L2.data$GrammarR)`.
+
+The following lines of `R` code can be used to obtain these numbers.
+
+```{r}
+median(L1.data$GrammarR)
+median(L2.data$GrammarR)
+
+min(L1.data$GrammarR)
+max(L1.data$GrammarR)
+
+min(L2.data$GrammarR)
+max(L2.data$GrammarR)
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+[**Q8.15**]{style="color:green;"} Examine the boxplots displayed in @fig-NormalBoxplots.
+
+```{r}
+#| echo: false
+#| label: "Q8.15"
+
+check_question(c("Ages in Group 1 are normally distributed.",
+                 "Ages in Group 2 are normally distributed.",
+                 "Ages in Group 3 are normally distributed.",
+                 "In all three groups, the median age is approximately the same."),
+               options = c("Ages in Group 1 are normally distributed.",
+                           "Ages in Group 1 are not normally distributed.",
+                           "Ages in Group 2 are normally distributed.",
+                           "Ages in Group 2 are not normally distributed.",
+                           "Ages in Group 3 are normally distributed.",
+                           "Ages in Group 3 are not normally distributed",
+                           "On average, participants were older in Group 1 and younger in Group 3.",
+                           "In all three groups, the median age is approximately the same.",
+                           "In all three groups, the IQR is approximately the same."),
+               type = "check",
+               q_id = "Q8.15", 
+               button_label = "Check answer",
+               right = "That's right! Remember that if a boxplot is symmetrical around the median, this means that the variable it visualises is normally distributed and therefore its mean and median will be approximately the same.",
+               wrong = "No, not quite. Remember that normal distributions are characterised by a symmetrical distribution of data points around the median. In a boxplot, the median is represented by the thick bar inside the box.")
+check_hint("Four of the above statements are correct.", 
+           hint_title = "🐭 Click on the mouse for a first hint.")
+```
+
+[**Q8.16**]{style="color:green;"} The boxplots in @fig-NormalBoxplots are based on the same data as the three density plots in @fig-3NormalDistributions. Compare the two figures. Which distribution corresponds to which boxplot?
+
+```{r}
+#| echo: false
+#| label: "Q8.16"
+
+check_question(c("Distribution A is visualised in boxplot 3.",
+                 "Distribution C is visualised in boxplot 1."),
+               options = c("Distribution A is visualised in boxplot 3.",
+                           "Distribution C is visualised in boxplot 1.",
+                           "Distribution B is visualised in boxplot 1.",
+                           "Distribution C is visualised in boxplot 3.",
+                           "Distributions A, B and C are visualised in boxplot 2."),
+               type = "check",
+               q_id = "Q8.16", 
+               button_label = "Check answer",
+               right = "That's right, well done!",
+               wrong = "No, not quite. The easiest way to find the correct answers to this question is to compare the minimum and maximum values in both figures.")
+check_hint("Two of the above statements are true.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+[**Q8.17**]{style="color:green;"} Examine the following distribution of scores on the grammatical comprehension test administered as part of @DabrowskaExperienceAptitudeIndividual2019.
+
+```{r}
+#| label: "fig-L1GrammarRDensityPlot"
+#| fig-cap: "Density plot of participants' scores on the English comprehension grammar test"
+#| fig-width: 8
+#| fig-height: 5
+#| fig-alt: "Bar plot of participants’ scores on the English comprehension grammar test overlaid with a density curve. The median (76) is highlighted. The density curve generally rises until a high point of 78. However, several values deviate strongly from the curve in both directions."
+#| echo: false
+
+L1.data |>
+  ggplot(mapping = aes(x = GrammarR)) + 
+  geom_histogram(aes(x = GrammarR, y = after_stat(density)),
+                 binwidth = 1,
+                 fill = "black",
+                 alpha = 0.4) + 
+  geom_density(colour = "purple",
+               fill = "purple",
+               alpha = 0.2,
+               linewidth = 0.8) +
+  # geom_vline(aes(xintercept = mean(GrammarR)),
+  #            color = "#0000EE",
+  #            linetype = "dashed",
+  #            linewidth = 0.8) +
+  geom_vline(aes(xintercept = median(GrammarR)),
+             color = "darkred",
+             linewidth = 0.8) + 
+  # # Add label for mean:
+  # annotate("text",
+  #          x = 73,
+  #          y = 0.03,
+  #          label = "mean",
+  #          colour = "#0000EE",
+  #          family = "mono") +
+  # 
+  # # Add curved arrow for mean:
+  # annotate(
+  #   geom = "curve",
+  #   x = 73,
+  #   y = 0.026,
+  #   xend = 74.2,
+  #   yend = 0.02,
+  #   curvature = 0.4,
+  #   arrow = arrow(length = unit(0.2, "cm")),
+  #   colour = "#0000EE") +
+  
+  # Add label for median:
+  annotate("text",
+           x = 78.5,
+           y = 0.015,
+           label = "median",
+           colour = "darkred",
+           family = "mono") +
+
+  # Add curved arrow for median:
+  annotate(
+    geom = "curve",
+    x = 78.5,
+    y = 0.01,
+    xend = 76.2,
+    yend = 0.006,
+    curvature = -0.2,
+    arrow = arrow(length = unit(0.2, "cm")),
+    colour = "darkred") +  
+
+  theme_classic() +
+  scale_y_continuous(name = "Density",
+                     breaks = scales::breaks_width(0.02),
+                     expand = c(0, 0)) +
+  scale_x_continuous(breaks = scales::breaks_width(1),
+                     expand = c(0, 0)) +
+  labs(x = "Scores on the English grammar test")
+```
+
+Are the scores visualised in @fig-L1GrammarRDensityPlot normally distributed?
+
+```{r}
+#| echo: false
+#| label: "Q8.17"
+
+check_question("No, they are far from normally distributed.",
+               options = c("No, they are far from normally distributed.",
+                           "Yes, they are approximately normally distributed.",
+                           "It's impossible to tell from the plot alone.",
+                           "Yes, they are approximately normally distributed, but with a slight positive skew."),
+               type = "radio",
+               q_id = "Q8.17", 
+               random_answer_order = TRUE,
+               button_label = "Check answer",
+               right = "Correct!",
+               wrong = "Humm... Are you sure?")
+check_hint("Does the density curve ressemble a more or less symmetrical bell shape around the median?", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+[**Q8.18**]{style="color:green;"} Compare the following outputs of the `summary()` function.
+
+```{r}
+summary(L1.data$GrammarR)
+summary(L2.data$GrammarR)
+```
+
+Based on the outputs of the `summary()` function, what does @fig-L1GrammarRDensityPlot display?
+
+```{r}
+#| echo: false
+#| label: "Q8.18"
+
+check_question("The distribution of GrammarR scores among L1 participants.",
+               options = c("The distribution of GrammarR scores among L1 participants.",
+                           "The distribution of GrammarR scores among L2 participants.",
+                          "The distribution of GrammarR scores among both L1 and L2 participants.",
+                           "None of the above."),
+               type = "radio",
+               q_id = "Q8.18", 
+               button_label = "Check answer",
+               right = "That's right, well done!",
+               wrong = "Humm... Are you sure?")
+```
+
+[**Q8.19**]{style="color:green;"} Compare the following boxplots which summarise the distribution of scores on the grammatical comprehension test (`GrammarR`) administered as part of @DabrowskaExperienceAptitudeIndividual2019.
+
+```{r}
+#| label: "fig-GrammarRBoxplots"
+#| fig-cap: "Boxplots showing L1 and L2 participants' English grammar comprehension test scores"
+#| fig-alt: "Box plots showing L1 and L2 participants’ English grammar comprehension test scores. The box plot for L1 participants has a median of around 76, an interquartile range from 71 to 79, a minimum of 61 and a maximum of 80. The box plot for L2 participants has a median of around 75, an interquartile range from 59 to 77, a minimum of 40 and a maximum of 80."
+#| echo: false
+
+grammar.results <- data.frame(Scores = c(L1.data$GrammarR, L2.data$GrammarR),
+                                        Group = c(rep("L1 participants", length(L1.data$GrammarR)), rep("L2 participants", length(L2.data$GrammarR)))) 
+
+ggplot(mapping = aes(y = Scores, x = Group, fill = Group),
+       data = grammar.results) +
+  geom_boxplot(alpha = 0.5) +
+  scale_y_continuous(breaks = seq(0, 80, 5)) +
+  scale_fill_manual(values = c("purple", "pink")) +
+  labs(y = "Scores on the English grammar test", 
+       x = "",
+       title = "Grammar comprehension") +
+  theme_bw() +
+  theme(element_text(size = 12),
+        legend.position = "none")
+
+```
+
+Why do the two boxplots look so different?
+
+```{r}
+#| echo: false
+#| label: "Q8.19"
+
+check_question(c("Because the range of scores was much larger among L2 participants than among L1 participants.", 
+                 "Because more than a quarter of L2 participants scored below 60, whereas only one L1 participant scored below 60.",
+                 "Because the IQR of scores was much larger among L2 participants than among L1 participants."),
+               options = c("Because the range of scores was much larger among L2 participants than among L1 participants.",
+                           "Because the IQR of scores was much larger among L2 participants than among L1 participants.",
+                           "Because more than a quarter of L2 participants scored below 60, whereas only one L1 participant scored below 60.",
+                           "Because proportionally more L2 participants scored below the L2 median score than L1 participants did below the L1 median.",
+                           "Because the median L2 score is much lower than the median L1 score.",
+                           "Because the two groups were not of equal size (there were more L1 than L2 participants)."),
+               random_answer_order = TRUE,
+               type = "check",
+               q_id = "Q8.19", 
+               button_label = "Check answer",
+               right = "That's right, well done! 🎉",
+               wrong = "No, not quite.")
+check_hint("Remember that, in a boxplot, the size of the box tells us nothing about the number of data points in the visualised variable. Rather, it tells us about the spread of the data points as compared to the median.", hint_title = "🐭 Click on the mouse for a hint.")
+check_hint("Remember that, in a boxplot, the box always covers the middle 50% of the data and that the median line always represents the middle value in the dataset. It is therefore impossible for proportionally more L2 participants to score below the L2 median score than L1 participants below the L1 median. This is because, in all distributions including non-parametric ones, 50% of the data points are below the median and 50% are above it.", 
+           hint_title = "🦉 Hover over the owl for a second hint.",
+           type = "onmouseover")
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+[**Q8.20**]{style="color:green;"} What is the standard deviation of L1 participants' age in @DabrowskaExperienceAptitudeIndividual2019? Calculate the sample standard deviation to two decimal places.
+
+```{r}
+#| echo: false
+#| label: "Q8.20"
+
+check_question("16.15",
+               button_label = "Check answer",
+               q_id = "Q8.20", 
+               right = "Excellent! ✅",
+               wrong = "Incorrect. ❌"
+)
+check_hint("You will need to combine the `sd()` and the `round()` funtions to answer this question.", hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+[**Q8.21**]{style="color:green;"} Compare the standard deviation of the `Age` variable in the L1 and L2 datasets. What can you conclude on the basis of this comparison?
+
+```{r}
+#| echo: false
+#| label: "Q8.21"
+
+check_question("There is greater variability around the mean age in the L1 data than in the L2 data.",
+               options = c("Age is not normally distributed in both the L1 and the L2 data.",
+                           "There is greater variability around the mean age in the L1 data than in the L2 data.",
+                           "There is greater variability around the mean age in the L2 data than in the L1 data.",
+                           "L2 participants are more likely to be older than L1 participants.",
+                           "There is almost twice as much variability in L2 participants' ages than in L1's."),
+               type = "check",
+               q_id = "Q8.21", 
+               button_label = "Check answer",
+               right = "That's right, well done! 🎉",
+               wrong = "No, that's incorrect."
+)
+check_hint("Only one of these statements can be deduced from a comparison of these standard deviations.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+:::
+### Check your progress 🌟 {.unnumbered}
+
+You have successfully completed [`r checkdown::insert_score()` out of 21 questions]{style="color:green;"} in this chapter.
