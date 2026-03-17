@@ -4,50 +4,47 @@ extract_sections <- function(input_file) {
   }
   
   lines <- readLines(input_file)
-  in_target_block <- FALSE
-  nesting_level <- 0
   extracted_lines <- character()
+  in_oer_block <- FALSE
+  current_colons <- 0
+  block_start <- NULL
   
   for (i in seq_along(lines)) {
     line <- lines[i]
     
-    # Match opening block: :::: {.content-visible when-profile="OER"}
-    # Allow optional whitespace around the opening
-    if (grepl("^::::\\s*\\{\\.content-visible\\s+when-profile=\"OER\"\\}", line)) {
-      nesting_level <- nesting_level + 1
-      in_target_block <- TRUE
-      cat("Entered target block at line", i, "\n")
-      next  # Skip adding this line
+    # Check for OER block opening (3-5 colons)
+    if (grepl("^:::{1,5}\\s*\\{\\.content-visible\\s+when-profile=\"OER\"\\}", line)) {
+      # Count exact colons in opening line
+      current_colons <- length(gregexpr(":", line)[[1]])
+      in_oer_block <- TRUE
+      block_start <- i
+      next  # Skip opening line
     }
     
-    # Match closing block: ::::
-    # Only count it if it's a standalone closing block (no content inside)
-    # This avoids matching other `::::` lines (e.g., in code chunks or other blocks)
-    if (grepl("^::::\\s*$", line)) {
-      if (nesting_level > 0) {
-        nesting_level <- nesting_level - 1
-        if (nesting_level == 0) {
-          in_target_block <- FALSE
-          cat("Exited target block at line", i, "\n")
-        }
+    # Check for block closing (must exactly match current_colons)
+    if (in_oer_block) {
+      # Create exact pattern for closing marker
+      closing_pattern <- paste0("^", strrep(":", current_colons), "\\s*$")
+      if (grepl(closing_pattern, line)) {
+        in_oer_block <- FALSE
+        cat("Extracted OER block from line", block_start, "to", i, "\n")
+        next  # Skip closing line
       }
-      next  # Skip adding this line
     }
     
-    # Add line only if we're inside the target block and not a block delimiter
-    if (in_target_block) {
+    # If we're in an OER block, keep the content
+    if (in_oer_block) {
       extracted_lines <- c(extracted_lines, line)
     }
   }
   
-  # Optional: Warn if block wasn't closed
-  if (nesting_level > 0) {
-    warning("Block not closed in file: ", input_file)
+  # Only warn if we're actually in a block at the end
+  if (in_oer_block) {
+    warning("OER block starting at line ", block_start, " not closed in file: ", input_file)
   }
   
   return(extracted_lines)
 }
-
 
 # Main function to process all files
 process_directory <- function() {
@@ -86,7 +83,6 @@ process_directory <- function() {
         # Add header to the new file
         header <- c(
 paste("# Ch. ", chapter_number, ": Tasks & Quizzes {.unnumbered}", sep=""),
-          "---",
           "")
         
         # Insert header at the beginning
@@ -104,3 +100,4 @@ paste("# Ch. ", chapter_number, ": Tasks & Quizzes {.unnumbered}", sep=""),
 
 # Run the processing function
 process_directory()
+
