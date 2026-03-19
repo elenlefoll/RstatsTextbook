@@ -1544,6 +1544,7 @@ Create density plots in `R` using {ggplot2} is very simple. Because, yes, you've
 ```{r}
 #| label: "fig-GrammarDensity"
 #| fig-cap: "Distribution of English vocabulary test results" 
+#| fig-alt: "A density plot of English grammar test scores: there is a small bump around 10 and a large mountain around 95."
 #| fig-height: 4
 #| fig-width: 5
 
@@ -1666,6 +1667,8 @@ The help file of each `geom_` function provides a list of the **aesthetics** arg
 #| label: "fig-SillyDensityPlot"
 #| code-fold: true
 #| code-summary: "Show code to generate plot below."
+#| fig-cap: "Density plot of L2 participants' non-verbal IQ scores."
+#| fig-alt: "A density plot of L2 participants' non-verbal IQ scores, forming a wide hill plateauing slightly from 10 to 15 and peaking at 20. There is a very thick dotted line running along the countour of the hill."
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -1686,6 +1689,8 @@ It can, however, be very useful to help identify different elements within a com
 #| label: "fig-UsefulDensityPlot"
 #| code-fold: true
 #| code-summary: "Show code to generate plot below."
+#| fig-cap: "Overlapping density plot of L1 and L2 participants' non-verbal IQ scores."
+#| fig-alt: "Two overlapping density plots for L1 and L2 participants' non-verbal IQ scores, with a dotted line indicating the mean for each group. The hill for the L2 speakers' results is taller, and its mean is greater."
 
 # We first create an R object that contains the mean Block scores for both L1 and L2 participants.
 mean.blocks <- Dabrowska.data |>
@@ -1726,6 +1731,8 @@ Whilst it's possible to plot just a single boxplot, that rarely makes sense. In 
 #| fig-height: 3
 #| fig-width: 4
 #| label: "fig-GrammarBoxPlot"
+#| fig-cap: "Box plot of participants' English grammar test results."
+#| fig-alt: "A vertical box plot of participants' English grammar test results. The minimum is placed slightly below 50 with an interquartile range from 75 to 95 and a median at 90. There are several outliers from 0 to the minimum."
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar)) +
@@ -1741,6 +1748,8 @@ If, however, we want to compare the `Grammar` scores of two or more different gr
 #| fig-height: 3
 #| fig-width: 5
 #| label: "fig-GrammarBoxPlotGroup"
+#| fig-cap: "Box plots of L1 and L2 participants' English grammar test results."
+#| fig-alt: "The previous box plot has been divided into two individual charts for L1 and L2 participants' results. For L1 participants the minimum and interquartile range have shifted upwards very slightly and there is a single outlier below 50. For L2 participants the minimum has been extended down to 0 and the interquartile range stretched down below 50."
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -1912,6 +1921,8 @@ ggplot(data = Dabrowska.data,
 ```{r}
 #| echo: false
 #| fig-asp: 1.2
+#| fig-cap: Dot plots of participants' English collocation test results."
+#| fig-alt: "Dot plots of participants' English collocation test results. For L1 speakers, the largest cluster of dots spans from 35 to 50 and for L2 speakers they fall in a wider range from 0 to 75."
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Colloc, 
@@ -1957,6 +1968,8 @@ ggplot(data = Dabrowska.data,
 ```{r}
 #| echo: false
 #| fig-asp: 1.2
+#| fig-cap: Violin plots of participants' English collocation test results."
+#| fig-alt: "Violin plots of participants' English collocation test results. The plot for L1 speakers expands towards the higher end of the range, forming an upside down pear shape, whereas the plot for L2 speakers resembles a peanut which bulges out around 10 and then again around 55."
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Colloc, 
@@ -1999,6 +2012,8 @@ Dabrowska.data |>
 ```{r}
 #| echo: false
 #| fig-asp: 1.2
+#| fig-cap: "Violin-boxplot of participants' English collocation test results."
+#| fig-alt: "The previous violin plots have been overlaid with box plots."
 
 Dabrowska.data |> 
   ggplot(mapping = aes(y = Blocks, 
@@ -2029,6 +2044,8 @@ To explore this hypothesis, we map the total number of years that participants s
 
 ```{r}
 #| fig-asp: 0.8
+#| fig-cap: "Scatter plot comparing participants' grammar comprehension test scores with number of years of formal education."
+#| fig-alt: "A scatter plot comparing L1 and L2 participants' grammar comprehension test scores with the number of years of formal education they have received. For the L1 participants, the dots are clustered near the top left, indicating higher scores and fewer years of formal education. For the L2 partipants, the dots cluster at the top and bottom center, indicating a wider range of test scores and more formal education on average."
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = EduTotal, 
@@ -2049,6 +2066,8 @@ In @fig-GrammarScatterPlot, we add a regression line (in blue) per panel to our 
 #| label: "fig-GrammarScatterPlot"
 #| source-line-numbers: "6-7"
 #| fig-asp: 0.8
+#| fig-cap: "Regression lines for participants' grammar comprehension test scores vs. years of formal education."
+#| fig-alt: "The previous scatter plots with a blue lines indicating the correlation between the two variables. For L1 speakers the line proceeds through the cluster upwards and to the right at a shallow angle. For L2 speakers a similar line trajectory cuts through the bottom of the top cluster. For both groups there is a weak positive correlation."
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = EduTotal, 
@@ -2290,6 +2309,9 @@ set.seed(13)
 ```
 
 ```{r}
+#| fig-cap: "Word cloud of native languages from the study."
+#| fig-alt: "A word cloud of participants' native languages coloured according to language family and sized according to the number of participant speakers."
+
 ggplot(data = NativeLg_freq,
        aes(label = NativeLg,
            size = n,
@@ -2315,6 +2337,8 @@ We have seen that, on a scatter plot, each point represents an observation, in o
 #| fig-height: 4
 #| fig-width: 8
 #| label: "fig-ColourScatterPlot"
+#| fig-cap: "Scatter plot of L2 participants' grammar comprehension scores and age coloured by native language."
+#| fig-alt: "A scatter plot comparing L2 participants' grammar comprehension scores and age, with the dots coloured according to their native language."
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -2337,6 +2361,8 @@ Instead of plotting points on the scatter plot, we can plot text. Thus, instead 
 #| fig-width: 8
 #| source-line-numbers: "6-7"
 #| label: "fig-TextScatterPlot"
+#| fig-cap: "Scatter plot of L2 participants' grammar comprehension scores and age with the dots replaced by text."
+#| fig-alt: "The previous scatterplot with the dots replaced by coloured text displaying the name of the language."
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -2361,6 +2387,8 @@ Clearly, there are too many L2 participants for @fig-TextScatterPlot to be legib
 #| fig-width: 8
 #| source-line-numbers: "3,13"
 #| label: "fig-TextScatterPlot2"
+#| fig-cap: "Scatter plot of female L2 participants' grammar comprehension scores and age who scored lower than 90."
+#| fig-alt: "The previous scatterplot displaying only the data points for female participants who scored lower than 90."
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -2393,6 +2421,8 @@ Note that we had to expand the limits of the *x*-axis in order for labels of the
 #| fig-height: 4
 #| fig-width: 8
 #| label: "fig-TextScatterPlot3"
+#| fig-cap: "Scatter plot of female L2 participants' grammar comprehension scores and age who scored lower than 90, expanded with {{ggrepel}}."
+#| fig-alt: "The previous scatterplot has been expanded with ggrepel in order to prevent labels from overlapping."
 
 #install.packages("ggrepel")
 library(ggrepel)
@@ -2427,6 +2457,8 @@ By default, the `geom_boxplot()` function plots dots for any outliers. Since we 
 #| fig-width: 4
 #| out-width: 50%
 #| label: "fig-GrammarPointBoxplot"
+#| fig-cap: "Boxplot of participants' grammar comprehension test scores overlaid by dots."
+#| fig-alt: "The boxplots of L1 and L2 participants' grammar comprehension test scores overlaid by dots for each data point, rather than just the outliers."
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -2447,6 +2479,8 @@ When there are too many points overlapping, even adding some transparency to the
 #| out-width: 50%
 #| source-line-numbers: "5-7"
 #| label: "fig-JitteredGrammar"
+#| fig-cap: "The boxplots with dots slightly randomized by {{geom_jitter}}."
+#| fig-alt: "The previous boxplots with the dots slightly randomized using geom_jitter."
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -2468,6 +2502,8 @@ We can also map the colour of the jittered points to another categorical variabl
 #| out-width: 60%
 #| source-line-numbers: "4"
 #| label: "fig-JitteredGrammarGender"
+#| fig-cap: "The boxplots with dots coloured according to participants gender."
+#| fig-alt: "The previous boxplots with the dots coloured according to participant gender."
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -2493,6 +2529,8 @@ We can, in theory, visualise even more of our data by adding a **shape** `aesthe
 #| out-width: 70%
 #| source-line-numbers: "7"
 #| label: "fig-JitteredGrammarComplex"
+#| fig-cap: "The boxplots combining shapes to indicate gender and colour to indicate occupation."
+#| fig-alt: "The previous boxplots with the dots as circles or squares to indicate participant gender and coloured according to participant occupation."
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -2562,6 +2600,7 @@ ggplotly(myplot)
 #| fig-width: 5
 #| out-width: 80%
 #| label: "fig-InteractivePlot"
+#| fig-cap: "Boxplots with interactive data points."
 #| fig-alt: "An interactive boxplot with jittered points, and the y-axis labeled as Grammar comprehension test score. Points are colored by gender (red is female and blue is male). The left group has scores clustered mostly between 75 and 100, while the right group shows a wider spread, ranging from near 0 up to 100. Users can hover over each point to view additional details: Group, Grammar, Gender, and Occupation."
 
 # There is a well-known but, as of yet, unresolved bug in the plotly library, which means that the geom_boxplot() parameter "outliers = FALSE" is ignored in the interactive version of the plot. Below, I apply the workaround explained here: https://github.com/plotly/plotly.R/issues/1114.
@@ -2600,7 +2639,6 @@ If you want to display more than one additional variable on hover, you can do us
 ```{r}
 #| eval: false
 #| source-line-numbers: "5-7,17"
-#| fig-alt: "This is the same plot as above. The only difference is that when users hover over each point, some additinoal details are shown: Group, Grammar, Gender, Age, Years in formal education, and Job."
 
 myplot2 <- Dabrowska.data |> 
   ggplot(mapping = aes(y = Grammar, 
@@ -2626,6 +2664,8 @@ ggplotly(myplot2)
 #| fig-asp: 1
 #| fig-width: 5
 #| out-width: 80%
+#| fig-alt: "Hovering over the dots now displays even more information."
+#| fig-alt: "This is the same plot as above. The only difference is that when users hover over each point, some additinoal details are shown: Group, Grammar, Gender, Age, Years in formal education, and Job."
 
 # There is a well-known but, as of yet, unresolved bug in the plotly library, which means that the geom_boxplot() parameter "outliers = FALSE" is ignored in the interactive version of the plot. Below, I apply the workaround explained here: https://github.com/plotly/plotly.R/issues/1114.
 
