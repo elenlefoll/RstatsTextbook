@@ -373,6 +373,7 @@ You can learn more about Markdown here: <https://www.markdownguide.org/basic-syn
 
 Markdown is gaining in popularity and is now widely supported across many platforms, from text editors to content management systems, ensuring that your formatting remains consistent and portable. It's increasingly used to write documentation, blog posts, or simply to take notes. Check out the [Markdown Guide](https://www.markdownguide.org/basic-syntax/) to learn more.
 
+::: {.content-visible when-format="html"}
 +--------------------------------------+---------------------------------------+
 | Markdown syntax                      | Rendered output                       |
 +======================================+=======================================+
@@ -414,6 +415,45 @@ Markdown is gaining in popularity and is now widely supported across many platfo
 +--------------------------------------+---------------------------------------+
 
 : Commonly used formatting options and their markdown syntax (adapted from the official [Quarto Guide](https://quarto.org/docs/authoring/markdown-basics.html)) {#tbl-markdown tbl-colwidths="\[50,50\]"}
+:::
+
+::: {.content-visible when-format="pdf"}
++--------------------------------------+------------------------------------+
+| Markdown syntax                      | Rendered output                    |
++======================================+====================================+
+| `*italics*`                          | *italics*                          |
++--------------------------------------+------------------------------------+
+| `**bold**`                           | **bold**                           |
++--------------------------------------+------------------------------------+
+| `***bold italics***`                 | bold italics                       |
++--------------------------------------+------------------------------------+
+| `superscript^2^ / subscript~2~`      | superscript^2^ / subscript~2~      |
++--------------------------------------+------------------------------------+
+| `~~strikethrough~~`                  | ~~strikethrough~~                  |
++--------------------------------------+------------------------------------+
+| `` `verbatim code` ``                | `verbatim code`                    |
++--------------------------------------+------------------------------------+
+| `<https://quarto.org>`               | <https://quarto.org>               |
++--------------------------------------+------------------------------------+
+| `[Quarto guide](https://quarto.org)` | [Quarto guide](https://quarto.org) |
++--------------------------------------+------------------------------------+
+| ``` markdown                         | -   bullet-point list              |
+| * bullet-point list                  |                                    |
+|   + sub-item 1                       |     -   sub-item 1                 |
+|   + sub-item 2                       |     -   sub-item 2                 |
+|     - sub-sub-item 1                 |         -   sub-sub-item 1         |
+| ```                                  |                                    |
++--------------------------------------+------------------------------------+
+| ``` markdown                         | 1.  numbered list                  |
+| 1. numbered list                     | 2.  item 2                         |
+| 2. item 2                            |     i.  sub-item 1                 |
+|    i. sub-item 1                     |         A.  sub-sub-item 1         |
+|       A.  sub-sub-item 1             |                                    |
+| ```                                  |                                    |
++--------------------------------------+------------------------------------+
+
+: Commonly used formatting options and their markdown syntax (adapted from the official [Quarto Guide](https://quarto.org/docs/authoring/markdown-basics.html)) {#tbl-markdown}
+:::
 
 ::: callout-note
 To make writing in Quarto more convenient and less error-prone, you can switch on a **spell-checker** within *RStudio*. To do so, go to *Tools \> Global Options... \> Spelling*. You may need to restart *RStudio* for the change to take effect.
@@ -1017,7 +1057,7 @@ To embed an image from an external file, you can use the "Insert" menu in *RStud
 Below is the source code for @fig-RealisticPipeline in Markdown. The code includes the **relative path** to the image file (see @sec-FoldersPaths) relative to the **project directory** (see @sec-RProject). In the example below, the image file `BERD_pipeline-real.jpg` is located in a subfolder called `images`. If you want to try this out yourself, you will need to create this subfolder within your own project directory and save @fig-RealisticPipeline to this subfolder.
 
 ``` markdown
-![A more realistic research pipeline [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/) @seiboldBERDCourseMake2023]](images/BERD_pipeline-real.jpg){#fig-RealisticPipeline fig-alt="Cartoon drawing of a complex set of pipes with various entry points for \"data\" and a single output: a research paper with text, a table, and a plot. Sections of the pipe are coloured according to the processes that they correspond to. These include data cleaning, overview, figures, modelling, and text." width="480"}
+![A more realistic research pipeline [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) @seiboldBERDCourseMake2023]](images/BERD_pipeline-real.jpg){#fig-RealisticPipeline fig-alt="Cartoon drawing of a complex set of pipes with various entry points for \"data\" and a single output: a research paper with text, a table, and a plot. Sections of the pipe are coloured according to the processes that they correspond to. These include data cleaning, overview, figures, modelling, and text." width="480"}
 ```
 
 ![A more realistic research pipeline [[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) @seiboldBERDCourseMake2023]](images/BERD_pipeline-real.jpg){#fig-RealisticPipeline fig-alt="Cartoon drawing of a complex set of pipes with various entry points for \"data\" and a single output: a research paper with text, a table, and a plot. Sections of the pipe are coloured according to the processes that they correspond to. These include data cleaning, overview, figures, modelling, and text." width="480"}
@@ -1518,8 +1558,8 @@ Now that you know about **literate programming** in Quarto, rewrite the followin
 :::
 ::::
 
-:::: {.content-visible when-profile="OER"}
-::: {.callout-note collapse="true"}
+::::: {.content-visible when-profile="OER"}
+:::: {.callout-note collapse="true"}
 #### Click here for the solution to [**Q14.15**]{style="color:green;"}
 
 Below is a screenshot of a Quarto document with the inline code chunks and its rendered `.odt` version as opened in LibreOffice Writer. You can click on the images to zoom in.
@@ -1529,8 +1569,8 @@ Below is a screenshot of a Quarto document with the inline code chunks and its r
 
 ![Rendered document as opened in LibreOffice Writer](images/LibreOffice_TaskSolution.png)
 :::
-:::
 ::::
+:::::
 
 ### PDF
 
@@ -1567,13 +1607,13 @@ format:
 
 In research, it's quite common that you will be working on a project that will be submitted as a paper or thesis (e.g. in PDF format) *and* that you'll also want to **present** in class, to your research group, or at a conference. Conveniently, we can turn any Quarto document into **presentation slides**. At the time of writing, there are three presentation formats to choose from:
 
-+----------------------------------------------------------------------+---------------------------------------------------------------------+-----------------------+
-| [Revealjs](https://quarto.org/docs/presentations/revealjs/)          | An open-source HTML presentation framework.                         | `format: revealjs`    |
-+----------------------------------------------------------------------+---------------------------------------------------------------------+-----------------------+
-| [Power-Point](https://quarto.org/docs/presentations/powerpoint.html) | Microsoft Office's presentation editing software.                   | `format: pptx`        |
-+----------------------------------------------------------------------+---------------------------------------------------------------------+-----------------------+
-| [Beamer](https://quarto.org/docs/presentations/beamer.html)          | A LaTeX class for producing presentations and slides in PDF format. | `format: beamer`      |
-+----------------------------------------------------------------------+---------------------------------------------------------------------+-----------------------+
++----------------------------------------------------------------------+---------------------------------------------------------------------+--------------------+
+| [Revealjs](https://quarto.org/docs/presentations/revealjs/)          | An open-source HTML presentation framework.                         | `format: revealjs` |
++----------------------------------------------------------------------+---------------------------------------------------------------------+--------------------+
+| [Power-Point](https://quarto.org/docs/presentations/powerpoint.html) | Microsoft Office's presentation editing software.                   | `format: pptx`     |
++----------------------------------------------------------------------+---------------------------------------------------------------------+--------------------+
+| [Beamer](https://quarto.org/docs/presentations/beamer.html)          | A LaTeX class for producing presentations and slides in PDF format. | `format: beamer`   |
++----------------------------------------------------------------------+---------------------------------------------------------------------+--------------------+
 
 I recommend using **Revealjs**. The best way to get a sense of what is possible is to explore the [demo](https://quarto.org/docs/presentations/revealjs/demo/){target="_blank"} presentation from the [Quarto Guide](https://quarto.org/docs/presentations/revealjs/).
 
@@ -1609,11 +1649,11 @@ This chapter only just scratched the surface of what's possible in Quarto. The Q
 -   Last but not least, [Awesome Quarto](https://github.com/mcanouil/awesome-quarto) provides a curated and regularly updated list of the many Quarto-related docs, talks, tools, examples, and articles that the internet has to offer.
 :::
 
-:::: {.content-visible when-profile="OER"}
+::: {.content-visible when-profile="OER"}
 ### Check your progress 🌟 {.unnumbered}
 
 Well done! You have successfully completed this chapter on literate programming using Quarto. You have answered [`r checkdown::insert_score()` out of 16 questions]{style="color:green;"} correctly.
-::::
+:::
 
 ::: {.content-visible when-format="pdf"}
 ### Check your progress {.unnumbered}
