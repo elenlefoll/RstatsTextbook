@@ -12,6 +12,7 @@ bibliography: references.bib
 #### **Chapter overview** {.unnumbered}
 
 Now that you have installed and tested `R` and RStudio, in this chapter, you will learn how to:
+
 ::: {.content-visible when-format="html"}
 -   Use the `R` Console
 -   Do basic mathematical operations in `R`
@@ -20,6 +21,7 @@ Now that you have installed and tested `R` and RStudio, in this chapter, you wil
 -   Add comments to your scripts
 -   Keep your cool when errors pop up! `r emoji("sunglasses")`
 :::
+
 ::: {.content-visible when-format="pdf"}
 -   Use the `R` Console
 -   Do basic mathematical operations in `R`
@@ -41,13 +43,17 @@ One way to write `R` code in *RStudio* is to use the Console. If you set up *RSt
 
 Data input is the most basic operation in `R`. Try inputting a number by typing it out in the Console and then pressing "Enter". `R` will interpret the number and return it. You can input both integers (whole numbers, e.g. `13`) and decimal numbers (e.g. `0.5`).
 
-![Inputting numbers in the Console](images/ConsoleInputNumbers.png){#fig-ConsoleInputNumbers fig-alt="Screenshot of RStudio showing the Console with the equation 13 + 0.5 = 13.5." width="60%"}
+::: {#fig-ConsoleInput layout="[[40,-1,40], [100]]"}
+![Inputting numbers](images/ConsoleInputNumbers.png){#fig-ConsoleInputNumbers fig-alt="Screenshot of RStudio showing the Console with the equation 13 + 0.5 = 13.5."}
+
+![Inputting strings](images/ConsoleInputStrings.png){#fig-ConsoleInputStrings fig-alt="RStudio screenshot showing the input of two strings in the console"}
+
+Using the `R` Console
+:::
 
 `R` can handle not only numbers but also text data, known as "character strings" or just "strings". Strings must always be enclosed in quotation marks. You can choose to use either double quotation marks `" "` or single quotation marks `' '`, but it is important to be consistent. In this textbook, we will use double quotation marks throughout.
 
 Try first inputting a single word and then an entire sentence in the Console as in @fig-ConsoleInputStrings.
-
-![Inputting strings in the Console](images/ConsoleInputStrings.png){#fig-ConsoleInputStrings fig-alt="RStudio screenshot showing the input of two strings in the console" width="60%"}
 
 ::: {.callout-warning collapse="false"}
 Word processors such as Microsoft Word, Pages, and LibreOffice Writer should *not* be used to write, edit, or share `R` scripts. Among other problems, such programmes frequently enable an automatic 'smart quotes' feature, which silently replaces straight quotation marks (`"`) with curly ones (“ and ”). These correspond to different Unicode characters, which `R` does not recognise as valid string delimiters. Hence, curly quotes result in broken code that returns errors, e.g.:
@@ -94,7 +100,7 @@ check_question("R returns an error message because it interprets the word as an 
 
 `R` can also be used as a very powerful calculator. The lines of code in @fig-ConsoleInputMathematicalOperations demonstrate mathematical operations involving addition (`+`), subtraction (`-`), division (`/`), and multiplication (`*`). Try out a few yourself!
 
-![Using the `R` Console as a calculator](images/ConsoleInputMathematicalOperations.png){#fig-ConsoleInputMathematicalOperations fig-alt="RStudio screenshot showing the console with the input of multiple mathematical operations." width="60%"}
+![Using the `R` Console as a calculator](images/ConsoleInputMathematicalOperations.png){#fig-ConsoleInputMathematicalOperations fig-alt="RStudio screenshot showing the console with the input of multiple mathematical operations." width="70%"}
 
 :::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
@@ -173,13 +179,15 @@ If you're feeling lazy or simply want to avoid making a typo, you can type just 
 :::
 ::::
 
-![Calling up stored objects in the Console to view their content](images/ShowObjects.png){#fig-ShowObjects fig-alt="RStudio screenshot showing two stored objects printed in the console." width="450"}
+::: {#fig-ObjectCalls layout="[[40,-1,40], [100]]"}
+![Calling up stored objects in the Console to view their content](images/ShowObjects.png){#fig-ShowObjects fig-alt="RStudio screenshot showing two stored objects printed in the console."}
+
+![Using the `class()` function](images/ShowObjectClass.png){#fig-ShowObjectClass fig-alt="RStudio screenshot showing the object types with the class() function from two stored objects."}
+:::
 
 ### Object types
 
-These two objects are of different types. We can use the `class()` function to find out which type of object an object is.
-
-![Using the `class()` function](images/ShowObjectClass.png){#fig-ShowObjectClass fig-alt="RStudio screenshot showing the object types with the class() function from two stored objects." width="450"}
+These two objects are of different types. We can use the `class()` function to find out which type of object an object is (see @fig-ShowObjectClass).
 
 Here, `my.favourite.number` is a numeric object, while `my.favourite.word` is a character object.
 
@@ -229,7 +237,7 @@ Object names are unique. If you create a new object with an existing object name
 word2 <- "surprised"
 ```
 
-Earlier on, you created an object called `word2` which contained the string "cheerful". But, by running this new line of code, "cheerful" has been replaced by the string "surprised" - with no warning that you were about to permanently delete "cheerful"! `r emoji("astonished")`
+Earlier on, you created an object called `word2` which contained the string "cheerful". But, by running this new line of code, "cheerful" has been replaced by the string "surprised" - with no warning that you were about to permanently delete "cheerful"! `r emoji("astonished")`
 
 The command to delete a single object from your environment is `remove()` or `rm()`. Hence, to permanently delete the object `MySecondWord`, you can use either of these commands:
 
@@ -502,7 +510,7 @@ check_question("Because this command asks whether New.French.Word is not equal t
 
 If you try to run code that `R` cannot interpret, your Console will display an error message in red. A large part of learning to code is really about learning how to interpret these error messages, and making the most common errors often enough that you immediately know how to fix them. The process of fixing programming errors is called **debugging** and often involves an array of emotions (see @fig-DebuggingMonster).
 
-![The joys of debugging by [\@allison_horst](https://allisonhorst.com/allison-horst).](images/DebuggingMonsters.png){#fig-DebuggingMonster fig-alt="A cartoon of a fuzzy round monster face showing 10 different emotions experienced during the process of debugging code. The progression goes from (1) “I got this” - looking determined and optimistic; (2) “Huh. Really thought that was it.” - looking a bit baffled; (3) “...” - looking up at the ceiling in thought; (4) “Fine. Restarting.” - looking a bit annoyed; (5) “OH WTF.” Looking very frazzled and frustrated; (6) “Zombie meltdown.” - looking like a full meltdown; (7) (blank) - sleeping; (8) “A NEW HOPE!” - a happy looking monster with a lightbulb above; (9) “insert awesome theme song” - looking determined and typing away; (10) “I love coding” - arms raised in victory with a big smile, with confetti falling."}
+![The emotional rollercoster of debugging by [\@allison_horst](https://allisonhorst.com/allison-horst) (CC BY 4.0)](images/AHorst_DebuggingMonsters.png){#fig-DebuggingMonster fig-alt="A cartoon of a fuzzy round monster face showing 10 different emotions experienced during the process of debugging code. The progression goes from (1) “I got this” - looking determined and optimistic; (2) “Huh. Really thought that was it.” - looking a bit baffled; (3) “...” - looking up at the ceiling in thought; (4) “Fine. Restarting.” - looking a bit annoyed; (5) “OH WTF.” Looking very frazzled and frustrated; (6) “Zombie meltdown.” - looking like a full meltdown; (7) (blank) - sleeping; (8) “A NEW HOPE!” - a happy looking monster with a lightbulb above; (9) “insert awesome theme song” - looking determined and typing away; (10) “I love coding” - arms raised in victory with a big smile, with confetti falling." width="80%"}
 
 In `R`, you will regularly encounter one particular problem that we will call the "plus-situation". Let's take a closer look at this error. Copy and paste this exact line of code in your `R` Console and hit "Enter" to run it:
 
@@ -514,7 +522,7 @@ sqrt(my.favourite.number
 
 Notice that, in this erroneous line of code, we have (intentionally) forgotten to include the final bracket. As a result, after you hit "Enter", the Console output shows a "`+`" instead of the result of the mathematical operation (see @fig-ConsoleIncompleteFunction). The "`+`" indicates that the line is incomplete and therefore cannot be interpreted yet. Whenever you see a "`+`" at the start of a command in the Console, `R` is asking you to complete your line of code.
 
-![Incomplete function in console](images/ConsoleUncompleteFunction.png){#fig-ConsoleIncompleteFunction fig-alt="RStudio screenshot showing the console with an incomplete function and a red ellipse around the +-symbol." width="450"}
+![Incomplete function in console](images/ConsoleUncompleteFunction.png){#fig-ConsoleIncompleteFunction fig-alt="RStudio screenshot showing the console with an incomplete function and a red ellipse around the +-symbol." width="70%"}
 
 There are two ways to fix this. The first method is to complete the line of code directly in the Console. In the above case, this means adding the closing bracket "`)`" after the "`+`" and hitting "Enter" again. Now that the line has been completed, `R` is able to interpret it as a valid `R` command and therefore outputs the expected result.
 
@@ -538,9 +546,9 @@ sqrt(my.favourite.number)
 
 ```
 
-As shown in @fig-ConsoleError, even though we have corrected the problem, we now get an error! `r emoji("exploding_head")` At first sight, this does not make sense, but look carefully at what happened in the Console: The line of code that `R` tried to interpret (in blue) is `sqrt(my.favourite.number + sqrt(my.favourite.number)`, i.e. the combination of the incomplete version of the command *plus* the complete one. This is obviously nonsense and `R` tells us so by outputting an error message (see @fig-ConsoleError)!
+As shown in @fig-ConsoleError, even though we have corrected the problem, we now get an error! `r emoji("exploding_head")` At first sight, this does not make sense, but look carefully at what happened in the Console: The line of code that `R` tried to interpret (in blue) is `sqrt(my.favourite.number + sqrt(my.favourite.number)`, i.e. the combination of the incomplete version of the command *plus* the complete one. This is obviously nonsense and `R` tells us so by outputting an error message (see @fig-ConsoleError)!
 
-![Error message in console](images/ConsoleError.png){#fig-ConsoleError fig-alt="RStudio screenshot showing the console with an error." width="450"}
+![Error message in console](images/ConsoleError.png){#fig-ConsoleError fig-alt="RStudio screenshot showing the console with an error." width="70%"}
 
 To run a new line of code, we must see the command prompt `>` in the Console. So, let's generate the error again and learn how to fix it with the second method. Add this erroneous line to your script again and run it:
 
@@ -606,9 +614,9 @@ good.luck <- موفق باشيد"
 :::
 ::::
 
-Debugging is an unavoidable part of writing code. If you're stuck and starting to feel frustrated, the best thing you can usually do is to take a short break!
+Debugging is an unavoidable part of writing code. If you're stuck and starting to feel frustrated, the best thing you can usually do is to take a short break (see @fig-TakeABreak)!
 
-![Time to take a break? (artwork by [\@allison_horst](https://allisonhorst.com/allison-horst)).](images/AHorst_ErrorMonster.png){fig-alt="A frustrated little monster sits on the ground with his hat next to him, saying \"I just need a minute.\" Looking on empathetically is the R logo, with the word \"Error\" in many different styles behind it." width="450"}
+![Time to take a break? (artwork by [\@allison_horst](https://allisonhorst.com/allison-horst) CC BY 4.0)](images/AHorst_ErrorMonster.png){#fig-TakeABreak fig-alt="A frustrated little monster sits on the ground with his hat next to him, saying \"I just need a minute.\" Looking on empathetically is the R logo, with the word \"Error\" in many different styles behind it." width="70%"}
 
 :::: {.content-visible when-profile="OER"}
 ::: {.callout-note collapse="true"}
