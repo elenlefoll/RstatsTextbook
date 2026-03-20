@@ -197,10 +197,6 @@
 \usepackage{emoji}
 \usepackage{fvextra}
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
-\DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
-\usepackage{fontspec}
-\newfontfamily\ipaFont{Charis}
-\newcommand{\ipa}[1]{{\ipaFont #1}}
 \KOMAoption{captions}{tableheading}
 \makeatletter
 \@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
@@ -298,6 +294,14 @@ visualisation in \texttt{R}}
 \date{12 March 2026}
 \begin{document}
 \maketitle
+
+\RecustomVerbatimEnvironment{verbatim}{Verbatim}{
+  showspaces = false,
+  showtabs = false,
+  breaksymbolleft={},
+  breaklines
+  % Note: setting commandchars=\\\{\} here will cause an error 
+}
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -999,9 +1003,9 @@ formats exist, such as \textbf{Wave}form Audio File Format (WAVE) and
 \textbf{F}ree \textbf{L}ossless \textbf{A}udio \textbf{C}odec (FLAC).
 
 We can usually tell in what format a file is in by looking at its file
-extension. The file extension is the suffix of the file name. It comes
-at the end of the file name and is preceded by a dot. The file extension
-of a WAVE file is \texttt{.wav}, whereas that of an MP3 file is
+extension. The file extension is the suffix of the filename. It comes at
+the end of the filename and is preceded by a dot. The file extension of
+a WAVE file is \texttt{.wav}, whereas that of an MP3 file is
 \texttt{.mp3}; hence the file \texttt{recording.wav} is a WAVE file,
 whereas \texttt{recording.mp3} is an MP3 file.
 
@@ -1018,11 +1022,11 @@ misleading and can lead to all kinds of problems.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={File Finder window showing 7 files with file names that do not include a file extension.}]{images/FinderWindowNoExtensions.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={File Finder window showing 7 files with filenames that do not include a file extension.}]{images/FinderWindowNoExtensions.png}}
 
 }
 
-\subcaption{\label{fig-NoExtensions}Displaying file names without file
+\subcaption{\label{fig-NoExtensions}Displaying filenames without file
 extensions}
 
 \end{minipage}%
@@ -1038,7 +1042,7 @@ extensions}
 
 }
 
-\subcaption{\label{fig-Extensions}Displaying file names with their
+\subcaption{\label{fig-Extensions}Displaying filenames with their
 extensions}
 
 \end{minipage}%
@@ -1092,8 +1096,8 @@ on \textbf{Windows}:
   Click `Extract'.
 \end{enumerate}
 
-On \textbf{Mac OS}, double-clicking a \texttt{.zip} file name in the
-will automatically unzip it.
+On \textbf{Mac OS}, double-clicking a \texttt{.zip} filename in the will
+automatically unzip it.
 
 If you are using a \textbf{Linux} terminal, use the command
 \texttt{unzip} followed by the name of the file to unzip it.
@@ -1440,7 +1444,7 @@ instructions on how to install LibreOffice) and, from the list of
 options under `Create', click on `Calc Spreadsheet' to open up a blank
 spreadsheet. Then, from the `File' drop-down menu, select `Open\ldots{}'
 or use the keyboard shortcut
-\texttt{Ctrl-O} (windows), \texttt{Cmd-O} (mac), \texttt{Ctrl-O} (linux)
+\texttt{Ctrl-O} (linux), \texttt{Cmd-O} (mac), \texttt{Ctrl-O} (windows)
 and locate the DSV file that you wish to open.
 
 On opening a DSV file in LibreOffice Calc, we get a dialogue box with
@@ -1588,7 +1592,7 @@ file corrupted, I recommend making either
 application to open up such files.
 
 On \textbf{MacOS}, you can change the default application used to open
-files of any file extensions by right-clicking a file name with this
+files of any file extensions by right-clicking a filename with this
 particular extension and than selecting `Get Info'
 (Figure~\ref{fig-ChangeDefaultAppMac01}). In the example below, Numbers
 is the default application for all \texttt{.csv} files (see
@@ -1706,9 +1710,9 @@ opening \texttt{.csv} files in Windows}
 If it is not possible to adjust the default app settings, either due to
 insufficient permissions or because you only have temporary access to
 this PC, do \emph{not} to open \texttt{.csv} or \texttt{.tsv} files with
-the default program. Instead, right-click on the file name and, using
-the `Open with' option, select the option to open the file with
-LibreOffice, if available, or else with a plain-text editor.
+the default program. Instead, right-click on the filename and, using the
+`Open with' option, select the option to open the file with LibreOffice,
+if available, or else with a plain-text editor.
 
 \end{tcolorbox}
 
@@ -1803,14 +1807,13 @@ frustrating.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={A frustrated looking little monster in front of a very disorganised cooking area, with smoke and fire coming from a pot surrounded by a mess of bowls, utensils, and scattered ingredients.}]{images/AHorst_MessyKitchen.png}}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={A frustrated looking little monster in front of a very disorganised cooking area, with smoke and fire coming from a pot surrounded by a mess of bowls, utensils, and scattered ingredients.}]{images/AHorst_MessyKitchen.png}
 
 }
 
 \caption{\label{fig-MessyKitchen}An inefficient and potentially
-dangerous workflow (artwork
-\href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}
-\href{https://twitter.com/allison_horst}{Allison Horst})}
+dangerous workflow (\href{https://twitter.com/allison_horst}{artwork CC
+BY 4.0 @allison\_horst})}
 
 \end{figure}%
 
@@ -1818,30 +1821,30 @@ But the good news is: just as a tidy, well-organized kitchen can greatly
 enhance your cooking experience, good file management can streamline
 your research process, help you avoid making mistakes, and reduce
 stress. In the following sections, we will cook up some good practices
-for file naming, data management, and project organisation. We will
-start with basic recipes for naming and managing your files. See the
-`Going further' boxes for tips on learning the `gourmet skills' needed
-to handle more complex projects. So, let's don the chef's hat and learn
-how to create a user-friendly computer workspace. And remember, as with
+for filenaming, data management, and project organisation. We will start
+with basic recipes for naming and managing your files. See the `Going
+further' boxes for tips on learning the `gourmet skills' needed to
+handle more complex projects. So, let's don the chef's hat and learn how
+to create a user-friendly computer workspace. And remember, as with
 cooking, practice makes perfect!
 
 \begin{figure}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={An organised kitchen with sections labeled "tools", "report" and "files", while a monster in a chef\textquotesingle s hat stirs in a bowl labeled "code."}]{images/AHorst_TidyKitchen.png}}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={An organised kitchen with sections labeled "tools", "report" and "files", while a monster in a chef\textquotesingle s hat stirs in a bowl labeled "code."}]{images/AHorst_TidyKitchen.png}
 
 }
 
-\caption{\label{fig-TidyKitchen}A tidy and efficient workflow (artwork
-\href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}
-\href{https://twitter.com/allison_horst}{Allison Horst})}
+\caption{\label{fig-TidyKitchen}A tidy and efficient workflow
+(\href{https://twitter.com/allison_horst}{artwork CC BY 4.0
+@allison\_horst})}
 
 \end{figure}%
 
 \section{Naming conventions}\label{sec-FileNaming}
 
-File names are labels. They tell us what is inside a file and helps us
+filenames are labels. They tell us what is inside a file and helps us
 identify the correct file quickly and reliably. If you had to run to the
 printing shop to get your thesis printed in time for a tight deadline,
 which of these sets of files would you rather have to choose from? Which
@@ -1873,7 +1876,7 @@ is more likely to lead you to getting the wrong version printed?
 
 \end{minipage}%
 
-\caption{\label{fig-filenames}Two sets of file names, one clearly better
+\caption{\label{fig-filenames}Two sets of filenames, one clearly better
 than the other.}
 
 \end{figure}%
@@ -1893,17 +1896,17 @@ guess what a file contains based on an ambiguous or unclear name like
 not
 \texttt{Thai\ Bird\textquotesingle{}s\ Eye\ Chilli\ bought\ on\ December\ 19,\ 2023\ whilst\ Christmas\ shopping\ with\ mum,\ note\ that\ the\ best\ before\ date\ is\ 31\ January\ 2028})!
 Unless you and all your colleagues read Thai, do not be tempted to write
-the part of the file name in Thai as this could also lead to
+the part of the filename in Thai as this could also lead to
 misunderstandings.
 
-Another reason for not including Thai characters in your file name is
+Another reason for not including Thai characters in your filename is
 that it would not be \textbf{computer-friendly}. In general, computers
 are not good at dealing with names that contain anything else but Latin
 alphanumeric characters, e.g.~the letters \texttt{A} to \texttt{Z} and
 \texttt{a} to \texttt{z} with no accents and the numbers \texttt{0} to
 \texttt{9}. Hyphens (\texttt{-}) and underscores (\texttt{\_}) can also
 be used, but not spaces. The dot (\texttt{.}) is reserved for the file
-extension and should ideally not be used elsewhere in the file name.
+extension and should ideally not be used elsewhere in the filename.
 
 Hence, whilst
 \texttt{Thai\ Bird\textquotesingle{}s\ Eye\ Chilli\ 31\ Jan\ 2028} is
@@ -1917,85 +1920,71 @@ in a meaningful way. For example, in the label
 distinguishes between two different pieces of information, whilst the
 \texttt{-} helps humans to parse individual words within a piece of
 information. Using such patterns consistently not only helps humans to
-read file names efficiently, it also means that computers can easily
+read filenames efficiently, it also means that computers can easily
 `parse', i.e.~break down such names into meaningful items. This can be
 very useful to search for files or automatically extract metadata from
-file names.
-
-\begin{figure}
-
-\centering{
-
-\pandocbounded{\includegraphics[keepaspectratio,alt={Cartoon representations of common cases in coding. A snake screams "SCREAMING\_SNAKE\_CASE" into the face of a camel (wearing ear muffs) with "camelCase" written along its back. Vegetables on a skewer spell out "kebab-case" (words on a skewer). A mellow, happy looking snake has text "snake\_case" along it.}]{images/AHorst_InThatCase.png}}
-
-}
-
-\caption{\label{fig-InThatCase}To help us remember the different,
-systematic ways to use letter case, hyphens, and underscores in naming
-conventions, these patterns have fun names (artwork
-\href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}
-\href{https://twitter.com/allison_horst}{Allison Horst}).}
-
-\end{figure}%
+filenames.
 
 It is fine to use both lower-case and upper-case letters in file and
 folder names. However, some operating systems will treat upper-case and
 lower-case letters as the same, whilst others will not. This means that
-you should avoid having file names that are only distinguishable by
-case.
+you should avoid having filenames that are only distinguishable by case.
 
-Finally, it is worth noting that file names cannot be infinitely long!
-The maximum length of a file name depends on the operating system and
-the application that you use\footnote{For example, many Windows
-  applications have a maximum file path length of 260 characters (Learn
-  Microsoft 2022).} but, as a rule of thumb, if you can display the
-entire file name in a reasonably sized Finder window (on macOS) or File
-Explorer window (on Windows), its length is unquestionably both human-
-and computer-friendly.
+Finally, it is worth noting that filenames cannot be infinitely long!
+The maximum length of a filename depends on the operating system and the
+application that you use\footnote{For example, many Windows applications
+  have a maximum file path length of 260 characters (Learn Microsoft
+  2022).} but, as a rule of thumb, if you can display the entire
+filename in a reasonably sized Finder window (on macOS) or File Explorer
+window (on Windows), its length is unquestionably both human- and
+computer-friendly.
 
-It is also important to ensure that file names are easily sortable. If
+It is also important to ensure that filenames are easily sortable. If
 you have a series of files that document a process, consider beginning
-each file name with a number that correspond to the order of the
-process, e.g.~\texttt{01\_DataPreparation.R},
-\texttt{02\_DataAnnotation.R}, \texttt{03\_AnnotationEvaluation.R}.
-Left-padding the numbers with one or more \texttt{0} will mean that the
-files are sorted numerically, even when files are listed alphabetically
-(see Figure~\ref{fig-FileNamesLeftPaddedNumbers}).
+each filename with a number that correspond to the order of the process,
+e.g.~\texttt{01\_DataPreparation.R}, \texttt{02\_DataAnnotation.R},
+\texttt{03\_AnnotationEvaluation.R}. Left-padding the numbers with one
+or more \texttt{0} will mean that the files are sorted numerically, even
+when files are listed alphabetically (see
+Figure~\ref{fig-FileNamesLeftPaddedNumbers}).
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={List of file names without left-padded numbers so that, when sorted alphabetically, these files are not ordered numerically.}]{images/FileNamesLexicographic.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={List of filenames without left-padded numbers so that, when sorted alphabetically, these files are not ordered numerically.}]{images/FileNamesLexicographic.png}}
 
 }
 
-\subcaption{\label{fig-FileNamesNaturalNumbers}File names without
+\subcaption{\label{fig-FileNamesNaturalNumbers}Filenames without
 additional zeros numbers}
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.01\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={List of file names with left-padded numbers that are ordered alphabetically. The files are ordered in a clear and organised manner.}]{images/FileNamesPaddedNumbers.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={List of filenames with left-padded numbers that are ordered alphabetically. The files are ordered in a clear and organised manner.}]{images/FileNamesPaddedNumbers.png}}
 
 }
 
-\subcaption{\label{fig-FileNamesLeftPaddedNumbers}File names with
+\subcaption{\label{fig-FileNamesLeftPaddedNumbers}Filenames with
 left-padded numbers}
 
 \end{minipage}%
 
-\caption{\label{fig-NumberPadding}Why left-padding file names is good
+\caption{\label{fig-NumberPadding}Why left-padding filenames is good
 file naming practice.}
 
 \end{figure}%
 
-It is sometimes useful to include the date in file names. However, many
+It is sometimes useful to include the date in filenames. However, many
 date formats are not easily sortable (see
 Figure~\ref{fig-FileNamesDateFormatUnordered}). Formatting dates using
 the `YYYY-MM-DD' format as in
@@ -2008,11 +1997,11 @@ sort your files in chronological order.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={A finder window showing the files pane with file names in an unordered date format. The files cannot be ordered meaningfully based on the date in the file name.}]{images/FileNamesDateFormatUnordered.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A finder window showing the files pane with filenames in an unordered date format. The files cannot be ordered meaningfully based on the date in the filename.}]{images/FileNamesDateFormatUnordered.png}}
 
 }
 
-\subcaption{\label{fig-FileNamesDateFormatUnordered}File names with a
+\subcaption{\label{fig-FileNamesDateFormatUnordered}Filenames with a
 non-ordered date format}
 
 \end{minipage}%
@@ -2021,16 +2010,16 @@ non-ordered date format}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={A finder window showing the files pane with file names in an ordered date format (YYYY-MM-DD). The files can be meaningfully ordered based on the date in the file name.}]{images/FileNamesDateFormatOrdered.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A finder window showing the files pane with filenames in an ordered date format (YYYY-MM-DD). The files can be meaningfully ordered based on the date in the filename.}]{images/FileNamesDateFormatOrdered.png}}
 
 }
 
-\subcaption{\label{fig-FileNamesDateFormatOrdered}File names with an
+\subcaption{\label{fig-FileNamesDateFormatOrdered}Filenames with an
 ordered date format}
 
 \end{minipage}%
 
-\caption{\label{fig-Dates}Why using the YYYY-MM-DD is good file naming
+\caption{\label{fig-Dates}Why using the YYYY-MM-DD is good filenaming
 practice.}
 
 \end{figure}%
@@ -2043,15 +2032,15 @@ different day-month conventions (e.g.~12/13 can mean both 12 December
 and 13, November).
 
 Even though computers have gotten much better at dealing with folder and
-file names containing spaces and special characters, using anything
-other than basic Latin alphanumeric characters (\texttt{A-Z},
-\texttt{a-z}, and \texttt{0-9}), \texttt{-} and \texttt{\_} in file and
-folder names will - sooner or later - cause you or your colleagues some
-serious issues. This is especially true when you start coding. Do not
-delay getting used to using systematic, human- and computer-friendly
-folder and file names! In the long run, these simple guidelines will
-make your digital life much smoother and save you much time and
-unnecessary stress.
+filenames containing spaces and special characters, using anything other
+than basic Latin alphanumeric characters (\texttt{A-Z}, \texttt{a-z},
+and \texttt{0-9}), \texttt{-} and \texttt{\_} in file and folder names
+will - sooner or later - cause you or your colleagues some serious
+issues. This is especially true when you start coding. Do not delay
+getting used to using systematic, human- and computer-friendly folder
+and filenames! In the long run, these simple guidelines will make your
+digital life much smoother and save you much time and unnecessary
+stress.
 
 \section{Folders and paths}\label{sec-FoldersPaths}
 
@@ -2098,9 +2087,9 @@ e.g.~\texttt{"../Starters/Soups/Pea-Mint-Soup\_Barbara"}.
 For example,
 \texttt{"/Users/lefoll/Documents/Teaching/RstatsTextbook/ToDo.txt"} is
 the absolute path from my computer's root folder to the file containing
-my to-do list in relation to this textbook project. By contrast, a
-``relative path'' represents the location of a file or folder relative
-to another folder. Hence, if I am already in the directory
+my to-do list in relation to this textbook project. A relative path
+represents the location of a file or folder relative to another folder.
+Hence, if I am already in the directory
 \texttt{"/Users/lefoll/Documents/Teaching/RstatsTextbook/"}, the
 relative path to my to-do list is only \texttt{"ToDo.txt"}.
 
@@ -2127,23 +2116,21 @@ you have found it:
 \begin{itemize}
 \item
   on Windows/Linux: Right-click on the file (in some older Windows
-  versions, you may also need to press the
-  \texttt{Shift} (windows), \texttt{Shift} (linux) key). Among the
-  options presented to you, click on the one to copy the file path
+  versions, you may also need to press the \texttt{Shift} key). Among
+  the options presented to you, click on the one to copy the file path
   (e.g.~``Copy as path'' or similar in the language of your operating
   system).
 \item
-  on macOS: Right-click on the file and then press the `Option' or
-  \texttt{⌥} (mac: \texttt{Option}) key on your keyboard. Pressing down
-  this key will change the options you are given after having
-  right-clicked. One of these options should now be ``Copy \ldots{} as
-  Pathname'' (or something equivalent in the language of your operating
-  system). Click on this option.
+  on macOS: Right-click on the file and then press the \texttt{Option}
+  key on your keyboard. Pressing down this key will change the options
+  you are given after having right-clicked. One of these options should
+  now be ``Copy \ldots{} as Pathname'' (or something equivalent in the
+  language of your operating system). Click on this option.
 \end{itemize}
 
 Then, open any text-editing programme (e.g.~LibreOffice Writer,
 Microsoft Word, NotePad++, TextEdit) and use the shortcut
-\texttt{Ctrl-V} (windows), \texttt{Cmd-V} (mac), \texttt{Ctrl-V} (linux)
+\texttt{Ctrl-V} (linux), \texttt{Cmd-V} (mac), \texttt{Ctrl-V} (windows)
 to paste your file's path in the empty document. If you are on Windows,
 your path should have backslashes, whereas if you are on Linux or macOS,
 your path should have forward slashes.
@@ -2163,7 +2150,7 @@ accidentally delete files, your computer can become infested with a
 nasty virus, etc.
 
 An effective way to protect your projects is to abide by the
-\textbf{3-2-1 rule} (Schweinberger). It's simple:
+\textbf{3-2-1 rule} (Schweinberger 2022). It's simple:
 
 \begin{itemize}
 \tightlist
@@ -2218,13 +2205,13 @@ management.
 
 \section{Conclusion}\label{conclusion}
 
-Sound project management - comprising of both good folder and file
-naming practices and the smart organisation of these folders and files -
-is the foundation for efficient research workflow. Understanding and
-applying these basic principles of data management will ensure that
-everything in your digital `kitchen' has its place, is well labelled,
-and easy to find. By ensuring that we keep our kitchens clean, tidy, and
-safe, we can whip out some truly delicious dishes!
+Sound project management - comprising of both good folder and filenaming
+practices and the smart organisation of these folders and files - is the
+foundation for efficient research workflow. Understanding and applying
+these basic principles of data management will ensure that everything in
+your digital `kitchen' has its place, is well labelled, and easy to
+find. By ensuring that we keep our kitchens clean, tidy, and safe, we
+can whip out some truly delicious dishes!
 
 \begin{figure}
 
@@ -2252,9 +2239,9 @@ safe, we can whip out some truly delicious dishes!
 
 \end{minipage}%
 
-\caption{\label{fig-Kitchens}The kitchen workflow metaphor (artwork
-\href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}
-\href{https://twitter.com/allison_horst}{Allison Horst}).}
+\caption{\label{fig-Kitchens}The kitchen workflow metaphor
+(\href{https://twitter.com/allison_horst}{artwork CC BY 4.0
+@allison\_horst}).}
 
 \end{figure}%
 
@@ -2267,9 +2254,8 @@ work with files and data:
 \tightlist
 \item
   The University of Queensland Library. 2023. Work with Data and Files.
-  The University of Queensland.
+  The University of Queensland. Open Educational Resource.
   \url{https://uq.pressbooks.pub/digital-essentials-data-and-files/}.
-  (14 May, 2024).
 \end{itemize}
 
 To go further, here are some great, open-access resources to dive deeper
@@ -2281,15 +2267,18 @@ research:
   Berez-Kroeker, Andrea L., Bradley McDonnell, Eve Koller \& Lauren B.
   Collister. 2022. \emph{The Open Handbook of Linguistic Data
   Management}. MIT Press.
-  \url{https://doi.org/10.7551/mitpress/12200.001.0001}.
+  \url{https://doi.org/10.7551/mitpress/12200.001.0001}. {[}Open
+  Access{]}.
 \item
   Heid, Ulrich, Piotr Bański \& Laura Herzberg (eds.). 2025.
   \emph{Harmonizing Language Data: Standards for Linguistic Resources}
   (Digital Linguistics 4). Boston: De Gruyter.
-  \url{https://doi.org/10.1515/9783112208212}.
+  \url{https://doi.org/10.1515/9783112208212}. {[}Open Access{]}.
 \item
-  Lewis, Crystal. \emph{Data Management in Large-Scale Education
-  Research}. \url{https://datamgmtinedresearch.com/}. (14 May, 2024).
+  Lewis, Crystal. 2024. \emph{Data Management in Large-Scale Education
+  Research}. Chapman and Hall/CRC.
+  \url{https://doi.org/10.1201/9781032622835}
+  \url{https://datamgmtinedresearch.com/}. {[}Open Access{]}.
 \end{itemize}
 
 \end{tcolorbox}
@@ -2433,21 +2422,6 @@ many community-led initiatives such as
 \href{https://latinr.org/}{LatinR}, that encourage under-represented
 groups to participate in and contribute to the \texttt{R} community.
 
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=2.60417in,height=\textheight,keepaspectratio,alt={Hex sticker logo showing the R logo painted in the colours of the rainbow and the transgender flags}]{images/rladiesrp_logo.png}
-
-}
-
-\caption{\label{fig-RLadies}Logo of the
-\href{https://rladiesrp.github.io/}{RLadies Ribeirão Preto}, one of
-\href{https://benubah.github.io/r-community-explorer/rladies.html}{many
-RLadies+ chapters}.}
-
-\end{figure}%
-
 \begin{quote}
 ``I am studying a language/linguistics so why should I learn to code?''
 \emoji{thinking}
@@ -2519,11 +2493,11 @@ actually be doing the heavy-lifting, under the hood.
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.40\linewidth}
 
 \centering{
 
-\includegraphics[width=2.40625in,height=\textheight,keepaspectratio,alt={R logo}]{images/Rlogo.png}
+\includegraphics[width=0.3\linewidth,height=\textheight,keepaspectratio,alt={R logo}]{images/Rlogo.png}
 
 }
 
@@ -2532,11 +2506,14 @@ environment \texttt{R}}
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.20\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.40\linewidth}
 
 \centering{
 
-\includegraphics[width=1.92708in,height=1.85417in,alt={RStudio logo}]{images/RStudio-Logo_Trademark.png}
+\includegraphics[width=0.3\linewidth,height=\textheight,keepaspectratio,alt={RStudio logo}]{images/RStudio-Logo_Trademark.png}
 
 }
 
@@ -2554,20 +2531,22 @@ things!}
 \begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Using other IDEs to work in \texttt{R}}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 At the time of writing, \emph{RStudio} is the most widely used
-Integrated Development Environment (IDE) to work in \texttt{R}. However,
-it is worth noting that many other IDEs that can be used to access
-\texttt{R}. These include:
+\textbf{Integrated Development Environment (IDE)} to work in \texttt{R}.
+However, it is worth noting that many other IDEs that can be used to
+access \texttt{R}. These include:
 
 \begin{itemize}
 \tightlist
 \item
+  \href{https://eclipseide.org/}{Eclipse}
+\item
   \href{https://jupyter.org/}{Jupyter notebook}
 \item
-  \href{https://code.visualstudio.com/}{Visual Studio Code}
+  \href{https://positron.posit.co/}{Positron}
 \item
   \href{https://www.jetbrains.com/pycharm/}{PyCharm}
 \item
-  \href{https://eclipseide.org/}{Eclipse}
+  \href{https://code.visualstudio.com/}{Visual Studio Code}
 \end{itemize}
 
 Whilst this textbook will assume that everyone is working in
@@ -2768,7 +2747,7 @@ possibly even contaminated kitchen!
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
@@ -2780,7 +2759,10 @@ possibly even contaminated kitchen!
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.02\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
@@ -2818,7 +2800,7 @@ Figure~\ref{fig-RStudioNewLayout}.
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.37\linewidth}
 
 \centering{
 
@@ -2830,7 +2812,10 @@ Figure~\ref{fig-RStudioNewLayout}.
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.02\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.61\linewidth}
 
 \centering{
 
@@ -2871,7 +2856,7 @@ Figure~\ref{fig-testplotRStudio}.
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
@@ -2884,7 +2869,10 @@ pane}
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.02\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
@@ -2964,12 +2952,12 @@ the other information.
 
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={Screenshot from RStudio. The Console output reads: trying URL \textquotesingle https://cran.rstudio.com/bin/macosx/big-su r-arm64/contrib/4.3/janeaustenr\_1.0.0.tgz\textquotesingle{} Content type \textquotesingle application/x-gzip\textquotesingle{} length 1624062 bytes (1.5 MB) downloaded 1.5 MB The downloaded binary packages are in /var/folders/\_x/ycbk0by91blbvnqkbtv105w0000g p/T//Rtmp5xaS1h/downloaded\_packages}]{images/JaneaustenrInstalled.png}
+\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio,alt={Screenshot from RStudio. The Console output reads: trying URL \textquotesingle https://cran.rstudio.com/bin/macosx/big-su r-arm64/contrib/4.3/janeaustenr\_1.0.0.tgz\textquotesingle{} Content type \textquotesingle application/x-gzip\textquotesingle{} length 1624062 bytes (1.5 MB) downloaded 1.5 MB The downloaded binary packages are in /var/folders/\_x/ycbk0by91blbvnqkbtv105w0000g p/T//Rtmp5xaS1h/downloaded\_packages}]{images/JaneaustenrInstalled.png}
 
 }
 
 \caption{\label{fig-PckInstalled}Screenshot showing that the package has
-been correctly installed.}
+been correctly installed}
 
 \end{figure}%
 
@@ -3058,12 +3046,12 @@ or higher. All CRAN packages are listed on:
 
 \centering{
 
-\href{https://cran.r-project.org/web/packages/janeaustenr/index.html}{\pandocbounded{\includegraphics[keepaspectratio,alt={janeaustenr: Jane Austen\textquotesingle s Complete Novels Full texts for Jane Austen\textquotesingle s 6 completed novels, ready for text analysis. These novels are "Sense and Sensibility" ", "Pride and Prejudice" \textquotesingle, "Mansfield Park" , "Emma". \textquotesingle, "Northanger Abbey", and "Persuasion". Version: Depends: Suggests: Published: DOI: Author: Maintainer: BugReports: License: URL: NeedsCompilation: no Materials: CRAN checks: 1.0.0 R (≥ 3.5) dplyr, testthat 2022-08-26 10.32614/CRAN.package.janeaustenr Julia Silge I {[}aut, cre{]} Julia Silge \textless{} julia silge at gmail.com\textgreater{} https://github.com/juliasilge/janeaustenr/issues MIT + file LICENSE https://github.com/juliasilge/janeaustenr README, NEWS janeaustenr results}]{images/CRAN_janeaustenr.png}}}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={janeaustenr: Jane Austen\textquotesingle s Complete Novels Full texts for Jane Austen\textquotesingle s 6 completed novels, ready for text analysis. These novels are "Sense and Sensibility" ", "Pride and Prejudice" \textquotesingle, "Mansfield Park" , "Emma". \textquotesingle, "Northanger Abbey", and "Persuasion". Version: Depends: Suggests: Published: DOI: Author: Maintainer: BugReports: License: URL: NeedsCompilation: no Materials: CRAN checks: 1.0.0 R (≥ 3.5) dplyr, testthat 2022-08-26 10.32614/CRAN.package.janeaustenr Julia Silge I {[}aut, cre{]} Julia Silge \textless{} julia silge at gmail.com\textgreater{} https://github.com/juliasilge/janeaustenr/issues MIT + file LICENSE https://github.com/juliasilge/janeaustenr README, NEWS janeaustenr results}]{images/CRAN_janeaustenr.png}
 
 }
 
-\caption{\label{fig-CRANJane}Screenshot of the top part of
-\textless https://cran.r-project.org/web/packages/janeaustenr/index.html\textgreater{}
+\caption{\label{fig-CRANJane}Screenshot from
+\url{https://cran.r-project.org/web/packages/janeaustenr/index.html}
 (accessed on 17 December 2025)}
 
 \end{figure}%
@@ -3128,7 +3116,7 @@ that the package is loaded and ready to be used.
 
 \centering{
 
-\includegraphics[width=4.20833in,height=\textheight,keepaspectratio,alt={The screenshot shows that the command library (janeaustern) has been run in the console and that the console returned a new empty line and nothing else. The screenshot also shows the packages tab with the words "jan" in the search box and two packages displayed.  The first is the janeaustern package and the checkbox to the left of it is ticked. The second is a package that also starts with "jan" namely "janitor" but this one does not have a checked box next to it because it has not been loaded.}]{images/LoadingJaneAustern.png}
+\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio,alt={The screenshot shows that the command library (janeaustern) has been run in the console and that the console returned a new empty line and nothing else. The screenshot also shows the packages tab with the words "jan" in the search box and two packages displayed.  The first is the janeaustern package and the checkbox to the left of it is ticked. The second is a package that also starts with "jan" namely "janitor" but this one does not have a checked box next to it because it has not been loaded.}]{images/LoadingJaneAustern.png}
 
 }
 
@@ -3170,19 +3158,20 @@ name in the Console, e.g.~\texttt{emma}. The entire novel will be
 printed in the Console output! You can print only a few lines by
 selecting them within square brackets. For example, the command
 \texttt{emma{[}20:25{]}} will print lines 20 to 25 of the object
-\texttt{emma} (see Figure~\ref{fig-emma2025}).
+\texttt{emma} (see Figure~\ref{fig-emma2025}). You can also adjust the
+size of the Console pane to see more or less of the text at any one
+time.
 
 \begin{figure}
 
 \centering{
 
-\includegraphics[width=4.16667in,height=\textheight,keepaspectratio,alt={Screenshot from RStudio. The command is: emma{[}20:25{]} and the Console output reads: {[}1{]} "She was the youngest of the two daughters of a most affectionate,"        {[}2{]} "indulgent father; and had, in consequence of her sister\textquotesingle s marriage, been" {[}3{]} "mistress of his house from a very early period. Her mother had died"      {[}4{]} "too long ago for her to have more than an indistinct remembrance of"      {[}5{]} "her caresses; and her place had been supplied by an excellent woman as"   {[}6{]} "governess, who had fallen little short of a mother in affection."}]{images/Emma2025.png}
+\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio,alt={Screenshot from RStudio. The command is: emma{[}20:25{]} and the Console output reads: {[}1{]} "She was the youngest of the two daughters of a most affectionate,"        {[}2{]} "indulgent father; and had, in consequence of her sister\textquotesingle s marriage, been" {[}3{]} "mistress of his house from a very early period. Her mother had died"      {[}4{]} "too long ago for her to have more than an indistinct remembrance of"      {[}5{]} "her caresses; and her place had been supplied by an excellent woman as"   {[}6{]} "governess, who had fallen little short of a mother in affection."}]{images/Emma2025.png}
 
 }
 
 \caption{\label{fig-emma2025}Screenshot showing a selection of lines
-from the object \texttt{emma} (note that you can adjust the size of the
-Console pane to see more or less of the text at any one time).}
+from the object \texttt{emma}}
 
 \end{figure}%
 
@@ -3256,7 +3245,7 @@ Figure~\ref{fig-UpdateRStudio}). You can safely click on the option
 
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={Finder window showing the RStudio.app icon and the folder Apps. A warning message reads: An older item named "RStudio.app" already exists in this location. Do you want to replace it with the newer one you\textquotesingle re copying? The clickable options are: Keep Both Stop Replace}]{images/UpdateRStudio.png}
+\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio,alt={Finder window showing the RStudio.app icon and the folder Apps. A warning message reads: An older item named "RStudio.app" already exists in this location. Do you want to replace it with the newer one you\textquotesingle re copying? The clickable options are: Keep Both Stop Replace}]{images/UpdateRStudio.png}
 
 }
 
@@ -3306,7 +3295,7 @@ Section~\ref{sec-installingR}).
 
 \centering{
 
-\includegraphics[width=5.29167in,height=\textheight,keepaspectratio,alt={CRAN R for macOS page showing the latest R Version.}]{images/CRAN_R_For_MacOS_Version.png}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={CRAN R for macOS page showing the latest R Version.}]{images/CRAN_R_For_MacOS_Version.png}
 
 }
 
@@ -3335,11 +3324,11 @@ All'' and ``Install Updates''.
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={*RStudio* screenshot showing the packages tab with the highlighted update button.}]{images/R_Studio_Packages_Update.png}
+\pandocbounded{\includegraphics[keepaspectratio,alt={*RStudio* screenshot showing the packages tab with the highlighted update button.}]{images/R_Studio_Packages_Update.png}}
 
 }
 
@@ -3348,11 +3337,14 @@ in RStudio's Packages tab}
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.02\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={RStudio screenshot showing the Update Packages dialog with all packages selected and a highlighted Install Updates button.}]{images/Update_Packages_Dialog.png}
+\pandocbounded{\includegraphics[keepaspectratio,alt={*RStudio* screenshot showing the Update Packages dialog with all packages selected and a highlighted Install Updates button.}]{images/Update_Packages_Dialog.png}}
 
 }
 
@@ -3361,7 +3353,7 @@ in RStudio}
 
 \end{minipage}%
 
-\caption{\label{fig-UpdateGUI}Updating packages using RStudio's
+\caption{\label{fig-UpdateGUI}Updating packages using \emph{RStudio}'s
 Graphical User Interface (GUI)}
 
 \end{figure}%
@@ -3375,13 +3367,23 @@ and a bit of patience. \emoji{person-in-lotus-position}
 The \{installr\} package simplifies updating \texttt{R} on Windows. To
 install the package use the usual commands:
 
+\protect\phantomsection\label{annotated-cell-371}%
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{install.packages}\NormalTok{(}\StringTok{"installr"}\NormalTok{) }\CommentTok{\# Run this command the first time you use the package.}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"installr"}\NormalTok{) }\hspace*{\fill}\NormalTok{\circled{1}}
 
-\FunctionTok{library}\NormalTok{(installr) }\CommentTok{\# Run this command everytime you want to update R using this package.}
+\FunctionTok{library}\NormalTok{(installr) }\hspace*{\fill}\NormalTok{\circled{2}}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{description}
+\tightlist
+\item[\circled{1}]
+Run this command the first time you use the package.
+\item[\circled{2}]
+Run this command every time you want to update \texttt{R} using this
+package.
+\end{description}
 
 Then, run the \texttt{updateR()} function, which automates the updating
 process by detecting your current \texttt{R} version, comparing it with
@@ -3422,7 +3424,7 @@ Are you confident that you can\ldots?
 Once you have successfully completed all the steps outlined in this
 chapter, you are ready to get sta\texttt{R}ted with
 Chapter~\ref{sec-GettingStaRted}, which provides a hands-on introduction
-to \texttt{R} in \emph{RStudio}. \emoji{nerd-face}
+to working in \texttt{R} in \emph{RStudio}. \emoji{nerd-face}
 
 \bookmarksetup{startatroot}
 
@@ -3776,7 +3778,7 @@ the one that you like best:
   left corner of the tool bar.
 \item
   Use the keyboard shortcut
-  \texttt{Ctrl-Shift-N} (windows), \texttt{Cmd-Shift-N} (mac), \texttt{Ctrl-Shift-N} (linux).
+  \texttt{Ctrl-Shift-N} (linux), \texttt{Cmd-Shift-N} (mac), \texttt{Ctrl-Shift-N} (windows).
 \end{enumerate}
 
 Whichever option you chose, \emph{RStudio} should have opened an empty
@@ -3839,7 +3841,7 @@ or ``running'' code), select the line that you want to execute, or place
 your mouse cursor anywhere within that line and then click on the
 ``Run'' button (in the top-right corner of the pane, see
 Figure~\ref{fig-NewScript}) or use the keyboard shortcut
-\texttt{Ctrl-Enter} (windows), \texttt{Cmd-Enter} (mac), \texttt{Ctrl-Enter} (linux).
+\texttt{Ctrl-Enter} (linux), \texttt{Cmd-Enter} (mac), \texttt{Ctrl-Enter} (windows).
 This shortcut is worth learning, as it will save you a lot of time and
 effort in the long term.
 
@@ -3881,7 +3883,7 @@ computer. To do so either:
   Click on the save icon \emoji{floppy-disk}, or
 \item
   Use the keyboard shortcut
-  \texttt{Ctrl-S} (windows), \texttt{Cmd-S} (mac), \texttt{Ctrl-S} (linux).
+  \texttt{Ctrl-S} (linux), \texttt{Cmd-S} (mac), \texttt{Ctrl-S} (windows).
 \end{enumerate}
 
 Give your script a meaningful file name. Remember that file names should
@@ -4094,7 +4096,7 @@ analyses are reproducible (see Chapter~\ref{sec-LiteRateProgramming}),
 let's now generate this error from an \texttt{.R} script. To do so, copy
 and paste the erroneous line of code in your \texttt{.R} script and try
 to run it by either clicking on the ``Run'' icon or using the shortcut
-\texttt{Ctrl-Enter} (windows), \texttt{Cmd-Enter} (mac), \texttt{Ctrl-Enter} (linux).
+\texttt{Ctrl-Enter} (linux), \texttt{Cmd-Enter} (mac), \texttt{Ctrl-Enter} (windows).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4150,7 +4152,7 @@ The plus-situation arises again, but we will now solve it using the
 second method. Head over to the Console and place your cursor next to
 the \texttt{+}. This time, instead of completing the line by adding a
 closing bracket, press the Escape key
-\texttt{Esc} (windows), \texttt{Esc} (mac), \texttt{Esc} (linux) on your
+\texttt{Esc} (linux), \texttt{Esc} (mac), \texttt{Esc} (windows) on your
 keyboard. This will cancel the incomplete line of code. Then, you can
 add the missing \texttt{)} in your script and rerun the newly completed
 line of code from the Source pane.
@@ -4730,7 +4732,7 @@ correctly imported. Here's a list of things to check (in that order):
     (if you're struggling to find the correct path, you may want to try
     out the import method explained in Section~\ref{sec-ImportingGUI}).
     To ensure that you are not misspelling the name of the file, you can
-    press the tab key on your keyboard to get \emph{RStudio} to
+    press the \texttt{tab} key on your keyboard to get \emph{RStudio} to
     auto-complete the file name for you.
   \item
     If the error message includes the statement ``could not find
@@ -6320,14 +6322,15 @@ combination of two symbols, the computer pipe symbol \texttt{\textbar{}}
 and the right angle bracket \texttt{\textgreater{}}. Don't worry if
 you're not sure where these two symbols are on your keyboard as
 \emph{RStudio} has a handy shortcut for you:
-\texttt{Ctrl/Cmd\ +\ Shift\ +\ M} (see
-Figure~\ref{fig-Pipes}).\footnote{If, in your version of RStudio, this
-  shortcut produces \texttt{\%\textgreater{}\%} instead of
+\texttt{Ctrl-Shift-M} (linux), \texttt{Cmd-Shift-M} (mac), \texttt{Ctrl-Shift-M} (windows)
+\footnote{If, in your version of RStudio, this shortcut produces
+  \texttt{\%\textgreater{}\%} instead of
   \texttt{\textbar{}\textgreater{}}, you have probably not activated the
   native \texttt{R} pipe option in your \emph{RStudio} global options
-  (see instructions in Section~\ref{sec-GlobalOptions}).} I strongly
-recommend that you write this shortcut on a prominent post-it and learn
-it asap, as you will need it a lot when you are working in \texttt{R}!
+  (see instructions in Section~\ref{sec-GlobalOptions}).} (see
+Figure~\ref{fig-Pipes}). I strongly recommend that you write this
+shortcut on a prominent post-it and learn it asap, as you will need it a
+lot when you are working in \texttt{R}!
 
 \begin{figure}
 
@@ -19673,7 +19676,7 @@ you will immediately see the effect of your formatting on screen. For
 example, to format a word in italics, you can click on the corresponding
 button in the toolbar (see Figure~\ref{fig-QuartoModes}) or use the
 keyboard shortcut
-\texttt{Ctrl-I} (windows), \texttt{Cmd-I} (mac), \texttt{Ctrl-I} (linux)
+\texttt{Ctrl-I} (linux), \texttt{Cmd-I} (mac), \texttt{Ctrl-I} (windows)
 --- just like you would in text-processing software --- and this will
 immediately display the text in italics.
 
@@ -19840,7 +19843,7 @@ There are three ways to do so:
 \tightlist
 \item
   Using the keyboard shortcut
-  \texttt{Ctrl-Alt-I} (windows), \texttt{Cmd-Option-I} (mac), \texttt{Ctrl-Alt-I} (linux)
+  \texttt{Ctrl-Alt-I} (linux), \texttt{Cmd-Option-I} (mac), \texttt{Ctrl-Alt-I} (windows)
 \item
   Clicking on the green ``Insert chunk'' button icon in the editor
   toolbar
@@ -19877,13 +19880,13 @@ To run code within a Quarto document, we can either run:
 \tightlist
 \item
   each individual line of code using the keyboard shortcut
-  \texttt{Ctrl-Enter} (windows), \texttt{Cmd-Enter} (mac), \texttt{Ctrl-Enter} (linux)
+  \texttt{Ctrl-Enter} (linux), \texttt{Cmd-Enter} (mac), \texttt{Ctrl-Enter} (windows)
   or
 \item
   the entire code chunk either by clicking the
   ``Run''\pandocbounded{\includegraphics[keepaspectratio]{images/notebook-run-chunk.png}}icon
   or with shortcut
-  \texttt{Shift-Ctrl-Enter} (windows), \texttt{Shift-Cmd-Enter} (mac), \texttt{Shift-Ctrl-Enter} (linux).
+  \texttt{Shift-Ctrl-Enter} (linux), \texttt{Shift-Cmd-Enter} (mac), \texttt{Shift-Ctrl-Enter} (windows).
 \end{itemize}
 
 \emph{RStudio} will execute the code and display the results either
@@ -20635,7 +20638,7 @@ of references (also referred to as a \textbf{bibliography}).
 \emph{RStudio}'s Visual editor makes inserting bibliographic references
 very convenient. To insert a reference, click on ``Insert'' and then
 select ``Citation'' or use the keyboard shortcut
-\texttt{Ctrl-Shift-F8} (windows), \texttt{Cmd-Shift-F8} (mac), \texttt{Ctrl-Shift-F8} (linux).This
+\texttt{Ctrl-Shift-F8} (linux), \texttt{Cmd-Shift-F8} (mac), \texttt{Ctrl-Shift-F8} (windows).This
 opens up a menu (see Figure~\ref{fig-QuartoCitation}) giving you the
 option to search for the source that you'd like to cite on your own
 computer (e.g.~in your own Zotero database, if you use Zotero), via the
@@ -22490,7 +22493,7 @@ The systemic environmental risks of artficial intelligence. Gesellschaft
 für Informatik e.V. \url{https://doi.org/10.18420/studie_senvrai}.
 
 \bibitem[\citeproctext]{ref-schweinbergerDataManagementVersion2022}
-Schweinberger, Martin. Data management, version control, and
+Schweinberger, Martin. 2022. Data management, version control, and
 reproducibility. \url{https://ladal.edu.au/repro.html}.
 
 \bibitem[\citeproctext]{ref-seiboldBERDCourseMake2023}
