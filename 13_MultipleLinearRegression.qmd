@@ -1472,6 +1472,7 @@ Then we can use the double square bracket operator to display a single diagnosti
 #| label: "fig-PosteriorPredictiveCheck"
 #| fig-cap: "Comparing the distribution of observed vocabulary scores (green) with data simulated based on model predictions (blue)"
 diagnostic.plots[[1]]
+#| fig-alt: "A density chart comparing observed vocabulary scores with scores predicted by the model. A green line which plateaus slightly from about 50 to 70 at densities from 0.013 to 0.015 and peaks at around 80 with a density of 0.020 is overlapped by several transparent blue lines, all of which peak at lower test scores."
 ```
 
 This first plot (@fig-PosteriorPredictiveCheck) is another way to compare the model's predicted values (represented here as blue distributions) with the real-life (i.e observed) outcome variable (represented here in green). We can see that the center of the distribution of observed `Vocab` scores is slightly shifted to the right compared to most distributions of model-predicted data. That said, the simulated distributions are close to the real distribution and largely follow a similar shape. If they didn't, this would suggest that a linear regression model may not be suitable for our data.
@@ -1481,6 +1482,7 @@ The second plot (@fig-Linearity) is designed To check the assumption of **linear
 ```{r}
 #| label: "fig-Linearity"
 #| fig-cap: "The relationship between model predictions (fitted values) and model residuals"
+#| fig-alt: "A scatter plot relating model predictions and model residuals. The majority of the dots fall between -10 and 20 residuals, and a very slightly curved line cuts through them. It begins slightly below zero, peaks slightly above zero at about 80 fitted values, and falls back below zero. The linearity is indicated by a large shaded region surrounding the line."
 diagnostic.plots[[2]]
 ```
 
@@ -1491,6 +1493,7 @@ The {performance} package proposes a different kind of diagnostic plot to check 
 ```{r}
 #| label: "fig-Homoscedasticity"
 #| fig-cap: "The relationship between the model predictions (fitted values) and the square root of absolute standardised residuals"
+#| fig-alt: "Another scatter plot indicating the linearity of the relationship between fitted values and the square root of absolute standardised residuals. Most of the dots fall between 0.3 and 1.3 standardised residuals. The linearity line begins relatively level at around 0.9 standard residuals and dips to around 0.6 between fitted values 70 and 80."
 diagnostic.plots[[3]]
 ```
 
@@ -1498,7 +1501,8 @@ The fourth diagnostic plot (@fig-Influential) helps to detect **outliers** in th
 
 ```{r}
 #| label: "fig-Influential"
-#| fig-cap: "The relationship between leverage as estimated using Cook's distance and standardised residuals"
+#| fig-cap: "The relationship between leverage and the square root of absolute standardised residuals as estimated using Cook's distance and standardised residuals"
+#| fig-alt: "A scatter plot of the relationship between leverage and standardised residuals, estimated using Cook's distance. Most of the dots are clumped together between 0.0 and 0.1 leverage at between 5 and -5 standardised residuals. A relatively straight line which rises slowly cuts through the middle of them as two dotted curved lines approach it, both labeled 0.9. Several of the dots are labeled with numbers, those in the larger group greater than 60 and the dot at the end of the line with 21."
 diagnostic.plots[[4]]
 ```
 
@@ -1533,6 +1537,7 @@ The {performance} package relies on the Variance Inflation Factor (VIF) to quant
 ```{r}
 #| label: "fig-Collinearity"
 #| fig-cap: "VIF factor and 95% confidence interval for each predictor in the model"
+#| fig-alt: "A chart providing the variance inflation factor and 95% confidence interval for each of the model predictors: age c, ART, ART:edutotal c, blocks c, and edutotal c. age c, art, and blocks c have lower variance inflation factors and smaller confidence intervals than art:edutotal c and edutotal c."
 diagnostic.plots[[5]]
 ```
 
@@ -1541,6 +1546,7 @@ Finally, the sixth plot output by the `check_model()` function serves to check t
 ```{r}
 #| label: "fig-Normality"
 #| fig-cap: "Q-Q plot"
+#| fig-alt: "A scatter plot relating standard normal distribution quantities and sample quantile deviations. Most of the dots are clustered around the line at 0 sample quantile deviations from standard normal distribution quantities -1 to 2, outside of which they are more scattered. All of the dots are encapsulated by a shaded area which thins at the middle."
 diagnostic.plots[[6]]
 ```
 
