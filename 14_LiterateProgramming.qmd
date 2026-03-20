@@ -54,7 +54,8 @@ Not only is using Quarto (or any other literate programming format, see @sec-Lit
 
 This is in contrast to **replicability**, where the same methods, but different data are used; and **robustness**, where the same data, but different methods are used. Finally, if a finding can be reliably observed across different datasets with different methods, then we can say that the finding is **generalisable**.
 
-![Defining *reproducibility* and related terms ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) [The Turing Way Community](https://book.the-turing-way.org/reproducible-research/overview/overview-definitions) )](images/TuringWay_reproducible-matrix.jpg){#fig-reproducibility-terminology width="444"}
+![Defining *reproducibility* and related terms ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) [The Turing Way Community](https://book.the-turing-way.org/reproducible-research/overview/overview-definitions) )](images/TuringWay_reproducible-matrix.jpg){#fig-reproducibility-terminology width="444"}{fig-alt: "A table defining four terms: reproducible, replicable, robust, and generalisable. For reproducibility, data and analysis are the same. For replicability, data is different and the analysis is the same. For robustness, data is the same and the analysis is different. For generalisability, data and analysis are both different."}
+![Defining *reproducibility* and related terms ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) [The Turing Way Community](https://book.the-turing-way.org/reproducible-research/overview/overview-definitions) )](images/TuringWay_reproducible-matrix.jpg){#fig-reproducibility-terminology width="444"}{fig-alt: "A table defining four terms: reproducible, replicable, robust, and generalisable. For reproducibility, data and analysis are the same. For replicability, data is different and the analysis is the same. For robustness, data is the same and the analysis is different. For generalisability, data and analysis are both different."}
 
 Given this definition, reproducibility might seem like a low bar to pass. You might be thinking: shouldn't it be obvious that we'll get the same results if we repeat a study using exactly the same data and method? Well, yes, it should be. But it very often isn't! For a start, to be able to even attempt to reproduce the results of a study, the underlying data must be available. Linguists that share their primary data as Ewa Dąbrowska did as part of her 2019 publication [@DabrowskaExperienceAptitudeIndividual2019] remain the exception rather than the norm [see @bochynskaReproducibleResearchPractices2023a][^14_literateprogramming-1]. Second, the data must be available in an accessible format and must be published together with enough documentation to be understandable to an independent researcher. Third, the author(s) of the original study need to have very diligently documented all their data wrangling and analyses steps. The best way to do this is undoubtedly to use code that does not require closed-source software (e.g. a researcher without a license for SPSS or Stata will not be able to run SPSS or Stata scripts, see @sec-OpenSource). This open code must be shared in an accessible format, too. Fourth, independent researchers need to be able to run these scripts. To this end, it is important that they know exactly which tools were used. Thus, if the analyses were conducted in `R`, they need to know which `R` version and which packages and package versions were used (@sec-Packages). They also need to know in which order the scripts were run and, finally, the scripts must run on their own computers without any errors. So now, reproducibility doesn't sound quite so easy, right? Luckily, if we apply the principles of literate programming in Quarto, we can go a long way towards ensuring that our research is reproducible.
 
@@ -176,7 +177,7 @@ To get started with Quarto:
 
 2.  Then, create a new Quarto document by navigating to *File \> New File \> Quarto Document...*, or clicking on the "new document" button and selecting "*Quarto Document..."*. A dialogue menu will appear (@fig-QuartoNew). Leave everything as is and simply click on "Create" at the bottom.
 
-![Creating a new Quarto document](images/Quarto_new.png){#fig-QuartoNew width="401"}
+![Creating a new Quarto document](images/Quarto_new.png){#fig-QuartoNew width="401"}{#fig-alt: "A screenshot of the new document settings in Quarto. The format selected is HTML as opposed to PDF or Word Document, no engine is selected, and visual markdown editor is not enabled."}
 
 3.  *RStudio* has now opened a new, untitled Quarto file (`.qmd`). Depending on your settings, this new Quarto document may include some template material, which you can delete. Change the title of your Quarto document (which is not the same as its filename!) and add three further lines to the **document header** by copying and pasting the following lines at the top of the document, replacing the default header. Quarto document headers[^14_literateprogramming-5] are written in **YAML** which, I kid you not, stands for *Yet Another Markup Language*! `r emoji("sweat_smile")`
 
@@ -198,9 +199,9 @@ date: last-modified
 6.  Navigate to the folder where you saved your `.qmd` file to find the rendered HTML file. You can use a Finder (on macOS) or File Explorer window (on Windows) or go to the "Files" pane in *RStudio* to do this. The rendered version of your file will have the same filename as your Quarto document, but with the file extension `.html` (e.g. `LearningQuarto.html`). If you open on the file, it will appear in your default web browser (e.g. Firefox, Chrome, Safari). You should see that the HTML document features the title of your document, your name as the author, and today's date (see @fig-QuartoHTML).
 
 ::: {layout-ncol="2"}
-![The `.qmd` file as opened in RStudio](images/LearningQuarto_qmd.png){#fig-QuartoRender}
+![The `.qmd` file as opened in RStudio](images/LearningQuarto_qmd.png){#fig-QuartoRender}{#fig-alt: "A screenshot of the .qmd file opened in RStudio. "Render" has been circles in the top bar, and the window displays the following text: title, learning quarto, subtitle, by reproducing the descriptive statistics of Dabrowska's (2019) study, author, Elen Le Foll, date, last modified."}
 
-![The `.html` file as opened in a web browser](images/LearningQuarto_html.png){#fig-QuartoHTML}
+![The `.html` file as opened in a web browser](images/LearningQuarto_html.png){#fig-QuartoHTML}{#fig-alt: "A screenshot of the .html file opened in a web browser. The text of the previous screenshot is displayed."}
 :::
 
 For now, the document is empty. In the next sections, you will learn how to add text, code, and code outputs to your Quarto document.
@@ -1067,10 +1068,10 @@ This example embedded image includes a caption (that, itself, includes a link), 
 Figures can be arranged in many ways. The example below uses the `:::` **div syntax** to display two images side-by-side. This syntax also allows for subcaptions as shown in @fig-Pipelines.
 
 ``` markdown
-::: {#fig-Pipelines layout-ncol="2"}
+::: {#fig-Pipelines layout-ncol="2"}{#fig-alt: "The earlier graphic with 3 entry points for data."}
 ![An idealised research pipeline](images/BERD_pipeline-simple.jpg){#fig-IdealisedPipeline}
 
-![A more realistic research pipeline](images/BERD_pipeline-real.jpg){#fig-RealisticPipeline2}
+![A more realistic research pipeline](images/BERD_pipeline-real.jpg){#fig-RealisticPipeline2}{#fig-alt: "The earlier, more realistic pipeline graphic."}
 
 Research workflows as pipelines [[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) @seiboldBERDCourseMake2023]
 :::
@@ -1099,6 +1100,7 @@ As with computed tables (see @sec-QuartoTables), various code chunk options can 
 ```{r}
 #| label: fig-scatterplot
 #| fig-cap: "L2 participants' lexical proficiency in English and their professional occupational group"
+#| fig-cap: "A scatter plot relating vocabulary and collocation test scores. The dots are coloured according to occupational group. A slightly upward sloping regression line cuts through the dots, indicating a positive correlation."
 #| fig-height: 5
 #| fig-asp: 0.618
 #| message: false
@@ -1160,7 +1162,7 @@ ggplotly(L2.scatter2)
 
 An important aspect of academic writing is the inclusion of in-text bibliographic references (**citations**) and a well-formatted list of references (also referred to as a **bibliography**). *RStudio*'s Visual editor makes inserting bibliographic references very convenient. To insert a reference, click on "Insert" and then select "Citation" or use the keyboard shortcut {{< kbd mac=Cmd-Shift-F8 win=Ctrl-Shift-F8 linux=Ctrl-Shift-F8 >}}.This opens up a menu (see @fig-QuartoCitation) giving you the option to search for the source that you'd like to cite on your own computer (e.g. in your own Zotero database, if you use Zotero), via the [Crossref](https://www.crossref.org/) database, or directly using a [DOI](https://forrt.org/glossary/english/doi/).
 
-![Search menu for bibliographic reference](images/Quarto_citation.png){#fig-QuartoCitation}
+![Search menu for bibliographic reference](images/Quarto_citation.png){#fig-QuartoCitation}{#fig-alt: "A screenshot of the citations window in RStudio. \"dabrowska\" has been entered in the search bar, and the 2019 study has been selected, generating a citation below."}
 
 Alternatively, if you start typing `@` in the Visual editor, a quick reference menu will appear. Either way, any references that you add will be displayed as `@` followed by a **reference identifier**. For example, in the source code of this Quarto document, every reference to @DabrowskaExperienceAptitudeIndividual2019 is indicated as `@DabrowskaExperienceAptitudeIndividual2019`.
 
