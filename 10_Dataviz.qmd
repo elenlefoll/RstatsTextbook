@@ -57,7 +57,7 @@ Check that your data are correctly imported by examining the output of `View(Dab
 
 The syntax of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] is made up of **layers** (@fig-layers), which allow us to create highly effective and efficient data visualisations, while giving us lots of flexibility and control.
 
-![The syntax of the Grammar of Graphics as visualised in the [QCBS R Workshop Series](https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html) ([CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/))](images/gglayers.png){#fig-layers width="559" fig-alt="A layered diagram illustrating the key elements of data visualization: Data, Aesthetics, Geometries, Facets, Statistics, Coordinates, and Theme, each shown as a layer with a distinct colour."}
+![The syntax of the Grammar of Graphics as visualised in the [QCBS R Workshop Series](https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html) ([CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/))](images/gglayers.png){#fig-layers width="559" fig-alt="A layered diagram illustrating the key elements of data visualization: Data, Aesthetics, Geometries, Facets, Statistics, Coordinates, and Theme, each shown as a layer with a distinct colour."}
 
 The **data** layer and the **aesthetics** layer are compulsory as you cannot build a graph that does not map *some* data onto *some* visual aspect (= aesthetic) of a graph. The remaining layers are optional, but some are very important. In the following, we will explain how the **geometries**, **facet**, **scales**, **coordinates**, and **theme** layers are used to build and customise graphs using the {ggplot2} library in `R`.
 
@@ -665,7 +665,7 @@ The {ggplot2} framework also allows for the addition of an optional `theme()` **
 #| source-line-numbers: "6"
 #| fig-height: 4
 #| fig-cap: "@fig-BarOccupGroup in the \"black and white\" theme."
-#| fig-alt: "The barplot from Figure 10.5 in the 'black and white' theme."
+#| fig-alt: "The barplot from Figure 10.5 displayed in black and white."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup)) +
@@ -681,7 +681,7 @@ ggplot(data = Dabrowska.data,
 #| source-line-numbers: "6"
 #| fig-height: 4
 #| fig-cap: "@fig-BarOccupGroup in the \"dark\" theme."
-#| fig-alt: "The barplot from Figure 10.5 in the 'dark' theme."
+#| fig-alt: "The barplot from Figure 10.5 printed in dark colours."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup)) +
@@ -914,8 +914,8 @@ levels(fct_infreq(Dabrowska.data$NativeLg))
 levels(fct_rev(fct_infreq(Dabrowska.data$NativeLg)))
 ```
 
-:::: {.content-visible when-profile="OER"}
-::::::: {.callout-tip collapse="false"}
+:::::: {.content-visible when-profile="OER"}
+::::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
 [**Q10.3**]{style="color:green;"} Compare the two plots below. Which one makes it easier to see which occupational group has the fewest participants and why?
@@ -928,7 +928,7 @@ library(tidyverse)
 Dabrowska.data <- readRDS(file = here("data", "processed", "combined_L1_L2_data.rds"))
 ```
 
-:::::: columns
+:::: columns
 ::: {.column width="45%"}
 **Bar plot**
 
@@ -981,7 +981,7 @@ Dabrowska.data |>
     theme_void(base_size = 20) # This increases the font size.
 ```
 :::
-::::::
+::::
 
 ```{r}
 #| echo: false
@@ -1007,8 +1007,8 @@ check_hint("Two reasons are correct.",
            hint_title = "🐭 Click on the mouse for a second hint.")
 
 ```
-:::::::
-::::
+:::::
+::::::
 
 :::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
@@ -1281,7 +1281,7 @@ ggplot(data = Dabrowska.data,
   theme_minimal()
 ```
 
-:::: {.content-visible when-profile="OER"}
+:::::::::::: {.content-visible when-profile="OER"}
 ::::::::::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -1533,7 +1533,7 @@ ggplot(data = Dabrowska.data,
 ```
 ::::::
 :::::::::::
-::::
+::::::::::::
 
 ### Density plots {#sec-Density}
 
@@ -1829,6 +1829,7 @@ Dabrowska.data |>
 ```{r}
 #| echo: false
 #| label: "fig-OccupBoxPlot"
+#| fig-alt: "The previous box plot has been subdivided further according to participant occupation, producing 4 box plots each. The box plots for the L1 speakers are quite similar to each other and have smaller and greater ranges, whereas the L2 plots have larger ranges, with the exception of the 'I' occupation group, which is small and falls entirely between 90 and 100."
 
 Dabrowska.data |>
   mutate(Group = fct_recode(Group,
@@ -2664,7 +2665,6 @@ ggplotly(myplot2)
 #| fig-asp: 1
 #| fig-width: 5
 #| out-width: 80%
-#| fig-alt: "Hovering over the dots now displays even more information."
 #| fig-alt: "This is the same plot as above. The only difference is that when users hover over each point, some additinoal details are shown: Group, Grammar, Gender, Age, Years in formal education, and Job."
 
 # There is a well-known but, as of yet, unresolved bug in the plotly library, which means that the geom_boxplot() parameter "outliers = FALSE" is ignored in the interactive version of the plot. Below, I apply the workaround explained here: https://github.com/plotly/plotly.R/issues/1114.
@@ -2739,15 +2739,17 @@ ggsave("figures/BlocksDensityPlot.svg",
        units = "px")
 ```
 
-:::: {.content-visible when-profile="OER"}
+::: {.content-visible when-profile="OER"}
 ### Check your progress 🌟 {.unnumbered}
 
 Well done! You have successfully completed this chapter on data visualisation using the Grammar of Graphics approach. You have answered [`r checkdown::insert_score()` out of 21 questions]{style="color:green;"} correctly.
-::::
+:::
 
-:::: {.content-visible when-format="pdf"}
+::: {.content-visible when-format="pdf"}
 ### Check your progress {.unnumbered}
-::::
+
+You are now ready to get creative: Complete this chapter's [tasks and quizzes](https://elenlefoll.github.io/RstatsTextbook/11_quiz.html)! `r emoji("art")`
+:::
 
 Are you confident that you can...?
 

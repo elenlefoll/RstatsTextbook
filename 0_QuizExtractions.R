@@ -12,8 +12,8 @@ extract_sections <- function(input_file) {
   for (i in seq_along(lines)) {
     line <- lines[i]
     
-    # Check for OER block opening (3-5 colons)
-    if (grepl("^:::{1,5}\\s*\\{\\.content-visible\\s+when-profile=\"OER\"\\}", line)) {
+    # Check for OER block opening
+    if (grepl("^:::{1,6}\\s*\\{\\.content-visible\\s+when-profile=\"OER\"\\}", line)) {
       # Count exact colons in opening line
       current_colons <- length(gregexpr(":", line)[[1]])
       in_oer_block <- TRUE
@@ -67,9 +67,12 @@ process_directory <- function() {
         # Extract chapter number from filename
         chapter_number <- gsub("\\D", "", file)
         
-        # Create output file name
+        # Create output file name with quizzes directory
         base_name <- tools::file_path_sans_ext(file)
-        output_file <- paste0(chapter_number, "_quiz.qmd")
+        output_file <- file.path("quizzes", paste0(chapter_number, "_quiz.qmd"))
+        
+        # Create quizzes directory if it doesn't exist
+        dir.create("quizzes", showWarnings = FALSE)
         
         # Check if output file already exists
         if (file.exists(output_file)) {
@@ -82,8 +85,9 @@ process_directory <- function() {
         
         # Add header to the new file
         header <- c(
-paste("# Ch. ", chapter_number, ": Tasks & Quizzes {.unnumbered}", sep=""),
-          "")
+          paste("# Ch. ", chapter_number, ": Tasks & Quizzes {.unnumbered}", sep=""),
+          ""
+        )
         
         # Insert header at the beginning
         final_content <- c(header, extracted_lines)
@@ -96,8 +100,8 @@ paste("# Ch. ", chapter_number, ": Tasks & Quizzes {.unnumbered}", sep=""),
       }
     )
   }
-}
-
+}  
+  
 # Run the processing function
 process_directory()
 
