@@ -60,7 +60,7 @@ Check the Environment pane in RStudio to ensure that everything has gone to plan
 
 In @sec-ImportingErrors, we saw that we can use the `View()` function to display tabular data in a format that resembles that of a spreadsheet programme (see @fig-ViewData1).
 
-The two datasets from @DabrowskaExperienceAptitudeIndividual2019 are both long and wide so you will need to scroll in both directions to view all the data. *RStudio* also provides a filter option and a search tool (see @fig-ViewData1). Note that both of these tools can only be used to visually inspect the data. You cannot alter the dataset in any way using these tools (and that's a good thing!).
+The two datasets from @DabrowskaExperienceAptitudeIndividual2019 are both long and wide so you will need to scroll in both directions to view all the data. *RStudio* also provides a filter option and a search tool (see @fig-ViewData1). Note that both of these tools can only be used to visually inspect the data. You cannot alter the dataset in any way using these tools. And that's a good thing because any changes that we make should be documented in code (as we will learn in @sec-DataWrangling).
 
 ```{r eval=FALSE}
 View(L1.data)
@@ -138,11 +138,11 @@ In statistics, we differentiate between **numeric** (or **quantitative**) and **
 
 Some **numeric variables** are **continuous**: they contain measured data that, at least theoretically, can have an infinite number of values within a range (e.g. time). In practice, however the number of possible values depends on the precision of the measurement (e.g. are we measuring time in years, as in the age of adults, or milliseconds, as in participants' reaction times in a linguistic experiment). **Numeric variables** for which only a defined set of values are possible are called **discrete** variables (e.g. number of occurrences of a word in a corpus). Most often, discrete numeric variables represent counts of something.
 
-[![](images/AHorst_NumericVariables.png){fig-alt="Cartoon comparison of continuous versus discrete data. On the left: \"Continuous - measured data, can have infinite values within possible range.\" Below is an illustration of a chick, with text \"I am 3.1\" tall, I weight 34.16 grams.\" On the right: \"Discrete - observations can only exist at limited values, often counts.\" Below is an illustration of an octopus with text \"I have 8 legs and 4 spots!\"" width="509"}](https://allisonhorst.com)
+![Numeric variables ([artwork CC BY 4.0 \@allison_horst](https://twitter.com/allison_horst))](images/AHorst_NumericVariables.png){#fig-HorstNumeric fig-alt="Cartoon comparison of continuous versus discrete data. On the left: \"Continuous - measured data, can have infinite values within possible range.\" Below is an illustration of a chick, with text \"I am 3.1\" tall, I weight 34.16 grams.\" On the right: \"Discrete - observations can only exist at limited values, often counts.\" Below is an illustration of an octopus with text \"I have 8 legs and 4 spots!\"" width="70%"}
 
 **Categorical variables** can be **nominal** or **ordinal**. Nominal variables contain unordered categorical values (e.g. participants' mother tongue or nationality), whereas ordinal variables have categorical values that can be ordered meaningfully (e.g. participants' proficiency in a specific language where the values *beginner, intermediate* and *advanced* or *A1*, *A2*, *B1*, *B2*, *C1* and *C2* have a meaningful order). However, the difference between each category (or level) is not necessarily equal. **Binary** variables are a special case of nominal variable which only has two mutually exclusive outcomes (e.g. *true* or *false* in a quiz question).
 
-[![](images/AHorst_CategoricalVariables.png){fig-alt="Visual representations of nominal, ordinal, and binary variables. Left: Nominal (ordered descriptions) with illustrations below of a turtle, snail, and butterfly. Center: Ordinal (ordered descriptions) with illustrations below of three bees - one looks unhappy (saying \"I am unhappy\"), one looks ok (saying \"I am OK\"), and one looks very happy (saying \"I am awesome!\"). Right: Binary (only 2 mutually exclusive outcomes), with below a T-rex saying \"I am extinct\" and a shark saying \"HA.\""}](https://allisonhorst.com/)
+![Categorical variables ([artwork CC BY 4.0 \@allison_horst](https://twitter.com/allison_horst))](images/AHorst_CategoricalVariables.png){#Horst-Categorical fig-alt="Visual representations of nominal, ordinal, and binary variables. Left: Nominal (ordered descriptions) with illustrations below of a turtle, snail, and butterfly. Center: Ordinal (ordered descriptions) with illustrations below of three bees - one looks unhappy (saying \"I am unhappy\"), one looks ok (saying \"I am OK\"), and one looks very happy (saying \"I am awesome!\"). Right: Binary (only 2 mutually exclusive outcomes), with below a T-rex saying \"I am extinct\" and a shark saying \"HA.\"" width="80%"}
 
 :::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
@@ -230,11 +230,11 @@ str(L1.data)
 
 At the top of its output, the function `str(L1.data)` first informs us that `L1.data` is a **data frame** object, consisting of 90 observations (i.e. rows) and 31 variables (i.e. columns). Then, it returns a list of all of the variables included in this data frame. Each line starts with a `$` sign and corresponds to one column. First, the name of the column (e.g. `Occupation`) is printed, followed by the column's `R` data type (e.g. `chr` for a character string vector), and then its values for the first few rows of the table (e.g. we can see that the first participant in this dataset was a "Student" and the second a "Student/Support Worker").
 
-Compare the outputs of the `str()` and `head()` functions in the Console with that of the `View()` function to understand the different ways in which the same dataset can be examined in RStudio.
-
 :::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
+
+Compare the outputs of the `str()` and `head()` functions in the Console with that of the `View()` function to understand the different ways in which the same dataset can be examined in RStudio.
 
 [**Q7.6**]{style="color:green;"} Use the `str()` function to examine the internal structure of the L2 dataset. How many columns are there in the L2 dataset?
 
@@ -344,9 +344,9 @@ Before doing any data analysis, it is crucial to carefully visually examine the 
 -   Do the values look plausible?
 -   Are there any missing values?
 
-Looking at the `Gender` and `Age` variables, we can see that all the L1 participants declared being either 'male' (`"M"`) or 'female' (`"F"`), that the youngest were 17 years old, and that no participant was improbably old. A single improbable value is likely to be the result of a data entry error, e.g. a participant or researcher accidentally entered `188` as an age, instead of `18`. If you spot lots of improbable or outright weird values (e.g. `C`, `I` and `PS` as age values!), something is likely to have gone wrong during the data import process (see @sec-ImportingErrors).
+Looking at the `Gender` and `Age` variables, we can see that the L1 participants declared being either 'male' (`"M"`) or 'female' (`"F"`). We note that the youngest were 17 years old, which seems reasonable and we also check that no participant was improbably old. A single improbable value is likely to be the result of a data entry error, e.g. a participant or researcher accidentally entered `188` as an age, instead of `18`. If you spot a whole string of improbable or outright impossible values (e.g. `C`, `I` and `PS` as age values!), something has likely gone wrong during the data import process (see @sec-ImportingErrors).
 
-Just like we can save individual numbers and words as `R` objects to our `R` environment, we can also save individual variables as individual `R` objects. As we saw in @sec-WorkingRObjects, in this case, the values of the variable are not printed in the Console, but rather saved to our `R` environment.
+Just like we can save individual numbers and words as `R` objects to our `R` environment, we can also save individual columns as individual `R` objects. As we saw in @sec-WorkingRObjects, in this case, the values of the variable are not printed in the Console, but rather saved to our `R` environment.
 
 ```{r}
 L1.Occupation <- L1.data$Occupation
@@ -360,7 +360,7 @@ head(L1.Occupation)
 
 ## Accessing individual data points in `R` {#sec-SquareBrackets}
 
-We can also access individual data points from a variable using the index operator, the square brackets (`[]`). For example, we can access the `Occupation` value for the fourth L1 participant by specifying that we only want the fourth element of the `R` object `L1.Occupation`.
+We can also access individual data points from a variable using the index operator: the square brackets (`[]`). For example, we can access the `Occupation` value for the fourth L1 participant by specifying that we only want the fourth element of the `R` object `L1.Occupation`.
 
 ```{r}
 L1.Occupation[4]
@@ -372,24 +372,20 @@ We can also do this from the `L1.data` data frame object directly. To this end, 
 L1.data$Occupation[4]
 ```
 
-We can access a continuous range of data points using the `:` operator.
+We can access a consecutive range of data points using the `:` operator.
 
 ```{r}
 L1.data$Occupation[10:15]
 
 ```
 
-Or, if they are not continuous, we can list the numbers of the values that we are interesting in using the combine function (`c()`) and commas separating each index value.
+Or, if they are not consecutive, we can list the numbers of the values that we are interesting in using the combine function (`c()`) and commas separating each index value.
 
 ```{r}
 L1.data$Occupation[c(11,13,29,90)]
 ```
 
-It is also possible to access data points from a table by specifying both the number of the row and the number of the column of the relevant data point(s) using the following pattern:
-
-```         
-[row,column]
-```
+It is also possible to access data points from a tabular `R` object by specifying both the number of the row and the number of the column of the relevant data point(s) using the following pattern: `[row,column]`.
 
 For example, given that we know that `Occupation` is stored in the fourth column of `L1.data`, we can find out the occupation of the L1 participant in the 60^th^ row of the dataset like this:
 
@@ -397,7 +393,7 @@ For example, given that we know that `Occupation` is stored in the fourth column
 L1.data[60,4]
 ```
 
-All of these approaches can be combined. For example, here we access the values of the second, third, and fourth columns for the 11^th^, 13^th^, 29^th^, and 90^th^ L1 participants.
+All of these approaches can be combined. For example, below we access the values of the second, third, and fourth columns for the 11^th^, 13^th^, 29^th^, and 90^th^ L1 participants.
 
 ```{r}
 L1.data[c(11,13,29,90),2:4]
@@ -475,21 +471,23 @@ We can then combine the `sum()` and the `length()` functions to calculate the pa
 sum(L1.data$Age) / length(L1.data$Age)
 ```
 
-Base `R` includes lots of useful functions, especially to do statistics. Hence, it will come as no surprise to find that there is a built-in function to calculate mean average values. It is called `mean()` and is very simple to use.
+Base `R` includes lots of useful functions to do statistics, which means that it includes a built-in function to calculate mean average values. It is called `mean()` and simplifies the procedure considerably:
 
 ```{r}
 mean(L1.data$Age)
 ```
 
-If you save the values of a variable to your `R` session environment, you do not need to use the name of the dataset and the `$` sign to calculate its mean. Instead, you can directly apply the `mean()` function to the stored `R` object.
+If we save the values of a variable to our `R` session environment, we do not need to use the name of the dataset and the `$` sign to calculate its mean. Instead, we can directly apply the `mean()` function to the stored `R` object:
 
 ```{r}
-# Saving the values of the Age variable to a new R object called L1.Age:
-L1.Age <- L1.data$Age
+L1.Age <- L1.data$Age # <1>
 
-# Applying the mean() function to this new R object:
-mean(L1.Age)
+mean(L1.Age) # <2>
 ```
+
+1.  Saving the values of the Age variable to a new R object called L1.Age
+
+2.  Applying the mean() function to this new R object
 
 :::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
@@ -610,13 +608,13 @@ summary(L1.Occupation) # <18>
 
 ### Function arguments
 
-All of the functions that we have looked at this chapter so far work with just a single argument: either a vector of values (e.g. a variable from our dataset as in `mean(L1.data$Age)`) or an entire tabular dataset (e.g. `str(L1.data)`). When we looked at the `head()` function, we saw that, per default, it displays the first six rows but that we can change this by specifying a second argument in the function. In `R`, arguments within a function are always separated by a comma.
+All of the functions that we have looked at this chapter so far work with just a single argument: either a vector of values (e.g. a variable from our dataset as in `mean(L1.data$Age)`) or an entire tabular dataset as in `str(L1.data)`. When we looked at the `head()` function, we saw that, per default, it displays the first six rows, but that we can change this by specifying a second argument in the function. In `R`, arguments within a function are always separated by a comma.
 
 ```{r}
 head(L1.Age, n = 6)
 ```
 
-The names of the argument can be specified but do not have to be if they are listed in the order specified in the documentation. You can check the 'Usage' section of a function's help file (e.g. using `help(head)` function or `?head`) to find out the order of the arguments. Run the following commands and compare their output:
+The names of the argument can be specified but don't have to be if they are listed in the order specified in the documentation. You can check the 'Usage' section of a function's help file (e.g. with `help(head)`  or `?head`) to find out the order of a function's arguments. Run the following commands and compare their output:
 
 ```{r eval = FALSE}
 head(x = L1.Age, n = 6)
@@ -625,7 +623,7 @@ head(n = 6, x = L1.Age)
 head(6, L1.Age)
 ```
 
-Whilst the first three return exactly the same output, the fourth returns an error because the argument names are not specified and are not in the order specified in the function's help file. To avoid making errors and confusing your collaborators and/or future self, it's good practice to explicitly name all the arguments except the most obvious ones.
+Whilst the first three return exactly the same output, the fourth returns an error because the argument names are not specified and are not in the order specified in the function's help file. To avoid making errors and confusing your collaborators and/or future self, it's best to explicitly name all the arguments except the most obvious ones.
 
 :::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
@@ -706,41 +704,41 @@ check_hint("Two options are correct because, as long as the arguments are listed
 
 ## Combining functions in `R`
 
-Combining functions is where the real fun starts with programming! In @sec-RFunctions, we already combined two functions using a mathematical operator (`/`). But what if we want to compute L1 participant's average age to two decimal places? To do this, we need to combine the `mean()` function and the `round()` function. We can do this in two steps.
+Combining functions is where the real fun starts with programming! In @sec-RFunctions, we already combined two functions using a mathematical operator (`/`). Now, we are going to compute L1 participant's average age to two decimal places. To do this, we need to combine the `mean()` function and the `round()` function. We can do this in two steps:
 
 ```{r}
-# Step 1:
-L1.mean.age <- mean(L1.Age)
-
-# Step 2:
-round(L1.mean.age, digits = 2)
+L1.mean.age <- mean(L1.Age) # <1>
+round(L1.mean.age, digits = 2) # <2>
 ```
 
-In step 1, we compute the mean value and save it as an `R` object and, in step 2, we pass this object through the `round()` function with the argument `digits = 2`. There is nothing wrong with this method, but it often require lots of intermediary `R` objects, which can get rather tiresome.
+1.  In step 1, we compute the mean value and save it as an `R` object.
+2.  In step 2, we pass this object through the `round()` function with the argument `digits = 2`
 
-In the following, we will look at two further ways to combine functions in `R`: nesting and piping.
+:::: {.content-visible when-format="html"}
+::: callout-note
+Hover over the numbers to the right of the code to see the code annotation.
+:::
+::::
+
+In principle, there is nothing wrong with this method, but it often require lots of intermediary `R` objects, which can get rather tiresome and can lead to human errors as you can end up calling the wrong object. In the following, we will look at two further ways to combine functions in `R`: nesting and piping.
 
 ### Nested functions {#sec-Nesting}
 
-The first method involves lots of brackets (also known as 'parentheses'). This is because in nested functions, one function is placed inside another function. The inner function is evaluated first, and its result is passed to the next outer function. Here's an example:
+The first method involves lots of brackets (also known as 'parentheses'). This is because in nested functions, one function is placed inside another function. The inner function is evaluated first, and its result is passed to the next outer function. In the following example, the `mean()` function is nested inside the `round()` function. The `mean()` function calculates the mean of `L1.Age`, and the result is passed to the `round()` function, which rounds the result to the nearest integer:
 
 ```{r}
 round(mean(L1.Age))
 ```
 
-In this example, the `mean()` function is nested inside the `round()` function. The `mean()` function calculates the mean of `L1.Age`, and the result is passed to the `round()` function, which rounds the result to the nearest integer.
-
-You can also pass additional arguments to any of the functions, but you must make sure that you place the arguments within the correct set of brackets.
+We can also pass additional arguments to any of the functions, but we must make sure to place the arguments within the correct set of brackets. In the following example, the argument `digits = 2` belongs to the outer function `round()`; hence it must be placed within the outer set of brackets:
 
 ```{r}
 round(mean(L1.Age), digits = 2)
 ```
 
-In this example, the argument `digits = 2` belongs to the outer function `round()`; hence it must be placed within the outer set of brackets.
+In theory, we can nest as many functions as we like, but things can get quite chaotic after more than a couple of functions. We need to make sure that we can trace back which arguments and which brackets belong to which function (see @fig-NestedFunctions).
 
-In theory, you can nest as many functions as you like, but things can get quite chaotic after more than a couple of functions. You need to make sure that you can trace back which arguments and which brackets belong to which function (see @fig-NestedFunctions).
-
-![A schematic representations of a) one function with two arguments, b) two nested functions each with two arguments, and c) three nested functions each with two arguments](images/NestedFunctions.png){#fig-NestedFunctions fig-alt="The pseudo code reads like this a) function(argument 1, argument 2), b) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), c) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c)."}
+![A schematic representations of a) one function with two arguments, b) two nested functions each with two arguments, and c) three nested functions each with two arguments](images/NestedFunctions.png){#fig-NestedFunctions fig-alt="The pseudo code reads like this a) function(argument 1, argument 2), b) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), c) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c)." width="80%"}
 
 ::: callout-tip
 ### Time to think!
@@ -748,17 +746,20 @@ In theory, you can nest as many functions as you like, but things can get quite 
 Consider the three lines of code below. Without running them, can you tell which of the three lines of code will output the square root of L1 participant's average age to two decimal places?
 
 ```{r eval = FALSE}
-round(sqrt(mean(L1.Age) digits = 2))
+round(sqrt(mean(L1.Age) digits = 2)) # <1>
 
-sqrt(round(mean(L1.Age), digits = 2))
+sqrt(round(mean(L1.Age), digits = 2)) # <2>
 
-round(sqrt(mean(L1.Age)), digits = 2)
-
+round(sqrt(mean(L1.Age)), digits = 2) # <3>
 ```
 
-The first line will return an "unexpected symbol" error because it is missing a comma before the argument `digits = 2`. The second line actually outputs `6.126989`, which has more than two decimal places! This is because `R` interprets the functions from the inside out: first, it calculates the mean value, then it rounds that off to two decimal places, and only then does it compute the square root of that rounded off value. The third line, in contrast, does the rounding operation as the last step. Note that, in the two lines of code that do not produce an error, the brackets around the argument `digits = 2` are also located in different places.
+1.  This code will return an "unexpected symbol" error because it is missing a comma before the argument `digits = 2`. 
 
-It is very easy to make bracketing errors when writing code and especially so when nesting functions (see @fig-NestedFunctions). Watch your commas and brackets (see also @sec-Errors)!
+2.  This second line of code actually outputs `6.126989`, which has more than two decimal places! This is because `R` interprets the functions from the inside out: first, it calculates the mean value, then it rounds that off to two decimal places, and only then does it compute the square root of that rounded off value. 
+
+3.  This third attempt, in contrast, does the rounding operation as the last step. Note that, in the two lines of code that do not produce an error, the brackets around the argument `digits = 2` are also located in different places.
+
+It is very easy to make bracketing errors when writing code and especially so when nesting functions (see @fig-NestedFunctions) so watch your commas and brackets (see also @sec-Errors)!
 :::
 
 ### Piped Functions {#sec-Piping}
@@ -767,7 +768,7 @@ If you found all these brackets overwhelming: fear not! There is a second method
 
 [^7_variablesfunctions-1]: This is the **native R pipe** operator, which was introduced in May 2021 with `R` version 4.1.0. As a result, you will not find it in code written in earlier versions of `R`. Previously, piping required an additional `R` library, the {magrittr} library. The {magrittr} pipe looks like this: `%>%`. At first sight, they appear to work is in the same way, but there are some important differences. If you are familiar with the {magrittr} pipe and want to understand how it differs from the native R pipe, I recommend this excellent blog post by Isabella Velásquez: <https://ivelasq.rbind.io/blog/understanding-the-r-pipe/>.
 
-The `|>` operator passes the output of one function on to the first argument of the next function. This allows us to chain multiple functions together in a much more intuitive way.
+The `|>` operator passes the output of one function on to the first argument of the next function. This allows us to chain multiple functions together in a much more intuitive way, e.g.:
 
 ```{r}
 L1.Age |> 
@@ -775,7 +776,7 @@ L1.Age |>
  round()
 ```
 
-In this example, the object `L1.Age` is passed on to the first argument of the `mean()` function. This calculates the mean of `L1.Age`. Next, this result is passed to the `round()` function, which rounds the mean value to the nearest integer.
+In the example above, the object `L1.Age` is passed on to the first argument of the `mean()` function. This calculates the mean of `L1.Age`. Next, this result is passed to the `round()` function, which rounds the mean value to the nearest integer.
 
 To pass additional arguments to any function in the pipeline, we add them within the brackets that belong to that function:
 
@@ -785,7 +786,7 @@ L1.Age |>
  round(digits = 2)
 ```
 
-Like many of the relational operators we saw in @sec-RelationalOperators, the `R` pipe is a combination of two symbols, the computer pipe symbol `|` and the right angle bracket `>`. Don't worry if you're not sure where these two symbols are on your keyboard as *RStudio* has a handy shortcut for you: {{< kbd mac=Cmd-Shift-M win=Ctrl-Shift-M linux=Ctrl-Shift-M >}} [^7_variablesfunctions-2] (see @fig-Pipes). I strongly recommend that you write this shortcut on a prominent post-it and learn it asap, as you will need it a lot when you are working in `R`!
+Like many of the relational operators we learnt about in @sec-RelationalOperators, the `R` pipe is a combination of two symbols, the computer pipe `|` and the right angle bracket `>`. Don't worry if you're not sure where these two symbols are on your keyboard as *RStudio* has a handy shortcut for you: {{< kbd mac=Cmd-Shift-M win=Ctrl-Shift-M linux=Ctrl-Shift-M >}} (see also @fig-Pipes). I strongly recommend that you write this shortcut on a prominent post-it and learn it asap, as you will need it a lot when you are working in `R`![^7_variablesfunctions-2]
 
 [^7_variablesfunctions-2]: If, in your version of RStudio, this shortcut produces `%>%` instead of `|>`, you have probably not activated the native `R` pipe option in your *RStudio* global options (see instructions in @sec-GlobalOptions).
 
@@ -881,19 +882,20 @@ There is often more than one way to solve problems in `R`. Choose whichever way 
 :::: {.content-visible when-profile="OER"}
 ### Check your progress 🌟 {.unnumbered}
 
-You have successfully completed [`r checkdown::insert_score()` out of 19 questions]{style="color:green;"} in this chapter.
+Well done! You have successfully completed [`r checkdown::insert_score()` out of 19 questions]{style="color:green;"} in this chapter.
 ::::
 
 :::: {.content-visible when-format="pdf"}
 ### Check your progress {.unnumbered}
+It's time to complete this chapter's [tasks and quizzes](https://elenlefoll.github.io/RstatsTextbook/quizzes/7_quiz.html)! Good luck! `r emoji("four_leaf_clover")`
 ::::
 
 Are you confident that you can...?
 
 -   [ ] Inspect a data set in `R` (@sec-InspectingData)
 -   [ ] Recognise different types of variables (@sec-Variables)
--   [ ] Access individual columns and data points in `R` (@sec-DollarSign) - (@sec-SquareBrackets)
+-   [ ] Access individual columns and data points in `R` (@sec-DollarSign)--(@sec-SquareBrackets)
 -   [ ] Use built-in `R` functions and change function arguments (@sec-RFunctions)
--   [ ] Combine functions in `R` using both the nesting and the piping methods (@sec-Nesting) - (@sec-Piping)
+-   [ ] Combine functions in `R` using both the nesting and the piping methods (@sec-Nesting)--(@sec-Piping)
 
-You are now ready to some statistics in `R`! In @sec-DescRiptiveStats, we begin with descriptive statistics.
+You are now ready to do statistics in `R`! `r emoji("muscle")` In @sec-DescRiptiveStats, we begin with descriptive statistics.

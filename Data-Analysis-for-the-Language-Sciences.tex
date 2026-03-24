@@ -197,7 +197,6 @@
 \usepackage{emoji}
 \usepackage{fvextra}
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
-\DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
 \KOMAoption{captions}{tableheading}
 \makeatletter
 \@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
@@ -295,6 +294,14 @@ visualisation in \texttt{R}}
 \date{12 March 2026}
 \begin{document}
 \maketitle
+
+\RecustomVerbatimEnvironment{verbatim}{Verbatim}{
+  showspaces = false,
+  showtabs = false,
+  breaksymbolleft={},
+  breaklines
+  % Note: setting commandchars=\\\{\} here will cause an error 
+}
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -830,6 +837,11 @@ happy to advise students and researchers on these topics.
 \subsection*{Check your progress}\label{check-your-progress-1}
 \addcontentsline{toc}{subsection}{Check your progress}
 
+Head over to the online appendix to complete this chapter's
+\href{https://elenlefoll.github.io/RstatsTextbook/1_quiz.html}{tasks and
+quizzes}. This is a great opportunity to consolidate what you have
+learnt so far and you will get immediate feedback on your progress.
+
 Are you confident that you can\ldots?
 
 \begin{itemize}
@@ -991,9 +1003,9 @@ formats exist, such as \textbf{Wave}form Audio File Format (WAVE) and
 \textbf{F}ree \textbf{L}ossless \textbf{A}udio \textbf{C}odec (FLAC).
 
 We can usually tell in what format a file is in by looking at its file
-extension. The file extension is the suffix of the file name. It comes
-at the end of the file name and is preceded by a dot. The file extension
-of a WAVE file is \texttt{.wav}, whereas that of an MP3 file is
+extension. The file extension is the suffix of the filename. It comes at
+the end of the filename and is preceded by a dot. The file extension of
+a WAVE file is \texttt{.wav}, whereas that of an MP3 file is
 \texttt{.mp3}; hence the file \texttt{recording.wav} is a WAVE file,
 whereas \texttt{recording.mp3} is an MP3 file.
 
@@ -1010,11 +1022,11 @@ misleading and can lead to all kinds of problems.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={File Finder window showing 7 files with file names that do not include a file extension.}]{images/FinderWindowNoExtensions.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={File Finder window showing 7 files with filenames that do not include a file extension.}]{images/FinderWindowNoExtensions.png}}
 
 }
 
-\subcaption{\label{fig-NoExtensions}Displaying file names without file
+\subcaption{\label{fig-NoExtensions}Displaying filenames without file
 extensions}
 
 \end{minipage}%
@@ -1030,7 +1042,7 @@ extensions}
 
 }
 
-\subcaption{\label{fig-Extensions}Displaying file names with their
+\subcaption{\label{fig-Extensions}Displaying filenames with their
 extensions}
 
 \end{minipage}%
@@ -1084,8 +1096,8 @@ on \textbf{Windows}:
   Click `Extract'.
 \end{enumerate}
 
-On \textbf{Mac OS}, double-clicking a \texttt{.zip} file name in the
-will automatically unzip it.
+On \textbf{Mac OS}, double-clicking a \texttt{.zip} filename in the will
+automatically unzip it.
 
 If you are using a \textbf{Linux} terminal, use the command
 \texttt{unzip} followed by the name of the file to unzip it.
@@ -1359,27 +1371,19 @@ be used to separate values, but the most common separators are the comma
 semicolon (\texttt{;}). Below is the \texttt{.csv} file corresponding to
 Table~\ref{tbl-RepoTable}.
 
-\begin{codelisting}
-
-\caption{\texttt{17-03-2026\_repositories.csv}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{Repository,Discipline,Online since,Homepage}
-\NormalTok{CLARIN,Linguistics,2012,https://www.clarin.eu/}
-\NormalTok{Dryad,All,2008,https://datadryad.org/}
-\NormalTok{Figshare,All,2012,https://figshare.com/}
-\NormalTok{HAL,All,2001,https://hal.science/}
-\NormalTok{IRIS,Linguistics,2011,https://www.iris{-}database.org/}
-\NormalTok{"Open Science Framework, OSF",All,2011,https://osf.io/}
-\NormalTok{TalkBank,Linguistics,1999,https://talkbank.org/}
-\NormalTok{"Tromsø Repository of Language and Linguistics, TROLLing",Linguistics,2014,https://site.uit.no/trolling/}
-\NormalTok{Vivil,Clinical research,2017,https://vivli.org/}
-\NormalTok{Zenodo,All,2013,https://zenodo.org/}
-\end{Highlighting}
-\end{Shaded}
-
-\end{codelisting}
+\begin{verbatim}
+Repository,Discipline,Online since,Homepage
+CLARIN,Linguistics,2012,https://www.clarin.eu/
+Dryad,All,2008,https://datadryad.org/
+Figshare,All,2012,https://figshare.com/
+HAL,All,2001,https://hal.science/
+IRIS,Linguistics,2011,https://www.iris-database.org/
+"Open Science Framework, OSF",All,2011,https://osf.io/
+TalkBank,Linguistics,1999,https://talkbank.org/
+"Tromsø Repository of Language and Linguistics, TROLLing",Linguistics,2014,https://site.uit.no/trolling/
+Vivil,Clinical research,2017,https://vivli.org/
+Zenodo,All,2013,https://zenodo.org/
+\end{verbatim}
 
 As you can see, the values are separated by commas.\footnote{Note that
   the file extension \texttt{.csv} stands for ``comma-separated
@@ -1432,7 +1436,7 @@ instructions on how to install LibreOffice) and, from the list of
 options under `Create', click on `Calc Spreadsheet' to open up a blank
 spreadsheet. Then, from the `File' drop-down menu, select `Open\ldots{}'
 or use the keyboard shortcut
-\texttt{Ctrl-O} (linux), \texttt{Cmd-O} (mac), \texttt{Ctrl-O} (windows)
+\texttt{Cmd-O} (mac), \texttt{Ctrl-O} (linux), \texttt{Ctrl-O} (windows)
 and locate the DSV file that you wish to open.
 
 On opening a DSV file in LibreOffice Calc, we get a dialogue box with
@@ -1442,7 +1446,7 @@ various options (see Figure~\ref{fig-DSVImportCalc}).
 
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={A screenshot showing the text import dialogue in LibreOffice Calc. It shows that the checkbox for comma is checked and that the string delimiter is set to double quotation mark. All other checkboxes are unchecked.}]{images/DSVImportCalc.png}
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio,alt={A screenshot showing the text import dialogue in LibreOffice Calc. It shows that the checkbox for comma is checked and that the string delimiter is set to double quotation mark. All other checkboxes are unchecked.}]{images/DSVImportCalc.png}
 
 }
 
@@ -1580,7 +1584,7 @@ file corrupted, I recommend making either
 application to open up such files.
 
 On \textbf{MacOS}, you can change the default application used to open
-files of any file extensions by right-clicking a file name with this
+files of any file extensions by right-clicking a filename with this
 particular extension and than selecting `Get Info'
 (Figure~\ref{fig-ChangeDefaultAppMac01}). In the example below, Numbers
 is the default application for all \texttt{.csv} files (see
@@ -1592,7 +1596,7 @@ your choice.
 
 \begin{figure}[H]
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
@@ -1604,7 +1608,10 @@ your choice.
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.01\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
@@ -1698,14 +1705,19 @@ opening \texttt{.csv} files in Windows}
 If it is not possible to adjust the default app settings, either due to
 insufficient permissions or because you only have temporary access to
 this PC, do \emph{not} to open \texttt{.csv} or \texttt{.tsv} files with
-the default program. Instead, right-click on the file name and, using
-the `Open with' option, select the option to open the file with
-LibreOffice, if available, or else with a plain-text editor.
+the default program. Instead, right-click on the filename and, using the
+`Open with' option, select the option to open the file with LibreOffice,
+if available, or else with a plain-text editor.
 
 \end{tcolorbox}
 
 \subsection*{Check your progress}\label{check-your-progress-3}
 \addcontentsline{toc}{subsection}{Check your progress}
+
+It's time to complete this chapter's
+\href{https://elenlefoll.github.io/RstatsTextbook/quizzes/2_quiz.html}{tasks
+and quizzes}. They involve Playmobil and the story of a real-life Excel
+disaster!
 
 Are you confident that you can\ldots?
 
@@ -1790,14 +1802,13 @@ frustrating.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={A frustrated looking little monster in front of a very disorganised cooking area, with smoke and fire coming from a pot surrounded by a mess of bowls, utensils, and scattered ingredients.}]{images/AHorst_MessyKitchen.png}}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={A frustrated looking little monster in front of a very disorganised cooking area, with smoke and fire coming from a pot surrounded by a mess of bowls, utensils, and scattered ingredients.}]{images/AHorst_MessyKitchen.png}
 
 }
 
 \caption{\label{fig-MessyKitchen}An inefficient and potentially
-dangerous workflow (artwork
-\href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}
-\href{https://twitter.com/allison_horst}{Allison Horst})}
+dangerous workflow (\href{https://twitter.com/allison_horst}{artwork CC
+BY 4.0 @allison\_horst})}
 
 \end{figure}%
 
@@ -1805,30 +1816,30 @@ But the good news is: just as a tidy, well-organized kitchen can greatly
 enhance your cooking experience, good file management can streamline
 your research process, help you avoid making mistakes, and reduce
 stress. In the following sections, we will cook up some good practices
-for file naming, data management, and project organisation. We will
-start with basic recipes for naming and managing your files. See the
-`Going further' boxes for tips on learning the `gourmet skills' needed
-to handle more complex projects. So, let's don the chef's hat and learn
-how to create a user-friendly computer workspace. And remember, as with
+for filenaming, data management, and project organisation. We will start
+with basic recipes for naming and managing your files. See the `Going
+further' boxes for tips on learning the `gourmet skills' needed to
+handle more complex projects. So, let's don the chef's hat and learn how
+to create a user-friendly computer workspace. And remember, as with
 cooking, practice makes perfect!
 
 \begin{figure}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={An organised kitchen with sections labeled "tools", "report" and "files", while a monster in a chef\textquotesingle s hat stirs in a bowl labeled "code."}]{images/AHorst_TidyKitchen.png}}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={An organised kitchen with sections labeled "tools", "report" and "files", while a monster in a chef\textquotesingle s hat stirs in a bowl labeled "code."}]{images/AHorst_TidyKitchen.png}
 
 }
 
-\caption{\label{fig-TidyKitchen}A tidy and efficient workflow (artwork
-\href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}
-\href{https://twitter.com/allison_horst}{Allison Horst})}
+\caption{\label{fig-TidyKitchen}A tidy and efficient workflow
+(\href{https://twitter.com/allison_horst}{artwork CC BY 4.0
+@allison\_horst})}
 
 \end{figure}%
 
 \section{Naming conventions}\label{sec-FileNaming}
 
-File names are labels. They tell us what is inside a file and helps us
+filenames are labels. They tell us what is inside a file and helps us
 identify the correct file quickly and reliably. If you had to run to the
 printing shop to get your thesis printed in time for a tight deadline,
 which of these sets of files would you rather have to choose from? Which
@@ -1860,7 +1871,7 @@ is more likely to lead you to getting the wrong version printed?
 
 \end{minipage}%
 
-\caption{\label{fig-filenames}Two sets of file names, one clearly better
+\caption{\label{fig-filenames}Two sets of filenames, one clearly better
 than the other.}
 
 \end{figure}%
@@ -1880,17 +1891,17 @@ guess what a file contains based on an ambiguous or unclear name like
 not
 \texttt{Thai\ Bird\textquotesingle{}s\ Eye\ Chilli\ bought\ on\ December\ 19,\ 2023\ whilst\ Christmas\ shopping\ with\ mum,\ note\ that\ the\ best\ before\ date\ is\ 31\ January\ 2028})!
 Unless you and all your colleagues read Thai, do not be tempted to write
-the part of the file name in Thai as this could also lead to
+the part of the filename in Thai as this could also lead to
 misunderstandings.
 
-Another reason for not including Thai characters in your file name is
+Another reason for not including Thai characters in your filename is
 that it would not be \textbf{computer-friendly}. In general, computers
 are not good at dealing with names that contain anything else but Latin
 alphanumeric characters, e.g.~the letters \texttt{A} to \texttt{Z} and
 \texttt{a} to \texttt{z} with no accents and the numbers \texttt{0} to
 \texttt{9}. Hyphens (\texttt{-}) and underscores (\texttt{\_}) can also
 be used, but not spaces. The dot (\texttt{.}) is reserved for the file
-extension and should ideally not be used elsewhere in the file name.
+extension and should ideally not be used elsewhere in the filename.
 
 Hence, whilst
 \texttt{Thai\ Bird\textquotesingle{}s\ Eye\ Chilli\ 31\ Jan\ 2028} is
@@ -1904,85 +1915,71 @@ in a meaningful way. For example, in the label
 distinguishes between two different pieces of information, whilst the
 \texttt{-} helps humans to parse individual words within a piece of
 information. Using such patterns consistently not only helps humans to
-read file names efficiently, it also means that computers can easily
+read filenames efficiently, it also means that computers can easily
 `parse', i.e.~break down such names into meaningful items. This can be
 very useful to search for files or automatically extract metadata from
-file names.
-
-\begin{figure}
-
-\centering{
-
-\pandocbounded{\includegraphics[keepaspectratio,alt={Cartoon representations of common cases in coding. A snake screams "SCREAMING\_SNAKE\_CASE" into the face of a camel (wearing ear muffs) with "camelCase" written along its back. Vegetables on a skewer spell out "kebab-case" (words on a skewer). A mellow, happy looking snake has text "snake\_case" along it.}]{images/AHorst_InThatCase.png}}
-
-}
-
-\caption{\label{fig-InThatCase}To help us remember the different,
-systematic ways to use letter case, hyphens, and underscores in naming
-conventions, these patterns have fun names (artwork
-\href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}
-\href{https://twitter.com/allison_horst}{Allison Horst}).}
-
-\end{figure}%
+filenames.
 
 It is fine to use both lower-case and upper-case letters in file and
 folder names. However, some operating systems will treat upper-case and
 lower-case letters as the same, whilst others will not. This means that
-you should avoid having file names that are only distinguishable by
-case.
+you should avoid having filenames that are only distinguishable by case.
 
-Finally, it is worth noting that file names cannot be infinitely long!
-The maximum length of a file name depends on the operating system and
-the application that you use\footnote{For example, many Windows
-  applications have a maximum file path length of 260 characters (Learn
-  Microsoft 2022).} but, as a rule of thumb, if you can display the
-entire file name in a reasonably sized Finder window (on macOS) or File
-Explorer window (on Windows), its length is unquestionably both human-
-and computer-friendly.
+Finally, it is worth noting that filenames cannot be infinitely long!
+The maximum length of a filename depends on the operating system and the
+application that you use\footnote{For example, many Windows applications
+  have a maximum file path length of 260 characters (Learn Microsoft
+  2022).} but, as a rule of thumb, if you can display the entire
+filename in a reasonably sized Finder window (on macOS) or File Explorer
+window (on Windows), its length is unquestionably both human- and
+computer-friendly.
 
-It is also important to ensure that file names are easily sortable. If
+It is also important to ensure that filenames are easily sortable. If
 you have a series of files that document a process, consider beginning
-each file name with a number that correspond to the order of the
-process, e.g.~\texttt{01\_DataPreparation.R},
-\texttt{02\_DataAnnotation.R}, \texttt{03\_AnnotationEvaluation.R}.
-Left-padding the numbers with one or more \texttt{0} will mean that the
-files are sorted numerically, even when files are listed alphabetically
-(see Figure~\ref{fig-FileNamesLeftPaddedNumbers}).
+each filename with a number that correspond to the order of the process,
+e.g.~\texttt{01\_DataPreparation.R}, \texttt{02\_DataAnnotation.R},
+\texttt{03\_AnnotationEvaluation.R}. Left-padding the numbers with one
+or more \texttt{0} will mean that the files are sorted numerically, even
+when files are listed alphabetically (see
+Figure~\ref{fig-FileNamesLeftPaddedNumbers}).
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={List of file names without left-padded numbers so that, when sorted alphabetically, these files are not ordered numerically.}]{images/FileNamesLexicographic.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={List of filenames without left-padded numbers so that, when sorted alphabetically, these files are not ordered numerically.}]{images/FileNamesLexicographic.png}}
 
 }
 
-\subcaption{\label{fig-FileNamesNaturalNumbers}File names without
+\subcaption{\label{fig-FileNamesNaturalNumbers}Filenames without
 additional zeros numbers}
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.01\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={List of file names with left-padded numbers that are ordered alphabetically. The files are ordered in a clear and organised manner.}]{images/FileNamesPaddedNumbers.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={List of filenames with left-padded numbers that are ordered alphabetically. The files are ordered in a clear and organised manner.}]{images/FileNamesPaddedNumbers.png}}
 
 }
 
-\subcaption{\label{fig-FileNamesLeftPaddedNumbers}File names with
+\subcaption{\label{fig-FileNamesLeftPaddedNumbers}Filenames with
 left-padded numbers}
 
 \end{minipage}%
 
-\caption{\label{fig-NumberPadding}Why left-padding file names is good
+\caption{\label{fig-NumberPadding}Why left-padding filenames is good
 file naming practice.}
 
 \end{figure}%
 
-It is sometimes useful to include the date in file names. However, many
+It is sometimes useful to include the date in filenames. However, many
 date formats are not easily sortable (see
 Figure~\ref{fig-FileNamesDateFormatUnordered}). Formatting dates using
 the `YYYY-MM-DD' format as in
@@ -1995,11 +1992,11 @@ sort your files in chronological order.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={A finder window showing the files pane with file names in an unordered date format. The files cannot be ordered meaningfully based on the date in the file name.}]{images/FileNamesDateFormatUnordered.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A finder window showing the files pane with filenames in an unordered date format. The files cannot be ordered meaningfully based on the date in the filename.}]{images/FileNamesDateFormatUnordered.png}}
 
 }
 
-\subcaption{\label{fig-FileNamesDateFormatUnordered}File names with a
+\subcaption{\label{fig-FileNamesDateFormatUnordered}Filenames with a
 non-ordered date format}
 
 \end{minipage}%
@@ -2008,16 +2005,16 @@ non-ordered date format}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={A finder window showing the files pane with file names in an ordered date format (YYYY-MM-DD). The files can be meaningfully ordered based on the date in the file name.}]{images/FileNamesDateFormatOrdered.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A finder window showing the files pane with filenames in an ordered date format (YYYY-MM-DD). The files can be meaningfully ordered based on the date in the filename.}]{images/FileNamesDateFormatOrdered.png}}
 
 }
 
-\subcaption{\label{fig-FileNamesDateFormatOrdered}File names with an
+\subcaption{\label{fig-FileNamesDateFormatOrdered}Filenames with an
 ordered date format}
 
 \end{minipage}%
 
-\caption{\label{fig-Dates}Why using the YYYY-MM-DD is good file naming
+\caption{\label{fig-Dates}Why using the YYYY-MM-DD is good filenaming
 practice.}
 
 \end{figure}%
@@ -2030,15 +2027,15 @@ different day-month conventions (e.g.~12/13 can mean both 12 December
 and 13, November).
 
 Even though computers have gotten much better at dealing with folder and
-file names containing spaces and special characters, using anything
-other than basic Latin alphanumeric characters (\texttt{A-Z},
-\texttt{a-z}, and \texttt{0-9}), \texttt{-} and \texttt{\_} in file and
-folder names will - sooner or later - cause you or your colleagues some
-serious issues. This is especially true when you start coding. Do not
-delay getting used to using systematic, human- and computer-friendly
-folder and file names! In the long run, these simple guidelines will
-make your digital life much smoother and save you much time and
-unnecessary stress.
+filenames containing spaces and special characters, using anything other
+than basic Latin alphanumeric characters (\texttt{A-Z}, \texttt{a-z},
+and \texttt{0-9}), \texttt{-} and \texttt{\_} in file and folder names
+will - sooner or later - cause you or your colleagues some serious
+issues. This is especially true when you start coding. Do not delay
+getting used to using systematic, human- and computer-friendly folder
+and filenames! In the long run, these simple guidelines will make your
+digital life much smoother and save you much time and unnecessary
+stress.
 
 \section{Folders and paths}\label{sec-FoldersPaths}
 
@@ -2066,30 +2063,30 @@ or a folder in a computer's filesystem. There are different types of
 paths. An \textbf{absolute path} provides a complete path from the
 computer's ``root folder''. If our house were our root folder, the
 absolute path to Aunt Sophie's recipe would be
-\texttt{"/Kitchen/Recipes/Desserts/Cakes/Apple-Cake\_Aunt-Sophie"}.
-Hence, just like your home's postal address, which ideally specifies
-your home's absolute location worldwide, an absolute path provides a
-complete path from a computer's \textbf{root folder} to the file or
-folder in question.
+\texttt{/Kitchen/Recipes/Desserts/Cakes/Apple-Cake\_Aunt-Sophie}. Hence,
+just like your home's postal address, which ideally specifies your
+home's absolute location worldwide, an absolute path provides a complete
+path from a computer's \textbf{root folder} to the file or folder in
+question.
 
 By contrast, a \textbf{relative path} represents the location of a file
 or folder relative to another folder. Hence, if we already have the
 Dessert folder open in front of us, the relative path to the apple cake
-recipe would simply be \texttt{"Cakes/Apple-Cake\_Aunt-Sophie"}.
-However, if we wanted to access a recipe in the Starters folder from the
-Cakes folder, we would first have to go ``back up the path'' from the
-Cakes folder to the Recipes drawer. This is achieved by adding
-\texttt{../} to the front of the relative path,
-e.g.~\texttt{"../Starters/Soups/Pea-Mint-Soup\_Barbara"}.
+recipe would simply be \texttt{Cakes/Apple-Cake\_Aunt-Sophie}. However,
+if we wanted to access a recipe in the Starters folder from the Cakes
+folder, we would first have to go ``back up the path'' from the Cakes
+folder to the Recipes drawer. This is achieved by adding \texttt{../} to
+the front of the relative path,
+e.g.~\texttt{../Starters/Soups/Pea-Mint-Soup\_Barbara}.
 
 For example,
-\texttt{"/Users/lefoll/Documents/Teaching/RstatsTextbook/ToDo.txt"} is
-the absolute path from my computer's root folder to the file containing
-my to-do list in relation to this textbook project. By contrast, a
-``relative path'' represents the location of a file or folder relative
-to another folder. Hence, if I am already in the directory
-\texttt{"/Users/lefoll/Documents/Teaching/RstatsTextbook/"}, the
-relative path to my to-do list is only \texttt{"ToDo.txt"}.
+\texttt{/Users/lefoll/Documents/Teaching/RstatsTextbook/ToDo.txt} is the
+absolute path from my computer's root folder to the file containing my
+to-do list in relation to this textbook project. A relative path
+represents the location of a file or folder relative to another folder.
+Hence, if I am already in the directory
+\texttt{/Users/lefoll/Documents/Teaching/RstatsTextbook/}, the relative
+path to my to-do list is only \texttt{ToDo.txt}.
 
 Note that, here, we use the term ``folder'' as a metaphor for a computer
 file directory. Most modern operating systems use folder icons that look
@@ -2099,10 +2096,19 @@ in computer file systems.
 
 To complicate things a little, the way file paths are written varies
 depending on the computer's operating system. In Unix-based systems like
-Linux and macOS, paths are written using forward slashes
-(e.g.~\texttt{"/Users/elen/Documents/Teaching/RstatsTextbook/ToDo.txt"}),
+Linux and macOS, paths are written using forward slashes \texttt{/},
 whereas on Windows, paths are written using backslashes
-(e.g.~\texttt{"C:\textbackslash{}Users\textbackslash{}elen\textbackslash{}Documents\textbackslash{}Teaching\textbackslash{}RstatsTextbook\textbackslash{}ToDo.txt"}).
+\texttt{\textbackslash{}}.
+
+\begin{itemize}
+\tightlist
+\item
+  macOS and Linux:
+  \texttt{/Users/elen/Documents/Teaching/RstatsTextbook/ToDo.txt}
+\item
+  Windows:
+  \texttt{C:\textbackslash{}Users\textbackslash{}elen\textbackslash{}Documents\textbackslash{}Teaching\textbackslash{}RstatsTextbook\textbackslash{}ToDo.txt}
+\end{itemize}
 
 There are many ways to find out where your files are stored on your
 computer. Let us begin by opening a Finder window (on macOS) or a File
@@ -2114,23 +2120,21 @@ you have found it:
 \begin{itemize}
 \item
   on Windows/Linux: Right-click on the file (in some older Windows
-  versions, you may also need to press the
-  \texttt{Shift} (linux), \texttt{Shift} (windows) key). Among the
-  options presented to you, click on the one to copy the file path
+  versions, you may also need to press the \texttt{Shift} key). Among
+  the options presented to you, click on the one to copy the file path
   (e.g.~``Copy as path'' or similar in the language of your operating
   system).
 \item
-  on macOS: Right-click on the file and then press the `Option' or
-  \texttt{⌥} (mac: \texttt{Option}) key on your keyboard. Pressing down
-  this key will change the options you are given after having
-  right-clicked. One of these options should now be ``Copy \ldots{} as
-  Pathname'' (or something equivalent in the language of your operating
-  system). Click on this option.
+  on macOS: Right-click on the file and then press the \texttt{Option}
+  key on your keyboard. Pressing down this key will change the options
+  you are given after having right-clicked. One of these options should
+  now be ``Copy \ldots{} as Pathname'' (or something equivalent in the
+  language of your operating system). Click on this option.
 \end{itemize}
 
 Then, open any text-editing programme (e.g.~LibreOffice Writer,
-Microsoft Word, TextEdit, or NotePad++) and use the shortcut
-\texttt{Ctrl-V} (linux), \texttt{Cmd-V} (mac), \texttt{Ctrl-V} (windows)
+Microsoft Word, NotePad++, TextEdit) and use the shortcut
+\texttt{Cmd-V} (mac), \texttt{Ctrl-V} (linux), \texttt{Ctrl-V} (windows)
 to paste your file's path in the empty document. If you are on Windows,
 your path should have backslashes, whereas if you are on Linux or macOS,
 your path should have forward slashes.
@@ -2150,7 +2154,7 @@ accidentally delete files, your computer can become infested with a
 nasty virus, etc.
 
 An effective way to protect your projects is to abide by the
-\textbf{3-2-1 rule} (Schweinberger). It's simple:
+\textbf{3-2-1 rule} (Schweinberger 2022). It's simple:
 
 \begin{itemize}
 \tightlist
@@ -2205,13 +2209,13 @@ management.
 
 \section{Conclusion}\label{conclusion}
 
-Sound project management - comprising of both good folder and file
-naming practices and the smart organisation of these folders and files -
-is the foundation for efficient research workflow. Understanding and
-applying these basic principles of data management will ensure that
-everything in your digital `kitchen' has its place, is well labelled,
-and easy to find. By ensuring that we keep our kitchens clean, tidy, and
-safe, we can whip out some truly delicious dishes!
+Sound project management - comprising of both good folder and filenaming
+practices and the smart organisation of these folders and files - is the
+foundation for efficient research workflow. Understanding and applying
+these basic principles of data management will ensure that everything in
+your digital `kitchen' has its place, is well labelled, and easy to
+find. By ensuring that we keep our kitchens clean, tidy, and safe, we
+can whip out some truly delicious dishes!
 
 \begin{figure}
 
@@ -2239,9 +2243,9 @@ safe, we can whip out some truly delicious dishes!
 
 \end{minipage}%
 
-\caption{\label{fig-Kitchens}The kitchen workflow metaphor (artwork
-\href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}
-\href{https://twitter.com/allison_horst}{Allison Horst}).}
+\caption{\label{fig-Kitchens}The kitchen workflow metaphor
+(\href{https://twitter.com/allison_horst}{artwork CC BY 4.0
+@allison\_horst}).}
 
 \end{figure}%
 
@@ -2254,9 +2258,8 @@ work with files and data:
 \tightlist
 \item
   The University of Queensland Library. 2023. Work with Data and Files.
-  The University of Queensland.
+  The University of Queensland. Open Educational Resource.
   \url{https://uq.pressbooks.pub/digital-essentials-data-and-files/}.
-  (14 May, 2024).
 \end{itemize}
 
 To go further, here are some great, open-access resources to dive deeper
@@ -2268,21 +2271,28 @@ research:
   Berez-Kroeker, Andrea L., Bradley McDonnell, Eve Koller \& Lauren B.
   Collister. 2022. \emph{The Open Handbook of Linguistic Data
   Management}. MIT Press.
-  \url{https://doi.org/10.7551/mitpress/12200.001.0001}.
+  \url{https://doi.org/10.7551/mitpress/12200.001.0001}. {[}Open
+  Access{]}.
 \item
   Heid, Ulrich, Piotr Bański \& Laura Herzberg (eds.). 2025.
   \emph{Harmonizing Language Data: Standards for Linguistic Resources}
   (Digital Linguistics 4). Boston: De Gruyter.
-  \url{https://doi.org/10.1515/9783112208212}.
+  \url{https://doi.org/10.1515/9783112208212}. {[}Open Access{]}.
 \item
-  Lewis, Crystal. \emph{Data Management in Large-Scale Education
-  Research}. \url{https://datamgmtinedresearch.com/}. (14 May, 2024).
+  Lewis, Crystal. 2024. \emph{Data Management in Large-Scale Education
+  Research}. Chapman and Hall/CRC.
+  \url{https://doi.org/10.1201/9781032622835}
+  \url{https://datamgmtinedresearch.com/}. {[}Open Access{]}.
 \end{itemize}
 
 \end{tcolorbox}
 
 \subsection*{Check your progress}\label{check-your-progress-5}
 \addcontentsline{toc}{subsection}{Check your progress}
+
+It's time to complete this chapter's
+\href{https://elenlefoll.github.io/RstatsTextbook/quizzes/3_quiz.html}{tasks
+and quizzes}! Good luck! \emoji{four-leaf-clover}
 
 Are you confident that you can\ldots?
 
@@ -2416,21 +2426,6 @@ many community-led initiatives such as
 \href{https://latinr.org/}{LatinR}, that encourage under-represented
 groups to participate in and contribute to the \texttt{R} community.
 
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=2.60417in,height=\textheight,keepaspectratio,alt={Hex sticker logo showing the R logo painted in the colours of the rainbow and the transgender flags}]{images/rladiesrp_logo.png}
-
-}
-
-\caption{\label{fig-RLadies}Logo of the
-\href{https://rladiesrp.github.io/}{RLadies Ribeirão Preto}, one of
-\href{https://benubah.github.io/r-community-explorer/rladies.html}{many
-RLadies+ chapters}.}
-
-\end{figure}%
-
 \begin{quote}
 ``I am studying a language/linguistics so why should I learn to code?''
 \emoji{thinking}
@@ -2502,11 +2497,11 @@ actually be doing the heavy-lifting, under the hood.
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.40\linewidth}
 
 \centering{
 
-\includegraphics[width=2.40625in,height=\textheight,keepaspectratio,alt={R logo}]{images/Rlogo.png}
+\includegraphics[width=0.3\linewidth,height=\textheight,keepaspectratio,alt={R logo}]{images/Rlogo.png}
 
 }
 
@@ -2515,11 +2510,14 @@ environment \texttt{R}}
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.20\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.40\linewidth}
 
 \centering{
 
-\includegraphics[width=1.92708in,height=1.85417in,alt={RStudio logo}]{images/RStudio-Logo_Trademark.png}
+\includegraphics[width=0.3\linewidth,height=\textheight,keepaspectratio,alt={RStudio logo}]{images/RStudio-Logo_Trademark.png}
 
 }
 
@@ -2537,20 +2535,22 @@ things!}
 \begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Using other IDEs to work in \texttt{R}}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 At the time of writing, \emph{RStudio} is the most widely used
-Integrated Development Environment (IDE) to work in \texttt{R}. However,
-it is worth noting that many other IDEs that can be used to access
-\texttt{R}. These include:
+\textbf{Integrated Development Environment (IDE)} to work in \texttt{R}.
+However, it is worth noting that many other IDEs that can be used to
+access \texttt{R}. These include:
 
 \begin{itemize}
 \tightlist
 \item
+  \href{https://eclipseide.org/}{Eclipse}
+\item
   \href{https://jupyter.org/}{Jupyter notebook}
 \item
-  \href{https://code.visualstudio.com/}{Visual Studio Code}
+  \href{https://positron.posit.co/}{Positron}
 \item
   \href{https://www.jetbrains.com/pycharm/}{PyCharm}
 \item
-  \href{https://eclipseide.org/}{Eclipse}
+  \href{https://code.visualstudio.com/}{Visual Studio Code}
 \end{itemize}
 
 Whilst this textbook will assume that everyone is working in
@@ -2751,7 +2751,7 @@ possibly even contaminated kitchen!
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
@@ -2763,7 +2763,10 @@ possibly even contaminated kitchen!
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.01\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
@@ -2801,7 +2804,7 @@ Figure~\ref{fig-RStudioNewLayout}.
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.37\linewidth}
 
 \centering{
 
@@ -2813,7 +2816,10 @@ Figure~\ref{fig-RStudioNewLayout}.
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.01\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.62\linewidth}
 
 \centering{
 
@@ -2854,7 +2860,7 @@ Figure~\ref{fig-testplotRStudio}.
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
@@ -2867,7 +2873,10 @@ pane}
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.01\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
@@ -2947,12 +2956,12 @@ the other information.
 
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={Screenshot from RStudio. The Console output reads: trying URL \textquotesingle https://cran.rstudio.com/bin/macosx/big-su r-arm64/contrib/4.3/janeaustenr\_1.0.0.tgz\textquotesingle{} Content type \textquotesingle application/x-gzip\textquotesingle{} length 1624062 bytes (1.5 MB) downloaded 1.5 MB The downloaded binary packages are in /var/folders/\_x/ycbk0by91blbvnqkbtv105w0000g p/T//Rtmp5xaS1h/downloaded\_packages}]{images/JaneaustenrInstalled.png}
+\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio,alt={Screenshot from RStudio. The Console output reads: trying URL \textquotesingle https://cran.rstudio.com/bin/macosx/big-su r-arm64/contrib/4.3/janeaustenr\_1.0.0.tgz\textquotesingle{} Content type \textquotesingle application/x-gzip\textquotesingle{} length 1624062 bytes (1.5 MB) downloaded 1.5 MB The downloaded binary packages are in /var/folders/\_x/ycbk0by91blbvnqkbtv105w0000g p/T//Rtmp5xaS1h/downloaded\_packages}]{images/JaneaustenrInstalled.png}
 
 }
 
 \caption{\label{fig-PckInstalled}Screenshot showing that the package has
-been correctly installed.}
+been correctly installed}
 
 \end{figure}%
 
@@ -3041,12 +3050,12 @@ or higher. All CRAN packages are listed on:
 
 \centering{
 
-\href{https://cran.r-project.org/web/packages/janeaustenr/index.html}{\pandocbounded{\includegraphics[keepaspectratio,alt={janeaustenr: Jane Austen\textquotesingle s Complete Novels Full texts for Jane Austen\textquotesingle s 6 completed novels, ready for text analysis. These novels are "Sense and Sensibility" ", "Pride and Prejudice" \textquotesingle, "Mansfield Park" , "Emma". \textquotesingle, "Northanger Abbey", and "Persuasion". Version: Depends: Suggests: Published: DOI: Author: Maintainer: BugReports: License: URL: NeedsCompilation: no Materials: CRAN checks: 1.0.0 R (≥ 3.5) dplyr, testthat 2022-08-26 10.32614/CRAN.package.janeaustenr Julia Silge I {[}aut, cre{]} Julia Silge \textless{} julia silge at gmail.com\textgreater{} https://github.com/juliasilge/janeaustenr/issues MIT + file LICENSE https://github.com/juliasilge/janeaustenr README, NEWS janeaustenr results}]{images/CRAN_janeaustenr.png}}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={janeaustenr: Jane Austen\textquotesingle s Complete Novels Full texts for Jane Austen\textquotesingle s 6 completed novels, ready for text analysis. These novels are "Sense and Sensibility" ", "Pride and Prejudice" \textquotesingle, "Mansfield Park" , "Emma". \textquotesingle, "Northanger Abbey", and "Persuasion". Version: Depends: Suggests: Published: DOI: Author: Maintainer: BugReports: License: URL: NeedsCompilation: no Materials: CRAN checks: 1.0.0 R (≥ 3.5) dplyr, testthat 2022-08-26 10.32614/CRAN.package.janeaustenr Julia Silge I {[}aut, cre{]} Julia Silge \textless{} julia silge at gmail.com\textgreater{} https://github.com/juliasilge/janeaustenr/issues MIT + file LICENSE https://github.com/juliasilge/janeaustenr README, NEWS janeaustenr results}]{images/CRAN_janeaustenr.png}}
 
 }
 
-\caption{\label{fig-CRANJane}Screenshot of the top part of
-\textless https://cran.r-project.org/web/packages/janeaustenr/index.html\textgreater{}
+\caption{\label{fig-CRANJane}Screenshot from
+\url{https://cran.r-project.org/web/packages/janeaustenr/index.html}
 (accessed on 17 December 2025)}
 
 \end{figure}%
@@ -3111,7 +3120,7 @@ that the package is loaded and ready to be used.
 
 \centering{
 
-\includegraphics[width=4.20833in,height=\textheight,keepaspectratio,alt={The screenshot shows that the command library (janeaustern) has been run in the console and that the console returned a new empty line and nothing else. The screenshot also shows the packages tab with the words "jan" in the search box and two packages displayed.  The first is the janeaustern package and the checkbox to the left of it is ticked. The second is a package that also starts with "jan" namely "janitor" but this one does not have a checked box next to it because it has not been loaded.}]{images/LoadingJaneAustern.png}
+\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio,alt={The screenshot shows that the command library (janeaustern) has been run in the console and that the console returned a new empty line and nothing else. The screenshot also shows the packages tab with the words "jan" in the search box and two packages displayed.  The first is the janeaustern package and the checkbox to the left of it is ticked. The second is a package that also starts with "jan" namely "janitor" but this one does not have a checked box next to it because it has not been loaded.}]{images/LoadingJaneAustern.png}
 
 }
 
@@ -3130,43 +3139,43 @@ need to do the washing-up! \emoji{upside-down-face}
 \subsection{Package documentation}\label{sec-PackageDocumentation}
 
 To find out more about any package or function, use the handy
-\texttt{help()} function or its shortcut
-\texttt{?} (linux), \texttt{?} (mac), \texttt{?} (windows). For example,
-to find out more about the \{janeaustenr\} package, enter the command
+\texttt{help()} function or its shortcut \texttt{?}. For example, to
+find out more about the \{janeaustenr\} package, enter the command
 \texttt{help(janeaustenr)} or \texttt{?janeaustenr} in the Console. The
-help file will open up in the \textbf{Help} tab of the bottom-right pane
-(see Figure~\ref{fig-RStudioNewLayout}). It contains the name of the
-package and a short description, as well as the name of the package
-maintainer, Julia Silge, and some additional links.
+help file will open up in the Help tab of the bottom-right pane (see
+Figure~\ref{fig-RStudioNewLayout}). It contains the name of the package
+and a short description, as well as the name of the package maintainer,
+Julia Silge, and some additional links.
 
 One of these links takes us to the package creator's GitHub repository.
 This is where we can find a source code for the package, should we want
 to check how it works under the hood, or amend it in any way. Click on
 this link and scroll down the package's GitHub page to consult its
-\textbf{README file}. This document informs us that the package includes
-plain text versions of Jane Austen's six completed, published novels and
-tells us under what name they are stored within the library. For
-example, to access \emph{Pride and Prejudice,} we need to load the
-library object \texttt{prideprejudice}.
+README file. This document informs us that the package includes plain
+text versions of Jane Austen's six completed, published novels and tells
+us under what name they are stored within the library. For example, to
+access \emph{Pride and Prejudice}, we need to load the library object
+\texttt{prideprejudice}.
 
 Pick your favourite Jane Austen novel and enter its corresponding object
 name in the Console, e.g.~\texttt{emma}. The entire novel will be
 printed in the Console output! You can print only a few lines by
 selecting them within square brackets. For example, the command
 \texttt{emma{[}20:25{]}} will print lines 20 to 25 of the object
-\texttt{emma} (see Figure~\ref{fig-emma2025}).
+\texttt{emma} (see Figure~\ref{fig-emma2025}). You can also adjust the
+size of the Console pane to see more or less of the text at any one
+time.
 
 \begin{figure}
 
 \centering{
 
-\includegraphics[width=4.16667in,height=\textheight,keepaspectratio,alt={Screenshot from RStudio. The command is: emma{[}20:25{]} and the Console output reads: {[}1{]} "She was the youngest of the two daughters of a most affectionate,"        {[}2{]} "indulgent father; and had, in consequence of her sister\textquotesingle s marriage, been" {[}3{]} "mistress of his house from a very early period. Her mother had died"      {[}4{]} "too long ago for her to have more than an indistinct remembrance of"      {[}5{]} "her caresses; and her place had been supplied by an excellent woman as"   {[}6{]} "governess, who had fallen little short of a mother in affection."}]{images/Emma2025.png}
+\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio,alt={Screenshot from RStudio. The command is: emma{[}20:25{]} and the Console output reads: {[}1{]} "She was the youngest of the two daughters of a most affectionate,"        {[}2{]} "indulgent father; and had, in consequence of her sister\textquotesingle s marriage, been" {[}3{]} "mistress of his house from a very early period. Her mother had died"      {[}4{]} "too long ago for her to have more than an indistinct remembrance of"      {[}5{]} "her caresses; and her place had been supplied by an excellent woman as"   {[}6{]} "governess, who had fallen little short of a mother in affection."}]{images/Emma2025.png}
 
 }
 
 \caption{\label{fig-emma2025}Screenshot showing a selection of lines
-from the object \texttt{emma} (note that you can adjust the size of the
-Console pane to see more or less of the text at any one time).}
+from the object \texttt{emma}}
 
 \end{figure}%
 
@@ -3240,7 +3249,7 @@ Figure~\ref{fig-UpdateRStudio}). You can safely click on the option
 
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={Finder window showing the RStudio.app icon and the folder Apps. A warning message reads: An older item named "RStudio.app" already exists in this location. Do you want to replace it with the newer one you\textquotesingle re copying? The clickable options are: Keep Both Stop Replace}]{images/UpdateRStudio.png}
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio,alt={Finder window showing the RStudio.app icon and the folder Apps. A warning message reads: An older item named "RStudio.app" already exists in this location. Do you want to replace it with the newer one you\textquotesingle re copying? The clickable options are: Keep Both Stop Replace}]{images/UpdateRStudio.png}
 
 }
 
@@ -3290,7 +3299,7 @@ Section~\ref{sec-installingR}).
 
 \centering{
 
-\includegraphics[width=5.29167in,height=\textheight,keepaspectratio,alt={CRAN R for macOS page showing the latest R Version.}]{images/CRAN_R_For_MacOS_Version.png}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={CRAN R for macOS page showing the latest R Version.}]{images/CRAN_R_For_MacOS_Version.png}
 
 }
 
@@ -3319,11 +3328,11 @@ All'' and ``Install Updates''.
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={*RStudio* screenshot showing the packages tab with the highlighted update button.}]{images/R_Studio_Packages_Update.png}
+\pandocbounded{\includegraphics[keepaspectratio,alt={*RStudio* screenshot showing the packages tab with the highlighted update button.}]{images/R_Studio_Packages_Update.png}}
 
 }
 
@@ -3332,11 +3341,14 @@ in RStudio's Packages tab}
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.01\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={RStudio screenshot showing the Update Packages dialog with all packages selected and a highlighted Install Updates button.}]{images/Update_Packages_Dialog.png}
+\pandocbounded{\includegraphics[keepaspectratio,alt={*RStudio* screenshot showing the Update Packages dialog with all packages selected and a highlighted Install Updates button.}]{images/Update_Packages_Dialog.png}}
 
 }
 
@@ -3345,7 +3357,7 @@ in RStudio}
 
 \end{minipage}%
 
-\caption{\label{fig-UpdateGUI}Updating packages using RStudio's
+\caption{\label{fig-UpdateGUI}Updating packages using \emph{RStudio}'s
 Graphical User Interface (GUI)}
 
 \end{figure}%
@@ -3359,13 +3371,22 @@ and a bit of patience. \emoji{person-in-lotus-position}
 The \{installr\} package simplifies updating \texttt{R} on Windows. To
 install the package use the usual commands:
 
+\protect\phantomsection\label{annotated-cell-368}%
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{install.packages}\NormalTok{(}\StringTok{"installr"}\NormalTok{) }\CommentTok{\# Run this command the first time you use the package.}
-
-\FunctionTok{library}\NormalTok{(installr) }\CommentTok{\# Run this command everytime you want to update R using this package.}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"installr"}\NormalTok{) }\hspace*{\fill}\NormalTok{\circled{1}}
+\FunctionTok{library}\NormalTok{(installr) }\hspace*{\fill}\NormalTok{\circled{2}}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{description}
+\tightlist
+\item[\circled{1}]
+Run this command the first time you use the package.
+\item[\circled{2}]
+Run this command every time you want to update \texttt{R} using this
+package.
+\end{description}
 
 Then, run the \texttt{updateR()} function, which automates the updating
 process by detecting your current \texttt{R} version, comparing it with
@@ -3381,6 +3402,11 @@ For more details, check the documentation using the command
 
 \subsection*{Check your progress}\label{check-your-progress-7}
 \addcontentsline{toc}{subsection}{Check your progress}
+
+Are you ready to started with \texttt{R}? Find out by completing this
+chapter's
+\href{https://elenlefoll.github.io/RstatsTextbook/quizzes/4_quiz.html}{tasks
+and quizzes}!
 
 Are you confident that you can\ldots?
 
@@ -3406,7 +3432,7 @@ Are you confident that you can\ldots?
 Once you have successfully completed all the steps outlined in this
 chapter, you are ready to get sta\texttt{R}ted with
 Chapter~\ref{sec-GettingStaRted}, which provides a hands-on introduction
-to \texttt{R} in \emph{RStudio}. \emoji{nerd-face}
+to working in \texttt{R} in \emph{RStudio}.~\emoji{nerd-face}
 
 \bookmarksetup{startatroot}
 
@@ -3423,17 +3449,17 @@ chapter, you will learn how to:
 \begin{itemize}
 \tightlist
 \item
-  Use the \texttt{R} Console.
+  Use the \texttt{R} Console
 \item
-  Do basic mathematical operations in \texttt{R}.
+  Do basic mathematical operations in \texttt{R}
 \item
-  Create and use \texttt{R} objects.
+  Create and use \texttt{R} objects
 \item
-  Write and save \texttt{.R} scripts.
+  Write and save \texttt{.R} scripts
 \item
-  Add comments to your scripts.
+  Add comments to your scripts
 \item
-  Keep your cool when errors pop up! \emoji{sunglasses}
+  Keep your cool when errors pop up!
 \end{itemize}
 
 If you are already familiar with the basics of \texttt{R} and are keen
@@ -3458,14 +3484,34 @@ integers (whole numbers, e.g.~\texttt{13}) and decimal numbers
 
 \begin{figure}
 
+\begin{minipage}[t]{0.49\linewidth}
+
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={Screenshot of RStudio showing the Console with the equation 13 + 0.5 = 13.5.}]{images/ConsoleInputNumbers.png}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Screenshot of RStudio showing the Console with the equation 13 + 0.5 = 13.5.}]{images/ConsoleInputNumbers.png}}
 
 }
 
-\caption{\label{fig-ConsoleInputNumbers}Inputting numbers in the
-Console}
+\subcaption{\label{fig-ConsoleInputNumbers}Inputting numbers}
+
+\end{minipage}%
+%
+\begin{minipage}[t]{0.01\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.49\linewidth}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio,alt={RStudio screenshot showing the input of two strings in the console}]{images/ConsoleInputStrings.png}}
+
+}
+
+\subcaption{\label{fig-ConsoleInputStrings}Inputting strings}
+
+\end{minipage}%
+
+\caption{\label{fig-ConsoleInput}Using the \texttt{R} Console}
 
 \end{figure}%
 
@@ -3479,19 +3525,6 @@ throughout.
 
 Try first inputting a single word and then an entire sentence in the
 Console as in Figure~\ref{fig-ConsoleInputStrings}.
-
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={RStudio screenshot showing the input of two strings in the console}]{images/ConsoleInputStrings.png}
-
-}
-
-\caption{\label{fig-ConsoleInputStrings}Inputting strings in the
-Console}
-
-\end{figure}%
 
 \begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
@@ -3538,7 +3571,7 @@ Try out a few yourself!
 
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={RStudio screenshot showing the console with the input of multiple mathematical operations.}]{images/ConsoleInputMathematicalOperations.png}
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio,alt={RStudio screenshot showing the console with the input of multiple mathematical operations.}]{images/ConsoleInputMathematicalOperations.png}
 
 }
 
@@ -3616,33 +3649,42 @@ pressing ``Enter''.
 
 \begin{figure}
 
+\begin{minipage}[t]{0.49\linewidth}
+
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={RStudio screenshot showing two stored objects printed in the console.}]{images/ShowObjects.png}
+\pandocbounded{\includegraphics[keepaspectratio,alt={RStudio screenshot showing two stored objects printed in the console.}]{images/ShowObjects.png}}
 
 }
 
-\caption{\label{fig-ShowObjects}Calling up stored objects in the Console
-to view their content}
+\subcaption{\label{fig-ShowObjects}Calling up stored objects in the
+Console to view their content}
+
+\end{minipage}%
+%
+\begin{minipage}[t]{0.01\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.49\linewidth}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio,alt={RStudio screenshot showing the object types with the class() function from two stored objects.}]{images/ShowObjectClass.png}}
+
+}
+
+\subcaption{\label{fig-ShowObjectClass}Using the \texttt{class()}
+function}
+
+\end{minipage}%
 
 \end{figure}%
 
 \subsection{Object types}\label{object-types}
 
 These two objects are of different types. We can use the
-\texttt{class()} function to find out which type of object an object is.
-
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={RStudio screenshot showing the object types with the class() function from two stored objects.}]{images/ShowObjectClass.png}
-
-}
-
-\caption{\label{fig-ShowObjectClass}Using the \texttt{class()} function}
-
-\end{figure}%
+\texttt{class()} function to find out which type of object an object is
+(see Figure~\ref{fig-ShowObjectClass}).
 
 Here, \texttt{my.favourite.number} is a numeric object, while
 \texttt{my.favourite.word} is a character object.
@@ -3703,8 +3745,8 @@ your Environment pane:
 Earlier on, you created an object called \texttt{word2} which contained
 the string ``cheerful''. But, by running this new line of code,
 ``cheerful'' has been replaced by the string ``surprised'' - with no
-warning that you were about to permanently delete ``cheerful''!
-\emoji{astonished}
+warning that you were about to permanently delete
+``cheerful''!~\emoji{astonished}
 
 The command to delete a single object from your environment is
 \texttt{remove()} or \texttt{rm()}. Hence, to permanently delete the
@@ -3760,7 +3802,7 @@ the one that you like best:
   left corner of the tool bar.
 \item
   Use the keyboard shortcut
-  \texttt{Ctrl-Shift-N} (linux), \texttt{Cmd-Shift-N} (mac), \texttt{Ctrl-Shift-N} (windows).
+  \texttt{Cmd-Shift-N} (mac), \texttt{Ctrl-Shift-N} (linux), \texttt{Ctrl-Shift-N} (windows).
 \end{enumerate}
 
 Whichever option you chose, \emph{RStudio} should have opened an empty
@@ -3823,7 +3865,7 @@ or ``running'' code), select the line that you want to execute, or place
 your mouse cursor anywhere within that line and then click on the
 ``Run'' button (in the top-right corner of the pane, see
 Figure~\ref{fig-NewScript}) or use the keyboard shortcut
-\texttt{Ctrl-Enter} (linux), \texttt{Cmd-Enter} (mac), \texttt{Ctrl-Enter} (windows).
+\texttt{Cmd-Enter} (mac), \texttt{Ctrl-Enter} (linux), \texttt{Ctrl-Enter} (windows).
 This shortcut is worth learning, as it will save you a lot of time and
 effort in the long term.
 
@@ -3865,7 +3907,7 @@ computer. To do so either:
   Click on the save icon \emoji{floppy-disk}, or
 \item
   Use the keyboard shortcut
-  \texttt{Ctrl-S} (linux), \texttt{Cmd-S} (mac), \texttt{Ctrl-S} (windows).
+  \texttt{Cmd-S} (mac), \texttt{Ctrl-S} (linux), \texttt{Ctrl-S} (windows).
 \end{enumerate}
 
 Give your script a meaningful file name. Remember that file names should
@@ -4015,12 +4057,14 @@ Figure~\ref{fig-DebuggingMonster}).
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={A cartoon of a fuzzy round monster face showing 10 different emotions experienced during the process of debugging code. The progression goes from (1) ``I got this'' - looking determined and optimistic; (2) ``Huh. Really thought that was it.'' - looking a bit baffled; (3) ``...'' - looking up at the ceiling in thought; (4) ``Fine. Restarting.'' - looking a bit annoyed; (5) ``OH WTF.'' Looking very frazzled and frustrated; (6) ``Zombie meltdown.'' - looking like a full meltdown; (7) (blank) - sleeping; (8) ``A NEW HOPE!'' - a happy looking monster with a lightbulb above; (9) ``insert awesome theme song'' - looking determined and typing away; (10) ``I love coding'' - arms raised in victory with a big smile, with confetti falling.}]{images/DebuggingMonsters.png}}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={A cartoon of a fuzzy round monster face showing 10 different emotions experienced during the process of debugging code. The progression goes from (1) ``I got this'' - looking determined and optimistic; (2) ``Huh. Really thought that was it.'' - looking a bit baffled; (3) ``...'' - looking up at the ceiling in thought; (4) ``Fine. Restarting.'' - looking a bit annoyed; (5) ``OH WTF.'' Looking very frazzled and frustrated; (6) ``Zombie meltdown.'' - looking like a full meltdown; (7) (blank) - sleeping; (8) ``A NEW HOPE!'' - a happy looking monster with a lightbulb above; (9) ``insert awesome theme song'' - looking determined and typing away; (10) ``I love coding'' - arms raised in victory with a big smile, with confetti falling.}]{images/AHorst_DebuggingMonsters.png}
 
 }
 
-\caption{\label{fig-DebuggingMonster}The joys of debugging by
-\href{https://allisonhorst.com/allison-horst}{@allison\_horst}.}
+\caption{\label{fig-DebuggingMonster}The emotional rollercoster of
+debugging by
+\href{https://allisonhorst.com/allison-horst}{@allison\_horst} (CC BY
+4.0)}
 
 \end{figure}%
 
@@ -4049,7 +4093,7 @@ of code.
 
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={RStudio screenshot showing the console with an incomplete function and a red ellipse around the +-symbol.}]{images/ConsoleUncompleteFunction.png}
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio,alt={RStudio screenshot showing the console with an incomplete function and a red ellipse around the +-symbol.}]{images/ConsoleUncompleteFunction.png}
 
 }
 
@@ -4078,7 +4122,7 @@ analyses are reproducible (see Chapter~\ref{sec-LiteRateProgramming}),
 let's now generate this error from an \texttt{.R} script. To do so, copy
 and paste the erroneous line of code in your \texttt{.R} script and try
 to run it by either clicking on the ``Run'' icon or using the shortcut
-\texttt{Ctrl-Enter} (linux), \texttt{Cmd-Enter} (mac), \texttt{Ctrl-Enter} (windows).
+\texttt{Cmd-Enter} (mac), \texttt{Ctrl-Enter} (linux), \texttt{Ctrl-Enter} (windows).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4098,7 +4142,7 @@ run the command again.
 \end{Shaded}
 
 As shown in Figure~\ref{fig-ConsoleError}, even though we have corrected
-the problem, we now get an error! \emoji{exploding-head} At first sight,
+the problem, we now get an error!~\emoji{exploding-head} At first sight,
 this does not make sense, but look carefully at what happened in the
 Console: The line of code that \texttt{R} tried to interpret (in blue)
 is \texttt{sqrt(my.favourite.number\ +\ sqrt(my.favourite.number)},
@@ -4111,7 +4155,7 @@ Figure~\ref{fig-ConsoleError})!
 
 \centering{
 
-\includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={RStudio screenshot showing the console with an error.}]{images/ConsoleError.png}
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio,alt={RStudio screenshot showing the console with an error.}]{images/ConsoleError.png}
 
 }
 
@@ -4134,7 +4178,7 @@ The plus-situation arises again, but we will now solve it using the
 second method. Head over to the Console and place your cursor next to
 the \texttt{+}. This time, instead of completing the line by adding a
 closing bracket, press the Escape key
-\texttt{Esc} (linux), \texttt{Esc} (mac), \texttt{Esc} (windows) on your
+\texttt{Esc} (mac), \texttt{Esc} (linux), \texttt{Esc} (windows) on your
 keyboard. This will cancel the incomplete line of code. Then, you can
 add the missing \texttt{)} in your script and rerun the newly completed
 line of code from the Source pane.
@@ -4158,21 +4202,29 @@ really nothing worth stressing about!
 
 Debugging is an unavoidable part of writing code. If you're stuck and
 starting to feel frustrated, the best thing you can usually do is to
-take a short break!
+take a short break (see Figure~\ref{fig-TakeABreak})!
 
-\begin{figure}[H]
+\begin{figure}
 
-{\centering \includegraphics[width=4.6875in,height=\textheight,keepaspectratio,alt={A frustrated little monster sits on the ground with his hat next to him, saying "I just need a minute." Looking on empathetically is the R logo, with the word "Error" in many different styles behind it.}]{images/AHorst_ErrorMonster.png}
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio,alt={A frustrated little monster sits on the ground with his hat next to him, saying "I just need a minute." Looking on empathetically is the R logo, with the word "Error" in many different styles behind it.}]{images/AHorst_ErrorMonster.png}
 
 }
 
-\caption{Time to take a break? (artwork by
-\href{https://allisonhorst.com/allison-horst}{@allison\_horst}).}
+\caption{\label{fig-TakeABreak}Time to take a break? (artwork by
+\href{https://allisonhorst.com/allison-horst}{@allison\_horst} CC BY
+4.0)}
 
 \end{figure}%
 
 \subsection*{Check your progress}\label{check-your-progress-9}
 \addcontentsline{toc}{subsection}{Check your progress}
+
+It's time to complete this chapter's
+\href{https://elenlefoll.github.io/RstatsTextbook/quizzes/5_quiz.html}{tasks
+and quizzes} and ensure that you are ready to get started with
+\texttt{R} in earnest!
 
 Are you confident that you can\ldots?
 
@@ -4209,14 +4261,14 @@ data}{ImpoRting data}}\label{sec-ImportingData}
 overview}}{Chapter overview}}\label{chapter-overview-5}
 \addcontentsline{toc}{subsubsection}{\textbf{Chapter overview}}
 
-Many introductory \texttt{R} textbooks postpone this section until much
-later by relying on datasets that are directly accessible as \texttt{R}
-data objects. In real life, however, research data rarely come neatly
-packaged as an \texttt{R} data object. Your data will most likely be
-stored in a spreadsheet table or as text files of some kind. And -let's
-be honest- they will be more messy than you would like to admit, making
-this chapter and the next crucial for learning to do data analysis in
-\texttt{R}.
+Many introductory textbooks make data import in \texttt{R} appear very
+simple by relying on datasets that are directly accessible as \texttt{R}
+data objects and already ``cleaned up''. In real life, however, research
+data rarely come neatly packaged as an \texttt{R} data object. Your data
+will most likely be stored in a spreadsheet or as text files of some
+kind. And --let's be honest-- they will be more messy than you would
+like to admit, making this chapter and the next crucial to learning to
+do data analysis in \texttt{R}!
 
 This chapter will take you through the process of:
 
@@ -4229,21 +4281,23 @@ This chapter will take you through the process of:
 \item
   Importing a \texttt{.csv} file as an \texttt{R} object in \texttt{R}
 \item
-  Importing data from LibreOffice Calc, Microsoft Excel, Google Sheets,
-  SPSS and other formats
+  Importing data from LibreOffice/OpenOffice Calc, Microsoft Excel,
+  Google Sheets, SPSS and other formats
 \item
   Examining a data frame object in \texttt{R}
 \end{itemize}
 
 In future chapters, we will continue to work with these data. We will
-learn how to ``clean them up'' for data analysis, before we begin to
+learn how to ``tidy them up'' for data analysis, before we begin to
 explore them using descriptive statistics and data visualisations.
 
 \section{Accessing data from a published study}\label{sec-AccessingData}
 
 As we saw in Section~\ref{sec-OpenScience}, it is good practice to share
 both the data and materials associated with research studies so that
-others can reproduce and replicate the research.
+others can reproduce and replicate\footnote{For more on reproductions
+  and replications, see Section~\ref{sec-Reproducibility}.} the
+research.
 
 In the following chapters, we will focus on data associated with the
 following study:
@@ -4259,7 +4313,7 @@ Language Learning 69(S1). 72--100.
 
 \centering{
 
-\includegraphics[width=4.80208in,height=\textheight,keepaspectratio,alt={Front page of an EMPIRICAL STUDY journal article published at Language Learning: Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers by Ewa Dabrowska (University of Birmingham}]{images/DabrowskaTitle.png}
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio,alt={Front page of an EMPIRICAL STUDY journal article published at Language Learning: Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers by Ewa Dabrowska (University of Birmingham}]{images/DabrowskaTitle.png}
 
 }
 
@@ -4268,18 +4322,14 @@ Learning}
 
 \end{figure}%
 
-Follow the DOI\footnote{``Digital Object Identifiers (DOI) are
-  alpha-numeric strings that can be assigned to any entity, including:
-  publications (including preprints), materials, datasets, and feature
-  films - the use of DOIs is not restricted to just scholarly or
-  academic material. DOIs''provides a system for persistent and
-  actionable identification and interoperable exchange of managed
-  information on digital networks.'' (\url{https://doi.org/hb.html\%29}.
-  There are many different DOI registration agencies that operate DOIs,
-  but the two that researchers would most likely encounter are Crossref
-  and Datacite.'' ({Parsons et al.} 2022)} link above and read the
-abstract to find out what the study was about. You do not need to have
-institutional or paid access to the full paper to read the abstract.
+Follow the DOI\footnote{Digital Object Identifiers (DOI) are
+  alpha-numeric strings that can be assigned to publications, preprints,
+  datasets, and all other kinds of research materials with the aim of
+  facilitating the exchange of information on digital networks and
+  avoiding dead links ({Parsons et al.} 2022).} link associated with the
+article referenced above and read the abstract to find out what the
+study was about. Note that you do not need to have an institutional or
+paid access to the full paper to able to read the abstract.
 
 The author, Ewa Dąbrowska, has made the data used in this study
 available on an open repository (see Section~\ref{sec-Sharing}). To find
@@ -4299,9 +4349,9 @@ Dąbrowska, E. (2018). L2 data {[}Data set{]}. Retrieved from
 \end{quote}
 
 You may have noticed that the datasets were published in 2018, whereas
-the article (Dąbrowska 2019) was published in the following year. This
-is very common in academic publications as it can take many months or
-even years for an article or book to be published, by which time the
+the article (Dąbrowska 2019) was published the following year. This is
+very common in academic publications as it can take many months or even
+years for an article or book to be published, by which time the
 author(s) may have already made the data available on a repository. This
 particular article was actually first published on the journal's website
 on 22 October 2018 as an ``advanced online publication'', but was not
@@ -4319,33 +4369,39 @@ Save the two datasets in an appropriate place on your computer (see
 Section~\ref{sec-FoldersPaths}), as we will continue to work with these
 two files in the following chapters.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{What's a good place to save these files? \emoji{thinking-face}}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{What's a good place to save these files?~\emoji{thinking}}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
-If you haven't already done so, I suggest that you create a folder in
-which you save everything that you create whilst learning from this
+If you haven't already done so, now is a good time to create a folder in
+which you save everything that you create while learning from this
 textbook. This folder could be called something along the lines of
-\texttt{DataLiteracyTextbook}, \texttt{2024\_data\_literacy}, or
-\texttt{LeFoll\_2024\_DataLiteracy} (see Section~\ref{sec-FileNaming}).
-Then, within this folder, I recommend that you create another folder
-called \texttt{Dabrowska2019} (note how I have not included the ``ą''
-character in the folder name as this could cause problems), and within
-this folder, create another folder called \texttt{data}. This is the
-folder in which you can save these two files.
+\texttt{DataAnalysisR} or \texttt{2026\_Data-Analysis-R} (see
+Section~\ref{sec-FileNaming}). Then, within this folder, I recommend
+that you create a subfolder called \texttt{Dabrowska2019} (note how I
+have not included the ``ą'' character in the folder name as this could
+cause problems on some operating systems), and within this folder,
+create another subfolder called \texttt{data}. This is the folder in
+which you can save these two data files.
 
 \end{tcolorbox}
 
 The file \texttt{L1\_data.csv} contains data about the study's L1
 participants. It is a delimiter-separated values (DSV) file (see
 Section~\ref{sec-DSV}). The first five lines of the file are printed
-below. Note that this is a very wide table as it contains many columns
-(you can scroll to the right to view all the columns).
+below. Note that this is a very wide table as it contains many columns.
 
 \begin{verbatim}
-Participant,Age,Gender,Occupation,OccupGroup,OtherLgs,Education,EduYrs,ReadEng1,ReadEng2,ReadEng3,ReadEng,Active,ObjCl,ObjRel,Passive,Postmod,Q.has,Q.is,Locative,SubCl,SubRel,GrammarR,Grammar,VocabR,Vocab,CollocR,Colloc,Blocks,ART,LgAnalysis
-1,21,M,Student,PS,None,3rd year of BA,17,1,2,2,5,8,8,8,8,8,8,6,8,8,8,78,95,48,73.33333333,30,68.75,16,17,15
-2,38,M,Student/Support Worker,PS,None,NVQ IV Music Performance,13,1,2,3,6,8,8,8,8,8,8,7,8,8,8,79,97.5,58,95.55555556,35,84.375,11,31,13
-3,55,M,Retired,I,None,No formal (City and Guilds),11,3,3,4,10,8,8,8,8,8,7,8,8,8,8,79,97.5,58,95.55555556,31,71.875,5,38,5
-4,26,F,Web designer,PS,None,BA Fine Art,17,3,3,3,9,8,8,8,8,8,8,8,8,8,8,80,100,53,84.44444444,37,90.625,20,26,15
+Participant,Age,Gender,Occupation,OccupGroup,OtherLgs,Education,EduYrs,
+ReadEng1,ReadEng2,ReadEng3,ReadEng,Active,ObjCl,ObjRel,Passive,Postmod,
+Q.has,Q.is,Locative,SubCl,SubRel,GrammarR,Grammar,VocabR,Vocab,CollocR,
+Colloc,Blocks,ART,LgAnalysis
+1,21,M,Student,PS,None,3rd year of BA,17,1,2,2,5,8,8,8,8,8,8,6,8,8,8,
+78,95,48,73.33333333,30,68.75,16,17,15
+2,38,M,Student/Support Worker,PS,None,NVQ IV Music Performance,13,1,2,3,6,8,8,8,8,8,8,7,8,8,8,79,97.5,58,95.55555556,
+35,84.375,11,31,13
+3,55,M,Retired,I,None,No formal (City and Guilds),11,3,3,4,10,8,8,
+8,8,8,7,8,8,8,8,79,97.5,58,95.55555556,31,71.875,5,38,5
+4,26,F,Web designer,PS,None,BA Fine Art,17,3,3,3,9,8,8,8,8,8,8,8,8,
+8,8,80,100,53,84.44444444,37,90.625,20,26,15
 \end{verbatim}
 
 \section{\texorpdfstring{Using Projects in
@@ -4368,8 +4424,8 @@ manner. In the long run, this will make your life much, much easier. It
 will also be an absolute lifesaver as soon as you need to share your
 work with others (e.g.~your supervisor, colleagues, reviewers, etc.).
 
-To create a new Project, you have two options. In RStudio, you can
-select `File', then `New Project\ldots{}' (see ``a'' on
+To create a new Project, you have two options. In \emph{RStudio}, you
+can select `File', then `New Project\ldots{}' (see ``a'' on
 Figure~\ref{fig-RStudioNewProject}). Alternatively, you can click on the
 Project button in the top-right corner of your \emph{RStudio} window and
 then select `New Project\ldots{}' (see ``b'' on
@@ -4383,7 +4439,8 @@ Figure~\ref{fig-RStudioNewProject}).
 
 }
 
-\caption{\label{fig-RStudioNewProject}Create a new project in RStudio}
+\caption{\label{fig-RStudioNewProject}Create a new project in
+\emph{RStudio}}
 
 \end{figure}%
 
@@ -4418,7 +4475,7 @@ new session' and then click on `Create Project'.
 
 \begin{figure}[H]
 
-{\centering \includegraphics[width=5in,height=\textheight,keepaspectratio,alt={New Project Wizard for Create Project from Existing Directory R Project. It shows the working directory: .../Documents/DataLiteracyTextbook/Dabrowska2019. There are three buttons: Browse..., Create Project and Cancel}]{images/RStudioNewProjectDialogue.png}
+{\centering \includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio,alt={New Project Wizard for Create Project from Existing Directory R Project. It shows the working directory: .../Documents/DataLiteracyTextbook/Dabrowska2019. There are three buttons: Browse..., Create Project and Cancel}]{images/RStudioNewProjectDialogue.png}
 
 }
 
@@ -4444,7 +4501,7 @@ itself (see Figure~\ref{fig-RStudioLaunchProject}).
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
@@ -4457,7 +4514,10 @@ File Finder}
 
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.01\linewidth}
+~\end{minipage}%
+%
+\begin{minipage}[t]{0.49\linewidth}
 
 \centering{
 
@@ -4480,15 +4540,18 @@ The folder in which the \texttt{.Rproj} file was created corresponds to
 your project's \textbf{working directory}. Once you have opened a
 Project, you can see the path to your project's working directory at the
 top of the Console pane in RStudio. The Files pane should also show the
-content of this directory.
+content of this directory as in Figure~\ref{fig-ContentsProj}.
 
-\begin{figure}[H]
+\begin{figure}
 
-{\centering \includegraphics[width=3.125in,height=\textheight,keepaspectratio,alt={Screenshot of the Files pane of *RStudio* showing the contens of a folder entitled \textquotesingle Dabrowska2019\textquotesingle. It contains an RProject file called \textquotesingle Dabrowska2019.Rproj\textquotesingle, a folder called \textquotesingle analysis\textquotesingle{} and another folder called \textquotesingle data\textquotesingle.}]{images/WorkingDirectory.png}
+\centering{
+
+\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio,alt={Screenshot of the Files pane of RStudio showing the contens of a folder entitled \textquotesingle Dabrowska2019\textquotesingle. It contains an RProject file called \textquotesingle Dabrowska2019.Rproj\textquotesingle, a folder called \textquotesingle analysis\textquotesingle{} and another folder called \textquotesingle data\textquotesingle.}]{images/WorkingDirectory.png}
 
 }
 
-\caption{Contents of the project folder as displayed by RStudio}
+\caption{\label{fig-ContentsProj}Contents of the project folder as
+displayed by \emph{RStudio}}
 
 \end{figure}%
 
@@ -4669,27 +4732,30 @@ systems. For more reasons to use \{here\}, check out the blog post
 should I use the here package when I'm already using projects?}'' by
 Barrett (2018).
 
-\begin{figure}[H]
+\end{tcolorbox}
+
+Although a fairly common way of working with data in \texttt{R}, using
+\texttt{setwd()} (see Section~\ref{sec-HardcodingFilePaths}) is
+dangerous and will, sooner or later, cause you and/or your colleagues
+some nasty accidents (see Figure~\ref{fig-HelmetHere}). A combination of
+using R projects (\texttt{.RProj}) and the \{here\} package as described
+above is much safer!
+
+\begin{figure}
 
 \centering{
 
-\includegraphics[width=6.25in,height=\textheight,keepaspectratio,alt={A cartoon of a cracked glass cube looking frustrated with casts on its arm and leg, with bandaids on it, containing ``setwd'', looks on at a metal riveted cube labeled ``R Proj'' holding a skateboard looking sympathetic, and a smaller cube with a helmet on labeled ``here'' doing a trick on a skateboard.}]{images/AHorst_RProjHere.png}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A cartoon of a cracked glass cube looking frustrated with casts on its arm and leg, with bandaids on it, containing \textquotesingle setwd\textquotesingle, looks on at a metal riveted cube labeled \textquotesingle R Proj\textquotesingle{} holding a skateboard looking sympathetic, and a smaller cube with a helmet on labeled \textquotesingle here\textquotesingle{} doing a trick on a skateboard.}]{images/AHorst_RProjHere.png}}
 
 }
 
-\caption{\label{fig-HelmetHere}Although a fairly common way of working
-with data in \texttt{R}, using \texttt{setwd()} (see
-Section~\ref{sec-HardcodingFilePaths}) is dangerous and will, sooner or
-later, cause you and/or your colleagues some nasty accidents. A
-combination of using RProj and \{here\} as described above is much
-safer!}
+\caption{\label{fig-HelmetHere}\href{https://twitter.com/allison_horst}{Artwork
+CC BY 4.0 @allison\_horst}}
 
 \end{figure}%
 
-\end{tcolorbox}
-
-\section{\texorpdfstring{Import errors and issues
-\emoji{pleading-face}}{Import errors and issues }}\label{sec-ImportingErrors}
+\section{\texorpdfstring{Import errors and
+issues~\emoji{pleading-face}}{Import errors and issues~}}\label{sec-ImportingErrors}
 
 It is crucial that you check whether your data have genuinely been
 correctly imported. Here's a list of things to check (in that order):
@@ -4709,7 +4775,7 @@ correctly imported. Here's a list of things to check (in that order):
     (if you're struggling to find the correct path, you may want to try
     out the import method explained in Section~\ref{sec-ImportingGUI}).
     To ensure that you are not misspelling the name of the file, you can
-    press the tab key on your keyboard to get \emph{RStudio} to
+    press the \texttt{tab} key on your keyboard to get \emph{RStudio} to
     auto-complete the file name for you.
   \item
     If the error message includes the statement ``could not find
@@ -4734,20 +4800,27 @@ correctly imported. Here's a list of things to check (in that order):
 \item
   To view the entire table, use the function \texttt{View()} with the
   name of your data object as the first and only argument,
-  e.g.~\texttt{View(L1.data)}\footnote{Note that, unlike the functions
-    that we have used so far, the \texttt{View()} function begins with a
-    capital letter. \texttt{R} is a case-sensitive programming language,
-    which means that \texttt{view()} and \texttt{View()} are not the
-    same thing!}. This will open up a new tab in your Source pane that
-  displays the full table, much like in a spreadsheet programme. You can
-  search and filter the table in this tab, but you cannot edit it in any
-  way (and that's a good thing because, if we want to edit things, we
-  want to ensure that we keep track of our changes in a script!). Browse
-  through the table and check that everything ``looks healthy''. This is
-  much like visually inspecting and smelling ingredients before using
-  them in a recipe. It's not perfect but if something is really off, you
-  should notice it. Check that each cell appears to have one and only
-  one value.
+  e.g.~\texttt{View(L1.data)}. This will open up a new tab in your
+  Source pane that displays the full table, much like in a spreadsheet
+  programme. You can search and filter the table in this tab, but you
+  cannot edit it in any way (and that's a good thing because, if we want
+  to edit things, we want to ensure that we keep track of our changes in
+  a script!). Browse through the table and check that everything ``looks
+  healthy''. This is much like visually inspecting and smelling
+  ingredients before using them in a recipe. It's not perfect but if
+  something is really off, you should notice it. Check that each cell
+  appears to have one and only one value.
+\end{enumerate}
+
+Note that, unlike the functions that we have used so far, the
+\texttt{View()} function begins with a capital letter. \texttt{R} is a
+case-sensitive programming language, which means that \texttt{view()}
+and \texttt{View()} are not the same thing!
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
 \item
   Finally, use the \texttt{str()} function to view the structure of your
   data object in a more compact way. Using the command
@@ -4908,10 +4981,11 @@ cells are now labelled \texttt{NA}.
 files}\label{sec-readr}
 
 The \{tidyverse\} is a family of packages that we will use a lot in
-future chapters. This family of package includes the \{readr\} package
-which features some very useful functions to import data into
-\texttt{R}. You can install and load the \{readr\} package either
-individually or as part of the \{tidyverse\} bundle:
+future chapters (see Section~\ref{sec-tidyverse}). This family of
+package includes the \{readr\} package which features some very useful
+functions to import data into \texttt{R}. You can install and load the
+\{readr\} package either individually or as part of the \{tidyverse\}
+bundle:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4995,12 +5069,11 @@ Note that, just like \texttt{read.csv()} was a special case of
 \texttt{read.table}, the \{readr\} function \texttt{read\_csv()} is a
 special variant of the more general function \texttt{read\_delim()} that
 can be used to import data from all kinds of DSV files. Check the help
-file to find out all the options using \texttt{?read\_delim}.
-
-The help file informs us that the package includes a function
-specifically designed to import semi-colon separated file with the the
-comma as the decimal point: \texttt{read\_csv2()}. It further states
-that ``{[}t{]}his format is common in some European countries.'' If you
+file to find out all the options using \texttt{?read\_delim}. The help
+file informs us that the package includes a function specifically
+designed to import semi-colon separated file with the the comma as the
+decimal point: \texttt{read\_csv2()}. It further states that
+``{[}t{]}his format is common in some European countries.'' If you
 scroll down the help page, you will see that its usage is summarised in
 the following way:
 
@@ -5071,18 +5144,20 @@ software}\label{sec-SpreadsheetSoftware}
 
 If your data are currently stored in a spreadsheet software
 (e.g.~LibreOffice Calc, Google Sheets, or Microsoft Excel), you can
-export them to \texttt{.csv} or \texttt{.tsv}. However, if you do not
-wish to do this (e.g.~because your colleague wishes to maintain the
-spreadsheet format that includes formatting elements such as bold or
-coloured cells), there are functions to import these file formats
-directly into \texttt{R}.
+export them to \texttt{.csv} or \texttt{.tsv}, which are better
+archiving and sharing formats. However, if you do not wish to do this
+(e.g.~because your colleague wishes to maintain the spreadsheet format
+that includes formatting elements such as bold or coloured cells) or
+because this is not your own data, you'll be pleased to learn that there
+are functions to import these file formats directly into \texttt{R}.
 
-\subsection{LibreOffice Calc}\label{libreoffice-calc}
+\subsection{LibreOffice/OpenOffice
+Calc}\label{libreofficeopenoffice-calc}
 
 For LibreOffice Calc (which you should have installed in
-Section~\ref{sec-OpenSource}), you can install the \{readODS\} package
-and use its \texttt{read\_ods()} function to import \texttt{.ods} files.
-Details about all the options can be found here
+Section~\ref{sec-OpenSource}) and OpenOffice Calc, you can install the
+\{readODS\} package and use its \texttt{read\_ods()} function to import
+\texttt{.ods} files. Details about all the options can be found here
 \url{https://www.rdocumentation.org/packages/readODS/versions/2.3.0}.
 
 \begin{Shaded}
@@ -5136,9 +5211,9 @@ here: \url{https://readxl.tidyverse.org/}.
 There are also several ways to import data from Google Sheets. The
 simplest is to export your tabular data as a \texttt{.csv},
 \texttt{.tsv}, \texttt{.xslx}, or \texttt{.ods} file by selecting Google
-Sheet's menu option `File' \textgreater{} `Download'. Then, you can
-simply import this downloaded file in \texttt{R} using the corresponding
-function as described above.
+Sheet's menu option under `File' and `Download'. Then, you can import
+this downloaded file in \texttt{R} using the corresponding function as
+described above.
 
 However, if you want to directly import your data from Google Sheets and
 be able to dynamically update the analyses that you conduct in
@@ -5157,13 +5232,13 @@ use the \{googlesheets4\} package (which is part of the \{tidyverse\}):
 \FunctionTok{library}\NormalTok{(googlesheets4)}
 
 \CommentTok{\# Import your Google Sheets data using your (spread)sheet\textquotesingle{}s URL:}
-\NormalTok{MySheetsData }\OtherTok{\textless{}{-}} \FunctionTok{read\_sheet}\NormalTok{(}\StringTok{"https://docs.google.com/spreadsheets/d/1U6Cf\_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY/edit\#gid=780868077"}\NormalTok{,}
+\NormalTok{MySheetsData }\OtherTok{\textless{}{-}} \FunctionTok{read\_sheet}\NormalTok{(}\StringTok{"https://docs.google.com/spreadsheets/YourURL"}\NormalTok{,}
                             \AttributeTok{sheet =} \DecValTok{1}\NormalTok{,}
                             \AttributeTok{col\_names =} \ConstantTok{TRUE}\NormalTok{,}
                             \AttributeTok{na =} \StringTok{"NA"}\NormalTok{)}
 
 \CommentTok{\# Or import your Google Sheets data using just the sheet\textquotesingle{}s ID:}
-\NormalTok{MySheetsData }\OtherTok{\textless{}{-}} \FunctionTok{read\_sheet}\NormalTok{(}\StringTok{"1U6Cf\_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY/edit\#gid=780868077"}\NormalTok{,}
+\NormalTok{MySheetsData }\OtherTok{\textless{}{-}} \FunctionTok{read\_sheet}\NormalTok{(}\StringTok{"YourGoogleSheetsID"}\NormalTok{,}
                             \AttributeTok{sheet =} \DecValTok{1}\NormalTok{,}
                             \AttributeTok{col\_names =} \ConstantTok{TRUE}\NormalTok{,}
                             \AttributeTok{na =} \StringTok{"NA"}\NormalTok{)}
@@ -5174,7 +5249,7 @@ use the \{googlesheets4\} package (which is part of the \{tidyverse\}):
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={Sign in with Google. Tidyverse API Packages wants access to your Google Account. Select what Tidyverse API Packages can access • See, edit, create, and delete all your Google Sheets spreadsheets. Because you\textquotesingle re using Sign in with Google, Tidyverse API Packages will be able to Associate you with your personal info on Google, See your primary Google Account email address. Make sure you trust Tidyverse API Packages. You may be sharing sensitive info with this site or app. Learn about how Tidyverse API Packages will handle your data by reviewing its privacy policies. You can always see or remove access in your Google Account. Learn about the risks. The two buttons at the bottom read: Cancel and Continue}]{images/GoogleSheetsTidyverseAccess.png}}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={Sign in with Google. Tidyverse API Packages wants access to your Google Account. Select what Tidyverse API Packages can access • See, edit, create, and delete all your Google Sheets spreadsheets. Because you\textquotesingle re using Sign in with Google, Tidyverse API Packages will be able to Associate you with your personal info on Google, See your primary Google Account email address. Make sure you trust Tidyverse API Packages. You may be sharing sensitive info with this site or app. Learn about how Tidyverse API Packages will handle your data by reviewing its privacy policies. You can always see or remove access in your Google Account. Learn about the risks. The two buttons at the bottom read: Cancel and Continue}]{images/GoogleSheetsTidyverseAccess.png}
 
 }
 
@@ -5251,12 +5326,14 @@ work with file formats that are specific to our discipline. In the
 spirit of Open Science (see Chapter~\ref{sec-OpenScholarship}), many are
 making these packages available to the wider research community by
 releasing them under open licenses. For example, linguistics
-M.A.~students Katja Wiesner and Nicolas Werner wrote an \texttt{R}
-package to facilitate the import of \texttt{.eaf} files generated by the
-annotation software \href{https://archive.mpi.nl/tla/elan}{ELAN}
-(Lausberg \& Sloetjes 2009) into \texttt{R} as part of a seminar project
-supervised by Dr.~Fahime (Fafa) Same at the University of Cologne
-(\url{https://github.com/relan-package/rELAN/?tab=readme-ov-file}).
+M.A.~students Katja Wiesner and Nicolas Werner wrote and published an
+\texttt{R} package called
+\href{https://github.com/relan-package/rELAN/?tab=readme-ov-file}{rELAN}
+to facilitate the import of the \texttt{.eaf} files generated by the
+linguistics annotation software
+\href{https://archive.mpi.nl/tla/elan}{ELAN} (Lausberg \& Sloetjes 2009)
+as part of a seminar project supervised by Dr.~Fahime (Fafa) Same at the
+University of Cologne.
 
 \section{\texorpdfstring{Quick-and-dirty (aka bad!) ways to import data
 in
@@ -5265,7 +5342,8 @@ in
 Feel free to skip this section if you got on just fine with the
 importing method introduced above as the following two methods are
 problematic for a number of reasons. However, they may come in useful in
-special cases, which is why both are briefly explained below.
+special cases and you will certainly find scripts that include hardcoded
+paths, which is why both are briefly explained below.
 
 \subsection{\texorpdfstring{Hardcoding file paths in \texttt{R} scripts
 \emoji{woozy-face}}{Hardcoding file paths in R scripts }}\label{sec-HardcodingFilePaths}
@@ -5336,15 +5414,9 @@ explained how to copy full file paths from a file Explorer or Finder
 window. Note that if there are spaces or other special characters other
 than \texttt{\_} or \texttt{-} anywhere in your file path, your import
 command will fail (see Section~\ref{sec-FileNaming} on naming
-conventions for folders and files). The following command, for instance,
-will fail and return an error (see Figure~\ref{fig-ImportErrorSpace})
-because the folder ``Uni Work'' contains a space.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{L1.data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\AttributeTok{file =} \StringTok{"/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/L1\_data.csv"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+conventions for folders and files). The import command in
+Figure~\ref{fig-ImportErrorSpace}, for instance, fails and returns an
+error (see ) because the folder ``Uni Work'' contains a space.
 
 \begin{figure}
 
@@ -5376,7 +5448,7 @@ session using RStudio's GUI (graphical user interface).
 
 \centering{
 
-\includegraphics[width=4.20833in,height=\textheight,keepaspectratio,alt={Screenshot of the Files pane in *RStudio* displaying the options after clicking on a CSV file. The option \textquotesingle Import Dataset...\textquotesingle{} is highlighted. Clicking on this will open the \textquotesingle Import Text Data\textquotesingle{} dialog for importing this file.}]{images/RStudioImportDataset.png}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Screenshot of the Files pane in *RStudio* displaying the options after clicking on a CSV file. The option \textquotesingle Import Dataset...\textquotesingle{} is highlighted. Clicking on this will open the \textquotesingle Import Text Data\textquotesingle{} dialog for importing this file.}]{images/RStudioImportDataset.png}}
 
 }
 
@@ -5443,6 +5515,11 @@ that \emph{RStudio} generated.
 
 \subsection*{Check your progress}\label{check-your-progress-11}
 \addcontentsline{toc}{subsection}{Check your progress}
+
+It's time to complete this chapter's
+\href{https://elenlefoll.github.io/RstatsTextbook/quizzes/6_quiz.html}{tasks
+and quizzes}! These tasks are crucial to be able to continue with the
+following chapters.
 
 Are you confident that you can\ldots?
 
@@ -5575,7 +5652,9 @@ will need to scroll in both directions to view all the data.
 \emph{RStudio} also provides a filter option and a search tool (see
 Figure~\ref{fig-ViewData1}). Note that both of these tools can only be
 used to visually inspect the data. You cannot alter the dataset in any
-way using these tools (and that's a good thing!).
+way using these tools. And that's a good thing because any changes that
+we make should be documented in code (as we will learn in
+Chapter~\ref{sec-DataWrangling}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5661,7 +5740,19 @@ possible are called \textbf{discrete} variables (e.g.~number of
 occurrences of a word in a corpus). Most often, discrete numeric
 variables represent counts of something.
 
-\href{https://allisonhorst.com}{\includegraphics[width=5.30208in,height=\textheight,keepaspectratio]{images/AHorst_NumericVariables.png}}
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={Cartoon comparison of continuous versus discrete data. On the left: "Continuous - measured data, can have infinite values within possible range." Below is an illustration of a chick, with text "I am 3.1" tall, I weight 34.16 grams." On the right: "Discrete - observations can only exist at limited values, often counts." Below is an illustration of an octopus with text "I have 8 legs and 4 spots!"}]{images/AHorst_NumericVariables.png}
+
+}
+
+\caption{\label{fig-HorstNumeric}Numeric variables
+(\href{https://twitter.com/allison_horst}{artwork CC BY 4.0
+@allison\_horst})}
+
+\end{figure}%
 
 \textbf{Categorical variables} can be \textbf{nominal} or
 \textbf{ordinal}. Nominal variables contain unordered categorical values
@@ -5675,7 +5766,17 @@ level) is not necessarily equal. \textbf{Binary} variables are a special
 case of nominal variable which only has two mutually exclusive outcomes
 (e.g.~\emph{true} or \emph{false} in a quiz question).
 
-\href{https://allisonhorst.com/}{\pandocbounded{\includegraphics[keepaspectratio]{images/AHorst_CategoricalVariables.png}}}
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={Visual representations of nominal, ordinal, and binary variables. Left: Nominal (ordered descriptions) with illustrations below of a turtle, snail, and butterfly. Center: Ordinal (ordered descriptions) with illustrations below of three bees - one looks unhappy (saying "I am unhappy"), one looks ok (saying "I am OK"), and one looks very happy (saying "I am awesome!"). Right: Binary (only 2 mutually exclusive outcomes), with below a T-rex saying "I am extinct" and a shark saying "HA."}]{images/AHorst_CategoricalVariables.png}
+
+}
+
+\caption{Categorical variables
+(\href{https://twitter.com/allison_horst}{artwork CC BY 4.0
+@allison\_horst})}
+
+\end{figure}%
 
 \subsection{\texorpdfstring{Inspecting variables in
 \texttt{R}}{Inspecting variables in R}}\label{inspecting-variables-in-r}
@@ -5770,10 +5871,6 @@ and then its values for the first few rows of the table (e.g.~we can see
 that the first participant in this dataset was a ``Student'' and the
 second a ``Student/Support Worker'').
 
-Compare the outputs of the \texttt{str()} and \texttt{head()} functions
-in the Console with that of the \texttt{View()} function to understand
-the different ways in which the same dataset can be examined in RStudio.
-
 \subsection{\texorpdfstring{Accessing individual columns in
 \texttt{R}}{Accessing individual columns in R}}\label{sec-DollarSign}
 
@@ -5820,18 +5917,19 @@ examine the data to spot any problems. Ask yourself:
 \end{itemize}
 
 Looking at the \texttt{Gender} and \texttt{Age} variables, we can see
-that all the L1 participants declared being either `male' (\texttt{"M"})
-or `female' (\texttt{"F"}), that the youngest were 17 years old, and
-that no participant was improbably old. A single improbable value is
-likely to be the result of a data entry error, e.g.~a participant or
-researcher accidentally entered \texttt{188} as an age, instead of
-\texttt{18}. If you spot lots of improbable or outright weird values
+that the L1 participants declared being either `male' (\texttt{"M"}) or
+`female' (\texttt{"F"}). We note that the youngest were 17 years old,
+which seems reasonable and we also check that no participant was
+improbably old. A single improbable value is likely to be the result of
+a data entry error, e.g.~a participant or researcher accidentally
+entered \texttt{188} as an age, instead of \texttt{18}. If you spot a
+whole string of improbable or outright impossible values
 (e.g.~\texttt{C}, \texttt{I} and \texttt{PS} as age values!), something
-is likely to have gone wrong during the data import process (see
+has likely gone wrong during the data import process (see
 Section~\ref{sec-ImportingErrors}).
 
 Just like we can save individual numbers and words as \texttt{R} objects
-to our \texttt{R} environment, we can also save individual variables as
+to our \texttt{R} environment, we can also save individual columns as
 individual \texttt{R} objects. As we saw in
 Section~\ref{sec-WorkingRObjects}, in this case, the values of the
 variable are not printed in the Console, but rather saved to our
@@ -5864,7 +5962,7 @@ the first six values using the \texttt{head()} function.
 \texttt{R}}{Accessing individual data points in R}}\label{sec-SquareBrackets}
 
 We can also access individual data points from a variable using the
-index operator, the square brackets (\texttt{{[}{]}}). For example, we
+index operator: the square brackets (\texttt{{[}{]}}). For example, we
 can access the \texttt{Occupation} value for the fourth L1 participant
 by specifying that we only want the fourth element of the \texttt{R}
 object \texttt{L1.Occupation}.
@@ -5893,7 +5991,7 @@ directly. To this end, we use a combination of the \texttt{\$} and the
 [1] "Web designer"
 \end{verbatim}
 
-We can access a continuous range of data points using the \texttt{:}
+We can access a consecutive range of data points using the \texttt{:}
 operator.
 
 \begin{Shaded}
@@ -5907,7 +6005,7 @@ operator.
 [4] "School Crossing Guard" "Carer/Cleaner"         "IT Support"           
 \end{verbatim}
 
-Or, if they are not continuous, we can list the numbers of the values
+Or, if they are not consecutive, we can list the numbers of the values
 that we are interesting in using the combine function (\texttt{c()}) and
 commas separating each index value.
 
@@ -5922,13 +6020,10 @@ commas separating each index value.
 [4] "Student"              
 \end{verbatim}
 
-It is also possible to access data points from a table by specifying
-both the number of the row and the number of the column of the relevant
-data point(s) using the following pattern:
-
-\begin{verbatim}
-[row,column]
-\end{verbatim}
+It is also possible to access data points from a tabular \texttt{R}
+object by specifying both the number of the row and the number of the
+column of the relevant data point(s) using the following pattern:
+\texttt{{[}row,column{]}}.
 
 For example, given that we know that \texttt{Occupation} is stored in
 the fourth column of \texttt{L1.data}, we can find out the occupation of
@@ -5945,8 +6040,8 @@ this:
 [1] "Train Driver"
 \end{verbatim}
 
-All of these approaches can be combined. For example, here we access the
-values of the second, third, and fourth columns for the
+All of these approaches can be combined. For example, below we access
+the values of the second, third, and fourth columns for the
 11\textsuperscript{th}, 13\textsuperscript{th}, 29\textsuperscript{th},
 and 90\textsuperscript{th} L1 participants.
 
@@ -6030,10 +6125,10 @@ functions to calculate the participants' average age.
 [1] 37.54444
 \end{verbatim}
 
-Base \texttt{R} includes lots of useful functions, especially to do
-statistics. Hence, it will come as no surprise to find that there is a
-built-in function to calculate mean average values. It is called
-\texttt{mean()} and is very simple to use.
+Base \texttt{R} includes lots of useful functions to do statistics,
+which means that it includes a built-in function to calculate mean
+average values. It is called \texttt{mean()} and simplifies the
+procedure considerably:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6045,20 +6140,27 @@ built-in function to calculate mean average values. It is called
 [1] 37.54444
 \end{verbatim}
 
-If you save the values of a variable to your \texttt{R} session
-environment, you do not need to use the name of the dataset and the
-\texttt{\$} sign to calculate its mean. Instead, you can directly apply
-the \texttt{mean()} function to the stored \texttt{R} object.
+If we save the values of a variable to our \texttt{R} session
+environment, we do not need to use the name of the dataset and the
+\texttt{\$} sign to calculate its mean. Instead, we can directly apply
+the \texttt{mean()} function to the stored \texttt{R} object:
 
+\protect\phantomsection\label{annotated-cell-71}%
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Saving the values of the Age variable to a new R object called L1.Age:}
-\NormalTok{L1.Age }\OtherTok{\textless{}{-}}\NormalTok{ L1.data}\SpecialCharTok{$}\NormalTok{Age}
+\NormalTok{L1.Age }\OtherTok{\textless{}{-}}\NormalTok{ L1.data}\SpecialCharTok{$}\NormalTok{Age }\hspace*{\fill}\NormalTok{\circled{1}}
 
-\CommentTok{\# Applying the mean() function to this new R object:}
-\FunctionTok{mean}\NormalTok{(L1.Age)}
+\FunctionTok{mean}\NormalTok{(L1.Age) }\hspace*{\fill}\NormalTok{\circled{2}}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{description}
+\tightlist
+\item[\circled{1}]
+Saving the values of the Age variable to a new R object called L1.Age
+\item[\circled{2}]
+Applying the mean() function to this new R object
+\end{description}
 
 \begin{verbatim}
 [1] 37.54444
@@ -6069,9 +6171,9 @@ the \texttt{mean()} function to the stored \texttt{R} object.
 All of the functions that we have looked at this chapter so far work
 with just a single argument: either a vector of values (e.g.~a variable
 from our dataset as in \texttt{mean(L1.data\$Age)}) or an entire tabular
-dataset (e.g.~\texttt{str(L1.data)}). When we looked at the
+dataset as in \texttt{str(L1.data)}. When we looked at the
 \texttt{head()} function, we saw that, per default, it displays the
-first six rows but that we can change this by specifying a second
+first six rows, but that we can change this by specifying a second
 argument in the function. In \texttt{R}, arguments within a function are
 always separated by a comma.
 
@@ -6085,11 +6187,12 @@ always separated by a comma.
 [1] 21 38 55 26 55 58
 \end{verbatim}
 
-The names of the argument can be specified but do not have to be if they
+The names of the argument can be specified but don't have to be if they
 are listed in the order specified in the documentation. You can check
-the `Usage' section of a function's help file (e.g.~using
-\texttt{help(head)} function or \texttt{?head}) to find out the order of
-the arguments. Run the following commands and compare their output:
+the `Usage' section of a function's help file (e.g.~with
+\texttt{help(head)} or \texttt{?head}) to find out the order of a
+function's arguments. Run the following commands and compare their
+output:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6103,49 +6206,65 @@ the arguments. Run the following commands and compare their output:
 Whilst the first three return exactly the same output, the fourth
 returns an error because the argument names are not specified and are
 not in the order specified in the function's help file. To avoid making
-errors and confusing your collaborators and/or future self, it's good
-practice to explicitly name all the arguments except the most obvious
-ones.
+errors and confusing your collaborators and/or future self, it's best to
+explicitly name all the arguments except the most obvious ones.
 
 \section{\texorpdfstring{Combining functions in
 \texttt{R}}{Combining functions in R}}\label{combining-functions-in-r}
 
 Combining functions is where the real fun starts with programming! In
 Section~\ref{sec-RFunctions}, we already combined two functions using a
-mathematical operator (\texttt{/}). But what if we want to compute L1
-participant's average age to two decimal places? To do this, we need to
+mathematical operator (\texttt{/}). Now, we are going to compute L1
+participant's average age to two decimal places. To do this, we need to
 combine the \texttt{mean()} function and the \texttt{round()} function.
-We can do this in two steps.
+We can do this in two steps:
 
+\protect\phantomsection\label{annotated-cell-74}%
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Step 1:}
-\NormalTok{L1.mean.age }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(L1.Age)}
-
-\CommentTok{\# Step 2:}
-\FunctionTok{round}\NormalTok{(L1.mean.age, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
+\NormalTok{L1.mean.age }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(L1.Age) }\hspace*{\fill}\NormalTok{\circled{1}}
+\FunctionTok{round}\NormalTok{(L1.mean.age, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{) }\hspace*{\fill}\NormalTok{\circled{2}}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{description}
+\tightlist
+\item[\circled{1}]
+In step 1, we compute the mean value and save it as an \texttt{R}
+object.
+\item[\circled{2}]
+In step 2, we pass this object through the \texttt{round()} function
+with the argument \texttt{digits\ =\ 2}
+\end{description}
 
 \begin{verbatim}
 [1] 37.54
 \end{verbatim}
 
-In step 1, we compute the mean value and save it as an \texttt{R} object
-and, in step 2, we pass this object through the \texttt{round()}
-function with the argument \texttt{digits\ =\ 2}. There is nothing wrong
-with this method, but it often require lots of intermediary \texttt{R}
-objects, which can get rather tiresome.
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
-In the following, we will look at two further ways to combine functions
-in \texttt{R}: nesting and piping.
+Hover over the numbers to the right of the code to see the code
+annotation.
+
+\end{tcolorbox}
+
+In principle, there is nothing wrong with this method, but it often
+require lots of intermediary \texttt{R} objects, which can get rather
+tiresome and can lead to human errors as you can end up calling the
+wrong object. In the following, we will look at two further ways to
+combine functions in \texttt{R}: nesting and piping.
 
 \subsection{Nested functions}\label{sec-Nesting}
 
 The first method involves lots of brackets (also known as
 `parentheses'). This is because in nested functions, one function is
 placed inside another function. The inner function is evaluated first,
-and its result is passed to the next outer function. Here's an example:
+and its result is passed to the next outer function. In the following
+example, the \texttt{mean()} function is nested inside the
+\texttt{round()} function. The \texttt{mean()} function calculates the
+mean of \texttt{L1.Age}, and the result is passed to the
+\texttt{round()} function, which rounds the result to the nearest
+integer:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6157,15 +6276,11 @@ and its result is passed to the next outer function. Here's an example:
 [1] 38
 \end{verbatim}
 
-In this example, the \texttt{mean()} function is nested inside the
-\texttt{round()} function. The \texttt{mean()} function calculates the
-mean of \texttt{L1.Age}, and the result is passed to the
-\texttt{round()} function, which rounds the result to the nearest
-integer.
-
-You can also pass additional arguments to any of the functions, but you
-must make sure that you place the arguments within the correct set of
-brackets.
+We can also pass additional arguments to any of the functions, but we
+must make sure to place the arguments within the correct set of
+brackets. In the following example, the argument \texttt{digits\ =\ 2}
+belongs to the outer function \texttt{round()}; hence it must be placed
+within the outer set of brackets:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6177,20 +6292,16 @@ brackets.
 [1] 37.54
 \end{verbatim}
 
-In this example, the argument \texttt{digits\ =\ 2} belongs to the outer
-function \texttt{round()}; hence it must be placed within the outer set
-of brackets.
-
-In theory, you can nest as many functions as you like, but things can
-get quite chaotic after more than a couple of functions. You need to
-make sure that you can trace back which arguments and which brackets
-belong to which function (see Figure~\ref{fig-NestedFunctions}).
+In theory, we can nest as many functions as we like, but things can get
+quite chaotic after more than a couple of functions. We need to make
+sure that we can trace back which arguments and which brackets belong to
+which function (see Figure~\ref{fig-NestedFunctions}).
 
 \begin{figure}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={The pseudo code reads like this a) function(argument 1, argument 2), b) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), c) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c).}]{images/NestedFunctions.png}}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={The pseudo code reads like this a) function(argument 1, argument 2), b) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), c) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c).}]{images/NestedFunctions.png}
 
 }
 
@@ -6206,30 +6317,38 @@ Consider the three lines of code below. Without running them, can you
 tell which of the three lines of code will output the square root of L1
 participant's average age to two decimal places?
 
+\protect\phantomsection\label{annotated-cell-405}%
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{round}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(L1.Age) }\AttributeTok{digits =} \DecValTok{2}\NormalTok{))}
+\FunctionTok{round}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(L1.Age) }\AttributeTok{digits =} \DecValTok{2}\NormalTok{)) }\hspace*{\fill}\NormalTok{\circled{1}}
 
-\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{round}\NormalTok{(}\FunctionTok{mean}\NormalTok{(L1.Age), }\AttributeTok{digits =} \DecValTok{2}\NormalTok{))}
+\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{round}\NormalTok{(}\FunctionTok{mean}\NormalTok{(L1.Age), }\AttributeTok{digits =} \DecValTok{2}\NormalTok{)) }\hspace*{\fill}\NormalTok{\circled{2}}
 
-\FunctionTok{round}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(L1.Age)), }\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{round}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(L1.Age)), }\AttributeTok{digits =} \DecValTok{2}\NormalTok{) }\hspace*{\fill}\NormalTok{\circled{3}}
 \end{Highlighting}
 \end{Shaded}
 
-The first line will return an ``unexpected symbol'' error because it is
-missing a comma before the argument \texttt{digits\ =\ 2}. The second
-line actually outputs \texttt{6.126989}, which has more than two decimal
-places! This is because \texttt{R} interprets the functions from the
-inside out: first, it calculates the mean value, then it rounds that off
-to two decimal places, and only then does it compute the square root of
-that rounded off value. The third line, in contrast, does the rounding
-operation as the last step. Note that, in the two lines of code that do
-not produce an error, the brackets around the argument
-\texttt{digits\ =\ 2} are also located in different places.
+\begin{description}
+\tightlist
+\item[\circled{1}]
+This code will return an ``unexpected symbol'' error because it is
+missing a comma before the argument \texttt{digits\ =\ 2}.
+\item[\circled{2}]
+This second line of code actually outputs \texttt{6.126989}, which has
+more than two decimal places! This is because \texttt{R} interprets the
+functions from the inside out: first, it calculates the mean value, then
+it rounds that off to two decimal places, and only then does it compute
+the square root of that rounded off value.
+\item[\circled{3}]
+This third attempt, in contrast, does the rounding operation as the last
+step. Note that, in the two lines of code that do not produce an error,
+the brackets around the argument \texttt{digits\ =\ 2} are also located
+in different places.
+\end{description}
 
 It is very easy to make bracketing errors when writing code and
 especially so when nesting functions (see
-Figure~\ref{fig-NestedFunctions}). Watch your commas and brackets (see
+Figure~\ref{fig-NestedFunctions}) so watch your commas and brackets (see
 also Section~\ref{sec-Errors})!
 
 \end{tcolorbox}
@@ -6254,7 +6373,7 @@ operator, which in \texttt{R} is
 
 The \texttt{\textbar{}\textgreater{}} operator passes the output of one
 function on to the first argument of the next function. This allows us
-to chain multiple functions together in a much more intuitive way.
+to chain multiple functions together in a much more intuitive way, e.g.:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6268,9 +6387,9 @@ to chain multiple functions together in a much more intuitive way.
 [1] 38
 \end{verbatim}
 
-In this example, the object \texttt{L1.Age} is passed on to the first
-argument of the \texttt{mean()} function. This calculates the mean of
-\texttt{L1.Age}. Next, this result is passed to the \texttt{round()}
+In the example above, the object \texttt{L1.Age} is passed on to the
+first argument of the \texttt{mean()} function. This calculates the mean
+of \texttt{L1.Age}. Next, this result is passed to the \texttt{round()}
 function, which rounds the mean value to the nearest integer.
 
 To pass additional arguments to any function in the pipeline, we add
@@ -6288,20 +6407,20 @@ them within the brackets that belong to that function:
 [1] 37.54
 \end{verbatim}
 
-Like many of the relational operators we saw in
+Like many of the relational operators we learnt about in
 Section~\ref{sec-RelationalOperators}, the \texttt{R} pipe is a
-combination of two symbols, the computer pipe symbol \texttt{\textbar{}}
-and the right angle bracket \texttt{\textgreater{}}. Don't worry if
-you're not sure where these two symbols are on your keyboard as
-\emph{RStudio} has a handy shortcut for you:
-\texttt{Ctrl/Cmd\ +\ Shift\ +\ M}\footnote{If, in your version of
-  RStudio, this shortcut produces \texttt{\%\textgreater{}\%} instead of
-  \texttt{\textbar{}\textgreater{}}, you have probably not activated the
-  native \texttt{R} pipe option in your \emph{RStudio} global options
-  (see instructions in Section~\ref{sec-GlobalOptions}).} (see
-Figure~\ref{fig-Pipes}). I strongly recommend that you write this
-shortcut on a prominent post-it and learn it asap, as you will need it a
-lot when you are working in \texttt{R}!
+combination of two symbols, the computer pipe \texttt{\textbar{}} and
+the right angle bracket \texttt{\textgreater{}}. Don't worry if you're
+not sure where these two symbols are on your keyboard as \emph{RStudio}
+has a handy shortcut for you:
+\texttt{Cmd-Shift-M} (mac), \texttt{Ctrl-Shift-M} (linux), \texttt{Ctrl-Shift-M} (windows)
+(see also Figure~\ref{fig-Pipes}). I strongly recommend that you write
+this shortcut on a prominent post-it and learn it asap, as you will need
+it a lot when you are working in \texttt{R}!\footnote{If, in your
+  version of RStudio, this shortcut produces \texttt{\%\textgreater{}\%}
+  instead of \texttt{\textbar{}\textgreater{}}, you have probably not
+  activated the native \texttt{R} pipe option in your \emph{RStudio}
+  global options (see instructions in Section~\ref{sec-GlobalOptions}).}
 
 \begin{figure}
 
@@ -6320,6 +6439,10 @@ Foll 2025. Zenodo. \url{https://doi.org/10.5281/zenodo.17440405})}
 \subsection*{Check your progress}\label{check-your-progress-13}
 \addcontentsline{toc}{subsection}{Check your progress}
 
+It's time to complete this chapter's
+\href{https://elenlefoll.github.io/RstatsTextbook/quizzes/7_quiz.html}{tasks
+and quizzes}! Good luck! \emoji{four-leaf-clover}
+
 Are you confident that you can\ldots?
 
 \begin{itemize}
@@ -6330,16 +6453,16 @@ Are you confident that you can\ldots?
   Recognise different types of variables (Section~\ref{sec-Variables})
 \item[$\square$]
   Access individual columns and data points in \texttt{R}
-  (Section~\ref{sec-DollarSign}) - (Section~\ref{sec-SquareBrackets})
+  (Section~\ref{sec-DollarSign})--(Section~\ref{sec-SquareBrackets})
 \item[$\square$]
   Use built-in \texttt{R} functions and change function arguments
   (Section~\ref{sec-RFunctions})
 \item[$\square$]
   Combine functions in \texttt{R} using both the nesting and the piping
-  methods (Section~\ref{sec-Nesting}) - (Section~\ref{sec-Piping})
+  methods (Section~\ref{sec-Nesting})--(Section~\ref{sec-Piping})
 \end{itemize}
 
-You are now ready to some statistics in \texttt{R}! In
+You are now ready to do statistics in \texttt{R}! \emoji{muscle} In
 Chapter~\ref{sec-DescRiptiveStats}, we begin with descriptive
 statistics.
 
@@ -8197,6 +8320,12 @@ understanding standard deviation.
 \subsection*{Check your progress}\label{check-your-progress-15}
 \addcontentsline{toc}{subsection}{Check your progress}
 
+It's time to complete this chapter's
+\href{https://elenlefoll.github.io/RstatsTextbook/8_quiz.html}{tasks and
+quizzes}. They will give you more opportunities to explore the datasets
+from Dąbrowska (2019), ensuring that you are ready to then tackle data
+wrangling, visualisation, and inferential statistics!
+
 Are you confident that you can\ldots?
 
 \begin{itemize}
@@ -9252,7 +9381,7 @@ using base \texttt{R} functions. For example, the \texttt{mutate()} code
 chunk above could be replaced by the following lines of base \texttt{R}
 code.
 
-\protect\phantomsection\label{annotated-cell-473}%
+\protect\phantomsection\label{annotated-cell-470}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{L2.data}\SpecialCharTok{$}\NormalTok{NativeLg.cleaned.base }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(}\StringTok{"([a{-}zA{-}Z]+).*"}\NormalTok{, }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{1"}\NormalTok{, L2.data}\SpecialCharTok{$}\NormalTok{NativeLg) }\hspace*{\fill}\NormalTok{\circled{1}}
@@ -9875,9 +10004,10 @@ Section~\ref{sec-ExcelWarning}!).
 \subsection*{Check your progress}\label{check-your-progress-17}
 \addcontentsline{toc}{subsection}{Check your progress}
 
-That was a lot of data wrangling, but we are now ready to proceed with
-some comparative analyses of L1 and L2 English speakers' language
-skills!
+It's time to complete this chapter's
+\href{https://elenlefoll.github.io/RstatsTextbook/quizzes/9_quiz.html}{tasks
+and quizzes}! Lots of opportunities to hone your data wrangling skills!
+\emoji{building-construction}
 
 Are you confident that you can\ldots?
 
@@ -9910,10 +10040,12 @@ Are you confident that you can\ldots?
   your computer (Section~\ref{sec-ExportingRObjects})
 \end{itemize}
 
-In Chapter~\ref{sec-DataViz} we continue to explore the tidyverse as we
-learn how to use the popular tidyverse package \{ggplot2\} to visualise
-the pre-processed data from Dąbrowska (2019). Are you ready to get
-creative? \emoji{art}
+That was a lot of data wrangling, but we are now ready to proceed with
+some comparative analyses of L1 and L2 English speakers' language
+skills! In Chapter~\ref{sec-DataViz} we continue to explore the
+tidyverse as we learn how to use the popular tidyverse package
+\{ggplot2\} to visualise the pre-processed data from Dąbrowska (2019).
+Are you ready to get creative? \emoji{art}
 
 \bookmarksetup{startatroot}
 
@@ -11009,7 +11141,7 @@ themes for you to explore.
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio,alt={The barplot from Figure 10.5 in the \textquotesingle black and white\textquotesingle{} theme.}]{10_Dataviz_files/figure-pdf/unnamed-chunk-10-1.pdf}}
+{\centering \pandocbounded{\includegraphics[keepaspectratio,alt={The barplot from Figure 10.5 displayed in black and white.}]{10_Dataviz_files/figure-pdf/unnamed-chunk-10-1.pdf}}
 
 }
 
@@ -11033,7 +11165,7 @@ theme.}
 
 \begin{figure}[H]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio,alt={The barplot from Figure 10.5 in the \textquotesingle dark\textquotesingle{} theme.}]{10_Dataviz_files/figure-pdf/unnamed-chunk-11-1.pdf}}
+{\centering \pandocbounded{\includegraphics[keepaspectratio,alt={The barplot from Figure 10.5 printed in dark colours.}]{10_Dataviz_files/figure-pdf/unnamed-chunk-11-1.pdf}}
 
 }
 
@@ -11651,7 +11783,7 @@ density plots and it's called\ldots{} \texttt{geom\_density()}! 😃
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/fig-GrammarDensity-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A density plot of English grammar test scores: there is a small bump around 10 and a large mountain around 95.}]{10_Dataviz_files/figure-pdf/fig-GrammarDensity-1.pdf}}
 
 }
 
@@ -11752,11 +11884,12 @@ layer, it doesn't necessarily mean that it's a good idea to do so!
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/fig-SillyDensityPlot-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A density plot of L2 participants\textquotesingle{} non-verbal IQ scores, forming a wide hill plateauing slightly from 10 to 15 and peaking at 20. There is a very thick dotted line running along the countour of the hill.}]{10_Dataviz_files/figure-pdf/fig-SillyDensityPlot-1.pdf}}
 
 }
 
-\caption{\label{fig-SillyDensityPlot}}
+\caption{\label{fig-SillyDensityPlot}Density plot of L2 participants'
+non-verbal IQ scores.}
 
 \end{figure}%
 
@@ -11796,11 +11929,12 @@ within a complex plot as in Figure~\ref{fig-UsefulDensityPlot}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/fig-UsefulDensityPlot-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Two overlapping density plots for L1 and L2 participants\textquotesingle{} non-verbal IQ scores, with a dotted line indicating the mean for each group. The hill for the L2 speakers\textquotesingle{} results is taller, and its mean is greater.}]{10_Dataviz_files/figure-pdf/fig-UsefulDensityPlot-1.pdf}}
 
 }
 
-\caption{\label{fig-UsefulDensityPlot}}
+\caption{\label{fig-UsefulDensityPlot}Overlapping density plot of L1 and
+L2 participants' non-verbal IQ scores.}
 
 \end{figure}%
 
@@ -11847,11 +11981,12 @@ density plot (see Section~\ref{sec-Density}) than as a single boxplot.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/fig-GrammarBoxPlot-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A vertical box plot of participants\textquotesingle{} English grammar test results. The minimum is placed slightly below 50 with an interquartile range from 75 to 95 and a median at 90. There are several outliers from 0 to the minimum.}]{10_Dataviz_files/figure-pdf/fig-GrammarBoxPlot-1.pdf}}
 
 }
 
-\caption{\label{fig-GrammarBoxPlot}}
+\caption{\label{fig-GrammarBoxPlot}Box plot of participants' English
+grammar test results.}
 
 \end{figure}%
 
@@ -11877,11 +12012,12 @@ values of the \texttt{Group} variable (which are either ``L1'' or
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/fig-GrammarBoxPlotGroup-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={The previous box plot has been divided into two individual charts for L1 and L2 participants\textquotesingle{} results. For L1 participants the minimum and interquartile range have shifted upwards very slightly and there is a single outlier below 50. For L2 participants the minimum has been extended down to 0 and the interquartile range stretched down below 50.}]{10_Dataviz_files/figure-pdf/fig-GrammarBoxPlotGroup-1.pdf}}
 
 }
 
-\caption{\label{fig-GrammarBoxPlotGroup}}
+\caption{\label{fig-GrammarBoxPlotGroup}Box plots of L1 and L2
+participants' English grammar test results.}
 
 \end{figure}%
 
@@ -11935,7 +12071,15 @@ combination of a boxplot (see Section~\ref{sec-IQR}) and a histogram
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/unnamed-chunk-42-1.pdf}}
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio,alt={Dot plots of participants\textquotesingle{} English collocation test results. For L1 speakers, the largest cluster of dots spans from 35 to 50 and for L2 speakers they fall in a wider range from 0 to 75.}]{10_Dataviz_files/figure-pdf/unnamed-chunk-42-1.pdf}}
+
+}
+
+\caption{Dot plots of participants' English collocation test results.''}
+
+\end{figure}%
 
 \paragraph*{Violin plots}\label{violin-plots}
 \addcontentsline{toc}{paragraph}{Violin plots}
@@ -11965,7 +12109,16 @@ boxplot.
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/unnamed-chunk-44-1.pdf}}
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio,alt={Violin plots of participants\textquotesingle{} English collocation test results. The plot for L1 speakers expands towards the higher end of the range, forming an upside down pear shape, whereas the plot for L2 speakers resembles a peanut which bulges out around 10 and then again around 55.}]{10_Dataviz_files/figure-pdf/unnamed-chunk-44-1.pdf}}
+
+}
+
+\caption{Violin plots of participants' English collocation test
+results.''}
+
+\end{figure}%
 
 By themselves, \textbf{violin plots} are rather abstract representations
 of variable distributions. However, in combination with
@@ -11991,7 +12144,16 @@ plots, the violin plots will mask the boxplots completely.
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/unnamed-chunk-46-1.pdf}}
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio,alt={The previous violin plots have been overlaid with box plots.}]{10_Dataviz_files/figure-pdf/unnamed-chunk-46-1.pdf}}
+
+}
+
+\caption{Violin-boxplot of participants' English collocation test
+results.}
+
+\end{figure}%
 
 \end{tcolorbox}
 
@@ -12032,7 +12194,16 @@ L2 group.
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/unnamed-chunk-47-1.pdf}}
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio,alt={A scatter plot comparing L1 and L2 participants\textquotesingle{} grammar comprehension test scores with the number of years of formal education they have received. For the L1 participants, the dots are clustered near the top left, indicating higher scores and fewer years of formal education. For the L2 partipants, the dots cluster at the top and bottom center, indicating a wider range of test scores and more formal education on average.}]{10_Dataviz_files/figure-pdf/unnamed-chunk-47-1.pdf}}
+
+}
+
+\caption{Scatter plot comparing participants' grammar comprehension test
+scores with number of years of formal education.}
+
+\end{figure}%
 
 At first glance, it would seem that our data do not support our initial
 hypothesis: among the L2 participants, there is no obvious trend
@@ -12065,11 +12236,13 @@ and the number of years they spent in formal education.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/fig-GrammarScatterPlot-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={The previous scatter plots with a blue lines indicating the correlation between the two variables. For L1 speakers the line proceeds through the cluster upwards and to the right at a shallow angle. For L2 speakers a similar line trajectory cuts through the bottom of the top cluster. For both groups there is a weak positive correlation.}]{10_Dataviz_files/figure-pdf/fig-GrammarScatterPlot-1.pdf}}
 
 }
 
-\caption{\label{fig-GrammarScatterPlot}}
+\caption{\label{fig-GrammarScatterPlot}Regression lines for
+participants' grammar comprehension test scores vs.~years of formal
+education.}
 
 \end{figure}%
 
@@ -12183,7 +12356,15 @@ language family to a \texttt{colour}.
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/unnamed-chunk-55-1.pdf}}
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio,alt={A word cloud of participants\textquotesingle{} native languages coloured according to language family and sized according to the number of participant speakers.}]{10_Dataviz_files/figure-pdf/unnamed-chunk-55-1.pdf}}
+
+}
+
+\caption{Word cloud of native languages from the study.}
+
+\end{figure}%
 
 Word clouds are widely used in the media and corporate world, but they
 are much rarer in academic research. Although word clouds can help to
@@ -12228,11 +12409,12 @@ family.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/fig-ColourScatterPlot-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A scatter plot comparing L2 participants\textquotesingle{} grammar comprehension scores and age, with the dots coloured according to their native language.}]{10_Dataviz_files/figure-pdf/fig-ColourScatterPlot-1.pdf}}
 
 }
 
-\caption{\label{fig-ColourScatterPlot}}
+\caption{\label{fig-ColourScatterPlot}Scatter plot of L2 participants'
+grammar comprehension scores and age coloured by native language.}
 
 \end{figure}%
 
@@ -12263,11 +12445,12 @@ aesthetics.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/fig-TextScatterPlot-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={The previous scatterplot with the dots replaced by coloured text displaying the name of the language.}]{10_Dataviz_files/figure-pdf/fig-TextScatterPlot-1.pdf}}
 
 }
 
-\caption{\label{fig-TextScatterPlot}}
+\caption{\label{fig-TextScatterPlot}Scatter plot of L2 participants'
+grammar comprehension scores and age with the dots replaced by text.}
 
 \end{figure}%
 
@@ -12302,11 +12485,13 @@ fewer than 90 points on the test.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/fig-TextScatterPlot2-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={The previous scatterplot displaying only the data points for female participants who scored lower than 90.}]{10_Dataviz_files/figure-pdf/fig-TextScatterPlot2-1.pdf}}
 
 }
 
-\caption{\label{fig-TextScatterPlot2}}
+\caption{\label{fig-TextScatterPlot2}Scatter plot of female L2
+participants' grammar comprehension scores and age who scored lower than
+90.}
 
 \end{figure}%
 
@@ -12344,11 +12529,13 @@ which was designed to avoid text labels overlapping.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{10_Dataviz_files/figure-pdf/fig-TextScatterPlot3-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={The previous scatterplot has been expanded with ggrepel in order to prevent labels from overlapping.}]{10_Dataviz_files/figure-pdf/fig-TextScatterPlot3-1.pdf}}
 
 }
 
-\caption{\label{fig-TextScatterPlot3}}
+\caption{\label{fig-TextScatterPlot3}Scatter plot of female L2
+participants' grammar comprehension scores and age who scored lower than
+90, expanded with \{\{ggrepel\}\}.}
 
 \end{figure}%
 
@@ -12391,11 +12578,12 @@ option, otherwise the outliers will be plotted twice.
 
 \centering{
 
-\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio]{10_Dataviz_files/figure-pdf/fig-GrammarPointBoxplot-1.pdf}
+\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio,alt={The boxplots of L1 and L2 participants\textquotesingle{} grammar comprehension test scores overlaid by dots for each data point, rather than just the outliers.}]{10_Dataviz_files/figure-pdf/fig-GrammarPointBoxplot-1.pdf}
 
 }
 
-\caption{\label{fig-GrammarPointBoxplot}}
+\caption{\label{fig-GrammarPointBoxplot}Boxplot of participants' grammar
+comprehension test scores overlaid by dots.}
 
 \end{figure}%
 
@@ -12425,11 +12613,12 @@ overlaps.
 
 \centering{
 
-\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio]{10_Dataviz_files/figure-pdf/fig-JitteredGrammar-1.pdf}
+\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio,alt={The previous boxplots with the dots slightly randomized using geom\_jitter.}]{10_Dataviz_files/figure-pdf/fig-JitteredGrammar-1.pdf}
 
 }
 
-\caption{\label{fig-JitteredGrammar}}
+\caption{\label{fig-JitteredGrammar}The boxplots with dots slightly
+randomized by \{\{geom\_jitter\}\}.}
 
 \end{figure}%
 
@@ -12457,11 +12646,12 @@ variable from our dataset, e.g.~\texttt{Gender}.
 
 \centering{
 
-\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{10_Dataviz_files/figure-pdf/fig-JitteredGrammarGender-1.pdf}
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio,alt={The previous boxplots with the dots coloured according to participant gender.}]{10_Dataviz_files/figure-pdf/fig-JitteredGrammarGender-1.pdf}
 
 }
 
-\caption{\label{fig-JitteredGrammarGender}}
+\caption{\label{fig-JitteredGrammarGender}The boxplots with dots
+coloured according to participants gender.}
 
 \end{figure}%
 
@@ -12502,11 +12692,12 @@ Figure~\ref{fig-JitteredGrammarComplex} in your opinion?
 
 \centering{
 
-\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{10_Dataviz_files/figure-pdf/fig-JitteredGrammarComplex-1.pdf}
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio,alt={The previous boxplots with the dots as circles or squares to indicate participant gender and coloured according to participant occupation.}]{10_Dataviz_files/figure-pdf/fig-JitteredGrammarComplex-1.pdf}
 
 }
 
-\caption{\label{fig-JitteredGrammarComplex}}
+\caption{\label{fig-JitteredGrammarComplex}The boxplots combining shapes
+to indicate gender and colour to indicate occupation.}
 
 \end{figure}%
 
@@ -12667,6 +12858,10 @@ attempting to save anything in it!
 
 \subsection*{Check your progress}\label{check-your-progress-19}
 \addcontentsline{toc}{subsection}{Check your progress}
+
+You are now ready to get creative: Complete this chapter's
+\href{https://elenlefoll.github.io/RstatsTextbook/11_quiz.html}{tasks
+and quizzes}! \emoji{art}
 
 Are you confident that you can\ldots?
 
@@ -13769,7 +13964,7 @@ data:
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={Two scatter plot showing the relationship between the number of years in formal education and English grammar comprehension test scores for two groups, L1 and L2. Each black dot represents an individual's score. A blue regression line in each plot shows a positive trend: more years in education are associated with higher test scores in both groups.}]{11_Inferential_files/figure-pdf/fig-YearEducationPlot-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Two scatter plots showing the relationship between the number of years in formal education and English grammar comprehension test scores for two groups, L1 and L2. Each black dot represents an individual's score. A blue regression line in each plot shows a positive trend: more years in education are associated with higher test scores in both groups.}]{11_Inferential_files/figure-pdf/fig-YearEducationPlot-1.pdf}}
 
 }
 
@@ -16383,7 +16578,7 @@ the assumption of linearity is violated.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{12_SimpleLinearRegression_files/figure-pdf/fig-Nonlinear-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A scatter plot comparing word frequency and word rank. The dots follow a curve starting at around word frequency 6,000 and word rank 1, and become increasingly spread out as word frequency decreases and word rank increases, forming a sloping horn shape. A shallow downward-sloping regression line cuts through the lower half of the funnel and ends at around word rank 550.}]{12_SimpleLinearRegression_files/figure-pdf/fig-Nonlinear-1.pdf}}
 
 }
 
@@ -16424,7 +16619,7 @@ decrease as the outcome variable increases or decreases.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{12_SimpleLinearRegression_files/figure-pdf/fig-VocabResidual-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A scatter plot comparing model residuals and predicted vocab scores. The points fall into a roughly triangular area which becomes more narrow as predicted vocab scores increases. The greatest range of model residuals is found around a predicted vocab score of 67. A perfectly horizontal line cuts through the chart at 0 model residuals.}]{12_SimpleLinearRegression_files/figure-pdf/fig-VocabResidual-1.pdf}}
 
 }
 
@@ -16470,7 +16665,7 @@ shown in Figure~\ref{fig-VocabResidualDensity}, the residuals of
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{12_SimpleLinearRegression_files/figure-pdf/fig-VocabResidualDensity-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A density plot of model residuals. The hill rises sharply and peaks just before 0 residuals, marked by a horizontal dotted line, before falling more gradually.}]{12_SimpleLinearRegression_files/figure-pdf/fig-VocabResidualDensity-1.pdf}}
 
 }
 
@@ -17034,7 +17229,7 @@ Let's decipher the summary of \texttt{model4\_c} step-by-step:
   years (\texttt{EduTotal}), we combine the coefficient estimates as
   follows:
 
-\protect\phantomsection\label{annotated-cell-601}%
+\protect\phantomsection\label{annotated-cell-598}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \FloatTok{70.5852} \SpecialCharTok{+} \hspace*{\fill}\NormalTok{\circled{1}}
@@ -18102,7 +18297,7 @@ Based on the coefficient estimates of the model summary, we can
 therefore calculate the predicted \texttt{Vocab} score of the student /
 support worker as follows:
 
-\protect\phantomsection\label{annotated-cell-308}%
+\protect\phantomsection\label{annotated-cell-306}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \FloatTok{51.9162} \SpecialCharTok{+} \hspace*{\fill}\NormalTok{\circled{1}}
@@ -18131,7 +18326,7 @@ years in formal education
 
 And similarly for the housewife with the same ART score:
 
-\protect\phantomsection\label{annotated-cell-309}%
+\protect\phantomsection\label{annotated-cell-307}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \FloatTok{51.9162} \SpecialCharTok{+} \hspace*{\fill}\NormalTok{\circled{1}}
@@ -18828,6 +19023,7 @@ diagnostic plot from this saved list:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{diagnostic.plots[[}\DecValTok{1}\NormalTok{]]}
+\CommentTok{\#| fig{-}alt: "A density chart comparing observed vocabulary scores with scores predicted by the model. A green line which plateaus slightly from about 50 to 70 at densities from 0.013 to 0.015 and peaks at around 80 with a density of 0.020 is overlapped by several transparent blue lines, all of which peak at lower test scores."}
 \end{Highlighting}
 \end{Shaded}
 
@@ -18872,7 +19068,7 @@ assumption of linearity is not severely violated.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{13_MultipleLinearRegression_files/figure-pdf/fig-Linearity-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A scatter plot relating model predictions and model residuals. The majority of the dots fall between -10 and 20 residuals, and a very slightly curved line cuts through them. It begins slightly below zero, peaks slightly above zero at about 80 fitted values, and falls back below zero. The linearity is indicated by a large shaded region surrounding the line.}]{13_MultipleLinearRegression_files/figure-pdf/fig-Linearity-1.pdf}}
 
 }
 
@@ -18910,7 +19106,7 @@ suggesting that the assumption is met.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{13_MultipleLinearRegression_files/figure-pdf/fig-Homoscedasticity-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Another scatter plot indicating the linearity of the relationship between fitted values and the square root of absolute standardised residuals. Most of the dots fall between 0.3 and 1.3 standardised residuals. The linearity line begins relatively level at around 0.9 standard residuals and dips to around 0.6 between fitted values 70 and 80.}]{13_MultipleLinearRegression_files/figure-pdf/fig-Homoscedasticity-1.pdf}}
 
 }
 
@@ -18937,12 +19133,13 @@ considered \textbf{influential observations}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{13_MultipleLinearRegression_files/figure-pdf/fig-Influential-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A scatter plot of the relationship between leverage and standardised residuals, estimated using Cook\textquotesingle s distance. Most of the dots are clumped together between 0.0 and 0.1 leverage at between 5 and -5 standardised residuals. A relatively straight line which rises slowly cuts through the middle of them as two dotted curved lines approach it, both labeled 0.9. Several of the dots are labeled with numbers, those in the larger group greater than 60 and the dot at the end of the line with 21.}]{13_MultipleLinearRegression_files/figure-pdf/fig-Influential-1.pdf}}
 
 }
 
-\caption{\label{fig-Influential}The relationship between leverage as
-estimated using Cook's distance and standardised residuals}
+\caption{\label{fig-Influential}The relationship between leverage and
+the square root of absolute standardised residuals as estimated using
+Cook's distance and standardised residuals}
 
 \end{figure}%
 
@@ -19015,7 +19212,7 @@ not suffer from multicollinearity.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{13_MultipleLinearRegression_files/figure-pdf/fig-Collinearity-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A chart providing the variance inflation factor and 95\% confidence interval for each of the model predictors: age c, ART, ART:edutotal c, blocks c, and edutotal c. age c, art, and blocks c have lower variance inflation factors and smaller confidence intervals than art:edutotal c and edutotal c.}]{13_MultipleLinearRegression_files/figure-pdf/fig-Collinearity-1.pdf}}
 
 }
 
@@ -19044,7 +19241,7 @@ the points should all fall along the straight reference line (in green).
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{13_MultipleLinearRegression_files/figure-pdf/fig-Normality-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A scatter plot relating standard normal distribution quantities and sample quantile deviations. Most of the dots are clustered around the line at 0 sample quantile deviations from standard normal distribution quantities -1 to 2, outside of which they are more scattered. All of the dots are encapsulated by a shaded area which thins at the middle.}]{13_MultipleLinearRegression_files/figure-pdf/fig-Normality-1.pdf}}
 
 }
 
@@ -19164,8 +19361,8 @@ make a number of important assumptions that do not always hold:
   language sciences, such a situation is actually quite rare (see
   Section~\ref{sec-IndependenceSLR}). To model interdependencies between
   observations, we can fit \textbf{mixed-effects models} (also called
-  multilevel or hierarchical models) (to learn more, see e.g. Gries
-  2021: Chapter~6; Sonderegger 2023: Chapters~8-10; Winter 2019:
+  multilevel or hierarchical models) (to learn more, see e.g. Vasishth
+  et al. 2022; Sonderegger 2023: Chapters~8-10; Winter 2019:
   Chapters~14-15).
 \item
   Linear regression models assume \textbf{linear} relationships between
@@ -19226,6 +19423,12 @@ coding styles.
 
 \subsection*{Check your progress}\label{check-your-progress-25}
 \addcontentsline{toc}{subsection}{Check your progress}
+
+That was a lot to take in: well done for getting through this chapter!
+Completing this chapter's
+\href{https://elenlefoll.github.io/RstatsTextbook/quizzes/13_quiz.html}{tasks
+and quizzes} will help you consolidate all this new knowledge. Good
+luck! \emoji{four-leaf-clover}
 
 Are you confident that you can\ldots?
 
@@ -19375,7 +19578,7 @@ terminology of \href{https://book.the-turing-way.org/}{The Turing Way}.
 We thus define \textbf{reproducibility} as the ability of an independent
 researcher or team to obtain the same results as in a study using the
 same data and methods as the original study (see
-Figure~\ref{fig-reproducibility-terminology}).
+\textbf{?@fig-reproducibility-terminology}).
 
 This is in contrast to \textbf{replicability}, where the same methods,
 but different data are used; and \textbf{robustness}, where the same
@@ -19383,21 +19586,18 @@ data, but different methods are used. Finally, if a finding can be
 reliably observed across different datasets with different methods, then
 we can say that the finding is \textbf{generalisable}.
 
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=4.625in,height=\textheight,keepaspectratio]{images/TuringWay_reproducible-matrix.jpg}
-
-}
-
-\caption{\label{fig-reproducibility-terminology}Defining
-\emph{reproducibility} and related terms
-(\href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}
-\href{https://book.the-turing-way.org/reproducible-research/overview/overview-definitions}{The
-Turing Way Community} )}
-
-\end{figure}%
+\includegraphics[width=4.625in,height=\textheight,keepaspectratio,alt={Defining reproducibility and related terms (CC BY 4.0 The Turing Way Community )}]{images/TuringWay_reproducible-matrix.jpg}\{fig-alt:
+``A table defining four terms: reproducible, replicable, robust, and
+generalisable. For reproducibility, data and analysis are the same. For
+replicability, data is different and the analysis is the same. For
+robustness, data is the same and the analysis is different. For
+generalisability, data and analysis are both different.''\}
+\includegraphics[width=4.625in,height=\textheight,keepaspectratio,alt={Defining reproducibility and related terms (CC BY 4.0 The Turing Way Community )}]{images/TuringWay_reproducible-matrix.jpg}\{fig-alt:
+``A table defining four terms: reproducible, replicable, robust, and
+generalisable. For reproducibility, data and analysis are the same. For
+replicability, data is different and the analysis is the same. For
+robustness, data is the same and the analysis is different. For
+generalisability, data and analysis are both different.''\}
 
 Given this definition, reproducibility might seem like a low bar to
 pass. You might be thinking: shouldn't it be obvious that we'll get the
@@ -19484,21 +19684,14 @@ To get started with Quarto:
   \emph{File~\textgreater~New File~\textgreater~Quarto
   Document\ldots{}}, or clicking on the ``new document'' button and
   selecting ``\emph{Quarto Document\ldots''}. A dialogue menu will
-  appear (Figure~\ref{fig-QuartoNew}). Leave everything as is and simply
+  appear (\textbf{?@fig-QuartoNew}). Leave everything as is and simply
   click on''Create'' at the bottom.
 \end{enumerate}
 
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=4.17708in,height=\textheight,keepaspectratio]{images/Quarto_new.png}
-
-}
-
-\caption{\label{fig-QuartoNew}Creating a new Quarto document}
-
-\end{figure}%
+\includegraphics[width=4.17708in,height=\textheight,keepaspectratio,alt={Creating a new Quarto document}]{images/Quarto_new.png}\{\#fig-alt:
+``A screenshot of the new document settings in Quarto. The format
+selected is HTML as opposed to PDF or Word Document, no engine is
+selected, and visual markdown editor is not enabled.''\}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -19542,7 +19735,7 @@ To get started with Quarto:
   To check your Quarto installation, render your document by either
   selecting \emph{File~\textgreater~Render Document} in the main menu,
   or clicking on ``Render'' button in the Quarto menu bar (see
-  Figure~\ref{fig-QuartoRender}). Your \texttt{.qmd} file will
+  \textbf{?@fig-QuartoRender}). Your \texttt{.qmd} file will
   automatically be rendered to HTML (Quarto's default rendering format).
 \item
   Navigate to the folder where you saved your \texttt{.qmd} file to find
@@ -19554,44 +19747,23 @@ To get started with Quarto:
   file, it will appear in your default web browser (e.g.~Firefox,
   Chrome, Safari). You should see that the HTML document features the
   title of your document, your name as the author, and today's date (see
-  Figure~\ref{fig-QuartoHTML}).
+  \textbf{?@fig-QuartoHTML}).
 \end{enumerate}
 
 \begin{figure}
 
 \begin{minipage}[t]{0.50\linewidth}
-
-\begin{figure}[H]
-
-\centering{
-
-\pandocbounded{\includegraphics[keepaspectratio]{images/LearningQuarto_qmd.png}}
-
-}
-
-\caption{\label{fig-QuartoRender}The \texttt{.qmd} file as opened in
-RStudio}
-
-\end{figure}%
-
-\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio,alt={The .qmd file as opened in RStudio}]{images/LearningQuarto_qmd.png}}\{\#fig-alt:
+``A screenshot of the .qmd file opened in RStudio.''Render'' has been
+circles in the top bar, and the window displays the following text:
+title, learning quarto, subtitle, by reproducing the descriptive
+statistics of Dabrowska's (2019) study, author, Elen Le Foll, date, last
+modified.''\}\end{minipage}%
 %
 \begin{minipage}[t]{0.50\linewidth}
-
-\begin{figure}[H]
-
-\centering{
-
-\pandocbounded{\includegraphics[keepaspectratio]{images/LearningQuarto_html.png}}
-
-}
-
-\caption{\label{fig-QuartoHTML}The \texttt{.html} file as opened in a
-web browser}
-
-\end{figure}%
-
-\end{minipage}%
+\pandocbounded{\includegraphics[keepaspectratio,alt={The .html file as opened in a web browser}]{images/LearningQuarto_html.png}}\{\#fig-alt:
+``A screenshot of the .html file opened in a web browser. The text of
+the previous screenshot is displayed.''\}\end{minipage}%
 
 \end{figure}%
 
@@ -19624,7 +19796,7 @@ you will immediately see the effect of your formatting on screen. For
 example, to format a word in italics, you can click on the corresponding
 button in the toolbar (see Figure~\ref{fig-QuartoModes}) or use the
 keyboard shortcut
-\texttt{Ctrl-I} (linux), \texttt{Cmd-I} (mac), \texttt{Ctrl-I} (windows)
+\texttt{Cmd-I} (mac), \texttt{Ctrl-I} (linux), \texttt{Ctrl-I} (windows)
 --- just like you would in text-processing software --- and this will
 immediately display the text in italics.
 
@@ -19791,7 +19963,7 @@ There are three ways to do so:
 \tightlist
 \item
   Using the keyboard shortcut
-  \texttt{Ctrl-Alt-I} (linux), \texttt{Cmd-Option-I} (mac), \texttt{Ctrl-Alt-I} (windows)
+  \texttt{Cmd-Option-I} (mac), \texttt{Ctrl-Alt-I} (linux), \texttt{Ctrl-Alt-I} (windows)
 \item
   Clicking on the green ``Insert chunk'' button icon in the editor
   toolbar
@@ -19828,13 +20000,13 @@ To run code within a Quarto document, we can either run:
 \tightlist
 \item
   each individual line of code using the keyboard shortcut
-  \texttt{Ctrl-Enter} (linux), \texttt{Cmd-Enter} (mac), \texttt{Ctrl-Enter} (windows)
+  \texttt{Cmd-Enter} (mac), \texttt{Ctrl-Enter} (linux), \texttt{Ctrl-Enter} (windows)
   or
 \item
   the entire code chunk either by clicking the
   ``Run''\pandocbounded{\includegraphics[keepaspectratio]{images/notebook-run-chunk.png}}icon
   or with shortcut
-  \texttt{Shift-Ctrl-Enter} (linux), \texttt{Shift-Cmd-Enter} (mac), \texttt{Shift-Ctrl-Enter} (windows).
+  \texttt{Shift-Cmd-Enter} (mac), \texttt{Shift-Ctrl-Enter} (linux), \texttt{Shift-Ctrl-Enter} (windows).
 \end{itemize}
 
 \emph{RStudio} will execute the code and display the results either
@@ -20448,10 +20620,10 @@ Figure~\ref{fig-Pipelines}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{::: \{\#fig{-}Pipelines layout{-}ncol="2"\}}
+\NormalTok{::: \{\#fig{-}Pipelines layout{-}ncol="2"\}\{\#fig{-}alt: "The earlier graphic with 3 entry points for data."\}}
 \AlertTok{![An idealised research pipeline](images/BERD\_pipeline{-}simple.jpg)}\NormalTok{\{\#fig{-}IdealisedPipeline\}}
 
-\AlertTok{![A more realistic research pipeline](images/BERD\_pipeline{-}real.jpg)}\NormalTok{\{\#fig{-}RealisticPipeline2\}}
+\AlertTok{![A more realistic research pipeline](images/BERD\_pipeline{-}real.jpg)}\NormalTok{\{\#fig{-}RealisticPipeline2\}\{\#fig{-}alt: "The earlier, more realistic pipeline graphic."\}}
 
 \NormalTok{Research workflows as pipelines [}\CommentTok{[}\OtherTok{CC BY 4.0}\CommentTok{](https://creativecommons.org/licenses/by/4.0/)}\NormalTok{ @seiboldBERDCourseMake2023]}
 \NormalTok{:::}
@@ -20517,6 +20689,7 @@ the generated output in Figure~\ref{fig-scatterplot}.
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
 \CommentTok{\#| label: fig{-}scatterplot}
 \CommentTok{\#| fig{-}cap: "L2 participants\textquotesingle{} lexical proficiency in English and their professional occupational group"}
+\CommentTok{\#| fig{-}alt: "A scatter plot relating vocabulary and collocation test scores. The dots are coloured according to occupational group. A slightly upward sloping regression line cuts through the dots, indicating a positive correlation."}
 \CommentTok{\#| fig{-}height: 5}
 \CommentTok{\#| fig{-}asp: 0.618}
 \CommentTok{\#| message: false}
@@ -20540,7 +20713,7 @@ the generated output in Figure~\ref{fig-scatterplot}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{14_LiterateProgramming_files/figure-pdf/fig-scatterplot-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A scatter plot relating vocabulary and collocation test scores. The dots are coloured according to occupational group. A slightly upward sloping regression line cuts through the dots, indicating a positive correlation.}]{14_LiterateProgramming_files/figure-pdf/fig-scatterplot-1.pdf}}
 
 }
 
@@ -20586,25 +20759,17 @@ of references (also referred to as a \textbf{bibliography}).
 \emph{RStudio}'s Visual editor makes inserting bibliographic references
 very convenient. To insert a reference, click on ``Insert'' and then
 select ``Citation'' or use the keyboard shortcut
-\texttt{Ctrl-Shift-F8} (linux), \texttt{Cmd-Shift-F8} (mac), \texttt{Ctrl-Shift-F8} (windows).This
-opens up a menu (see Figure~\ref{fig-QuartoCitation}) giving you the
+\texttt{Cmd-Shift-F8} (mac), \texttt{Ctrl-Shift-F8} (linux), \texttt{Ctrl-Shift-F8} (windows).This
+opens up a menu (see \textbf{?@fig-QuartoCitation}) giving you the
 option to search for the source that you'd like to cite on your own
 computer (e.g.~in your own Zotero database, if you use Zotero), via the
 \href{https://www.crossref.org/}{Crossref} database, or directly using a
 \href{https://forrt.org/glossary/english/doi/}{DOI}.
 
-\begin{figure}
-
-\centering{
-
-\pandocbounded{\includegraphics[keepaspectratio]{images/Quarto_citation.png}}
-
-}
-
-\caption{\label{fig-QuartoCitation}Search menu for bibliographic
-reference}
-
-\end{figure}%
+\pandocbounded{\includegraphics[keepaspectratio,alt={Search menu for bibliographic reference}]{images/Quarto_citation.png}}\{\#fig-alt:
+``A screenshot of the citations window in RStudio. "dabrowska" has been
+entered in the search bar, and the 2019 study has been selected,
+generating a citation below.''\}
 
 Alternatively, if you start typing \texttt{@} in the Visual editor, a
 quick reference menu will appear. Either way, any references that you
@@ -21363,6 +21528,12 @@ interactive dashboards, the world's your oyster! \emoji{rocket}
 \subsection*{Check your progress}\label{check-your-progress-27}
 \addcontentsline{toc}{subsection}{Check your progress}
 
+It's time to test your understanding of literate programming as
+implemented in Quarto. Head over to the online appendix to complete this
+chapter's
+\href{https://elenlefoll.github.io/RstatsTextbook/quizzes/14_quiz.html}{tasks
+and quizzes}. Good luck! \emoji{four-leaf-clover}
+
 Are you confident that you can\ldots?
 
 \begin{itemize}
@@ -21419,7 +21590,7 @@ Contrary to popular belief, `artificial intelligence' is not a
 technology. It is, and always has been, a marketing term used to sell
 (or secure research funding for) a wide, diverse, and shifting array of
 ideas, research projects, systems, and technologies (see
-Figure~\ref{fig-VennAI} from {Guest et al.} (2025); also Rooij et al.
+\textbf{?@fig-VennAI} from {Guest et al.} (2025); also Rooij et al.
 (2024)). Despite marketing claims, these systems and technologies are
 not `intelligent'; they cannot think, understand, or reason (see e.g.
 Quattrociocchi, Capraro \& Perc 2025). This is not to say that they do
@@ -21427,21 +21598,16 @@ not have valuable applications, but rather that we need to critically
 evaluate promotional claims and anthropomorphising language (e.g.~AI
 \emph{says} / \emph{thinks} / \emph{knows} / \emph{understands}).
 
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=4.16667in,height=\textheight,keepaspectratio]{images/GuestEA_2025_sets_AI.png}
-
-}
-
-\caption{\label{fig-VennAI}A cartoon set theoretic view of terms
-commonly used when discussing the superset AI from {Guest et al.}
-(2025): Figure~1
-(\href{https://creativecommons.org/licenses/by/4.0/legalcode}{CC BY
-4.0})}
-
-\end{figure}%
+\includegraphics[width=4.16667in,height=\textheight,keepaspectratio,alt={A cartoon set theoretic view of terms commonly used when discussing the superset AI from Guest et al. (2025): Figure~1 (CC BY 4.0)}]{images/GuestEA_2025_sets_AI.png}\{\#fig-alt:
+``A set theoretic view of terms used to discuss AI technology along with
+real world models. The four circles are labeled LLM, ANN, chatbot, and
+generative model. ELIZA, jabberwacky, and ALICE are purely chatbots.
+QDA, Bernoulli naive Bayes and LDA are purely generative models. AlexNet
+is purely an ANN. There are no pure LLMs on the chart. GAN and BM are
+hybrid generative models and ANNs, BERT is a hybrid LLM and ANN. Siri
+belongs to all categories except generative model, GPT to all categories
+except chatbot, and ChatGPT to all categories, sitting in the center of
+the diagram.''\}
 
 Popular, commercial chat-based AI products such as ChatGPT, Claude,
 CoPilot, and Gemini are powered by Large Language Models (LLMs). LLMs
@@ -21811,6 +21977,15 @@ asking for feedback or to get an LLM to generate first drafts of
 sections, code, and/or quiz questions. But in linguistics research,
 teaching, and learning, \textbf{quality matters more than velocity}.
 
+\subsection*{Check your progress}\label{check-your-progress-29}
+\addcontentsline{toc}{subsection}{Check your progress}
+
+This chapter's interactive
+\href{https://elenlefoll.github.io/RstatsTextbook/quizzes/15_quiz.html}{tasks
+and quizzes} encourage you to continue reflecting on the impact of AI in
+research and learning. Perhaps you'd like to complete them with a friend
+or colleague? \emoji{hugs}
+
 \begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{More food for thought \emoji{green-apple} \emoji{apple}}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \begin{itemize}
@@ -21956,8 +22131,8 @@ acquired so far.
 
 \caption{Happy learning and good luck with all your data analysis
 p\texttt{R}ojects!️ (artwork by
-\href{https://allisonhorst.com/r-packages-functions}{Allison Horst}
-\href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0})}
+\href{https://allisonhorst.com/r-packages-functions}{Allison Horst} CC
+BY 4.0}
 
 \end{figure}%
 
@@ -22426,7 +22601,7 @@ The systemic environmental risks of artficial intelligence. Gesellschaft
 für Informatik e.V. \url{https://doi.org/10.18420/studie_senvrai}.
 
 \bibitem[\citeproctext]{ref-schweinbergerDataManagementVersion2022}
-Schweinberger, Martin. Data management, version control, and
+Schweinberger, Martin. 2022. Data management, version control, and
 reproducibility. \url{https://ladal.edu.au/repro.html}.
 
 \bibitem[\citeproctext]{ref-seiboldBERDCourseMake2023}
@@ -22504,6 +22679,12 @@ Vasishth, Shravan \& Andrew Gelman. 2021. How to embrace variation and
 accept uncertainty in linguistic and psycholinguistic data analysis.
 \emph{Linguistics} 59(5). 1311--1342.
 \url{https://doi.org/10.1515/ling-2019-0051}.
+
+\bibitem[\citeproctext]{ref-klieglLinearMixedModels}
+Vasishth, Shravan, Daniel Schad, Audrey Bürki \& Reinhold Kliegl. 2022.
+\emph{Linear mixed models in linguistics and psychology: A comprehensive
+introduction}. Open Educational Resource.
+\url{https://vasishth.github.io/Freq_CogSci/}.
 
 \bibitem[\citeproctext]{ref-vaswaniAttentionAllYou2017}
 Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion
