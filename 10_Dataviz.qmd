@@ -9,29 +9,31 @@ html:
 
 # The Gramma`R` of Graphics {#sec-DataViz}
 
-One of the advantages of working in `R` is that it allows us to create highly customised graphs for effective data visualisation. The **Grammar of Graphics** [@wilkinsonGrammarGraphics2005] is a theoretical framework that defines a structured approach to building and understanding statistical graphs. We will focus on using the tidyverse package [{ggplot2}](https://ggplot2.tidyverse.org/) [@Wickhamggplot2Elegantgraphics2016] to create effective data visualisations. The {ggplot2} is an implementation of the Grammar of Graphics (GG) syntax in `R`.
+One of the advantages of working in `R` is that it allows us to create beautiful graphs for effective data visualisation. In this chapter, we will focus on the Grammar of Graphics [@wilkinsonGrammarGraphics2005], a theoretical framework that defines a structured approach to building and understanding statistical graphs, and on using the tidyverse package [{ggplot2}](https://ggplot2.tidyverse.org/) [@Wickhamggplot2Elegantgraphics2016] to create effective data visualisations. The {ggplot2} is an implementation of the Grammar of Graphics (GG) syntax in `R`.
 
-This chapter is divided into two parts: the first explains the **syntax** of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] and how the {ggplot2} package works, while the second part focuses on the **semantics** of statistical graphics and provides an introduction to the many different types of data visualisations that can be created using the package.
+This chapter is divided into two parts: the first explains the **syntax** of the Grammar of Graphics and how the {ggplot2} package works, while the second part focuses on the **semantics** of statistical graphics and provides an introduction to the most common types of data visualisations that are used in the language sciences.
 
 ### Chapter overview {.unnumbered}
 
 In this chapter, you will learn how to:
 
--   Create and interpret bar plots to visualise categorical variables.
--   Create and interpret histograms, density plots, and violin plots to visualise continuous numeric variables.
--   Create and interpret boxplots to visualise the distribution of continuous numeric variables across different subsets of the data.
--   Create and interpret scatter plots to visualise correlations between pairs of numeric variables.
--   Create and interpret facetted plots to explore the relationship between three or more variables at once.
--   Create interactive plots for data exploration.
+-   Create and interpret barplots to visualise categorical variables
+-   Create and interpret histograms, density plots, and violin plots to visualise continuous numeric variables
+-   Create and interpret boxplots to visualise the distribution of continuous numeric variables across different subsets of the data
+-   Create and interpret scatter plots to visualise correlations between pairs of numeric variables
+-   Create and interpret facetted plots to explore the relationship between three or more variables at once
+-   Create interactive plots for data exploration
 
-![Building a data masterpiece with {ggplot2} (artwork by [Allison Horst](https://twitter.com/allison_horst) CC BY 4.0)](images/AHorst_ggplot2.png){#fig-DataArtists fig-alt="A fuzzy monster in a beret and scarf, critiquing their own column graph on a canvas in front of them while other assistant monsters (also in berets) carry over boxes full of elements that can be used to customize a graph (like themes and geometric shapes). In the background is a wall with framed data visualizations. Stylized text reads: ggplot2: build a data masterpiece."}
+::: {.content-visible when-format="html"}
+![Building a data masterpiece with {ggplot2} (artwork CC BY 4.0 [\@allison_horst](https://twitter.com/allison_horst))](images/AHorst_ggplot2.png){fig-alt="A fuzzy monster in a beret and scarf, critiquing their own column graph on a canvas in front of them while other assistant monsters (also in berets) carry over boxes full of elements that can be used to customize a graph (like themes and geometric shapes). In the background is a wall with framed data visualizations. Stylised text reads: ggplot2: build a data masterpiece."}
+:::
 
 ### Set-up and data import {.unnumbered .unlisted}
 
 ::: {.callout-warning collapse="false"}
 ### Prerequisites
 
-This chapter assumes that you are familiar with the concepts of descriptive statistics explained in @sec-DescRiptiveStats, and the use of the data wrangling functions introduced in @sec-DataWrangling.
+This chapter assumes that you are familiar with the concepts of descriptive statistics explained in @sec-DescRiptiveStats and the data wrangling functions from @sec-DataWrangling.
 
 All examples and quiz questions are based on data from:
 
@@ -42,7 +44,7 @@ Our starting point for this chapter is the wrangled combined dataset that we cre
 Alternatively, you can download `Dabrowska2019.zip` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/raw/69d1e31be7394f2b612825f031ebffeb75886390/Dabrowska2019.zip){.uri}. To launch the project correctly, first unzip the file and then double-click on the `Dabrowska2019.Rproj` file.
 :::
 
-Before we begin, we must load the `combined_L1_L2_data.rds` file that we created and saved in @sec-DataWrangling. This file contains the data of all the L1 and L2 participants of @DabrowskaExperienceAptitudeIndividual2019. The categorical variables are stored as factors and obvious data entry inconsistencies and typos have been corrected (see @sec-DataWrangling).
+Before we begin, we must load the `combined_L1_L2_data.rds` file that we created and saved in @sec-DataWrangling. This file contains the data of all the L1 and L2 participants of @DabrowskaExperienceAptitudeIndividual2019. We have converted all categorical variables to factors and corrected obvious data entry errors and typos (see @sec-DataWrangling).
 
 ```{r}
 library(here)
@@ -51,15 +53,17 @@ library(tidyverse)
 Dabrowska.data <- readRDS(file = here("data", "processed", "combined_L1_L2_data.rds"))
 ```
 
-Check that your data are correctly imported by examining the output of `View(Dabrowska.data)` and `str(Dabrowska.data)`. Once you are satisfied that that's the case, we ready to get creative! `r emoji("art")`
+Check that your data are correctly imported by examining the output of `View(Dabrowska.data)` and `str(Dabrowska.data)`. Once you are satisfied that that's the case, you are ready to get creative! `r emoji("art")`
 
 ## The syntax of graphics {#sec-Syntax}
 
-The syntax of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] is made up of **layers** (@fig-layers), which allow us to create highly effective and efficient data visualisations, while giving us lots of flexibility and control.
+The syntax of the Grammar of Graphics [@wilkinsonGrammarGraphics2005] is made up of **layers** (see @fig-layers), which allow us to create highly effective and efficient data visualisations, while giving us lots of flexibility and control.
 
-![The syntax of the Grammar of Graphics as visualised in the [QCBS R Workshop Series](https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html) ([CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/))](images/gglayers.png){#fig-layers width="559" fig-alt="A layered diagram illustrating the key elements of data visualization: Data, Aesthetics, Geometries, Facets, Statistics, Coordinates, and Theme, each shown as a layer with a distinct colour."}
+![The syntax of the Grammar of Graphics as visualised in the [QCBS R Workshop Series](https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html) (CC BY-NC-SA *Centre de la science de la biodiversité du Québec*)](images/gglayers.png){#fig-layers width="60%" fig-alt="A layered diagram illustrating the key elements of data visualization: Data, Aesthetics, Geometries, Facets, Statistics, Coordinates, and Theme, each shown as a layer with a distinct colour."}
 
-The **data** layer and the **aesthetics** layer are compulsory as you cannot build a graph that does not map *some* data onto *some* visual aspect (= aesthetic) of a graph. The remaining layers are optional, but some are very important. In the following, we will explain how the **geometries**, **facet**, **scales**, **coordinates**, and **theme** layers are used to build and customise graphs using the {ggplot2} library in `R`.
+The **data** layer and the **aesthetics** layer are compulsory as you cannot build a graph that does not map *some* data onto *some* visual aspect (i.e. an "aesthetic") of a graph. The remaining layers are optional, but some are very important. In the following, we will explain how the **geometries**, **facet**, **scales**, **coordinates**, and **theme** layers are used to build and customise graphs using the {ggplot2} library.
+
+### Aesthetics {#sec-aes}
 
 :::: {.content-visible when-format="html"}
 ::: column-margin
@@ -67,12 +71,11 @@ The **data** layer and the **aesthetics** layer are compulsory as you cannot bui
 :::
 ::::
 
-### Aesthetics {#sec-aes}
-
-As explained in the documentation, the `ggplot()` function[^10_dataviz-1] has two compulsory arguments. First, we must select the **data** that we want to visualise. Second, we must specify which variable(s) from the data should be mapped onto which visual property or **aesthetics** (short: `aes`) of the plot.
+As explained in the documentation, the `ggplot()` function[^10_dataviz-1] has two compulsory arguments (see `?ggplot`). First, we must select the **data** that we want to visualise. Second, we must specify which variable(s) from the data should be mapped onto which visual property or **aesthetics** (short: `aes`) of the plot.
 
 [^10_dataviz-1]: Note that, while the library is called {ggplot2}, its main function is called `ggplot()`.
 
+::: {.content-visible when-format="html"}
 > |                  |                 |
 > |------------------|-----------------|
 > | ggplot {ggplot2} | R Documentation |
@@ -86,36 +89,42 @@ As explained in the documentation, the `ggplot()` function[^10_dataviz-1] has tw
 > ```         
 > ggplot(data = NULL, mapping = aes(), ...)
 > ```
+:::
 
-For example, to create a bar plot visualising the distribution of participants' occupational groups in the combined dataset from @DabrowskaExperienceAptitudeIndividual2019 (`Dabrowska.data`), we need to map the `OccupGroup` variable from `Dabrowska.data` onto our plot's *x-*axis (`x`).
+For example, to create a barplot visualising the distribution of participants' occupational groups in the combined dataset from @DabrowskaExperienceAptitudeIndividual2019 (`Dabrowska.data`), we need to map the `OccupGroup` variable from `Dabrowska.data` onto our plot's *x-*axis (`x`).
 
 ```{r}
-#| fig-cap: "Attempt to plot the distribution of participants' occupational groups in Dąbrowska (2019)"
+#| fig-cap: "A first attempt to plot the distribution of participants' occupational groups in Dąbrowska (2019)"
 #| label: "fig-EmptyBarplot"
 #| fig-alt: "An empty plot with the x-axis labeled OccupGroup and four group labels: C, I, M, and PS. No data is shown."
+#| out-width: "70%"
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup))
 
 ```
 
-As you can see from @fig-EmptyBarplot, however, running this code returns an empty plot: All we get is a grid background and a nicely labelled *x-*axis, but no data... Why might that be?  `r emoji("thinking")`
+As you can see from @fig-EmptyBarplot, however, running this code returns an empty plot! All we get is a grid background and a nicely labelled *x-*axis, but no data... Why might that be? `r emoji("thinking")`
 
 ### Geometries {#sec-geoms}
 
-The reason we are not seeing any data is that we have not yet specified with which kind of **geometry** (short: **geom**) we would like to plot the data. The {ggplot2} library features more than 30 different geom functions! They all begin with the prefix `geom_`. To create a bar plot showing participants' occupational groups, we need to add a `geom_bar()` **layer** to our empty `ggplot` object (see @fig-barplot1).
+The reason we are not seeing any data is that we have not yet specified with which kind of **geometry** (short: **geom**) we would like to plot the data. The {ggplot2} library features more than 30 different geom functions! They all begin with the prefix `geom_`. To create a barplot showing participants' occupational groups, we need to add a `geom_bar()` **layer** to our empty `ggplot` object (see @fig-barplot1).
 
 ```{r}
-#| fig-cap: "Distribution of participants' occupational groups (C = clerical position, I = inactive (i.e. unemployed, retired, or homemakers), M = manual jobs, PS = professional-level job or studying for a degree)"
+#| fig-cap: "Distribution of participants' occupational groups (C = clerical position, I = inactive, i.e. unemployed, retired, or homemakers, M = manual jobs, PS = professional-level job or studying for a degree)"
 #| label: "fig-barplot1"
-#| fig-alt: "A bar plot showing the number of various occupational groups. The x-axis is labeled as OccupGroup and represents different occupation categories: C, I, M, and PS, with PS having the highest count of them all. The y-axis represents the number of individuals in each group and is labeled as count."
+#| fig-alt: "A barplot showing the number of various occupational groups. The x-axis is labeled as OccupGroup and represents different occupation categories: C, I, M, and PS, with PS having the highest count of them all. The y-axis represents the number of individuals in each group and is labeled as count."
+#| out-width: "70%"
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup)) +
   geom_bar()
 ```
 
-Note that we use the `+` operator to *add* layers to `ggplot` objects. If we try to use the pipe operator (`|>`) *within* the `ggplot()` function, we will get an error message.
+::::: callout-warning
+### Frequent error {.unnumbered}
+
+Note that we use the `+` operator to *add* layers to `ggplot` objects. You might be tempted to use the pipe operator (`|>`). But if we try to pipe something *inside* the `ggplot()` function, `R` returns an error message:
 
 ```{r eval = FALSE}
 ggplot(data = Dabrowska.data,
@@ -140,19 +149,19 @@ i Did you use `%>%` or `|>` instead of `+`?
 Run `rlang::last_trace()` to see where the error occurred.
 ```
 :::
+:::::
 
 ### Statistics and labels {#sec-StatsLabs}
 
-We now have a simple bar plot that represents the distribution of participants' occupational groups in @DabrowskaExperienceAptitudeIndividual2019. By default, the axis labels are simply the names of the variables that are mapped onto the plot's aesthetics. That's why, in @fig-barplot1, our *x*-axis is labelled "OccupGroup".
+We now have a simple barplot that represents the distribution of participants' occupational groups in @DabrowskaExperienceAptitudeIndividual2019. By default, the axis labels are simply the names of the variables that are mapped onto the plot's aesthetics. That's why, in @fig-barplot1, our *x*-axis is labelled "OccupGroup".
 
-What about the *y*-axis? We did not specify a *y*-aesthetic within the mapping argument of our `ggplot()` object, yet the *y*-axis is labelled "count". This is because `geom_bar()` automatically computes a "count" **statistic** that gets mapped to the *y*-aesthetic.
-
-If we want to change these axis labels, we can do so by adding a `labs()` **layer** to our plot (see @fig-BarOccupGroup).
+What about the *y*-axis? We did not specify a *y*-aesthetic within the mapping argument of our `ggplot()` object, yet the *y*-axis is labelled "count". This is because `geom_bar()` automatically computes a "count" **statistic** that gets mapped to the *y*-aesthetic. If we want to change these axis labels, we can do so by adding a `labs()` **layer** to our plot (see @fig-BarOccupGroup).
 
 ```{r}
-#| fig-cap: "Distribution of participants' occupational groups (C = clerical position, I = inactive (i.e. unemployed, retired, or homemakers), M = manual jobs, PS = professional-level job or studying for a degree)"
+#| fig-cap: "Distribution of participants' occupational groups (C = clerical position, I = inactive, M = manual jobs, PS = professional-level job or studying for a degree)"
 #| label: "fig-BarOccupGroup"
-#| fig-alt: "This is the same bar plot as above. The only difference is that the x-axis is labeled as Occupational group and the y-axis is labeled as Number of participants."
+#| fig-alt: "This is the same barplot as above. The only difference is that the x-axis is labeled as Occupational group and the y-axis is labeled as Number of participants."
+#| out-width: "70%"
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup)) +
@@ -202,9 +211,9 @@ Alternative text, or **alt-text**, is a concise description of an image used to 
 
 A good alt-text aims to convey the main message and insights of the graph, allowing someone who cannot see it to understand the information being presented [see @universityofsouthcarolinaAlternativeText and @w3cwebaccessibilityinitiativewaiImages2022 for concise tutorials on how to write good alt-texts for all kinds of images]. In the context of online publications, alt-text is also useful in regions with low bandwidth as images may take a very long time to load. By including alt-text, we can therefore make our work more accessible and inclusive, enabling more people to engage with and understand our data and analyses.
 
-@sec-QuartoFigures explains how to add alt-text to plots and figures in Quarto documents. Whilst AI products will now automatically generate alt-text for us, it is best to write alt-text ourselves. This is because auto-generated alt-text often does not focus on the visual information that we want to convey, misses out on important aspects, and/or overwhelms the user with redundant information (for more on AI-assisted research and learning, see @sec-AI).
+@sec-QuartoFigures explains how to add alt-text to plots and figures in Quarto documents. If you take a peek at the [source code](https://github.com/elenlefoll/RstatsTextbook/blob/main/10_Dataviz.qmd) of this textbook chapter, you will see that every figure in this textbook is described with alt-text. Whilst some AI products now claim to be able to automatically generate alt-text for us, it is best to write alt-text ourselves. This is because auto-generated alt-text often does not focus on the visual information that we want to convey, misses out on important aspects, and/or overwhelms the user with redundant information (for more on AI-assisted research and learning, see @sec-AI).
 
-Blind and low-vision readers may also want to check out the [{BrailleR}](https://ajrgodfrey.github.io/BrailleR/articles/BrailleR.html) package [@godfreyBrailleRImprovedAccess2025], which converts plots generated in `R` into a textual form that can be interpreted by blind and low-vision `R` users who cannot access the graphs without printing the image to a tactile embosser, or who need the extra text to support any tactile images that they do create.
+Blind and low-vision readers may also want to check out the [{BrailleR}](https://ajrgodfrey.github.io/BrailleR/articles/BrailleR.html) package [@godfreyBrailleRImprovedAccess2025], which converts plots generated in `R` into a textual form that can be interpreted by blind and low-vision `R` users who cannot access the graphs without printing the image to a tactile embosser, or who need the extra text to support any tactile images that they have created.
 
 ```{r}
 #| include: false
@@ -228,17 +237,17 @@ Instead of using the **data** argument of the `ggplot()` function as we did abov
 **Using the data argument of `ggplot()`**
 
 ```{r}
-#| fig-alt: "This is the same bar plot as above."
+#| fig-alt: "This is the same barplot as above."
 
 ggplot(data = Dabrowska.data,
-       mapping = aes(x = OccupGroup))      +
+       mapping = aes(x = OccupGroup)) +
   geom_bar() +
   labs(x = "Occupational group",
        y = "Number of participants")
 ```
 :::
 
-::: {.column width="4%"}
+::: {.column width="2%"}
 <!-- empty column to create gap -->
 :::
 
@@ -246,7 +255,7 @@ ggplot(data = Dabrowska.data,
 **Piping the data into `ggplot()`**
 
 ```{r}
-#| fig-alt: "This is the same bar plot as above."
+#| fig-alt: "This is the same barplot as above even though the code used to generate it is slightly different."
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup)) +
@@ -257,76 +266,121 @@ Dabrowska.data |>
 :::
 ::::::
 
+:::::: content-hidden
+### Second attempt for PDF
+
+This currently does not work as expected. Code inspired by this discussion: https://github.com/quarto-dev/quarto-cli/issues/13410.
+
+::::: {layout="[47.5,-5,47.5]"}
+<div>
+
+**Using the data argument of `ggplot()`**
+
+```{r}
+#| fig-alt: "This is the same barplot as above."
+#| out-width: "40%"
+
+ggplot(data = Dabrowska.data,
+       mapping = aes(x = OccupGroup)) +
+  geom_bar() +
+  labs(x = "Occupational group",
+       y = "Number of participants")
+```
+
+</div>
+
+<div>
+
+**Piping the data into `ggplot()`**
+
+```{r}
+#| fig-alt: "This is the same barplot as above even though the code used to generate it is slightly different."
+#| out-width: "40%" 
+
+Dabrowska.data |> 
+  ggplot(mapping = aes(x = OccupGroup)) +
+  geom_bar() +
+  labs(x = "Occupational group",
+       y = "Number of participants")
+```
+
+</div>
+:::::
+::::::
+
 The outputs are exactly the same! Piping the dataset into the `ggplot()` function, however, allows us to easily wrangle the data that we want to visualise 'on the fly', without transforming the data object itself. For example, we can use the tidyverse `filter()` function (see @sec-filter) to examine the distribution of occupational groups among L2 participants only (see @fig-BarOccupGroupL2).
 
 ```{r}
-#| source-line-numbers: "2,7"
+#| source-line-numbers: "2"
 #| label: "fig-BarOccupGroupL2"
-#| fig-alt: "Bar plot with the title of Occupational groups of L2 participants showing the distribution of L2 participants' occupational group. The x-axis is labeled as Occupational group with PS having the highest count, and the y-axis is labeled as Number of participants."
+#| fig-cap: "Distribution of L2 participants' occupational groups in @DabrowskaExperienceAptitudeIndividual2019"
+#| fig-alt: "Barplot with the title of Occupational groups of L2 participants showing the distribution of L2 participants' occupational group. The x-axis is labeled as Occupational group with PS having the highest count, and the y-axis is labeled as Number of participants."
+#| out-width: "70%"
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
   ggplot(mapping = aes(x = OccupGroup)) +
   geom_bar() +
   labs(x = "Occupational group",
-       y = "Number of participants",
-       title = "Occupational groups of L2 participants")
+       y = "Number of participants")
 ```
 
 We can also combine several `filter()` conditions using the `&` (AND) and `|` (OR) operators. For example, we may want to visualise the distribution of the occupational groups of participants who are L2 speakers of English *and* whose first language is Polish (see @fig-BarOccupGroupL2Polish).
 
 ```{r}
-#| source-line-numbers: "2,7"
+#| source-line-numbers: "2"
 #| label: "fig-BarOccupGroupL2Polish"
-#| fig-alt: "Bar plot showing the number of Polish L2 participants across occupational groups C, I, M, and PS, with M having the highest count. The x-axis and the y-axis are labeled as the plot above. The title of the plot is Occupational groups of Polish L2 participants."
+#| fig-cap: "Distribution of Polish participants' occupational groups in @DabrowskaExperienceAptitudeIndividual2019"
+#| fig-alt: "Barplot showing the number of Polish L2 participants across occupational groups C, I, M, and PS, with M having the highest count. The x-axis and the y-axis are labeled as the plot above. The title of the plot is Occupational groups of Polish L2 participants."
+#| out-width: "70%"
 
 Dabrowska.data |> 
   filter(Group == "L2" & NativeLg == "Polish") |> 
   ggplot(mapping = aes(x = OccupGroup)) +
   geom_bar() +
   labs(x = "Occupational group",
-       y = "Number of participants",
-       title = "Occupational groups of Polish L2 participants")
+       y = "Number of participants")
 ```
 
 ### Facets {#sec-facets}
 
-If we want to compare two subsets of the data, we can add a **facet layer** to subdivide the plot into several plots each representing a subset of the data. In the following, we use the `facet_wrap()` function to subdivide our bar plot by the `Group` variable (`~ Group`). This allows us to easily compare the distribution of occupations across L1 and the L2 participants (see @fig-BarOccupGroupFacet).
+If we want to compare two subsets of the data, we can add a **facet layer** to subdivide the plot into several plots each representing a subset of the data. In the following, we use the `facet_wrap()` function to subdivide our barplot by the `Group` variable (`~ Group`). This allows us to easily compare the distribution of occupations across L1 and the L2 participants (see @fig-BarOccupGroupFacet).
 
 ```{r}
 #| source-line-numbers: "4"
 #| label: "fig-BarOccupGroupFacet"
-#| fig-alt: "Bar plot titled Occupational groups of participants showing the number of participants in four occupational groups for two categories, L1 and L2. The plot is divided into two panels: in the L1 group, the number of participants is roughly equal across all occupations, ranging from about 20 to 25. In the L2 group, PS has the highest number of participants at over 30, followed by M and C, while I has the fewest participants."
+#| fig-cap: "Distribution of L1 (left) and L2 (right) participants' occupational groups in @DabrowskaExperienceAptitudeIndividual2019"
+#| fig-alt: "Barplot titled Occupational groups of participants showing the number of participants in four occupational groups for two categories, L1 and L2. The plot is divided into two panels: in the L1 group, the number of participants is roughly equal across all occupations, ranging from about 20 to 25. In the L2 group, PS has the highest number of participants at over 30, followed by M and C, while I has the fewest participants."
+#| out-width: "80%"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup)) +
   geom_bar() +
   facet_wrap(~ Group) +
   labs(x = "Occupational group",
-       y = "Number of participants",
-       title = "Occupational groups of participants")
+       y = "Number of participants")
 ```
 
-::: {.callout-warning collapse="false"}
-#### Error message: "seq.default(from, to, by) : invalid" {.unnumbered}
-
-If you get the error message
+::: callout-warning
+#### Frequent error when attempting to generate a plot in *RStudio* {.unnumbered}
 
 ```         
 Error in seq.default(from, to, by) : invalid '(to - from)/by' 
 ```
 
-when trying to run a chunk of code that generates a plot, this is most likely due to your Plots pane in *RStudio* not being large enough to accommodate the plot. If you increase its size and rerun the chunk, your plot should appear in the Plots pane as expected.
+If you get this error message when trying to run a chunk of code that generates a plot, this is most likely due to your Plots pane in *RStudio* not being large enough to accommodate the plot. If you increase its size and rerun the chunk, your plot should appear in the Plots pane as expected.
 
-If you have a small screen, you can also click on the "`r emoji("magnifying-glass-tilted-right")` Zoom" button at the top of the Plots pane to view your plot in a separate *RStudio* window, which you can resize according to your needs.
+If you have a small screen, you can also click on the `r emoji("mag_right")` Zoom button at the top of the Plots pane to view your plot in a separate *RStudio* window, which you can resize according to your needs.
 :::
 
-To compare the distributions of occupations of the male and female L2 participants, we can combine a `filter()` operation to select only the L2 participants, with a `facet_wrap()` layer (see @fig-BarOccupGroupL2Facet).
+To compare the distributions of occupations of the male and female L2 participants, we can combine a `filter()` operation to select only the L2 participants with a `facet_wrap()` layer (see @fig-BarOccupGroupL2Facet).
 
 ```{r}
-#| source-line-numbers: "2,5"
+#| source-line-numbers: "2"
 #| label: "fig-BarOccupGroupL2Facet"
-#| fig-alt: "Bar plot titled Occupational groups of L2 participants showing the number of female and male participants across four occupational groups. The plot is divided into two panels: F and M. In both the highest number belongs to the group PS."
+#| fig-cap: "Distribution of occupational groups among female (left) and male (right) L2 participants"
+#| fig-alt: "Barplot showing the L2 participants across four occupational groups. The plot is divided into two panels: F and M. In both, the largest category is the group PS. There are more female participants belonging to the C group than male."
+#| out-width: "80%"
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -334,8 +388,7 @@ Dabrowska.data |>
   geom_bar() +
   facet_wrap(~ Gender) +
   labs(x = "Occupational group",
-       y = "Participants",
-       title = "Occupational groups of L2 participants")
+       y = "Participants")
 ```
 
 To explore potential gender differences in occupational groups across both L1 and L2 groups, we can combine the two variables within the `facet_wrap()` function (see @fig-TwoFacetsBarplot).
@@ -344,7 +397,9 @@ To explore potential gender differences in occupational groups across both L1 an
 #| source-line-numbers: "4"
 #| fig-asp: 1
 #| label: "fig-TwoFacetsBarplot"
-#| fig-alt: "Bar plot showing the number of participants across four occupational groups, split by language group (L1 and L2) and gender (F and M). The plot has four panels. L1 Female participant counts are relatively even across groups, with the highest in PS. In L2 Female panel a large number of participants are in the PS group, in L1 Male panel all occupational groups have similar participant counts, and in L2 Male panel PS and M have the highest counts."
+#| fig-cap: "Distribution of occupational groups among female (left) and male (right) L1 (top) and L2 (bottom) participants"
+#| fig-alt: "Barplot showing the number of participants across four occupational groups, split by language group (L1 and L2) and gender (F and M). The plot has four panels. L1 Female participant counts are relatively even across groups, with the highest in PS. In L2 Female panel a large number of participants are in the PS group, in L1 Male panel all occupational groups have similar participant counts, and in L2 Male panel PS and M have the highest counts."
+#| out-width: "70%"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup)) +
@@ -356,13 +411,15 @@ Dabrowska.data |>
 
 ### Scales {#sec-scales}
 
-**Scale** layers allow us to map data values to the visual values of an aesthetic. For example, to make our facetted plot in @fig-TwoFacetsBarplot easier to read, we could add some colour using a **fill** aesthetic to fill each bar with a colour that corresponds to the participants' gender. To do so, we map each unique value of the variable `Gender` ("F" and "M") onto a colour that is then used to fill the corresponding bars of our bar plot. Adding the **fill** aesthetic automatically generates a legend (see @fig-ColourBarplot).
+Scale layers allow us to map data values to the visual values of an aesthetic. For example, to make our facetted plot in @fig-TwoFacetsBarplot easier to read, we could add some colour using a **fill** aesthetic to fill each bar with a colour that corresponds to the participants' gender. To do so, we map each unique value of the variable `Gender` ("F" and "M") onto a colour that is then used to fill the corresponding bars of our barplot. Adding the fill aesthetic automatically generates a legend (see @fig-ColourBarplot).
 
 ```{r}
 #| source-line-numbers: "3"
 #| fig-asp: 1
 #| label: "fig-ColourBarplot"
+#| fig-cap: "A facetted barplot with default {scales} colours"
 #| fig-alt: "This is the same plot as above. The only difference is that the bars in the two F panels are in the colour light red, and the bars in the two M panels are in the colour blue. There is a legend titled Gender on the right side of the plot that shows which colour shows which category."
+#| out-width: "70%"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, 
@@ -373,16 +430,15 @@ Dabrowska.data |>
        y = "Participants")
 ```
 
-As we did not specify any **fill** colours for @fig-ColourBarplot, {ggplot2} used default colours taken from the {scales} package of the tidyverse environment. This is because, in the Grammar of Graphics, colour palettes are governed by **scales**. To specify a different set of colours, we therefore need to specify a **scale layer**.
-
-One way to do this is to use `scale_fill_manual()` to manually pick our own colours, either using [`R` colour codes](https://r-charts.com/colors/) (such as `purple`) or [hexadecimal colour codes](https://www.w3schools.com/colors/colors_picker.asp) (such as `#34027d`). Note that both types of colour codes must be enclosed in quotation marks.
+As we did not specify any fill colours for @fig-ColourBarplot, {ggplot2} used default colours taken from the {scales} package of the tidyverse environment. This is because, in the Grammar of Graphics, colour palettes are governed by scales. To specify a different set of colours, we therefore need to specify a **scale layer**. One way to do this is to use `scale_fill_manual()` to manually pick our own colours, either using [`R` colour codes](https://r-charts.com/colors/) (such as `purple`) or [hexadecimal colour codes](https://www.w3schools.com/colors/colors_picker.asp) (such as `#34027d`). Note that both types of colour codes must be enclosed in quotation marks.
 
 ```{r}
-#| fig-cap: "A facetted bar plot with hand-picked colours"
+#| fig-cap: "A facetted barplot with hand-picked colours"
 #| label: "fig-PurpleBarplot"
 #| source-line-numbers: "3,8"
 #| fig-asp: 1
 #| fig-alt: "This is the same plot as above. The only difference is that the bars in the two F panels are in the colour light purple, and the bars in the two M panels are in the dark purple."
+#| out-width: "70%"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, 
@@ -396,13 +452,14 @@ Dabrowska.data |>
 
 Although it makes the plot easier to interpret, the colour aesthetic (here `fill`) is not strictly necessary to understand the data represented in @fig-PurpleBarplot. After all, the two `gender` subgroups are already distinguished by the `facet_wrap()` layer. That's not necessarily a bad thing, but you must consider whether such redundant elements facilitate the interpretation of the data visualised or not.
 
-In some cases, colour is used as the *only* way of identifying subgroups in the data, for example in a **stacked bar plot** (see @fig-ColourStackedBarplot). In such cases, it is important to consider how the plot will be perceived by different people (see note on colour blindness below).
+In some cases, colour is used as the *only* way of identifying subgroups in the data, for example in a **stacked barplot** (see @fig-ColourStackedBarplot). In such cases, it is important to consider how the plot will be perceived by different people (see note on colour blindness below).
 
 ```{r}
-#| fig-cap: "A stacked bar plot with hand-picked colours"
+#| fig-cap: "A stacked barplot with hand-picked colours"
 #| label: "fig-ColourStackedBarplot"
 #| source-line-numbers: "3,5"
-#| fig-alt: "Bar plot showing the number of participants across four occupational groups, split by two language groups (L1 and L2). Each bar in this plot contains two colours: light purple representing female participants and dark purple representing male ones. There is a legend titled Gender on the right side of the plot."
+#| fig-alt: "Barplot showing the number of participants across four occupational groups, split by two language groups (L1 and L2). Each bar in this plot contains two colours: light purple representing female participants and dark purple representing male ones. There is a legend titled Gender on the right side of the plot."
+#| out-width: "80%"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup, 
@@ -417,11 +474,11 @@ Dabrowska.data |>
 **Scale** layers can be used to control the axes of your plots. Play around with the "expand" and "limits" arguments of the `scale_y_continuous()` function to understand how they work.
 
 ```{r}
-#| fig-cap: "A bar plot with a y-axis that starts at zero."
-#| label: "fig-PurpleBarplot0"
+#| fig-cap: "A barplot with a *y-*axis that starts at zero and ends at 100"
+#| label: "fig-Barplot0"
 #| source-line-numbers: "9,10"
-#| fig-height: 6
-#| fig-alt: "This is the same facetted bar plot as above except that now the plot area start exactly at zero."
+#| fig-alt: "This is the same facetted barplot as above except that now the plot area start exactly at zero participant and is expanded to 100, even though the largest category (PS) has fewer than 60 participants."
+#| out-width: "70%"
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup)) +
@@ -429,7 +486,7 @@ Dabrowska.data |>
   labs(x = "Occupational group",
        y = "Participants") +
   scale_y_continuous(expand = c(0,0),
-                     limits = c(0,60))  
+                     limits = c(0,100))  
 ```
 
 ::: {.callout-note collapse="false"}
@@ -438,23 +495,25 @@ Dabrowska.data |>
 Colour blindness is a condition that results in a decreased ability to see colours and perceive differences in colour. There are different types of colour blindness but, in general, it is best to avoid red-green contrasts. To ensure that your data visualisations are accessible to as many people as possible, you may want to use the [{colorBlindness}](https://cran.r-project.org/web/packages/colorBlindness/vignettes/colorBlindness.html) package [@ouColorBlindnessSafeColor2021] to simulate the appearance of a set of colours for people with different forms of colour blindness.
 
 ```{r}
-#| fig-height: 3
-#| fig-cap: "Default {scales} discreet palette under different forms of colour blindness and grey-scale."
-#| fig-alt: "A graphic of multiple coloured boxes, the top row corresponding to the default {scales} discreet palette. The following rows simulate how these colours are perceived by someone with deuteranope and protanope colour blindness, and in grey-scale, respectively."
+#| fig-cap: "Default {scales} discrete palette as perceived with different forms of colour blindness"
+#| label: "fig-colorBlindness"
+#| fig-alt: "A graphic composed of multiple coloured boxes, the top row corresponding to the default {scales} discrete palette as perceived by people with 'normal vision'. The following rows simulate how these colours are perceived by someone with deuteranope and protanope colour blindness, and in grey-scale, respectively. In these rows, the shades of the six colours are hardly distinguisable from each other."
+#| out-width: 80%
+#| fig-height: 5
 
 #install.packages("colorBlindness")
 library(colorBlindness)
-
 colorBlindness::displayAllColors(scales::hue_pal()(6))
-
 ```
 
-Using the {colorBlindness} package, we can immediately see that the default {scales} discrete palette that {ggplot2} used in @fig-ColourBarplot is not accessible to colour blind people (deuteranope and protanope), nor is it distinguishable when printed in grey-scale (desaturate). In contrast, our hand-picked colours from @fig-PurpleBarplot fare much better.
+Using the {colorBlindness} package, we can immediately see that the default {scales} discrete palette that {ggplot2} used in @fig-ColourBarplot is not accessible to colour-blind people (deuteranope and protanope), nor is it distinguishable when printed in grey-scale (desaturate). In contrast, our hand-picked colours from @fig-PurpleBarplot fare much better.
 
 ```{r}
+#| fig-cap: "The colours we selected in @fig-PurpleBarplot as perceived with different forms of colour blindness"
+#| label: "fig-colorBlindness2"
+#| fig-alt: "A similar graphic to the one above, but this time with the two shades of purple selected earlier and the contrast between the two is clear for all types of colour blindness represented by this package."
 #| fig-height: 3
-#| fig-cap: "The colours we selected in @fig-PurpleBarplot under different forms of colour blindness and grey-scale."
-#| fig-alt: "A similar graphic to the one above, but this time with the two shades of purple selected earlier."
+#| out-width: 70%
 
 colorBlindness::displayAllColors(c("pink", "#34027d"))
 ```
@@ -462,26 +521,29 @@ colorBlindness::displayAllColors(c("pink", "#34027d"))
 But you need not manually pick colours, as many people have developed and shared `R` packages that feature attractive, ready-to-use colour-blind friendly palettes. The [{viridis}](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) package [@garnierSjmgarnierViridisCRAN2023], for example, includes eight such palettes ("magma", "inferno", "plasma", "cividis", "rocket", "turbo") that also reproduce well in grey-scale. And, as it is included in the {ggplot2} installation, you don't even need to install the {viridis} package separately!
 
 ```{r}
-#| fig-height: 3
-#| fig-cap: "Colours from the {{viridis}} package palette under different forms of colour blindness and grey-scale."
-#| fig-alt: "A similar graphic to the one above, but this time with colours from the viridis package palette."
+#| fig-height: 5
+#| out-width: 80%
+#| label: "fig-colourBlindnessViridis"
+#| fig-cap: "Colours from the {viridis} package palette as perceived with different forms of colour blindness"
+#| fig-alt: "A similar graphic to the one above, but this time with colours from the viridis package, which can be distinguished by most colour-blind people."
 
 colorBlindness::displayAllColors(viridis::viridis(6))
 ```
 
-Choosing an appropriate palette is not the only way to make your visualisations accessible to colour-blind readers. Another way is to provide redundant mappings to other aesthetics such as size, line type, shape, or pattern. Finally, it is important to remember that colour blindness is by no means the only type of visual impairment you should consider when creating visualisations. Worldwide, far more people are affected by **blindness** and **low vision**. @sec-QuartoFigures explains how to add **alternative texts** (alt-text) to plots and images. Many people with visual impairments rely on screen readers that use these alternative texts to provide audio descriptions of images and plots. These alternative texts can also improve the experience of users facing internet connection issues resulting in images that do not load properly or quickly enough.
+Choosing an appropriate palette is not the only way to make your visualisations accessible to colour-blind readers. Another way is to provide redundant mappings to other aesthetics such as size, line type, shape, or pattern.
+
+Finally, it is important to remember that colour blindness is by no means the only type of visual impairment you should consider when creating visualisations. Worldwide, far more people are affected by **blindness** and **low vision**. @sec-QuartoFigures explains how to add **alternative texts** (alt-text) to plots and images. Many people with visual impairments rely on screen readers that use these alternative texts to provide audio descriptions of images and plots. These alternative texts can also improve the experience of users facing internet connection issues resulting in images that do not load properly or quickly enough.
 :::
 
 Some academic publishers still require grey-scale plots, in which case you will want to use the **scale** layer `scale_fill_grey()`. Alternatively, the colour palettes of the {viridis} package (see information box on colour blindness) render well in grey, too. The {viridis} function for a discrete colour scale (as needed for a categorical variable such as `Gender`) can be called up using the `scale_fill_viridis_d()` function. With the "option" argument, you can switch between eight different viridis palettes ("magma", "inferno", "plasma", "cividis", "rocket", "turbo").
 
+:::: {.content-visible when-format="html"}
 ::: panel-tabset
 ###### scale_fill_grey()
 
 ```{r}
 #| source-line-numbers: "9"
 #| fig-height: 4
-#| label: "fig-GreyBarplot"
-#| fig-cap: "@fig-ColourStackedBarplot in grey-scale."
 #| fig-alt: "The stacked barplot from Figure 10.13 in grey-scale."
 
 Dabrowska.data |> 
@@ -500,8 +562,6 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "9"
 #| fig-height: 4
-#| label: "fig-ViridisBarplot"
-#| fig-cap: "@fig-ColourStackedBarplot in the default {{viridis}} palette."
 #| fig-alt: "The stacked barplot from Figure 10.13 in the default viridis palette."
 
 Dabrowska.data |> 
@@ -520,8 +580,6 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "9"
 #| fig-height: 4
-#| label: "fig-ViridisTurboBarplot"
-#| fig-cap: "@fig-ColourStackedBarplot in the \"turbo\" {{viridis}} palette."
 #| fig-alt: "The stacked barplot from Figure 10.13 in the 'turbo' viridis palette."
 
 Dabrowska.data |> 
@@ -535,17 +593,17 @@ Dabrowska.data |>
   scale_fill_viridis_d(option = "turbo")
 ```
 :::
+::::
 
-If you like colours, check out the {paletteer} package [@hvitfeldtPaletteerComprehensiveCollection2021], which provides a neat interface to access a very large collection of `R` colour packages, some of which are very fun! The advantage is that you only need to install one package (`install.packages("paletteer")`) to have a huge range of palettes at your disposal. Below is a small selection of some personal favourites.
+If you like colours, check out the {paletteer} package [@hvitfeldtPaletteerComprehensiveCollection2021], which provides a neat interface to access a very large collection of `R` colour palette packages, some of which are very fun! The advantage is that you only need to install one package (`install.packages("paletteer")`) to have a huge range of palettes at your disposal. [Below is a small selection of some personal favourites.]{.content-visible when-format="html"}.
 
+:::: {.content-visible when-format="html"}
 ::: panel-tabset
 ##### beyonce::X11
 
 ```{r}
 #| source-line-numbers: "8"
 #| fig-height: 4
-#| label: "fig-BeyonceBarplot"
-#| fig-cap: "@fig-BarOccupGroup in the \"beyonce:X11\" palette."
 #| fig-alt: "The barplot from Figure 10.5 in the 'beyonce:X11' palette."
 
 Dabrowska.data |> 
@@ -563,8 +621,6 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "8"
 #| fig-height: 4
-#| label: "fig-BridgetRileyBarplot"
-#| fig-cap: "@fig-BarOccupGroup in the default \"BridgetRiley\" palette."
 #| fig-alt: "The barplot from Figure 10.5 in the 'BridgetRiley' palette."
 
 Dabrowska.data |> 
@@ -582,8 +638,6 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "8"
 #| fig-height: 4
-#| label: "fig-JanelleBarplot"
-#| fig-cap: "@fig-BarOccupGroup in the \"janelle\" palette."
 #| fig-alt: "The barplot from Figure 10.5 in the 'janelle' palette."
 
 Dabrowska.data |> 
@@ -601,8 +655,6 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "8"
 #| fig-height: 4
-#| label: "fig-FridaKahloBarplot"
-#| fig-cap: "@fig-BarOccupGroup in the \"FridaKahlo\" palette."
 #| fig-alt: "The barplot from Figure 10.5 in the 'FridaKahlo' palette."
 
 Dabrowska.data |> 
@@ -620,8 +672,6 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "8"
 #| fig-height: 4
-#| label: "fig-KissBarplot"
-#| fig-cap: "@fig-BarOccupGroup in the \"kiss\" palette."
 #| fig-alt: "The barplot from Figure 10.5 in the 'kiss' palette."
 
 Dabrowska.data |> 
@@ -639,8 +689,6 @@ Dabrowska.data |>
 ```{r}
 #| source-line-numbers: "8"
 #| fig-height: 4
-#| label: "fig-SpeakNowBarplot"
-#| fig-cap: "@fig-BarOccupGroup in the \"speakNow\" palette."
 #| fig-alt: "The barplot from Figure 10.5 in the 'speakNow' palette."
 
 Dabrowska.data |> 
@@ -653,19 +701,26 @@ Dabrowska.data |>
   paletteer::scale_fill_paletteer_d("tayloRswift::speakNow")
 ```
 :::
+::::
 
 ### Themes {#sec-themes}
 
-The {ggplot2} framework also allows for the addition of an optional `theme()` **layer** to further customise the look of plots. The default {ggplot2} theme is `theme_grey()`. Here are some of the pre-built themes that come with the {ggplot2} library for you to compare. As with colour palettes, you can install additional libraries that will give you access to literally hundreds of ready-made themes for you to explore.
+The {ggplot2} framework also allows for the addition of an optional `theme()` **layer** to further customise the look of plots. The default {ggplot2} theme is `theme_grey()`. Here are some of the pre-built themes that come with the {ggplot2} library for you to try out and compare:
 
+-   `theme_bw()`
+-   `theme_classic()`
+-   `theme_dark()`
+-   `theme_light()`
+-   `theme_minimal()`
+-   `theme_void()`
+
+:::: {.content-visible when-format="html"}
 ::: panel-tabset
 ##### theme_bw()
 
 ```{r}
 #| source-line-numbers: "6"
-#| fig-height: 4
-#| fig-cap: "@fig-BarOccupGroup in the \"black and white\" theme."
-#| fig-alt: "The barplot from Figure 10.5 displayed in black and white."
+#| fig-alt: "The barplot from Figure 10.5 displayed in black and white with a thin black frame and a light grey grid in the background."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup)) +
@@ -675,13 +730,25 @@ ggplot(data = Dabrowska.data,
   theme_bw()
 ```
 
+##### theme_classic()
+
+```{r}
+#| source-line-numbers: "6"
+#| fig-alt: "The barplot from Figure 10.5 displayed in black and white with no background and simple clean lines for the axes."
+
+ggplot(data = Dabrowska.data,
+       mapping = aes(x = OccupGroup)) +
+  geom_bar() +
+  labs(x = "Occupational group",
+       y = "Number of participants") +
+  theme_classic()
+```
+
 ##### theme_dark()
 
 ```{r}
 #| source-line-numbers: "6"
-#| fig-height: 4
-#| fig-cap: "@fig-BarOccupGroup in the \"dark\" theme."
-#| fig-alt: "The barplot from Figure 10.5 printed in dark colours."
+#| fig-alt: "The barplot from Figure 10.5 printed in dark colours with a very dark grey background and grid."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup)) +
@@ -695,9 +762,7 @@ ggplot(data = Dabrowska.data,
 
 ```{r}
 #| source-line-numbers: "6"
-#| fig-height: 4
-#| fig-cap: "@fig-BarOccupGroup in the \"light\" theme."
-#| fig-alt: "The barplot from Figure 10.5 in the 'light' theme."
+#| fig-alt: "The barplot from Figure 10.5 in the 'light' theme, very similar to theme_bw() but with a lighter background and grid."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup)) +
@@ -711,9 +776,7 @@ ggplot(data = Dabrowska.data,
 
 ```{r}
 #| source-line-numbers: "6"
-#| fig-height: 4
-#| fig-cap: "@fig-BarOccupGroup in the \"minimal\" theme."
-#| fig-alt: "The barplot from Figure 10.5 in the 'minimal' theme."
+#| fig-alt: "The barplot from Figure 10.5 with no black lines for the axes."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup)) +
@@ -727,9 +790,7 @@ ggplot(data = Dabrowska.data,
 
 ```{r}
 #| source-line-numbers: "6"
-#| fig-height: 4
-#| fig-cap: "@fig-BarOccupGroup in the \"void\" theme."
-#| fig-alt: "The barplot from Figure 10.5 in the 'void' theme."
+#| fig-alt: "The barplot from Figure 10.5 with no axes and no labels whatsever, just the bars."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup)) +
@@ -739,23 +800,47 @@ ggplot(data = Dabrowska.data,
   theme_void()
 ```
 :::
+::::
 
-Pretty much all aspects of plot themes can be customised. To demonstrate this, @fig-SillyTheme displays a bar plot with some highly customised aesthetics. I will let you judge how meaningful these custom choices are and whether they genuinely help the reader to interpret the data... `r emoji("face-with-raised-eyebrow")`
+As with colour palettes, you can also install additional packages that will give you access to literally hundreds of ready-made themes for you to explore. @fig-Economist customised by adding a `theme_economist()` layer from the {ggthemes} package [@ggthemes2025].
 
 ```{r}
+#| source-line-numbers: "1,2,9,10"
+#| label: fig-Economist
+#| fig-cap: "Barplot with a theme inspired by *The Economist* magazine"
+#| fig-alt: "The barplot from Figure 10.5 labels in a different font, bars filled with different shades of blue and grey, a light blue background, white lines, and a legend at the top of the graph as opposed to one the right."
+#| out-width: 70%
+
+#install.packages("ggthemes")
+library(ggthemes)
+
+ggplot(data = Dabrowska.data,
+       mapping = aes(x = OccupGroup,
+                     fill = OccupGroup)) +
+  geom_bar() +
+  labs(x = "Occupational group",
+       y = "Number of participants") +
+  scale_fill_economist() +
+  theme_economist()
+```
+
+Pretty much all aspects of plot themes can be customised. To demonstrate this, the code below creates @fig-SillyTheme, a barplot with some highly customised aesthetics. I will let you judge how meaningful these custom choices are and whether they genuinely help the reader to interpret the data... `r emoji("raised_eyebrow")`
+
+::: {.content-visible when-format="html"}
+```{r}
 #| eval: !expr 'knitr::is_html_output()'
-#| label: fig-SillyTheme
 #| code-fold: true
-#| code-summary: "See {ggplot2} code to generate plot."
-#| fig-cap: "A heavily 'customised' bar plot."
-#| fig-alt: "A bar plot showing the number of participants by occupational group. The plot features unconventional styling including a peach background, bright yellow grid lines, vertical axis labels, and bold colored text."
+#| code-summary: "Show code customising `ggplot` theme layer."
+#| label: fig-SillyTheme
+#| fig-cap: "Barplot demonstrating customisation options of the `ggplot` theme layer"
+#| fig-alt: "A barplot showing the number of participants by occupational group. The plot features unconventional styling including a peach background, bright yellow grid lines, vertical axis labels, and bold colored text. It is very ugly and very difficult to read."
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup, fill = Gender)) +
   geom_bar() +
   labs(x = "Occupational group",
        y = "Number of participants",
-        title = "An example of an extravagantly customised ggplot...") +
+       title = "An example of an extravagantly customised ggplot...") +
     theme(
       panel.background = element_rect(fill = "#FFC080", color = NA),
       panel.grid.major = element_line(color = "gold", linewidth = 1.5),
@@ -764,20 +849,40 @@ ggplot(data = Dabrowska.data,
       axis.title.y = element_text(size = 25, color = "green", family = "Courier New"),
       axis.text.x = element_text(face = "italic", size = 12, color = "cyan"),
       axis.text.y = element_text(size = 14, color = "grey"),
-      plot.title = element_text(face = "bold", size = 10, color = "purple", family = "Comic Sans MS")
-      )
+      plot.title = element_text(face = "bold", size = 10, color = "purple", family = "Comic Sans MS"))
+```
+:::
 
+::: {.content-visible when-format="pdf"}
+```{r}
+#| eval: false
+#| echo: true
+
+ggplot(data = Dabrowska.data,
+       mapping = aes(x = OccupGroup, fill = Gender)) +
+  geom_bar() +
+  labs(x = "Occupational group",
+       y = "Number of participants",
+       title = "An example of an extravagantly customised ggplot...") +
+    theme(
+      panel.background = element_rect(fill = "#FFC080", color = NA),
+      panel.grid.major = element_line(color = "gold", linewidth = 1.5),
+      panel.grid.minor = element_line(color = "grey20", linewidth = 0.5),
+      axis.title.x = element_text(face = "bold", size = 12, color = "brown", angle = 10),
+      axis.title.y = element_text(size = 25, color = "green", family = "Courier New"),
+      axis.text.x = element_text(face = "italic", size = 12, color = "cyan"),
+      axis.text.y = element_text(size = 14, color = "grey"),
+      plot.title = element_text(face = "bold", size = 10, color = "purple", family = "Comic Sans MS"))
 ```
 
-::: {#fig-SillyTheme .content-visible when-format="pdf"}
-![](images/SillyTheme.png)
+![Barplot demonstrating some of the customisation options of `ggplot` themes](images/SillyTheme.png){#fig-SillyTheme fig-alt="A barplot showing the number of participants by occupational group. The plot features unconventional styling including a peach background, bright yellow grid lines, vertical axis labels, and bold colored text. It is very ugly and very difficult to read." width="80%"}
 :::
 
 ### Coordinates {#sec-coordinates}
 
 By default, the coordinate system that is used in `ggplot` objects is the **Cartesian coordinate system**, which has a horizontal axis (*x*) and a vertical axis (*y*) that are perpendicular to each other. To change this default Cartesian coordinate system, we need to add a **coordinate layer**.
 
-For example, if we want to display the full names of the four occupational groups used in @DabrowskaExperienceAptitudeIndividual2019, we can change the labels of the categories using `mutate()` and `fct_recode()` *before* piping the data into `ggplot()` (see @sec-ggplotData) and then flip the *x* and *y* axes using the coordinate layer `coord_flip()`. As shown in @fig-FlippedBarplot, this makes long labels much easier to read.
+For example, to be able to display the full names of the four occupational groups used in @DabrowskaExperienceAptitudeIndividual2019, we can change the labels of the categories using `mutate()` and `fct_recode()` *before* piping the data into `ggplot()` (see @sec-ggplotData) and then flip the *x* and *y* axes using the coordinate layer `coord_flip()`. As shown in @fig-FlippedBarplot, this makes long labels much easier to read.
 
 ```{r}
 #| source-line-numbers: "2-6,13"
@@ -785,7 +890,7 @@ For example, if we want to display the full names of the four occupational group
 #| fig-width: 8
 #| label: "fig-FlippedBarplot"
 #| fig-cap: "@fig-ColourStackedBarplot displayed horizontally."
-#| fig-alt: "A horizontal bar plot showing the number of participants by occupational group and gender. The chart shows four occupational categories on the y-axis with their full names: Professional-level job/student, Manual profession, Professionally inactive, and Clerical profession."
+#| fig-alt: "A horizontal barplot showing the number of participants by occupational group and gender. The chart shows four occupational categories on the y-axis with their full names: Professional-level job/student, Manual profession, Professionally inactive, and Clerical profession."
 
 Dabrowska.data |> 
   mutate(OccupGroup = fct_recode(OccupGroup,
@@ -804,14 +909,14 @@ Dabrowska.data |>
   theme(axis.text = element_text(size = 12))
 ```
 
-The vast majority of statistical graphs use the Cartesian coordinate system. Pie charts and other circular plots, however, use the **polar coordinate system** (`coord_polar`), whereby quantities are mapped onto angles rather than distances. In general, humans are much better at judging lengths than angles or areas [@clevelandGraphicalPerceptionVisual1987], which is why circular graphs such as pie charts are typically *not* recommended forms of good data visualisations [see, e.g. @fewPiesDessert]. That said, they *can* be produced using the {ggplot2} library by adding the **coordinate** layer `coord_polar("y")` and modifying a few parameters.
+The vast majority of statistical graphs use the Cartesian coordinate system. Pie charts and other circular plots, however, use the **polar coordinate system** (`coord_polar`), whereby quantities are mapped onto angles rather than distances. In general, humans are much better at judging lengths than angles or areas [@clevelandGraphicalPerceptionVisual1987], which is why circular graphs such as pie charts are typically *not* recommended forms of good data visualisations [@fewPiesDessert]. That said, they can be produced using the {ggplot2} library by adding the **coordinate** layer `coord_polar("y")` and modifying a few parameters.
 
 ```{r}
 #| source-line-numbers: "8-13"
-#| fig-height: 4
+#| out-width: "70%" 
 #| label: "fig-OccupGroupPieChart"
-#| fig-cap: "@fig-ColourStackedBarplot displayed as a pie chart."
-#| fig-alt: "This is a pie chart of the data above. A legend on the right identifies each occupational group with its corresponding color."
+#| fig-cap: "@fig-ColourStackedBarplot displayed as a pie chart"
+#| fig-alt: "This is a pie chart of the data above. The size of each segment reprensent the number of participants in each category. A legend to the right of the pie matches each occupational group with its corresponding color."
 
 Dabrowska.data |> 
   mutate(OccupGroup = fct_recode(OccupGroup,
@@ -831,7 +936,7 @@ Dabrowska.data |>
 
 So far, we have seen how the syntax of the Grammar of Graphics can be used to build statistical graphs layer by layer. We now turn to the **semantics** of graphics. As linguists are well placed to know, semantics is the study of **meaning**. In the Grammar of Graphics, the semantics of graphics is defined as "the meanings of the representative symbols and arrangements we use to display information" [@wilkinsonGrammarGraphics2005: 20]. In what follows, we will see how thinking about the semantics of graphics can help us to think about how the different components of a graph interact to convey insightful visual information from raw data. This will help us to make informed choices when choosing the geometries, scales, facets, and themes of our data visualisations.
 
-But, first, let's think about **why** we visualise data. Data visualisation is about more than just communicating the results of our analyses to **others** at the publication stage. In fact, good data visualisation can help **us** make informed decisions throughout the research process from the data wrangling stage to the evaluation of complex statistical models. Here are some reasons for visualising data. Can you think of others? `r emoji("thinking")`
+But, first, let's think about why we visualise data. Data visualisation is about more than just communicating the results of our analyses to others at the publication stage. In fact, good data visualisation can help us make informed decisions throughout the research process from the data wrangling stage to the evaluation of complex statistical models. Here are some reasons for visualising data. Can you think of others? `r emoji("thinking")`
 
 :::::: columns
 ::: {.column width="40%"}
@@ -859,15 +964,15 @@ But, first, let's think about **why** we visualise data. Data visualisation is a
 :::
 ::::::
 
-![Using the {ggplot2} package for data exploration (artwork by [Allison Horst](https://twitter.com/allison_horst) CC BY 4.0)](images/AHorst_ggplot2_explore.png){#fig-ExplorerMonster fig-alt="A group of fuzzy round monsters with binoculars, backpacks and guide books looking up a graphs flying around with wings (like birders, but with exploratory data visualizations). Stylized text reads “ggplot2: visual data exploration.”"}
+::: {.content-visible when-format="html"}
+![Using the {ggplot2} package for data exploration (artwork by \@allison_horst CC BY 4.0)](images/AHorst_ggplot2_explore.png){fig-alt="A group of fuzzy round monsters with binoculars, backpacks and guide books looking up a graphs flying around with wings (like birders, but with exploratory data visualizations). Stylized text reads “ggplot2: visual data exploration.”"}
+:::
 
-Depending on the type of data that we want to visualise and why, we can choose different types of plots. A great resource to choose a graphic that is suitable for your data is [the `R` Graph Gallery](https://r-graph-gallery.com/).
+Depending on the type of data that we want to visualise and why, we can choose different types of plots. A great resource to choose a graphic that is suitable for your data is [the `R` Graph Gallery](https://r-graph-gallery.com/). In the following, we will first look at how we can plot categorical variables and discrete numeric variables, before we move on to visualising continuous numeric variables and combinations of different types of variables (see @sec-Variables).
 
-In the following, we will first look at how we can plot **categorical variables** and **discrete numeric variables**, before we move on to visualising **continuous numeric variables** and combinations of different types of variables (see @sec-Variables).
+### Barplots
 
-### Bar plots
-
-As we saw in @Sec-Syntax, bar plots (also called **bar charts**) are a great way to visualise **categorical variables**. We also saw that, when using horizontal writing systems, it is often easier to interpret a bar plot if its coordinates are flipped so that longer labels can be read more readily.
+As we saw in @Sec-Syntax, barplots (also called **bar charts**) are a great way to visualise **categorical variables**. We also saw that, when using horizontal writing systems, it is often easier to interpret a barplot if its coordinates are flipped so that longer labels can be read more readily.
 
 :::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
@@ -881,11 +986,11 @@ Then, click on the "Show `R` code" button just above the figure to compare your 
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show `R` code."
-#| fig-width: 9
+#| code-summary: "Show `R` code to generate plot."
+#| out-width: 85%
 #| label: "fig-NativeLanguagesBarplot"
-#| fig-cap: "Horizontal bar chart quantifying study participants by native language family."
-#| fig-alt: "A horizontal bar plot titled showing the distribution of native languages among second language learners, with bars colored by language family."
+#| fig-cap: "Horizontal bar chart tallying L2 participants' native languages"
+#| fig-alt: "A horizontal barplot showing the distribution of native languages among second language learners, with bars colored by language family and a colour legend to the right of the plot."
 
 Dabrowska.data |> 
   filter(Group == "L2") |> 
@@ -901,10 +1006,10 @@ Dabrowska.data |>
        y = NULL, 
        fill = "Language family",
        title = "Native languages of L2 participants") +
-  theme_minimal(base_size = 16)
+  theme_minimal(base_size = 12)
 ```
 
-To create @fig-NativeLanguagesBarplot, we first reordered the factor levels of the `NativeLg` variable using two functions from the {forcats} package (see @sec-Factors): `fct_infreq()` is first used to order the factors according to their frequency (by default, they are sorted alphabetically), and then `fct_rev()` is used to reverse that order. The latter step is needed because the `coord_flip()` functions reverses everything. You can check the order of a factor's level using the function `levels()`. Note that, if two levels have the same number of occurrences, they are ordered alphabetically (as seen in @fig-NativeLanguagesBarplot).
+To create @fig-NativeLanguagesBarplot, we reordered the factor levels of the `NativeLg` variable using two functions from the {forcats} package (see @sec-Factors): `fct_infreq()` is first used to order the factors according to their frequency (by default, they are sorted alphabetically) and then `fct_rev()` is used to reverse that order. The latter step is needed because the `coord_flip()` functions "flips" everything around. You can check the order of a factor's level using the function `levels()`. Notice how, if two levels have the same number of occurrences, they are ordered alphabetically (as seen in @fig-NativeLanguagesBarplot).
 
 ```{r}
 levels(Dabrowska.data$NativeLg)
@@ -914,8 +1019,8 @@ levels(fct_infreq(Dabrowska.data$NativeLg))
 levels(fct_rev(fct_infreq(Dabrowska.data$NativeLg)))
 ```
 
-:::::: {.content-visible when-profile="OER"}
-::::: {.callout-tip collapse="false"}
+:::::::: {.content-visible when-profile="OER"}
+::::::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
 [**Q10.3**]{style="color:green;"} Compare the two plots below. Which one makes it easier to see which occupational group has the fewest participants and why?
@@ -928,13 +1033,13 @@ library(tidyverse)
 Dabrowska.data <- readRDS(file = here("data", "processed", "combined_L1_L2_data.rds"))
 ```
 
-:::: columns
+:::::: columns
 ::: {.column width="45%"}
-**Bar plot**
+**Barplot**
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show `R` code for the bar plot"
+#| code-summary: "Show `R` code to create the barplot."
 
 Dabrowska.data |> 
   mutate(OccupGroup = fct_recode(OccupGroup,
@@ -965,7 +1070,7 @@ Dabrowska.data |>
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show `R` code for the pie chart"
+#| code-summary: "Show `R` code to create the pie chart."
 
 Dabrowska.data |> 
   mutate(OccupGroup = fct_recode(OccupGroup,
@@ -981,18 +1086,18 @@ Dabrowska.data |>
     theme_void(base_size = 20) # This increases the font size.
 ```
 :::
-::::
+::::::
 
 ```{r}
 #| echo: false
 #| label: "Q10.3"
 
-check_question(c("The bar plot because humans are better at distinguishing small differences in lengths than in angles.",
-                 "The bar plot because the labels are immediately next to the corresponding bars."),
-               options = c("The bar plot because humans dislike round objects and prefer objects with sharp angles.",
-                           "The bar plot because humans are better at distinguishing small differences in lengths than in angles.",
+check_question(c("The barplot because humans are better at distinguishing small differences in lengths than in angles.",
+                 "The barplot because the labels are immediately next to the corresponding bars."),
+               options = c("The barplot because humans dislike round objects and prefer objects with sharp angles.",
+                           "The barplot because humans are better at distinguishing small differences in lengths than in angles.",
                            "The pie chart as most humans learn to read clocks early on in life.",
-                           "The bar plot because the labels are immediately next to the corresponding bars.",
+                           "The barplot because the labels are immediately next to the corresponding bars.",
                            "The pie chart because the colours are easier to distinguish when they are close to each other."),
                type = "check",
                q_id = "Q10.3", 
@@ -1007,16 +1112,16 @@ check_hint("Two reasons are correct.",
            hint_title = "🐭 Click on the mouse for a second hint.")
 
 ```
-:::::
-::::::
+:::::::
+::::::::
 
 :::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-Using the {ggplot2} library, create a bar plot that shows the distribution of occupational groups (`OccupGroup`) among male L1 and L2 participants in @DabrowskaExperienceAptitudeIndividual2019's study.
+Using the {ggplot2} library, create a barplot that shows the distribution of occupational groups (`OccupGroup`) among male L1 and L2 participants in @DabrowskaExperienceAptitudeIndividual2019's study.
 
-[**Q10.4**]{style="color:green;"} Drawing on the information provided by your bar plot, how many male participants reported having manual jobs?
+[**Q10.4**]{style="color:green;"} Drawing on the information provided by your barplot, how many male participants reported having manual jobs?
 
 ```{r}
 #| echo: false
@@ -1031,7 +1136,7 @@ check_question("exactly 20",
                type = "radio",
                q_id = "Q10.4", 
                button_label = "Check answer",
-               right = "That's right! Your bar plot should make that immediately obvious.",
+               right = "That's right! Your barplot should make that immediately obvious.",
                wrong = "No, are you sure that you have plotted the distribution of occupational groups among male participants only?")
 
 ```
@@ -1050,7 +1155,7 @@ Dabrowska.data |>
   theme_minimal()
 ```
 
-[**Q10.5**]{style="color:green;"} Is the legend in the bar plot that you have created necessary?
+[**Q10.5**]{style="color:green;"} Is the legend in the barplot that you have created necessary?
 
 ```{r}
 #| echo: false
@@ -1168,12 +1273,12 @@ Dabrowska.data |>
 
 ### Histograms {#sec-histograms}
 
-In @sec-DistributionsNumeric, we visually examined the distribution of participants' ages in a **bar plot**. This was possible because the age variable in @DabrowskaExperienceAptitudeIndividual2019 was recorded as a discrete numeric variable (i.e. either as 18 or 19, but not 18.4 years of age).
+In @sec-DistributionsNumeric, we visually examined the distribution of participants' ages in a **barplot**. This was possible because the age variable in @DabrowskaExperienceAptitudeIndividual2019 was recorded as a discrete numeric variable (i.e. either as 18 or 19, but not 18.4 years of age).
 
 ```{r}
 #| label: "fig-AgeBarPlot"
-#| fig-cap: "Bar plot of participant ages in @DabrowskaExperienceAptitudeIndividual2019."
-#| fig-alt: "Bar plot of participant ages in the Dabrowska study."
+#| fig-cap: "Barplot of participant ages in @DabrowskaExperienceAptitudeIndividual2019."
+#| fig-alt: "Barplot of participant ages in the Dabrowska study."
 ggplot(data = Dabrowska.data,
        mapping = aes(Age)) +
   geom_bar() +
@@ -1181,14 +1286,15 @@ ggplot(data = Dabrowska.data,
   theme_minimal()
 ```
 
-Bar plots are best suited for categorical data and should only be used to visualise discrete numeric variables that have a fairly limited number of possible values. As we can see from the output of the `unique()` function, this is not the case for the `Age` variable in `Dabrowska.data`, as it includes `r length(unique(Dabrowska.data$Age))` different age values, ranging from `r min(Dabrowska.data$Age)` to `r max(Dabrowska.data$Age)`.
+Barplots are best suited for categorical data and should only be used to visualise discrete numeric variables that have a limited number of possible values. They should never be used to report mean values (see [#barbarplot](https://barbarplots.github.io/) campaign)! 
+As we can see from the output of the `unique()` function below, the `Age` variable in `Dabrowska.data` features `r length(unique(Dabrowska.data$Age))` different age values, ranging from `r min(Dabrowska.data$Age)` to `r max(Dabrowska.data$Age)`. 
 
 ```{r}
 unique(Dabrowska.data$Age) |> 
   sort()
 ```
 
-The distribution of participants' ages is therefore better visualised as a histogram or density plot. To visualise participants' age as **histogram** (\@fig-AgeHistogram) rather than as a bar plot (\@fig-AgeBarPlot), change the plot geometry (see @sec-geoms) from `geom_bar()` to `geom_histogram()`.
+Clearly, these data are unsuitable for a barplot! The distribution of participants' ages would be much better visualised as a histogram or density plot. To visualise participants' age as **histogram** (@fig-AgeHistogram) rather than as a barplot (@fig-AgeBarPlot), we change the plot geometry (see @sec-geoms) from `geom_bar()` to `geom_histogram()`:
 
 ```{r}
 #| message: true
@@ -1205,9 +1311,9 @@ ggplot(data = Dabrowska.data,
   theme_minimal()
 ```
 
-When generating this histogram, a message appears in the `R` console that informs us that, by default, the `geom_histogram()` function subdivided the `Age` values into 30 **bins**. This means that the age range from `r min(Dabrowska.data$Age)` to `r max(Dabrowska.data$Age)` has been subdivided into 30 groups of equal size. Given that there is a range of 48 in the `Age` values in this dataset, this is not a great way to subdivide the values of this variable.
+When generating this histogram, a message appears in the `R` console that informs us that, by default, the `geom_histogram()` function subdivided the `Age` values into 30 **bins**. This means that the age range from `r min(Dabrowska.data$Age)` to `r max(Dabrowska.data$Age)` was subdivided into 30 groups of equal size. Given that there is a range of 48 in the `Age` values in this dataset, this is not a great way to subdivide the values of this variable.
 
-As indicated in the message, to change this behaviour, we can adjust the value of the "binwidth" argument. This argument determines how many years go in each bin. So if we choose to have two years in each subdivision of the `Age` variable, we will end up with 24 bins. Logically, if we decide to group four years in each subdivision of the `Age` variable, we will end up with just 12 bins.
+As indicated in the message, to change this behaviour, we can adjust the value of the "binwidth" argument. This argument determines how many years go in each bin. So if we choose to have two years in each subdivision of the `Age` variable, we will end up with 24 bins. Thus, if we decide to group four years in each subdivision of the `Age` variable, we will end up with just 12 bins.
 
 Compare the three histograms below. In your opinion, which binwidth provides the most effective way to visualise the distribution of participants' ages? `r emoji("thinking")`
 
@@ -2754,7 +2860,7 @@ You are now ready to get creative: Complete this chapter's [tasks and quizzes](h
 Are you confident that you can...?
 
 -   [ ] Use the syntax of the Grammar of Graphics to build and customise your graphs layer-by-layer (using data, aesthetics, geometries, facetting, scales, coordinates, and theme layers) (@sec-Syntax)
--   [ ] Create and interpret bar plots, histograms, density plots, boxplots, scatter plots, and word clouds (@sec-Semantics)
+-   [ ] Create and interpret barplots, histograms, density plots, boxplots, scatter plots, and word clouds (@sec-Semantics)
 -   [ ] Create and interpret complex plots and interactive plots for data exploration (@sec-CombiningGeoms) and (@sec-InteractivePlots)
 -   [ ] Export and share your plots in various formats (@sec-ExploringPlots)
 
@@ -2765,7 +2871,7 @@ If so, you are ready to move out on inferential statistics in @sec-Inferential!
 
 If you have completed this chapter, you can now produce some of the most widely used plots in the language sciences: Congratulations!
 
-Bar plots, boxplots, scatter plots, density plots and histograms may well be all that you need for now. But you should know that the possibilities with `R`, the {ggplot2} library, and its many extensions are pretty much limitless: The [`R` Graph Gallery](https://r-graph-gallery.com/) lists some 50 different types of charts with over 400 examples with code!
+Barplots, boxplots, scatter plots, density plots and histograms may well be all that you need for now. But you should know that the possibilities with `R`, the {ggplot2} library, and its many extensions are pretty much limitless: The [`R` Graph Gallery](https://r-graph-gallery.com/) lists some 50 different types of charts with over 400 examples with code!
 
 Another great resource is [The R Graphics Cookbook](https://r-graphics.org) by Winston Chang. To go beyond the basics and to find out more information about the theoretical underpinnings of the {ggplot2} package, I recommend [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org).
 
