@@ -1108,31 +1108,31 @@ list
 <div class="cell-output-display">
 <form name="form_Q6_12" onsubmit="return validate_form_Q6_12()" method="post">
 <label>
-<input type="checkbox" id="answer_Q6_12_1" value="Because Dr. Dąbrowska decided not to collect this information for L1 participants.">
+<input type="radio" name="answer_Q6_12" id="answer_Q6_12_1" value="Because Dr. Dąbrowska decided not to collect this information for L1 participants.">
 Because Dr. Dąbrowska decided not to collect this information for L1 participants.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q6_12_2" value="Because, in this study, all L1 participants have English as their native language.">
+<input type="radio" name="answer_Q6_12" id="answer_Q6_12_2" value="Because, in this study, all L1 participants have English as their native language.">
 Because, in this study, all L1 participants have English as their native language.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q6_12_3" value="Because this variable was removed from the dataset for data protection reasons.">
+<input type="radio" name="answer_Q6_12" id="answer_Q6_12_3" value="Because this variable was removed from the dataset for data protection reasons.">
 Because this variable was removed from the dataset for data protection reasons.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q6_12_4" value="Because some or all of the L1 participants did not wish to answer this question.">
+<input type="radio" name="answer_Q6_12" id="answer_Q6_12_4" value="Because some or all of the L1 participants did not wish to answer this question.">
 Because some or all of the L1 participants did not wish to answer this question.
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_Q6_12"></div>
 </form>
-<script>function validate_form_Q6_12() {var text; var x1 = document.getElementById('answer_Q6_12_1'); var x2 = document.getElementById('answer_Q6_12_2'); var x3 = document.getElementById('answer_Q6_12_3'); var x4 = document.getElementById('answer_Q6_12_4'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == false){text = 'That’s right!';} else {text = 'No, that’s not the reason.';} document.getElementById('result_Q6_12').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q6_12() {var x, text; var x = document.forms['form_Q6_12']['answer_Q6_12'].value;if (x == 'Because, in this study, all L1 participants have English as their native language.'){text = 'That’s right!';} else {text = 'No, that’s not the reason.';} document.getElementById('result_Q6_12').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12;res1 = document.getElementById('result_Q6_1').innerText == 'Well done!'; res2 = document.getElementById('result_Q6_2').innerText == 'That’s right.'; res3 = document.getElementById('result_Q6_3').innerText == 'That’s right.'; res4 = document.getElementById('result_Q6_4').innerText == 'That’s right!'; res5 = document.getElementById('result_Q6_5').innerText == 'That’s right! 🎉'; res6 = document.getElementById('result_Q6_6').innerText == 'That’s right!'; res7 = document.getElementById('result_Q6_7').innerText == 'You are right: this DSV file does not have a delimiter character. This would be problematic if some of the values included commas but, as they don’t, it’s not a problem.'; res8 = document.getElementById('result_Q6_8').innerText == 'That’s right!'; res9 = document.getElementById('result_Q6_9').innerText == 'That’s right!'; res10 = document.getElementById('result_Q6_10').innerText == 'That’s right! The L2 dataset includes additional information such as the participants’ native language(s) and the age they were when they first moved to an English-speaking country.'; res11 = document.getElementById('result_Q6_11').innerText == 'That’s right!'; res12 = document.getElementById('result_Q6_12').innerText == 'That’s right!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_Q6_12').innerText == 'That’s right!';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1512,25 +1512,64 @@ Dąbrowska, Ewa. 2019. Experience, aptitude, and individual differences in lingu
           }
         };
       }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
             }
-          });
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
         }
     const findCites = (el) => {
       const parentEl = el.parentElement;
