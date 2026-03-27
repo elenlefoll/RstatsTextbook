@@ -609,6 +609,10 @@ Almeida, Alexandre, Adam Loy &amp; Heike Hofmann. 2018. ggplot2
 compatible quantile-quantile plots in <span>R</span>. <em>The R
 Journal</em> 10(2). 248–261. <a href="https://doi.org/10.32614/RJ-2018-051">https://doi.org/10.32614/RJ-2018-051</a>.
 </div>
+<div id="ref-ggthemes2025" class="csl-entry" role="listitem">
+Arnold, Jeffrey B. 2025. <em><span class="nocase">ggthemes</span>: Extra
+themes, scales and geoms for ’ggplot2’</em>. <a href="https://doi.org/10.32614/CRAN.package.ggthemes">https://doi.org/10.32614/CRAN.package.ggthemes</a>.
+</div>
 <div id="ref-arregoitiaLargeLanguageModel2026" class="csl-entry" role="listitem">
 Arregoitia, Luis D. Verde. 2026. Large language <span>M</span>odel tools
 for <span>R</span>. <a href="https://luisdva.github.io/llmsr-book/">https://luisdva.github.io/llmsr-book/</a>.
@@ -844,6 +848,10 @@ corpus-based analysis of the language of EFL textbooks used in secondary
 schools in <span>France</span>, <span>Germany</span> and
 <span>Spain</span></em>. Osnabrück, Germany: Osnabrück University PhD
 thesis. <a href="https://doi.org/10.48693/278">https://doi.org/10.48693/278</a>.
+</div>
+<div id="ref-ggworcloud2024" class="csl-entry" role="listitem">
+Le Pennec, Erwan &amp; Kamil Slowikowski. 2024. <em><span class="nocase">ggwordcloud</span>: A word cloud geom for ’ggplot2’</em>.
+<a href="https://doi.org/10.32614/CRAN.package.ggwordcloud">https://doi.org/10.32614/CRAN.package.ggwordcloud</a>.
 </div>
 <div id="ref-alvinashcraftMaximumPathLength2022" class="csl-entry" role="listitem">
 Learn Microsoft. 2022. Maximum path length limitation. <em>Learn
@@ -1202,8 +1210,16 @@ Jones, Aidan N. Gomez, Lukasz Kaiser &amp; Illia Polosukhin. 2017.
 Attention is all you need. Long Beach, CA, USA. <a href="https://doi.org/10.48550/arXiv.1706.03762">https://doi.org/10.48550/arXiv.1706.03762</a>.
 </div>
 <div id="ref-Wickhamggplot2Elegantgraphics2016" class="csl-entry" role="listitem">
-Wickham, Hadley. <em>ggplot2: Elegant graphics for data analysis</em>.
-<a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+Wickham, Hadley. 2016. <em>ggplot2: Elegant graphics for data
+analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+</div>
+<div id="ref-stringr2025" class="csl-entry" role="listitem">
+Wickham, Hadley. 2025b. <em>Stringr: Simple, consistent wrappers for
+common string operations</em>. <a href="https://doi.org/10.32614/CRAN.package.stringr">https://doi.org/10.32614/CRAN.package.stringr</a>.
+</div>
+<div id="ref-forcats2025" class="csl-entry" role="listitem">
+Wickham, Hadley. 2025a. <em><span class="nocase">forcats</span>: Tools
+for working with categorical variables (factors)</em>. <a href="https://doi.org/10.32614/CRAN.package.forcats">https://doi.org/10.32614/CRAN.package.forcats</a>.
 </div>
 <div id="ref-wickham2024emoji" class="csl-entry" role="listitem">
 <span class="nocase">Wickham, Hadley &amp; et al.</span> 2024. <em>Emo:
@@ -1222,8 +1238,8 @@ data</em>. 2nd edition. Beijing Boston Farnham Sebastopol Tokyo:
 O’Reilly. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>.
 </div>
 <div id="ref-TidyMessyData" class="csl-entry" role="listitem">
-Wickham, Hadley, Davis Vaughan &amp; Maximilian Girlich. Tidy messy
-data. <a href="https://tidyr.tidyverse.org/">https://tidyr.tidyverse.org/</a>.
+Wickham, Hadley, Davis Vaughan &amp; Maximilian Girlich. 2025. Tidy
+messy data. <a href="https://tidyr.tidyverse.org/">https://tidyr.tidyverse.org/</a>.
 </div>
 <div id="ref-wilkinsonGrammarGraphics2005" class="csl-entry" role="listitem">
 Wilkinson, Leland. 2005. <em>The <span>Grammar</span> of
@@ -1631,25 +1647,64 @@ are widespread in the scientific literature. <em>Genome Biology</em>
           }
         };
       }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
             }
-          });
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
         }
     const findCites = (el) => {
       const parentEl = el.parentElement;

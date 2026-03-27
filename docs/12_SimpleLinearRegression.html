@@ -1608,13 +1608,13 @@ Figure&nbsp;12.5: Relationship between actual and predicted <code>Vocab</code> t
 </div>
 <p>In <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a>, the dotted blue line represents where the points would lie, if <code>model1</code> perfectly predicted <code>Vocab</code> scores based only on the number of years that participants spent in formal education. The dots that fall on or very close to the dotted line stand for L1 participants for whom our model accurately predicts their <code>Vocab</code> score based solely on the number of years they spent in formal education. The further the dots are from the dotted line, the worse the predictions for these speakers. The distances between each point and the dotted line in <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> correspond to the model’s residuals. <strong>Residuals</strong> are therefore the ‘left-over’ variability in the data that our model cannot account for.</p>
 <p>Residuals can be positive or negative, depending on whether the dots on the predicted vs.&nbsp;actual values plot are above or below the dotted line of perfect fit. However, what matters more are their absolute values. The larger the residuals, the worse the model fit. Returning to the question, ‘How good is our model fit?’, we can conclude from <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> that it’s not great. But we already knew that from the model’s fairly low R² value and, crucially, we also know that many other factors are likely to account for some of the remaining variation in vocabulary scores.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
+<div id="nte-Causation" class="callout callout-style-default callout-warning callout-titled" title="Association does not imply causation!">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Association does not imply causation.
+Warning&nbsp;12.1: Association does not imply causation!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -3259,25 +3259,64 @@ Winter, Bodo. 2019. <em>Statistics for linguists: An introduction using <span>R<
           }
         };
       }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
             }
-          });
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
         }
     const findCites = (el) => {
       const parentEl = el.parentElement;
