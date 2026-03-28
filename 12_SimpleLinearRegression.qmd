@@ -14,7 +14,7 @@ html:
 library(tidyverse)
 ```
 
-### From tests to models {.unnumbered}
+### Chapter overview {.unnumbered}
 
 This chapter will take you from statistical tests to statistical modelling. By the end of this chapter, you will be able to:
 
@@ -255,7 +255,7 @@ L1.data |>
   theme_bw()
 ```
 
-On average, the longer L1 speakers were in formal education, the better they performed on the vocabulary test. The correlation is larger than for `Grammar` scores, and it is statistically significant at an α-level of 0.05 (*r* = 0.43, 95% CI \[0.24, 0.58\]):
+On average, the longer L1 speakers were in formal education, the better they performed on the vocabulary test. The correlation is larger than for `Grammar` scores, and it is statistically significant at an $\alpha$-level of 0.05 (*r* = 0.43, 95% CI \[0.24, 0.58\]):
 
 ```{r}
 cor.test(formula = ~ Vocab + EduTotal,
@@ -401,7 +401,7 @@ In @fig-ActualPredictedVocab, the dotted blue line represents where the points w
 
 Residuals can be positive or negative, depending on whether the dots on the predicted vs. actual values plot are above or below the dotted line of perfect fit. However, what matters more are their absolute values. The larger the residuals, the worse the model fit. Returning to the question, 'How good is our model fit?', we can conclude from @fig-ActualPredictedVocab that it's not great. But we already knew that from the model's fairly low R² value and, crucially, we also know that many other factors are likely to account for some of the remaining variation in vocabulary scores.
 
-::: {#nte-Causation .callout-warning title="Association does not imply causation!"}
+::: {#nte-Causation .callout-important title="Association does not imply causation!"}
 You may be familiar with the Latin phrase:
 
 -   ***Cum hoc ergo propter hoc*** ('with this, therefore because of this')
@@ -412,7 +412,7 @@ or its English equivalent:
 
 They both refer to the human tendency to assume that, if two things are regularly associated, one probably *causes* the other. However, this is a logical fallacy. For example, even if we had observed a very high correlation between the number of years participants were in formal education and their receptive vocabulary test scores (and had therefore reported an excellent model fit with very small residuals), this would by no means imply that, on average, spending more time in formal education *leads to* greater vocabulary knowledge. A correlation merely describes an association; it tells us nothing about any causal relationship.
 
-It is often tempting to interpret the results of statistical tests and models causally, but this is the result of a well-known human cognitive bias [see, e.g, @matuteIllusionsCausalityHow2015; @kaufmanIllusionCausalityCognitive2018]. In the language sciences and across the social sciences more generally, there are usually far too many potential factors at play to warrant any causal interpretation. What we are modelling throughout this chapter and @sec-MLR are **statistical associations**. We cannot draw any conclusions about what *caused* what from these models. In the context of statistical modelling, we can extend the famous saying to: **Association does not imply causation**.
+It is often tempting to interpret the results of statistical tests and models causally, but this is the result of a well-known human cognitive bias [see, e.g, @matuteIllusionsCausalityHow2015; @kaufmanIllusionCausalityCognitive2018]. In the language sciences and across the social sciences more generally, there are usually far too many potential factors at play to warrant any causal interpretation. What we are modelling throughout this chapter and @sec-MLR are **statistical associations**. We cannot draw any conclusions about what *caused* what from these models. In the context of statistical modelling, we can extend the famous saying to **association does not imply causation**.
 
 There are three main reasons for this:
 
@@ -422,7 +422,7 @@ There are three main reasons for this:
 
 3.  Finally, it is important to consider the possibility that even a statistically significant association could be entirely **spurious**. This happens more often than you might think, and it is more likely to happen with smaller datasets. Moreover, the more we test associations, the more likely we are to find statistically significant ones (see @sec-pHacking on the multiple testing problem and Type 1 errors). When associations are very strong, we may be tempted to think that they are real, but this may not be the case. To raise awareness of this risk, [Tyler Vigen](https://tylervigen.com/about-spurious-correlations) conducted correlation tests on millions of combinations of randomly selected variables and created a website featuring thousands of examples of very large and highly significant correlations that are all entirely spurious (e.g. @fig-SpuriousCorrelation).
 
-    ![Find this spurious correlation ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) and thousands more by Tyler Vigen at <https://tylervigen.com/spurious-correlations>.](images/Vigen_unhealthy-air-quality-in-johnstown-pennsylvania_correlates-with_masters-degrees-awarded-in-education.png){#fig-SpuriousCorrelation fig-alt="A linear line chart with years as the X-axis and two variables on the Y-axis. The first variable is Air pollution in Johnstown, Pennsylvania and the second variable is Master's degrees awarded in Education.  The chart goes from 2012 to 2021, and the two variables track closely in value over that time. The following statistics are displayed on the graph: Pearson's r = 0.989, r-squared = 0.979, p < 0.01 Source: tylervigen.com/spurious/correlation/3139"}
+    ![Find this spurious correlation and thousands more by Tyler Vigen at <https://tylervigen.com/spurious-correlations> (CC BY 4.0)](images/Vigen_unhealthy-air-quality-in-johnstown-pennsylvania_correlates-with_masters-degrees-awarded-in-education.png){#fig-SpuriousCorrelation fig-alt="A linear line chart with years as the X-axis and two variables on the Y-axis. The first variable is Air pollution in Johnstown, Pennsylvania and the second variable is Master's degrees awarded in Education.  The chart goes from 2012 to 2021, and the two variables track closely in value over that time. The following statistics are displayed on the graph: Pearson's r = 0.989, r-squared = 0.979, p < 0.01 Source: tylervigen.com/spurious/correlation/3139"}
 :::
 
 :::: {.content-visible when-profile="OER"}
@@ -832,7 +832,7 @@ summary(model3)
 
 -   The **adjusted R^2^ value** for our model is relatively low (`0.07509`). This means that our model accounts for about 7.5% of the total variance in `Vocab` scores across the dataset. Given that the R^2^ of `model1` was `0.1213`, this indicates that `OccupGroup` is a considerably less useful predictor variable to help us predict participants' `Vocab` scores than whether or not they are an L1 speaker (`Group`).
 
--   What's more, the model summary reveals that only one of the `model3`'s three coefficient estimates is statistically significantly different from 0 at the α-level of 0.05: `OccupGroupI` with a ***p*****-value** of `0.0335`. This means that we can reject the null hypothesis that there is no difference in `Vocab` scores between speakers of the occupational group "C" (the reference level) and those of the occupational group "I". For the other two occupational groups, we do not have enough evidence to reject the null hypothesis of no difference compared to the reference level "C".
+-   What's more, the model summary reveals that only one of the `model3`'s three coefficient estimates is statistically significantly different from 0 at the $\alpha$-level of 0.05: `OccupGroupI` with a ***p*****-value** of `0.0335`. This means that we can reject the null hypothesis that there is no difference in `Vocab` scores between speakers of the occupational group "C" (the reference level) and those of the occupational group "I". For the other two occupational groups, we do not have enough evidence to reject the null hypothesis of no difference compared to the reference level "C".
 
 We can display the predicted `Vocab` scores for each occupational group, together with a 95% confidence interval around these predicted values using the `emmeans()` function from the [{emmeans}](https://rvlenth.github.io/emmeans/index.html) package [@lenthEmmeansEstimatedMarginal2025a]:
 
@@ -1073,7 +1073,7 @@ visreg(taskmodel4, gg = TRUE) +
 check_question("Because the dataset only includes one Greek L1 speaker.",
                options = c("Because the dataset only includes one Greek L1 speaker.",
                            "Because p-values have nothing to do with effect sizes.",
-                           "Because the model chose a particularly low α-level." ,
+                           "Because the model chose a particularly low $\alpha$-level." ,
                            "Because the data for Hellenic speakers is less reliable than for the other L2 speakers."),
                random_answer_order = TRUE,
                q_id = "Q12.13", 
@@ -1081,7 +1081,7 @@ check_question("Because the dataset only includes one Greek L1 speaker.",
                type = "radio",
                right = "Absolutely! 💯",
                wrong = "No, check the hints if you're not sure how to proceed. And remember that, if in doubt, visualisation is always a good idea!")
-check_hint("It is never the model that chooses the α-level, but rather us, the researchers.", 
+check_hint("It is never the model that chooses the $\alpha$-level, but rather us, the researchers.", 
            hint_title = "🦉 Hover over the owl for a first hint.",
            type = "onmouseover")
 check_hint("Remember that p-values depend on three different factors, see Section 11.3", 

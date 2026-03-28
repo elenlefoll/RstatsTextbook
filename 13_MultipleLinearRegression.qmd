@@ -290,7 +290,7 @@ Let's decipher the summary of `model4_c` step-by-step:
       select(Group, NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)
     ```
 
--   The ***p*****-values** associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable *levels*, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in @sec-Categoricalpredictor, we fitted a simple linear regression model (`model3`) which included only `OccupGroup` as a single predictor. In this simple model, the coefficient estimate for `OccupGroupI` made a statistically significant contribution to the model at an α-level of 0.05 (*p* = 0.0335). By contrast, in the present multiple linear regression model, the predictor level `OccupGroupI` does *not* make a statistically significant contribution (*p* = 0.077600 which is greater than 0.05). This is because our multiple regression model `model4_c` includes predictors that account for some of the same variance in `Vocab` scores in the data that occupational groups accounted for in our earlier model. This leaves less unique variance attributable to occupational group, thereby rendering it statistically non-significant.
+-   The ***p*****-values** associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable *levels*, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in @sec-Categoricalpredictor, we fitted a simple linear regression model (`model3`) which included only `OccupGroup` as a single predictor. In this simple model, the coefficient estimate for `OccupGroupI` made a statistically significant contribution to the model at an $\alpha$-level of 0.05 (*p* = 0.0335). By contrast, in the present multiple linear regression model, the predictor level `OccupGroupI` does *not* make a statistically significant contribution (*p* = 0.077600 which is greater than 0.05). This is because our multiple regression model `model4_c` includes predictors that account for some of the same variance in `Vocab` scores in the data that occupational groups accounted for in our earlier model. This leaves less unique variance attributable to occupational group, thereby rendering it statistically non-significant.
 
 -   From the **adjusted R-squared** value (`0.3276`) displayed at the bottom of the model summary output, we can see that our multiple linear regression model accounts for around 33% of the total variance in `Vocab` scores found in the @DabrowskaExperienceAptitudeIndividual2019 data. This is considerably more than we achieved with any of the simple linear models that we fitted in @sec-SLR.
 
@@ -588,13 +588,13 @@ check_hint("Watch out: Although they are easily confused, the plus sign (`+`) an
 #| label: "Q13.2"
 
 check_question(c("Recognising more real authors on the ART is associated with higher Vocab scores.",
-                 "ART makes a statistically significant contribution to the model at the α-level of 0.05.",
+                 "ART makes a statistically significant contribution to the model at the $\alpha$-level of 0.05.",
                  "The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c)."),
                options = c("Recognising more real authors on the ART is associated with higher Vocab scores.",
-                 "ART makes a statistically significant contribution to the model at the α-level of 0.05.",
+                 "ART makes a statistically significant contribution to the model at the $\alpha$-level of 0.05.",
                  "The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c).",
                  "Recognising more real authors on the ART is associated with lower Vocab scores.",
-                 "ART does not make a statistically significant contribution to the model at the α-level of 0.05.",
+                 "ART does not make a statistically significant contribution to the model at the $\alpha$-level of 0.05.",
                  "The model that does not include ART (model4_c) accounts for more of the variance in Vocab scores than the model that does."),
                random_answer_order = TRUE,
                type = "check",
@@ -1179,7 +1179,7 @@ L1.model <- lm(Vocab ~ ART + EduTotal_c + ART:EduTotal_c,
 summary(L1.model)
 ```
 
-The model summary confirms that both predictors individually (i.e. as main effects) make statistically significant, positive contributions to the prediction of `Vocab` scores. Crucially, the summary also indicates that the interaction effect (`ART:EduTotal_c`) is statistically significant at α = 0.05 (*p* = `0.001017`). The negative coefficient estimate of `-0.1803` means that, for each additional year of formal education, our model predicts that the effect of a participant's `ART` score on `Vocab` decreases by 0.1803 points. In simpler terms, the positive effect of reading literature, as measured by the Author Recognition Test [@acheson2008], decreases slightly for every year spent in formal education.
+The model summary confirms that both predictors individually (i.e. as main effects) make statistically significant, positive contributions to the prediction of `Vocab` scores. Crucially, the summary also indicates that the interaction effect (`ART:EduTotal_c`) is statistically significant at $\alpha$ = 0.05 (*p* = `0.001017`). The negative coefficient estimate of `-0.1803` means that, for each additional year of formal education, our model predicts that the effect of a participant's `ART` score on `Vocab` decreases by 0.1803 points. In simpler terms, the positive effect of reading literature, as measured by the Author Recognition Test [@acheson2008], decreases slightly for every year spent in formal education.
 
 Remember that, whenever we report an interaction, we can no longer interpret the estimated coefficients of the individual predictors in isolation. That is because we must also consider the interaction effect. To understand what this means in practice, let's compare two speakers from the L1 dataset:
 
@@ -1256,9 +1256,9 @@ visreg(L1.model,
   theme_bw()
 ```
 
-For low and mid-level ART scores, the model predicts a positive correlation between the number of years a participant has spent in formal education and their predicted `Vocab` scores. However, this is not the case for participants who scored high on the ART test (third panel). The three regression lines representing the model's predicted scores are clearly not parallel, and it would not be possible to draw three parallel lines that each stay within their respective 95% confidence bands. This confirms that, in this L1 model, the interaction between ART scores and years in formal education is statistically significant at α = 0.05. The main effects of these two predictors cannot be meaningfully interpreted without considering this interaction.
+For low and mid-level ART scores, the model predicts a positive correlation between the number of years a participant has spent in formal education and their predicted `Vocab` scores. However, this is not the case for participants who scored high on the ART test (third panel). The three regression lines representing the model's predicted scores are clearly not parallel, and it would not be possible to draw three parallel lines that each stay within their respective 95% confidence bands. This confirms that, in this L1 model, the interaction between ART scores and years in formal education is statistically significant at $\alpha$ = 0.05. The main effects of these two predictors cannot be meaningfully interpreted without considering this interaction.
 
-## Model selection
+## Model selection and preregistration {#sec-Preregistration}
 
 Typically, the more predictors we enter in a model, the better the model fits the data. However, having predictors that contribute very little to the model and/or whose contributions are not statistically significant risks lowering the accuracy of the model's predictions on new data. In this case, we say that the model **overfits**. A model that overfits the sample data risks not generalising to other data. If the aim of our statistical modelling is to infer from our sample to the general population (see @sec-Inferential), it can sometimes make sense to try to find an 'optimal' model that accounts for as much of the variance in the outcome variable as possible, relying only on association effects that we can be fairly confident could not have occurred due to chance only. This is where model selection comes into play.
 
@@ -1720,7 +1720,7 @@ check_model(L2.model.b) # Now all looking much better than earlier!
 summary(L2.model.b) # Adjusted R-squared:  0.2027
 ```
 
-[**Q13.13**]{style="color:green;"} Which main-effect predictor(s) make a statistically significant contribution to `L2.model.b` at α = 0.05?
+[**Q13.13**]{style="color:green;"} Which main-effect predictor(s) make a statistically significant contribution to `L2.model.b` at $\alpha$ = 0.05?
 
 ```{r}
 #| echo: false
@@ -1755,7 +1755,7 @@ check_question("Yes, the ReadEng coefficient is positive, which means that the m
                wrong = "No, only individual observations (i.e. data points) can be considered outliers, not coefficient estimates.")
 ```
 
-[**Q13.15**]{style="color:green;"} Which interaction effect(s) make a statistically significant contribution to `L2.model.b` at α = 0.05?
+[**Q13.15**]{style="color:green;"} Which interaction effect(s) make a statistically significant contribution to `L2.model.b` at $\alpha$ = 0.05?
 
 ```{r}
 #| echo: false

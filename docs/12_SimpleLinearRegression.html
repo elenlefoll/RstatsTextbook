@@ -143,6 +143,35 @@ div.csl-indent {
 }
 </style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -607,7 +636,7 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#from-tests-to-models" id="toc-from-tests-to-models" class="nav-link active" data-scroll-target="#from-tests-to-models">From tests to models</a></li>
+  <li><a href="#chapter-overview" id="toc-chapter-overview" class="nav-link active" data-scroll-target="#chapter-overview">Chapter overview</a></li>
   <li><a href="#sec-Correlationsregression" id="toc-sec-Correlationsregression" class="nav-link" data-scroll-target="#sec-Correlationsregression"><span class="header-section-number">12.1</span> Correlations as regression over a numeric variable</a>
   <ul class="collapse">
   <li><a href="#a-perfect-prediction" id="toc-a-perfect-prediction" class="nav-link" data-scroll-target="#a-perfect-prediction"><span class="header-section-number">12.1.1</span> A perfect prediction</a></li>
@@ -653,8 +682,8 @@ div.csl-indent {
 </header>
 
 
-<section id="from-tests-to-models" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="from-tests-to-models">From tests to models</h3>
+<section id="chapter-overview" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="chapter-overview">Chapter overview</h3>
 <p>This chapter will take you from statistical tests to statistical modelling. By the end of this chapter, you will be able to:</p>
 <ul>
 <li>Use the <code>lm()</code> function to fit linear regression models with:
@@ -676,7 +705,7 @@ div.csl-indent {
 </section>
 <section id="sec-Correlationsregression" class="level2" data-number="12.1">
 <h2 data-number="12.1" class="anchored" data-anchor-id="sec-Correlationsregression"><span class="header-section-number">12.1</span> Correlations as regression over a numeric variable</h2>
-<p>This section explains how the principle of correlation, which we covered in <a href="11_Inferential.html#sec-Correlations" class="quarto-xref"><span>Section 11.5</span></a>, is integral to linear regression modelling. We begin with a ‘toy’ example to familiarise ourselves with the concept of statistical modelling. It is important to take the time to genuinely understand how simple linear regression works before moving on to more complex, real-world research questions.</p>
+<p>This section explains how the principle of correlation, which we covered in <a href="11_Inferential.html#sec-Correlations" class="quarto-xref"><span>Section 11.6</span></a>, is integral to linear regression modelling. We begin with a ‘toy’ example to familiarise ourselves with the concept of statistical modelling. It is important to take the time to genuinely understand how simple linear regression works before moving on to more complex, real-world research questions.</p>
 <section id="a-perfect-prediction" class="level3" data-number="12.1.1">
 <h3 data-number="12.1.1" class="anchored" data-anchor-id="a-perfect-prediction"><span class="header-section-number">12.1.1</span> A perfect prediction</h3>
 <p>In the following, we will fit a simple linear regression model to predict the percentage of correct answers that a student obtained in a multiple-choice test based on the number of questions that they correctly answered in this same test. Clearly, this is a purely hypothetical example because, if we know the number of questions that a student correctly answered and how many questions there were in the test, we can easily calculate the percentage of questions that the student answered correctly.</p>
@@ -1349,7 +1378,7 @@ Figure&nbsp;12.2: The correlation between learners’ test results expressed as 
 <pre data-code-line-numbers=""><code>[1] 90</code></pre>
 </div>
 </div>
-<p>In our model summary, the coefficient estimate for <code>N.correct</code> is associated with a <em>p</em>-value of <code>&lt;2e-16</code>. It corresponds to the <em>p</em>-value of our <code>cor.test()</code> on the same data, and is actually the smallest value that <code>R</code> will display. In other words, it is extremely small. This <em>p</em>-value indicates that we can safely reject the null hypothesis that this coefficient is zero under the assumptions of a linear regression model. In other words, we can reject the null hypothesis that the number of correct answers is <em>not</em> a useful predictor to predict the percentage of correctly answered questions under the assumption of a linear regression model (more on these assumptions in <a href="11_Inferential.html#sec-Assumptions" class="quarto-xref"><span>Section 11.6</span></a>).</p>
+<p>In our model summary, the coefficient estimate for <code>N.correct</code> is associated with a <em>p</em>-value of <code>&lt;2e-16</code>. It corresponds to the <em>p</em>-value of our <code>cor.test()</code> on the same data, and is actually the smallest value that <code>R</code> will display. In other words, it is extremely small. This <em>p</em>-value indicates that we can safely reject the null hypothesis that this coefficient is zero under the assumptions of a linear regression model. In other words, we can reject the null hypothesis that the number of correct answers is <em>not</em> a useful predictor to predict the percentage of correctly answered questions under the assumption of a linear regression model (more on these assumptions in <a href="11_Inferential.html#sec-Assumptions" class="quarto-xref"><span>Section 11.7</span></a>).</p>
 <p>The penultimate line of the model summary is also important. It features two <strong>R-squared (R<sup>2</sup>) values</strong>. Like the absolute values of correlation coefficients, these can range between 0 and 1. R<sup>2</sup>&nbsp;=&nbsp;0 means that the model accounts for 0% of the variance in the outcome variable. R<sup>2</sup>&nbsp;=&nbsp;1 means that the model accounts for 100% of the variance, i.e.&nbsp;that it can perfectly predict the values of the outcome variable from the predictor variable(s). As our simulated <code>test.results</code> dataset is based on a perfect correlation, our model is able to perfectly predict the outcome variable, hence both our R<sup>2</sup> values equal <code>1</code>. In this chapter and <a href="13_MultipleLinearRegression.html" class="quarto-xref"><span>Chapter 13</span></a>, however, we will focus on the <strong>adjusted R-squared value</strong> because it accounts for the fact that the more predictors we include in our model, the easier it is to predict the outcome variable.</p>
 <p>Finally, you may have also noticed that the <code>lm()</code> function returned a warning message when we fitted this practice model:</p>
 <pre data-code-line-numbers=""><code>Warning message:
@@ -1396,7 +1425,7 @@ In summary.lm(test.model) :
 </div>
 </div>
 </div>
-<p>Recall that, in <a href="11_Inferential.html#sec-Correlations" class="quarto-xref"><span>Section 11.5</span></a>, we saw that there is a <strong>positive correlation</strong> between the total number of years that English L1 speakers spent in formal education (<code>EduTotal</code>) and their English grammar comprehension test scores (<code>Grammar</code>). <a href="#fig-EducationYearsVocab" class="quarto-xref">Figure&nbsp;<span>12.3</span></a> suggests that this positive correlation also holds for the association between the number of years participants spent in formal education and their receptive vocabulary test scores (<code>Vocab</code>).</p>
+<p>Recall that, in <a href="11_Inferential.html#sec-Correlations" class="quarto-xref"><span>Section 11.6</span></a>, we saw that there is a <strong>positive correlation</strong> between the total number of years that English L1 speakers spent in formal education (<code>EduTotal</code>) and their English grammar comprehension test scores (<code>Grammar</code>). <a href="#fig-EducationYearsVocab" class="quarto-xref">Figure&nbsp;<span>12.3</span></a> suggests that this positive correlation also holds for the association between the number of years participants spent in formal education and their receptive vocabulary test scores (<code>Vocab</code>).</p>
 <div class="cell">
 <details class="code-fold">
 <summary>See code to generate plot.</summary>
@@ -1421,7 +1450,7 @@ Figure&nbsp;12.3: Relationship between years spent in formal education and vocab
 </div>
 </div>
 </div>
-<p>On average, the longer L1 speakers were in formal education, the better they performed on the vocabulary test. The correlation is larger than for <code>Grammar</code> scores, and it is statistically significant at an α-level of 0.05 (<em>r</em> = 0.43, 95% CI [0.24, 0.58]):</p>
+<p>On average, the longer L1 speakers were in formal education, the better they performed on the vocabulary test. The correlation is larger than for <code>Grammar</code> scores, and it is statistically significant at an <span class="math inline">\(\alpha\)</span>-level of 0.05 (<em>r</em> = 0.43, 95% CI [0.24, 0.58]):</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(<span class="at">formula =</span> <span class="sc">~</span> Vocab <span class="sc">+</span> EduTotal,</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> L1.data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1608,13 +1637,13 @@ Figure&nbsp;12.5: Relationship between actual and predicted <code>Vocab</code> t
 </div>
 <p>In <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a>, the dotted blue line represents where the points would lie, if <code>model1</code> perfectly predicted <code>Vocab</code> scores based only on the number of years that participants spent in formal education. The dots that fall on or very close to the dotted line stand for L1 participants for whom our model accurately predicts their <code>Vocab</code> score based solely on the number of years they spent in formal education. The further the dots are from the dotted line, the worse the predictions for these speakers. The distances between each point and the dotted line in <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> correspond to the model’s residuals. <strong>Residuals</strong> are therefore the ‘left-over’ variability in the data that our model cannot account for.</p>
 <p>Residuals can be positive or negative, depending on whether the dots on the predicted vs.&nbsp;actual values plot are above or below the dotted line of perfect fit. However, what matters more are their absolute values. The larger the residuals, the worse the model fit. Returning to the question, ‘How good is our model fit?’, we can conclude from <a href="#fig-ActualPredictedVocab" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> that it’s not great. But we already knew that from the model’s fairly low R² value and, crucially, we also know that many other factors are likely to account for some of the remaining variation in vocabulary scores.</p>
-<div id="nte-Causation" class="callout callout-style-default callout-warning callout-titled" title="Association does not imply causation!">
+<div id="nte-Causation" class="callout callout-style-default callout-important callout-titled" title="Association does not imply causation!">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning&nbsp;12.1: Association does not imply causation!
+Important&nbsp;12.1: Association does not imply causation!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1632,7 +1661,7 @@ Warning&nbsp;12.1: Association does not imply causation!
 <ol type="1">
 <li><p>There may be one or more <strong>confounding variables</strong> that we have not accounted for in our model. For instance, we can predict with a fair degree of accuracy how much vocabulary an infant understands based on their weight. However, the weight of young children is, of course, highly correlated with their age and, by extension, the amount of language exposure they’ve had so far in their life. Clearly, it is not their weight that is <em>causing</em> them to understand more words. Unfortunately, it’s not always that obvious. Going back to <code>model1</code>, it is very likely that some of the younger participants in the <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="References.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> dataset were still in formal education at the time of data collection; this includes all those who reported being students. In other words, for at least some of the participants, the <code>EduTotal</code> variable confounds age and years spent in formal education.</p></li>
 <li><p>Even if there is a causal effect, it may not be in the <strong>direction</strong> that we assume. For example, the vocabulary knowledge of adult learners of a foreign language is probably a fairly good predictor of how many foreign language classes these adult learners have attended. However, this does not mean that vocabulary knowledge <em>causes</em> adults to attend classes. If anything, it is more likely to be the other way around. Whilst it seems rather obvious in this example, in linguistics and education, complex interdependencies between predictors are very common. Consider reading ability: the more a child reads, the better they become at reading. Therefore, we might conclude that spending more time reading leads to better reading skills. However, for some children, poor reading skills may actually <em>cause</em> a lack of motivation and interest in reading in the first place. Clearly, determining causal relationships is tricky!</p></li>
-<li><p>Finally, it is important to consider the possibility that even a statistically significant association could be entirely <strong>spurious</strong>. This happens more often than you might think, and it is more likely to happen with smaller datasets. Moreover, the more we test associations, the more likely we are to find statistically significant ones (see <a href="11_Inferential.html#sec-pHacking" class="quarto-xref"><span>Section 11.7</span></a> on the multiple testing problem and Type 1 errors). When associations are very strong, we may be tempted to think that they are real, but this may not be the case. To raise awareness of this risk, <a href="https://tylervigen.com/about-spurious-correlations">Tyler Vigen</a> conducted correlation tests on millions of combinations of randomly selected variables and created a website featuring thousands of examples of very large and highly significant correlations that are all entirely spurious (e.g. <a href="#fig-SpuriousCorrelation" class="quarto-xref">Figure&nbsp;<span>12.6</span></a>).</p>
+<li><p>Finally, it is important to consider the possibility that even a statistically significant association could be entirely <strong>spurious</strong>. This happens more often than you might think, and it is more likely to happen with smaller datasets. Moreover, the more we test associations, the more likely we are to find statistically significant ones (see <a href="11_Inferential.html#sec-pHacking" class="quarto-xref"><span>Section 11.8</span></a> on the multiple testing problem and Type 1 errors). When associations are very strong, we may be tempted to think that they are real, but this may not be the case. To raise awareness of this risk, <a href="https://tylervigen.com/about-spurious-correlations">Tyler Vigen</a> conducted correlation tests on millions of combinations of randomly selected variables and created a website featuring thousands of examples of very large and highly significant correlations that are all entirely spurious (e.g. <a href="#fig-SpuriousCorrelation" class="quarto-xref">Figure&nbsp;<span>12.6</span></a>).</p>
 <div id="fig-SpuriousCorrelation" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A linear line chart with years as the X-axis and two variables on the Y-axis. The first variable is Air pollution in Johnstown, Pennsylvania and the second variable is Master's degrees awarded in Education.  The chart goes from 2012 to 2021, and the two variables track closely in value over that time. The following statistics are displayed on the graph: Pearson's r = 0.989, r-squared = 0.979, p < 0.01 Source: tylervigen.com/spurious/correlation/3139">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-SpuriousCorrelation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -2277,7 +2306,7 @@ F-statistic: 5.222 on 3 and 153 DF,  p-value: 0.001849</code></pre>
 </div>
 <p>Participants who have manual jobs (“M”) are predicted to score <code>-9.133</code> points <em>fewer</em> than those in clerical positions, and so-called “professionals” (“PS”) will do slightly worse than clerks (<code>-2.261</code> points). Compare these predicted values to those observed in the data shown in <a href="#fig-VocabByOccupation" class="quarto-xref">Figure&nbsp;<span>12.8</span></a>.</p></li>
 <li><p>The <strong>adjusted R<sup>2</sup> value</strong> for our model is relatively low (<code>0.07509</code>). This means that our model accounts for about 7.5% of the total variance in <code>Vocab</code> scores across the dataset. Given that the R<sup>2</sup> of <code>model1</code> was <code>0.1213</code>, this indicates that <code>OccupGroup</code> is a considerably less useful predictor variable to help us predict participants’ <code>Vocab</code> scores than whether or not they are an L1 speaker (<code>Group</code>).</p></li>
-<li><p>What’s more, the model summary reveals that only one of the <code>model3</code>’s three coefficient estimates is statistically significantly different from 0 at the α-level of 0.05: <code>OccupGroupI</code> with a <strong><em>p</em>-value</strong> of <code>0.0335</code>. This means that we can reject the null hypothesis that there is no difference in <code>Vocab</code> scores between speakers of the occupational group “C” (the reference level) and those of the occupational group “I”. For the other two occupational groups, we do not have enough evidence to reject the null hypothesis of no difference compared to the reference level “C”.</p></li>
+<li><p>What’s more, the model summary reveals that only one of the <code>model3</code>’s three coefficient estimates is statistically significantly different from 0 at the <span class="math inline">\(\alpha\)</span>-level of 0.05: <code>OccupGroupI</code> with a <strong><em>p</em>-value</strong> of <code>0.0335</code>. This means that we can reject the null hypothesis that there is no difference in <code>Vocab</code> scores between speakers of the occupational group “C” (the reference level) and those of the occupational group “I”. For the other two occupational groups, we do not have enough evidence to reject the null hypothesis of no difference compared to the reference level “C”.</p></li>
 </ul>
 <p>We can display the predicted <code>Vocab</code> scores for each occupational group, together with a 95% confidence interval around these predicted values using the <code>emmeans()</code> function from the <a href="https://rvlenth.github.io/emmeans/index.html">{emmeans}</a> package <span class="citation" data-cites="lenthEmmeansEstimatedMarginal2025a">(<a href="References.html#ref-lenthEmmeansEstimatedMarginal2025a" role="doc-biblioref">Lenth &amp; Piaskowski 2025</a>)</span>:</p>
 <div class="cell">
@@ -2618,8 +2647,8 @@ Because p-values have nothing to do with effect sizes.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q12_13" id="answer_Q12_13_2" value="Because the model chose a particularly low α-level.">
-Because the model chose a particularly low α-level.
+<input type="radio" name="answer_Q12_13" id="answer_Q12_13_2" value="Because the model chose a particularly low $lpha$-level.">
+Because the model chose a particularly low $lpha$-level.
 </label>
 <br>
 <label>
@@ -2637,19 +2666,19 @@ Because the data for Hellenic speakers is less reliable than for the other L2 sp
 </form>
 <script>function validate_form_Q12_13() {var x, text; var x = document.forms['form_Q12_13']['answer_Q12_13'].value;if (x == 'Because the dataset only includes one Greek L1 speaker.'){text = 'Absolutely! 💯';} else {text = 'No, check the hints if you’re not sure how to proceed. And remember that, if in doubt, visualisation is always a good idea!';} document.getElementById('result_Q12_13').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13;res1 = document.getElementById('result_Q12_1').innerText == 'That’s right, well done! 🎉'; res2 = document.getElementById('result_Q12_2').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_Q12_3').innerText == 'That’s right, well done! 🎉'; res4 = document.getElementById('result_Q12_4').innerText == 'Indeed! ✅'; res5 = document.getElementById('result_Q12_5').innerText == 'You’re right.'; res6 = document.getElementById('result_Q12_6').innerText == 'That’s right! ✅'; res7 = document.getElementById('result_Q12_7').innerText == 'You are correct. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_Q12_8').innerText == 'That’s right! ✅'; res9 = document.getElementById('result_Q12_9').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.'; res10 = document.getElementById('result_Q12_10').innerText == 'Yes, well done! 🎉'; res11 = document.getElementById('result_Q12_11').innerText == 'Absolutely! ✅'; res12 = document.getElementById('result_Q12_12').innerText == 'That’s right, well done! 🎉'; res13 = document.getElementById('result_Q12_13').innerText == 'Absolutely! 💯';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_Q12_13').innerText == 'Absolutely! 💯';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
 <div id="hint_97457" onmouseover="return show_hint_97457()">🦉 Hover over the owl for a first hint.</div>
 <div id="result_97457" onmouseover="return show_hint_97457()"></div>
-<script>function show_hint_97457(){var x = document.getElementById('result_97457').innerHTML; if(!x){document.getElementById('result_97457').innerHTML = 'It is never the model that chooses the α-level, but rather us, the researchers.';} else {document.getElementById('result_97457').innerHTML = '';}}</script>
+<script>function show_hint_97457(){var x = document.getElementById('result_97457').innerHTML; if(!x){document.getElementById('result_97457').innerHTML = 'It is never the model that chooses the \(lpha\)-level, but rather us, the researchers.';} else {document.getElementById('result_97457').innerHTML = '';}}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_45364" onclick="return show_hint_45364()">🐭 Click on the mouse for a second hint.</div>
-<div id="result_45364" onclick="return show_hint_45364()"></div>
-<script>function show_hint_45364(){var x = document.getElementById('result_45364').innerHTML; if(!x){document.getElementById('result_45364').innerHTML = 'Remember that p-values depend on three different factors, see Section 11.3';} else {document.getElementById('result_45364').innerHTML = '';}}</script>
+<div id="hint_68745" onclick="return show_hint_68745()">🐭 Click on the mouse for a second hint.</div>
+<div id="result_68745" onclick="return show_hint_68745()"></div>
+<script>function show_hint_68745(){var x = document.getElementById('result_68745').innerHTML; if(!x){document.getElementById('result_68745').innerHTML = 'Remember that p-values depend on three different factors, see Section 11.3';} else {document.getElementById('result_68745').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -2719,7 +2748,7 @@ We can be 95% confident that the true mean score is located within this confiden
 <p>Similar to the statistical tests that we conducted in <a href="11_Inferential.html" class="quarto-xref"><span>Chapter 11</span></a>, linear regression also has a number of assumptions that should be met if we want to obtain reliable results that we can trust. It is therefore very important that we check that these assumptions are met.</p>
 <section id="sec-IndependenceSLR" class="level3" data-number="12.4.1">
 <h3 data-number="12.4.1" class="anchored" data-anchor-id="sec-IndependenceSLR"><span class="header-section-number">12.4.1</span> Assumption 1: Independence</h3>
-<p>This is the same assumption as for the statistical tests that we covered in <a href="11_Inferential.html" class="quarto-xref"><span>Chapter 11</span></a> (see <a href="11_Inferential.html#sec-Independence" class="quarto-xref"><span>Section 11.6.2</span></a>). It means that each observation in our dataset should be unrelated to every other observation. In other words, knowing the value of one data point shouldn’t give us any information about any other data point in our dataset. This assumption is critical because violations can lead to unjustifiably low <em>p</em>-values and narrower confidence intervals.</p>
+<p>This is the same assumption as for the statistical tests that we covered in <a href="11_Inferential.html" class="quarto-xref"><span>Chapter 11</span></a> (see <a href="11_Inferential.html#sec-Independence" class="quarto-xref"><span>Section 11.7.2</span></a>). It means that each observation in our dataset should be unrelated to every other observation. In other words, knowing the value of one data point shouldn’t give us any information about any other data point in our dataset. This assumption is critical because violations can lead to unjustifiably low <em>p</em>-values and narrower confidence intervals.</p>
 <p>Independence violations arise from the way data were collected. For example, if we test the same person several times, their test results are likely to be more similar to each other than to the results of other participants. Similarly, if we collect data over time, today’s measurement might be influenced by yesterday’s value. When pupils are sampled from different schools, pupils within the same school or class might be more similar to each other than to pupils from other schools and/or classes.</p>
 <p>If our data do not meet the assumption of independence, we need to use a different analysis method that can account for the fact that our data points are related to each other. In the language sciences, this is most commonly achieved using <strong>mixed-effects models</strong>. In this textbook, however, we only cover <strong>fixed-effects</strong> <strong>models</strong> for which the assumption of independence must be held.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -2766,7 +2795,7 @@ Figure&nbsp;12.10: Non-linear distribution of word frequencies in the Brown corp
 </section>
 <section id="sec-Residuals" class="level3" data-number="12.4.3">
 <h3 data-number="12.4.3" class="anchored" data-anchor-id="sec-Residuals"><span class="header-section-number">12.4.3</span> Assumption 3: Homogeneity of residuals</h3>
-<p>Linear regression models assume homogeneity — or constant variance — of the residuals (see <a href="11_Inferential.html#sec-Homoscedasticity" class="quarto-xref"><span>Section 11.6.5</span></a>). This assumption is best checked by visually examining the model residuals. In <a href="#fig-VocabResidual" class="quarto-xref">Figure&nbsp;<span>12.11</span></a>, we plot the residuals of <code>model1</code> and check that their variability does not systematically increase or decrease as the outcome variable increases or decreases.</p>
+<p>Linear regression models assume homogeneity — or constant variance — of the residuals (see <a href="11_Inferential.html#sec-Homoscedasticity" class="quarto-xref"><span>Section 11.7.5</span></a>). This assumption is best checked by visually examining the model residuals. In <a href="#fig-VocabResidual" class="quarto-xref">Figure&nbsp;<span>12.11</span></a>, we plot the residuals of <code>model1</code> and check that their variability does not systematically increase or decrease as the outcome variable increases or decreases.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>See code to generate plot.</summary>

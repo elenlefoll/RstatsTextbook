@@ -232,6 +232,7 @@ BrailleR::Describe()
 
 Instead of using the **data** argument of the `ggplot()` function as we did above, we can **pipe** the data into the function's first argument (see @sec-Piping). Compare these two methods and their outputs.
 
+::::::: {.content-visible when-format="html"}
 :::::: columns
 ::: {.column width="48%"}
 **Using the data argument of `ggplot()`**
@@ -265,20 +266,15 @@ Dabrowska.data |>
 ```
 :::
 ::::::
+:::::::
 
-:::::: content-hidden
-### Second attempt for PDF
-
-This currently does not work as expected. Code inspired by this discussion: https://github.com/quarto-dev/quarto-cli/issues/13410.
-
-::::: {layout="[47.5,-5,47.5]"}
-<div>
-
+::::: {.content-visible when-format="pdf"}
 **Using the data argument of `ggplot()`**
 
 ```{r}
 #| fig-alt: "This is the same barplot as above."
 #| out-width: "40%"
+#| eval: false
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup)) +
@@ -287,15 +283,12 @@ ggplot(data = Dabrowska.data,
        y = "Number of participants")
 ```
 
-</div>
-
-<div>
-
 **Piping the data into `ggplot()`**
 
 ```{r}
 #| fig-alt: "This is the same barplot as above even though the code used to generate it is slightly different."
 #| out-width: "40%" 
+#| eval: false
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup)) +
@@ -303,10 +296,7 @@ Dabrowska.data |>
   labs(x = "Occupational group",
        y = "Number of participants")
 ```
-
-</div>
 :::::
-::::::
 
 The outputs are exactly the same! Piping the dataset into the `ggplot()` function, however, allows us to easily wrangle the data that we want to visualise 'on the fly', without transforming the data object itself. For example, we can use the tidyverse `filter()` function (see @sec-filter) to examine the distribution of occupational groups among L2 participants only (see @fig-BarOccupGroupL2).
 
@@ -809,6 +799,7 @@ As with colour palettes, you can also install additional packages that will give
 #| label: fig-Economist
 #| fig-cap: "Barplot with a theme inspired by *The Economist* magazine"
 #| fig-alt: "The barplot from Figure 10.5 labels in a different font, bars filled with different shades of blue and grey, a light blue background, white lines, and a legend at the top of the graph as opposed to one the right."
+#| fig-asp: 0.8
 #| out-width: 70%
 
 #install.packages("ggthemes")
@@ -1679,8 +1670,7 @@ An alternative to displaying the data in discrete bins is to apply a density fun
 #| label: "fig-GrammarDensity"
 #| fig-cap: "Distribution of English vocabulary test results" 
 #| fig-alt: "A density plot of English grammar test scores: there is a small bump around 10 and a large mountain around 95."
-#| fig-height: 4
-#| fig-width: 5
+#| out-width: 70%
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = Grammar)) +
@@ -1833,6 +1823,7 @@ It goes without saying that, just because you *can* customise many aspects of a 
 #| fig-alt: "Two overlapping density plots for L1 and L2 participants' non-verbal IQ scores, with a dotted line indicating the mean for each group. The hill for the L2 speakers' results is taller, and its mean is greater."
 #| code-fold: true
 #| code-summary: "Show annotated `R` code to generate figure below."
+#| out-width: 80%
 
 mean.blocks <- Dabrowska.data |> # <1>
   group_by(Group) |>
@@ -2199,7 +2190,8 @@ In the following, we will build a scatterplot to explore the following hypothesi
 To explore this hypothesis, we map the total number of years that participants spent in formal education (`EduTotal`) onto the *x*-axis and their `Grammar` scores onto the *y*-axis. In addition, we use the `facet_wrap()` function to split the data into two panels: one for the L1 participants and the other for the L2 group.
 
 ```{r}
-#| fig-asp: 0.8
+#| fig-asp: 0.7
+#| out-width: 70%
 #| fig-cap: "Scatterplot comparing participants' grammar comprehension test scores with number of years of formal education."
 #| fig-alt: "A scatterplot comparing L1 and L2 participants' grammar comprehension test scores with the number of years of formal education they have received. For the L1 participants, the dots are clustered near the top left, indicating higher scores and fewer years of formal education. For the L2 partipants, the dots cluster at the top and bottom center, indicating a wider range of test scores and more formal education on average."
 
@@ -2218,7 +2210,8 @@ At first glance, it would seem that our data do not support our initial hypothes
 ```{r}
 #| label: "fig-GrammarScatterPlot"
 #| source-line-numbers: "6-7"
-#| fig-asp: 0.8
+#| fig-asp: 0.7
+#| out-width: 70%
 #| fig-cap: "Regression lines for participants' grammar comprehension test scores vs. years of formal education."
 #| fig-alt: "The previous scatterplots with a blue lines indicating the correlation between the two variables. For L1 speakers the line proceeds through the cluster upwards and to the right at a shallow angle. For L2 speakers a similar line trajectory cuts through the bottom of the top cluster. For both groups there is a weak positive correlation."
 
