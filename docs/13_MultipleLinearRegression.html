@@ -145,6 +145,35 @@ div.csl-indent {
 }
 </style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -622,7 +651,7 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#interactions-between-two-numeric-predictors" id="toc-interactions-between-two-numeric-predictors" class="nav-link" data-scroll-target="#interactions-between-two-numeric-predictors"><span class="header-section-number">13.6.1</span> Interactions between two numeric predictors</a></li>
   </ul></li>
-  <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection"><span class="header-section-number">13.7</span> Model selection</a></li>
+  <li><a href="#sec-Preregistration" id="toc-sec-Preregistration" class="nav-link" data-scroll-target="#sec-Preregistration"><span class="header-section-number">13.7</span> Model selection and preregistration</a></li>
   <li><a href="#sec-ModelAssumptions" id="toc-sec-ModelAssumptions" class="nav-link" data-scroll-target="#sec-ModelAssumptions"><span class="header-section-number">13.8</span> Checking model assumptions</a></li>
   <li><a href="#sec-FutureModels" id="toc-sec-FutureModels" class="nav-link" data-scroll-target="#sec-FutureModels"><span class="header-section-number">13.9</span> Tapping into the potential of statistical modelling</a>
   <ul class="collapse">
@@ -675,7 +704,7 @@ div.csl-indent {
 <pre data-code-line-numbers=""><code>outcome.variable ~ predictor</code></pre>
 <p>In the second half of this chapter, we will continue to try to predict (i.e.&nbsp;try to better understand) <code>Vocab</code> scores among L1 and L2 English speakers, but this time, we will do so with <em>multiple</em> predictors. To this end, we will use the <code>+</code> operator to add predictors to our model formula like this:</p>
 <pre data-code-line-numbers=""><code>outcome.variable ~ predictor1 + predictor2 + predictor3</code></pre>
-<p>A linear regression model can include as many predictors as we like – or rather, as is meaningful and we have data for! The predictors can be a mixture of numeric and categorical predictors. Multiple linear regression modelling is much more powerful than conducting individual statistical tests (as in <a href="11_Inferential.html" class="quarto-xref"><span>Chapter 11</span></a>) or several simple linear regression models (as in <a href="12_SimpleLinearRegression.html" class="quarto-xref"><span>Chapter 12</span></a>) because it enables us to quantify the strength of the association between an outcome variable and a predictor, while <strong>controlling for the other predictors</strong> – in other words, while holding all the other predictors constant. Moreover, it also reduces the risk of reporting false positive results (i.e.&nbsp;Type 1 error, see <a href="11_Inferential.html#sec-pHacking" class="quarto-xref"><span>Section 11.7</span></a>). In this chapter, we will see that we can learn much more about our data from a single multiple linear regression model than from a series of individual statistical tests or simple regression models.</p>
+<p>A linear regression model can include as many predictors as we like – or rather, as is meaningful and we have data for! The predictors can be a mixture of numeric and categorical predictors. Multiple linear regression modelling is much more powerful than conducting individual statistical tests (as in <a href="11_Inferential.html" class="quarto-xref"><span>Chapter 11</span></a>) or several simple linear regression models (as in <a href="12_SimpleLinearRegression.html" class="quarto-xref"><span>Chapter 12</span></a>) because it enables us to quantify the strength of the association between an outcome variable and a predictor, while <strong>controlling for the other predictors</strong> – in other words, while holding all the other predictors constant. Moreover, it also reduces the risk of reporting false positive results (i.e.&nbsp;Type 1 error, see <a href="11_Inferential.html#sec-pHacking" class="quarto-xref"><span>Section 11.8</span></a>). In this chapter, we will see that we can learn much more about our data from a single multiple linear regression model than from a series of individual statistical tests or simple regression models.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1083,7 +1112,7 @@ Tip
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Group, NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div></li>
-<li><p>The <strong><em>p</em>-values</strong> associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable <em>levels</em>, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in <a href="12_SimpleLinearRegression.html#sec-Categoricalpredictor" class="quarto-xref"><span>Section 12.3</span></a>, we fitted a simple linear regression model (<code>model3</code>) which included only <code>OccupGroup</code> as a single predictor. In this simple model, the coefficient estimate for <code>OccupGroupI</code> made a statistically significant contribution to the model at an α-level of 0.05 (<em>p</em>&nbsp;=&nbsp;0.0335). By contrast, in the present multiple linear regression model, the predictor level <code>OccupGroupI</code> does <em>not</em> make a statistically significant contribution (<em>p</em>&nbsp;=&nbsp;0.077600 which is greater than 0.05). This is because our multiple regression model <code>model4_c</code> includes predictors that account for some of the same variance in <code>Vocab</code> scores in the data that occupational groups accounted for in our earlier model. This leaves less unique variance attributable to occupational group, thereby rendering it statistically non-significant.</p></li>
+<li><p>The <strong><em>p</em>-values</strong> associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable <em>levels</em>, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in <a href="12_SimpleLinearRegression.html#sec-Categoricalpredictor" class="quarto-xref"><span>Section 12.3</span></a>, we fitted a simple linear regression model (<code>model3</code>) which included only <code>OccupGroup</code> as a single predictor. In this simple model, the coefficient estimate for <code>OccupGroupI</code> made a statistically significant contribution to the model at an <span class="math inline">\(\alpha\)</span>-level of 0.05 (<em>p</em>&nbsp;=&nbsp;0.0335). By contrast, in the present multiple linear regression model, the predictor level <code>OccupGroupI</code> does <em>not</em> make a statistically significant contribution (<em>p</em>&nbsp;=&nbsp;0.077600 which is greater than 0.05). This is because our multiple regression model <code>model4_c</code> includes predictors that account for some of the same variance in <code>Vocab</code> scores in the data that occupational groups accounted for in our earlier model. This leaves less unique variance attributable to occupational group, thereby rendering it statistically non-significant.</p></li>
 <li><p>From the <strong>adjusted R-squared</strong> value (<code>0.3276</code>) displayed at the bottom of the model summary output, we can see that our multiple linear regression model accounts for around 33% of the total variance in <code>Vocab</code> scores found in the <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="References.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> data. This is considerably more than we achieved with any of the simple linear models that we fitted in <a href="12_SimpleLinearRegression.html" class="quarto-xref"><span>Chapter 12</span></a>.</p></li>
 </ul>
 <section id="sec-ModelPredictions" class="level3" data-number="13.4.1">
@@ -1228,48 +1257,48 @@ Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART
 <div class="cell-output-display">
 <form name="form_Q13_2" onsubmit="return validate_form_Q13_2()" method="post">
 <label>
-<input type="checkbox" id="answer_Q13_2_1" value="ART makes a statistically significant contribution to the model at the α-level of 0.05.">
-ART makes a statistically significant contribution to the model at the α-level of 0.05.
+<input type="checkbox" id="answer_Q13_2_1" value="ART makes a statistically significant contribution to the model at the $lpha$-level of 0.05.">
+ART makes a statistically significant contribution to the model at the $lpha$-level of 0.05.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q13_2_2" value="The model that does not include ART (model4_c) accounts for more of the variance in Vocab scores than the model that does.">
-The model that does not include ART (model4_c) accounts for more of the variance in Vocab scores than the model that does.
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q13_2_3" value="Recognising more real authors on the ART is associated with lower Vocab scores.">
-Recognising more real authors on the ART is associated with lower Vocab scores.
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q13_2_4" value="The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c).">
-The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c).
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q13_2_5" value="Recognising more real authors on the ART is associated with higher Vocab scores.">
+<input type="checkbox" id="answer_Q13_2_2" value="Recognising more real authors on the ART is associated with higher Vocab scores.">
 Recognising more real authors on the ART is associated with higher Vocab scores.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q13_2_6" value="ART does not make a statistically significant contribution to the model at the α-level of 0.05.">
-ART does not make a statistically significant contribution to the model at the α-level of 0.05.
+<input type="checkbox" id="answer_Q13_2_3" value="The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c).">
+The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c).
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q13_2_4" value="The model that does not include ART (model4_c) accounts for more of the variance in Vocab scores than the model that does.">
+The model that does not include ART (model4_c) accounts for more of the variance in Vocab scores than the model that does.
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q13_2_5" value="Recognising more real authors on the ART is associated with lower Vocab scores.">
+Recognising more real authors on the ART is associated with lower Vocab scores.
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q13_2_6" value="ART does not make a statistically significant contribution to the model at the $lpha$-level of 0.05.">
+ART does not make a statistically significant contribution to the model at the $lpha$-level of 0.05.
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_Q13_2"></div>
 </form>
-<script>function validate_form_Q13_2() {var text; var x1 = document.getElementById('answer_Q13_2_1'); var x2 = document.getElementById('answer_Q13_2_2'); var x3 = document.getElementById('answer_Q13_2_3'); var x4 = document.getElementById('answer_Q13_2_4'); var x5 = document.getElementById('answer_Q13_2_5'); var x6 = document.getElementById('answer_Q13_2_6'); if (x1.checked == true&x2.checked == false&x3.checked == false&x4.checked == true&x5.checked == true&x6.checked == false){text = 'Excellent!';} else {text = 'No, not quite. Check the code below if you need some help.';} document.getElementById('result_Q13_2').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q13_2() {var text; var x1 = document.getElementById('answer_Q13_2_1'); var x2 = document.getElementById('answer_Q13_2_2'); var x3 = document.getElementById('answer_Q13_2_3'); var x4 = document.getElementById('answer_Q13_2_4'); var x5 = document.getElementById('answer_Q13_2_5'); var x6 = document.getElementById('answer_Q13_2_6'); if (x1.checked == true&x2.checked == true&x3.checked == true&x4.checked == false&x5.checked == false&x6.checked == false){text = 'Excellent!';} else {text = 'No, not quite. Check the code below if you need some help.';} document.getElementById('result_Q13_2').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'Excellent!';text = res1 + res2;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_Q13_2').innerText == 'Excellent!';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_30574" onclick="return show_hint_30574()">🐭 Click on the mouse for a hint.</div>
-<div id="result_30574" onclick="return show_hint_30574()"></div>
-<script>function show_hint_30574(){var x = document.getElementById('result_30574').innerHTML; if(!x){document.getElementById('result_30574').innerHTML = 'Three of these statements are correct.';} else {document.getElementById('result_30574').innerHTML = '';}}</script>
+<div id="hint_40019" onclick="return show_hint_40019()">🐭 Click on the mouse for a hint.</div>
+<div id="result_40019" onclick="return show_hint_40019()"></div>
+<script>function show_hint_40019(){var x = document.getElementById('result_40019').innerHTML; if(!x){document.getElementById('result_40019').innerHTML = 'Three of these statements are correct.';} else {document.getElementById('result_40019').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -1420,7 +1449,7 @@ visreg(model.ART, xvar = "ART", CI = 0.01)
 <span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">alpha =</span> .<span class="dv">01</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Observe how the width of the confidence bands changes when you increase the significance level from 0.01 to 0.1: the higher the significance level, the narrower the confidence band becomes. Remember that the significance level corresponds to the risk that we are willing to take of wrongly rejecting the null hypothesis when it is actually true. Therefore, when we lower this risk by choosing a lower significance level (i.e.&nbsp;0.01), we end up with wider confidence bands that are more likely to allow us to draw a flat line (see <a href="11_Inferential.html#sec-Correlations" class="quarto-xref"><span>Section 11.5</span></a>). If we can draw a flat line through a 99% confidence band, this means that we do not have enough evidence to reject the null hypothesis at the significance level of 0.01.</p>
+<p>Observe how the width of the confidence bands changes when you increase the significance level from 0.01 to 0.1: the higher the significance level, the narrower the confidence band becomes. Remember that the significance level corresponds to the risk that we are willing to take of wrongly rejecting the null hypothesis when it is actually true. Therefore, when we lower this risk by choosing a lower significance level (i.e.&nbsp;0.01), we end up with wider confidence bands that are more likely to allow us to draw a flat line (see <a href="11_Inferential.html#sec-Correlations" class="quarto-xref"><span>Section 11.6</span></a>). If we can draw a flat line through a 99% confidence band, this means that we do not have enough evidence to reject the null hypothesis at the significance level of 0.01.</p>
 </div>
 </div>
 </div>
@@ -1989,7 +2018,7 @@ Multiple R-squared:  0.4625,    Adjusted R-squared:  0.4437
 F-statistic: 24.67 on 3 and 86 DF,  p-value: 1.311e-11</code></pre>
 </div>
 </div>
-<p>The model summary confirms that both predictors individually (i.e.&nbsp;as main effects) make statistically significant, positive contributions to the prediction of <code>Vocab</code> scores. Crucially, the summary also indicates that the interaction effect (<code>ART:EduTotal_c</code>) is statistically significant at α&nbsp;=&nbsp;0.05 (<em>p</em>&nbsp;=&nbsp;<code>0.001017</code>). The negative coefficient estimate of <code>-0.1803</code> means that, for each additional year of formal education, our model predicts that the effect of a participant’s <code>ART</code> score on <code>Vocab</code> decreases by 0.1803 points. In simpler terms, the positive effect of reading literature, as measured by the Author Recognition Test <span class="citation" data-cites="acheson2008">(<a href="References.html#ref-acheson2008" role="doc-biblioref">Acheson, Wells &amp; MacDonald 2008</a>)</span>, decreases slightly for every year spent in formal education.</p>
+<p>The model summary confirms that both predictors individually (i.e.&nbsp;as main effects) make statistically significant, positive contributions to the prediction of <code>Vocab</code> scores. Crucially, the summary also indicates that the interaction effect (<code>ART:EduTotal_c</code>) is statistically significant at <span class="math inline">\(\alpha\)</span>&nbsp;=&nbsp;0.05 (<em>p</em>&nbsp;=&nbsp;<code>0.001017</code>). The negative coefficient estimate of <code>-0.1803</code> means that, for each additional year of formal education, our model predicts that the effect of a participant’s <code>ART</code> score on <code>Vocab</code> decreases by 0.1803 points. In simpler terms, the positive effect of reading literature, as measured by the Author Recognition Test <span class="citation" data-cites="acheson2008">(<a href="References.html#ref-acheson2008" role="doc-biblioref">Acheson, Wells &amp; MacDonald 2008</a>)</span>, decreases slightly for every year spent in formal education.</p>
 <p>Remember that, whenever we report an interaction, we can no longer interpret the estimated coefficients of the individual predictors in isolation. That is because we must also consider the interaction effect. To understand what this means in practice, let’s compare two speakers from the L1 dataset:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>L1.data <span class="sc">|&gt;</span> </span>
@@ -2112,11 +2141,11 @@ Figure&nbsp;13.8: <code>Vocab</code> scores as predicted by <code>L1.model</code
 </div>
 </div>
 </div>
-<p>For low and mid-level ART scores, the model predicts a positive correlation between the number of years a participant has spent in formal education and their predicted <code>Vocab</code> scores. However, this is not the case for participants who scored high on the ART test (third panel). The three regression lines representing the model’s predicted scores are clearly not parallel, and it would not be possible to draw three parallel lines that each stay within their respective 95% confidence bands. This confirms that, in this L1 model, the interaction between ART scores and years in formal education is statistically significant at α&nbsp;=&nbsp;0.05. The main effects of these two predictors cannot be meaningfully interpreted without considering this interaction.</p>
+<p>For low and mid-level ART scores, the model predicts a positive correlation between the number of years a participant has spent in formal education and their predicted <code>Vocab</code> scores. However, this is not the case for participants who scored high on the ART test (third panel). The three regression lines representing the model’s predicted scores are clearly not parallel, and it would not be possible to draw three parallel lines that each stay within their respective 95% confidence bands. This confirms that, in this L1 model, the interaction between ART scores and years in formal education is statistically significant at <span class="math inline">\(\alpha\)</span>&nbsp;=&nbsp;0.05. The main effects of these two predictors cannot be meaningfully interpreted without considering this interaction.</p>
 </section>
 </section>
-<section id="model-selection" class="level2 page-columns page-full" data-number="13.7">
-<h2 data-number="13.7" class="anchored" data-anchor-id="model-selection"><span class="header-section-number">13.7</span> Model selection</h2>
+<section id="sec-Preregistration" class="level2 page-columns page-full" data-number="13.7">
+<h2 data-number="13.7" class="anchored" data-anchor-id="sec-Preregistration"><span class="header-section-number">13.7</span> Model selection and preregistration</h2>
 <p>Typically, the more predictors we enter in a model, the better the model fits the data. However, having predictors that contribute very little to the model and/or whose contributions are not statistically significant risks lowering the accuracy of the model’s predictions on new data. In this case, we say that the model <strong>overfits</strong>. A model that overfits the sample data risks not generalising to other data. If the aim of our statistical modelling is to infer from our sample to the general population (see <a href="11_Inferential.html" class="quarto-xref"><span>Chapter 11</span></a>), it can sometimes make sense to try to find an ‘optimal’ model that accounts for as much of the variance in the outcome variable as possible, relying only on association effects that we can be fairly confident could not have occurred due to chance only. This is where model selection comes into play.</p>
 <p>Some people consider model selection to be a bit of an art. This chapter only aims to introduce the topic and does not cover — let alone compare or endorse — different model selection procedures. Ultimately, what really matters is that, <em>if</em> we intend to apply a model selection procedure, we decide on the method <em>before</em> analysing the data. The most credible way to settle on a model selection procedure prior to data analysis is to <strong>preregister</strong> an analysis plan on an online platform such as <a href="https://aspredicted.org/">AsPredicted.org</a>, <a href="https://www.cos.io/initiatives/prereg">Open Science Framework (OSF)</a>, and <a href="https://zenodo.org/">Zenodo</a> <span class="citation" data-cites="harozComparisonPreregistrationPlatforms2022">(see <a href="References.html#ref-harozComparisonPreregistrationPlatforms2022" role="doc-biblioref">Haroz 2022</a>)</span>:</p>
 <blockquote class="blockquote">
@@ -2130,7 +2159,7 @@ Figure&nbsp;13.8: <code>Vocab</code> scores as predicted by <code>L1.model</code
 <figcaption><a href="https://www.cos.io/initiatives/badges">Preregistration Open Science badge</a></figcaption>
 </figure>
 </div>
-</div></div><p>Model selection bears the very real risk of (consciously or unconsciously) “fishing” for statistically significant results. Fishing is a highly Questionable Research Practice (QRP, see <a href="11_Inferential.html#sec-pHacking" class="quarto-xref"><span>Section 11.7</span></a>) that consists in trying out different methods until we arrive at findings that match our theory and/or hypotheses. For this reason, selection procedures in regression modelling have been heavily criticised over the years and there are very good arguments for not engaging in any model selection at all <span class="citation" data-cites="thompsonStepwiseRegressionStepwise1995 smithStepAwayStepwise2018 harrellRegressionModelingStrategies2015">(<a href="References.html#ref-thompsonStepwiseRegressionStepwise1995" role="doc-biblioref">Thompson 1995</a>; <a href="References.html#ref-smithStepAwayStepwise2018" role="doc-biblioref">Smith 2018</a>; <a href="References.html#ref-harrellRegressionModelingStrategies2015" role="doc-biblioref">Harrell 2015</a>: Section 4.3)</span>.</p>
+</div></div><p>Model selection bears the very real risk of (consciously or unconsciously) “fishing” for statistically significant results. Fishing is a highly Questionable Research Practice (QRP, see <a href="11_Inferential.html#sec-pHacking" class="quarto-xref"><span>Section 11.8</span></a>) that consists in trying out different methods until we arrive at findings that match our theory and/or hypotheses. For this reason, selection procedures in regression modelling have been heavily criticised over the years and there are very good arguments for not engaging in any model selection at all <span class="citation" data-cites="thompsonStepwiseRegressionStepwise1995 smithStepAwayStepwise2018 harrellRegressionModelingStrategies2015">(<a href="References.html#ref-thompsonStepwiseRegressionStepwise1995" role="doc-biblioref">Thompson 1995</a>; <a href="References.html#ref-smithStepAwayStepwise2018" role="doc-biblioref">Smith 2018</a>; <a href="References.html#ref-harrellRegressionModelingStrategies2015" role="doc-biblioref">Harrell 2015</a>: Section 4.3)</span>.</p>
 <blockquote class="blockquote">
 <p>A fundamental problem with stepwise regression is that some real explanatory variables that have causal effects on the dependent variable may happen to not be statistically significant, while nuisance variables may be coincidentally significant. As a result, the model may fit the data well in-sample, but do poorly out-of-sample <span class="citation" data-cites="smithStepAwayStepwise2018">(<a href="References.html#ref-smithStepAwayStepwise2018" role="doc-biblioref">Smith 2018</a>: 1)</span>.</p>
 </blockquote>
@@ -2443,11 +2472,11 @@ Figure&nbsp;13.10: Predicted vocabulary scores for L1 speakers as a function of 
 <p>These problems can occur for a number of reasons, but most often because the model is too complex given the data available: the sample size may be too small or the data too sparse for certain combinations of predictors (e.g.&nbsp;if you try to enter gender and native language as predictors in a model, but for some languages only female native speakers are represented in the dataset). There are often ways around these issues, but they are beyond the scope of this introductory textbook (see recommended readings below and <a href="https://elenlefoll.github.io/RstatsTextbook/A_FurtherResources.html">next-step resources</a>).</p>
 <p>The model assumptions for multiple linear regression models are the same as for simple linear regression models (see <a href="12_SimpleLinearRegression.html#sec-AssumptionsLR" class="quarto-xref"><span>Section 12.4</span></a>):</p>
 <ul>
-<li>Independence of the data points (see <a href="11_Inferential.html#sec-Independence" class="quarto-xref"><span>Section 11.6.2</span></a> and <a href="12_SimpleLinearRegression.html#sec-IndependenceSLR" class="quarto-xref"><span>Section 12.4.1</span></a>)</li>
-<li>Linear relationships between the predictors (see <a href="11_Inferential.html#sec-Linearity" class="quarto-xref"><span>Section 11.6.4</span></a> and <a href="12_SimpleLinearRegression.html#sec-LinearitySLR" class="quarto-xref"><span>Section 12.4.2</span></a>)</li>
-<li>Homogeneity of the model residuals (see <a href="11_Inferential.html#sec-Homoscedasticity" class="quarto-xref"><span>Section 11.6.5</span></a> and <a href="12_SimpleLinearRegression.html#sec-Residuals" class="quarto-xref"><span>Section 12.4.3</span></a>)</li>
-<li>Normality of the model residuals (see <a href="11_Inferential.html#sec-Normality" class="quarto-xref"><span>Section 11.6.3</span></a>)</li>
-<li>No overly influential outliers (see <a href="11_Inferential.html#sec-Linearity" class="quarto-xref"><span>Section 11.6.4</span></a>)</li>
+<li>Independence of the data points (see <a href="11_Inferential.html#sec-Independence" class="quarto-xref"><span>Section 11.7.2</span></a> and <a href="12_SimpleLinearRegression.html#sec-IndependenceSLR" class="quarto-xref"><span>Section 12.4.1</span></a>)</li>
+<li>Linear relationships between the predictors (see <a href="11_Inferential.html#sec-Linearity" class="quarto-xref"><span>Section 11.7.4</span></a> and <a href="12_SimpleLinearRegression.html#sec-LinearitySLR" class="quarto-xref"><span>Section 12.4.2</span></a>)</li>
+<li>Homogeneity of the model residuals (see <a href="11_Inferential.html#sec-Homoscedasticity" class="quarto-xref"><span>Section 11.7.5</span></a> and <a href="12_SimpleLinearRegression.html#sec-Residuals" class="quarto-xref"><span>Section 12.4.3</span></a>)</li>
+<li>Normality of the model residuals (see <a href="11_Inferential.html#sec-Normality" class="quarto-xref"><span>Section 11.7.3</span></a>)</li>
+<li>No overly influential outliers (see <a href="11_Inferential.html#sec-Linearity" class="quarto-xref"><span>Section 11.7.4</span></a>)</li>
 </ul>
 <p>There is only one additional assumption that is specific to models that include multiple predictors:</p>
 <ul>
@@ -2565,7 +2594,7 @@ Figure&nbsp;13.15: The relationship between leverage and the square root of abso
 </div>
 <p>As you can see, this female senior lecturer is rather unusual: she performed below average in the non-verbal IQ test (<code>Blocks</code>), yet achieved the second-highest <code>Vocab</code> score. She also performed far above average on the author recognition test (<code>ART</code>) and reported the longest period in formal education among the L1 participants (<code>EduTotal</code>).</p>
 <p>In some cases, it may be justified to remove overly influential outliers; however, this should typically only be done when we are fairly certain that the outliers were caused by a technical error, such as a measuring instrument not functioning properly, or a human error, such as a participant misunderstanding the direction of a response scale. All other outliers may be theoretically interesting: if our aim is to generalise our model to the full population, we must be prepared to include some unusual observations that also belong to that population. In the case of L1 English speakers, this includes people who spent more than 20 years in formal education and are seemingly much more into languages than the kind of abstract puzzles typically found in non-verbal IQ tests!</p>
-<p>The fifth diagnostic plot output by the <code>check_model()</code> function (<a href="#fig-Collinearity" class="quarto-xref">Figure&nbsp;<span>13.16</span></a>) serves to check the assumption of a no <strong>multicollinearity</strong>. Multicollinearity, or <strong>high collinearity</strong>, refers to a strong linear dependence between predictors such that they do not contribute unique or independent information to the model. Multicollinearity should not be confused with a strong correlation between two individual predictors as measured using the <code>cor.test()</code> function (see <a href="11_Inferential.html#sec-Correlations" class="quarto-xref"><span>Section 11.5</span></a>). What matters here is the association between one or more predictor variables, conditional on the other variables in the model. This is considerably more complex to calculate, but luckily, there are several functions that allow us to do just that in <code>R</code>.</p>
+<p>The fifth diagnostic plot output by the <code>check_model()</code> function (<a href="#fig-Collinearity" class="quarto-xref">Figure&nbsp;<span>13.16</span></a>) serves to check the assumption of a no <strong>multicollinearity</strong>. Multicollinearity, or <strong>high collinearity</strong>, refers to a strong linear dependence between predictors such that they do not contribute unique or independent information to the model. Multicollinearity should not be confused with a strong correlation between two individual predictors as measured using the <code>cor.test()</code> function (see <a href="11_Inferential.html#sec-Correlations" class="quarto-xref"><span>Section 11.6</span></a>). What matters here is the association between one or more predictor variables, conditional on the other variables in the model. This is considerably more complex to calculate, but luckily, there are several functions that allow us to do just that in <code>R</code>.</p>
 <p>The {performance} package relies on the Variance Inflation Factor (VIF) to quantify collinearity. Typically, VIF scores above 10 are considered to indicate a problematic degree of collinearity between some predictors. <a href="#fig-Collinearity" class="quarto-xref">Figure&nbsp;<span>13.16</span></a> indicates that our model does not suffer from multicollinearity.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>diagnostic.plots[[<span class="dv">5</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2820,7 +2849,7 @@ None of these assumptions
 <span id="cb119-6"><a href="#cb119-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(L2.model.b) <span class="co"># Adjusted R-squared:  0.2027</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p><span style="color:green;"><strong>Q13.13</strong></span> Which main-effect predictor(s) make a statistically significant contribution to <code>L2.model.b</code> at α&nbsp;=&nbsp;0.05?</p>
+<p><span style="color:green;"><strong>Q13.13</strong></span> Which main-effect predictor(s) make a statistically significant contribution to <code>L2.model.b</code> at <span class="math inline">\(\alpha\)</span>&nbsp;=&nbsp;0.05?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_Q13_13" onsubmit="return validate_form_Q13_13()" method="post">
@@ -2893,7 +2922,7 @@ No, the ReadEng coefficient is larger than all other coefficients, which violate
          }}</script>
 </div>
 </div>
-<p><span style="color:green;"><strong>Q13.15</strong></span> Which interaction effect(s) make a statistically significant contribution to <code>L2.model.b</code> at α&nbsp;=&nbsp;0.05?</p>
+<p><span style="color:green;"><strong>Q13.15</strong></span> Which interaction effect(s) make a statistically significant contribution to <code>L2.model.b</code> at <span class="math inline">\(\alpha\)</span>&nbsp;=&nbsp;0.05?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_Q13_15" onsubmit="return validate_form_Q13_15()" method="post">
