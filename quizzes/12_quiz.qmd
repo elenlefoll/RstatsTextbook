@@ -5,7 +5,7 @@
 
 In this task, you will seek answers to the research question: To what extent can the results of the non-verbal IQ `Blocks` test be used to predict `Vocab` scores among L1 and L2 speakers of English based on the data from @DabrowskaExperienceAptitudeIndividual2019? As we will be answering this question within a linear regression framework, what we are really asking is: To what extent are these variables linearly associated with each other?
 
-[**Q12.1**]{style="color:green;"} Fit a linear model to predict `Vocab` scores among L1 participants based on their `Blocks` test scores. What is the adjusted R^2^ value of this model?
+[**Q12.1**]{style="color:green;"} Fit a linear model to predict `Vocab` scores among L1 participants based on their `Blocks` test scores. What is the adjusted *R*^2^ value of this model?
 
 ```{r}
 #| echo: false
@@ -34,7 +34,7 @@ check_question("0.07",
 taskmodel1 <- lm(formula = Vocab ~ Blocks,
                  data = L1.data)
 
-summary(taskmodel1) # Adjusted R-squared:  0.07232 
+summary(taskmodel1) # Adjusted *R*-squared:  0.07232 
 ```
 
 [**Q12.2**]{style="color:green;"} According to your model, which of these values is the predicted `Vocab` score of an L1 speaker with a `Blocks` score of 20?
@@ -97,7 +97,7 @@ ggplot(L1.data,
   theme_minimal()
 ```
 
-[**Q12.3**]{style="color:green;"} Now fit a new linear model to predict `Vocab` scores among L2 participants based on their `Blocks` test scores. Comparing the adjusted R^2^ value of this new L2 model to your previous L1 model, which of these statements is/are true?
+[**Q12.3**]{style="color:green;"} Now fit a new linear model to predict `Vocab` scores among L2 participants based on their `Blocks` test scores. Comparing the adjusted *R*^2^ value of this new L2 model to your previous L1 model, which of these statements is/are true?
 
 ```{r}
 #| echo: false
@@ -113,7 +113,7 @@ check_question("Blocks test scores are a much more useful predictor of Vocab sco
                q_id = "Q12.3", 
                type = "check",
                right = "That's right, well done! 🎉",
-               wrong = "No, compare the adjusted R-squared values of the two models.")
+               wrong = "No, compare the adjusted *R*-squared values of the two models.")
 check_hint("Remember that we cannot interpret linear regression models causally.", 
            hint_title = "🦉 Hover over the owl for a first hint.",
            type = "onmouseover")
@@ -130,8 +130,8 @@ check_hint("Only one of these statements is true.",
 taskmodel2 <- lm(formula = Vocab ~ Blocks,
                  data = L2.data)
 
-summary(taskmodel2) # Adjusted R-squared:  0.007177 
-summary(taskmodel1) # Adjusted R-squared:  0.07232 
+summary(taskmodel2) # Adjusted *R*-squared:  0.007177 
+summary(taskmodel1) # Adjusted *R*-squared:  0.07232 
 ```
 
 [**Q12.4**]{style="color:green;"} In your L2 model, the *p*-value for the `Blocks` predictor should be `0.228620`. True or false: This *p*-value means that there is a 23% chance of obtaining a Blocks coefficient estimate of 0.72 or higher in a random sample of 67 L2 speakers of English when there is actually no association between the results of the `Blocks` test and those of the `Vocab` test?
@@ -220,7 +220,7 @@ taskmodel3 <- lm(formula = Vocab ~ Gender,
 summary(taskmodel3) # p-value associated with coefficient estimate for GenderM = 0.957
 ```
 
-[**Q12.7**]{style="color:green;"} The adjusted R^2^ coefficient of the model is `-0.006433`. True or false: This means that male participants, on average, score 0.006433 fewer points than female participants on the `Vocab` test?
+[**Q12.7**]{style="color:green;"} The adjusted *R*^2^ coefficient of the model is `-0.006433`. True or false: This means that male participants, on average, score 0.006433 fewer points than female participants on the `Vocab` test?
 
 ```{r}
 #| echo: false
@@ -232,7 +232,7 @@ check_question("False.",
                type = "radio",
                q_id = "Q12.7", 
                button_label = "Check answer",
-               right = "You are correct. This statement is completely wrong: the model's R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.",
+               right = "You are correct. This statement is completely wrong: the model's *R*-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple *R*-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple *R*-squared coefficient is almost 0 (0.0000187). In this model, the multiple *R*-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.",
                wrong = "No, that's incorrect.")
 
 ```
@@ -242,7 +242,7 @@ check_question("False.",
 
 In this task, you will explore whether L2 participants' native language is a useful predictor when trying to model their English `Vocab` scores.
 
-[**Q12.8**]{style="color:green;"} Fit a linear model to model L2 participants' `Vocab` score based on their native language (`NativeLg`). According to the model's adjusted R^2^ coefficient, how much of the variance in `Vocab` scores among L2 participants does this model account for?
+[**Q12.8**]{style="color:green;"} Fit a linear model to model L2 participants' `Vocab` score based on their native language (`NativeLg`). According to the model's adjusted *R*^2^ coefficient, how much of the variance in `Vocab` scores among L2 participants does this model account for?
 
 ```{r}
 #| echo: false
@@ -270,10 +270,10 @@ check_question("About 13%",
 taskmodel3 <- lm(formula = Vocab ~ NativeLg,
                 data = L2.data) 
 
-summary(taskmodel3) # Adjusted R-squared:  0.1331 
+summary(taskmodel3) # Adjusted *R*-squared:  0.1331 
 ```
 
-[**Q12.9**]{style="color:green;"} In this model, there is a greater difference between the multiple R^2^ and the adjusted R^2^ coefficients than in all previous models in this chapter. Why might that be?
+[**Q12.9**]{style="color:green;"} In this model, there is a greater difference between the multiple *R*^2^ and the adjusted *R*^2^ coefficients than in all previous models in this chapter. Why might that be?
 
 ```{r}
 #| echo: false
@@ -287,7 +287,7 @@ check_question("Because the NativeLg variable includes 10 different levels.",
                type = "check",
                q_id = "Q12.9", 
                button_label = "Check answer",
-               right = "That's right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants' native language.",
+               right = "That's right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted *R*-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants' native language.",
                wrong = "No, that's not the reason.")
 check_hint("Only one of these reasons is correct.", hint_title = "🐭 Click on the mouse for a hint.")
 
@@ -300,10 +300,10 @@ check_hint("Only one of these reasons is correct.", hint_title = "🐭 Click on 
 #| label: "Q12.10"
 
 check_question(c("When adjusted for the number of predictors, the language family model is worse at predicting Vocab scores.",
-                 "The more predictors there are, the easier it is to predict the Vocab scores of the sample. This is why the language family model has a lower multiple R-squared coefficient"),
+                 "The more predictors there are, the easier it is to predict the Vocab scores of the sample. This is why the language family model has a lower multiple *R*-squared coefficient"),
                options = c("When adjusted for the number of predictors, the language family model is better at predicting Vocab scores.",
                            "When adjusted for the number of predictors, the language family model is worse at predicting Vocab scores.",
-                           "The more predictors there are, the easier it is to predict the Vocab scores of the sample. This is why the language family model has a lower multiple R-squared coefficient.",
+                           "The more predictors there are, the easier it is to predict the Vocab scores of the sample. This is why the language family model has a lower multiple *R*-squared coefficient.",
                            "The language family model is statistically less significant than the other model because it features fewer predictors."),
                type = "check",
                q_id = "Q12.10", 
@@ -413,7 +413,7 @@ visreg(taskmodel4, gg = TRUE) +
 check_question("Because the dataset only includes one Greek L1 speaker.",
                options = c("Because the dataset only includes one Greek L1 speaker.",
                            "Because p-values have nothing to do with effect sizes.",
-                           "Because the model chose a particularly low α-level." ,
+                           "Because the model chose a particularly low $\alpha$-level." ,
                            "Because the data for Hellenic speakers is less reliable than for the other L2 speakers."),
                random_answer_order = TRUE,
                q_id = "Q12.13", 
@@ -421,7 +421,7 @@ check_question("Because the dataset only includes one Greek L1 speaker.",
                type = "radio",
                right = "Absolutely! 💯",
                wrong = "No, check the hints if you're not sure how to proceed. And remember that, if in doubt, visualisation is always a good idea!")
-check_hint("It is never the model that chooses the α-level, but rather us, the researchers.", 
+check_hint("It is never the model that chooses the $\alpha$-level, but rather us, the researchers.", 
            hint_title = "🦉 Hover over the owl for a first hint.",
            type = "onmouseover")
 check_hint("Remember that p-values depend on three different factors, see Section 11.3", 
