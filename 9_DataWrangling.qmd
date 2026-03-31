@@ -25,11 +25,11 @@ In this chapter, you will learn how to:
 
 This chapter explains how to examine, clean, and manipulate data mostly using functions from the [{tidyverse}](https://www.tidyverse.org): a collection of useful `R` packages increasingly used for all kinds of data analysis projects. Tidyverse functions are designed to work with **tidy data** (see @fig-tidydata) and, as a result, they are often easier to combine.
 
-![Tidy data illustration from the [Openscapes](https://www.openscapes.org/) blog [Tidy Data for reproducibility, efficiency, and collaboration](https://www.openscapes.org/blog/2020/10/12/tidy-data/) CC BY 4.0 @horstOpenscapesTidyData2020.](images/AHorst_tidydata.jpg){#fig-tidydata fig-alt="Stylized text providing an overview of Tidy Data. The top reads “Tidy data is a standard way of mapping the meaning of a dataset to its structure. - Hadley Wickham.” On the left reads “In tidy data: each variable forms a column; each observation forms a row; each cell is a single measurement.” There is an example table on the lower right with columns ‘id’, ‘name’ and ‘color’ with observations for different cats, illustrating tidy data structure." fig-pos="H" width="80%"}
+![Tidy data illustration from the [Openscapes](https://www.openscapes.org/) blog [Tidy Data for reproducibility, efficiency, and collaboration](https://www.openscapes.org/blog/2020/10/12/tidy-data/) CC BY 4.0 @horstOpenscapesTidyData2020](images/AHorst_tidydata.jpg){#fig-tidydata fig-alt="Stylized text providing an overview of Tidy Data. The top reads “Tidy data is a standard way of mapping the meaning of a dataset to its structure. - Hadley Wickham.” On the left reads “In tidy data: each variable forms a column; each observation forms a row; each cell is a single measurement.” There is an example table on the lower right with columns ‘id’, ‘name’ and ‘color’ with observations for different cats, illustrating tidy data structure." fig-pos="H" width="80%"}
 
 Learning to manipulate data and conduct data analysis in `R` "the tidyverse-way" can help make your workflows more efficient.
 
-> If you ensure that your data are tidy, you'll spend less time fighting with the tools and more time working on your analysis [@TidyMessyData].
+> If you ensure that your data are tidy, you'll spend less time fighting with the tools and more time working on your analysis. [@TidyMessyData]
 
 ## Base `R` vs. tidyverse functions {#sec-Conflicts}
 
@@ -37,7 +37,7 @@ Novice `R` users may find it confusing that many operations can be performed usi
 
 You will no doubt have noticed that the functions `read.csv()` and `read_csv()` have very similar but not exactly identical names. This is helpful to differentiate between the two functions. Unfortunately, some function names are found in several packages, which can lead to conflicts and errors! For example, you may have noticed that when you load the tidyverse library the first time in a project, a message similar to @fig-tidyverseConflicts is printed in the Console (note that you should have more recent installations of these packages).
 
-![Screenshot of my `R` Console after having loaded the {tidyverse} library](images/TidyverseConflicts.png){#fig-tidyverseConflicts fig-alt="Screenshot of R Console showing the output of the command library(tidyverse). The output lists all attached core tidyverse packages and their versions and then it lists \"Conflicts: tidyverse_conflicts() ── ✖ dplyr::filter() masks stats::filter() ✖ dplyr::lag()    masks stats::lag() ℹ Use the conflicted package to force all conflicts to become errors\"" width="70%"}
+![Screenshot of my `R` Console after having loaded the {tidyverse} library](images/TidyverseConflicts.png){#fig-tidyverseConflicts fig-alt="Screenshot of R Console showing the output of the command library(tidyverse). The output lists all attached core tidyverse packages and their versions and then it lists \"Conflicts: tidyverse_conflicts() ── ✖ dplyr::filter() masks stats::filter() ✖ dplyr::lag()    masks stats::lag() ℹ Use the conflicted package to force all conflicts to become errors\"" width="50%"}
 
 First, the message reproduced in @fig-tidyverseConflicts confirms that loading the {tidyverse} library has led to the successful loading of a total of nine packages and that these are now ready to use. Crucially, the message also warns us about **conflicts** between some {tidyverse} packages and base `R` packages. These conflicts are due to the fact that two functions from the {dplyr} package have exactly the same name as functions from the base `R` {stats} package. The warning informs us that, by default, the {dplyr} functions will be applied.
 
@@ -71,11 +71,7 @@ Before beginning any data analysis, it is important to always check the sanity o
 ::: {.callout-warning collapse="false"}
 ### Prerequisites
 
-In this chapter and the following chapters, all examples, tasks, and quiz questions are based on data from:
-
-> Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72--100. <https://doi.org/10.1111/lang.12323>.
-
-You will only be able to reproduce the analyses and answer the quiz questions from this chapter if you have created an RProject and successfully imported the two datasets from @DabrowskaExperienceAptitudeIndividual2019 into your local `R` environment (see @fig-DataLoaded). Detailed instructions to do so can be found from @sec-RProject to @sec-ImportingDataCSV.
+In this chapter and the following chapters, all examples, tasks, and quiz questions are based on data from @DabrowskaExperienceAptitudeIndividual2019. You will only be able to reproduce the analyses and answer the quiz questions if you have created an RProject and saved the data within the project directory. Detailed instructions to do so can be found from @sec-RProject to @sec-ImportingDataCSV.
 
 Alternatively, you can download `Dabrowska2019.zip` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/raw/69d1e31be7394f2b612825f031ebffeb75886390/Dabrowska2019.zip){.uri}. To launch the project correctly, first unzip the file and then double-click on the `Dabrowska2019.Rproj` file.
 :::
@@ -627,7 +623,7 @@ Below is an extract of the help page for the `word()` function (accessed with th
 :::
 
 ::: {.content-visible when-format="pdf"}
-![](images/help_word.png){fig-alt="This image contains the start of the stringr:word() help file. Screenreaders are advised to read the documentation directly from the ?stringr:word." fig-align="center" width="70%"}
+![](images/help_word.png){fig-alt="This image contains the start of the stringr:word() help file. Screenreaders are advised to read the documentation directly from the ?stringr:word." fig-align="center" width="60%"}
 :::
 
 The help file tells us that "The default value select\[s\] the first word". In our case, this means that we can use the `word()` function with no specified argument as this will automatically retain only the first word of every entry.
@@ -675,7 +671,7 @@ L2.data$NativeLg |>
 2.  We then extract the first word before the first forward slash, if any.
 
 ::: {.callout-note collapse="false"}
-#### Going further: Using regular expressions (regex) `r emoji("rocket")`
+#### Using regular expressions (regex)
 
 Many functions of the {stringr} package involve **regular expressions** (short: **regex**). The second page of the [{stringr} cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) provides a nice overview of how regular expressions can be used to manipulate character strings in `R`.
 
@@ -698,7 +694,7 @@ Each programming language/software has a slightly different flavour of regex but
 
 We have now reduced the number of levels in the `NativeLg` variable to just 14 unique languages, but we still have some typos to correct, e.g. "Lithunanina" and "Lituanian". We can correct these on a case-by-case basis using `case_when()`. This is a very useful tidyverse function from the {dplyr} package that works wonders once we have gotten used to its syntax. @fig-case_when illustrates the syntax with a toy example dataset about the dangerousness of dragons (`df`). In this annotated line of code in @fig-case_when, `mutate()` is used to add a new column called `danger` whose values depend on the type of dragon that we are dealing with. The first argument of `case_when()` determines that, when the dragon `type` is equal to "kraken", then the `danger` value is set to "extreme", otherwise the danger value is set to "high". You can see the outcome in the `danger` column.
 
-![Artwork explaining the `case_when()` function CC BY 4.0 [\@allison_horst](https://allisonhorst.com/allison-horst)](images/AHorst_case_when.png){#fig-case_when fig-alt="Cartoon showing a table with creature type (kraken, dragon, or cyclops) and age (baby, teen, or adult). The three creatures listed are adding a new column named “danger”, which contains the word “extreme!” if the type is “kraken”, or “high” for any other type. Stylized text reads “dplyr::case_when() - IF ELSE...but you love it? An example of code is shown: mutate(danger = case_when(type == “kraken” ~ “extreme!”, TRUE ~ “high”)."}
+![Artwork explaining the `case_when()` function CC BY 4.0 [\@allison_horst](https://allisonhorst.com/allison-horst)](images/AHorst_case_when.png){#fig-case_when fig-alt="Cartoon showing a table with creature type (kraken, dragon, or cyclops) and age (baby, teen, or adult). The three creatures listed are adding a new column named “danger”, which contains the word “extreme!” if the type is “kraken”, or “high” for any other type. Stylized text reads “dplyr::case_when() - IF ELSE...but you love it? An example of code is shown: mutate(danger = case_when(type == “kraken” ~ “extreme!”, TRUE ~ “high”)." width=90%}
 
 Applying `case_when()` to fix the typos in the `NativeLg` variable in `L2.data`, we determine that:
 
@@ -1010,7 +1006,7 @@ The {dplyr} package boasts a host of useful functions to combine tables (see @fi
 
 [^9_datawrangling-3]: We could also use the `full_join()` function since we want to retain all rows and all columns from both datasets.
 
-![Extract of the [data transformation with {dplyr} cheatsheet](https://rstudio.github.io/cheatsheets/data-transformation.pdf) (CC BY SA Posit Software, PBC)](images/dplyr_cheatsheet_extract.png){#fig-dplyrcheatsheet fig-alt="Extract from dplyr cheatsheet showing all the \"join\" functions. Screenreader friendly version can be found here: https://rstudio.github.io/cheatsheets/html/data-transformation.html" out-width="70%"}
+![Extract of the [data transformation with {dplyr} cheatsheet](https://rstudio.github.io/cheatsheets/data-transformation.pdf) (CC BY SA Posit Software, PBC)](images/dplyr_cheatsheet_extract.png){#fig-dplyrcheatsheet fig-alt="Extract from dplyr cheatsheet showing all the \"join\" functions. Screenreader friendly version can be found here: https://rstudio.github.io/cheatsheets/html/data-transformation.html" width="70%"}
 
 However, when we try to combine `L1.data` and `L2.data` using `bind_rows()`, we get an error message... Does this error remind you of [Q7.10]{style="color:green;"} from @sec-VaRiablesAndFunctions by any chance?
 
@@ -1110,7 +1106,7 @@ Combining the two datasets from @DabrowskaExperienceAptitudeIndividual2019 was r
 
 The `pivot_longer()` and `pivot_wider()` functions allow you to easily convert tables from "long" to "wide" format and vice versa (see @fig-tidyrcheatsheet).
 
-![Extract of the [data tidying with {tidyr} cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf) (CC BY SA Posit Software, PBC)](images/tidyr_cheatsheet_extract.png){#fig-tidyrcheatsheet fig-alt="pivot_longer(data, cols, names_to = \"name\", values_to = \"value\", values_drop_na = FALSE) \"Lengthen\" data by collapsing several columns into two. Column names move to a new names_to column and values to a new values_to column. pivot_longer(table4a, cols = 2:3, names_to =\"year\", values_to = \"cases\") pivot_wider(data, names_from = \"name\", values_from = \"value\") The inverse of pivot_longer(). \"Widen\" data by expanding two columns into several. One column provides the new column names, the other the values. pivot_wider(table2, names_from = type, values_from = count)" out-width="60%"}
+![Extract of the [data tidying with {tidyr} cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf) (CC BY SA Posit Software, PBC)](images/tidyr_cheatsheet_extract.png){#fig-tidyrcheatsheet fig-alt="pivot_longer(data, cols, names_to = \"name\", values_to = \"value\", values_drop_na = FALSE) \"Lengthen\" data by collapsing several columns into two. Column names move to a new names_to column and values to a new values_to column. pivot_longer(table4a, cols = 2:3, names_to =\"year\", values_to = \"cases\") pivot_wider(data, names_from = \"name\", values_from = \"value\") The inverse of pivot_longer(). \"Widen\" data by expanding two columns into several. One column provides the new column names, the other the values. pivot_wider(table2, names_from = type, values_from = count)" width="70%"}
 
 :::: {.content-visible when-format="html"}
 ::: column-margin
@@ -1128,7 +1124,7 @@ Note that older textbooks/tutorials and AI products such as ChatGPT, Claude, and
 
 AI products may also suggest using functions that are **deprecated**. As with superseded functions, you will get a warning message with a recommended alternative. In this case, however, you must follow the advice of the warning, as writing new code with deprecated functions is really asking for trouble! Deprecated functions are scheduled for removal, which means that your code will eventually no longer run on up-to-date `R` versions.
 
-![The four main stages of the lifecycle of R packages, functions, function arguments (image by Henry and Wickham 2023 for Posit Software, PBC, <https://lifecycle.r-lib.org/articles/stages.html>).](images/lifecycle.svg){#fig-lifecycle fig-alt="Graphic with four boxes corresponding to the 4 main stages of the lifecycle of 'R' packages. From left to right, one arrow leads from 'experimental' to 'stable', and two arrows lead from 'stable' to 'deprecated' and 'superseded'."}
+![The four main stages of the lifecycle of R packages, functions, function arguments (image by Henry and Wickham 2023 for Posit Software, PBC, <https://lifecycle.r-lib.org/articles/stages.html>).](images/lifecycle.svg){#fig-lifecycle fig-alt="Graphic with four boxes corresponding to the 4 main stages of the lifecycle of 'R' packages. From left to right, one arrow leads from 'experimental' to 'stable', and two arrows lead from 'stable' to 'deprecated' and 'superseded'." width=80%}
 
 In sum, to ensure the future compatibility of your code, do not ignore warnings about deprecated functions and, in general, *never ever* blindly trust the output of AI tools! More on the use of AI for research and learning in @sec-AI.
 :::
