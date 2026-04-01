@@ -1713,18 +1713,10 @@ Condition2  0.005  0.019
 Tst2:Cndtn2 0.005  0.029 0.063 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing confidence intervals</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit1<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>                      2.5 %      97.5 %
-.sig01            0.7629507  1.27445594
-.sig02            0.6849006  1.24190402
-(Intercept)      -1.0087438 -0.06326542
-Test2            -1.1843879 -0.77093946
-Condition2       -0.2405335  0.16501237
-Test2:Condition2 -0.8521078 -0.04121350</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting number of digits and calculating AIC</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit1<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co">#confint(fit1.1)</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting number of digits and calculating AIC</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit1<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 2427.102</code></pre>
 </div>
@@ -1737,7 +1729,7 @@ Test2:Condition2 -0.8521078 -0.04121350</code></pre>
 <h4 data-number="19.5.1.3" class="anchored" data-anchor-id="model-comparison"><span class="header-section-number">19.5.1.3</span> Model comparison</h4>
 <p><span class="citation" data-cites="2021">Terai, Yamashita &amp; Pasich (<a href="../../References.html#ref-2021" role="doc-biblioref">2021</a>)</span> conducted further analysis and comparisons of the two models, using the function <code>anova()</code>, which is an analysis of variance (a statistical method which compares the variance across the means of different groups), and <code>testInteractions()</code>, which makes it possible to perform simple main effects analysis. First, the authors conducted a comparison of the models with and without the interaction term using the <code>anova()</code> function.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit1, fit1<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit1, fit1<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Data: dat
 Models:
@@ -1757,10 +1749,10 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>After comparing the models and testing the interaction, <span class="citation" data-cites="2021">Terai, Yamashita &amp; Pasich (<a href="../../References.html#ref-2021" role="doc-biblioref">2021</a>)</span> conducted pairwise comparisons on the effects of <code>Condition</code> and <code>Test</code>.</p>
 <p>For this, the authors used the <code>emmeans()</code> function, which computes estimated marginal means. First, they conducted pairwise comparisons of Condition levels within each level of Test, and assigned it to a variable <code>a</code>. This object is then printed.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing estimated marginal means using the `emmeans()` function</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit1<span class="fl">.1</span>, pairwise <span class="sc">~</span> Condition<span class="sc">|</span>Test, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing estimated marginal means using the `emmeans()` function</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit1<span class="fl">.1</span>, pairwise <span class="sc">~</span> Condition<span class="sc">|</span>Test, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>$emmeans
 Test = L1 Production:
@@ -1790,9 +1782,9 @@ Results are given on the log odds ratio (not the response) scale. </code></pre>
 </div>
 <p>Additionally, <span class="citation" data-cites="2021">Terai, Yamashita &amp; Pasich (<a href="../../References.html#ref-2021" role="doc-biblioref">2021</a>)</span> calculated confidence intervals and effect sizes for this object <code>a</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing confidence intervals for emmeans object a</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(a, parm, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing confidence intervals for emmeans object a</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(a, parm, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>$emmeans
 Test = L1 Production:
@@ -1820,9 +1812,9 @@ Test = L2 Production:
 Results are given on the log odds ratio (not the response) scale. 
 Confidence level used: 0.95 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating effect sizes</span></span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(a, <span class="at">sigma =</span> <span class="fu">sigma</span>(fit1<span class="fl">.1</span>), <span class="at">edf =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating effect sizes</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(a, <span class="at">sigma =</span> <span class="fu">sigma</span>(fit1<span class="fl">.1</span>), <span class="at">edf =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Test = L1 Production:
  contrast      effect.size    SE  df asymp.LCL asymp.UCL
@@ -1838,10 +1830,10 @@ Confidence level used: 0.95 </code></pre>
 </div>
 <p>The same procedure was applied in the other direction: While with variable <code>a</code>, <code>emmeans()</code> was told to do pairwise comparisons of Condition levels within each level of Test, <span class="citation" data-cites="2021">Terai, Yamashita &amp; Pasich (<a href="../../References.html#ref-2021" role="doc-biblioref">2021</a>)</span> also computed all comparisons of Test levels within each level of Condition, and saved this object as the variable <code>b</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing EMMs</span></span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit1<span class="fl">.1</span>, pairwise <span class="sc">~</span> Test<span class="sc">|</span>Condition, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing EMMs</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(fit1<span class="fl">.1</span>, pairwise <span class="sc">~</span> Test<span class="sc">|</span>Condition, <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>$emmeans
 Condition = L1L2:
@@ -1868,9 +1860,9 @@ Condition = L2L1:
 
 Results are given on the log odds ratio (not the response) scale. </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing confidence intervals for emmeans object b</span></span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(b, parm, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing confidence intervals for emmeans object b</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(b, parm, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>$emmeans
 Condition = L1L2:
@@ -1898,9 +1890,9 @@ Condition = L2L1:
 Results are given on the log odds ratio (not the response) scale. 
 Confidence level used: 0.95 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating effect sizes</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(b, <span class="at">sigma =</span> <span class="fu">sigma</span>(fit1<span class="fl">.1</span>), <span class="at">edf =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating effect sizes</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="fu">eff_size</span>(b, <span class="at">sigma =</span> <span class="fu">sigma</span>(fit1<span class="fl">.1</span>), <span class="at">edf =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Condition = L1L2:
  contrast                        effect.size    SE  df asymp.LCL asymp.UCL
@@ -1921,14 +1913,14 @@ Confidence level used: 0.95 </code></pre>
 <h4 data-number="19.5.1.5" class="anchored" data-anchor-id="visualizing-model-1"><span class="header-section-number">19.5.1.5</span> Visualizing Model 1</h4>
 <p>Finally, the authors presented the results of this model in a plot that visualizes all important information regarding research question 1 <span class="citation" data-cites="2021">(<a href="../../References.html#ref-2021" role="doc-biblioref">Terai, Yamashita &amp; Pasich 2021</a>: 1127)</span>. In the following code chunk, you can see how they set graphical parameters and then created a base <code>R</code> plot.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty =</span> <span class="st">"s"</span>) <span class="co"># sets the shape: square</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pin =</span><span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">10</span>)) <span class="co"># sets the plot size</span></span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="st">"ps"</span>) <span class="co"># font size</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty =</span> <span class="st">"s"</span>) <span class="co"># sets the shape: square</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pin =</span><span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">10</span>)) <span class="co"># sets the plot size</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="st">"ps"</span>) <span class="co"># font size</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fig-cap-location-bottom">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69" data-cap-location="bottom" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(fit1<span class="fl">.1</span>), <span class="at">multiline =</span> T, <span class="at">ci.style =</span> <span class="st">"bands"</span>, <span class="at">xlab =</span> <span class="st">"Test Type"</span>, <span class="at">ylab =</span> <span class="st">"Accuracy Rate"</span>,</span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">""</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">rescale.axis =</span> F, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">colors =</span> <span class="st">"black"</span>, <span class="at">asp =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67" data-cap-location="bottom" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(fit1<span class="fl">.1</span>), <span class="at">multiline =</span> T, <span class="at">ci.style =</span> <span class="st">"bands"</span>, <span class="at">xlab =</span> <span class="st">"Test Type"</span>, <span class="at">ylab =</span> <span class="st">"Accuracy Rate"</span>,</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">""</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">rescale.axis =</span> F, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">colors =</span> <span class="st">"black"</span>, <span class="at">asp =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-testlearn-direc" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1954,49 +1946,49 @@ Figure&nbsp;19.5: Interaction between Test Type and Learning Condition on accura
 <h4 data-number="19.5.2.1" class="anchored" data-anchor-id="l1-production-test"><span class="header-section-number">19.5.2.1</span> L1 Production test</h4>
 <p>We begin by focusing only on the L1 production data. In the script they provided, the authors loaded the data again for this part and stored it as another object. However, we will continue to use <code>dat</code> to reproduce the code, instead. The authors used the function <code>filter()</code>, which only keeps the rows for the L1 Production test. This data is filtered because, while each participant took both L1 and L2 production tests, the authors found different patterns for both test types, which is why they chose to analyze them separately <span class="citation" data-cites="2021">(<a href="../../References.html#ref-2021" role="doc-biblioref">Terai, Yamashita &amp; Pasich 2021</a>: 1126)</span>. This is the part where participants of the study had to produce the L1 (Japanese) word when shown the L2 (English) word.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>dat.L1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(dat, Test <span class="sc">==</span> <span class="st">"L1 Production"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>dat.L1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(dat, Test <span class="sc">==</span> <span class="st">"L1 Production"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Next, the learning directions (Condition) were converted to a factor. <span class="citation" data-cites="2021">Terai, Yamashita &amp; Pasich (<a href="../../References.html#ref-2021" role="doc-biblioref">2021</a>)</span> converted the categories (L1 -&gt; L2 vs.&nbsp;L2 -&gt; L1) into two factor levels so that <code>R</code> treats it as a categorical binary variable.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting Condition (Learning direction) as a factor</span></span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>dat.L1<span class="sc">$</span>Condition <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dat.L1<span class="sc">$</span>Condition)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting Condition (Learning direction) as a factor</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>dat.L1<span class="sc">$</span>Condition <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dat.L1<span class="sc">$</span>Condition)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Here, too, the authors make use of contrast coding once more and standardised vocabulary scores:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">contr.treatment</span>(<span class="dv">2</span>)</span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>my.coding <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">1</span>))</span>
-<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>my.simple <span class="ot">&lt;-</span> c<span class="sc">-</span>my.coding</span>
-<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(dat.L1<span class="sc">$</span>Condition) <span class="ot">&lt;-</span> my.simple</span>
-<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a>dat.L1<span class="sc">$</span>s.vocab <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat.L1<span class="sc">$</span>Vocab)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">contr.treatment</span>(<span class="dv">2</span>)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>my.coding <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">1</span>))</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>my.simple <span class="ot">&lt;-</span> c<span class="sc">-</span>my.coding</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(dat.L1<span class="sc">$</span>Condition) <span class="ot">&lt;-</span> my.simple</span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a>dat.L1<span class="sc">$</span>s.vocab <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat.L1<span class="sc">$</span>Vocab)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="model-without-interaction" class="level4" data-number="19.5.2.2">
 <h4 data-number="19.5.2.2" class="anchored" data-anchor-id="model-without-interaction"><span class="header-section-number">19.5.2.2</span> Model without interaction</h4>
 <p>This model without interaction assumes that learning direction and L2 proficiency each have independent effects on test accuracy.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-54" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-54" data-target-annotation="1">1</button><span id="annotated-cell-54-1" class="code-annotation-target"><a href="#annotated-cell-54-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">glmer</span>(Answer <span class="sc">~</span> s.vocab <span class="sc">+</span> Condition <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-54" data-target-annotation="2">2</button><span id="annotated-cell-54-2" class="code-annotation-target"><a href="#annotated-cell-54-2" aria-hidden="true" tabindex="-1"></a>                (<span class="dv">1</span><span class="sc">|</span>ID) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ItemID),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-54" data-target-annotation="3">3</button><span id="annotated-cell-54-3" class="code-annotation-target"><a href="#annotated-cell-54-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">family =</span> binomial,</span>
-<span id="annotated-cell-54-4"><a href="#annotated-cell-54-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> dat.L1, </span>
-<span id="annotated-cell-54-5"><a href="#annotated-cell-54-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">glmerControl</span>(<span class="at">optimizer =</span> <span class="st">"bobyqa"</span>))</span>
-<span id="annotated-cell-54-6"><a href="#annotated-cell-54-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-54-7"><a href="#annotated-cell-54-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-53" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-53" data-target-annotation="1">1</button><span id="annotated-cell-53-1" class="code-annotation-target"><a href="#annotated-cell-53-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">glmer</span>(Answer <span class="sc">~</span> s.vocab <span class="sc">+</span> Condition <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-53" data-target-annotation="2">2</button><span id="annotated-cell-53-2" class="code-annotation-target"><a href="#annotated-cell-53-2" aria-hidden="true" tabindex="-1"></a>                (<span class="dv">1</span><span class="sc">|</span>ID) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ItemID),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-53" data-target-annotation="3">3</button><span id="annotated-cell-53-3" class="code-annotation-target"><a href="#annotated-cell-53-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">family =</span> binomial,</span>
+<span id="annotated-cell-53-4"><a href="#annotated-cell-53-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> dat.L1, </span>
+<span id="annotated-cell-53-5"><a href="#annotated-cell-53-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">glmerControl</span>(<span class="at">optimizer =</span> <span class="st">"bobyqa"</span>))</span>
+<span id="annotated-cell-53-6"><a href="#annotated-cell-53-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-53-7"><a href="#annotated-cell-53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-54" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-53" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-54" data-code-lines="1" data-code-annotation="1">The model formula includes main effects of learning condition and proficiency plus their interaction.</span>
+<span data-code-cell="annotated-cell-53" data-code-lines="1" data-code-annotation="1">The model formula includes main effects of learning condition and proficiency plus their interaction.</span>
 </dd>
-<dt data-target-cell="annotated-cell-54" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-53" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-54" data-code-lines="2" data-code-annotation="2">The model formula also includes random intercepts for participants and items (to account for repeated measures).</span>
+<span data-code-cell="annotated-cell-53" data-code-lines="2" data-code-annotation="2">The model formula also includes random intercepts for participants and items (to account for repeated measures).</span>
 </dd>
-<dt data-target-cell="annotated-cell-54" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-53" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-54" data-code-lines="3" data-code-annotation="3">This is necessary because our outcome is binary (correct/incorrect).</span>
+<span data-code-cell="annotated-cell-53" data-code-lines="3" data-code-annotation="3">This is necessary because our outcome is binary (correct/incorrect).</span>
 </dd>
 </dl>
 </div>
@@ -2035,7 +2027,7 @@ Condition2  0.002  0.006</code></pre>
 </div>
 <p>Further, <span class="citation" data-cites="2021">Terai, Yamashita &amp; Pasich (<a href="../../References.html#ref-2021" role="doc-biblioref">2021</a>)</span> computed the model’s AIC.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit2) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit2) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 1316.26</code></pre>
 </div>
@@ -2046,12 +2038,12 @@ Condition2  0.002  0.006</code></pre>
 <h4 data-number="19.5.2.3" class="anchored" data-anchor-id="model-with-interaction"><span class="header-section-number">19.5.2.3</span> Model with Interaction</h4>
 <p>What if English proficiency only matters in one of the two learning directions? To figure this out, <span class="citation" data-cites="2021">Terai, Yamashita &amp; Pasich (<a href="../../References.html#ref-2021" role="doc-biblioref">2021</a>)</span> added an interaction term to the model: <code>s.vocab * Condition</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>fit2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glmer</span>(Answer <span class="sc">~</span> s.vocab <span class="sc">*</span> Condition <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ItemID),</span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> binomial, </span>
-<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> dat.L1, </span>
-<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">glmerControl</span>(<span class="at">optimizer =</span> <span class="st">"bobyqa"</span>))</span>
-<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>fit2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glmer</span>(Answer <span class="sc">~</span> s.vocab <span class="sc">*</span> Condition <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ItemID),</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> binomial, </span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> dat.L1, </span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">glmerControl</span>(<span class="at">optimizer =</span> <span class="st">"bobyqa"</span>))</span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Generalized linear mixed model fit by maximum likelihood (Laplace
   Approximation) [glmerMod]
@@ -2088,17 +2080,17 @@ s.vocab     -0.026
 Condition2   0.000  0.001       
 s.vcb:Cndt2  0.001 -0.003  0.006</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit2<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit2<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>                         2.5 %      97.5 %
-.sig01              0.73079653  1.28734674
-.sig02              0.67541189  1.29854303
-(Intercept)        -0.53661195  0.43865905
-s.vocab            -0.27346324  0.48467861
-Condition2         -0.09542201  0.46370242
-s.vocab:Condition2 -0.64914673 -0.08900216</code></pre>
+.sig01              0.73079922  1.28729202
+.sig02              0.67541363  1.29848739
+(Intercept)        -0.53714956  0.43908234
+s.vocab            -0.27397898  0.48470670
+Condition2         -0.09542877  0.46366465
+s.vocab:Condition2 -0.64903456 -0.08897167</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit2<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit2<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 1311.563</code></pre>
 </div>
@@ -2109,10 +2101,10 @@ s.vocab:Condition2 -0.64914673 -0.08900216</code></pre>
 <h4 data-number="19.5.2.4" class="anchored" data-anchor-id="visualization"><span class="header-section-number">19.5.2.4</span> Visualization</h4>
 <p>Visualizing model predictions is a very useful way to better understand complex models like this one. <span class="citation" data-cites="2021">Terai, Yamashita &amp; Pasich (<a href="../../References.html#ref-2021" role="doc-biblioref">2021</a>)</span> visualized the model <code>fit2.1</code> using the following base <code>R</code> plot.</p>
 <div class="cell fig-cap-location-bottom">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82" data-cap-location="bottom" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(fit2<span class="fl">.1</span>), <span class="at">multiline =</span> T, <span class="at">ci.style =</span> <span class="st">"bands"</span>,</span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Vocabulary Size"</span>, <span class="at">ylab =</span> <span class="st">"Accuracy Rate"</span>,</span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">""</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">rescale.axis =</span> F, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">colors =</span> <span class="st">"black"</span>, <span class="at">asp =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80" data-cap-location="bottom" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(fit2<span class="fl">.1</span>), <span class="at">multiline =</span> T, <span class="at">ci.style =</span> <span class="st">"bands"</span>,</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Vocabulary Size"</span>, <span class="at">ylab =</span> <span class="st">"Accuracy Rate"</span>,</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">""</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">rescale.axis =</span> F, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">colors =</span> <span class="st">"black"</span>, <span class="at">asp =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-l1" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2132,28 +2124,28 @@ Figure&nbsp;19.6: Predicted L1 Production accuracy across vocabulary sizes and l
 <h4 data-number="19.5.2.5" class="anchored" data-anchor-id="l2-production-test"><span class="header-section-number">19.5.2.5</span> L2 Production Test</h4>
 <p><span class="citation" data-cites="2021">Terai, Yamashita &amp; Pasich (<a href="../../References.html#ref-2021" role="doc-biblioref">2021</a>)</span> repeated all the same steps for the L2 production test, now predicting accuracy for when the participants had to produce English words after learning Japanese-English pairs.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering the data we need</span></span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>dat.L2 <span class="ot">&lt;-</span> <span class="fu">filter</span>(dat, Test <span class="sc">==</span> <span class="st">"L2 Production"</span>)</span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting Condition as factors</span></span>
-<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>dat.L2<span class="sc">$</span>Condition <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dat.L2<span class="sc">$</span>Condition)</span>
-<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">contr.treatment</span>(<span class="dv">2</span>)</span>
-<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a>my.coding <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">1</span>))</span>
-<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a>my.simple <span class="ot">&lt;-</span> c<span class="sc">-</span>my.coding</span>
-<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(dat.L2<span class="sc">$</span>Condition) <span class="ot">&lt;-</span> my.simple </span>
-<span id="cb83-12"><a href="#cb83-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-13"><a href="#cb83-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Scaling Vocab scores</span></span>
-<span id="cb83-14"><a href="#cb83-14" aria-hidden="true" tabindex="-1"></a>dat.L2<span class="sc">$</span>s.vocab <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat.L2<span class="sc">$</span>Vocab)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering the data we need</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>dat.L2 <span class="ot">&lt;-</span> <span class="fu">filter</span>(dat, Test <span class="sc">==</span> <span class="st">"L2 Production"</span>)</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting Condition as factors</span></span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>dat.L2<span class="sc">$</span>Condition <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dat.L2<span class="sc">$</span>Condition)</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">contr.treatment</span>(<span class="dv">2</span>)</span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a>my.coding <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">1</span>))</span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a>my.simple <span class="ot">&lt;-</span> c<span class="sc">-</span>my.coding</span>
+<span id="cb81-10"><a href="#cb81-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-11"><a href="#cb81-11" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(dat.L2<span class="sc">$</span>Condition) <span class="ot">&lt;-</span> my.simple </span>
+<span id="cb81-12"><a href="#cb81-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-13"><a href="#cb81-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Scaling Vocab scores</span></span>
+<span id="cb81-14"><a href="#cb81-14" aria-hidden="true" tabindex="-1"></a>dat.L2<span class="sc">$</span>s.vocab <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat.L2<span class="sc">$</span>Vocab)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model without interaction</span></span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">glmer</span>(Answer <span class="sc">~</span> s.vocab<span class="sc">+</span>Condition <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ItemID),</span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> binomial, </span>
-<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> dat.L2, </span>
-<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">glmerControl</span>(<span class="at">optimizer =</span> <span class="st">"bobyqa"</span>))</span>
-<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model without interaction</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">glmer</span>(Answer <span class="sc">~</span> s.vocab<span class="sc">+</span>Condition <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ItemID),</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> binomial, </span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> dat.L2, </span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">glmerControl</span>(<span class="at">optimizer =</span> <span class="st">"bobyqa"</span>))</span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Generalized linear mixed model fit by maximum likelihood (Laplace
   Approximation) [glmerMod]
@@ -2188,18 +2180,18 @@ Correlation of Fixed Effects:
 s.vocab    -0.037       
 Condition2  0.017 -0.001</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 1146.519</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model with interaction</span></span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>fit3<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glmer</span>(Answer <span class="sc">~</span> s.vocab <span class="sc">*</span> Condition <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ItemID),</span>
-<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> binomial,</span>
-<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> dat.L2, </span>
-<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">glmerControl</span>(<span class="at">optimizer =</span> <span class="st">"bobyqa"</span>))</span>
-<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit3<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model with interaction</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>fit3<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glmer</span>(Answer <span class="sc">~</span> s.vocab <span class="sc">*</span> Condition <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ID) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>ItemID),</span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> binomial,</span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> dat.L2, </span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">glmerControl</span>(<span class="at">optimizer =</span> <span class="st">"bobyqa"</span>))</span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit3<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Generalized linear mixed model fit by maximum likelihood (Laplace
   Approximation) [glmerMod]
@@ -2236,17 +2228,17 @@ s.vocab     -0.037
 Condition2   0.014  0.012       
 s.vcb:Cndt2  0.019  0.003 -0.041</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit3<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit3<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>                        2.5 %      97.5 %
-.sig01              0.9458295  1.69438382
-.sig02              0.6790572  1.33827015
-(Intercept)        -1.6992600 -0.56667480
-s.vocab            -0.1627638  0.62538806
-Condition2         -0.5720030  0.04444102
-s.vocab:Condition2 -0.5864708  0.02637148</code></pre>
+.sig01              0.9458318  1.69373065
+.sig02              0.6790647  1.33794127
+(Intercept)        -1.6989047 -0.56606911
+s.vocab            -0.1625726  0.62507709
+Condition2         -0.5716568  0.04442562
+s.vocab:Condition2 -0.5861211  0.02636997</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit3<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit3<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 1145.316</code></pre>
 </div>
@@ -2256,8 +2248,8 @@ s.vocab:Condition2 -0.5864708  0.02637148</code></pre>
 <section id="visualization-1" class="level4" data-number="19.5.2.6">
 <h4 data-number="19.5.2.6" class="anchored" data-anchor-id="visualization-1"><span class="header-section-number">19.5.2.6</span> Visualization</h4>
 <div class="cell fig-cap-location-bottom">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94" data-cap-location="bottom" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(fit3<span class="fl">.1</span>), <span class="at">multiline =</span> T, <span class="at">ci.style =</span> <span class="st">"bands"</span>, <span class="at">xlab =</span> <span class="st">"Vocabulary Size"</span>, <span class="at">ylab =</span> <span class="st">"Accuracy Rate"</span>,</span>
-<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">""</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">rescale.axis =</span> F, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">colors =</span> <span class="st">"black"</span>, <span class="at">asp =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92" data-cap-location="bottom" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(fit3<span class="fl">.1</span>), <span class="at">multiline =</span> T, <span class="at">ci.style =</span> <span class="st">"bands"</span>, <span class="at">xlab =</span> <span class="st">"Vocabulary Size"</span>, <span class="at">ylab =</span> <span class="st">"Accuracy Rate"</span>,</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">""</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">rescale.axis =</span> F, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">colors =</span> <span class="st">"black"</span>, <span class="at">asp =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-l2" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2287,19 +2279,19 @@ Figure&nbsp;19.7: Predicted L2 Production accuracy across vocabulary size and le
 <h4 data-number="19.5.4.1" class="anchored" data-anchor-id="calculating-vifs-for-the-models"><span class="header-section-number">19.5.4.1</span> Calculating VIFs for the Models</h4>
 <p><span class="citation" data-cites="2021">Terai, Yamashita &amp; Pasich (<a href="../../References.html#ref-2021" role="doc-biblioref">2021</a>)</span> used a helper function <code>vif.mer()</code> to calculate VIFs for mixed models, which can be directly imported from GitHub using the <code>source()</code> function.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"https://raw.githubusercontent.com/aufrank/R-hacks/master/mer-utils.R"</span>)</span>
-<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vif.mer</span>(fit1<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"https://raw.githubusercontent.com/aufrank/R-hacks/master/mer-utils.R"</span>)</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vif.mer</span>(fit1<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>           Test2       Condition2 Test2:Condition2 
         1.001121         1.004295         1.004777 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif.mer</span>(fit2<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif.mer</span>(fit2<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>           s.vocab         Condition2 s.vocab:Condition2 
           1.000008           1.000044           1.000049 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif.mer</span>(fit3<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif.mer</span>(fit3<span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>           s.vocab         Condition2 s.vocab:Condition2 
           1.000152           1.001814           1.001678 </code></pre>
