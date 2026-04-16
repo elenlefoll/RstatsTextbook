@@ -1,0 +1,286 @@
+# Ch. 5: Tasks & Quizzes {.unnumbered}
+
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+[**Q5.1**]{style="color:green;"} What happens if you type a word without quotation marks in the Console and then press "enter"?
+
+```{r}
+#| echo: false
+#| label: "Q5.1"
+library(checkdown)
+check_question("R returns an error message because it interprets the word as an object name or command.", 
+               options = c("R returns an error message because it interprets the word as an object name or command.", 
+                           "R automatically wraps the word in quotation marks and processes it as a string.", 
+                           "R returns an error suggesting that you probably mistyped the word.", 
+                           "R returns an error message indicating that it expected a number."), 
+               type = "radio",
+               button_label = "Check answer", 
+               q_id = "Q5.1",
+               random_answer_order = TRUE,
+               right = "That's right. Without quotation marks, a string of characters is interpreted by `R` as the name of an object or function.",
+               wrong = "No, this is not what happens. Have you tried it in your Console? What does the error message say?")
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+[**Q5.2**]{style="color:green;"} Try entering `13^2` in the Console. What does the `^` (caret) operator do?
+
+```{r}
+#| echo: false
+#| label: "Q5.2"
+
+check_question("The ^ operator performs an exponentiation operation, here 13 to the power of 2.", 
+               options = c("The ^ operator performs an exponentiation operation, here 13 to the power of 2.", "The ^ operator calculates the modulus of a number, here of 13 with 2 as the base.", "The ^ operator creates a vector, here with 13 occurrences of the integer 2."), 
+               type = "radio",
+               button_label = "Check answer", 
+               q_id = "Q5.2",
+               random_answer_order = TRUE,
+               right = "That's right. Raising 13 to the power of 2 gives us the square of 13. Which is why the output is the same as for 13*13!",
+               wrong = "No. Compare the output of the operation 13^2 with 13*13. What do you notice?")
+```
+
+[**Q5.3**]{style="color:green;"} Compare `13*13` with `13 * 13`. What is the difference in the output?
+
+```{r}
+#| echo: false
+#| label: "Q5.3"
+
+check_question("There is no difference.", 
+               options = c("There is no difference.", "Adding a space generates an error.", "It is impossible to add a space in the R Console."), 
+               type = "radio",
+               button_label = "Check answer", 
+               q_id = "Q5.3",
+               random_answer_order = TRUE,
+               right = "That's right. Adding spaces within mathematical operations makes no difference in R. However, it's good practice to keep things consistent.",
+               wrong = "No. Have you tried?")
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+[**Q5.4**]{style="color:green;"} Which of these object names are *not* allowed in `R`? Try to create an object with each of these names and see if you get an error message or not.
+
+```{r}
+#| echo: false
+#| label: "Q5.4"
+
+check_question(c("1TopWord", "BestWordEver!", "my-favourite-word", "top word"),
+options = c("1TopWord", "BestWordEver!", "my-favourite-word", "top word", "Agnès.Favourite.Word", "Top1Word"),
+type = "checkbox",
+button_label = "Check answer", q_id = "Q5.4",
+random_answer_order = TRUE,
+right = "That's right! 🎉",
+wrong = "Not quite. Try again!")
+check_hint("Four of these object names are problematic and will return errors.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+[**Q5.5**]{style="color:green;"} What is the relational operator that checks whether a value is "more than or equal to" another value?
+
+```{r}
+#| echo: false
+#| label: "Q5.5"
+
+check_question(answer = ">=", 
+               q_id = "Q5.5", 
+               right = "That's right!",
+               wrong = "No. Experiment with the lines of code above to find the correct operator.")
+check_hint("This operator is a combination of two symbols.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+[**Q5.6**]{style="color:green;"} What is the relational operator that checks whether a value "is not equal to" another value?
+
+```{r}
+#| echo: false
+#| label: "Q5.6"
+
+check_question(answer = "!=", 
+               q_id = "Q5.6", 
+               right = "That's right!",
+               wrong = "No. Experiment with the lines of code above to find the correct operator.")
+check_hint("This operator is a combination of two symbols.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+Above, we created the following `R` character string object:
+
+```{r}
+New.French.Word <- "écogeste"
+```
+
+[**Q5.7**]{style="color:green;"} Why does this line of code return `FALSE` even though `New.French.Word` was assigned the character string "écogeste"?
+
+```{r}
+#| eval: false
+New.French.Word == "ecogeste"
+
+```
+
+```{r}
+#| echo: false
+#| label: "Q5.7"
+
+check_question("Because \"écogeste\" and \"ecogeste\" are two different strings in R.", 
+               options = c("Because R automatically removed the accent as object names must be in English.", "Because == cannot be used to compare character strings in French.", "Because \"écogeste\" and \"ecogeste\" are two different strings in R."), 
+               type = "radio",
+               button_label = "Check answer", 
+               q_id = "Q5.7",
+               random_answer_order = TRUE,
+               right = "Correct! The string saved as New.French.Word is \"écogeste\" not \"ecogeste\".",
+               wrong = "No, that's not the reason.")
+
+```
+
+[**Q5.8**]{style="color:green;"} Why does this line of code return `FALSE`?
+
+```{r}
+#| eval: false
+New.French.Word == " écogeste"
+
+```
+
+```{r}
+#| echo: false
+#| label: "Q5.8"
+
+check_question("Because this string includes an additional space character.", 
+               options = c("Because R is case-sensitive.", "Because this string includes an additional space character.", "Because string objects cannot include any special characters. This includes spaces."), 
+               type = "radio",
+               button_label = "Check answer", 
+               q_id = "Q5.8",
+               random_answer_order = TRUE,
+               right = "Correct! The extra space means that this string does not match the string saved as New.French.Word in the environment.",
+               wrong = "No, that's not the reason.")
+
+```
+
+[**Q5.9**]{style="color:green;"} Why does this line of code return `FALSE`?
+
+```{r}
+#| eval: false
+New.French.Word == "Écogeste"
+
+```
+
+```{r}
+#| echo: false
+#| label: "Q5.9"
+
+check_question("Because R is case-sensitive.", 
+               options = c("Because R is case-sensitive.", "Because strings should never start with a capital letter.", "Because this word is not in the dictionary of the Académie Française."), 
+               type = "radio",
+               button_label = "Check answer", 
+               q_id = "Q5.9",
+               random_answer_order = TRUE,
+               right = "Correct! Being case-sensitive means that lower-case letters and upper-case letters are interpreted as two different sets of characters.",
+               wrong = "No, that's not the reason.")
+
+```
+
+[**Q5.10**]{style="color:green;"} Why does this line of code return `FALSE`?
+
+```{r}
+#| eval: false
+New.French.Word != "écogeste"
+
+```
+
+```{r}
+#| echo: false
+#| label: "Q5.10"
+
+check_question("Because this command asks whether New.French.Word is not equal to \"écogeste\".", 
+               options = c("Because this command asks whether New.French.Word is not equal to \"écogeste\".", "Because this string is in a different text encoding.", "Because écogeste is no longer a new French word."), 
+               type = "radio",
+               button_label = "Check answer", 
+               q_id = "Q5.10",
+               random_answer_order = TRUE,
+               right = "That's right!",
+               wrong = "No, that's not the reason.")
+
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+[**Q5.11**]{style="color:green;"} Copy and paste the following lines of code in a new `.R` script. Try to run each line individually. Each line will generate an error of some kind. In some cases, *RStudio* will warn you in advance that a line of code is likely wrong by displaying a red cross icon to the left of the erroneous line. If you hover over the red cross icon, *RStudio* will display a message that may help you to fix the error.
+
+Can you decode the error messages to find out what is causing these errors and fix these ten erroneous commands?
+
+```{r}
+#| eval: false
+
+my.favourite.word <- "empathy"
+my.favourite.number <- 13
+
+# Error 1:
+my.favourite.number + my.favorite.number
+
+# Error 2:
+Negin-Fav-Word <- "Ach so!" 
+
+# Error 3:
+my.favourite.numbers^2
+
+# Error 4:
+ömers_favourite_ number <- 52
+
+# Error 5:
+    ömers_favorite_number =   my.favourite..number
+
+# Error 6:
+my.favourite.number*2 -> half.my.fav.number
+
+# Error 7:
+rose's.favourite.number <- 5
+
+# Error 8:
+BestWordEver <- "supercalifragilisticexpialidocious
+
+# Error 9:
+2FavNumbers <- my.favourite.number + ömers_favourite_number
+
+# Error 10:
+good.luck <- موفق باشيد"
+
+
+```
+:::
+::: {.callout-note collapse="true"}
+#### Click here for the solutions to [**Q5.11**]{style="color:green;"}
+
+1.  The first error was `object 'my.favorite.number' not found`. This means that the object `my.favorite.number` is not stored in your environment. If you think it is, the problem is most likely due to a typo. Here, `my.favorite.number` uses American English spelling, whereas we used British English spelling (with a "u") when we created the object. To correct the error, you need to use exactly the same spelling as when you created the object.
+
+2.  The second error is also `object 'Negin' not found`. However, here we do not expect an object called `Negin` to be in the environment because what we are actually trying to do is create and save a new object called `Negin-Fav-Word`! The problem is that `R` interprets the hyphens in this object name as "minus" and therefore tries to find the object `Negin` in order to then subtract `Fav` and `Word` from it. To correct this error, you need to remove the hyphens or replace them by dots.
+
+3.  The third error is yet another `object not found error`. It is another typo: the correct object name is not in the plural form.
+
+4.  The fourth error is `Error: unexpected symbol in "ömers_favourite_ number"`. In addition, *RStudio* warned us that there were some "unexpected tokens" in this line of code. The unexpected item is the space between `_` and `number`. To fix this error, you need to remove this space character.
+
+5.  The object `my.favourite..number` is not found because the name of the object saved in the environment does not have two consecutive dots. Note that the error does *not* come from the fact that this line begins with some white space and includes multiple space characters after the `=` sign. These added spaces make the line more difficult for us humans to read, but `R` simply ignores them. Hence, to fix this error, what you need to do is remove one of the consecutive dots in the object name.
+
+    It is also worth noting that, once you've removed the extra dot, this line of code replaces the value originally stored in `ömers_favourite_number` with the value stored in `my.favourite.number`. If you check your environment pane, you will see that the command has changed `ömers_favourite_number` to `13` with no warning!! In other words, here, the equal sign `=` behaves in the same way as the assignment operator `<-`.
+
+6.  If you tried to run this line, you will have noticed that it does not actually generate an error. However, you may have noticed that the assignment operator is in the opposite direction (`->` instead of `<-`). This means that `my.favourite.number` times two is assigned to a new object called `half.my.fav.number`. Having observed this, you will hopefully want to either amend the line for it to make mathematical sense (`my.favourite.number/2 -> half.my.fav.number`) or change the name of the new object for it to be meaningful (`my.favourite.number*2 -> twice.my.fav.number`).
+
+7.  Running this line will have caused you to run into a `+` situation in the console. As explained in @sec-Errors, to get out of it, first take your mouse cursor to the Console pane and press the Escape key on your keyboard to cancel the erroneous line. Whilst there is no error message to help you understand where the problem is coming from, you should see that *RStudio* helpfully displays a red cross icon to the left of the line; hovering over it displays a multi-line message. The first line is the relevant one: `unexpected token 's.favourite.number <- 5`. This tells us that apostrophes are forbidden in object names. Remove the `'` and the error will be fixed.
+
+8.  This line also causes a `+` situation. In this case, it is due to a missing quotation mark. To fix this error, first cancel the incomplete line of code by escaping it. Then, add the missing double quotation mark in your script and rerun the completed line.
+
+9.  The message `Error: unexpected symbol in "2FavNumbers"` is due to the fact that object names cannot start with a number. Change the object name to something like `TwoFavNumbers` or `Fav2Numbers` to fix this error.
+
+10. Here, too, the error message reads: `unexpected symbol`. However, it is important to remember that the unexpected symbol is not within the character string, but rather has to do with the code syntax used to assign the Persian string to `good.luck`. In other words, the problem has nothing to do with the fact that the string is in Persian, but rather that one of the quotation marks is missing. You can fix the error by ensuring that the phrase is enclosed in quotation marks.
+:::
+### Check your progress 🌟 {.unnumbered}
+
+You have successfully completed [`r checkdown::insert_score()` out of 11 questions]{style="color:green;"} in this chapter.

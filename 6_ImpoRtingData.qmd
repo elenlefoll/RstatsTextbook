@@ -1,54 +1,55 @@
 ---
 engine: knitr
 bibliography: references.bib
+code-annotations: below
 ---
 
 ```{r include=FALSE}
-library(checkdown)
 library(tidyverse)
 ```
+
 {{< include emoji_script.md >}}
 
 # Impo`R`ting data {#sec-ImportingData}
 
 #### **Chapter overview** {.unnumbered}
 
-Many introductory `R` textbooks postpone this section until much later by relying on datasets that are directly accessible as `R` data objects. In real life, however, research data rarely come neatly packaged as an `R` data object. Your data will most likely be stored in a spreadsheet table or as text files of some kind. And -let's be honest- they will be more messy than you would like to admit, making this chapter and the next crucial for learning to do data analysis in `R`.
+Many introductory textbooks make data import in `R` appear very simple by relying on datasets that are directly accessible as `R` data objects and already "cleaned up". In real life, however, research data rarely come neatly packaged as an `R` data object. Your data will most likely be stored in a spreadsheet or as text files of some kind. And --let's be honest-- they will be more messy than you would like to admit, making this chapter and the next crucial to learning to do data analysis in `R`!
 
 This chapter will take you through the process of:
 
 -   Downloading data from a real applied linguistics study
 -   Creating an `R` Project in RStudio
 -   Importing a `.csv` file as an `R` object in `R`
--   Importing data from LibreOffice Calc, Microsoft Excel, Google Sheets, SPSS and other formats
+-   Importing data from LibreOffice/OpenOffice Calc, Microsoft Excel, Google Sheets, SPSS and other formats
 -   Examining a data frame object in `R`
 
-In future chapters, we will continue to work with these data. We will learn how to "clean them up" for data analysis, before we begin to explore them using descriptive statistics and data visualisations.
+In future chapters, we will continue to work with these data. We will learn how to "tidy them up" for data analysis, before we begin to explore them using descriptive statistics and data visualisations.
 
 ## Accessing data from a published study {#sec-AccessingData}
 
-As we saw in @sec-OpenScience, it is good practice to share both the data and materials associated with research studies so that others can reproduce and replicate the research.
+As we saw in @sec-OpenScience, it is good practice to share both the data and materials associated with research studies so that others can reproduce and replicate[^6_importingdata-1] the research.
+
+[^6_importingdata-1]: For more on reproductions and replications, see @sec-Reproducibility.
 
 In the following chapters, we will focus on data associated with the following study:
 
 > Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72--100. <https://doi.org/10.1111/lang.12323>.
 
-![Title page from the journal Language Learning](images/DabrowskaTitle.png){#fig-DabrowskaTitle fig-alt="Front page of an EMPIRICAL STUDY journal article published at Language Learning: Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers by Ewa Dabrowska (University of Birmingham" width="461"}
+Follow the DOI[^6_importingdata-2] link associated with the article referenced above and read the abstract to find out what the study was about. Note that you do not need to have an institutional or paid access to the full paper to able to read the abstract.
 
-Follow the DOI[^6_importingdata-1] link above and read the abstract to find out what the study was about. You do not need to have institutional or paid access to the full paper to read the abstract.
+[^6_importingdata-2]: Digital Object Identifiers (DOI) are alpha-numeric strings that can be assigned to publications, preprints, datasets, and all other kinds of research materials with the aim of facilitating the exchange of information on digital networks and avoiding dead links [@parsonsCommunitysourcedGlossaryOpen2022].
 
-[^6_importingdata-1]: "Digital Object Identifiers (DOI) are alpha-numeric strings that can be assigned to any entity, including: publications (including preprints), materials, datasets, and feature films - the use of DOIs is not restricted to just scholarly or academic material. DOIs"provides a system for persistent and actionable identification and interoperable exchange of managed information on digital networks." ([https://doi.org/hb.html)](https://doi.org/hb.html%29). There are many different DOI registration agencies that operate DOIs, but the two that researchers would most likely encounter are Crossref and Datacite." [@parsonsCommunitysourcedGlossaryOpen2022]
-
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-[**Q6.1**]{style="color:green;"} What types of data were collected as part of this study?
+[**Q6.1**]{style="color:green;"} What types of data were collected as part of @DabrowskaExperienceAptitudeIndividual2019?
 
 ```{r}
 #| echo: false
 #| label: "Q6.1"
-
+library(checkdown)
 check_question(c("Participants' results on a grammar test", "Participants' results on a vocabulary test", "Participants' results on a collocations test", "Sociodemographic information about the participants including their age and level of education", "Participants' results on a language analytic ability test", "Participants' results on a nonverbal intelligence test"), 
                options = c("Participants' results on a grammar test", "Participants' results on a vocabulary test", "Participants' results on a collocations test", "Sociodemographic information about the participants including their age and level of education", "Participants' results on a language analytic ability test", "Participants' results on a nonverbal intelligence test"), 
                type = "check",
@@ -59,7 +60,7 @@ right = "Well done!",
 wrong = "That's a good start, but there are more...")
 ```
 
-[**Q6.2**]{style="color:green;"} On average, how did the English L2 speakers perform compared to the native speakers?
+[**Q6.2**]{style="color:green;"} On average, how did the English L2 speakers perform compared to the native speakers in @DabrowskaExperienceAptitudeIndividual2019?
 
 ```{r}
 #| echo: false
@@ -90,7 +91,6 @@ q_id = "Q6.3",
 right = "That's right.",
 wrong = "No, read the abstract again.")
 ```
-
 :::
 ::::
 
@@ -102,7 +102,7 @@ The author, Ewa Dąbrowska, has made the data used in this study available on an
 >
 > Dąbrowska, E. (2018). L2 data \[Data set\]. Retrieved from [https://www.iris-database.org/iris/app/home/detail?id=york:935514](https://www.iris-database.org/details/L8w1U-ZDgnH)
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -120,26 +120,26 @@ random_answer_order = FALSE,
 q_id = "Q6.4", 
 right = "That's right!",
 wrong = "Are you sure?")
-check_hint("Check the links listed in Appendix S4.", hint_title = "<br>🐭 Click on the mouse for a hint.")
+check_hint("Check the links listed in Appendix S4.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
 
 ```
-
 :::
 ::::
 
-You may have noticed that the datasets were published in 2018, whereas the article [@DabrowskaExperienceAptitudeIndividual2019] was published in the following year. This is very common in academic publications as it can take many months or even years for an article or book to be published, by which time the author(s) may have already made the data available on a repository. This particular article was actually first published on the journal's website on 22 October 2018 as an "advanced online publication", but was not officially published until March 2019 as part of Volume 69, Issue S1 of the journal (see <https://doi.org/10.1111/lang.12323>). This explains the discrepancy between the publication date of the datasets and the publication date of the article recorded in the bibliographic reference.
+You may have noticed that the datasets were published in 2018, whereas the article [@DabrowskaExperienceAptitudeIndividual2019] was published the following year. This is very common in academic publications as it can take many months or even years for an article or book to be published, by which time the author(s) may have already made the data available on a repository. This particular article was actually first published on the journal's website on 22 October 2018 as an "advanced online publication", but was not officially published until March 2019 as part of Volume 69, Issue S1 of the journal (see <https://doi.org/10.1111/lang.12323>). This explains the discrepancy between the publication date of the datasets and the publication date of the article recorded in the bibliographic reference.
 
 ## Saving and examining the data {#sec-SavingData}
 
 Click on the two links listed in Appendix S4 and download the two datasets. Note that the URL may take a few seconds to redirect and load. Save the two datasets in an appropriate place on your computer (see @sec-FoldersPaths), as we will continue to work with these two files in the following chapters.
 
-::: {.callout-note collapse="true"}
-#### What's a good place to save these files? `r emoji("thinking-face")`
+::: {.callout-note collapse="false"}
+#### What's a good place to save these files? `r emoji("thinking")`
 
-If you haven't already done so, I suggest that you create a folder in which you save everything that you create whilst learning from this textbook. This folder could be called something along the lines of `DataLiteracyTextbook`, `2024_data_literacy`, or `LeFoll_2024_DataLiteracy` (see @sec-FileNaming). Then, within this folder, I recommend that you create another folder called `Dabrowska2019` (note how I have not included the "ą" character in the folder name as this could cause problems), and within this folder, create another folder called `data`. This is the folder in which you can save these two files.
+If you haven't already done so, now is a good time to create a folder in which you save everything that you create while learning from this textbook. This folder could be called something along the lines of `DataAnalysisR` or `2026_Data-Analysis-R` (see @sec-FileNaming). Then, within this folder, I recommend that you create a subfolder called `Dabrowska2019` (note how I have not included the "ą" character in the folder name as this could cause problems on some operating systems), and within this folder, create another subfolder called `data`. This is the folder in which you can save these two data files.
 :::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -159,20 +159,27 @@ right = "That's right! 🎉",
 wrong = "Are you sure? 🤨")
 
 ```
-
 :::
 ::::
 
-The file `L1_data.csv` contains data about the study's L1 participants. It is a delimiter-separated values (DSV) file (see @sec-DSV). The first five lines of the file are printed below. Note that this is a very wide table as it contains many columns (you can scroll to the right to view all the columns).
+The file `L1_data.csv` contains data about the study's L1 participants. It is a delimiter-separated values (DSV) file (see @sec-DSV). The first five lines of the file are printed below. Note that this is a very wide table as it contains many columns.
 
 ```         
-Participant,Age,Gender,Occupation,OccupGroup,OtherLgs,Education,EduYrs,ReadEng1,ReadEng2,ReadEng3,ReadEng,Active,ObjCl,ObjRel,Passive,Postmod,Q.has,Q.is,Locative,SubCl,SubRel,GrammarR,Grammar,VocabR,Vocab,CollocR,Colloc,Blocks,ART,LgAnalysis
-1,21,M,Student,PS,None,3rd year of BA,17,1,2,2,5,8,8,8,8,8,8,6,8,8,8,78,95,48,73.33333333,30,68.75,16,17,15
-2,38,M,Student/Support Worker,PS,None,NVQ IV Music Performance,13,1,2,3,6,8,8,8,8,8,8,7,8,8,8,79,97.5,58,95.55555556,35,84.375,11,31,13
-3,55,M,Retired,I,None,No formal (City and Guilds),11,3,3,4,10,8,8,8,8,8,7,8,8,8,8,79,97.5,58,95.55555556,31,71.875,5,38,5
-4,26,F,Web designer,PS,None,BA Fine Art,17,3,3,3,9,8,8,8,8,8,8,8,8,8,8,80,100,53,84.44444444,37,90.625,20,26,15
+Participant,Age,Gender,Occupation,OccupGroup,OtherLgs,Education,EduYrs,
+ReadEng1,ReadEng2,ReadEng3,ReadEng,Active,ObjCl,ObjRel,Passive,Postmod,
+Q.has,Q.is,Locative,SubCl,SubRel,GrammarR,Grammar,VocabR,Vocab,CollocR,
+Colloc,Blocks,ART,LgAnalysis
+1,21,M,Student,PS,None,3rd year of BA,17,1,2,2,5,8,8,8,8,8,8,6,8,8,8,
+78,95,48,73.33333333,30,68.75,16,17,15
+2,38,M,Student/Support Worker,PS,None,NVQ IV Music Performance,13,1,2,3,6,8,8,8,8,8,8,7,8,8,8,79,97.5,58,95.55555556,
+35,84.375,11,31,13
+3,55,M,Retired,I,None,No formal (City and Guilds),11,3,3,4,10,8,8,
+8,8,8,7,8,8,8,8,79,97.5,58,95.55555556,31,71.875,5,38,5
+4,26,F,Web designer,PS,None,BA Fine Art,17,3,3,3,9,8,8,8,8,8,8,8,8,
+8,8,80,100,53,84.44444444,37,90.625,20,26,15
 ```
-:::: {.content-visible when-format="html"}
+
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -209,7 +216,6 @@ right = "You are right: this DSV file does not have a delimiter character. This 
 wrong = "No, take a closer look at the extract of the DSV file printed above.")
 
 ```
-
 :::
 ::::
 
@@ -217,11 +223,11 @@ wrong = "No, take a closer look at the extract of the DSV file printed above.")
 
 One of the advantages of working with *RStudio* is that it allows us to harness the potential of *RStudio* Projects. Projects help us to keep our digital kitchen nice and tidy. In RStudio, each project has its own directory, environment, and history which means that we can work on multiple projects at the same time and *RStudio* will keep them completely separate. This means that we can easily switch between cooking different dishes, say a gluten-free egg curry and vegan pancakes, without fear of accidentally setting the wrong temperature on the cooker or contaminating either dish.
 
-Regardless of whether or not you're a keen multi-tasker, *RStudio* Projects are a great way to help you keep together all the data, scripts, and outputs associated with a single project in an organised manner. In the long run, this will make your life much, much easier. It will also be an absolute lifesaver as soon as you need to share your work with others (e.g. your supervisor, colleagues, reviewers, etc.).
+Regardless of whether or not you're a keen multitasker, *RStudio* Projects are a great way to help you keep together all the data, scripts, and outputs associated with a single project in an organised manner. In the long run, this will make your life much, much easier. It will also be an absolute lifesaver as soon as you need to share your work with others (e.g. your supervisor, colleagues, reviewers, etc.).
 
-To create a new Project, you have two options. In RStudio, you can select 'File', then 'New Project...' (see "a" on @fig-RStudioNewProject). Alternatively, you can click on the Project button in the top-right corner of your *RStudio* window and then select 'New Project...' (see "b" on @fig-RStudioNewProject).
+To create a new Project, you have two options. In *RStudio*, you can select 'File', then 'New Project...' (see @fig-RStudioNewProject a). Alternatively, you can click on the Project button in the top-right corner of your *RStudio* window and then select 'New Project...' (see @fig-RStudioNewProject b).
 
-![Create a new project in RStudio](images/RStudioNewProject.png){#fig-RStudioNewProject fig-alt="Screenshot of the *RStudio* interface with two highlighted sections for creating a new project. The first highlight (a) is on the 'File' menu in the top left corner, where the option 'New Project...' is circled. The second highlight (b) is in the top right corner, where the option 'New Project...' in a dropdown menu is circled. Both options provide a way to start a new project in RStudio."}
+![Create a new project in *RStudio*](images/RStudioNewProject.png){#fig-RStudioNewProject fig-alt="Screenshot of the *RStudio* interface with two highlighted sections for creating a new project. The first highlight (a) is on the 'File' menu in the top left corner, where the option 'New Project...' is circled. The second highlight (b) is in the top right corner, where the option 'New Project...' in a dropdown menu is circled. Both options provide a way to start a new project in RStudio." width="80%"}
 
 Both options will open up a window with three options for creating a new project:
 
@@ -231,25 +237,25 @@ Both options will open up a window with three options for creating a new project
 
 In @sec-SavingData, you should have already saved the data that we want to import in a dedicated folder on your computer. Here, a folder is the same as a directory. Hence, you can select the second option: 'Existing Directory'.
 
-Clicking on this option will open up a new window (@fig-RStudioNewProject). Click on 'Browse...' to navigate to the folder where you intend to save all your work related to @DabrowskaExperienceAptitudeIndividual2019. If you followed my suggestions earlier on, this would be a folder called something along the lines of `Dabrowska2019`. Once you have selected the correct folder, select the option 'Open in a new session' and then click on 'Create Project'.
+Clicking on this option will open up a new window (@fig-NewProjectWindow). Click on 'Browse...' to navigate to the folder where you intend to save all your work related to @DabrowskaExperienceAptitudeIndividual2019. If you followed my suggestions earlier on, this would be a folder called something along the lines of `Dabrowska2019`. Once you have selected the correct folder, select the option 'Open in a new session' and then click on 'Create Project'.
 
-![New project window](images/RStudioNewProjectDialogue.png){fig-alt="New Project Wizard for Create Project from Existing Directory R Project. It shows the working directory: .../Documents/DataLiteracyTextbook/Dabrowska2019. There are three buttons: Browse..., Create Project and Cancel" width="480"}
+![New project window](images/RStudioNewProjectDialogue.png){#fig-NewProjectWindow fig-alt="New Project Wizard for Create Project from Existing Directory R Project. It shows the working directory: .../Documents/DataLiteracyTextbook/Dabrowska2019. There are three buttons: Browse..., Create Project and Cancel" width="40%"}
 
 Creating an *RStudio* project generates a new file in your project folder called `Dabrowska2019.Rproj`. You can see it in the Files pane of RStudio. Note that the extension of this newly created file is `.Rproj`. Such `.Rproj` files store information about your project options, which you will not need to edit. More usefully, `.Rproj` files can be used as shortcuts for opening your projects. To see how this works, shut down RStudio. Then, in your computer file system (e.g. using a File Explorer window on Windows and a Finder window on macOS), navigate to your project folder to locate your `.Rproj` file (see @fig-ProjectFileFinder). Double-click on the file. This will automatically launch *RStudio* with all the correct settings for this particular project. Alternatively, you can use the Project button in the top-right corner of your *RStudio* window to open up a project from *RStudio* itself (see @fig-RStudioLaunchProject).
 
-::: {#fig-filenames layout-ncol="2"}
-![Launching a Project from the File Finder](images/ProjectFileFinder.png){#fig-ProjectFileFinder fig-alt="Screenshot of the project folder in the MacOS Finder with the .Rproj-file highlighted. To launch the project in a new session, the corresponding .Rproj-file can be double-clicked." width="440"}
+::: {#fig-filenames layout="[[50,-1,50], [100]]" layout-valign="center"}
+![Launching a Project from the File Finder](images/ProjectFileFinder.png){#fig-ProjectFileFinder fig-alt="Screenshot of the project folder in the MacOS Finder with the .Rproj-file highlighted. To launch the project in a new session, the corresponding .Rproj-file can be double-clicked."}
 
-![Launching a Project from RStudio](images/RStudioLaunchProject.png){#fig-RStudioLaunchProject fig-alt="Screenshot of the dropdown menu under the 'Project: (None)' in RStudio, displaying options such as 'New Project...', 'Open Project...', 'Open Project in New Session...', and 'Close Project.' The 'Open Project in New Session...' option is circled in red." width="440"}
+![Launching a Project from RStudio](images/RStudioLaunchProject.png){#fig-RStudioLaunchProject fig-alt="Screenshot of the dropdown menu under the 'Project: (None)' in RStudio, displaying options such as 'New Project...', 'Open Project...', 'Open Project in New Session...', and 'Close Project.' The 'Open Project in New Session...' option is circled in red."}
 
-The two options to open an RProject.
+Two different ways to open an R Project.
 :::
 
 ## Working directories {#sec-WorkingDirectories}
 
-The folder in which the `.Rproj` file was created corresponds to your project's **working directory**. Once you have opened a Project, you can see the path to your project's working directory at the top of the Console pane in RStudio. The Files pane should also show the content of this directory.
+The folder in which the `.Rproj` file was created corresponds to your project's **working directory**. Once you have opened a Project, you can see the path to your project's working directory at the top of the Console pane in RStudio. The Files pane should also show the content of this directory as in @fig-ContentsProj.
 
-![Contents of the project folder as displayed by RStudio](images/WorkingDirectory.png){fig-alt="Screenshot of the Files pane of *RStudio* showing the contens of a folder entitled 'Dabrowska2019'. It contains an RProject file called 'Dabrowska2019.Rproj', a folder called 'analysis' and another folder called 'data'." width="300"}
+![Contents of the project folder as displayed by *RStudio*](images/WorkingDirectory.png){#fig-ContentsProj fig-alt="Screenshot of the Files pane of RStudio showing the contens of a folder entitled 'Dabrowska2019'. It contains an R Project file called 'Dabrowska2019.Rproj', a folder called 'analysis' and another folder called 'data'." width="40%"}
 
 Click on the "New Folder" icon in your Files pane to create a new subfolder called `analysis`. Your folder `Dabrowska2019` should now contain an `.RProj` file and two subfolders called `analysis` and `data`.
 
@@ -292,12 +298,12 @@ In the command above, `header = TRUE`, explicitly tells `R` to import the first 
 
 The arguments `sep` and `quote` specify the characters that, in this `.csv` file are used to separate the values on the one hand, and delineate them, on the other (see @sec-DSV). As we saw above, @DabrowskaExperienceAptitudeIndividual2019's `.csv` files use the comma as the separator and the double quotation mark as the quoting character. Note that the `"` character needs to be preceded by a backslash (`\`) (we say it needs to be "escaped") because otherwise `R` will interpret it as part of the command syntax, which would lead to an error. Finally, the argument `dec = "."` explicitly tells `R` that this `.csv` file uses the dot as the decimal point. In some countries, e.g. Germany and France, the comma is used to represent decimal places so, if you obtain data from a German or French colleague, this setting may need to be changed to `dec = ","` for the data to be imported correctly.
 
-::: {.callout-important collapse="false"}
-#### "Hell is empty, and all the devils are {here}." `r emoji("smiling-face-with-horns")`
+::: {#nte-here .callout-important collapse="false"}
+#### "Hell is empty, and all the devils are here." `r emoji("smiling_imp")`
 
 This section title borrows a quote from The Tempest by William Shakespeare to reflect the fact that file paths are perhaps the most frequent source of frustration among (beginner) coders. @sec-ImportingErrors explains how to deal with the most frequent error messages. Ultimately, however, these errors are typically due to poor data management (see @sec-DataManagement). That's because the devil's in the detail (remember: no spaces, special characters, differences between different operating systems, etc.). As a result, even advanced users of `R` and other programming languages frequently find that file path issues continue to plague their work, if they fail to take file management seriously.
 
-To make your projects more robust to such issues, I strongly recommend working with the [{here}](https://here.r-lib.org/) package in addition to RProjects. You will first need to install the package:
+To make your projects more robust to such issues, I strongly recommend working with the [{here}](https://here.r-lib.org/) package in addition to R Projects. You will first need to install the package:
 
 ```{r eval = FALSE}
 
@@ -326,18 +332,20 @@ library(here)
 L1.data <- read.csv(file = here("data", "L1_data.csv"))
 ```
 
-Much like wearing a helmet for extra safety (@fig-HelmetHere), {here} makes the paths that you include in your code far more robust. In other words, they are far less likely to fail and break your code when you share your scripts with your colleagues, or run them yourself from different directories or operating systems. For more reasons to use {here}, check out the blog post "[Why should I use the here package when I'm already using projects?](https://malco.io/articles/2018-11-05-why-should-i-use-the-here-package-when-i-m-already-using-projects)" by @barrettWhyShouldUse2018.
-
-![Although a fairly common way of working with data in `R`, using `setwd()` (see @sec-HardcodingFilePaths) is dangerous and will, sooner or later, cause you and/or your colleagues some nasty accidents. A combination of using RProj and {here} as described above is much safer!](images/AHorst_RProjHere.png){#fig-HelmetHere fig-alt="A cartoon of a cracked glass cube looking frustrated with casts on its arm and leg, with bandaids on it, containing “setwd”, looks on at a metal riveted cube labeled “R Proj” holding a skateboard looking sympathetic, and a smaller cube with a helmet on labeled “here” doing a trick on a skateboard." width="600"}
+Much like wearing a helmet for extra safety (@fig-HelmetHere), {here} makes the paths that you include in your code far more robust. In other words, they are far less likely to fail and break your code when you share your scripts with your colleagues, or run them yourself from different directories or operating systems. For more reasons to use {here}, check out Malcolm @barrettWhyShouldUse2018's blog post "[Why should I use the here package when I'm already using projects?](https://malco.io/articles/2018-11-05-why-should-i-use-the-here-package-when-i-m-already-using-projects)".
 :::
 
-## Import errors and issues `r emoji("pleading-face")` {#sec-ImportingErrors}
+Although a fairly common way of working with data in `R`, using `setwd()` (see @sec-HardcodingFilePaths) is dangerous and will, sooner or later, cause you and/or your colleagues some nasty accidents (see @fig-HelmetHere). A combination of using R projects (`.RProj`) and the {here} package as described above is much safer!
+
+![Artwork CC BY 4.0 [\@allison_horst](https://twitter.com/allison_horst)](images/AHorst_RProjHere.png){#fig-HelmetHere fig-alt="A cartoon of a cracked glass cube looking frustrated with casts on its arm and leg, with bandaids on it, containing 'setwd', looks on at a metal riveted cube labeled 'R Proj' holding a skateboard looking sympathetic, and a smaller cube with a helmet on labeled 'here' doing a trick on a skateboard." width="70%"}
+
+## Import errors and issues `r emoji("pleading_face")` {#sec-ImportingErrors}
 
 It is crucial that you check whether your data have genuinely been correctly imported. Here's a list of things to check (in that order):
 
 1.  Were you able to run the import command without producing any errors? If you are getting an error, remember that this is most likely due to a typo (see @sec-Errors)!
 
-    -   If part of the error message reads "No such file or directory", this means that either the file path or the file name is incorrect. Carefully check the path that you specified in your import command (if you're struggling to find the correct path, you may want to try out the import method explained in @sec-ImportingGUI). To ensure that you are not misspelling the name of the file, you can press the tab key on your keyboard to get *RStudio* to auto-complete the file name for you.
+    -   If part of the error message reads "No such file or directory", this means that either the file path or the file name is incorrect. Carefully check the path that you specified in your import command (if you're struggling to find the correct path, you may want to try out the import method explained in @sec-ImportingGUI). To ensure that you are not misspelling the name of the file, you can press the `tab` key on your keyboard to get *RStudio* to auto-complete the file name for you.
 
     -   If the error message includes the statement "could not find function", this means that you have either misspelled the name of the function or this is not a base `R` function and you have forgotten to load the library to which this function belongs (see @sec-readr).
 
@@ -345,13 +353,16 @@ It is crucial that you check whether your data have genuinely been correctly imp
 
 2.  Has the `R` data object appeared in your Environment pane? Does it have the expected number of rows (observations) and columns (variables)? `L1.data` contains 90 observations and 31 variables. If you are getting different numbers, this might be because you previously opened the `.csv` file with Excel or that your computer converted it to Excel format automatically. To remedy this, ensure that you have followed all the steps described in @sec-DSVLibreOffice.
 
-3.  To view the entire table, use the function `View()` with the name of your data object as the first and only argument, e.g. `View(L1.data)`[^6_importingdata-2]. This will open up a new tab in your Source pane that displays the full table, much like in a spreadsheet programme. You can search and filter the table in this tab, but you cannot edit it in any way (and that's a good thing because, if we want to edit things, we want to ensure that we keep track of our changes in a script!). Browse through the table and check that everything "looks healthy". This is much like visually inspecting and smelling ingredients before using them in a recipe. It's not perfect but if something is really off, you should notice it. Check that each cell appears to have one and only one value.
+3.  To view the entire table, use the function `View()` with the name of your data object as the first and only argument, e.g. `View(L1.data)`. This will open up a new tab in your Source pane that displays the full table, much like in a spreadsheet programme. You can search and filter the table in this tab, but you cannot edit it in any way (and that's a good thing because, if we want to edit things, we want to ensure that we keep track of our changes in a script!). Browse through the table and check that everything "looks healthy". This is much like visually inspecting and smelling ingredients before using them in a recipe. It's not perfect but if something is really off, you should notice it. Check that each cell appears to have one and only one value.
 
 4.  Finally, use the `str()` function to view the structure of your data object in a more compact way. Using the command `str(L1.data)` will display a summary of the data.frame in the Console. The summary begins by informing us that this data object is a data.frame, that contains 90 observations and 31 variables. Then, it lists all of the variables, followed by the type of values stored in this variable (e.g. character strings or integers) and then the first few values for each variable. Especially with very wide tables that contain a lot of variables, it is often easier to check the summary of the imported data with `str()` than with `View()`, though I would always recommend taking a few seconds to do both. This is time well spent!
 
-[^6_importingdata-2]: Note that, unlike the functions that we have used so far, the `View()` function begins with a capital letter. `R` is a case-sensitive programming language, which means that `view()` and `View()` are not the same thing!
+::: callout-warning
+### Case matte`R`s! {.unnumbered}
+Note that, unlike the functions that we have used so far, the `View()` function begins with a capital letter. `R` is a case-sensitive programming language, which means that `view()` and `View()` are not the same thing! 
+:::
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
@@ -371,7 +382,8 @@ random_answer_order = TRUE,
 q_id = "Q6.8", 
 right = "That's right!",
 wrong = "Hummm, are you sure?")
-check_hint("Use the command `View(L1.data)` to display the full dataset in a new tab.", hint_title = "<br>🐭 Click on the mouse for a hint.")
+check_hint("Use the command `View(L1.data)` to display the full dataset in a new tab.",
+           hint_title = "🐭 Click on the mouse for a hint.")
 
 ```
 
@@ -389,9 +401,8 @@ random_answer_order = TRUE,
 q_id = "Q6.9", 
 right = "That's right!",
 wrong = "Hummm, are you sure?")
-check_hint("How many rows does the dataframe `L2.data` contain?", hint_title = "<br>🐭 Click on the mouse for a hint.")
-
-
+check_hint("How many rows does the dataframe `L2.data` contain?", 
+           hint_title = "🐭 Click on the mouse for a hint.")
 ```
 
 [**Q6.10**]{style="color:green;"} Compare the data frames containing the L1 and L2 data. Which dataset contains more variables?
@@ -408,7 +419,8 @@ random_answer_order = FALSE,
 q_id = "Q6.10", 
 right = "That's right! The L2 dataset includes additional information such as the participants' native language(s) and the age they were when they first moved to an English-speaking country.",
 wrong = "Hummm, are you sure?")
-check_hint("Remember that, in these two data frames, each colum represents a variable. Use the `View()` function to display the data frames and compare them.", hint_title = "<br>🐭 Click on the mouse for a hint.")
+check_hint("Remember that, in these two data frames, each colum represents a variable. Use the `View()` function to display the data frames and compare them.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
 
 ```
 
@@ -426,7 +438,7 @@ q_id = "Q6.11",
 random_answer_order = TRUE,
 right = "That's right!",
 wrong = "That's incorrect.")
-check_hint("Use the command `class(L1.data)` to find out which type of `R` object `L1.data` is.", hint_title = "<br>🐭 Click on the mouse for a hint.")
+check_hint("Use the command `class(L1.data)` to find out which type of `R` object `L1.data` is.", hint_title = "🐭 Click on the mouse for a hint.")
 
 ```
 
@@ -438,7 +450,7 @@ check_hint("Use the command `class(L1.data)` to find out which type of `R` objec
 
 check_question("Because, in this study, all L1 participants have English as their native language.",
                options = c("Because, in this study, all L1 participants have English as their native language.", "Because some or all of the L1 participants did not wish to answer this question.", "Because this variable was removed from the dataset for data protection reasons.", "Because Dr. Dąbrowska decided not to collect this information for L1 participants."), 
-               type = "check",
+               type = "radio",
 button_label = "Check answer",
 q_id = "Q6.12", 
 random_answer_order = TRUE,
@@ -486,7 +498,7 @@ For the command above to work, you will first need to save the file `offlinedata
 
 @fig-BusterudEAData displays an extract of the dataset `AJT_raw_scores_L2.csv` from an experimental study by @busterudVerbPlacementL32023. Although this DSV file has a `.csv` extension, it is actually separated by semicolons. As you can see in @fig-BusterudEAData, in the file `AJT_raw_scores_L2.csv`, the comma is used to show the decimal place.
 
-![Extract of data file AJT_raw_scores_L2.csv from](images/BusterudEA2023_data_snapshot.png){#fig-BusterudEAData fig-alt="The image shows a table from the data file AJT_raw_scores_L2.csv by Busterud et al. It includes rows numbered 261 to 274 with columns for ID, L3, Years of L3, Gender, L3 selfasses, L3 grade, L2 selfasses, and L2 grade. All entries in L3, Years of L3, and Gender are 2, 4, and 4, respectively. Values for L3 selfasses range from 1 to 2,5, L3 grade from 2 to 5, L2 selfasses from 2 to 6, and L2 grade from 3 to 6."}
+![Extract of data file AJT_raw_scores_L2.csv from](images/BusterudEA2023_data_snapshot.png){#fig-BusterudEAData fig-alt="The image shows a table from the data file AJT_raw_scores_L2.csv by Busterud et al. It includes rows numbered 261 to 274 with columns for ID, L3, Years of L3, Gender, L3 selfasses, L3 grade, L2 selfasses, and L2 grade. All entries in L3, Years of L3, and Gender are 2, 4, and 4, respectively. Values for L3 selfasses range from 1 to 2,5, L3 grade from 2 to 5, L2 selfasses from 2 to 6, and L2 grade from 3 to 6." width="80%"}
 
 If you look carefully, you will also see that this dataset has some empty cells. These data can be downloaded from <https://doi.org/10.18710/JBMAPT>. It is delivered with a README text file. It is good practice to include a README file when publishing datasets or code and, as the name suggests, it is always a good idea to actually read README files! `r emoji("upside-down-face")` Among other things, this particular README explains that, in this dataset: "Missing data are represented by empty cells."
 
@@ -504,18 +516,18 @@ AJT.raw.scores.L2 <- read.table(file = "data/AJT_raw_scores_L2.csv",
 
 Once we have run this command, we should check that the data have been correctly imported, for example by using the `View()` function:
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 
 View(AJT.raw.scores.L2)
-
 ```
 
-```{r echo = FALSE}
+```{r}
+#| echo: false
 
 AJT.raw.scores.L2 |> 
   select(ID:`L2.grade`) |> 
-  slice(262:274)
-
+  slice(262:267)
 ```
 
 Here, we can see that the data have been correctly imported as a table. The commas have been correctly converted to decimal points and the empty cells are now labelled `NA`.
@@ -524,57 +536,49 @@ Here, we can see that the data have been correctly imported as a table. The comm
 # [^importingdata-3]: If you are wondering why some are labelled `NA` and some `<NA>`, that's because cell F124 in this table contains a hyphen (`-`) rather than either a numeric value or nothing at all for a missing value. As a result, `R` is interpreting this variable (`L3.grade`) as a character string variable rather than a numeric variable. In string variables, `NA` is printed as `<NA>`. If we were to analyse these data further, we would need to convert this erroneous `-` to an `NA`. We can actually do that in the `read.table()` function by specifying that missing values are represented by both empty cells and cells containing only a hyphen using the argument `na.strings = c("", "-")`. [Download the data](https://doi.org/10.18710/JBMAPT) and try it out if you're curious!
 ```
 
-## Using {readr} from the {tidyverse} to import tabular files {#sec-readr}
+## Using {readr} to import tabular files {#sec-readr}
 
-The {tidyverse} is a family of packages that we will use a lot in future chapters. This family of package includes the {readr} package which features some very useful functions to import data into `R`. You can install and load the {readr} package either individually or as part of the {tidyverse} bundle:
+The {tidyverse} is a family of packages that we will use a lot in future chapters (see @sec-tidyverse). This family of package includes the {readr} package which features some very useful functions to import data into `R`. You can install and load the {readr} package either individually or as part of the {tidyverse} bundle:
 
 ```{r eval=FALSE}
+install.packages("readr") # <1>
+install.packages("tidyverse") # <2>
 
-# Install the package individually:
-install.packages("readr")
-
-# Or install the full tidyverse (this will take a little longer):
-install.packages("tidyverse")
-
-# Load the library:
-library(readr)
-
+library(readr) # <3>
 ```
+
+1.  Install just this package
+2.  Or install the full tidyverse (this will take a little longer).
+3.  Load the library.
 
 ### Delimiter-separated values (DSV) files
 
 The {readr} package includes functions to import DSV files that are similar, but not identical to the base `R` functions explained above. The main difference is that the {readr} functions load data into an `R` object of type "tibble" rather than "data frame". In practice, this will not make a difference for our work in future chapters. Hence, the following two commands can equally be used to import `L1_data.csv`:
 
 ```{r eval=TRUE}
-
-# Import .csv file using the base R function read.csv():
-L1.data <- read.csv(file = "data/L1_data.csv", 
+L1.data <- read.csv(file = "data/L1_data.csv", # <1>
                     header = TRUE, 
                     quote = "\"")
 
 class(L1.data)
 
-# Import .csv file using the {readr} function read_csv():
-L1.data <- read_csv(file = "data/L1_data.csv", 
+L1.data <- read_csv(file = "data/L1_data.csv", # <2> 
                     col_names = TRUE, 
                     quote = "\"")
 
 class(L1.data)
 ```
 
-Note that instead of the argument `header = TRUE`, the {readr} function `read_csv()` takes the argument `col_names = TRUE`, which has the same effect.
+1.  Import `.csv` file using the base `R` function `read.csv()`
+2.  Import `.csv` file using the {readr} function `read_csv()`
 
-There are a few more differences between the two functions that are worth noting:
+Note that instead of the argument `header = TRUE`, the {readr} function `read_csv()` takes the argument `col_names = TRUE`, which has the same effect. There are a few more differences between the two functions that are worth noting:
 
 -   If the column headers in your original data file contain spaces, these will be automatically replaced by dots (`.`) when you import data using base `R` functions. By contrast, with the {readr} functions, the spaces will, by default, be retained. As we will see later, this behaviour can represent both an advantage and disadvantage, depending on what you want to do.
-
 -   The {readr} functions are quicker and are therefore recommended if you are importing large datasets.
-
 -   In general, the behaviour of {readr} functions is more consistent across different operating systems and locale settings (e.g. the language in which your operating system is set).
 
-Note that, just like `read.csv()` was a special case of `read.table`, the {readr} function `read_csv()` is a special variant of the more general function `read_delim()` that can be used to import data from all kinds of DSV files. Check the help file to find out all the options using `?read_delim`.
-
-The help file informs us that the package includes a function specifically designed to import semi-colon separated file with the the comma as the decimal point: `read_csv2()`. It further states that "\[t\]his format is common in some European countries." If you scroll down the help page, you will see that its usage is summarised in the following way:
+Note that, just like `read.csv()` was a special case of `read.table`, the {readr} function `read_csv()` is a special variant of the more general function `read_delim()` that can be used to import data from all kinds of DSV files. Check the help file to find out all the options using `?read_delim`. The help file informs us that the package includes a function specifically designed to import semi-colon separated file with the the comma as the decimal point: `read_csv2()`. It further states that "\[t\]his format is common in some European countries." If you scroll down the help page, you will see that its usage is summarised in the following way:
 
 ```         
 read_csv2(
@@ -611,91 +615,92 @@ AJT.raw.scores.L2 <- read_csv2(file = "data/AJT_raw_scores_L2.csv")
 
 Note that, whereas when we used the base `R` function `read.table()` the header for the third variable in the file was imported as `Years.of.L3`, using the {readr} function, the variable is entitled `Years of L3`.
 
-### Fixed width files
+### Fixed-width files
 
-Fixed width files (with file extensions such as `.gz`, .`bz2` or `.xz`) are a less common type of data source in the language sciences. In these text-based files, the values are separated not by a specific character such as the comma or the tab, but by a set amount of white/empty space other than a tab. Fixed width files can be loaded using the [`read_fwf()`](https://readr.tidyverse.org/reference/read_fwf.html) function from {readr}. Fields can be specified by their widths with [`fwf_widths()`](https://readr.tidyverse.org/reference/read_fwf.html) or by their positions with [`fwf_positions()`](https://readr.tidyverse.org/reference/read_fwf.html).
+Fixed-width files (with file extensions such as `.gz`, .`bz2` or `.xz`) are a less common type of data source in the language sciences. In these text-based files, the values are separated not by a specific character such as the comma or the tab, but by a set amount of white/empty space other than a tab. Fixed-width files can be loaded using the [`read_fwf()`](https://readr.tidyverse.org/reference/read_fwf.html) function from {readr}. Fields can be specified by their widths with [`fwf_widths()`](https://readr.tidyverse.org/reference/read_fwf.html) or by their positions with [`fwf_positions()`](https://readr.tidyverse.org/reference/read_fwf.html).
 
 ## Importing files from spreadsheet software {#sec-SpreadsheetSoftware}
 
-If your data are currently stored in a spreadsheet software (e.g. LibreOffice Calc, Google Sheets, or Microsoft Excel), you can export them to `.csv` or `.tsv`. However, if you do not wish to do this (e.g. because your colleague wishes to maintain the spreadsheet format that includes formatting elements such as bold or coloured cells), there are functions to import these file formats directly into `R`.
+If your data are currently stored in a spreadsheet software (e.g. LibreOffice Calc, Google Sheets, or Microsoft Excel), you can export them to `.csv` or `.tsv`, which are better archiving and sharing formats. However, if you do not wish to do this (e.g. because your colleague wishes to maintain the spreadsheet format that includes formatting elements such as bold or coloured cells) or because this is not your own data, you'll be pleased to learn that there are functions to import these file formats directly into `R`.
 
-### LibreOffice Calc
+### LibreOffice/OpenOffice Calc
 
-For LibreOffice Calc (which you should have installed in @sec-OpenSource), you can install the {readODS} package and use its `read_ods()` function to import `.ods` files. Details about all the options can be found here <https://www.rdocumentation.org/packages/readODS/versions/2.3.0>.
+To import `.ods` files, as used natively by open-source text processing software such as LibreOffice Calc (which you should have installed in @sec-OpenSource) and OpenOffice Calc, you can install the [{readODS}](https://www.rdocumentation.org/packages/readODS/versions/2.3.0) package and use its `read_ods()` function:
 
 ```{r eval = FALSE}
-# Install from CRAN (safest option):
-install.packages("readODS")
+install.packages("readODS") # <1>
+remotes::install_github("ropensci/readODS") # <2>
 
-# Or install the development version from Github:
-remotes::install_github("ropensci/readODS")
+library(readODS) # <3>
 
-# Load the library:
-library(readODS)
-
-# Import your .ods data:
-MyLibreOfficeData <- read_ods("data/MyLibreOfficeTable.ods",
+MyLibreOfficeData <- read_ods("data/MyLibreOfficeTable.ods", # <4>
                             sheet = 1,
                             col_names = TRUE,
                             na = NA)
 
 ```
+
+1.  Install from CRAN. This is the safest option.
+2.  Alternatively, install the development version from Github.
+3.  Load the library.
+4.  Import the first tab of your `.ods` spreadsheet, ensuring that the first row is processed as the column headers and that `NA` are recognised as such.
 
 ### Microsoft Excel
 
-Various packages can be used to import Microsoft Excel file formats, but the simplest is {readxl}, which is part of the {tidyverse}. It allows users to import data in both `.xlsx` and the older `.xls` format. You can find out more about its various options here: <https://readxl.tidyverse.org/>.
+Various packages can be used to import Microsoft Excel file formats, but the simplest is [{readxl}](https://readxl.tidyverse.org/), which is also part of the {tidyverse} (@sec-tidyverse). It allows users to import data in both `.xlsx` and the older `.xls` format. 
 
 ```{r eval = FALSE}
-# Install from CRAN (safest option):
-install.packages("readxl")
+install.packages("readxl") # <1>
+remotes::install_github("tidyverse/readxl") # <2>
 
-# Or install the development version from Github:
-remotes::install_github("tidyverse/readxl")
+library(readxl) # <3>
 
-# Load the library:
-library(readxl)
-
-# Import your .ods data:
-MyExcelData <- read_excel("data/MyExcelSpreadsheet.xlsx",
+MyExcelData <- read_excel("data/MyExcelSpreadsheet.xlsx", # <4>
                             sheet = 1,
                             col_names = TRUE,
                             na = NA)
 
 ```
 
+1.  Install from CRAN (safest option).
+2.  Or install the development version from Github.
+3.  Load the library.
+4.  Import the first tab of your Excel spreadsheet, ensuring that the first row is processed as the column headers and that `NA` are recognised as such.
+
 ### Google Sheets
 
-There are also several ways to import data from Google Sheets. The simplest is to export your tabular data as a `.csv`, `.tsv`, `.xslx`, or `.ods` file by selecting Google Sheet's menu option 'File' \> 'Download'. Then, you can simply import this downloaded file in `R` using the corresponding function as described above.
+There are also several ways to import data from Google Sheets. The simplest is to export your tabular data as a `.csv`, `.tsv`, `.xslx`, or `.ods` file by selecting Google Sheet's menu option under 'File' and 'Download'. Then, you can import this downloaded file in `R` using the corresponding function as described above.
 
-However, if you want to directly import your data from Google Sheets and be able to dynamically update the analyses that you conduct in `R` even as the input data are amended on Google Sheets, you can use the {googlesheets4} package (which is part of the {tidyverse}):
+However, if you want to directly import your data from Google Sheets and be able to dynamically update the analyses that you conduct in `R` even as the input data are amended on Google Sheets, you can use the [{googlesheets4}](https://googlesheets4.tidyverse.org/) package (which is part of the {tidyverse}):
 
 ```{r eval = FALSE}
-# Install from CRAN (safest option):
-install.packages("googlesheets4")
+install.packages("googlesheets4") # <1>
+remotes::install_github("tidyverse/googlesheets4") # <2>
 
-# Or install the development version from Github:
-remotes::install_github("tidyverse/googlesheets4")
+library(googlesheets4) # <3>
 
-# Load the library:
-library(googlesheets4)
-
-# Import your Google Sheets data using your (spread)sheet's URL:
-MySheetsData <- read_sheet("https://docs.google.com/spreadsheets/d/1U6Cf_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY/edit#gid=780868077",
+MySheetsData <- read_sheet("https://docs.google.com/spreadsheets/YourURL", # <4>
                             sheet = 1,
                             col_names = TRUE,
                             na = "NA")
 
-# Or import your Google Sheets data using just the sheet's ID:
-MySheetsData <- read_sheet("1U6Cf_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY/edit#gid=780868077",
+MySheetsData <- read_sheet("YourGoogleSheetsID", # <5>
                             sheet = 1,
                             col_names = TRUE,
                             na = "NA")
 
 ```
 
-![Dialogue box to consent to the {tidyverse} API Packages having access to your Google Drive to import directly from a Google Sheet. Read this carefully before clicking on 'Continue'.](images/GoogleSheetsTidyverseAccess.png){#fig-TidyverseAPI fig-alt="Sign in with Google. Tidyverse API Packages wants access to your Google Account. Select what Tidyverse API Packages can access • See, edit, create, and delete all your Google Sheets spreadsheets. Because you're using Sign in with Google, Tidyverse API Packages will be able to Associate you with your personal info on Google, See your primary Google Account email address. Make sure you trust Tidyverse API Packages. You may be sharing sensitive info with this site or app. Learn about how Tidyverse API Packages will handle your data by reviewing its privacy policies. You can always see or remove access in your Google Account. Learn about the risks. The two buttons at the bottom read: Cancel and Continue"}
+1.  Install from CRAN (safest option).
+2.  Or install the development version from Github.
+3.  Load the library.
+4.  Import your Google Sheets data using its URL.
+5.  Or import your Google Sheets data using just the sheet's ID.
 
-### Importing spreadsheet files with multiple sheets/tabs {#sec-MultipleSheets}
+![Dialogue box to consent to the {tidyverse} API Packages having access to your Google Drive to import directly from a Google Sheet. Read this carefully before clicking on "Continue".](images/GoogleSheetsTidyverseAccess.png){#fig-TidyverseAPI fig-alt="Sign in with Google. Tidyverse API Packages wants access to your Google Account. Select what Tidyverse API Packages can access • See, edit, create, and delete all your Google Sheets spreadsheets. Because you're using Sign in with Google, Tidyverse API Packages will be able to Associate you with your personal info on Google, See your primary Google Account email address. Make sure you trust Tidyverse API Packages. You may be sharing sensitive info with this site or app. Learn about how Tidyverse API Packages will handle your data by reviewing its privacy policies. You can always see or remove access in your Google Account. Learn about the risks. The two buttons at the bottom read: Cancel and Continue" width="80%"}
+
+::: callout-note
+### Importing spreadsheet files with multiple sheets/tabs {.unnumbered}
 
 Note that, as spreadsheet software typically allow users to have several "sheets" or "tabs" within a file that each contains separate tables, the functions `read_excel()`, `read_ods()`, and `read_sheet` include an argument called `sheet` which allows you to specify which sheet should be imported. The default value is `1`, which simply means that the first one is imported. If your sheets have names, you can also use its name as the argument value, e.g.:
 
@@ -707,50 +712,51 @@ MyExcelData <- read_excel("data/MyExcelSpreadsheet.xlsx",
                             na = NA)
 
 ```
+:::
 
 ## Importing data files from SPSS, SAS and Stata {#sec-SPPS}
 
-If you've recently switched from working in SPSS, SAS, or Stata (or are collaborating with someone who uses these programmes), it might be useful to know that you can also import the data files created by programmes directly into `R` using the {haven} package. Details of all the options can be found here: <https://haven.tidyverse.org/>.
+If you've recently switched from working in SPSS, SAS, or Stata (or are collaborating with someone who uses these programmes), it might be useful to know that you can also import the data files created by programmes directly into `R` using the [{haven}](https://haven.tidyverse.org/) package.
 
 ```{r eval = FALSE}
-# Install from CRAN (safest option):
-install.packages("haven")
+install.packages("haven") # <1>
+remotes::install_github("tidyverse/haven") # <2>
 
-# Or install the development version from Github:
-remotes::install_github("tidyverse/haven")
+library(haven)  # <3>
 
-# Load the library:
-library(haven)
+MySASData <- read_sas("MySASDataFile.sas7bdat")  # <4>
 
-# Import an SAS file
-MySASData <- read_sas("MySASDataFile.sas7bdat")
+MySPSSDataFile <- read_sav("MySPSSDataFile.sav") # <5>
 
-# Import an SPSS file
-MySPSSDataFile <- read_sav("MySPSSDataFile.sav")
-
-# Import a Stata file
-MyStataData <- read_dta("MyStataDataFile.dta")
+MyStataData <- read_dta("MyStataDataFile.dta") # <6>
 
 ```
+
+1.  Install from CRAN (safest option).
+2.  Or install the development version from Github.
+3.  Load the library.
+4.  Import a SAS data file.
+5.  Import a SPSS data file.
+6.  Import a Stata data file.
 
 ## Importing other file formats {#sec-OtherFileFormats}
 
 In this textbook, we will only deal with DSV files (@sec-DSV) but, as you can imagine, there are many more `R` packages and functions that allow you to import all kinds of other file formats. These include `.xml`, `.json` and `.html` files, various database formats, and other files with complex structures (see, e.g. <https://rc2e.com/inputandoutput>).
 
-In addition, fellow linguists are constantly developing new packages to work with file formats that are specific to our discipline. In the spirit of Open Science (see @sec-OpenScholarship), many are making these packages available to the wider research community by releasing them under open licenses. For example, linguistics M.A. students Katja Wiesner and Nicolas Werner wrote an `R` package to facilitate the import of `.eaf` files generated by the annotation software [ELAN](https://archive.mpi.nl/tla/elan) [@lausbergCodingGesturalBehavior2009] into `R` as part of a seminar project supervised by Dr. Fahime (Fafa) Same at the University of Cologne (<https://github.com/relan-package/rELAN/?tab=readme-ov-file>).
+In addition, fellow linguists are constantly developing new packages to work with file formats that are specific to our discipline. In the spirit of Open Science (see @sec-OpenScholarship), many are making these packages available to the wider research community by releasing them under open licenses. For example, linguistics M.A. students Katja Wiesner and Nicolas Werner wrote and published an `R` package called [rELAN](https://github.com/relan-package/rELAN/?tab=readme-ov-file) to facilitate the import of the `.eaf` files generated by the linguistics annotation software [ELAN](https://archive.mpi.nl/tla/elan) [@lausbergCodingGesturalBehavior2009] as part of a seminar project supervised by Dr. Fahime (Fafa) Same at the University of Cologne.
 
 ## Quick-and-dirty (aka bad!) ways to import data in `R`
 
-Feel free to skip this section if you got on just fine with the importing method introduced above as the following two methods are problematic for a number of reasons. However, they may come in useful in special cases, which is why both are briefly explained below.
+Feel free to skip this section if you got on just fine with the importing method introduced above as the following two methods are problematic for a number of reasons. However, they may come in useful in special cases and you will certainly find scripts that include hardcoded paths, which is why both are briefly explained below.
 
 ### Hardcoding file paths in `R` scripts `r emoji("woozy_face")` {#sec-HardcodingFilePaths}
 
 Whilst it is certainly not recommended [see e.g. @bryanProjectorientedWorkflow2017], it is nonetheless worth understanding this method of working with file paths in `R` as you may well come across it in other people's code.
 
-Instead of creating an RProject to determine a project's working directory (as we did in @sec-RProject), it is possible to begin a script with a line of code that sets the **working directory** for the script using the function `setwd()`, e.g.:
+Instead of creating an R Project to determine a project's working directory (as we did in @sec-RProject), it is possible to begin a script with a line of code that sets the **working directory** for the script using the function `setwd()`, e.g.:
 
 ```{r eval = FALSE}
-setwd("/Users/lefoll/Documents/UzK/RstatsTextbook/Dabrowska2019")
+setwd("/Users/lefoll/UzK/RstatsTextbook/Dabrowska2019")
 ```
 
 Afterwards, data files can be imported using a **relative path** from the working directory just like we did earlier.
@@ -771,13 +777,9 @@ L1.data <- read.csv(file = "/Users/lefoll/Documents/UzK/RstatsTextbook/Dabrowska
 
 Having to work with such a script is particularly laborious because it means that, if you inherit such a script from a colleague, you will have to manually change every single file path in the script to the corresponding file paths on your own computer. And, as @bryanProjectorientedWorkflow2017 points out, this will also apply if you change anything in your own computer directory structure! I hope I've made clear that the potential for making errors in the process is far too important to even consider going down that route.
 
-However, should you have to use this method at some point for whatever reason, you can make use of @sec-FoldersPaths which explained how to copy full file paths from a file Explorer or Finder window. Note that if there are spaces or other special characters other than `_` or `-` anywhere in your file path, your import command will fail (see @sec-FileNaming on naming conventions for folders and files). The following command, for instance, will fail and return an error (see @fig-ImportErrorSpace) because the folder "Uni Work" contains a space.
+However, should you have to use this method at some point for whatever reason, you can make use of @sec-FoldersPaths which explained how to copy full file paths from a file Explorer or Finder window. Note that if there are spaces or other special characters other than `_` or `-` anywhere in your file path, your import command will fail (see @sec-FileNaming on naming conventions for folders and files). The import command in @fig-ImportErrorSpace, for instance, fails and returns an error (see ) because the folder "Uni Work" contains a space.
 
-```{r eval = FALSE}
-L1.data <- read.csv(file = "/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/L1_data.csv")
-```
-
-![Error message due to an error in the file path](images/ImportErrorSpace.png){#fig-ImportErrorSpace fig-alt="Screenshot of the Console pane of *RStudio* showing the above command having been run and having returned an error message: Error in file(file, \"rt\") : cannot open the connection In addition: Warning message: In file(file, \"rt\") :   cannot open file '/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/L1_data.csv': No such file or directory" width="422"}
+![Error message due to an error in the file path](images/ImportErrorSpace.png){#fig-ImportErrorSpace fig-alt="Screenshot of the Console pane of *RStudio* showing the above command having been run and having returned an error message: Error in file(file, \"rt\") : cannot open the connection In addition: Warning message: In file(file, \"rt\") :   cannot open file '/Users/lefoll/Documents/Uni Work/RstatsTextbook/Dabrowska2019/data/L1_data.csv': No such file or directory" width="50%"}
 
 The only way to fix this issue is to remove the space in the name of the folder (in your File Finder or Navigator window) and then amend the file path in your `R` script accordingly.
 
@@ -785,11 +787,11 @@ The only way to fix this issue is to remove the space in the name of the folder 
 
 You may have noticed that, if you click on a data file from the Files pane in *RStudio* (@fig-RStudioImportDataset), *RStudio* will offer to import the dataset for you. This looks like (and genuinely is) a very convenient way to import data in an `R` session using RStudio's GUI (graphical user interface).
 
-![Importing a file from RStudio's File pane](images/RStudioImportDataset.png){#fig-RStudioImportDataset fig-alt="Screenshot of the Files pane in *RStudio* displaying the options after clicking on a CSV file. The option 'Import Dataset...' is highlighted. Clicking on this will open the 'Import Text Data' dialog for importing this file." width="404"}
+![Importing a file from RStudio's File pane](images/RStudioImportDataset.png){#fig-RStudioImportDataset fig-alt="Screenshot of the Files pane in *RStudio* displaying the options after clicking on a CSV file. The option 'Import Dataset...' is highlighted. Clicking on this will open the 'Import Text Data' dialog for importing this file." width=40%}
 
-Clicking on 'Import Dataset' opens up RStudio's 'Import Text Data' dialogue box, which is similar to the one that we saw in LibreOffice Calc (@sec-DSVLibreOffice). It allows you to select the relevant options to correctly import the file and displays a preview to check that the options that you have selected are correct. You can also specify the name of the `R` object to which you want to assign the imported data. By default, the name of the data file (minus the file extension and any special characters) is suggested.
+Clicking on "Import Dataset" opens up *RStudio*'s "Import Text Data" dialogue box, which is similar to the one that we saw in LibreOffice Calc (@sec-DSVLibreOffice). It allows you to select the relevant options to correctly import the file and displays a preview to check that the options that you have selected are correct. You can also specify the name of the `R` object to which you want to assign the imported data. By default, the name of the data file (minus the file extension and any special characters) is suggested.
 
-![RStudio's 'Import Text Data' dialogue](images/RStudioReadrImportTextDataDialogue.png){#fig-RStudioReadrImportTextDataDialogue fig-alt="Screenshot of the 'Import Text Data'-dialouge showing the import settings of a the file 'L1_data.csv'. It shows the 'File URL' of the selected file to be imported, a 'Data Preview', the 'Import Options' and the 'Code Preview'." width="740"}
+![*RStudio*'s "Import Text Data" dialogue](images/RStudioReadrImportTextDataDialogue.png){#fig-RStudioReadrImportTextDataDialogue fig-alt="Screenshot of the 'Import Text Data'-dialogue showing the import settings of a the file 'L1_data.csv'. It shows the 'File URL' of the selected file to be imported, a 'Data Preview', the 'Import Options' and the 'Code Preview'." width="90%"}
 
 As soon as you click on the 'Import' button, the data are imported and opened using the `View()` function for you to check the sanity of the data.
 
@@ -801,15 +803,17 @@ Whilst there is no way of remedying the first issue, the second can easily be fi
 
 If you are running into errors due to incorrect file paths, it can be useful to try to import your data using RStudio's GUI to see where you are going wrong by comparing your own attempts with the import commands that *RStudio* generated.
 
-:::: {.content-visible when-format="html"}
-### Check your progress `r emoji("star2")` {.unnumbered}
+::: {.content-visible when-profile="OER"}
+### Check your progress 🌟 {.unnumbered}
 
 You have successfully completed [`r checkdown::insert_score()` out of 12 questions]{style="color:green;"} in this chapter.
-::::
+:::
 
-:::: {.content-visible when-format="pdf"}
+::: {.content-visible when-format="pdf"}
 ### Check your progress {.unnumbered}
-::::
+
+It's time to complete this chapter's [tasks and quizzes](https://elenlefoll.github.io/RstatsTextbook/quizzes/6_quiz.html)! These tasks are crucial to be able to continue with the following chapters.
+:::
 
 Are you confident that you can...?
 
@@ -819,7 +823,7 @@ Are you confident that you can...?
 -   [ ] Check whether your data are correctly imported (@sec-ImportingErrors)
 -   [ ] Import tabular data in other formats (@sec-ImportingTabularData)
 -   [ ] Use the {readr} package to import tabular files (@sec-readr)
--   [ ] Import files with single and multiple tabs from spreadsheet software (@sec-SpreadsheetSoftware) - (@sec-MultipleSheets)
+-   [ ] Import files with single and multiple tabs from spreadsheet software (@sec-SpreadsheetSoftware)
 -   [ ] Find out how to import data in other file formats (@sec-SPPS - @sec-OtherFileFormats)
 
-Now it's time to start exploring research data in `R`! In [the next chapter](@sec-VaRiablesAndFunctions), you will learn how to work with in-built `R` functions to find out more about the DSV data from @DabrowskaExperienceAptitudeIndividual2019 that you imported in this chapter.
+Now it's time to start exploring research data in `R`! In @sec-VaRiablesAndFunctions you will learn how to work with in-built `R` functions to find out more about the DSV data from @DabrowskaExperienceAptitudeIndividual2019 that you imported in this chapter.

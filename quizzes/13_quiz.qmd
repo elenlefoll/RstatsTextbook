@@ -1,0 +1,621 @@
+# Ch. 13: Tasks & Quizzes {.unnumbered}
+
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+The dataset from @DabrowskaExperienceAptitudeIndividual2019 includes a variable that we have not explored yet: `ART`. It stands for Author Recognition Test [@acheson2008] and is a measure of print exposure to (almost exclusively Western, English-language) literature. @DabrowskaExperienceAptitudeIndividual2019 [: 9] explains the testing instrument and her motivation for including it in her battery of tests as follows:
+
+> The test consists of a list of 130 names, half of which are names of real authors. The participants’ task is to mark the names that they know to be those of published authors. To penalize guessing, the score is computed by subtracting the number of foils \[wrong guesses\] from the number of real authors selected. Thus, the maximum possible score is 65, and the minimum score could be negative if a participant selects more foils than real authors. When this happened, the negative number was replaced with 0.
+>
+> The ART has been shown to be a valid and reliable measure of print exposure, which, unlike questionnaire-based measures, is not contaminated by socially desirable responses and assesses lifetime reading experience as opposed to current reading (see Acheson et al., 2008; Stanovich & Cunningham, 1992).
+
+```{r}
+#| include: false
+library(performance)
+library(here)
+library(qqplotr)
+library(visreg)
+library(tidyverse)
+
+select <- dplyr::select
+
+Dabrowska.data <- readRDS(file = here("data", "processed", "combined_L1_L2_data.rds"))
+
+L1.data <- Dabrowska.data |> 
+  filter(Group == "L1")
+
+L2.data <- Dabrowska.data |> 
+  filter(Group == "L2")
+
+Dabrowska.data <- Dabrowska.data |> 
+  mutate(Age_c = Age - median(Age),
+         Blocks_c = Blocks - median(Blocks),
+         EduTotal_c = EduTotal - median(EduTotal))
+
+```
+
+[**Q13.1**]{style="color:green;"} For this task, you will fit a new multiple linear regression model that predicts `Vocab` scores among L1 and L2 speakers using all of the predictors that we used in `model4_c` plus `ART` scores. Which formula do you need to specify inside the `lm()`function to fit this new model (which we will name `model.ART`)?
+
+```{r}
+#| echo: false
+#| label: "Q13.1"
+library(checkdown)
+check_question("Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART",
+               options = c("Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART",
+                           "ART ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c",
+                           "Vocab ~ model4_c + ART",
+                           "Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c * ART"),
+               random_answer_order = TRUE,
+               type = "radio",
+               q_id = "Q13.1",
+               button_label = "Check answer",
+               right = "That's right, well done!",
+               wrong = "No, try it out for yourself and see which formula generates the right model.") 
+check_hint("Watch out: Although they are easily confused, the plus sign (`+`) and the asterisk sign (`*`) have different meanings in model formulas.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+[**Q13.2**]{style="color:green;"} Fit a model using the correct formula from above and save it as `model.ART`. Examine the summary of your new model. Which of these statements is/are true?
+
+```{r}
+#| echo: false
+#| label: "Q13.2"
+
+check_question(c("Recognising more real authors on the ART is associated with higher Vocab scores.",
+                 "ART makes a statistically significant contribution to the model at the α-level of 0.05.",
+                 "The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c)."),
+               options = c("Recognising more real authors on the ART is associated with higher Vocab scores.",
+                 "ART makes a statistically significant contribution to the model at the α-level of 0.05.",
+                 "The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c).",
+                 "Recognising more real authors on the ART is associated with lower Vocab scores.",
+                 "ART does not make a statistically significant contribution to the model at the α-level of 0.05.",
+                 "The model that does not include ART (model4_c) accounts for more of the variance in Vocab scores than the model that does."),
+               random_answer_order = TRUE,
+               type = "check",
+               q_id = "Q13.2",
+               button_label = "Check answer",
+               right = "That's right! Well done!",
+               wrong = "No, not quite. Check the hint and the code below if you need some help.")
+check_hint("Three of these statements are correct.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to help you answer Q13.2."
+#| eval: false
+
+Dabrowska.data |> # <1>
+  ggplot(mapping = aes(y = Vocab,
+                       x = ART)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_bw()
+
+model.ART <- lm(Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART, 
+             data = Dabrowska.data) # <2>
+
+summary(model.ART) # <3>
+
+summary(model4_c) # <4>
+summary(model.ART)
+```
+
+1.  First, it is always a good idea to visualise the data before fitting a model to have an idea of what to expect.
+2.  We fit the new model with ART as an additional predictor using the correct formula from Q13.1.
+3.  We examine the coefficients of this new model.
+4.  To find out how much variance the model accounts for compared to our prior model, compare the adjusted *R*-squared values of the two models.
+
+Have you noticed how, having added `ART` as a predictor to your model, `Age` no longer makes a statistically significant contribution to the model (*p* = 0.070994)? How come? Well, it turns out that `ART` and `Age` are correlated (*r* = 0.32, see scatterplot below). This moderate positive correlation makes intuitive sense: the older you are, the more likely you are to have come across more authors and therefore be able to correctly identify them in the Author Recognition Test. Of the two predictors, our model suggests that ART scores are a more useful predictor of `Vocab` scores than age. In other words, if we know the ART score of a participant from the @DabrowskaExperienceAptitudeIndividual2019 dataset, their age does not provide additional information that can help us to better predict their `Vocab` score.
+
+```{r}
+#| echo: false
+#| fig-asp: 0.8
+#| fig-cap: "Observed relationship between participants' age and their Author Recognition Test (ART) scores. The blue line shows that there is a moderate positive correlation between these two variables."
+#| fig-alt: "Scatterplot showing the relationship between age on the x-axis and Author Recognition Test (ART) scores on the y-axis, with data points scattered throughout. A blue regression line with gray confidence band shows a moderate positive correlation."
+
+Dabrowska.data |> 
+  ggplot(mapping = aes(x = Age,
+                       y = ART)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_bw()
+```
+
+[**Q13.3**]{style="color:green;"} What is the predicted `Vocab` score of a female L1 speaker aged 31 (the median age) with a manual occupation, who scored 16 on the Blocks test (the median score), spent 14 years in formal education (median time period), and scored 20 on the Author Recognition Test?
+
+```{r}
+#| echo: false
+#| label: "Q13.3"
+
+check_question("71.1133",
+               options = c("71.1133",
+                           "74.1007",
+                           "74.3556",
+                           "8.5405",
+                           "123.3076",
+                           "73.6248"),
+               random_answer_order = TRUE,
+               type = "radio",
+               button_label = "Check answer",
+               q_id = "Q13.3",
+               right = "Absolutely, well done!",
+               wrong = "No, that's it. Check the hint below.")
+check_hint("The person described corresponds to the reference levels of all the predictors except for their occupational group and ART score.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q13.3."
+#| eval: false
+
+62.5728 + -2.5115 + 0.5526*20 # <1>
+```
+
+1. We must add together the coefficient for the intercept, the coefficient for the manual occupation (which is negative), and the ART coefficient multiplied by 20 (remember that we did not center this predictor).
+
+[**Q13.4**]{style="color:green;"} By default, the `visreg()` function displays a 95% confidence band around predicted values, corresponding to a significance level of 0.05. How can you change this default to display a 99% confidence band instead? Run the command `?visreg()` to find out how to achieve this from the function's help file.
+
+```{r}
+#| echo: false
+#| label: "Q13.4"
+
+check_question("visreg(model.ART, xvar = \"ART\", alpha = 0.01)",
+               options = c("visreg(model.ART, xvar = \"ART\", alpha = 0.01)",
+                           "visreg(model.ART, xvar = \"ART\", alpha = 99)",
+                           "visreg(model.ART, xvar = \"ART\", alpha = \"99%\")",
+                           "visreg(model.ART, xvar = \"ART\", CI = 0.01)",
+                           "visreg(model.ART, xvar = \"ART\", trans = CI(0.99))"),
+               random_answer_order = TRUE,
+               type = "radio",
+               q_id = "Q13.4",
+               button_label = "Check answer",
+               right = "That's right, well done!",
+               wrong = "No, that's not it. Have you tried to run the command to see if it works?")
+check_hint("99% expressed as a probability is 0.99. The significance level is equal to 1 minus the confidence level expressed as a probability.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q13.4."
+#| eval: false
+
+1 - 0.99 # <1>
+
+visreg(model.ART, # <2>
+       xvar = "ART", 
+       alpha = .01) # <3>
+```
+1.  The alpha value that corresponds to a 99% confidence interval is equal 0.01.
+2.  Hence the code should (minimally) include these arguments.
+3.  The argument that we need to change is called `alpha` because the significance level is also called the alpha-level (see Section 11.4). 
+
+Observe how the width of the confidence bands changes when you increase the significance level from 0.01 to 0.1: the higher the significance level, the narrower the confidence band becomes. Remember that the significance level corresponds to the risk that we are willing to take of wrongly rejecting the null hypothesis when it is actually true. Therefore, when we lower this risk by choosing a lower significance level (i.e. 0.01), we end up with wider confidence bands that are more likely to allow us to draw a flat line (see @sec-Correlations). If we can draw a flat line through a 99% confidence band, this means that we do not have enough evidence to reject the null hypothesis at the significance level of 0.01.
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+In the last [Your turn!]{style="color:green;"} section, you fitted a multiple linear regression model to predict `Vocab` scores among L1 and L2 speakers using all of the predictors that we used in `model4_c` plus `ART` scores.
+
+[**Q13.5**]{style="color:green;"} Calculate the relative importance of each of the predictors in this model using the {relaimpo} package. What is the relative importance of the predictor `ART` in this model as estimated by the lmg metric and rounded to two decimal places?
+
+```{r}
+#| echo: false
+#| label: "Q13.5"
+
+check_question(c("0.11", "0,11"),
+               button_label = "Check answer",
+               q_id = "Q13.5",
+               right = "That's right! Note that entering this predictor in the model changes the relative importance of all the other predictors, too.",
+               wrong = "No, that's incorrect.")  
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q13.5."
+#| eval: false
+
+model.ART <- lm(Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART, 
+             data = Dabrowska.data) # <1>
+
+library(relaimpo)
+rel.imp.metric <- calc.relimp(model.ART, # <2>
+                              type = "lmg")
+
+rel.imp.metric.df <- data.frame(lmg = rel.imp.metric$lmg) |>  # <3>
+    rownames_to_column(var = "Predictor")
+
+rel.imp.metric.df |> # <4>
+  mutate(lmg = round(lmg, digits = 2)) |> 
+  arrange(-lmg)
+```
+
+1.  Fit the model.
+2.  Compute the lmg values
+3.  Extract the lmg values and store them as a data frame.
+4.  Display the lmg values as a table.
+
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+In this task, we will explore the possibility of an interaction between participants' native-speaker status (`Group`) and the number of years they spent in formal education (`EduTotal`). The underlying idea is that, for the L1 speakers, their formal education will most likely have been in English; hence the longer they were in formal education, the higher they might score on the `Vocab` test. For the L2 speakers, however, their formal education will more likely have been in a language other than English. As a result, years in formal education may be a weaker predictor of `Vocab` scores than for L1 speakers.
+
+[**Q13.6**]{style="color:green;"} To begin, generate a plot to visualise this interaction in the observed data: map the `EduTotal` variable onto the *x*-axis and `Vocab` onto the *y*-axis, and split the plot into two facets, one for L1 and the other for L2 participants. Based on your interpretation of your plot, which of these statements is/are correct?
+
+```{r}
+#| echo: false
+#| label: "Q13.6"
+
+check_question(c("For both L1 and L2 participants, the number of years that they spent in formal education is positively correlated with their Vocab scores."),
+               options = c("For both L1 and L2 participants, the number of years that they spent in formal education is positively correlated with their Vocab scores.",
+                           "The number of years that L1 participants spent in formal education is positively correlated with their Vocab scores. This is not the case for L2 participants.",
+                           "For both L1 and L2 participants, the number of years that they spent in formal education is negatively correlated with their Vocab scores.",
+                           "For both L1 and L2 participants, the correlation between the number of years that they spent in formal education and their Vocab scores is not statistically significant."),
+               random_answer_order = TRUE,
+               type = "check",
+               q_id = "Q13.6",
+               button_label = "Check answer",
+               right = "That's right, well done! 🎉",
+               wrong = "No, that's incorrect. Check the code below if you're struggling to generate the plot.")
+check_hint("Only one of these statements is correct.", 
+           hint_title = "🐭 Click on the mouse for a hint.")           
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show code to generate the plot needed to complete Q13.6"
+#| eval: false
+
+Dabrowska.data |> 
+   ggplot(mapping = aes(x = EduTotal, 
+                        y = Vocab)) +
+     geom_point() +
+     facet_wrap(~ Group) +
+     geom_smooth(method = "lm", 
+                 se = TRUE) +
+     theme_bw()
+```
+
+[**Q13.7**]{style="color:green;"} Below is the model formula for `model5`:
+
+```         
+Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + Age_c:Group
+```
+
+What do you need to add to this formula to also model the interaction that you just visualised?
+
+```{r}
+#| echo: false
+#| label: "Q13.7"
+
+check_question("+ EduTotal_c:Group",
+                 options = c("+ Vocab ~ EduTotal_c:Group",
+                           "+ EduTotal_c:Group",
+                           "+ EduTotal_c:Group:Vocab"),
+               random_answer_order = TRUE,
+               type = "radio",
+               q_id = "Q13.7",
+               button_label = "Check answer",
+               right = "That's right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!",
+               wrong = "No, that's not it.")
+```
+
+[**Q13.8**]{style="color:green;"} Fit the model with the added interaction. Does the interaction make a statistically significant contribution to the model at the significance level of 0.05?
+
+```{r}
+#| echo: false
+#| label: "Q13.8"
+
+check_question("No, it does not.",
+               options = c("No, it does not.",
+                           "Yes, it does."),
+               button_label = "Check answer",
+               type = "radio",
+               q_id = "Q13.8",
+               right = "That's right. The *p*-value associated with the interaction coefficient is greater than 0.05.",
+               wrong = "No. The *p*-value associated with the interaction coefficient is greater than 0.05.")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show code to complete Q13.8"
+#| eval: false
+
+model5.int <- lm(Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + Age_c:Group + EduTotal_c:Group,
+                 data = Dabrowska.data)
+
+summary(model5.int)
+```
+
+[**Q13.9**]{style="color:green;"} Use the {visreg} package to visualise the interaction effect `EduTotal_c:Group` as predicted by your model. Looking at your plot of predicted values and partial residuals, which conclusion can you draw?
+
+```{r}
+#| echo: false
+#| label: "Q13.9"
+
+check_question("Years in formal education is a statistically significant predictor of Vocab scores for both L1 and L2 speakers, and there is no striking difference in the strength of this association between the L1 and the L2 group.",
+               options = c("Years in formal education is a statistically significant predictor of Vocab scores for both L1 and L2 speakers, and there is no striking difference in the strength of this association between the L1 and the L2 group.", 
+                           "Years in formal education is a statistically significant predictor of Vocab scores for L1 speakers, but not L2 speakers.", 
+                           "Years in formal education is a statistically significant predictor of Vocab scores for L2 speakers, but not L1 speakers.", 
+                           "The model makes almost perfect predictions for L1 speakers, but not L2 speakers.",
+                           "None of these conclusions can be drawn from the plot alone."),
+               button_label = "Check answer",
+               type = "radio",
+               q_id = "Q13.9",
+               right = "That's right, well done! We can tell from the plot that years in education is a statistically significant predictor because, in both the L1 and the L2 panel, it is impossible to draw a horizontal line that stays within the confidence band. A horizontal line would represent the null hypothesis of no association and, if we cannot draw it within the confidence band, this means that we can reject the null hypothesis. Concerning the statistical significance of the interaction, however, it is not obvious that the slopes of the two lines differ much. All the predicted Vocab scores for L2 speakers are lower than for L1 speakers, but the increase associated with more years of formal education, as represented by the gradients of the two slopes, look about the same. This is why the interaction coefficient turned out not to be statistically significant.",
+               wrong = "No. Remember that the strength of the association is represented by the gradient of the slope of the regression lines.")
+check_hint("Think about whether a horizontal line indicating no correlation (i.e. the null hypothesis) could be drawn within the confidence bands.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show code to help you complete Q13.9"
+#| eval: false
+
+visreg(model5.int, 
+       xvar = "EduTotal_c", 
+       by = "Group",
+       xtrans = function(x) x + median(Dabrowska.data$EduTotal), 
+       gg = TRUE) + 
+  labs(x = "Years in formal education",
+       y = "Predicted Vocab scores") +
+  theme_bw()
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+So far in this chapter, we have fitted a model of L1 speakers' `Vocab` scores. We have found that participants' print exposure (as measured by the ART), non-verbal intelligence (as measured by the Blocks test), their age, the number of years they were in formal education, and the interaction between ART scores and years in education all contribute to being able to predict how well they performed on the `Vocab` test. The model that we selected as the optimal model (`L1.model.back2`) was able to predict 58% of the variance in `Vocab` scores among L1 speakers.
+
+In this task, your aim is to find out which predictors and interactions among predictors can be used to predict `Vocab` scores among L2 speakers and to what degree of accuracy. In addition to the predictors that we entered in our full L1 model, you can enter three additional predictors in your model that are relevant to L2 speakers only:
+
+-   Age at which they started living in an English-speaking country (`Arrival`)
+-   Total number of years they have been living in an English-speaking country (`LoR`)
+-   Number of hours they spend reading in English in a typical week (`ReadEng`)
+
+Run the following code to median-center some of these numeric variables in `L2.data`:
+
+```{r}
+L2.data <- L2.data |> 
+  mutate(Blocks_c = Blocks - median(Blocks),
+         Age_c = Age - median(Age),
+         EduTotal_c = EduTotal - median(EduTotal),
+         Arrival_c = Arrival - median(Arrival),
+         LoR_c = LoR - median(LoR))
+```
+
+Then, fit the following multiple linear regression model on the L2 dataset and examine the model summary:
+
+```{r}
+#| output: false
+
+L2.model <- lm(formula = Vocab ~ ART + Blocks_c + Age_c + EduTotal_c + Arrival_c + LoR_c + ReadEng + ART:EduTotal_c + ART:ReadEng + EduTotal_c:ReadEng + Arrival_c:Age_c + LoR_c:Arrival_c,
+             data = L2.data)
+
+summary(L2.model)
+```
+
+[**Q13.10**]{style="color:green;"} How many interaction terms contribute to the predictions made by `L2.model`?
+
+```{r}
+#| echo: false
+#| label: "Q13.10"
+
+check_question("5",
+               options = c("0", "1", "2", "3", "4", "5"),
+               button_label = "Check answer",
+               q_id = "Q13.10",
+               right = "That's right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.",
+               wrong = "No, that's incorrect.")
+check_hint("By definition, all of the interactions entered in a model make a contribution, however small, to the model. Note that the question here is not about whether these contributions are statistically significantly different from zero.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+[**Q13.11**]{style="color:green;"} Use the `check_model()` function to visually check whether `L2.model` meets the most important assumptions of multiple linear regression models. Which assumption(s) are obviously violated?
+
+```{r}
+#| echo: false
+#| label: "Q13.11"
+check_question("No multicollinearity",
+               options = c("Independence of the data points",
+                           "Linear relationships between the predictors",
+                           "Homogeneity of the model residuals",
+                           "Normality of the model residuals",
+                           "No overly influential outliers",
+                           "No multicollinearity",
+                           "None of these assumptions"),
+               type = "check",
+               button_label = "Check answer",
+               q_id = "Q13.11",
+               right = "Yes, well done! 🎉",
+               wrong = "No, not quite.")
+check_hint("From the six diagnostic plots produced by the check_model() function, it transpires that one of these assumptions is severely violated.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q13.11."
+#| eval: false
+
+diagnostic.plots.L2 <- plot(check_model(L2.model, panel = FALSE))
+
+diagnostic.plots.L2[[1]] # No issues here.
+
+diagnostic.plots.L2[[2]] # Also no issues here.
+
+diagnostic.plots.L2[[3]] # Nothing major to worry about: the reference line is not perfectly flat, but it's not far off.
+
+diagnostic.plots.L2[[4]] # No observation points appear to have an overly large influence on the model
+
+diagnostic.plots.L2[[5]] # Here we have three coefficients with VIF scores > 10. This is problematic!
+
+diagnostic.plots.L2[[6]] # The residuals are not normally distributed, but the largest deviation is at lowest end of the distribution which is not terribly unusual.
+```
+
+We can display the exact VIF values of a model using the `vif()` function from the [{car}](https://www.john-fox.ca/Companion/index.html) package [@foxCompanionAppliedRegression2019]:
+
+```{r}
+#| eval: false
+install.packages("car")
+library(car)
+
+vif(L2.model)
+```
+
+```{r}
+#| echo: false
+#install.packages("car")
+library(car)
+
+vif(L2.model)
+```
+
+From this list of VIF values, we can see that three predictors display high collinearity: `Age_c`, `Arrival_c`, and `LoR_c`. This makes sense because, for most L2 participants recruited in the UK, if we know how old they were when they arrived in the UK (`Arrival`), and their length of residence in the country in years (`LoR`), then we can probably almost predict their age (`Age`) to a high degree of accuracy. We can easily check this hypothesis in a random sample of six participants from our `L2.data`:
+
+```{r}
+#| include: false
+set.seed(2025)
+```
+
+```{r}
+L2.data |> 
+  select(Arrival, LoR, Age) |> 
+  slice_sample(n = 6)
+```
+
+As you can see, in most cases, participants' age is equal to their age when they first arrived in the country plus the number of years they've been living there since. This is why `Age` and the combination of the predictors `Arrival` and `LoR` are almost perfectly correlated:
+
+```{r}
+cor(L2.data$Age, (L2.data$Arrival + L2.data$LoR))
+```
+
+To remedy this, we must remove one of these three predictors from our model. Fit a new model that does *not* include participants' age when they first arrived in the UK (`Arrival`). Save this new model as `L2.model.b`. Check that it now meets all the model assumptions and then examine its summary.
+
+[**Q13.12**]{style="color:green;"} Adjusted for the number of predictors entered into `L2.model.b`, what percentage of the variance in `Vocab` scores in the L2 dataset does this model accurately predict?
+
+```{r}
+#| echo: false
+#| label: "Q13.12"
+check_question("About 20%",
+               options = c("Practically 0%",
+                           "About 3%",
+                           "About 15%",
+                           "About 20%",
+                           "About 22%",
+                           "About 31%",
+                           "About 57%"),
+               button_label = "Check answer",
+               q_id = "Q13.12",
+               right = "You're right, well done! 🎉",
+               wrong = "No, this is not the correct value.")
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q13.12."
+#| eval: false
+
+L2.model.b <- lm(formula = Vocab ~ ART + Blocks_c + Age_c + EduTotal_c + LoR_c + ReadEng + ART:EduTotal_c + ART:ReadEng + EduTotal_c:ReadEng,
+             data = L2.data)
+
+check_model(L2.model.b) # Now all looking much better than earlier!
+
+summary(L2.model.b) # Adjusted *R*-squared:  0.2027
+```
+
+[**Q13.13**]{style="color:green;"} Which main-effect predictor(s) make a statistically significant contribution to `L2.model.b` at $\alpha$ = 0.05?
+
+```{r}
+#| echo: false
+#| label: "Q13.13"
+check_question("ReadEng",
+               options = c("ART",
+                           "Blocks_c",
+                           "Age_c",
+                           "EduTotal_c",
+                           "Arrival_c",
+                           "LoR_c",
+                           "ReadEng"),
+               type = "check",
+               button_label = "Check answer",
+               q_id = "Q13.13",
+               right = "That's right, only one main-effect predictor makes a statistically significant contribution to this model of receptive vocabularly knowledge among L2 speakers of English.",
+               wrong = "Humm, not quite. Which coefficient estimate(s) are associated with p-values that are lower than 0.05?")
+```
+
+[**Q13.14**]{style="color:green;"} Does the model's coefficient estimate for `ReadEng` make intuitive sense?
+
+```{r}
+#| echo: false
+#| label: "Q13.14"
+check_question("Yes, the ReadEng coefficient is positive, which means that the more time L2 speakers regularly spend reading in English, the higher their predicted receptive English vocabulary test scores.",
+               options = c("Yes, the ReadEng coefficient is positive, which means that the more time L2 speakers regularly spend reading in English, the higher their predicted receptive English vocabulary test scores.",
+                           "No, the ReadEng coefficient is larger than all other coefficients, which violates the model assumption of no overly influential outliers."),
+               type = "radio",
+               button_label = "Check answer",
+               q_id = "Q13.14",
+               right = "Yes, reading is a great way to learn new vocabularly! And reading a statistics textbook is therefore doubly beneficial: you get to learn about quantitative data analysis *and* expand your English vocabulary! 🤓",
+               wrong = "No, only individual observations (i.e. data points) can be considered outliers, not coefficient estimates.")
+```
+
+[**Q13.15**]{style="color:green;"} Which interaction effect(s) make a statistically significant contribution to `L2.model.b` at $\alpha$ = 0.05?
+
+```{r}
+#| echo: false
+#| label: "Q13.15"
+check_question("None of them",
+               options = c("ART:EduTotal_c",
+                           "ART:ReadEng",
+                           "EduTotal_c:ReadEng",
+                           "None of them"),
+               type = "check",
+               button_label = "Check answer",
+               q_id = "Q13.15",
+               right = "You are correct: none of them make a statistically significant contribution to the model. However, that doesn't necessarily mean that their coefficients do not point to any real associations. We may not have enough data to observe any statistically significant interactions.",
+               wrong = "Hummm, are you sure? check the model summary again.")
+```
+
+[**Q13.16**]{style="color:green;"} Use the {visreg} library to visualise the model's predicted `Vocab` scores (on the *y*-axis) as a function of all possible `ReadEng` values (on the *x*-axis) and subdivide the figure into three panels corresponding to low, mid-level, and high ART scores. Which arguments do you have to use inside the `visreg()` function to achieve this?
+
+```{r}
+#| echo: false
+#| label: "Q13.16"
+check_question(c("fit = L2.model.b", 
+                 "xvar = \"ReadEng\"", 
+                 "by = \"ART\""),
+               options = c("fit = L2.model.b",
+                           "xvar = \"ART\"", 
+                           "xvar = \"ReadEng\"", 
+                           "xtrans = function(x) x + median(L2.data$ReadEng)", 
+                           "by = \"ReadEng\"",
+                           "by = \"ART\""),
+               type = "check",
+               button_label = "Check answer",
+               q_id = "Q13.16",
+               right = "Yes, well done! 🎉 Now you can focus on interpreting your model's predicted values (the blue lines) and examine the partial residuals (the grey points that represent the variance in Vocab scores that is not accounted for by this model). It should be clear from this plot that this L2 model is not able to predict `Vocab` scores as well as our L1 model could (hence the considerably lower adjusted coefficient of determination (*R*-squared). Is this because L2 learners are more diverse and therefore less predictable? Or is it (also) because the sample size is smaller (67 instead of 90 participants)? We cannot tell from this data alone. What is certain is that more research is needed to answer these fascinating questions!",
+               wrong = "No, that won't quite do.")
+check_hint("Three of these arguments are necessary.", hint_title = "🐭 Click on the mouse for a hint.")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q13.16."
+#| eval: false
+
+visreg(fit = L2.model.b,
+       xvar = "ReadEng",
+       by = "ART")
+```
+:::
+### Check your progress 🌟 {.unnumbered}
+
+Congratulations: you have successfully completed the most difficult chapter of this textbook! 💪 You have answered [`r checkdown::insert_score()` out of 16 questions]{style="color:green;"} correctly.

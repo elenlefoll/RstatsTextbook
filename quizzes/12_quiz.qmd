@@ -1,0 +1,487 @@
+# Ch. 12: Tasks & Quizzes {.unnumbered}
+
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+In this task, you will seek answers to the research question: To what extent can the results of the non-verbal IQ `Blocks` test be used to predict `Vocab` scores among L1 and L2 speakers of English based on the data from @DabrowskaExperienceAptitudeIndividual2019? As we will be answering this question within a linear regression framework, what we are really asking is: To what extent are these variables linearly associated with each other?
+
+[**Q12.1**]{style="color:green;"} Fit a linear model to predict `Vocab` scores among L1 participants based on their `Blocks` test scores. What is the adjusted *R*^2^ value of this model?
+
+```{r}
+#| echo: false
+#| label: "Q12.1"
+library(checkdown)
+check_question("0.07",
+               options = c("0.0009",
+                           "0.006",
+                           "0.007",
+                           "0.07",
+                           "0.08",
+                           "0.7",
+                           "0.9"),
+               button_label = "Check answer",
+               q_id = "Q12.1", 
+               type = "radio",
+               right = "That's right, well done! 🎉",
+               wrong = "No, that's not it. Are you modelling the L1 data only?")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q12.1."
+#| eval: false
+
+taskmodel1 <- lm(formula = Vocab ~ Blocks,
+                 data = L1.data)
+
+summary(taskmodel1) # Adjusted *R*-squared:  0.07232 
+```
+
+[**Q12.2**]{style="color:green;"} According to your model, which of these values is the predicted `Vocab` score of an L1 speaker with a `Blocks` score of 20?
+
+```{r}
+#| echo: false
+#| label: "Q12.2"
+
+check_question("About 75",
+               options = c("About 75",
+                           "About 21",
+                           "About 55",
+                           "About 1",
+                           "Just over 0",
+                           "About -54"),
+               button_label = "Check answer",
+               q_id = "Q12.2", 
+               type = "radio",
+               right = "Awesome! Note that we also use the predict() function to extract the model's predicted value for any combination of predictor values, e.g. `predict(taskmodel1, data.frame(Blocks = 20))`",
+               wrong = "Humm, are you sure?")
+check_hint("You can answer this question either by plotting the predicted values of your model and reading the value off your graph or by doing some maths using the coefficient estimates provided in the summary of your model.", 
+           hint_title = "🦉 Hover over the owl for a first hint.",
+           type = "onmouseover")
+check_hint("If you choose to do solve this question numerically, you will need to multiply the coefficient estimate for the Blocks variable by 20 and add this to the coefficient estimate for the intercept.", 
+           hint_title = "🐭 Click on the mouse for a second hint.")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show code to answer Q12.2"
+#| eval: false
+
+# a) Taking a numerical approach, you can add up the model coefficients printed in the model summary. As always, start with the intercept coefficient and add to it the coefficient corresponding to an increase in one point on the Blocks test multiplied by the number of points that this participant achieved (20):
+summary(taskmodel1)
+
+54.5614 + 1.0527*20
+
+# Alternatively, we can take the coefficient estimate values directly from the model object to get an even more precise prediction like this:
+taskmodel1$coefficients[1] + (taskmodel1$coefficients[2] * 20)
+
+# b) Taking a graphical approach, we need to plot the model's predicted Vocab scores against all Blocks test scores in the dataset in order to find out how what the model's prediction is for a Blocks test score of 20. The ggplot code below adds an arrow and a dotted line to help you read the predicted Vocab score from the plot:
+ggplot(L1.data, 
+       aes(x = Blocks, 
+           y = predict(taskmodel1))) + 
+  geom_point() +
+  annotate("segment",
+           x = 20, 
+           y = 50, 
+           yend = 75,
+           colour = "blue",
+           arrow = arrow(length = unit(0.25, "cm"))) +
+  annotate("segment",
+           x = 0, 
+           xend = 19.5, 
+           y = 75.6,
+           colour = "blue",
+           linetype = "dotted") +
+  labs(y='Predicted Vocab scores', 
+       x='Blocks test scores') +
+  theme_minimal()
+```
+
+[**Q12.3**]{style="color:green;"} Now fit a new linear model to predict `Vocab` scores among L2 participants based on their `Blocks` test scores. Comparing the adjusted *R*^2^ value of this new L2 model to your previous L1 model, which of these statements is/are true?
+
+```{r}
+#| echo: false
+#| label: "Q12.3"
+
+check_question("Blocks test scores are a much more useful predictor of Vocab scores for L1 than L2 participants.",
+               options = c("Blocks test scores are a much more useful predictor of Vocab scores for L1 than L2 participants.",
+                           "Blocks test scores are a much useful predictor of Vocab scores for L2 than L1 participants.",
+                           "Higher Blocks test scores lead to statistically significantly higher Vocab scores among L1 participants.",
+                           "Blocks test scores allow us to almost perfectly predict Vocab scores among L1 participants.",
+                           "Blocks test scores allow us to almost perfectly predict Vocab scores among L2 participants."),
+               button_label = "Check answer",
+               q_id = "Q12.3", 
+               type = "check",
+               right = "That's right, well done! 🎉",
+               wrong = "No, compare the adjusted *R*-squared values of the two models.")
+check_hint("Remember that we cannot interpret linear regression models causally.", 
+           hint_title = "🦉 Hover over the owl for a first hint.",
+           type = "onmouseover")
+check_hint("Only one of these statements is true.", 
+           hint_title = "🐭 Click on the mouse for a second hint.")
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q12.3."
+#| eval: false
+
+taskmodel2 <- lm(formula = Vocab ~ Blocks,
+                 data = L2.data)
+
+summary(taskmodel2) # Adjusted *R*-squared:  0.007177 
+summary(taskmodel1) # Adjusted *R*-squared:  0.07232 
+```
+
+[**Q12.4**]{style="color:green;"} In your L2 model, the *p*-value for the `Blocks` predictor should be `0.228620`. True or false: This *p*-value means that there is a 23% chance of obtaining a Blocks coefficient estimate of 0.72 or higher in a random sample of 67 L2 speakers of English when there is actually no association between the results of the `Blocks` test and those of the `Vocab` test?
+
+```{r}
+#| echo: false
+#| label: "Q12.4"
+
+check_question("True.",
+               options = c("True.",
+                           "False."),
+               type = "radio",
+               q_id = "Q12.4", 
+               button_label = "Check answer",
+               right = "Indeed! ✅",
+               wrong = "No, remember that the *p*-value is statement about the likelihood of the data given the null hypothesis of no association.")
+
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+[**Q12.5**]{style="color:green;"} Draw a boxplot showing the distribution of `Vocab` scores among male and female participants in `Dabrowska.data`. Based on your boxplot, do you expect `Gender` to be a statistically significant predictor of `Vocab` scores?
+
+```{r}
+#| echo: false
+#| label: "Q12.5"
+
+check_question("No, because there is a lot of overlap between the two distributions and the female and male median Vocab scores are very close to each other.",
+               options = c("No, because there is a lot of overlap between the two distributions and the female and male median Vocab scores are very close to each other.",
+                           "No, because the female and male mean Vocab scores are very close to each other.",
+                           "Yes, because the mean Vocab score of male participants is higher than that of female participants.",
+                           "Yes, because there are a lot of very low Vocab scores among female participants.",
+                           "Yes, because there are significantly more female participants in this dataset."),
+               type = "radio",
+               q_id = "Q12.5", 
+               button_label = "Check answer",
+               right = "You're right.",
+               wrong = "No, that's not it. Remember that the middle line in a boxplot represents the median.")
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q12.5."
+#| eval: false
+
+Dabrowska.data |> 
+  ggplot(mapping = aes(x = Gender,
+                       y = Vocab)) +
+  geom_boxplot() +
+  labs(x = "Gender", 
+       y = "Vocab scores") +
+  theme_minimal()
+```
+
+[**Q12.6**]{style="color:green;"} Fit a model with `Vocab` as the outcome variable and `Gender` as the predictor to test your intuition based on your boxplot. Is `Gender` a statistically significant predictor of `Vocab` score in this simple linear regression model?
+
+```{r}
+#| echo: false
+#| label: "Q12.6"
+
+check_question("No, the p-value associated with GenderM coefficient is higher than 0.05.",
+               options = c("No, the p-value associated with GenderM coefficient is higher than 0.05.",
+                           "Yes, the p-value associated with GenderM coefficient is higher than 0.05.",
+                           "No, the p-value associated with GenderM coefficient is lower than 0.05.",
+                           "Yes, the p-value associated with GenderM coefficient is lower than 0.05."),
+               type = "radio",
+               q_id = "Q12.6", 
+               button_label = "Check answer",
+               right = "That's right! ✅",
+               wrong = "Are you sure? You should have obtained a p-value of 0.957.")
+check_hint("You will need to fit a linear model with `Vocab` as the outcome variable and `Gender` as the predictor.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show code to answer Q12.6"
+#| eval: false
+
+taskmodel3 <- lm(formula = Vocab ~ Gender,
+                 data = Dabrowska.data)
+
+summary(taskmodel3) # p-value associated with coefficient estimate for GenderM = 0.957
+```
+
+[**Q12.7**]{style="color:green;"} The adjusted *R*^2^ coefficient of the model is `-0.006433`. True or false: This means that male participants, on average, score 0.006433 fewer points than female participants on the `Vocab` test?
+
+```{r}
+#| echo: false
+#| label: "Q12.7"
+
+check_question("False.",
+               options = c("True.",
+                           "False."),
+               type = "radio",
+               q_id = "Q12.7", 
+               button_label = "Check answer",
+               right = "You are correct. This statement is completely wrong: the model's *R*-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple *R*-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple *R*-squared coefficient is almost 0 (0.0000187). In this model, the multiple *R*-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.",
+               wrong = "No, that's incorrect.")
+
+```
+:::
+::: {.callout-tip collapse="false"}
+#### Your turn! {.unnumbered}
+
+In this task, you will explore whether L2 participants' native language is a useful predictor when trying to model their English `Vocab` scores.
+
+[**Q12.8**]{style="color:green;"} Fit a linear model to model L2 participants' `Vocab` score based on their native language (`NativeLg`). According to the model's adjusted *R*^2^ coefficient, how much of the variance in `Vocab` scores among L2 participants does this model account for?
+
+```{r}
+#| echo: false
+#| label: "Q12.8"
+
+check_question("About 13%",
+               options = c("Practically 0%",
+                           "About 5%",
+                           "About 13%",
+                           "About 26%",
+                           "About 49%"),
+               type = "radio",
+               q_id = "Q12.8", 
+               button_label = "Check answer",
+               right = "That's right! ✅",
+               wrong = "No, this is not the correct value.")
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q12.8."
+#| eval: false
+
+taskmodel3 <- lm(formula = Vocab ~ NativeLg,
+                data = L2.data) 
+
+summary(taskmodel3) # Adjusted *R*-squared:  0.1331 
+```
+
+[**Q12.9**]{style="color:green;"} In this model, there is a greater difference between the multiple *R*^2^ and the adjusted *R*^2^ coefficients than in all previous models in this chapter. Why might that be?
+
+```{r}
+#| echo: false
+#| label: "Q12.9"
+
+check_question("Because the NativeLg variable includes 10 different levels.",
+               options = c("Because knowing a participant's native language is a particularly useful predictor of Vocab scores.",
+                           "Because the NativeLg variable includes 10 different levels.",
+                           "Because a participant's native language is inherently connected to their English vocabulary knowledge.",
+                           "Because the model's p-value is only just below 0.05."),
+               type = "check",
+               q_id = "Q12.9", 
+               button_label = "Check answer",
+               right = "That's right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted *R*-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants' native language.",
+               wrong = "No, that's not the reason.")
+check_hint("Only one of these reasons is correct.", hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+[**Q12.10**]{style="color:green;"} One way to reduce the number of levels in the `NativeLg` variable is to model `Vocab` scores based on L2 participants' native language family, instead. Fit a model that attempts to predict `Vocab` scores among L2 participants based on the `NativeLgFamily` variable (the creation of this variable was a [Your turn!]{style="color:green;"} task in @sec-casewhen). Based on your comparison of the two models, which of the following statements is/are true?
+
+```{r}
+#| echo: false
+#| label: "Q12.10"
+
+check_question(c("When adjusted for the number of predictors, the language family model is worse at predicting Vocab scores.",
+                 "The more predictors there are, the easier it is to predict the Vocab scores of the sample. This is why the language family model has a lower multiple *R*-squared coefficient"),
+               options = c("When adjusted for the number of predictors, the language family model is better at predicting Vocab scores.",
+                           "When adjusted for the number of predictors, the language family model is worse at predicting Vocab scores.",
+                           "The more predictors there are, the easier it is to predict the Vocab scores of the sample. This is why the language family model has a lower multiple *R*-squared coefficient.",
+                           "The language family model is statistically less significant than the other model because it features fewer predictors."),
+               type = "check",
+               q_id = "Q12.10", 
+               button_label = "Check answer",
+               right = "Yes, well done! 🎉",
+               wrong = "No, not quite.")
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show code to answer Q.12.10"
+#| eval: false
+
+taskmodel4 <- lm(formula = Vocab ~ NativeLgFamily,
+                data = L2.data) 
+
+summary(taskmodel4)
+```
+
+[**Q12.11**]{style="color:green;"} According to your `NativeLgFamily` model, what is the predicted `Vocab` score of an L2 participant with a Baltic L1?
+
+```{r}
+#| echo: false
+#| label: "Q12.11"
+
+check_question("73.778",
+               options = c("73.778",
+                           "9.497",
+                           "-23.749",
+                           "7.768",
+                           "0.1133"),
+               type = "radio",
+               q_id = "Q12.11", 
+               random_answer_order = TRUE,
+               button_label = "Check answer",
+               right = "Absolutely! ✅",
+               wrong = "No, check the hint if you can't find the right coefficient.")
+check_hint("The Baltic language family is the first and, therefore reference, level in the variable `NativeLgFamily`.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q12.11"
+#| eval: false
+
+# The Baltic language family is the first level in this categorical predictor (because we haven't changed the order which, by default, is alphabetical):
+levels(L2.data$NativeLgFamily)
+
+# The Intercept coefficient corresponds to an L2 participant with a Baltic native language:
+summary(taskmodel4)
+```
+
+[**Q12.12**]{style="color:green;"} According to your `NativeLgFamily` model, what is the predicted `Vocab` score of an L2 participant with a Slavic L1?
+
+```{r}
+#| echo: false
+#| label: "Q12.12"
+
+check_question("50.029",
+               options = c("73.778",
+                           "50.029",
+                           "23.749",
+                           "-23.749",
+                           "10.088"),
+               random_answer_order = TRUE,
+               type = "radio",
+               q_id = "Q12.12", 
+               button_label = "Check answer",
+               right = "That's right, well done! 🎉",
+               wrong = "No, check the hint if you're not sure how to proceed.")
+check_hint("Remember that, to find the predicted score for Slavic L1 speakers, you need to add the Slavic L1 coefficient to the Intercept coefficient. Alternatively, you can plot the predicted values and read the prediction off the graph.", 
+           hint_title = "🐭 Click on the mouse for a hint.")
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q12.12"
+#| eval: false
+
+# a) Numeric approach
+summary(taskmodel4)
+
+73.778 + -23.749
+
+# b) Graphical approach
+library(visreg)
+
+visreg(taskmodel4, gg = TRUE) +
+  labs(title = "Participants' L1 language family",
+       x = NULL,
+       y = "Vocab scores") +
+  theme_bw()
+
+# The predicted value for the Slavic L1 speakers is visualised by the last blue line.
+```
+
+[**Q12.13**]{style="color:green;"} According to the `NativeLgFamily` model, Hellenic L1 speakers are predicted to perform considerably better than the reference level of Baltic L1 speakers. However, the *p*-value associated with this coefficient estimate is very large (`0.4591`). Why is that?
+
+```{r}
+#| echo: false
+#| label: "Q12.13"
+
+check_question("Because the dataset only includes one Greek L1 speaker.",
+               options = c("Because the dataset only includes one Greek L1 speaker.",
+                           "Because p-values have nothing to do with effect sizes.",
+                           "Because the model chose a particularly low α-level." ,
+                           "Because the data for Hellenic speakers is less reliable than for the other L2 speakers."),
+               random_answer_order = TRUE,
+               q_id = "Q12.13", 
+               button_label = "Check answer",
+               type = "radio",
+               right = "Absolutely! 💯",
+               wrong = "No, check the hints if you're not sure how to proceed. And remember that, if in doubt, visualisation is always a good idea!")
+check_hint("It is never the model that chooses the α-level, but rather us, the researchers.", 
+           hint_title = "🦉 Hover over the owl for a first hint.",
+           type = "onmouseover")
+check_hint("Remember that p-values depend on three different factors, see Section 11.3", 
+           hint_title = "🐭 Click on the mouse for a second hint.")
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q12.13"
+#| eval: false
+
+# The plot of predicted values (see code below) shows that the coefficient estimate for Hellenic speakers is based on only one data point (as is also the case for Germanic speakers).
+library(visreg)
+visreg(taskmodel4, gg = TRUE) +
+  labs(title = "Participants' L1 language family",
+       x = NULL,
+       y = "Vocab scores") +
+  theme_bw()
+
+# We can check the distribution of native language family using the `table()`, `summary()` or `count()` functions:
+table(L2.data$NativeLgFamily)
+
+summary(L2.data$NativeLgFamily)
+
+L2.data |> 
+  count(NativeLgFamily)
+
+```
+
+[**Q12.14**]{style="color:green;"} Apply the `emmeans` function from the {emmeans} package to the `NativeLgFamily` model to compute the predicted mean `Vocab` scores of each L1 language family group. Romance L1 speakers are predicted to attain a mean score of 66.3. This predicted score is associated with a 95% confidence interval that spans from 43.2 to 56.8. What does this mean?
+
+```{r}
+#| echo: false
+#| label: "Q12.14"
+
+check_question("If we were to repeat this study many times, in the long run, 95% of the intervals that would calculate for this prediction would contain the true mean score.",
+               options = c("If we were to repeat this study many times, in the long run, 95% of the intervals that would calculate for this prediction would contain the true mean score.",
+                 "We can be 95% confident that the true mean score is located within this confidence interval."),
+               random_answer_order = TRUE,
+               q_id = "Q12.14", 
+               button_label = "Check answer",
+               type = "radio",
+               right = "That's right, well done! 🎉",
+               wrong = "No, that's incorrect. Remember that a 95% confidence interval does not say anything about this specific interval. It can only inform us about long-run probabilities.")
+check_hint("Common misconceptions about confidence intervals are highlighted in Section 11.2.", 
+           hint_title = "🐭 Click on the mouse for a second hint.")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show sample code to answer Q12.14"
+#| eval: false
+
+#install.packages("emmeans")
+library(emmeans)
+
+emmeans(taskmodel4, ~ NativeLgFamily)
+```
+:::
+### Check your progress 🌟 {.unnumbered}
+
+Well done! You have successfully completed this chapter introducing the linear regression modelling. You have answered [`r checkdown::insert_score()` out of 14 questions]{style="color:green;"} correctly.

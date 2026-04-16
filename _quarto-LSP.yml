@@ -1,7 +1,9 @@
 project:
   type: book
-  output-dir: LangSciPress
+  output-dir: PDF
 book:
+  date: "25 March 2026"
+  date-format: "D MMMM YYYY"
   chapters:
   - index.qmd
   - 1_OpenScholarship.qmd
@@ -13,30 +15,42 @@ book:
   - 7_VariablesFunctions.qmd 
   - 8_DescriptiveStats.qmd
   - 9_DataWrangling.qmd
-  - 10_Dataviz.qmd 
+  - 10_Dataviz.qmd
   - 11_Inferential.qmd
-  - 12_SimpleLinearRegression.qmd
-  - 13_MultipleLinearRegression.qmd
-  - 14_LiterateProgramming.qmd
+  - 12_Modelling.qmd
+  - 13_Regression.qmd
+  - 14_Quarto.qmd
   - 15_AI.qmd
-  - 99_references.qmd
+  - References.qmd
   
 execute:
   fig-asp: 0.618
-  
+  fig-width: 7
+
+lightbox: false
+
 format:
   pdf:
     toc: true
+    #template: 
     #documentclass: scrreprt
     #word-count: "{{< words-sum body-note >}}"
-    code-overflow: wrap
     keep-tex: true
     colorlinks: true
     prefer-html: true
+    indent: true
     include-in-header:
        text: |
          \usepackage{emoji}
          \usepackage{fvextra}
          \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
-         \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
-    mainfont: "DejaVu Sans" # Might help with the emojis (https://github.com/quarto-dev/quarto-cli/issues/4492)
+         \usepackage{csquotes}
+include-before-body:
+  text: |
+    \RecustomVerbatimEnvironment{verbatim}{Verbatim}{
+      showspaces = false,
+      showtabs = false,
+      breaksymbolleft={},
+      breaklines
+      % Note: setting commandchars=\\\{\} here will cause an error 
+    }
