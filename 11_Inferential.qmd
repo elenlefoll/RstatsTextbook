@@ -261,7 +261,7 @@ Provided that certain assumptions are met (see @sec-Assumptions), we can test nu
 
 Our descriptive analysis showed that, on average, the L2 participants scored 3.62 points higher than the L1 participants in the sample data. But we know that mean values alone are not sufficient to describe data and, as we saw in @fig-IQTestPlot, there was a lot of variability around these mean values. Moreover, we know that our sample is relatively small: it only has 90 L1 speakers and 67 L2 speakers (though it's worth noting that many experimental linguistics study have far fewer data points). The less data we have, the more likely we are to observe extreme values.[^11_inferential-1] This fact is also taken into account by statistical significance tests such as the *t*-test.
 
-[^11_inferential-1]: If you are not immediately convinced by this statement, imagine that a friend flips a coin three times and gets heads all three times. On the basis of these observed data, he claims that the coin is biased towards heads. How likely are you to believe his claim that the coin is unfair? Probably not very likely. But what about if he flips the coin 10 times and it lands on head all 10 times? This seems far more unlikely to happen by chance alone. In fact, the probability of getting three heads in a row with a fair coin is 0.125%, which means that, in the long-run, it will happen 1 in 8 times, whereas the probability of getting 10 heads in a row is just 0.001%, which is a one-in-a-thousand occurrence! Of course, this doesn't mean that it will *never* happen with a fair coin, but it is a very rare occurrence.
+[^11_inferential-1]: If you are not immediately convinced by this statement, imagine that a friend flips a coin three times and gets heads all three times. On the basis of these observed data, they claim that the coin is biased towards heads. How likely are you to believe their claim that the coin is unfair? Probably not very likely. But what about if they flip the coin 10 times and it lands on head all 10 times? This seems far more unlikely to happen by chance alone. In fact, the probability of getting three heads in a row with a fair coin is 0.125%, which means that, in the long-run, it will happen 1 in 8 times, whereas the probability of getting 10 heads in a row is just 0.001%, which is a one-in-a-thousand-times occurrence! Of course, this doesn't mean that it will *never* happen with a fair coin, but it is a very rare occurrence.
 
 The `R` function `t.test()` takes a **formula** as its first argument and the **data** at its second argument. In `R`, formulas rely on the tilde symbol (`~`) to indicate that the variable to the left of the tilde is *dependent* on the variables to the right of the tilde. By specifying the formula as `Blocks ~ Group`, we are therefore testing whether the mean results of the `Blocks` test are *dependent* on whether the participants are L1 or L2 speakers of English (`Group`). In other words, we apply the *t*-test to test our null hypothesis, which can be reformulated as:
 
@@ -800,19 +800,21 @@ The output of the `cor.test()` function also returned a 95% confidence interval 
 To summarise these results, we can write that, in this dataset, there is a positive and statistically significant correlation between the number of years that L1 participants reported spending in formal education and their receptive English vocabulary test scores, *r* = 0.36, 95% CI \[0.16, 0.53\], df = 88, *p* \< 0.001.
 :::
 
-How about L2 speakers? From the L2 panel of @fig-YearEducationPlot, we can see that the `Grammar` scores of L2 participants are, on average, much further away from the regression line than in the L1 panel, suggesting that it summarises the data far less well. Indeed, when we run the correlation test on the L2 data, we not only find that the correlation coefficient is much smaller (`0.13`), we also note that the 95% confidence interval around this coefficient \[`-0.11, 0.36`\] includes zero:
+How about L2 speakers? From the L2 panel of @fig-YearEducationPlot, we can see that the `Grammar` scores of L2 participants are, on average, much further away from the regression line than in the L1 panel, suggesting that it summarises the data far less well. Indeed, when we run the correlation test on the L2 data, we not only find that the correlation coefficient is much smaller (`0.13`), we also note that the 95% confidence interval around this coefficient \[`-0.11, 0.36`\] includes zero.
 
 ```{r}
 cor.test(formula = ~ EduTotal + Grammar,
          data = L2.data)
 ```
 
-Along with a *p*-value of \> 0.05, this suggests that we do not have enough evidence to reject the null hypothesis of no correlation between years in formal education and English grammar comprehension in the L2 population.
+Along with a *p*-value that is larger than 0.05, this suggests that we do not have enough evidence to reject the null hypothesis of no correlation between years in formal education and English grammar comprehension in the L2 population.
 
 ::: callout-note
 # How to report non-significant results
 
 To summarise these results, we can write that, in this dataset, there is a small positive, but non-significant correlation between the number of years that L2 participants reported spending in formal education and their receptive English vocabulary test scores, *r* = 0.13, 95% CI \[-0.11, 0.36\], df = 65, *p* = 0.2782.
+
+Non-significant results should always be reported. It is crucial to understand that, within the frequentist school of statistics, a non-significant result does not allow us to accept the null hypothesis. It merely means that we cannot reject the null hypothesis, which is not the same thing! 
 :::
 
 Confidence intervals around correlation coefficients can be difficult to interpret as numbers. The good news is that they can easily be visualised using the {ggplot2} library. In @sec-Scatterplots, we used the argument `se = FALSE` inside the `geom_smooth()` function. If, instead, we set this argument to `TRUE`, 95% confidence intervals will be displayed as grey bands around the regression lines. To change the $\alpha$-level, you will need to change the default value of the `level` argument.
