@@ -390,6 +390,54 @@ Once they are saved to the local environment, the values can be inserted inline 
  `{{r}} nrow(L1.data)` native speakers (`{{r}} L1.males` male and `{{r}} L1.females` female) and `{{r}} nrow(L2.data)` nonnative speakers of English (`{{r}} L2.males` male and `{{r}} L2.allfemales` female) were recruited through personal contacts, church and social clubs, and advertisements in local newspapers. 
 ```
 :::
+::: {.callout-note collapse="true"}
+### More complex inline computations
+
+For more complex computations, it is much better to compute the values in a dedicated code chunk. This also allows you to add **code annotation** which is important to ensure that other researchers (and your future self!) understand the reasoning behind the code.
+
+For example, the following annotated code chunk can be used to reproduce the descriptive statistics concerning L1 participants' professional occupations and foreign language skills.
+
+```{r}
+#| label: L1-jobs
+#| echo: fenced
+
+# Counting manual job participants using a tidyverse solution:
+L1.manualjobs <- L1.data |> # Select L1 dataset
+  count(OccupGroup) |> # Tally each level of OccupGroup
+  mutate(proportion = n/sum(n)) |> # Calculate proportion
+  filter(OccupGroup == "M") |> # Select only the manual occupations
+  pull(proportion) |> # Select just the proportion value
+  round(2)
+
+# Alternative: Counting manual job participants using a base R solution:
+L1.manualjobs <- round(proportions(table(L1.data$OccupGroup))["M"], digits = 2)
+
+# Counting clerical job participants
+L1.clerical <- round(proportions(table(L1.data$OccupGroup))["C"], digits = 2)
+
+# Counting professional job participants
+L1.pro.num <- L1.data |>
+  filter(OccupGroup %in% c('PS', 'PS ')) |>
+  count()
+
+L1.pro <- round((L1.pro.num/ nrow(L1.data)), digits = 2)
+
+# Counting professionally inactive participants
+L1.inactive <- round(proportions(table(L1.data$OccupGroup))["I"], digits = 2)
+
+# Counting participants who speak at least one language other than English
+L1.otherlgs <- L1.data |>
+  filter(OtherLgs != "None") |>
+  count()
+
+```
+
+The values saved to the local environment as `R` objects can then be inserted inline within the Markdown text as follows:
+
+``` markdown
+ `{{r}} numbers_to_words((L1.manualjobs*100), cap = TRUE)` percent of the participants held manual jobs, `{{r}} L1.clerical*100`% held clerical positions, and `{{r}} L1.pro*100`% had professional-level jobs or were studying for a degree; the remaining `{{r}} L1.inactive*100`% were occupationally inactive (i.e. unemployed, retired, or homemakers). In terms of education, participants’ backgrounds ranged from no formal qualifications to Ph.D., with corresponding differences in the number of years spent in full-time education (from `{{r}} min(L1.data$EduYrs)` to `{{r}} max(L1.data$EduYrs)`; *M* = `{{r}} round(mean(L1.data$EduYrs))`, *SD* = `{{r}} round(sd(L1.data$EduYrs))`). `{{r}} L1.otherlgs` participants reported a working knowledge of another language; the rest described themselves as monolinguals.
+```
+:::
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
