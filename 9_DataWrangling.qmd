@@ -11,15 +11,15 @@ bibliography: references.bib
 
 In this chapter, you will learn how to:
 
--   Recognise whether a dataset is in tidy data format
--   Check the sanity of an imported dataset
--   Pre-process data in a reproducible way using tidyverse functions
--   Convert character vectors representing categorical data to factors
--   Add and replace columns in a table
--   Transform several columns of a table at once
--   Use {stringr} functions to manipulate text values
--   Reshape and combine tables
--   Save and export `R` objects in different formats
+- Recognise whether a dataset is in tidy data format
+- Check the sanity of an imported dataset
+- Pre-process data in a reproducible way using tidyverse functions
+- Convert character vectors representing categorical data to factors
+- Add and replace columns in a table
+- Transform several columns of a table at once
+- Use {stringr} functions to manipulate text values
+- Reshape and combine tables
+- Save and export `R` objects in different formats
 
 ## Welcome to the tidyverse! `r emoji("ringed_planet")` {#sec-tidyverse}
 
@@ -155,7 +155,7 @@ summary(L1.Gender.fct)
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-The tidyverse package [{forcats}](https://forcats.tidyverse.org/) [@forcats2025] has a lot of very useful functions to manipulate factors. They all start with `fct_`. 
+The tidyverse package [{forcats}](https://forcats.tidyverse.org/) [@forcats2025] has a lot of very useful functions to manipulate factors. They all start with `fct_`.
 
 ```{r include=FALSE}
 library(checkdown)
@@ -216,7 +216,7 @@ check_hint("Use the `?` function to access the help files of each function and t
 
 ### Using `mutate()` to add and replace columns {#sec-mutate}
 
-In the previous section, we stored the factor representing L1 participants' gender as a separate `R` object called `L1.Gender.fct`. If, instead, we want to add this factor as an additional column to our dataset, we can use the `mutate()` function from [{dplyr}](https://dplyr.tidyverse.org/).
+In the previous section, we stored the factor representing L1 participants' gender as a separate `R` object called `L1.Gender.fct`. If, instead, we want to add this factor as an additional column to our dataset, we can use the `mutate()` function from [{dplyr}](https://dplyr.tidyverse.org/). In the code below and throughout this chapter, we use the pipe operator (`|>`) to combine functions. Remember that this allows us to insert (or "pipe") whatever comes immediately before the pipe into the first argument of the function that comes immediately after it (see @sec-Piping).
 
 :::: {.content-visible when-format="html"}
 ::: column-margin
@@ -361,7 +361,7 @@ summary(L2.data.fct$Gender)
 ::: callout-important
 ### Be kind to your future self! {.unnumbered}
 
-To ensure that our analyses are **reproducible** (see @sec-Reproducibility) from the raw data to the final statistics and figures, it is crucial that we document *all* of our corrections and other pre-processing steps in scripts. This ensures that, if we need to go back on any data pre-processing decision that we made or if we need to make any additional corrections, we can do so without having to re-do our entire analyses. For example, what if we later found out that a research assistant had coded participants who failed to provide a gender as `f`? It would be important to be able to go back to our decision of converting all `f` entries to `F`! In addition, coding and documenting our pre-processing steps means that all our analytical decisions are transparent and can be inspected and challenged by our peers.
+To ensure that our analyses are **reproducible** (see @sec-Reproducibility) from the raw data to the final statistics and figures, it is crucial that we document *all* of our corrections and other pre-processing steps in scripts. This ensures that, if we need to reconsider any data pre-processing decision that we made or if we need to make any additional corrections, we can do so without having to re-do our entire analyses. For example, what if we later found out that a research assistant had coded participants who failed to provide a gender as `f`? It would be important to be able to go back on our decision to convert all `f` entries to `F`! What's more, coding and documenting our pre-processing steps makes all our analytical decisions transparent, allowing our peers (and future selves!) to inspect and challenge them.
 :::
 
 ### Using {stringr} functions `r emoji("violin")` {#sec-stringR}
@@ -397,10 +397,10 @@ Like `mutate()` and `select()`, `str_to_upper()` also comes from a tidyverse pac
 :::
 ::::
 
--   `str_to_upper()` converts all characters to upper case.
--   `str_to_lower()` converts all characters to lower case.
--   `str_to_title()` converts character string title case (i.e. only the first letter of each word is capitalised).
--   `str_to_sentence()` converts character string to sentence case (i.e. only the first letter of each sentence is capitalised).
+- `str_to_upper()` converts all characters to upper case.
+- `str_to_lower()` converts all characters to lower case.
+- `str_to_title()` converts character string title case (i.e. only the first letter of each word is capitalised).
+- `str_to_sentence()` converts character string to sentence case (i.e. only the first letter of each sentence is capitalised).
 
 For more useful functions to manipulate character strings, check out the [{stringr} cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf).
 
@@ -694,7 +694,7 @@ Each programming language/software has a slightly different flavour of regex but
 
 We have now reduced the number of levels in the `NativeLg` variable to just 14 unique languages, but we still have some typos to correct, e.g. "Lithunanina" and "Lituanian". We can correct these on a case-by-case basis using `case_when()`. This is a very useful tidyverse function from the {dplyr} package that works wonders once we have gotten used to its syntax. @fig-case_when illustrates the syntax with a toy example dataset about the dangerousness of dragons (`df`). In this annotated line of code in @fig-case_when, `mutate()` is used to add a new column called `danger` whose values depend on the type of dragon that we are dealing with. The first argument of `case_when()` determines that, when the dragon `type` is equal to "kraken", then the `danger` value is set to "extreme", otherwise the danger value is set to "high". You can see the outcome in the `danger` column.
 
-![Artwork explaining the `case_when()` function CC BY 4.0 [\@allison_horst](https://allisonhorst.com/allison-horst)](images/AHorst_case_when.png){#fig-case_when fig-alt="Cartoon showing a table with creature type (kraken, dragon, or cyclops) and age (baby, teen, or adult). The three creatures listed are adding a new column named “danger”, which contains the word “extreme!” if the type is “kraken”, or “high” for any other type. Stylized text reads “dplyr::case_when() - IF ELSE...but you love it? An example of code is shown: mutate(danger = case_when(type == “kraken” ~ “extreme!”, TRUE ~ “high”)." width=90%}
+![Artwork explaining the `case_when()` function CC BY 4.0 [\@allison_horst](https://allisonhorst.com/allison-horst)](images/AHorst_case_when.png){#fig-case_when fig-alt="Cartoon showing a table with creature type (kraken, dragon, or cyclops) and age (baby, teen, or adult). The three creatures listed are adding a new column named “danger”, which contains the word “extreme!” if the type is “kraken”, or “high” for any other type. Stylized text reads “dplyr::case_when() - IF ELSE...but you love it? An example of code is shown: mutate(danger = case_when(type == “kraken” ~ “extreme!”, TRUE ~ “high”)." width="90%"}
 
 Applying `case_when()` to fix the typos in the `NativeLg` variable in `L2.data`, we determine that:
 
@@ -792,12 +792,12 @@ For some analyses, it may be useful to group together participants whose native 
 
 Use `mutate()` and `case_when()` to add a new variable to `L2.data` that corresponds to the L2 participant's native language family. Call this new variable `NativeLgFamily`. Use the following language family categories:
 
--   Baltic
--   Chinese
--   Germanic
--   Hellenic
--   Romance
--   Slavic
+- Baltic
+- Chinese
+- Germanic
+- Hellenic
+- Romance
+- Slavic
 
 If you're not sure which language family a language belongs to, look it up on Wikipedia (e.g. the Wikipedia page on the [German language](https://en.wikipedia.org/wiki/German_language) informs us in a text box at the top of the article that German is a Germanic language).
 
@@ -981,9 +981,9 @@ This is a reminder to *always* check whether your data wrangling operations have
 
 So far, we have analysed the L1 and L2 datasets individually. In the following chapters, however, we will conduct comparative analyses, comparing the performance of the L1 and L2 participants in the various language-related tests conduced as part of @DabrowskaExperienceAptitudeIndividual2019. To this end, we need to create a combined table that includes the data of all participants from @DabrowskaExperienceAptitudeIndividual2019. Recall that both tables, `L1.data` and `L2.data`, are in a tidy data format (@fig-tidydata). This means that:
 
--   each row represents an observation (i.e. here, a participant),
--   each cell represents a measurement, and
--   each variable forms a column.
+- each row represents an observation (i.e. here, a participant),
+- each cell represents a measurement, and
+- each variable forms a column.
 
 To combine the two datasets, therefore, we need to combine the rows of the two tables. However, we cannot simply add the rows of the `L2.data` table to the bottom of `L1.data` table because, as shown below, the two tables do not have the same number of columns and their shared columns are not in the same position!
 
@@ -1118,15 +1118,19 @@ Remember to carefully check the output of any data manipulation that you do *bef
 :::::
 
 ::: callout-important
-### Using AI tools for coding `r emoji("warning")`️
+### Using AI for coding `r emoji("warning")`️
 
 Note that older textbooks/tutorials and AI products such as ChatGPT, Claude, and CoPilot that have been trained on older web data will frequently suggest **superseded** (i.e. outdated) functions for data manipulation such as `spread()`, `gather()`, `select_all()`, and `mutate_if()`. If you use superseded functions, your code will still work, but `R` will print a warning in the Console and usually suggest a more modern alternative.
 
 AI products may also suggest using functions that are **deprecated**. As with superseded functions, you will get a warning message with a recommended alternative. In this case, however, you must follow the advice of the warning, as writing new code with deprecated functions is really asking for trouble! Deprecated functions are scheduled for removal, which means that your code will eventually no longer run on up-to-date `R` versions.
 
-![The four main stages of the lifecycle of R packages, functions, function arguments (image by Henry and Wickham 2023 for Posit Software, PBC, <https://lifecycle.r-lib.org/articles/stages.html>).](images/lifecycle.svg){#fig-lifecycle fig-alt="Graphic with four boxes corresponding to the 4 main stages of the lifecycle of 'R' packages. From left to right, one arrow leads from 'experimental' to 'stable', and two arrows lead from 'stable' to 'deprecated' and 'superseded'." width=80%}
+![The four main stages of the lifecycle of `R` packages, functions, function arguments (image by Henry and Wickham 2023 for Posit Software, PBC, <https://lifecycle.r-lib.org/articles/stages.html>).](images/lifecycle.svg){#fig-lifecycle fig-alt="Graphic with four boxes corresponding to the 4 main stages of the lifecycle of 'R' packages. From left to right, one arrow leads from 'experimental' to 'stable', and two arrows lead from 'stable' to 'deprecated' and 'superseded'." width="80%"}
 
-In sum, to ensure the future compatibility of your code, do not ignore warnings about deprecated functions and, in general, *never ever* blindly trust the output of AI tools! More on the use of AI for research and learning in @sec-AI.
+In short, to ensure the future compatibility of your code, do not ignore warnings about deprecated functions and, in general, *never ever* trust the output of AI tools! In particular, never install packages recommended by an AI without first checking the package's credentials as this is an excellent way to install malware on your computer, which hackers have long started capitalising on. Finally, granting an AI (coding) agent full access to your computer is literally a "cybersecurity nightmare" [@marcusLLMsCodingAgents2025].
+
+> When it comes to security, LLMs are like Swiss cheese — and that's going to cause huge problems. [@marcusWhenItComes2024]
+
+More on the use of AI for research and learning in @sec-AI.
 :::
 
 ## A pre-processing pipeline {#sec-filter}
@@ -1337,13 +1341,13 @@ combined.data |>
 As a final step, we want to save the `R` object `combined.data` to a local file on our computer so that, when we continue our analyses in a new `R` session, we can immediately start working with the wrangled dataset. We can either save the wrangled dataset as an `R` object (`.rds`) or export it as a DSV file (e.g. `.csv`, see @sec-DSV). The pros and cons of these two solutions are summarised in @tbl-saving.
 
 | DSV files (e.g. `.csv`, `.tsv`, `.tab`) | `R` data files (`.rds`) |
-|----|:---|
+|------------------------------------|:-----------------------------------|
 | `r emoji("white_check_mark")` Highly portable (i.e., can be opened in all standard spreadsheet software and text editors). | `r emoji("x")` Specific to `R` and cannot be opened in standard spreadsheet software or text editors. |
 | `r emoji("x")` Inefficient for very large datasets. | `r emoji("white_check_mark")` Efficient memory usage for more compact data storage and faster loading times in `R`. |
 | `r emoji("white_check_mark")` Universal, language-independent format and therefore suitable for long-term archiving. | `r emoji("x")` No guarantee that older `.rds` files will be compatible with newer versions of `R` and therefore unsuitable for long-term archiving. |
 | `r emoji("x")` Loss of metadata. | `r emoji("white_check_mark")` Preserve `R` data structures (e.g., factor variables remain stored as factors). |
 
-: Pros and cons of saving DSV vs. `R` data files {#tbl-saving}
+: Pros and cons of saving DSV vs. `R` data files
 
 We save both a `.csv` and an `.rds` version of the wrangled data. We save both files to a subfolder of our project "data" folder called "processed" using the {here} package to manage the file path (see @sec-ImportingDataCSV). If we try to save the file to this subfolder before it has been created at this location we get an error message.
 
@@ -1355,7 +1359,7 @@ saveRDS(combined.data, file = here("data", "processed", "combined_L1_L2_data.rds
 Error in gzfile(file, mode) : cannot open the connection
 ```
 
-We first need to create the "processed" subfolder before we can save to this location! There are two ways of doing this. In the Files pane of *RStudio* or in a File Navigator/Explorer window, we can navigate to the "data" folder and, from there, click on the "Create a new folder" icon to create a new subfolder called "processed". 
+We first need to create the "processed" subfolder before we can save to this location! There are two ways of doing this. In the Files pane of *RStudio* or in a File Navigator/Explorer window, we can navigate to the "data" folder and, from there, click on the "Create a new folder" icon to create a new subfolder called "processed".
 
 Alternatively, we can use the `dir.create()` function to create the subfolder from `R` itself. If the folder already exists at this location, we will get a warning.
 
@@ -1391,15 +1395,15 @@ It's time to complete this chapter's [tasks and quizzes](https://elenlefoll.gith
 
 Are you confident that you can...?
 
--   [ ] Define tidy data (@sec-tidyverse)
--   [ ] Check the sanity of a dataset (@sec-Sanity)
--   [ ] Convert character vectors representing categorical data to factors (@sec-Factors)
--   [ ] Add and replace columns in a table (@sec-mutate)
--   [ ] Transform several columns at once (@sec-across)
--   [ ] Use {stringr} functions to manipulate text values (@sec-stringR)
--   [ ] Interpret `R` package cheatsheets
--   [ ] Gain insights from the help file of `R` functions
--   [ ] Use tidyverse functions to pre-process data in an readable and reproducible way (@sec-Preprocessing) and (@sec-filter)
--   [ ] Save `R` objects as `.rds` and `.csv` files on your computer (@sec-ExportingRObjects)
+- [ ] Define tidy data (@sec-tidyverse)
+- [ ] Check the sanity of a dataset (@sec-Sanity)
+- [ ] Convert character vectors representing categorical data to factors (@sec-Factors)
+- [ ] Add and replace columns in a table (@sec-mutate)
+- [ ] Transform several columns at once (@sec-across)
+- [ ] Use {stringr} functions to manipulate text values (@sec-stringR)
+- [ ] Interpret `R` package cheatsheets
+- [ ] Gain insights from the help file of `R` functions
+- [ ] Use tidyverse functions to pre-process data in an readable and reproducible way (@sec-Preprocessing) and (@sec-filter)
+- [ ] Save `R` objects as `.rds` and `.csv` files on your computer (@sec-ExportingRObjects)
 
 That was a lot of data wrangling, but we are now ready to proceed with some comparative analyses of L1 and L2 English speakers' language skills! In @sec-DataViz we continue to explore the tidyverse as we learn how to use the popular tidyverse package {ggplot2} to visualise the pre-processed data from @DabrowskaExperienceAptitudeIndividual2019. Are you ready to get creative? `r emoji("art")`
