@@ -1,7 +1,5 @@
 ---
-engine: knitr
 bibliography: references.bib
-code-annotations: hover
 ---
 
 {{< include emoji_script.md >}}
@@ -31,11 +29,7 @@ In this chapter, you will learn how to:
 ::: {.callout-warning collapse="false"}
 ### Prerequisites
 
-In this chapter and the following chapters, all analyses are based on data from:
-
-> Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72--100. <https://doi.org/10.1111/lang.12323>.
-
-You will only be able to reproduce the analyses and answer the quiz questions from this chapter if you have created an RProject and successfully imported the two datasets from @DabrowskaExperienceAptitudeIndividual2019 into your local `R` environment (see @fig-DataLoaded). See detailed instructions @sec-RProject -- @sec-ImportingDataCSV.
+In this chapter and the following chapters, all analyses are based on data from @DabrowskaExperienceAptitudeIndividual2019. You will only be able to reproduce the analyses and answer the quiz questions if you have created an RProject and saved the data within the project directory. Detailed instructions to do so can be found from @sec-RProject to @sec-ImportingDataCSV.
 
 Alternatively, you can download `Dabrowska2019.zip` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/raw/69d1e31be7394f2b612825f031ebffeb75886390/Dabrowska2019.zip){.uri}. To launch the project correctly, first unzip the file and then double-click on the `Dabrowska2019.Rproj` file.
 
@@ -922,7 +916,7 @@ check_question("The difference between the mean and median age is greater in the
                type = "check",
                button_label = "Check answer",
                right = "Correct!",
-               wrong = "No, that's incorrect. Note that only one statement is correct.")
+               wrong = "No, that's incorrect. Only one statement is correct.")
 ```
 
 [**Q8.10**]{style="color:green;"} Which measure of central tendency best describes L1 participants' ages?
@@ -1069,7 +1063,7 @@ random_answer_order = TRUE,
 button_label = "Check answer",
 right = "Yes, these are reasonable assumptions that we can make based on the available data.",
 wrong = "No, not quite.")
-check_hint("Two of the above statements are reasonable assumptions that we can make based on the available data.", hint_title = "🐭 Click on the mouse for a hint.")
+check_hint("Two of the above statements are assumptions that we can make based on the available data.", hint_title = "🐭 Click on the mouse for a hint.")
 
 ```
 
@@ -1117,7 +1111,7 @@ type = "check",
 q_id = "Q8.13", 
 random_answer_order = TRUE,
 button_label = "Check answer",
-right = "Great stuff! Now, it's time to move on to measures of variability. 🤓",
+right = "Great stuff, well done! Now, it's time to move on to measures of variability. 🤓",
 wrong = "No, not quite.")
 check_hint("Two of the above statements are disadvantages of using the median.", hint_title = "🐭 Click on the mouse for a hint.")
 
@@ -1255,7 +1249,7 @@ We can further subdivide the distribution into chunks of 25% of the data, or **q
 
 - The **first quartile (Q~1~)** is the value below which 25% of the data falls. In other words, the first quartile corresponds to a value that lies above one-quarter of the values in the data set.
 
-- The **second quartile (Q~2~)** is the **median** and, as we know, half of the data (25% + 25% = 50%) are below this value, the other half are above.
+-   The **second quartile (Q~2~)** is the **median**. Half of the data (25% + 25% = 50%) are below this value, the other half are above.
 
 - The **third quartile (Q~3~)** is the value below which 75% of the data falls. In other words, it is also the value above which the upper 25% of the data are.
 
@@ -1317,6 +1311,7 @@ Remember that, in a perfectly normal distribution, the mean and median are equal
 #| label: "fig-NormalBoxplots"
 #| fig-cap: "Symmetrical boxplots showing three different normal distributions"
 #| fig-alt: "Three boxplots of the ages of different groups. All three are symmetrical and have their medians at 35 years. Group one’s box extends from 32.5 to 37.5 years, group two’s box extends from 32.6 to 37.4 years and group three’s box extends from 33 to 37 years. The maximums and minimums are at 46 and 24; 44 and 26; and 42.5 and 28 years respectively."
+#| out-width: 70%
 
 
 normal.ages <- data.frame(Age = c(normal.age.A, normal.age.B, normal.age.C),
@@ -1365,7 +1360,7 @@ check_hint("Four of the above statements are correct.",
            hint_title = "🐭 Click on the mouse for a first hint.")
 ```
 
-[**Q8.16**]{style="color:green;"} The boxplots in @fig-NormalBoxplots are based on the same data as the three density plots in @fig-3NormalDistributions. Compare the two figures. Which distribution corresponds to which boxplot?
+[**Q8.16**]{style="color:green;"} The boxplots below are based on the same data as the three density plots in @fig-3NormalDistributions. Compare the two figures. Which distribution corresponds to which boxplot?
 
 ```{r}
 #| echo: false
@@ -1391,7 +1386,6 @@ check_hint("Two of the above statements are true.",
 [**Q8.17**]{style="color:green;"} Examine the following distribution of scores on the grammatical comprehension test administered as part of @DabrowskaExperienceAptitudeIndividual2019.
 
 ```{r}
-#| label: "fig-L1GrammarRDensityPlot"
 #| fig-cap: "Density plot of participants' scores on the English comprehension grammar test"
 #| fig-width: 8
 #| fig-height: 5
@@ -1462,7 +1456,7 @@ L1.data |>
   labs(x = "Scores on the English grammar test")
 ```
 
-Are the scores visualised in @fig-L1GrammarRDensityPlot normally distributed?
+Are the scores visualised in the plot above normally distributed?
 
 ```{r}
 #| echo: false
@@ -1491,7 +1485,7 @@ summary(L1.data$GrammarR)
 summary(L2.data$GrammarR)
 ```
 
-Based on the outputs of the `summary()` function, what does @fig-L1GrammarRDensityPlot display?
+Based on the outputs of the `summary()` function, what does the plot above display?
 
 ```{r}
 #| echo: false
@@ -1566,7 +1560,7 @@ check_hint("Remember that, in a boxplot, the box always covers the middle 50% of
 
 ### Standard deviation {#sec-SD}
 
-In the language sciences and in many other disciplines, standard deviation is the most common reported measure of variability. Whereas the interquartile range (IQR) is a measure of variability around the median, **standard deviation (SD)** measures variability around the mean. In other words, if you report a mean value as a measure of central tendency, you should report the standard deviation along side it. However, if you report the median, than it makes more sense to report the IQR in the form of a boxplot (see @sec-IQR).
+In the language sciences and in many other disciplines, standard deviation is the most common reported measure of variability. Whereas the interquartile range (IQR) is a measure of variability around the median, **standard deviation (*SD*)** measures variability around the mean. In other words, if you report a mean value as a measure of central tendency, you should report the standard deviation along side it. However, if you report the median, than it makes more sense to report the IQR in the form of a boxplot (see @sec-IQR).
 
 ::: callout-info
 In a nutshell, the standard deviation tells us how far away, on average, each data point is from the mean.
@@ -1606,7 +1600,7 @@ sqrt(sum((Breton.scores - mean(Breton.scores))^2) / 5)
 
 From the above result, we can deduce that, on average, learners' test scores are 32 points away from the group mean of `r mean(Breton.scores)` points.
 
-And the good news is that there is a base `R` function to calculate the standard deviation. It is called `sd()`. However, if we use the `sd()` function to calculate the standard deviation of our five Breton learners' test scores, we get a slightly different result! `r emoji("monocle_face")`
+And the good news is that there is a base `R` function to calculate the standard deviation. It is called `sd()`. However, if we use the `sd()` function to calculate the standard deviation of our five Breton learners' test scores, we get a slightly different result... `r emoji("monocle_face")`
 
 ```{r}
 sd(Breton.scores)
@@ -1623,7 +1617,7 @@ sqrt(sum((Breton.scores - mean(Breton.scores))^2) / 4)
 With a normal distribution, the standard deviation informs us about the width of the bell around the central tendency. @fig-3NormalDistributions shows three normal distributions, all with a median/mean of 35, but with different bell shapes. This is because they have very different standard deviations around that central tendency of 35 years. Let us compare the distribution shapes of these three distributions:
 
 ::: {.content-visible when-format="html"}
-Distribution A (@fig-DensityA) is a normal distribution with a mean of 35 years (x̅ = 35) and a standard deviation of one year (sd = 1).
+Distribution A (@fig-DensityA) is a normal distribution with a mean of 35 years (M = 35) and a standard deviation of one year (*SD* = 1).
 
 ```{r}
 #| fig-height: 3
@@ -1635,7 +1629,7 @@ Distribution A (@fig-DensityA) is a normal distribution with a mean of 35 years 
 normal.density(normal.age.A)
 ```
 
-Distribution B (@fig-DensityB) is a normal distribution with a mean of 35 years (x̅ = 35) and a standard deviation of 5 years (sd = 5).
+Distribution B (@fig-DensityB) is a normal distribution with a mean of 35 years (M = 35) and a standard deviation of 5 years (*SD* = 5).
 
 ```{r}
 #| fig-height: 3
@@ -1648,7 +1642,7 @@ normal.density(normal.age.B) +
   labs(title = "B")
 ```
 
-Distribution C (@fig-DensityC) is a normal distribution with a mean of 35 years (x̅ = 35) and a standard deviation of 10 years (sd = 10).
+Distribution C (@fig-DensityC) is a normal distribution with a mean of 35 years (M = 35) and a standard deviation of 10 years (*SD* = 10).
 
 ```{r}
 #| fig-height: 3
@@ -1663,12 +1657,12 @@ normal.density(normal.age.C) +
 :::
 
 ::: {.content-visible when-format="pdf"}
-- Distribution A in @fig-3NormalDistributions is a normal distribution with a mean of 35 years (x̅ = 35) and a standard deviation of one year (sd = 1).
-- Distribution B is also a normal distribution with a mean of 35 years (x̅ = 35d), but a larger standard deviation of 5 years (sd = 5).
-- Distribution C is also a normal distribution with a mean of 35 years (x̅ = 35) and an even larger standard deviation of 10 years (sd = 10).
+-   Distribution A in @fig-3NormalDistributions is a normal distribution with a mean of 35 years (M = 35) and a standard deviation of one year (*SD* = 1).
+-   Distribution B is also a normal distribution with a mean of 35 years (M = 35), but a larger standard deviation of 5 years (*SD* = 5).
+-   Distribution C is also a normal distribution with a mean of 35 years (M = 35) and an even larger standard deviation of 10 years (*SD* = 10).
 :::
 
-The standard deviation provides a single metric of the variability around the mean. This means that knowing the mean and standard deviation of a numeric variable is not enough to tell us whether a distribution is (approximately) normal or skewed. Like the range and the IQR, a large standard deviation value indicates greater variability within a variable, but tells us nothing more. For instance, comparing the following two SDs tells us that there is a lot more variability around the mean of L2 participants' grammar comprehension test scores than in that of the L1 participants, but nothing more about the distribution of the test scores in either group.
+The standard deviation provides a single metric of the variability around the mean. This means that knowing the mean and standard deviation of a numeric variable is not enough to tell us whether a distribution is (approximately) normal or skewed. Like the range and the IQR, a large standard deviation value indicates greater variability within a variable, but tells us nothing more. For instance, comparing the following two standard deviations tells us that there is a lot more variability around the mean of L2 participants' grammar comprehension test scores than in that of the L1 participants, but nothing more about the distribution of the test scores in either group.
 
 ```{r}
 sd(L1.data$GrammarR) |>
@@ -1679,7 +1673,7 @@ sd(L2.data$GrammarR) |>
 ```
 
 ::: {.content-visible when-format="html"}
-In this respect, boxplots are more informative (compare the above SDs with @fig-GrammarRBoxplots). To evaluate the full shape of a numeric variable's distribution, however, it is best to plot the full distribution as a histogram or density plot.
+In this respect, boxplots are more informative (compare the above standard deviations with @fig-GrammarRBoxplots). To evaluate the full shape of a numeric variable's distribution, however, it is best to plot the full distribution as a histogram or density plot.
 :::
 
 ::: {.content-visible when-format="pdf"}
@@ -1702,7 +1696,7 @@ check_question(c("16.15", "16,15"),
                button_label = "Check answer",
                q_id = "Q8.20", 
                right = "Excellent! ✅",
-               wrong = "Incorrect. ❌"
+               wrong = "No, that's not it."
 )
 check_hint("You will need to combine the `sd()` and the `round()` funtions to answer this question.", hint_title = "🐭 Click on the mouse for a hint.")
 ```
@@ -1723,7 +1717,7 @@ check_question("There is greater variability around the mean age in the L1 data 
                q_id = "Q8.21", 
                button_label = "Check answer",
                right = "That's right, well done! 🎉",
-               wrong = "No, that's incorrect."
+               wrong = "No, that's incorrect. Note that only one statement is correct."
 )
 check_hint("Only one of these statements can be deduced from a comparison of these standard deviations.", hint_title = "🐭 Click on the mouse for a hint.")
 
@@ -1732,9 +1726,9 @@ check_hint("Only one of these statements can be deduced from a comparison of the
 ::::
 
 ::: callout-note
-#### Further reading
+#### Developping a visual understanding of standard deviation
 
-As a follow-up, I highly recommend reading this short and highly accessible [article](https://medium.com/data-science/a-visual-interpretation-of-the-standard-deviation-30f4676c291c) by Fahd @alhazmiVisualInterpretationStandard2020, who provides a beautiful visual guide to understanding standard deviation.
+As a follow-up, I highly recommend reading this short and highly accessible [article](https://medium.com/data-science/a-visual-interpretation-of-the-standard-deviation-30f4676c291c) by Fahd @alhazmiVisualInterpretationStandard2020, who provides a beautifully intuitive guide to understanding standard deviation with graphical animations.
 :::
 
 ::: {.content-visible when-profile="OER"}

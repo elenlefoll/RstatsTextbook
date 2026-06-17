@@ -138,6 +138,12 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 <style>
 .cell-output-stdout code {
   word-break: break-wor !important;
@@ -339,6 +345,7 @@ div.csl-indent {
         <div class="sidebar-tools-main tools-wide">
     <a href="mailto:elefoll@uni-koeln.de" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-envelope"></i></a>
     <a href="https://github.com/elenlefoll/RstatsTextbook/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Data-Analysis-for-the-Language-Sciences.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
@@ -429,20 +436,20 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./12_SimpleLinearRegression.html" class="sidebar-item-text sidebar-link">
+  <a href="./12_Modelling.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Int<code>R</code>oduction to statistical modelling</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./13_MultipleLinearRegression.html" class="sidebar-item-text sidebar-link">
+  <a href="./13_Regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Multiple linear reg<code>R</code>ession modelling</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./14_LiterateProgramming.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Rep<code>R</code>oducible research and academic w<code>R</code>iting in Quarto</span></span></a>
+  <a href="./14_Quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Rep<code>R</code>oducible research and academic writing in Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -677,11 +684,7 @@ div.csl-indent {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>In this chapter and the following chapters, all analyses are based on data from:</p>
-<blockquote class="blockquote">
-<p>Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72–100. <a href="https://doi.org/10.1111/lang.12323" class="uri">https://doi.org/10.1111/lang.12323</a>.</p>
-</blockquote>
-<p>You will only be able to reproduce the analyses and answer the quiz questions from this chapter if you have created an RProject and successfully imported the two datasets from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="References.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> into your local <code>R</code> environment (see <a href="#fig-DataLoaded" class="quarto-xref">Figure&nbsp;<span>7.1</span></a>). Detailed instructions to do so can be found from <a href="6_ImpoRtingData.html#sec-RProject" class="quarto-xref"><span>Section 6.3</span></a> to <a href="6_ImpoRtingData.html#sec-ImportingDataCSV" class="quarto-xref"><span>Section 6.5</span></a>.</p>
+<p>In this chapter and the following chapters, all analyses are based on data from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="References.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>. You will only be able to reproduce the analyses and answer the quiz questions if you have created an RProject and saved the data within the project directory. Detailed instructions to do so can be found from <a href="6_ImpoRtingData.html#sec-RProject" class="quarto-xref"><span>Section 6.3</span></a> to <a href="6_ImpoRtingData.html#sec-ImportingDataCSV" class="quarto-xref"><span>Section 6.5</span></a>.</p>
 <p>Alternatively, you can download <code>Dabrowska2019.zip</code> from <a href="https://github.com/elenlefoll/RstatsTextbook/raw/69d1e31be7394f2b612825f031ebffeb75886390/Dabrowska2019.zip" class="uri">the textbook’s GitHub repository</a>. To launch the project correctly, first unzip the file and then double-click on the <code>Dabrowska2019.Rproj</code> file.</p>
 <p>Before we get started, import both L1 and the L2 datasets to your local <code>R</code> environment:</p>
 <div class="cell">
@@ -694,7 +697,7 @@ div.csl-indent {
 <div id="fig-DataLoaded" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The environment pane contains two rows under the label Data: the L1.data object with 90 obs. of 31 variables and the L2.data object with 67 obs. of 45 variables">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-DataLoaded-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/RStudioEnvironment.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;7.1: Environment pane of RStudio showing that the datasets have been correctly loaded and are ready to be used in the current R session"><img src="images/RStudioEnvironment.png" class="img-fluid figure-img" alt="The environment pane contains two rows under the label Data: the L1.data object with 90 obs. of 31 variables and the L2.data object with 67 obs. of 45 variables"></a>
+<a href="images/RStudioEnvironment.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;7.1: Environment pane of RStudio showing that the datasets have been correctly loaded and are ready to be used in the current R session"><img src="images/RStudioEnvironment.png" class="img-fluid figure-img" style="width:80.0%" alt="The environment pane contains two rows under the label Data: the L1.data object with 90 obs. of 31 variables and the L2.data object with 67 obs. of 45 variables"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-DataLoaded-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7.1: Environment pane of RStudio showing that the datasets have been correctly loaded and are ready to be used in the current <code>R</code> session
@@ -715,10 +718,10 @@ Figure&nbsp;7.1: Environment pane of RStudio showing that the datasets have been
 <div id="fig-ViewData1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RStudio tab showing the first 22 rows and 7 columns of the L1.dataset. The filter and search buttons at the top of the tab are circled in red.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ViewData1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/ViewL1data.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;7.2: The L1.data object as visualised using the View() function in RStudio"><img src="images/ViewL1data.png" class="img-fluid figure-img" alt="RStudio tab showing the first 22 rows and 7 columns of the L1.dataset. The filter and search buttons at the top of the tab are circled in red."></a>
+<a href="images/ViewL1data.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;7.2: The L1.data object as visualised using the View() function in RStudio"><img src="images/ViewL1data.png" class="img-fluid figure-img" style="width:80.0%" alt="RStudio tab showing the first 22 rows and 7 columns of the L1.dataset. The filter and search buttons at the top of the tab are circled in red."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ViewData1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.2: The L1.data object as visualised using the <code>View()</code> function in RStudio
+Figure&nbsp;7.2: The L1.data object as visualised using the <code>View()</code> function in <em>RStudio</em>
 </figcaption>
 </figure>
 </div>
@@ -739,8 +742,8 @@ Figure&nbsp;7.2: The L1.data object as visualised using the <code>View()</code> 
 <div class="cell-output-display">
 <form name="form_Q7_1" onsubmit="return validate_form_Q7_1()" method="post">
 <label>
-<input type="radio" name="answer_Q7_1" id="answer_Q7_1_1" value="The R Console prints the data in a randomly jumbled way.">
-The R Console prints the data in a randomly jumbled way.
+<input type="radio" name="answer_Q7_1" id="answer_Q7_1_1" value="The R Console prints out all the data, but not the column headers.">
+The R Console prints out all the data, but not the column headers.
 </label>
 <br>
 <label>
@@ -749,13 +752,13 @@ R only displays the first 22 rows and the columns are not aligned because the Co
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_1" id="answer_Q7_1_3" value="The R Console prints out all the data, but not the column headers.">
-The R Console prints out all the data, but not the column headers.
+<input type="radio" name="answer_Q7_1" id="answer_Q7_1_3" value="R produces an error message because there are too many rows and the Console window is not long enough.">
+R produces an error message because there are too many rows and the Console window is not long enough.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_1" id="answer_Q7_1_4" value="R produces an error message because there are too many rows and the Console window is not long enough.">
-R produces an error message because there are too many rows and the Console window is not long enough.
+<input type="radio" name="answer_Q7_1" id="answer_Q7_1_4" value="The R Console prints the data in a randomly jumbled way.">
+The R Console prints the data in a randomly jumbled way.
 </label>
 <br>
 <input type="submit" value="Check answer">
@@ -768,9 +771,9 @@ R produces an error message because there are too many rows and the Console wind
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_64770" onclick="return show_hint_64770()">🐭 Click on the mouse for a hint.</div>
-<div id="result_64770" onclick="return show_hint_64770()"></div>
-<script>function show_hint_64770(){var x = document.getElementById('result_64770').innerHTML; if(!x){document.getElementById('result_64770').innerHTML = 'What happens when you increase or decrease the width of the Console pane in <em>RStudio</em> and then try to print the table again?';} else {document.getElementById('result_64770').innerHTML = '';}}</script>
+<div id="hint_34701" onclick="return show_hint_34701()">🐭 Click on the mouse for a hint.</div>
+<div id="result_34701" onclick="return show_hint_34701()"></div>
+<script>function show_hint_34701(){var x = document.getElementById('result_34701').innerHTML; if(!x){document.getElementById('result_34701').innerHTML = 'What happens when you increase or decrease the width of the Console pane in <em>RStudio</em> and then try to print the table again?';} else {document.getElementById('result_34701').innerHTML = '';}}</script>
 </div>
 </div>
 </div>
@@ -827,33 +830,33 @@ R produces an error message because there are too many rows and the Console wind
 <div class="cell-output-display">
 <form name="form_Q7_2" onsubmit="return validate_form_Q7_2()" method="post">
 <label>
-<input type="radio" name="answer_Q7_2" id="answer_Q7_2_1" value="head(L2.data, n = 10L)">
-head(L2.data, n = 10L)
-</label>
-<br>
-<label>
-<input type="radio" name="answer_Q7_2" id="answer_Q7_2_2" value="head(L2.data n = 10L)">
+<input type="radio" name="answer_Q7_2" id="answer_Q7_2_1" value="head(L2.data n = 10L)">
 head(L2.data n = 10L)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_2" id="answer_Q7_2_3" value="head(L2.data, L = 10)">
+<input type="radio" name="answer_Q7_2" id="answer_Q7_2_2" value="head(L2.data, L = 10)">
 head(L2.data, L = 10)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_2" id="answer_Q7_2_4" value="head(L2.data, 10)">
-head(L2.data, 10)
+<input type="radio" name="answer_Q7_2" id="answer_Q7_2_3" value="head(L2.data, n = 10L)">
+head(L2.data, n = 10L)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_2" id="answer_Q7_2_5" value="head(L2.data, n = 10)">
+<input type="radio" name="answer_Q7_2" id="answer_Q7_2_4" value="head(L2.data, n = 10)">
 head(L2.data, n = 10)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_2" id="answer_Q7_2_6" value="head(L2.data, rows = 10)">
+<input type="radio" name="answer_Q7_2" id="answer_Q7_2_5" value="head(L2.data, rows = 10)">
 head(L2.data, rows = 10)
+</label>
+<br>
+<label>
+<input type="radio" name="answer_Q7_2" id="answer_Q7_2_6" value="head(L2.data, 10)">
+head(L2.data, 10)
 </label>
 <br>
 <input type="submit" value="Check answer">
@@ -866,9 +869,9 @@ head(L2.data, rows = 10)
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_20518" onclick="return show_hint_20518()">🐭 Click on the mouse for a hint.</div>
-<div id="result_20518" onclick="return show_hint_20518()"></div>
-<script>function show_hint_20518(){var x = document.getElementById('result_20518').innerHTML; if(!x){document.getElementById('result_20518').innerHTML = 'You can find the correct command argument in the help file of the <code>head()</code> function. Remember that you can access a function’s help file using the commands <code>?</code> or <code>help</code>.';} else {document.getElementById('result_20518').innerHTML = '';}}</script>
+<div id="hint_24114" onclick="return show_hint_24114()">🐭 Click on the mouse for a hint.</div>
+<div id="result_24114" onclick="return show_hint_24114()"></div>
+<script>function show_hint_24114(){var x = document.getElementById('result_24114').innerHTML; if(!x){document.getElementById('result_24114').innerHTML = 'You can find the correct command argument in the help file of the <code>head()</code> function. Remember that you can access a function’s help file using the commands <code>?</code> or <code>help</code>.';} else {document.getElementById('result_24114').innerHTML = '';}}</script>
 </div>
 </div>
 </div>
@@ -879,23 +882,27 @@ head(L2.data, rows = 10)
 <h2 data-number="7.2" class="anchored" data-anchor-id="sec-Variables"><span class="header-section-number">7.2</span> Working with variables</h2>
 <section id="types-of-variables" class="level3" data-number="7.2.1">
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="types-of-variables"><span class="header-section-number">7.2.1</span> Types of variables</h3>
-<p>In statistics, we differentiate between <strong>numeric</strong> (or <strong>quantitative</strong>) and <strong>categorical</strong> (or <strong>qualitative</strong>) variables. Each variable type can be subdivided into different subtypes. It is very important to understand the differences between these types of data as we frequently have to use different statistics and visualisations depending on the type(s) of variable(s) that we are dealing with.</p>
-<p>Some <strong>numeric variables</strong> are <strong>continuous</strong>: they contain measured data that, at least theoretically, can have an infinite number of values within a range (e.g.&nbsp;time). In practice, however the number of possible values depends on the precision of the measurement (e.g.&nbsp;are we measuring time in years, as in the age of adults, or milliseconds, as in participants’ reaction times in a linguistic experiment). <strong>Numeric variables</strong> for which only a defined set of values are possible are called <strong>discrete</strong> variables (e.g.&nbsp;number of occurrences of a word in a corpus). Most often, discrete numeric variables represent counts of something.</p>
+<p>In statistics, we differentiate between <strong>numeric</strong> (or <strong>quantitative</strong>) (see <a href="#fig-HorstNumeric" class="quarto-xref">Figure&nbsp;<span>7.3</span></a>) and <strong>categorical</strong> (or <strong>qualitative</strong>) (see <a href="#fig-HorstCategorical" class="quarto-xref">Figure&nbsp;<span>7.4</span></a>) variables. Each variable type can be subdivided into different subtypes. It is very important to understand the differences between these types of data as we frequently have to use different statistics and visualisations depending on the type(s) of variable(s) that we are dealing with.</p>
+<p>Some numeric variables are <strong>continuous</strong>: they contain measured data that, at least theoretically, can have an infinite number of values within a range (e.g.&nbsp;time). In practice, however the number of possible values depends on the precision of the measurement (e.g.&nbsp;are we measuring time in years, as in the age of adults, or milliseconds, as in participants’ reaction times in a linguistic experiment). Numeric variables for which only a defined set of values are possible are called <strong>discrete</strong> variables (e.g.&nbsp;number of occurrences of a word in a corpus). Most often, discrete numeric variables represent counts of something.</p>
 <div id="fig-HorstNumeric" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Cartoon comparison of continuous versus discrete data. On the left: &quot;Continuous - measured data, can have infinite values within possible range.&quot; Below is an illustration of a chick, with text &quot;I am 3.1&quot; tall, I weight 34.16 grams.&quot; On the right: &quot;Discrete - observations can only exist at limited values, often counts.&quot; Below is an illustration of an octopus with text &quot;I have 8 legs and 4 spots!&quot;">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-HorstNumeric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/AHorst_NumericVariables.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;7.3: Numeric variables (artwork CC BY 4.0 @allison_horst)"><img src="images/AHorst_NumericVariables.png" class="img-fluid figure-img" style="width:70.0%" alt="Cartoon comparison of continuous versus discrete data. On the left: &quot;Continuous - measured data, can have infinite values within possible range.&quot; Below is an illustration of a chick, with text &quot;I am 3.1&quot; tall, I weight 34.16 grams.&quot; On the right: &quot;Discrete - observations can only exist at limited values, often counts.&quot; Below is an illustration of an octopus with text &quot;I have 8 legs and 4 spots!&quot;"></a>
+<a href="images/AHorst_NumericVariables.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;7.3: Numeric variables (artwork CC BY 4.0 @allison_horst)"><img src="images/AHorst_NumericVariables.png" class="img-fluid figure-img" style="width:50.0%" alt="Cartoon comparison of continuous versus discrete data. On the left: &quot;Continuous - measured data, can have infinite values within possible range.&quot; Below is an illustration of a chick, with text &quot;I am 3.1&quot; tall, I weight 34.16 grams.&quot; On the right: &quot;Discrete - observations can only exist at limited values, often counts.&quot; Below is an illustration of an octopus with text &quot;I have 8 legs and 4 spots!&quot;"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HorstNumeric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7.3: Numeric variables (<a href="https://twitter.com/allison_horst">artwork CC BY 4.0 @allison_horst</a>)
 </figcaption>
 </figure>
 </div>
-<p><strong>Categorical variables</strong> can be <strong>nominal</strong> or <strong>ordinal</strong>. Nominal variables contain unordered categorical values (e.g.&nbsp;participants’ mother tongue or nationality), whereas ordinal variables have categorical values that can be ordered meaningfully (e.g.&nbsp;participants’ proficiency in a specific language where the values <em>beginner, intermediate</em> and <em>advanced</em> or <em>A1</em>, <em>A2</em>, <em>B1</em>, <em>B2</em>, <em>C1</em> and <em>C2</em> have a meaningful order). However, the difference between each category (or level) is not necessarily equal. <strong>Binary</strong> variables are a special case of nominal variable which only has two mutually exclusive outcomes (e.g.&nbsp;<em>true</em> or <em>false</em> in a quiz question).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/AHorst_CategoricalVariables.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Categorical variables (artwork CC BY 4.0 @allison_horst)"><img src="images/AHorst_CategoricalVariables.png" class="img-fluid figure-img" style="width:80.0%" alt="Visual representations of nominal, ordinal, and binary variables. Left: Nominal (ordered descriptions) with illustrations below of a turtle, snail, and butterfly. Center: Ordinal (ordered descriptions) with illustrations below of three bees - one looks unhappy (saying &quot;I am unhappy&quot;), one looks ok (saying &quot;I am OK&quot;), and one looks very happy (saying &quot;I am awesome!&quot;). Right: Binary (only 2 mutually exclusive outcomes), with below a T-rex saying &quot;I am extinct&quot; and a shark saying &quot;HA.&quot;"></a></p>
-<figcaption>Categorical variables (<a href="https://twitter.com/allison_horst">artwork CC BY 4.0 @allison_horst</a>)</figcaption>
+<p>Categorical variables can be <strong>nominal</strong> or <strong>ordinal</strong>. Nominal variables contain unordered categorical values (e.g.&nbsp;participants’ mother tongue or nationality), whereas ordinal variables have categorical values that can be ordered meaningfully (e.g.&nbsp;participants’ proficiency in a specific language where the values <em>beginner, intermediate</em> and <em>advanced</em> or <em>A1</em>, <em>A2</em>, <em>B1</em>, <em>B2</em>, <em>C1</em> and <em>C2</em> have a meaningful order). However, the difference between each category (or level) is not necessarily equal. <strong>Binary</strong> variables are a special case of nominal variable which only has two mutually exclusive outcomes (e.g.&nbsp;<em>true</em> or <em>false</em> in a quiz question).</p>
+<div id="fig-HorstCategorical" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Visual representations of nominal, ordinal, and binary variables. Left: Nominal (ordered descriptions) with illustrations below of a turtle, snail, and butterfly. Center: Ordinal (ordered descriptions) with illustrations below of three bees - one looks unhappy (saying &quot;I am unhappy&quot;), one looks ok (saying &quot;I am OK&quot;), and one looks very happy (saying &quot;I am awesome!&quot;). Right: Binary (only 2 mutually exclusive outcomes), with below a T-rex saying &quot;I am extinct&quot; and a shark saying &quot;HA.&quot;">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-HorstCategorical-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/AHorst_CategoricalVariables.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;7.4: Categorical variables (artwork CC BY 4.0 @allison_horst)"><img src="images/AHorst_CategoricalVariables.png" class="img-fluid figure-img" style="width:80.0%" alt="Visual representations of nominal, ordinal, and binary variables. Left: Nominal (ordered descriptions) with illustrations below of a turtle, snail, and butterfly. Center: Ordinal (ordered descriptions) with illustrations below of three bees - one looks unhappy (saying &quot;I am unhappy&quot;), one looks ok (saying &quot;I am OK&quot;), and one looks very happy (saying &quot;I am awesome!&quot;). Right: Binary (only 2 mutually exclusive outcomes), with below a T-rex saying &quot;I am extinct&quot; and a shark saying &quot;HA.&quot;"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HorstCategorical-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.4: Categorical variables (<a href="https://twitter.com/allison_horst">artwork CC BY 4.0 @allison_horst</a>)
+</figcaption>
 </figure>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -920,13 +927,13 @@ Discrete
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_3" id="answer_Q7_3_2" value="Continuous">
-Continuous
+<input type="radio" name="answer_Q7_3" id="answer_Q7_3_2" value="Binary">
+Binary
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_3" id="answer_Q7_3_3" value="Binary">
-Binary
+<input type="radio" name="answer_Q7_3" id="answer_Q7_3_3" value="Continuous">
+Continuous
 </label>
 <br>
 <label>
@@ -942,9 +949,9 @@ Nominal
 <input type="submit" value="Check answer">
 <div id="result_Q7_3"></div>
 </form>
-<script>function validate_form_Q7_3() {var x, text; var x = document.forms['form_Q7_3']['answer_Q7_3'].value;if (x == 'Nominal'){text = 'Correct. These job categories cannot be meaningfully ordered.';} else {text = 'No, check the definitions above.';} document.getElementById('result_Q7_3').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q7_3() {var x, text; var x = document.forms['form_Q7_3']['answer_Q7_3'].value;if (x == 'Nominal'){text = 'Correct. This is definitely a categorical variable and these job categories cannot be meaningfully ordered.';} else {text = 'No, check the definitions above.';} document.getElementById('result_Q7_3').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_3').innerText == 'Correct. These job categories cannot be meaningfully ordered.';text = res1 + res2 + res3;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_Q7_3').innerText == 'Correct. This is definitely a categorical variable and these job categories cannot be meaningfully ordered.';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -954,8 +961,8 @@ Nominal
 <div class="cell-output-display">
 <form name="form_Q7_4" onsubmit="return validate_form_Q7_4()" method="post">
 <label>
-<input type="radio" name="answer_Q7_4" id="answer_Q7_4_1" value="Binary">
-Binary
+<input type="radio" name="answer_Q7_4" id="answer_Q7_4_1" value="Discrete">
+Discrete
 </label>
 <br>
 <label>
@@ -969,8 +976,8 @@ Continuous
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_4" id="answer_Q7_4_4" value="Discrete">
-Discrete
+<input type="radio" name="answer_Q7_4" id="answer_Q7_4_4" value="Binary">
+Binary
 </label>
 <br>
 <label>
@@ -981,14 +988,14 @@ Nominal
 <input type="submit" value="Check answer">
 <div id="result_Q7_4"></div>
 </form>
-<script>function validate_form_Q7_4() {var x, text; var x = document.forms['form_Q7_4']['answer_Q7_4'].value;if (x == 'Binary'){text = 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is binary because all of the participants either identified as female (F) or male (M).';} else {text = 'No, check the definitions above.';} document.getElementById('result_Q7_4').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q7_4() {var x, text; var x = document.forms['form_Q7_4']['answer_Q7_4'].value;if (x == 'Binary'){text = 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is a binary categorical variable because all of the participants either identified as female (F) or male (M).';} else {text = 'No, check the definitions above.';} document.getElementById('result_Q7_4').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_3').innerText == 'Correct. These job categories cannot be meaningfully ordered.'; res4 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is binary because all of the participants either identified as female (F) or male (M).';text = res1 + res2 + res3 + res4;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_Q7_3').innerText == 'Correct. This is definitely a categorical variable and these job categories cannot be meaningfully ordered.'; res2 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is a binary categorical variable because all of the participants either identified as female (F) or male (M).';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 </div>
-<p><span style="color:green;"><strong>Q7.5</strong></span> Which type of variable is stored in the column <code>VocabR</code> in <code>L1.data</code>?</p>
+<p><span style="color:green;"><strong>Q7.5</strong></span> Which type of variable is stored in the column <code>VocabR</code>, which stores participants’ scores in an English grammar comprehension test, in <code>L1.data</code>?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_Q7_5" onsubmit="return validate_form_Q7_5()" method="post">
@@ -998,31 +1005,31 @@ Continuous
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_5" id="answer_Q7_5_2" value="Binary">
-Binary
+<input type="radio" name="answer_Q7_5" id="answer_Q7_5_2" value="Other">
+Other
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_5" id="answer_Q7_5_3" value="Discrete">
-Discrete
-</label>
-<br>
-<label>
-<input type="radio" name="answer_Q7_5" id="answer_Q7_5_4" value="Nominal">
+<input type="radio" name="answer_Q7_5" id="answer_Q7_5_3" value="Nominal">
 Nominal
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_5" id="answer_Q7_5_5" value="Other">
-Other
+<input type="radio" name="answer_Q7_5" id="answer_Q7_5_4" value="Binary">
+Binary
+</label>
+<br>
+<label>
+<input type="radio" name="answer_Q7_5" id="answer_Q7_5_5" value="Discrete">
+Discrete
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_Q7_5"></div>
 </form>
-<script>function validate_form_Q7_5() {var x, text; var x = document.forms['form_Q7_5']['answer_Q7_5'].value;if (x == 'Discrete'){text = 'That’s right. These are participants’ score on a vocabularly test. The more items they got right, the more points they got.';} else {text = 'No, re-read the definitions above.';} document.getElementById('result_Q7_5').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q7_5() {var x, text; var x = document.forms['form_Q7_5']['answer_Q7_5'].value;if (x == 'Discrete'){text = 'That’s right. These are participants’ scores on a vocabularly test. The more items they got right, the more points they got.';} else {text = 'No, think about about the range of possible values on a typical grammar test.';} document.getElementById('result_Q7_5').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_3').innerText == 'Correct. These job categories cannot be meaningfully ordered.'; res4 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is binary because all of the participants either identified as female (F) or male (M).'; res5 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ score on a vocabularly test. The more items they got right, the more points they got.';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_Q7_3').innerText == 'Correct. This is definitely a categorical variable and these job categories cannot be meaningfully ordered.'; res2 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is a binary categorical variable because all of the participants either identified as female (F) or male (M).'; res3 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ scores on a vocabularly test. The more items they got right, the more points they got.';text = res1 + res2 + res3;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1101,7 +1108,7 @@ Other
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>Compare the outputs of the <code>str()</code> and <code>head()</code> functions in the Console with that of the <code>View()</code> function to understand the different ways in which the same dataset can be examined in RStudio.</p>
+<p>Compare the outputs of the <code>str()</code> and <code>head()</code> functions in the Console with that of the <code>View()</code> function to understand the different ways in which the same dataset can be examined in <em>RStudio</em>.</p>
 <p><span style="color:green;"><strong>Q7.6</strong></span> Use the <code>str()</code> function to examine the internal structure of the L2 dataset. How many columns are there in the L2 dataset?</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1122,48 +1129,48 @@ Other
 <div class="cell-output-display">
 <form name="form_Q7_7" onsubmit="return validate_form_Q7_7()" method="post">
 <label>
-<input type="checkbox" id="answer_Q7_7_1" value="EduYrs">
-EduYrs
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q7_7_2" value="EngWork">
-EngWork
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q7_7_3" value="NativeLg">
-NativeLg
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q7_7_4" value="OtherLgs">
-OtherLgs
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q7_7_5" value="FirstExp">
+<input type="checkbox" id="answer_Q7_7_1" value="FirstExp">
 FirstExp
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q7_7_6" value="Arrival">
+<input type="checkbox" id="answer_Q7_7_2" value="NativeLg">
+NativeLg
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q7_7_3" value="EngWork">
+EngWork
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q7_7_4" value="Arrival">
 Arrival
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q7_7_5" value="EduYrs">
+EduYrs
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q7_7_6" value="OtherLgs">
+OtherLgs
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_Q7_7"></div>
 </form>
-<script>function validate_form_Q7_7() {var text; var x1 = document.getElementById('answer_Q7_7_1'); var x2 = document.getElementById('answer_Q7_7_2'); var x3 = document.getElementById('answer_Q7_7_3'); var x4 = document.getElementById('answer_Q7_7_4'); var x5 = document.getElementById('answer_Q7_7_5'); var x6 = document.getElementById('answer_Q7_7_6'); if (x1.checked == false&x2.checked == true&x3.checked == true&x4.checked == false&x5.checked == true&x6.checked == true){text = 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.';} else {text = 'Not quite. Compare the outputs of <code>names(L1.data)</code> and <code>names(L2.data)</code> again.';} document.getElementById('result_Q7_7').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q7_7() {var text; var x1 = document.getElementById('answer_Q7_7_1'); var x2 = document.getElementById('answer_Q7_7_2'); var x3 = document.getElementById('answer_Q7_7_3'); var x4 = document.getElementById('answer_Q7_7_4'); var x5 = document.getElementById('answer_Q7_7_5'); var x6 = document.getElementById('answer_Q7_7_6'); if (x1.checked == true&x2.checked == true&x3.checked == true&x4.checked == true&x5.checked == false&x6.checked == false){text = 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.';} else {text = 'Not quite. Compare the outputs of <code>names(L1.data)</code> and <code>names(L2.data)</code> again.';} document.getElementById('result_Q7_7').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.';text = res1 + res2 + res3;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_3').innerText == 'Correct. These job categories cannot be meaningfully ordered.'; res4 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is binary because all of the participants either identified as female (F) or male (M).'; res5 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ score on a vocabularly test. The more items they got right, the more points they got.'; res6 = document.getElementById('result_Q7_6').innerText == 'That’s right, well done!'; res7 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_5664" onclick="return show_hint_5664()">🐭 Click on the mouse for a hint.</div>
-<div id="result_5664" onclick="return show_hint_5664()"></div>
-<script>function show_hint_5664(){var x = document.getElementById('result_5664').innerHTML; if(!x){document.getElementById('result_5664').innerHTML = 'Try using the <code>str()</code> or the <code>names()</code> functions to compare the two datasets.';} else {document.getElementById('result_5664').innerHTML = '';}}</script>
+<div id="hint_22013" onclick="return show_hint_22013()">🐭 Click on the mouse for a hint.</div>
+<div id="result_22013" onclick="return show_hint_22013()"></div>
+<script>function show_hint_22013(){var x = document.getElementById('result_22013').innerHTML; if(!x){document.getElementById('result_22013').innerHTML = 'Try using the <code>str()</code> or the <code>names()</code> functions to compare the two datasets.';} else {document.getElementById('result_22013').innerHTML = '';}}</script>
 </div>
 </div>
 <p><span style="color:green;"><strong>Q7.8</strong></span> Which type of <code>R</code> object is the variable <code>Arrival</code> stored as?</p>
@@ -1176,23 +1183,23 @@ interest
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q7_8_2" value="integer">
-integer
+<input type="checkbox" id="answer_Q7_8_2" value="index">
+index
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q7_8_3" value="digit">
-digit
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q7_8_4" value="intelligence">
+<input type="checkbox" id="answer_Q7_8_3" value="intelligence">
 intelligence
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q7_8_5" value="index">
-index
+<input type="checkbox" id="answer_Q7_8_4" value="digit">
+digit
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q7_8_5" value="integer">
+integer
 </label>
 <br>
 <label>
@@ -1203,16 +1210,16 @@ string character
 <input type="submit" value="Check answer">
 <div id="result_Q7_8"></div>
 </form>
-<script>function validate_form_Q7_8() {var text; var x1 = document.getElementById('answer_Q7_8_1'); var x2 = document.getElementById('answer_Q7_8_2'); var x3 = document.getElementById('answer_Q7_8_3'); var x4 = document.getElementById('answer_Q7_8_4'); var x5 = document.getElementById('answer_Q7_8_5'); var x6 = document.getElementById('answer_Q7_8_6'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == false&x5.checked == false&x6.checked == false){text = 'That’s right! <code>int</code> is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.';} else {text = 'No, that’s not it.';} document.getElementById('result_Q7_8').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q7_8() {var text; var x1 = document.getElementById('answer_Q7_8_1'); var x2 = document.getElementById('answer_Q7_8_2'); var x3 = document.getElementById('answer_Q7_8_3'); var x4 = document.getElementById('answer_Q7_8_4'); var x5 = document.getElementById('answer_Q7_8_5'); var x6 = document.getElementById('answer_Q7_8_6'); if (x1.checked == false&x2.checked == false&x3.checked == false&x4.checked == false&x5.checked == true&x6.checked == false){text = 'That’s right! <code>int</code> is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.';} else {text = 'No, that’s not it.';} document.getElementById('result_Q7_8').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res4 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.';text = res1 + res2 + res3 + res4;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_3').innerText == 'Correct. These job categories cannot be meaningfully ordered.'; res4 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is binary because all of the participants either identified as female (F) or male (M).'; res5 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ score on a vocabularly test. The more items they got right, the more points they got.'; res6 = document.getElementById('result_Q7_6').innerText == 'That’s right, well done!'; res7 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res8 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_55610" onclick="return show_hint_55610()">🐭 Click on the mouse for a hint.</div>
-<div id="result_55610" onclick="return show_hint_55610()"></div>
-<script>function show_hint_55610(){var x = document.getElementById('result_55610').innerHTML; if(!x){document.getElementById('result_55610').innerHTML = 'You can find the answer in the output of the command <code>str(L2.data)</code>';} else {document.getElementById('result_55610').innerHTML = '';}}</script>
+<div id="hint_54261" onclick="return show_hint_54261()">🐭 Click on the mouse for a hint.</div>
+<div id="result_54261" onclick="return show_hint_54261()"></div>
+<script>function show_hint_54261(){var x = document.getElementById('result_54261').innerHTML; if(!x){document.getElementById('result_54261').innerHTML = 'You can find the answer in the output of the command <code>str(L2.data)</code>';} else {document.getElementById('result_54261').innerHTML = '';}}</script>
 </div>
 </div>
 <p><span style="color:green;"><strong>Q7.9</strong></span> How old was the third participant listed in the L2 dataset when they first moved to an English-speaking country?</p>
@@ -1223,16 +1230,16 @@ string character
 <input type="submit" value="Check answer">
 <div id="result_Q7_9"></div>
 </form>
-<script>function validate_form_Q7_9() {var x, text; var x = document.forms['form_Q7_9']['answer_Q7_9'].value;if (x == '19'){text = 'Yes, well done!';} else {text = 'No. Have a look at the third number printed after <code>$ Arrival</code> in the output of the command <code>str(L2.data)</code>';} document.getElementById('result_Q7_9').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q7_9() {var x, text; var x = document.forms['form_Q7_9']['answer_Q7_9'].value;if (x == '19'){text = 'Yes, well done!';} else {text = 'No, that’s not it. Have a look at the third number printed after <code>$ Arrival</code> in the output of the command <code>str(L2.data)</code>';} document.getElementById('result_Q7_9').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res4 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.'; res5 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_Q7_3').innerText == 'Correct. This is definitely a categorical variable and these job categories cannot be meaningfully ordered.'; res2 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is a binary categorical variable because all of the participants either identified as female (F) or male (M).'; res3 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ scores on a vocabularly test. The more items they got right, the more points they got.'; res4 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!';text = res1 + res2 + res3 + res4;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_91396" onclick="return show_hint_91396()">🐭 Click on the mouse for a hint.</div>
-<div id="result_91396" onclick="return show_hint_91396()"></div>
-<script>function show_hint_91396(){var x = document.getElementById('result_91396').innerHTML; if(!x){document.getElementById('result_91396').innerHTML = 'You can find the answer in the output of the command <code>str(L2.data)</code>';} else {document.getElementById('result_91396').innerHTML = '';}}</script>
+<div id="hint_24554" onclick="return show_hint_24554()">🐭 Click on the mouse for a hint.</div>
+<div id="result_24554" onclick="return show_hint_24554()"></div>
+<script>function show_hint_24554(){var x = document.getElementById('result_24554').innerHTML; if(!x){document.getElementById('result_24554').innerHTML = 'You can find the answer in the output of the command <code>str(L2.data)</code>';} else {document.getElementById('result_24554').innerHTML = '';}}</script>
 </div>
 </div>
 <p><span style="color:green;"><strong>Q7.10</strong></span> In both datasets, the column <code>Participant</code> contains anonymised participant IDs. Why is the variable <code>Participant</code> stored as string character vector in <code>L1.data</code>, but as an integer vector in <code>L2.data</code>?</p>
@@ -1240,38 +1247,38 @@ string character
 <div class="cell-output-display">
 <form name="form_Q7_10" onsubmit="return validate_form_Q7_10()" method="post">
 <label>
-<input type="checkbox" id="answer_Q7_10_1" value="Because some of the L1 participants' IDs contain letters as well as numbers.">
-Because some of the L1 participants' IDs contain letters as well as numbers.
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q7_10_2" value="Because there are more L1 participants than L2 participants.">
-Because there are more L1 participants than L2 participants.
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q7_10_3" value="Because the L1 participants' IDs only contain whole numbers with no decimal points.">
+<input type="checkbox" id="answer_Q7_10_1" value="Because the L1 participants' IDs only contain whole numbers with no decimal points.">
 Because the L1 participants' IDs only contain whole numbers with no decimal points.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q7_10_4" value="Because the L1 participants' IDs are written out as words rather than digits.">
-Because the L1 participants' IDs are written out as words rather than digits.
+<input type="checkbox" id="answer_Q7_10_2" value="Because some of the L1 participants' IDs contain letters as well as numbers.">
+Because some of the L1 participants' IDs contain letters as well as numbers.
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q7_10_3" value="Because there are more L1 participants than L2 participants.">
+Because there are more L1 participants than L2 participants.
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q7_10_4" value="Because the L1 participants' ID numbers are written out as words rather than digits.">
+Because the L1 participants' ID numbers are written out as words rather than digits.
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_Q7_10"></div>
 </form>
-<script>function validate_form_Q7_10() {var text; var x1 = document.getElementById('answer_Q7_10_1'); var x2 = document.getElementById('answer_Q7_10_2'); var x3 = document.getElementById('answer_Q7_10_3'); var x4 = document.getElementById('answer_Q7_10_4'); if (x1.checked == true&x2.checked == false&x3.checked == false&x4.checked == false){text = 'That’s right! 🎉';} else {text = 'No, that’s not it. Have you had a look at the full set of participant IDs in the L1 dataset?';} document.getElementById('result_Q7_10').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q7_10() {var text; var x1 = document.getElementById('answer_Q7_10_1'); var x2 = document.getElementById('answer_Q7_10_2'); var x3 = document.getElementById('answer_Q7_10_3'); var x4 = document.getElementById('answer_Q7_10_4'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == false){text = 'That’s right! 🎉';} else {text = 'No, that’s not it. Have you had a look at the full set of participant IDs in the L1 dataset?';} document.getElementById('result_Q7_10').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res4 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.'; res5 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res6 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉';text = res1 + res2 + res3 + res4 + res5 + res6;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_Q7_3').innerText == 'Correct. This is definitely a categorical variable and these job categories cannot be meaningfully ordered.'; res2 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is a binary categorical variable because all of the participants either identified as female (F) or male (M).'; res3 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ scores on a vocabularly test. The more items they got right, the more points they got.'; res4 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res5 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_59362" onclick="return show_hint_59362()">🐭 Click on the mouse for a hint.</div>
-<div id="result_59362" onclick="return show_hint_59362()"></div>
-<script>function show_hint_59362(){var x = document.getElementById('result_59362').innerHTML; if(!x){document.getElementById('result_59362').innerHTML = 'Print the full list of values in both columns using the commands <code>L1.data$Participant</code> and <code>L2.data$Participant</code> to work it out.';} else {document.getElementById('result_59362').innerHTML = '';}}</script>
+<div id="hint_60462" onclick="return show_hint_60462()">🐭 Click on the mouse for a hint.</div>
+<div id="result_60462" onclick="return show_hint_60462()"></div>
+<script>function show_hint_60462(){var x = document.getElementById('result_60462').innerHTML; if(!x){document.getElementById('result_60462').innerHTML = 'Print the full list of values in both columns using the commands <code>L1.data$Participant</code> and <code>L2.data$Participant</code> to work it out.';} else {document.getElementById('result_60462').innerHTML = '';}}</script>
 </div>
 </div>
 </div>
@@ -1403,38 +1410,38 @@ Because the L1 participants' IDs are written out as words rather than digits.
 </form>
 <script>function validate_form_Q7_11() {var x, text; var x = document.forms['form_Q7_11']['answer_Q7_11'].value;if (x == 'Polish'){text = 'Brawo! 🇵🇱';} else {text = 'No, that’s not it. Check the hint if you need some help.';} document.getElementById('result_Q7_11').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res4 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.'; res5 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res6 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉'; res7 = document.getElementById('result_Q7_11').innerText == 'Brawo! 🇵🇱';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_3').innerText == 'Correct. These job categories cannot be meaningfully ordered.'; res4 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is binary because all of the participants either identified as female (F) or male (M).'; res5 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ score on a vocabularly test. The more items they got right, the more points they got.'; res6 = document.getElementById('result_Q7_6').innerText == 'That’s right, well done!'; res7 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res8 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.'; res9 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res10 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉'; res11 = document.getElementById('result_Q7_11').innerText == 'Brawo! 🇵🇱';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_75699" onclick="return show_hint_75699()">🐭 Click on the mouse for a hint.</div>
-<div id="result_75699" onclick="return show_hint_75699()"></div>
-<script>function show_hint_75699(){var x = document.getElementById('result_75699').innerHTML; if(!x){document.getElementById('result_75699').innerHTML = 'Use the command <code>L2.data$NativeLg[26]</code> to find out which it is.';} else {document.getElementById('result_75699').innerHTML = '';}}</script>
+<div id="hint_93835" onclick="return show_hint_93835()">🐭 Click on the mouse for a hint.</div>
+<div id="result_93835" onclick="return show_hint_93835()"></div>
+<script>function show_hint_93835(){var x = document.getElementById('result_93835').innerHTML; if(!x){document.getElementById('result_93835').innerHTML = 'Use the command <code>L2.data$NativeLg[26]</code> to find out which it is.';} else {document.getElementById('result_93835').innerHTML = '';}}</script>
 </div>
 </div>
-<p><span style="color:green;"><strong>Q7.12</strong></span> Which command(s) can you use to display only the Gender, Occupation, Native language, and Age of the last participant listed in the L2 dataset?</p>
+<p><span style="color:green;"><strong>Q7.12</strong></span> Which command(s) can you use to display only the gender, occupation, native language, and age of the last participant listed in the L2 dataset?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_Q7_12" onsubmit="return validate_form_Q7_12()" method="post">
 <label>
-<input type="checkbox" id="answer_Q7_12_1" value="L2.data[67,c(2,3,5,9)]">
-L2.data[67,c(2,3,5,9)]
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q7_12_2" value="L2.data[90,c(2:3,5,9)]">
-L2.data[90,c(2:3,5,9)]
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q7_12_3" value="L2.data[67:c(2,3,5,9)]">
+<input type="checkbox" id="answer_Q7_12_1" value="L2.data[67:c(2,3,5,9)]">
 L2.data[67:c(2,3,5,9)]
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q7_12_4" value="L2.data[67,c(2:3,5,9)]">
+<input type="checkbox" id="answer_Q7_12_2" value="L2.data[67,c(2:3,5,9)]">
 L2.data[67,c(2:3,5,9)]
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q7_12_3" value="L2.data[67,c(2,3,5,9)]">
+L2.data[67,c(2,3,5,9)]
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q7_12_4" value="L2.data[90,c(2:3,5,9)]">
+L2.data[90,c(2:3,5,9)]
 </label>
 <br>
 <label>
@@ -1450,21 +1457,21 @@ L2.data[-1:c(2,3,5,9)]
 <input type="submit" value="Check answer">
 <div id="result_Q7_12"></div>
 </form>
-<script>function validate_form_Q7_12() {var text; var x1 = document.getElementById('answer_Q7_12_1'); var x2 = document.getElementById('answer_Q7_12_2'); var x3 = document.getElementById('answer_Q7_12_3'); var x4 = document.getElementById('answer_Q7_12_4'); var x5 = document.getElementById('answer_Q7_12_5'); var x6 = document.getElementById('answer_Q7_12_6'); if (x1.checked == true&x2.checked == false&x3.checked == false&x4.checked == true&x5.checked == true&x6.checked == false){text = 'Great job!';} else {text = 'Not quite. Try out these options to find out for yourself which ones work and which don’t.';} document.getElementById('result_Q7_12').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q7_12() {var text; var x1 = document.getElementById('answer_Q7_12_1'); var x2 = document.getElementById('answer_Q7_12_2'); var x3 = document.getElementById('answer_Q7_12_3'); var x4 = document.getElementById('answer_Q7_12_4'); var x5 = document.getElementById('answer_Q7_12_5'); var x6 = document.getElementById('answer_Q7_12_6'); if (x1.checked == false&x2.checked == true&x3.checked == true&x4.checked == false&x5.checked == true&x6.checked == false){text = 'Great job!';} else {text = 'Not quite. Try out these options to find out for yourself which ones work and which don’t.';} document.getElementById('result_Q7_12').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res4 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.'; res5 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res6 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉'; res7 = document.getElementById('result_Q7_11').innerText == 'Brawo! 🇵🇱'; res8 = document.getElementById('result_Q7_12').innerText == 'Great job!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_3').innerText == 'Correct. These job categories cannot be meaningfully ordered.'; res4 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is binary because all of the participants either identified as female (F) or male (M).'; res5 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ score on a vocabularly test. The more items they got right, the more points they got.'; res6 = document.getElementById('result_Q7_6').innerText == 'That’s right, well done!'; res7 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res8 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.'; res9 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res10 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉'; res11 = document.getElementById('result_Q7_11').innerText == 'Brawo! 🇵🇱'; res12 = document.getElementById('result_Q7_12').innerText == 'Great job!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_27194" onmouseover="return show_hint_27194()">🦉 Hover over the owl for a hint</div>
-<div id="result_27194" onmouseover="return show_hint_27194()"></div>
-<script>function show_hint_27194(){var x = document.getElementById('result_27194').innerHTML; if(!x){document.getElementById('result_27194').innerHTML = 'Using <code>-1</code> as an index to access the last row is a neat trick in Python, but it sadly doesn’t work in <code>R</code>.';} else {document.getElementById('result_27194').innerHTML = '';}}</script>
+<div id="hint_88061" onmouseover="return show_hint_88061()">🦉 Hover over the owl for a hint</div>
+<div id="result_88061" onmouseover="return show_hint_88061()"></div>
+<script>function show_hint_88061(){var x = document.getElementById('result_88061').innerHTML; if(!x){document.getElementById('result_88061').innerHTML = 'Using <code>-1</code> as an index to access the last row is a neat trick in Python, but it sadly doesn’t work in <code>R</code>.';} else {document.getElementById('result_88061').innerHTML = '';}}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_5958" onclick="return show_hint_5958()">🐭 Click on the mouse for a second hint.</div>
-<div id="result_5958" onclick="return show_hint_5958()"></div>
-<script>function show_hint_5958(){var x = document.getElementById('result_5958').innerHTML; if(!x){document.getElementById('result_5958').innerHTML = 'Three of these will work. You’ll need to find all three!';} else {document.getElementById('result_5958').innerHTML = '';}}</script>
+<div id="hint_35443" onclick="return show_hint_35443()">🐭 Click on the mouse for a second hint.</div>
+<div id="result_35443" onclick="return show_hint_35443()"></div>
+<script>function show_hint_35443(){var x = document.getElementById('result_35443').innerHTML; if(!x){document.getElementById('result_35443').innerHTML = 'Three of these will work. You’ll need to find all three!';} else {document.getElementById('result_35443').innerHTML = '';}}</script>
 </div>
 </div>
 </div>
@@ -1517,11 +1524,11 @@ L2.data[-1:c(2,3,5,9)]
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-20" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-20" data-code-lines="1" data-code-annotation="1">Saving the values of the Age variable to a new R object called L1.Age</span>
+<span data-code-cell="annotated-cell-20" data-code-lines="1" data-code-annotation="1">Saving the values of the Age variable to a new <code>R</code> object called <code>L1.Age</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-20" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-20" data-code-lines="3" data-code-annotation="2">Applying the mean() function to this new R object</span>
+<span data-code-cell="annotated-cell-20" data-code-lines="3" data-code-annotation="2">Applying the <code>mean()</code> function to this new <code>R</code> object</span>
 </dd>
 </dl>
 </div>
@@ -1556,21 +1563,21 @@ Age is not comparable across two different datasets.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_13" id="answer_Q7_13_3" value="On average, the L2 participants are the same age than the L1 participants.">
-On average, the L2 participants are the same age than the L1 participants.
+<input type="radio" name="answer_Q7_13" id="answer_Q7_13_3" value="On average, the L2 participants are older than the L1 participants.">
+On average, the L2 participants are older than the L1 participants.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_13" id="answer_Q7_13_4" value="On average, the L2 participants are older than the L1 participants.">
-On average, the L2 participants are older than the L1 participants.
+<input type="radio" name="answer_Q7_13" id="answer_Q7_13_4" value="On average, the L2 participants are the same age than the L1 participants.">
+On average, the L2 participants are the same age than the L1 participants.
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_Q7_13"></div>
 </form>
-<script>function validate_form_Q7_13() {var x, text; var x = document.forms['form_Q7_13']['answer_Q7_13'].value;if (x == 'On average, the L2 participants are younger than the L1 participants.'){text = 'That’s right!';} else {text = 'No, this is incorrect. Compare the results of the commands <code>mean(L2.data$Age)</code> and <code>mean(L1.data$Age)</code>.';} document.getElementById('result_Q7_13').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q7_13() {var x, text; var x = document.forms['form_Q7_13']['answer_Q7_13'].value;if (x == 'On average, the L2 participants are younger than the L1 participants.'){text = 'Yes, that’s right!';} else {text = 'No, this is incorrect. Compare the results of the commands <code>mean(L2.data$Age)</code> and <code>mean(L1.data$Age)</code>.';} document.getElementById('result_Q7_13').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_3').innerText == 'Correct. These job categories cannot be meaningfully ordered.'; res4 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is binary because all of the participants either identified as female (F) or male (M).'; res5 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ score on a vocabularly test. The more items they got right, the more points they got.'; res6 = document.getElementById('result_Q7_6').innerText == 'That’s right, well done!'; res7 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res8 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.'; res9 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res10 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉'; res11 = document.getElementById('result_Q7_11').innerText == 'Brawo! 🇵🇱'; res12 = document.getElementById('result_Q7_12').innerText == 'Great job!'; res13 = document.getElementById('result_Q7_13').innerText == 'That’s right!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6;res1 = document.getElementById('result_Q7_3').innerText == 'Correct. This is definitely a categorical variable and these job categories cannot be meaningfully ordered.'; res2 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is a binary categorical variable because all of the participants either identified as female (F) or male (M).'; res3 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ scores on a vocabularly test. The more items they got right, the more points they got.'; res4 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res5 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉'; res6 = document.getElementById('result_Q7_13').innerText == 'Yes, that’s right!';text = res1 + res2 + res3 + res4 + res5 + res6;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1607,7 +1614,7 @@ On average, the L2 participants are older than the L1 participants.
 <span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>()</span>
 <span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><span style="color:green;"><strong>Q7.15</strong></span> <code>Age</code> is a numeric variable. What happens if you try these same functions with a character string variable? Find out by trying them out with the variable <code>L1.Occupation</code> which contains words rather than numbers.</p>
+<p><span style="color:green;"><strong>Q7.15</strong></span> <code>Age</code> is a numeric variable. What happens if you try these same functions with a character string variable? Find out by trying them out with the variable <code>L1.Occupation</code> which contains words, i.e.&nbsp;character strings, rather than numbers.</p>
 </div>
 </div>
 </div>
@@ -1623,7 +1630,7 @@ On average, the L2 participants are older than the L1 participants.
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>As you will have seen, often the clue is in the name of the function - but not always! 😉</p>
+<p>As you will have seen, often the clue is in the name of the function – but not always! 😉</p>
 <p>Hover your mouse over the numbers on the right for the solutions to appear.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-49" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-49" data-target-annotation="1">1</button><span id="annotated-cell-49-1" class="code-annotation-target"><a href="#annotated-cell-49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(L1.Age)</span>
@@ -1741,7 +1748,7 @@ On average, the L2 participants are older than the L1 participants.
 <pre data-code-line-numbers=""><code>[1] 21 38 55 26 55 58</code></pre>
 </div>
 </div>
-<p>The names of the argument can be specified but don’t have to be if they are listed in the order specified in the documentation. You can check the ‘Usage’ section of a function’s help file (e.g.&nbsp;with <code>help(head)</code> or <code>?head</code>) to find out the order of a function’s arguments. Run the following commands and compare their output:</p>
+<p>The names of the argument can be specified but don’t have to be if they are listed in the order specified in the documentation. You can check the “Usage” section of a function’s help file (e.g.&nbsp;with <code>help(head)</code> or <code>?head</code>) to find out the order of a function’s arguments. Run the following commands and compare their output:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="at">x =</span> L1.Age, <span class="at">n =</span> <span class="dv">6</span>)</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(L1.Age, <span class="dv">6</span>)</span>
@@ -1788,18 +1795,18 @@ The round() function rounds off numbers to the nearest whole number.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_16" id="answer_Q7_16_2" value="The round() function is designed to save screen space for smaller displays.">
+<input type="radio" name="answer_Q7_16" id="answer_Q7_16_2" value="The round() function displays just the first two digits of any number.">
+The round() function displays just the first two digits of any number.
+</label>
+<br>
+<label>
+<input type="radio" name="answer_Q7_16" id="answer_Q7_16_3" value="The round() function is designed to save screen space for smaller displays.">
 The round() function is designed to save screen space for smaller displays.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q7_16" id="answer_Q7_16_3" value="The round() function displays fewer values for ease of reading.">
+<input type="radio" name="answer_Q7_16" id="answer_Q7_16_4" value="The round() function displays fewer values for ease of reading.">
 The round() function displays fewer values for ease of reading.
-</label>
-<br>
-<label>
-<input type="radio" name="answer_Q7_16" id="answer_Q7_16_4" value="The round() function displays just the first two digits of any number.">
-The round() function displays just the first two digits of any number.
 </label>
 <br>
 <input type="submit" value="Check answer">
@@ -1822,33 +1829,33 @@ round(L1.data$Vocab, 2)
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q7_17_2" value="round(L1.data$Vocab, digits = 2)">
+<input type="checkbox" id="answer_Q7_17_2" value="round(L1.data$Vocab, digits = -4)">
+round(L1.data$Vocab, digits = -4)
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q7_17_3" value="round(L1.data$Vocab, digits = 2)">
 round(L1.data$Vocab, digits = 2)
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q7_17_3" value="round(L1.data$Vocab: digits = 2)">
+<input type="checkbox" id="answer_Q7_17_4" value="round(L1.data$Vocab: digits = 2)">
 round(L1.data$Vocab: digits = 2)
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q7_17_4" value="round(L1.data$Vocab, digits = -4)">
-round(L1.data$Vocab, digits = -4)
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_Q7_17"></div>
 </form>
-<script>function validate_form_Q7_17() {var text; var x1 = document.getElementById('answer_Q7_17_1'); var x2 = document.getElementById('answer_Q7_17_2'); var x3 = document.getElementById('answer_Q7_17_3'); var x4 = document.getElementById('answer_Q7_17_4'); if (x1.checked == true&x2.checked == true&x3.checked == false&x4.checked == false){text = 'That’s right.';} else {text = 'Not quite. Try out these commands to find out which ones work as expected.';} document.getElementById('result_Q7_17').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q7_17() {var text; var x1 = document.getElementById('answer_Q7_17_1'); var x2 = document.getElementById('answer_Q7_17_2'); var x3 = document.getElementById('answer_Q7_17_3'); var x4 = document.getElementById('answer_Q7_17_4'); if (x1.checked == true&x2.checked == false&x3.checked == true&x4.checked == false){text = 'That’s right.';} else {text = 'Not quite. Try out these commands to find out which ones work as expected. Perhaps there is more than one way to achieve this?';} document.getElementById('result_Q7_17').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res4 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.'; res5 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res6 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉'; res7 = document.getElementById('result_Q7_11').innerText == 'Brawo! 🇵🇱'; res8 = document.getElementById('result_Q7_12').innerText == 'Great job!'; res9 = document.getElementById('result_Q7_17').innerText == 'That’s right.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_Q7_3').innerText == 'Correct. This is definitely a categorical variable and these job categories cannot be meaningfully ordered.'; res2 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is a binary categorical variable because all of the participants either identified as female (F) or male (M).'; res3 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ scores on a vocabularly test. The more items they got right, the more points they got.'; res4 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res5 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉'; res6 = document.getElementById('result_Q7_13').innerText == 'Yes, that’s right!'; res7 = document.getElementById('result_Q7_17').innerText == 'That’s right.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_7823" onclick="return show_hint_7823()">🐭 Click on the mouse for a hint.</div>
-<div id="result_7823" onclick="return show_hint_7823()"></div>
-<script>function show_hint_7823(){var x = document.getElementById('result_7823').innerHTML; if(!x){document.getElementById('result_7823').innerHTML = 'Two options are correct because, as long as the arguments are listed in the correct order, we do not have to specify the names of the arguments.';} else {document.getElementById('result_7823').innerHTML = '';}}</script>
+<div id="hint_5928" onclick="return show_hint_5928()">🐭 Click on the mouse for a hint.</div>
+<div id="result_5928" onclick="return show_hint_5928()"></div>
+<script>function show_hint_5928(){var x = document.getElementById('result_5928').innerHTML; if(!x){document.getElementById('result_5928').innerHTML = 'Two options are correct because, as long as the arguments are listed in the correct order, we do not have to specify the names of the arguments.';} else {document.getElementById('result_5928').innerHTML = '';}}</script>
 </div>
 </div>
 </div>
@@ -1908,14 +1915,14 @@ Note
 <pre data-code-line-numbers=""><code>[1] 37.54</code></pre>
 </div>
 </div>
-<p>In theory, we can nest as many functions as we like, but things can get quite chaotic after more than a couple of functions. We need to make sure that we can trace back which arguments and which brackets belong to which function (see <a href="#fig-NestedFunctions" class="quarto-xref">Figure&nbsp;<span>7.4</span></a>).</p>
+<p>In theory, we can nest as many functions as we like, but things can get quite chaotic after more than a couple of functions. We need to make sure that we can trace back which arguments and which brackets belong to which function (see <a href="#fig-NestedFunctions" class="quarto-xref">Figure&nbsp;<span>7.5</span></a>).</p>
 <div id="fig-NestedFunctions" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The pseudo code reads like this a) function(argument 1, argument 2), b) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), c) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c).">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-NestedFunctions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/NestedFunctions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;7.4: A schematic representations of a) one function with two arguments, b) two nested functions each with two arguments, and c) three nested functions each with two arguments"><img src="images/NestedFunctions.png" class="img-fluid figure-img" style="width:80.0%" alt="The pseudo code reads like this a) function(argument 1, argument 2), b) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), c) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c)."></a>
+<a href="images/NestedFunctions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;7.5: A schematic representations of a) one function with two arguments, b) two nested functions each with two arguments, and c) three nested functions each with two arguments"><img src="images/NestedFunctions.png" class="img-fluid figure-img" style="width:80.0%" alt="The pseudo code reads like this a) function(argument 1, argument 2), b) functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), c) functionC(functionB(functionA(argument 1a, argument 2a), argument1b, argument2b), argument1c, argument2c)."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-NestedFunctions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.4: A schematic representations of a) one function with two arguments, b) two nested functions each with two arguments, and c) three nested functions each with two arguments
+Figure&nbsp;7.5: A schematic representations of a) one function with two arguments, b) two nested functions each with two arguments, and c) three nested functions each with two arguments
 </figcaption>
 </figure>
 </div>
@@ -1932,10 +1939,8 @@ Figure&nbsp;7.4: A schematic representations of a) one function with two argumen
 <p>Consider the three lines of code below. Without running them, can you tell which of the three lines of code will output the square root of L1 participant’s average age to two decimal places?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-58" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-58" data-target-annotation="1">1</button><span id="annotated-cell-58-1" class="code-annotation-target"><a href="#annotated-cell-58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">mean</span>(L1.Age) <span class="at">digits =</span> <span class="dv">2</span>))</span>
-<span id="annotated-cell-58-2"><a href="#annotated-cell-58-2" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-58" data-target-annotation="2">2</button><span id="annotated-cell-58-3" class="code-annotation-target"><a href="#annotated-cell-58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">round</span>(<span class="fu">mean</span>(L1.Age), <span class="at">digits =</span> <span class="dv">2</span>))</span>
-<span id="annotated-cell-58-4"><a href="#annotated-cell-58-4" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-58" data-target-annotation="3">3</button><span id="annotated-cell-58-5" class="code-annotation-target"><a href="#annotated-cell-58-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">mean</span>(L1.Age)), <span class="at">digits =</span> <span class="dv">2</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-58" data-target-annotation="2">2</button><span id="annotated-cell-58-2" class="code-annotation-target"><a href="#annotated-cell-58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">round</span>(<span class="fu">mean</span>(L1.Age), <span class="at">digits =</span> <span class="dv">2</span>))</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-58" data-target-annotation="3">3</button><span id="annotated-cell-58-3" class="code-annotation-target"><a href="#annotated-cell-58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">mean</span>(L1.Age)), <span class="at">digits =</span> <span class="dv">2</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-58" data-target-annotation="1">1</dt>
@@ -1944,16 +1949,16 @@ Figure&nbsp;7.4: A schematic representations of a) one function with two argumen
 </dd>
 <dt data-target-cell="annotated-cell-58" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-58" data-code-lines="3" data-code-annotation="2">This second line of code actually outputs <code>6.126989</code>, which has more than two decimal places! This is because <code>R</code> interprets the functions from the inside out: first, it calculates the mean value, then it rounds that off to two decimal places, and only then does it compute the square root of that rounded off value.</span>
+<span data-code-cell="annotated-cell-58" data-code-lines="2" data-code-annotation="2">This second line of code actually outputs <code>6.126989</code>, which has more than two decimal places! This is because <code>R</code> interprets the functions from the inside out: first, it calculates the mean value, then it rounds that off to two decimal places, and only then does it compute the square root of that rounded off value.</span>
 </dd>
 <dt data-target-cell="annotated-cell-58" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-58" data-code-lines="5" data-code-annotation="3">This third attempt, in contrast, does the rounding operation as the last step. Note that, in the two lines of code that do not produce an error, the brackets around the argument <code>digits = 2</code> are also located in different places.</span>
+<span data-code-cell="annotated-cell-58" data-code-lines="3" data-code-annotation="3">This third attempt, in contrast, does the rounding operation as the last step. Note that, in the two lines of code that do not produce an error, the brackets around the argument <code>digits = 2</code> are also located in different places.</span>
 </dd>
 </dl>
 </div>
 </div>
-<p>It is very easy to make bracketing errors when writing code and especially so when nesting functions (see <a href="#fig-NestedFunctions" class="quarto-xref">Figure&nbsp;<span>7.4</span></a>) so watch your commas and brackets (see also <a href="5_GettingStaRted.html#sec-Errors" class="quarto-xref"><span>Section 5.6</span></a>)!</p>
+<p>It is very easy to make bracketing errors when writing code and especially so when nesting functions (see <a href="#fig-NestedFunctions" class="quarto-xref">Figure&nbsp;<span>7.5</span></a>) so watch your commas and brackets (see also <a href="5_GettingStaRted.html#sec-Errors" class="quarto-xref"><span>Section 5.6</span></a>)!</p>
 </div>
 </div>
 </section>
@@ -1979,14 +1984,14 @@ Figure&nbsp;7.4: A schematic representations of a) one function with two argumen
 <pre data-code-line-numbers=""><code>[1] 37.54</code></pre>
 </div>
 </div>
-<p>Like many of the relational operators we learnt about in <a href="5_GettingStaRted.html#sec-RelationalOperators" class="quarto-xref"><span>Section 5.5</span></a>, the <code>R</code> pipe is a combination of two symbols, the computer pipe <code>|</code> and the right angle bracket <code>&gt;</code>. Don’t worry if you’re not sure where these two symbols are on your keyboard as <em>RStudio</em> has a handy shortcut for you: <kbd title="linux: Ctrl-Shift-M, mac: Cmd-Shift-M, windows: Ctrl-Shift-M" aria-hidden="true" data-linux="Ctrl-Shift-M" data-mac="Cmd-Shift-M" data-windows="Ctrl-Shift-M"></kbd><span class="visually-hidden"></span> (see also <a href="#fig-Pipes" class="quarto-xref">Figure&nbsp;<span>7.5</span></a>). I strongly recommend that you write this shortcut on a prominent post-it and learn it asap, as you will need it a lot when you are working in <code>R</code>!<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>Like many of the relational operators we learnt about in <a href="5_GettingStaRted.html#sec-RelationalOperators" class="quarto-xref"><span>Section 5.5</span></a>, the <code>R</code> pipe is a combination of two symbols, the computer pipe <code>|</code> and the right angle bracket <code>&gt;</code>. Don’t worry if you’re not sure where these two symbols are on your keyboard as <em>RStudio</em> has a handy shortcut for you: <kbd title="linux: Ctrl-Shift-M, mac: Cmd-Shift-M, windows: Ctrl-Shift-M" aria-hidden="true" data-linux="Ctrl-Shift-M" data-mac="Cmd-Shift-M" data-windows="Ctrl-Shift-M"></kbd><span class="visually-hidden"></span> (see also <a href="#fig-Pipes" class="quarto-xref">Figure&nbsp;<span>7.6</span></a>). I strongly recommend that you write this shortcut on a prominent post-it and learn it asap, as you will need it a lot when you are working in <code>R</code>!<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div id="fig-Pipes" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Collation of two images: One is a famous painting by René Magritte of a pipe with the caption &quot;Ceci n'est pas une pipe&quot; [This is not a pipe in French], and another, in the same style and colours, with the native R pipe operator and its keyboard shortcut with the caption &quot;Ceci est une pipe&quot; [This is a pipe in French].">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-Pipes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/NativeRPipe.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;7.5: Remix of René Magritte’s “La Trahison des images” with the native R pipe and its RStudio shortcut (Le Foll 2025. Zenodo. https://doi.org/10.5281/zenodo.17440405)"><img src="images/NativeRPipe.png" class="img-fluid figure-img" alt="Collation of two images: One is a famous painting by René Magritte of a pipe with the caption &quot;Ceci n'est pas une pipe&quot; [This is not a pipe in French], and another, in the same style and colours, with the native R pipe operator and its keyboard shortcut with the caption &quot;Ceci est une pipe&quot; [This is a pipe in French]."></a>
+<a href="images/NativeRPipe.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;7.6: Remix of René Magritte’s “La Trahison des images” with the native R pipe and its RStudio shortcut (Le Foll 2025. Zenodo. https://doi.org/10.5281/zenodo.17440405)"><img src="images/NativeRPipe.png" class="img-fluid figure-img" style="width:80.0%" alt="Collation of two images: One is a famous painting by René Magritte of a pipe with the caption &quot;Ceci n'est pas une pipe&quot; [This is not a pipe in French], and another, in the same style and colours, with the native R pipe operator and its keyboard shortcut with the caption &quot;Ceci est une pipe&quot; [This is a pipe in French]."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Pipes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.5: Remix of René Magritte’s “La Trahison des images” with the native <code>R</code> pipe and its RStudio shortcut (Le Foll 2025. Zenodo. <a href="https://doi.org/10.5281/zenodo.17440405" class="uri">https://doi.org/10.5281/zenodo.17440405</a>)
+Figure&nbsp;7.6: Remix of René Magritte’s “La Trahison des images” with the native <code>R</code> pipe and its RStudio shortcut (Le Foll 2025. Zenodo. <a href="https://doi.org/10.5281/zenodo.17440405" class="uri">https://doi.org/10.5281/zenodo.17440405</a>)
 </figcaption>
 </figure>
 </div>
@@ -2005,14 +2010,14 @@ Figure&nbsp;7.5: Remix of René Magritte’s “La Trahison des images” with t
 <p><span style="color:green;"><strong>Q7.18</strong></span> Using the <code>R</code> pipe operator, calculate the average mean age of the L2 participants and round off this value to two decimal places. What is the result?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_82609" onsubmit="return validate_form_82609()" method="post">
-<input type="text" placeholder="" name="answer_82609">
+<form name="form_7533" onsubmit="return validate_form_7533()" method="post">
+<input type="text" placeholder="" name="answer_7533">
 <input type="submit" value="Check answer">
-<div id="result_82609"></div>
+<div id="result_7533"></div>
 </form>
-<script>function validate_form_82609() {var x, text; var x = document.forms['form_82609']['answer_82609'].value;if (x == '32.72'){text = 'Yes, well done!';} else {text = 'No, try again.';} document.getElementById('result_82609').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_7533() {var x, text; var x = document.forms['form_7533']['answer_7533'].value;if (x == '32.72'){text = 'Yes, well done!';} else {text = 'No, try again.';} document.getElementById('result_7533').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15, res16;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_3').innerText == 'Correct. These job categories cannot be meaningfully ordered.'; res4 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is binary because all of the participants either identified as female (F) or male (M).'; res5 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ score on a vocabularly test. The more items they got right, the more points they got.'; res6 = document.getElementById('result_Q7_6').innerText == 'That’s right, well done!'; res7 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res8 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.'; res9 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res10 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉'; res11 = document.getElementById('result_Q7_11').innerText == 'Brawo! 🇵🇱'; res12 = document.getElementById('result_Q7_12').innerText == 'Great job!'; res13 = document.getElementById('result_Q7_13').innerText == 'That’s right!'; res14 = document.getElementById('result_Q7_16').innerText == 'That’s right.'; res15 = document.getElementById('result_Q7_17').innerText == 'That’s right.'; res16 = document.getElementById('result_82609').innerText == 'Yes, well done!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15 + res16;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15, res16;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_3').innerText == 'Correct. These job categories cannot be meaningfully ordered.'; res4 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is binary because all of the participants either identified as female (F) or male (M).'; res5 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ score on a vocabularly test. The more items they got right, the more points they got.'; res6 = document.getElementById('result_Q7_6').innerText == 'That’s right, well done!'; res7 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res8 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.'; res9 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res10 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉'; res11 = document.getElementById('result_Q7_11').innerText == 'Brawo! 🇵🇱'; res12 = document.getElementById('result_Q7_12').innerText == 'Great job!'; res13 = document.getElementById('result_Q7_13').innerText == 'That’s right!'; res14 = document.getElementById('result_Q7_16').innerText == 'That’s right.'; res15 = document.getElementById('result_Q7_17').innerText == 'That’s right.'; res16 = document.getElementById('result_7533').innerText == 'Yes, well done!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15 + res16;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -2027,14 +2032,14 @@ Figure&nbsp;7.5: Remix of René Magritte’s “La Trahison des images” with t
 </form>
 <script>function validate_form_Q7_19() {var x, text; var x = document.forms['form_Q7_19']['answer_Q7_19'].value;if (x == '16.33'){text = 'That’s right. Very well done!';} else {text = 'That’s not it. Check the code chunk below if you are unsure how to proceed.';} document.getElementById('result_Q7_19').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res4 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.'; res5 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res6 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉'; res7 = document.getElementById('result_Q7_11').innerText == 'Brawo! 🇵🇱'; res8 = document.getElementById('result_Q7_12').innerText == 'Great job!'; res9 = document.getElementById('result_Q7_17').innerText == 'That’s right.'; res10 = document.getElementById('result_Q7_19').innerText == 'That’s right. Very well done!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15, res16, res17;res1 = document.getElementById('result_Q7_1').innerText == 'That’s right. The printed message “[ reached ‘max’ / getOption(“max.print”) – omitted 45 rows ]” is not an error, but merely a message informing us that not all the rows could be printed.'; res2 = document.getElementById('result_Q7_2').innerText == 'That’s right! In fact, three of the above options will work. Try them out to work out which three they are!'; res3 = document.getElementById('result_Q7_3').innerText == 'Correct. These job categories cannot be meaningfully ordered.'; res4 = document.getElementById('result_Q7_4').innerText == 'That’s right. Even though we know that human gender is not actually binary, in this dataset, the variable Gender is binary because all of the participants either identified as female (F) or male (M).'; res5 = document.getElementById('result_Q7_5').innerText == 'That’s right. These are participants’ score on a vocabularly test. The more items they got right, the more points they got.'; res6 = document.getElementById('result_Q7_6').innerText == 'That’s right, well done!'; res7 = document.getElementById('result_Q7_7').innerText == 'That’s right! And there are more columns that are specific to the L2 dataset but which are not listed here.'; res8 = document.getElementById('result_Q7_8').innerText == 'That’s right! int is a subset of the numeric data type. It stands for ‘integer’ which is a whole number without a decimal place.'; res9 = document.getElementById('result_Q7_9').innerText == 'Yes, well done!'; res10 = document.getElementById('result_Q7_10').innerText == 'That’s right! 🎉'; res11 = document.getElementById('result_Q7_11').innerText == 'Brawo! 🇵🇱'; res12 = document.getElementById('result_Q7_12').innerText == 'Great job!'; res13 = document.getElementById('result_Q7_13').innerText == 'That’s right!'; res14 = document.getElementById('result_Q7_16').innerText == 'That’s right.'; res15 = document.getElementById('result_Q7_17').innerText == 'That’s right.'; res16 = document.getElementById('result_7533').innerText == 'Yes, well done!'; res17 = document.getElementById('result_Q7_19').innerText == 'That’s right. Very well done!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15 + res16 + res17;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_35130" onclick="return show_hint_35130()">🐭 Click on the mouse for a hint.</div>
-<div id="result_35130" onclick="return show_hint_35130()"></div>
-<script>function show_hint_35130(){var x = document.getElementById('result_35130').innerHTML; if(!x){document.getElementById('result_35130').innerHTML = 'There are several ways to solve this puzzle. It does not have to involve the pipe operator. Don’t hesitate to work in several steps by saving an intermediary result as an <code>R</code> object.';} else {document.getElementById('result_35130').innerHTML = '';}}</script>
+<div id="hint_20816" onclick="return show_hint_20816()">🐭 Click on the mouse for a hint.</div>
+<div id="result_20816" onclick="return show_hint_20816()"></div>
+<script>function show_hint_20816(){var x = document.getElementById('result_20816').innerHTML; if(!x){document.getElementById('result_20816').innerHTML = 'There are several ways to solve this puzzle. It does not have to involve the pipe operator. Don’t hesitate to work in several steps by saving an intermediary result as an <code>R</code> object.';} else {document.getElementById('result_20816').innerHTML = '';}}</script>
 </div>
 </div>
 </div>
