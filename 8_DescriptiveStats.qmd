@@ -20,13 +20,13 @@ L2.data <- read.csv(file = here("data", "L2_data.csv"))
 
 In this chapter, you will learn how to:
 
--   Choose and interpret different measures of central tendency
--   Calculate the mode, mean, and median of a numeric variable in `R`
--   Interpret histograms and density plots
--   Recognise the characteristics of a normally distributed variable
--   Interpret and calculate the interquartile range in `R`
--   Interpret boxplots
--   Interpret and calculate the standard deviation in `R`
+- Choose and interpret different measures of central tendency
+- Calculate the mode, mean, and median of a numeric variable in `R`
+- Interpret histograms and density plots
+- Recognise the characteristics of a normally distributed variable
+- Interpret and calculate the interquartile range in `R`
+- Interpret boxplots
+- Interpret and calculate the standard deviation in `R`
 
 ::: {.callout-warning collapse="false"}
 ### Prerequisites
@@ -108,7 +108,7 @@ L2.data <- read.csv(file = here("data", "L2_data.csv"))
 #| echo: false
 #| label: "Q8.1"
 
-check_question(c("66.31944", "66.31", "66.32", "66", "66.3"),
+check_question(c("66.31944", "66.31", "66.32", "66", "66.3", "66,31944", "66,31", "66,32", "66,3"),
 button_label = "Check answer",
 q_id = "Q8.1", 
 right = "That's right, well done! 🎉",
@@ -123,7 +123,7 @@ check_hint("Ensure that you have loaded the L1 data before using the `mean()` fu
 #| echo: false
 #| label: "Q8.2"
 
-check_question(c("29.47761", "29.47", "29.48", "29", "29.478"),
+check_question(c("29.47761", "29.47", "29.48", "29", "29.478", "29,47761", "29,47", "29,48", "29,478"),
 button_label = "Check answer",
 q_id = "Q8.2", 
 right = "Perfect!",
@@ -166,7 +166,7 @@ median(c(89, 91, 86, 5, 82, 87))
 #| echo: false
 #| label: "Q8.3"
 
-check_question(c("68.75", "68.7", "68.8", "69"),
+check_question(c("68.75", "68.7", "68.8", "69", "68,75", "68,7", "68,8"),
 button_label = "Check answer",
 q_id = "Q8.3", 
 right = "That's right, well done!",
@@ -181,7 +181,7 @@ check_hint("Ensure that you have loaded the L1 data before using the `median()` 
 #| echo: false
 #| label: "Q8.4"
 
-check_question(c("18.75", "18.7", "18.8", "19"),
+check_question(c("18.75", "18.7", "18.8", "19", "18,75", "18,7", "18,8"),
 button_label = "Check answer",
 q_id = "Q8.4", 
 right = "Excellent, well done! 🎉",
@@ -235,7 +235,7 @@ In comparative studies, it is important to ensure that comparisons are fair and 
 #| echo: false
 #| label: "Q8.5"
 
-check_question("37.54",
+check_question(c("37.54", "37,54"),
 button_label = "Check answer",
 q_id = "Q8.5", 
 right = "Perfect! 🌟",
@@ -761,46 +761,6 @@ L2.data |>
 
 If we wanted to work out the probability of an L2 participant being between `42` and `62` years old, we would have to calculate the area under the curve between these two points on the *x*-axis. Even without doing any maths, you can see that this area is considerably smaller than between the ages of `22` and `42`. This means that, in this dataset, participants are considerably more likely to be between 22 and 42 than between 42 and 62 years old.[^8_descriptivestats-4]
 
-::: {.content-visible when-format="html"}
-[^8_descriptivestats-4]: Of course, there is an `R` function to help you do the maths! The `ecdf()` function allows us to calculate the area under the curve between the ages of 42 and 62.
-
-    ```{r}
-    ecdf(L2.data$Age)(62) - ecdf(L2.data$Age)(42)
-    ```
-
-    In other words, there is a 11.94% probability of any L2 participant in this study being aged between 42 and 62 (corresponding to the light purple area in plot A). Compare this to the probability of a participant being between 22 and 42 years old.
-
-    ```{r}
-    ecdf(L2.data$Age)(42) - ecdf(L2.data$Age)(22)
-    ```
-
-    This is, indeed, a much higher probability (ca. 78%), as depicted by the much larger area highlighted in plot B.
-
-    ```{r}
-    #| echo: false
-    #| out-width: "70%"
-    DensityPlot <- ggplot(data = L2.data, aes(x = Age)) +
-          geom_density(fill = "purple", alpha = 0.5) +
-          theme_classic() +
-          scale_y_continuous(expand = c(0,0),
-                             limits = c(0,0.05)) +
-          scale_x_continuous(expand = c(0,0))
-
-        PlotA <- DensityPlot +
-          geom_vline(xintercept = c(42, 62), linetype = "dashed", color = "pink", linewidth = 1) +
-          annotate("rect", xmin = 42, xmax = 62, ymin = 0, ymax = Inf, alpha = 0.5, fill = "white")
-
-        PlotB <- DensityPlot +
-          geom_vline(xintercept = c(22, 42), linetype = "dashed", color = "pink", linewidth = 1) +
-          annotate("rect", xmin = 22, xmax = 42, ymin = 0, ymax = Inf, alpha = 0.5, fill = "white")
-
-        library(patchwork)
-        PlotA + PlotB +
-          plot_annotation(tag_levels = "A")
-    ```
-:::
-
-::: {.content-visible when-format="html"}
 [^8_descriptivestats-4]: Of course, there is an `R` function to help you do the maths! The `ecdf()` function allows us to calculate the area under the curve between the ages of 42 and 62.
 
     ```{r}
@@ -812,6 +772,11 @@ If we wanted to work out the probability of an L2 participant being between `42`
     ```{r}
     ecdf(L2.data$Age)(42) - ecdf(L2.data$Age)(22)
     ```
+
+::: {.content-visible when-format="html"}
+:::
+
+::: {.content-visible when-format="html"}
 :::
 
 The density plot of L2 participants' ages features a characteristic bell-shaped curve, which indicates that the distribution resembles a normal distribution. However, it also features a long tail towards the older years. We are therefore dealing with a **skewed distribution**. **Skewness** is a measure of asymmetry in a distribution. Skewed distributions occur when one tail end of the bell is longer than the other. Here, the asymmetry is due to the fact that @DabrowskaExperienceAptitudeIndividual2019's L2 data includes quite a few participants who were older than 40 at the time of the study, whereas there were none who were younger than 20. As the tail is to the right of the plot, statisticians speak of a right skewed (or positive) distribution.
@@ -1288,20 +1253,20 @@ median(c(5, 82, 86, 87, 89, 91))
 
 We can further subdivide the distribution into chunks of 25% of the data, or **quartiles** (see @fig-MakingIQR).
 
--   The **first quartile (Q~1~)** is the value below which 25% of the data falls. In other words, the first quartile corresponds to a value that lies above one-quarter of the values in the data set.
+- The **first quartile (Q~1~)** is the value below which 25% of the data falls. In other words, the first quartile corresponds to a value that lies above one-quarter of the values in the data set.
 
--   The **second quartile (Q~2~)** is the **median** and, as we know, half of the data (25% + 25% = 50%) are below this value, the other half are above.
+- The **second quartile (Q~2~)** is the **median** and, as we know, half of the data (25% + 25% = 50%) are below this value, the other half are above.
 
--   The **third quartile (Q~3~)** is the value below which 75% of the data falls. In other words, it is also the value above which the upper 25% of the data are.
+- The **third quartile (Q~3~)** is the value below which 75% of the data falls. In other words, it is also the value above which the upper 25% of the data are.
 
--   The **interquartile range (IQR)** is the range between the second and the third quartile: it therefore covers the middle 50% of the data. This is illustrated below with a growing number of imaginary Breton learners.
+- The **interquartile range (IQR)** is the range between the second and the third quartile: it therefore covers the middle 50% of the data. This is illustrated below with a growing number of imaginary Breton learners.
 
 ::: {.content-visible when-format="html"}
 ![Animation showing the interquartile range of five different sets of values (CC BY 4.0 Elen Le Foll <https://doi.org/10.5281/zenodo.17440319>)](images/quartiles.gif){#fig-MakingIQR fig-alt="Animation showing the interquartile range of different sets of values. The set of values are listed in one column and aligned at their respective medians. The first and third quartiles are highlighted and the range between them is labeled interquartile range."}
 :::
 
 ::: {.content-visible when-format="pdf"}
-![Screenshot of [animation](https://elenlefoll.github.io/RstatsTextbook/images/quartiles.gif) showing the interquartile range of five different sets of values (CC BY 4.0 Elen Le Foll <https://doi.org/10.5281/zenodo.17440319>)](images/GifCh8a.png){#fig-MakingIQR fig-alt="Still of an animation showing the interquartile range of different sets of values. The set of values are listed in one column and aligned at their respective medians. The first and third quartiles are highlighted and the range between them is labeled interquartile range."}
+![Screenshot of [animation](https://elenlefoll.github.io/RstatsTextbook/images/quartiles.gif) showing the interquartile range of five different sets of values (CC BY 4.0 Elen Le Foll <https://doi.org/10.5281/zenodo.17440319>)](images/GifCh8a.png){fig-alt="Still of an animation showing the interquartile range of different sets of values. The set of values are listed in one column and aligned at their respective medians. The first and third quartiles are highlighted and the range between them is labeled interquartile range."}
 :::
 
 The easiest way to examine a variable's IQR in `R` is to use the handy `summary()` function which, when applied to a numeric variable, returns a number of useful descriptive statistics including its first and third quartiles.[^8_descriptivestats-5]
@@ -1340,7 +1305,7 @@ In practice, quartiles are rarely reported as numbers. Instead, they are usually
 :::
 
 ::: {.content-visible when-format="pdf"}
-![Screenshot of [animation](https://elenlefoll.github.io/RstatsTextbook/images/boxplot.gif) showing the making of a boxplot (CC BY 4.0 Elen Le Foll <https://doi.org/10.5281/zenodo.17440384>)](images/GifCh8b.png){#fig-MakingBoxplot fig-alt="Three stills of an animation showing the making of a boxplot. The minimum, the maximum, the median and the other quartiles of a set of values get highlighted. As the set is turned into a boxplot, a box depicts the interquartile range with two whiskers connecting the sides of the box to the maximum and minimum. The median is also highlighted."}
+![Screenshot of [animation](https://elenlefoll.github.io/RstatsTextbook/images/boxplot.gif) showing the making of a boxplot (CC BY 4.0 Elen Le Foll <https://doi.org/10.5281/zenodo.17440384>)](images/GifCh8b.png){fig-alt="Three stills of an animation showing the making of a boxplot. The minimum, the maximum, the median and the other quartiles of a set of values get highlighted. As the set is turned into a boxplot, a box depicts the interquartile range with two whiskers connecting the sides of the box to the maximum and minimum. The median is also highlighted."}
 :::
 
 Remember that, in a perfectly normal distribution, the mean and median are equal. When a variable follows a normal distribution, its box is divided into two equal halves and the whiskers are of equal length (see @fig-NormalBoxplots). This symmetry comes from the fact that the values are equally distributed to the left and right of the median/mean. For the same reason, the bells of the normal distributions in @fig-3NormalDistributions were all (almost) symmetrical, although they had very different heights and widths.
@@ -1698,9 +1663,9 @@ normal.density(normal.age.C) +
 :::
 
 ::: {.content-visible when-format="pdf"}
--   Distribution A in @fig-3NormalDistributions is a normal distribution with a mean of 35 years (x̅ = 35) and a standard deviation of one year (sd = 1).
--   Distribution B is also a normal distribution with a mean of 35 years (x̅ = 35d), but a larger standard deviation of 5 years (sd = 5).
--   Distribution C is also a normal distribution with a mean of 35 years (x̅ = 35) and an even larger standard deviation of 10 years (sd = 10).
+- Distribution A in @fig-3NormalDistributions is a normal distribution with a mean of 35 years (x̅ = 35) and a standard deviation of one year (sd = 1).
+- Distribution B is also a normal distribution with a mean of 35 years (x̅ = 35d), but a larger standard deviation of 5 years (sd = 5).
+- Distribution C is also a normal distribution with a mean of 35 years (x̅ = 35) and an even larger standard deviation of 10 years (sd = 10).
 :::
 
 The standard deviation provides a single metric of the variability around the mean. This means that knowing the mean and standard deviation of a numeric variable is not enough to tell us whether a distribution is (approximately) normal or skewed. Like the range and the IQR, a large standard deviation value indicates greater variability within a variable, but tells us nothing more. For instance, comparing the following two SDs tells us that there is a lot more variability around the mean of L2 participants' grammar comprehension test scores than in that of the L1 participants, but nothing more about the distribution of the test scores in either group.
@@ -1733,7 +1698,7 @@ In sum, remember that, when describing variables, it is important to report both
 #| echo: false
 #| label: "Q8.20"
 
-check_question("16.15",
+check_question(c("16.15", "16,15"),
                button_label = "Check answer",
                q_id = "Q8.20", 
                right = "Excellent! ✅",
@@ -1786,12 +1751,12 @@ It's time to complete this chapter's [tasks and quizzes](https://elenlefoll.gith
 
 Are you confident that you can...?
 
--   [ ] Use and interpret different measures of central tendency (@sec-CentralTendency)
--   [ ] Calculate the mode, mean, median of a numeric variable in `R` (@sec-Mean - @sec-Median)
--   [ ] Interpret histograms and density plots (@sec-Distributions)
--   [ ] Recognise the characteristics of a normal distribution (@sec-Normal)
--   [ ] Interpret and calculate the interquartile range in `R` (@sec-IQR)
--   [ ] Interpret boxplots (@sec-IQR)
--   [ ] Interpret and calculate the standard deviation (@sec-SD)
+- [ ] Use and interpret different measures of central tendency (@sec-CentralTendency)
+- [ ] Calculate the mode, mean, median of a numeric variable in `R` (@sec-Mean - @sec-Median)
+- [ ] Interpret histograms and density plots (@sec-Distributions)
+- [ ] Recognise the characteristics of a normal distribution (@sec-Normal)
+- [ ] Interpret and calculate the interquartile range in `R` (@sec-IQR)
+- [ ] Interpret boxplots (@sec-IQR)
+- [ ] Interpret and calculate the standard deviation (@sec-SD)
 
 In @sec-DataViz, we will cover the basics of **data visualisation** and learn how to create a range of informative and elegant plots (including histograms and density plots) using the popular `R` package `ggplot2`. But, first, we need to learn about **data wrangling** (@sec-DataWrangling) to prepare our data for data visualisation and multivariable analyses. Are you ready? `r emoji("nerd_face")`
