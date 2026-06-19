@@ -101,6 +101,12 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 <style>
 .cell-output-stdout code {
   word-break: break-wor !important;
@@ -302,6 +308,7 @@ div.csl-indent {
         <div class="sidebar-tools-main tools-wide">
     <a href="mailto:elefoll@uni-koeln.de" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-envelope"></i></a>
     <a href="https://github.com/elenlefoll/RstatsTextbook/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Data-Analysis-for-the-Language-Sciences.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
@@ -392,20 +399,20 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./12_SimpleLinearRegression.html" class="sidebar-item-text sidebar-link">
+  <a href="./12_Modelling.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Int<code>R</code>oduction to statistical modelling</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./13_MultipleLinearRegression.html" class="sidebar-item-text sidebar-link">
+  <a href="./13_Regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Multiple linear reg<code>R</code>ession modelling</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./14_LiterateProgramming.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Rep<code>R</code>oducible research and academic w<code>R</code>iting in Quarto</span></span></a>
+  <a href="./14_Quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Rep<code>R</code>oducible research and academic writing in Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -606,7 +613,7 @@ div.csl-indent {
 
 <p>This book aims to provide a stepping stone for students and scholars of traditionally less quantitative and computational disciplines to gather first (hopefully positive!) experiences with statistical and computational approaches to working with empirical data<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The underlying belief is that these methods ought to be accessible to all, regardless of their academic background or personal circumstances. To this end, this book embraces the principles of Open Scholarship.</p>
 <blockquote class="blockquote">
-<p>[Open Scholarship] reflects the idea that knowledge of all kinds should be openly shared, transparent, rigorous, reproducible, replicable, accumulative, and inclusive (allowing for all knowledge systems). Open scholarship includes all scholarly activities that are not solely limited to research such as teaching and pedagogy <span class="citation" data-cites="parsonsCommunitysourcedGlossaryOpen2022">(<a href="References.html#ref-parsonsCommunitysourcedGlossaryOpen2022" role="doc-biblioref"><span class="nocase">Parsons et al.</span> 2022</a>)</span>.</p>
+<p>[Open Scholarship] reflects the idea that knowledge of all kinds should be openly shared, transparent, rigorous, reproducible, replicable, accumulative, and inclusive (allowing for all knowledge systems). Open scholarship includes all scholarly activities that are not solely limited to research such as teaching and pedagogy. <span class="citation" data-cites="parsonsCommunitysourcedGlossaryOpen2022">(<a href="References.html#ref-parsonsCommunitysourcedGlossaryOpen2022" role="doc-biblioref"><span class="nocase">Parsons et al.</span> 2022</a>)</span></p>
 </blockquote>
 <section id="chapter-overview" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="chapter-overview"><strong>Chapter overview</strong></h4>
@@ -623,42 +630,36 @@ div.csl-indent {
 <p>Open Science is a major component of Open Scholarship and the two terms are frequently used synonymously. Open Scholarship, however, is broader in that it includes all kinds of knowledge, whereas Open Science focuses on what is conventionally considered “scientific knowledge”. Open Science covers many different aspects including:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 17%">
-<col style="width: 56%">
-<col style="width: 13%">
-<col style="width: 13%">
+<col style="width: 25%">
+<col style="width: 75%">
 </colgroup>
 <tbody>
 <tr class="odd">
-<td><strong>Open materials</strong></td>
+<td><p><strong>Open materials</strong></p>
+<p><a href="images/OpenMaterials.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/OpenMaterials.png" class="img-fluid" style="width:60.0%" alt="Open materials badge showing an open box"></a></p></td>
 <td><p>Giving free, unrestricted, public access to research materials in a way that allows others to replicate the results of published studies and to conduct new studies based on these existing materials.</p>
 <p>Materials may include questionnaire items, all kinds of experimental stimuli, annotation schemes, inclusion and exclusion criteria, etc. (see Task 2 in <a href="2_Data.html#sec-Sharing" class="quarto-xref"><span>Section 2.4</span></a>).</p></td>
-<td><img src="images/OpenMaterials.png" class="img-fluid" alt="Open materials badge showing an open box"></td>
-<td></td>
 </tr>
 <tr class="even">
-<td><strong>Open data</strong></td>
+<td><p><strong>Open data</strong></p>
+<p><a href="images/OpenData.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/OpenData.png" class="img-fluid" style="width:60.0%" alt="Open data badge showing a bar chart"></a></p></td>
 <td><p>Giving free, unrestricted, public access to scientific data, whenever ethically and legally possible <span class="citation" data-cites="berez-kroekerOpenHandbookLinguistic2022">(see <a href="References.html#ref-berez-kroekerOpenHandbookLinguistic2022" role="doc-biblioref">Berez-Kroeker et al. 2022</a>)</span>. An important principle of Open Science is the sharing of FAIR data; that is data that are Findable, Accessible, Interoperable, and Reusable.</p>
 <p>In <a href="2_Data.html#sec-DataLanguageSciences" class="quarto-xref"><span>Section 2.1</span></a>, we will see that studies in the language sciences can involve many different types of data including texts, tables, images, and videos.</p></td>
-<td><img src="images/OpenData.png" class="img-fluid" alt="Open data badge showing a bar chart"></td>
-<td></td>
 </tr>
 <tr class="odd">
-<td><strong>Open code</strong></td>
+<td><p><strong>Open code</strong></p>
+<p><a href="images/OpenCode.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/OpenCode.png" class="img-fluid" style="width:60.0%" alt="Open data badge showing a forward slash in angled brackets"></a></p></td>
 <td><p>Making computer code freely and publicly available with appropriate documentation to make research methods and data analyses transparent.</p>
 <p>Open code can include source code for custom software and packages, code for stimuli generation, data collection and processing, statistical analysis, and data visualisation. Sharing code allows for collaborations, while sharing both code and data allows others to reproduce published results.</p></td>
-<td><img src="images/OpenCode.png" class="img-fluid" alt="Open data badge showing a forward slash in angled brackets"></td>
-<td></td>
 </tr>
 <tr class="even">
-<td><strong>Open access</strong></td>
-<td>Giving free, unrestricted, public access to scientific outputs, foremost publications. Contrary to a frequent misunderstanding, authors or their institutions do not necessarily have to pay article processing fees (<a href="https://forrt.org/glossary/english/article_processing_charge/">APC</a>s) to publish their work in open access. Publishing open access can instead involve uploading a pre-copyedit version of a publication on a public repository (see <a href="2_Data.html#sec-Sharing" class="quarto-xref"><span>Section 2.4</span></a>) or publishing in a so-called ‘diamond’ (typically non-profit) open access publication outlet <span class="citation" data-cites="theturingwaycommunityTuringWayHandbook2022">(see section on <a href="https://book.the-turing-way.org/reproducible-research/open/open-access.html">Open Access</a> in <a href="References.html#ref-theturingwaycommunityTuringWayHandbook2022" role="doc-biblioref">The Turing Way Community 2022</a>)</span>.</td>
-<td><img src="images/OpenAccess.jpg" class="img-fluid" alt="Open access symbol showing an open lock"></td>
-<td></td>
+<td><p><strong>Open access</strong></p>
+<p><a href="images/OpenAccess.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/OpenAccess.jpg" class="img-fluid" style="width:60.0%" alt="Open access symbol showing an open lock"></a></p></td>
+<td><p>Giving free, unrestricted, public access to scientific outputs, foremost publications. Contrary to a frequent misunderstanding, authors or their institutions do not necessarily have to pay article processing fees (<a href="https://forrt.org/glossary/english/article_processing_charge/">APC</a>s) to publish their work in open access. Publishing open access can instead involve uploading a pre-copyedit version of a publication on a public repository (see <a href="2_Data.html#sec-Sharing" class="quarto-xref"><span>Section 2.4</span></a>) or publishing in a so-called ‘diamond’ (typically non-profit) open access publication outlet <span class="citation" data-cites="theturingwaycommunityTuringWayHandbook2022">(see section on <a href="https://book.the-turing-way.org/reproducible-research/open/open-access.html">Open Access</a> in <a href="References.html#ref-theturingwaycommunityTuringWayHandbook2022" role="doc-biblioref">The Turing Way Community 2022</a>)</span>.</p></td>
 </tr>
 </tbody>
 </table>
-<p>Sharing research data allows us to <strong>reproduce</strong> the analyses reported in research publications based on the authors’ original data and to test whether different analysis methods would have led to different conclusions. Sharing research materials and code means that we can <strong>replicate</strong> studies to check the robustness of published results and/or their generalisability across different populations. For example, if a journal article reports on the effectiveness of a new language teaching method based on a study conducted at a British university, we can test whether the same effect can be observed when replicating the study at a Nigerian university or an Indonesian secondary school.</p>
+<p>Sharing research data allows us to <strong>reproduce</strong> the analyses reported in research publications based on the authors’ original data and to test whether different analysis methods would have led to different conclusions. Sharing research materials and code means that we can <strong>replicate</strong> studies to check the robustness of published results and/or their generalisability across different populations (see <a href="14_Quarto.html#sec-Reproducibility" class="quarto-xref"><span>Section 14.2</span></a>). For example, if a journal article reports on the effectiveness of a new language teaching method based on a study conducted at a British university, we can test whether the same effect can be observed when replicating the study at a Nigerian university or an Indonesian secondary school.</p>
 <p>Open Science advocates argue that scientific knowledge “[should], where appropriate, be openly accessible, transparent, rigorous, reproducible, replicable, accumulative, and inclusive, all which are considered fundamental features of the scientific endeavour” <span class="citation" data-cites="parsonsCommunitysourcedGlossaryOpen2022">(<a href="References.html#ref-parsonsCommunitysourcedGlossaryOpen2022" role="doc-biblioref"><span class="nocase">Parsons et al.</span> 2022</a>)</span>. This corresponds to an ideal that, although probably impossible to fully achieve, is nonetheless worth striving for at all times.</p>
 <blockquote class="blockquote">
 <p>Open science consists of principles and behaviors that promote transparent, credible, reproducible, and accessible science. <span class="citation" data-cites="parsonsCommunitysourcedGlossaryOpen2022">(<a href="References.html#ref-parsonsCommunitysourcedGlossaryOpen2022" role="doc-biblioref"><span class="nocase">Parsons et al.</span> 2022</a>)</span></p>
@@ -671,7 +672,7 @@ div.csl-indent {
 <div id="fig-OpenSoftware" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Small groups of diverse people in different areas (academia, the arts, industry, etc.) all contribute to developing software being discussed by different people in the middle of the image.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-OpenSoftware-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/TuringWay_open-development.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1.1: Open software development (CC BY 4.0 Scriberia with The Turing Way community, DOI: 10.5281/zenodo.3332807)"><img src="images/TuringWay_open-development.jpg" class="img-fluid figure-img" alt="Small groups of diverse people in different areas (academia, the arts, industry, etc.) all contribute to developing software being discussed by different people in the middle of the image."></a>
+<a href="images/TuringWay_open-development.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;1.1: Open software development (CC BY 4.0 Scriberia with The Turing Way community, DOI: 10.5281/zenodo.3332807)"><img src="images/TuringWay_open-development.jpg" class="img-fluid figure-img" alt="Small groups of diverse people in different areas (academia, the arts, industry, etc.) all contribute to developing software being discussed by different people in the middle of the image."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-OpenSoftware-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.1: Open software development (CC BY 4.0 Scriberia with <a href="https://book.the-turing-way.org/">The Turing Way</a> community, DOI: <a href="https://doi.org/10.5281/zenodo.3332807">10.5281/zenodo.3332807</a>)
@@ -697,24 +698,24 @@ Figure&nbsp;1.1: Open software development (CC BY 4.0 Scriberia with <a href="ht
 <div class="cell-output-display">
 <form name="form_Q1_1" onsubmit="return validate_form_Q1_1()" method="post">
 <label>
-<input type="radio" name="answer_Q1_1" id="answer_Q1_1_1" value="Pages">
+<input type="radio" name="answer_Q1_1" id="answer_Q1_1_1" value="LibreOffice Writer">
+LibreOffice Writer
+</label>
+<br>
+<label>
+<input type="radio" name="answer_Q1_1" id="answer_Q1_1_2" value="Pages">
 Pages
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q1_1" id="answer_Q1_1_2" value="Google Docs">
+<input type="radio" name="answer_Q1_1" id="answer_Q1_1_3" value="Google Docs">
 Google Docs
-</label>
-<br>
-<label>
-<input type="radio" name="answer_Q1_1" id="answer_Q1_1_3" value="LibreOffice Writer">
-LibreOffice Writer
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_Q1_1"></div>
 </form>
-<script>function validate_form_Q1_1() {var x, text; var x = document.forms['form_Q1_1']['answer_Q1_1'].value;if (x == 'LibreOffice Writer'){text = 'Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Writer as part of the LibreOffice package.';} else {text = 'No, this software is not open source. The source code is not available to all.';} document.getElementById('result_Q1_1').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q1_1() {var x, text; var x = document.forms['form_Q1_1']['answer_Q1_1'].value;if (x == 'LibreOffice Writer'){text = 'Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Writer as part of the LibreOffice package.';} else {text = 'No, this software is not open source. The source code is not available to all. Please try again.';} document.getElementById('result_Q1_1').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
          if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_Q1_1').innerText == 'Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Writer as part of the LibreOffice package.';text = res1;element.innerHTML = text;
          return false;
@@ -726,8 +727,8 @@ LibreOffice Writer
 <div class="cell-output-display">
 <form name="form_Q1_2" onsubmit="return validate_form_Q1_2()" method="post">
 <label>
-<input type="radio" name="answer_Q1_2" id="answer_Q1_2_1" value="Google Slides">
-Google Slides
+<input type="radio" name="answer_Q1_2" id="answer_Q1_2_1" value="Keynote">
+Keynote
 </label>
 <br>
 <label>
@@ -736,14 +737,14 @@ LibreOffice Impress
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q1_2" id="answer_Q1_2_3" value="Keynote">
-Keynote
+<input type="radio" name="answer_Q1_2" id="answer_Q1_2_3" value="Google Slides">
+Google Slides
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_Q1_2"></div>
 </form>
-<script>function validate_form_Q1_2() {var x, text; var x = document.forms['form_Q1_2']['answer_Q1_2'].value;if (x == 'LibreOffice Impress'){text = 'Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Impress as part of the LibreOffice package.';} else {text = 'No, this software is proprietary.';} document.getElementById('result_Q1_2').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q1_2() {var x, text; var x = document.forms['form_Q1_2']['answer_Q1_2'].value;if (x == 'LibreOffice Impress'){text = 'Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Impress as part of the LibreOffice package.';} else {text = 'No, this software is proprietary. Please try again.';} document.getElementById('result_Q1_2').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
          if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_Q1_1').innerText == 'Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Writer as part of the LibreOffice package.'; res2 = document.getElementById('result_Q1_2').innerText == 'Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Impress as part of the LibreOffice package.';text = res1 + res2;element.innerHTML = text;
          return false;
@@ -755,13 +756,13 @@ Keynote
 <div class="cell-output-display">
 <form name="form_Q1_3" onsubmit="return validate_form_Q1_3()" method="post">
 <label>
-<input type="radio" name="answer_Q1_3" id="answer_Q1_3_1" value="MATLAB">
-MATLAB
+<input type="radio" name="answer_Q1_3" id="answer_Q1_3_1" value="Python">
+Python
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q1_3" id="answer_Q1_3_2" value="Python">
-Python
+<input type="radio" name="answer_Q1_3" id="answer_Q1_3_2" value="MATLAB">
+MATLAB
 </label>
 <br>
 <label>
@@ -772,7 +773,7 @@ JavaScript
 <input type="submit" value="Check answer">
 <div id="result_Q1_3"></div>
 </form>
-<script>function validate_form_Q1_3() {var x, text; var x = document.forms['form_Q1_3']['answer_Q1_3'].value;if (x == 'MATLAB'){text = 'Correct. MATLAB is one of the few genuinely closed-source programming languages that continue to be used in research.';} else {text = 'No, just like <code>R</code>, this programming language is also open source.';} document.getElementById('result_Q1_3').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q1_3() {var x, text; var x = document.forms['form_Q1_3']['answer_Q1_3'].value;if (x == 'MATLAB'){text = 'Correct. MATLAB is one of the few genuinely closed-source programming languages that continue to be used in research.';} else {text = 'No, just like <code>R</code>, this programming language is also open source. Please try again.';} document.getElementById('result_Q1_3').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
          if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_Q1_1').innerText == 'Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Writer as part of the LibreOffice package.'; res2 = document.getElementById('result_Q1_2').innerText == 'Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Impress as part of the LibreOffice package.'; res3 = document.getElementById('result_Q1_3').innerText == 'Correct. MATLAB is one of the few genuinely closed-source programming languages that continue to be used in research.';text = res1 + res2 + res3;element.innerHTML = text;
          return false;
@@ -801,7 +802,7 @@ Ubuntu
 <input type="submit" value="Check answer">
 <div id="result_Q1_4"></div>
 </form>
-<script>function validate_form_Q1_4() {var x, text; var x = document.forms['form_Q1_4']['answer_Q1_4'].value;if (x == 'Ubuntu'){text = 'Correct! Ubuntu is one of many Linux distributions, a family of open source operating systems. You can find out more here: <a href="https://itsfoss.com/getting-started-with-ubuntu/">https://itsfoss.com/getting-started-with-ubuntu/</a>.';} else {text = 'No, this operating system is not open source. It is owned by Apple.';} document.getElementById('result_Q1_4').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q1_4() {var x, text; var x = document.forms['form_Q1_4']['answer_Q1_4'].value;if (x == 'Ubuntu'){text = 'Correct! Ubuntu is one of many Linux distributions, a family of open source operating systems. You can find out more here: <a href="https://itsfoss.com/getting-started-with-ubuntu/">https://itsfoss.com/getting-started-with-ubuntu/</a>.';} else {text = 'No, this operating system is not open source. It is owned by Apple. Please try again.';} document.getElementById('result_Q1_4').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
          if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_Q1_1').innerText == 'Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Writer as part of the LibreOffice package.'; res2 = document.getElementById('result_Q1_2').innerText == 'Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Impress as part of the LibreOffice package.'; res3 = document.getElementById('result_Q1_3').innerText == 'Correct. MATLAB is one of the few genuinely closed-source programming languages that continue to be used in research.'; res4 = document.getElementById('result_Q1_4').innerText == 'Correct! Ubuntu is one of many Linux distributions, a family of open source operating systems. You can find out more here: https://itsfoss.com/getting-started-with-ubuntu/.';text = res1 + res2 + res3 + res4;element.innerHTML = text;
          return false;
@@ -811,55 +812,26 @@ Ubuntu
 </div>
 </div>
 </div>
-<p>&nbsp;</p>
-<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Installing LibreOffice
+<span class="screen-reader-only">Important</span>Installing LibreOffice
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>To complete the tasks of this textbook, you will need to <strong>download</strong> and <strong>install</strong> the open-source software suite <strong>LibreOffice</strong>. This is important as we will use its spreadsheet editor, <strong>LibreOffice Calc</strong>, in the following two chapters.</p>
-<p><a href="images/LibreOffice_logo.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/LibreOffice_logo.png" class="img-fluid" alt="Libre Office logo" width="331"></a></p>
-<ul>
-<li><p>LibreOffice is available for Windows, Mac and Linux. You can download it from here: <a href="https://www.libreoffice.org/download/download-libreoffice/." class="uri">https://www.libreoffice.org/download/download-libreoffice/.</a></p></li>
-<li><p>Detailed installation instructions can be found here: <a href="https://www.libreoffice.org/get-help/install-howto/.You">https://www.libreoffice.org/get-help/install-howto/.</a></p></li>
-<li><p>On the <a href="https://www.libreoffice.org/download/download-libreoffice/.">official LibreOffice website</a> you can choose either:</p>
+<p>To complete the tasks of this textbook, you will need to <a href="https://www.libreoffice.org/download/download-libreoffice/">download</a> and <a href="https://www.libreoffice.org/get-help/install-howto/">install</a> the open-source software suite <strong>LibreOffice</strong>. This is important as we will use its spreadsheet editor, <strong>LibreOffice Calc</strong>, in the following two chapters.</p>
+<p><a href="images/LibreOffice_logo.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/LibreOffice_logo.png" class="img-fluid" alt="Libre Office logo" width="200"></a></p>
+<p>On the <a href="https://www.libreoffice.org/download/download-libreoffice/.">official LibreOffice website</a> you can choose either:</p>
 <ul>
 <li>the latest version for “technology enthusiast, early adopter or power user”</li>
 <li>or the “slightly older” but more tested version.</li>
-</ul></li>
-<li><p>In drafting this textbook, I used the latest version which, at the time, was version 24.2.2. The one that you download will be higher than that as the developers regularly publish updates. If you already have LibreOffice installed on your computer, now is a good time <a href="https://help.libreoffice.org/latest/en-US/text/shared/01/online_update.html?DbPAR=SHARED">to check that your version is up-to-date</a>.</p></li>
-<li><p>Detailed documentation is available in many different languages: <a href="https://documentation.libreoffice.org/en/english-documentation/" class="uri">https://documentation.libreoffice.org/en/english-documentation/</a>.</p></li>
 </ul>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Going further <span class="emoji" data-emoji="rocket">🚀</span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>In this introductory textbook, we have simplified things considerably. To be considered <strong>open source</strong>, software distributions actually have to comply with ten criteria. You can read up on them here:</p>
-<ul>
-<li><a href="https://opensource.org/osd" class="uri">https://opensource.org/osd</a></li>
-</ul>
-<p>To find out more about the benefits of open-source software in the context of research, I recommend reading:</p>
-<ul>
-<li><a href="https://book.the-turing-way.org/reproducible-research/open/open-source" class="uri">https://book.the-turing-way.org/reproducible-research/open/open-source</a></li>
-</ul>
+<p>It’s up to you which version you prefer to work with. If you already have LibreOffice installed on your computer, now is a good time <a href="https://help.libreoffice.org/latest/en-US/text/shared/01/online_update.html?DbPAR=SHARED">to check that your version is up-to-date</a>.</p>
 </div>
 </div>
 </div>
@@ -875,10 +847,10 @@ Ubuntu
 <li><strong>R</strong>emix - the right to combine the original or revised content with other open materials to create something new.</li>
 <li><strong>R</strong>edistribute - the right to share copies of the original content, any revisions, and remixes with others (e.g.&nbsp;give a copy of the content to a friend).</li>
 </ol>
-<div id="fig-OER" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Sketchnote graphic about Open Educational Resources">
+<div id="fig-OER" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Sketchnote graphic about Open Educational Resources">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-OER-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/oer.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;1.2: OER sketch note CC BY 4.0 Yvonne Stry"><img src="images/oer.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Sketchnote graphic about Open Educational Resources"></a>
+<a href="images/oer.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;1.2: OER sketch note CC BY 4.0 Yvonne Stry"><img src="images/oer.jpg" class="img-fluid figure-img" style="width:80.0%" alt="Sketchnote graphic about Open Educational Resources"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-OER-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.2: OER sketch note CC BY 4.0 <a href="https://leko.th-nuernberg.de/portal_digitale_lehre/praxisbeispiele/lehrmaterialien-teilen-fuer-flexibles-lernen/">Yvonne Stry</a>
@@ -893,7 +865,7 @@ Figure&nbsp;1.2: OER sketch note CC BY 4.0 <a href="https://leko.th-nuernberg.de
 </ol>
 <p>In line with the principles of Open Education, all of the datasets used as case studies in this textbook have been published in open access. We will analyse real data from published research studies in the fields of applied linguistics and language education to learn about data management, statistics, and data visualisation.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -902,38 +874,38 @@ Figure&nbsp;1.2: OER sketch note CC BY 4.0 <a href="https://leko.th-nuernberg.de
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><span style="color:green;"><strong>Q1.5</strong></span> Is it possible to reuse <a href="#fig-OER" class="quarto-xref">Figure&nbsp;<span>1.2</span></a> on a company website?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_Q1_5" onsubmit="return validate_form_Q1_5()" method="post">
 <label>
-<input type="radio" name="answer_Q1_5" id="answer_Q1_5_1" value="Yes, but only if it is the website of a non-profit company.">
-Yes, but only if it is the website of a non-profit company.
-</label>
-<br>
-<label>
-<input type="radio" name="answer_Q1_5" id="answer_Q1_5_2" value="Yes, but you must mention the name of the artist.">
+<input type="radio" name="answer_Q1_5" id="answer_Q1_5_1" value="Yes, but you must mention the name of the artist.">
 Yes, but you must mention the name of the artist.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q1_5" id="answer_Q1_5_3" value="Yes, but you must mention the image's sell-by date.">
-Yes, but you must mention the image's sell-by date.
+<input type="radio" name="answer_Q1_5" id="answer_Q1_5_2" value="Yes, but only if it is the website of a non-profit company.">
+Yes, but only if it is the website of a non-profit company.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q1_5" id="answer_Q1_5_4" value="Yes, but only after having obtained written consent from the artist.">
+<input type="radio" name="answer_Q1_5" id="answer_Q1_5_3" value="Yes, but only after having obtained written consent from the artist.">
 Yes, but only after having obtained written consent from the artist.
+</label>
+<br>
+<label>
+<input type="radio" name="answer_Q1_5" id="answer_Q1_5_4" value="Yes, but you must mention the image's sell-by date.">
+Yes, but you must mention the image's sell-by date.
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_Q1_5"></div>
 </form>
-<script>function validate_form_Q1_5() {var x, text; var x = document.forms['form_Q1_5']['answer_Q1_5'].value;if (x == 'Yes, but you must mention the name of the artist.'){text = 'That’s right!';} else {text = 'No, that’s not what the CC BY license means.';} document.getElementById('result_Q1_5').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q1_5() {var x, text; var x = document.forms['form_Q1_5']['answer_Q1_5'].value;if (x == 'Yes, but you must mention the name of the artist.'){text = 'That’s right!';} else {text = 'No, that’s not what the CC BY license means. Please try again.';} document.getElementById('result_Q1_5').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_Q1_5').innerText == 'That’s right!';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_Q1_1').innerText == 'Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Writer as part of the LibreOffice package.'; res2 = document.getElementById('result_Q1_2').innerText == 'Correct! And the good news is that, in Task 1 (see below), you will install LibreOffice Impress as part of the LibreOffice package.'; res3 = document.getElementById('result_Q1_3').innerText == 'Correct. MATLAB is one of the few genuinely closed-source programming languages that continue to be used in research.'; res4 = document.getElementById('result_Q1_4').innerText == 'Correct! Ubuntu is one of many Linux distributions, a family of open source operating systems. You can find out more here: https://itsfoss.com/getting-started-with-ubuntu/.'; res5 = document.getElementById('result_Q1_5').innerText == 'That’s right!';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -943,38 +915,38 @@ Yes, but only after having obtained written consent from the artist.
 <div class="cell-output-display">
 <form name="form_Q1_6" onsubmit="return validate_form_Q1_6()" method="post">
 <label>
-<input type="checkbox" id="answer_Q1_6_1" value="Course syllabi">
-Course syllabi
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q1_6_2" value="Massive Open Online Courses">
-Massive Open Online Courses
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q1_6_3" value="Course assessments">
-Course assessments
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q1_6_4" value="Serious games">
-Serious games
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q1_6_5" value="Lecture slides">
+<input type="checkbox" id="answer_Q1_6_1" value="Lecture slides">
 Lecture slides
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q1_6_6" value="Lesson plans">
+<input type="checkbox" id="answer_Q1_6_2" value="Lesson plans">
 Lesson plans
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q1_6_7" value="Textbooks">
+<input type="checkbox" id="answer_Q1_6_3" value="Massive Open Online Courses">
+Massive Open Online Courses
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q1_6_4" value="Course syllabi">
+Course syllabi
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q1_6_5" value="Course assessments">
+Course assessments
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q1_6_6" value="Textbooks">
 Textbooks
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q1_6_7" value="Serious games">
+Serious games
 </label>
 <br>
 <label>
@@ -996,7 +968,7 @@ Homework tasks
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1005,8 +977,9 @@ Homework tasks
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
+<p>In this introductory chapter, we have simplified things considerably. To be considered open source, software distributions actually have to comply with <a href="https://opensource.org/osd">ten criteria</a>. To find out more about the benefits of open-source software in the context of research <a href="https://book.the-turing-way.org/reproducible-research/open/open-source">The Turing Way</a> is a great place to start.</p>
 <p>There are thousands of high-quality <strong>Open Educational Resources</strong> (OERs) out there, yet few people are aware of them. OER databases are good starting points to start exploring OERs, e.g.:</p>
 <ul>
 <li><a href="https://oercommons.org/" class="uri">https://oercommons.org/</a></li>

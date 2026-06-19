@@ -133,6 +133,12 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 <style>
 .cell-output-stdout code {
   word-break: break-wor !important;
@@ -334,6 +340,7 @@ div.csl-indent {
         <div class="sidebar-tools-main tools-wide">
     <a href="mailto:elefoll@uni-koeln.de" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-envelope"></i></a>
     <a href="https://github.com/elenlefoll/RstatsTextbook/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../Data-Analysis-for-the-Language-Sciences.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
@@ -424,20 +431,20 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../12_SimpleLinearRegression.html" class="sidebar-item-text sidebar-link">
+  <a href="../12_Modelling.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Int<code>R</code>oduction to statistical modelling</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../13_MultipleLinearRegression.html" class="sidebar-item-text sidebar-link">
+  <a href="../13_Regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Multiple linear reg<code>R</code>ession modelling</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../14_LiterateProgramming.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Rep<code>R</code>oducible research and academic w<code>R</code>iting in Quarto</span></span></a>
+  <a href="../14_Quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Rep<code>R</code>oducible research and academic writing in Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -644,7 +651,7 @@ div.csl-indent {
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>In this task, you will seek answers to the research question: To what extent can the results of the non-verbal IQ <code>Blocks</code> test be used to predict <code>Vocab</code> scores among L1 and L2 speakers of English based on the data from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="../References.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>? As we will be answering this question within a linear regression framework, what we are really asking is: To what extent are these variables linearly associated with each other?</p>
-<p><span style="color:green;"><strong>Q12.1</strong></span> Fit a linear model to predict <code>Vocab</code> scores among L1 participants based on their <code>Blocks</code> test scores. What is the adjusted R<sup>2</sup> value of this model?</p>
+<p><span style="color:green;"><strong>Q12.1</strong></span> Fit a linear model to predict <code>Vocab</code> scores among L1 participants based on their <code>Blocks</code> test scores. What is the adjusted <em>R</em><sup>2</sup> value of this model?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_Q12_1" onsubmit="return validate_form_Q12_1()" method="post">
@@ -699,7 +706,7 @@ div.csl-indent {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>taskmodel1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> Vocab <span class="sc">~</span> Blocks,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> L1.data)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(taskmodel1) <span class="co"># Adjusted R-squared:  0.07232 </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(taskmodel1) <span class="co"># Adjusted *R*-squared:  0.07232 </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p><span style="color:green;"><strong>Q12.2</strong></span> According to your model, which of these values is the predicted <code>Vocab</code> score of an L1 speaker with a <code>Blocks</code> score of 20?</p>
@@ -746,14 +753,14 @@ About -54
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_75362" onmouseover="return show_hint_75362()">🦉 Hover over the owl for a first hint.</div>
-<div id="result_75362" onmouseover="return show_hint_75362()"></div>
-<script>function show_hint_75362(){var x = document.getElementById('result_75362').innerHTML; if(!x){document.getElementById('result_75362').innerHTML = 'You can answer this question either by plotting the predicted values of your model and reading the value off your graph or by doing some maths using the coefficient estimates provided in the summary of your model.';} else {document.getElementById('result_75362').innerHTML = '';}}</script>
+<div id="hint_66300" onmouseover="return show_hint_66300()">🦉 Hover over the owl for a first hint.</div>
+<div id="result_66300" onmouseover="return show_hint_66300()"></div>
+<script>function show_hint_66300(){var x = document.getElementById('result_66300').innerHTML; if(!x){document.getElementById('result_66300').innerHTML = 'You can answer this question either by plotting the predicted values of your model and reading the value off your graph or by doing some maths using the coefficient estimates provided in the summary of your model.';} else {document.getElementById('result_66300').innerHTML = '';}}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_74386" onclick="return show_hint_74386()">🐭 Click on the mouse for a second hint.</div>
-<div id="result_74386" onclick="return show_hint_74386()"></div>
-<script>function show_hint_74386(){var x = document.getElementById('result_74386').innerHTML; if(!x){document.getElementById('result_74386').innerHTML = 'If you choose to do solve this question numerically, you will need to multiply the coefficient estimate for the Blocks variable by 20 and add this to the coefficient estimate for the intercept.';} else {document.getElementById('result_74386').innerHTML = '';}}</script>
+<div id="hint_81582" onclick="return show_hint_81582()">🐭 Click on the mouse for a second hint.</div>
+<div id="result_81582" onclick="return show_hint_81582()"></div>
+<script>function show_hint_81582(){var x = document.getElementById('result_81582').innerHTML; if(!x){document.getElementById('result_81582').innerHTML = 'If you choose to do solve this question numerically, you will need to multiply the coefficient estimate for the Blocks variable by 20 and add this to the coefficient estimate for the intercept.';} else {document.getElementById('result_81582').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -789,7 +796,7 @@ About -54
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p><span style="color:green;"><strong>Q12.3</strong></span> Now fit a new linear model to predict <code>Vocab</code> scores among L2 participants based on their <code>Blocks</code> test scores. Comparing the adjusted R<sup>2</sup> value of this new L2 model to your previous L1 model, which of these statements is/are true?</p>
+<p><span style="color:green;"><strong>Q12.3</strong></span> Now fit a new linear model to predict <code>Vocab</code> scores among L2 participants based on their <code>Blocks</code> test scores. Comparing the adjusted <em>R</em><sup>2</sup> value of this new L2 model to your previous L1 model, which of these statements is/are true?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_Q12_3" onsubmit="return validate_form_Q12_3()" method="post">
@@ -821,21 +828,21 @@ Blocks test scores allow us to almost perfectly predict Vocab scores among L2 pa
 <input type="submit" value="Check answer">
 <div id="result_Q12_3"></div>
 </form>
-<script>function validate_form_Q12_3() {var text; var x1 = document.getElementById('answer_Q12_3_1'); var x2 = document.getElementById('answer_Q12_3_2'); var x3 = document.getElementById('answer_Q12_3_3'); var x4 = document.getElementById('answer_Q12_3_4'); var x5 = document.getElementById('answer_Q12_3_5'); if (x1.checked == true&x2.checked == false&x3.checked == false&x4.checked == false&x5.checked == false){text = 'That’s right, well done! 🎉';} else {text = 'No, compare the adjusted R-squared values of the two models.';} document.getElementById('result_Q12_3').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q12_3() {var text; var x1 = document.getElementById('answer_Q12_3_1'); var x2 = document.getElementById('answer_Q12_3_2'); var x3 = document.getElementById('answer_Q12_3_3'); var x4 = document.getElementById('answer_Q12_3_4'); var x5 = document.getElementById('answer_Q12_3_5'); if (x1.checked == true&x2.checked == false&x3.checked == false&x4.checked == false&x5.checked == false){text = 'That’s right, well done! 🎉';} else {text = 'No, compare the adjusted <em>R</em>-squared values of the two models.';} document.getElementById('result_Q12_3').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
          if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_Q12_1').innerText == 'That’s right, well done! 🎉'; res2 = document.getElementById('result_Q12_2').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_Q12_3').innerText == 'That’s right, well done! 🎉';text = res1 + res2 + res3;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_41210" onmouseover="return show_hint_41210()">🦉 Hover over the owl for a first hint.</div>
-<div id="result_41210" onmouseover="return show_hint_41210()"></div>
-<script>function show_hint_41210(){var x = document.getElementById('result_41210').innerHTML; if(!x){document.getElementById('result_41210').innerHTML = 'Remember that we cannot interpret linear regression models causally.';} else {document.getElementById('result_41210').innerHTML = '';}}</script>
+<div id="hint_17441" onmouseover="return show_hint_17441()">🦉 Hover over the owl for a first hint.</div>
+<div id="result_17441" onmouseover="return show_hint_17441()"></div>
+<script>function show_hint_17441(){var x = document.getElementById('result_17441').innerHTML; if(!x){document.getElementById('result_17441').innerHTML = 'Remember that we cannot interpret linear regression models causally.';} else {document.getElementById('result_17441').innerHTML = '';}}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_94901" onclick="return show_hint_94901()">🐭 Click on the mouse for a second hint.</div>
-<div id="result_94901" onclick="return show_hint_94901()"></div>
-<script>function show_hint_94901(){var x = document.getElementById('result_94901').innerHTML; if(!x){document.getElementById('result_94901').innerHTML = 'Only one of these statements is true.';} else {document.getElementById('result_94901').innerHTML = '';}}</script>
+<div id="hint_83666" onclick="return show_hint_83666()">🐭 Click on the mouse for a second hint.</div>
+<div id="result_83666" onclick="return show_hint_83666()"></div>
+<script>function show_hint_83666(){var x = document.getElementById('result_83666').innerHTML; if(!x){document.getElementById('result_83666').innerHTML = 'Only one of these statements is true.';} else {document.getElementById('result_83666').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -844,8 +851,8 @@ Blocks test scores allow us to almost perfectly predict Vocab scores among L2 pa
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>taskmodel2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> Vocab <span class="sc">~</span> Blocks,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> L2.data)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(taskmodel2) <span class="co"># Adjusted R-squared:  0.007177 </span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(taskmodel1) <span class="co"># Adjusted R-squared:  0.07232 </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(taskmodel2) <span class="co"># Adjusted *R*-squared:  0.007177 </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(taskmodel1) <span class="co"># Adjusted *R*-squared:  0.07232 </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p><span style="color:green;"><strong>Q12.4</strong></span> In your L2 model, the <em>p</em>-value for the <code>Blocks</code> predictor should be <code>0.228620</code>. True or false: This <em>p</em>-value means that there is a 23% chance of obtaining a Blocks coefficient estimate of 0.72 or higher in a random sample of 67 L2 speakers of English when there is actually no association between the results of the <code>Blocks</code> test and those of the <code>Vocab</code> test?</p>
@@ -972,9 +979,9 @@ Yes, the p-value associated with GenderM coefficient is lower than 0.05.
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_72380" onclick="return show_hint_72380()">🐭 Click on the mouse for a hint.</div>
-<div id="result_72380" onclick="return show_hint_72380()"></div>
-<script>function show_hint_72380(){var x = document.getElementById('result_72380').innerHTML; if(!x){document.getElementById('result_72380').innerHTML = 'You will need to fit a linear model with <code>Vocab</code> as the outcome variable and <code>Gender</code> as the predictor.';} else {document.getElementById('result_72380').innerHTML = '';}}</script>
+<div id="hint_37866" onclick="return show_hint_37866()">🐭 Click on the mouse for a hint.</div>
+<div id="result_37866" onclick="return show_hint_37866()"></div>
+<script>function show_hint_37866(){var x = document.getElementById('result_37866').innerHTML; if(!x){document.getElementById('result_37866').innerHTML = 'You will need to fit a linear model with <code>Vocab</code> as the outcome variable and <code>Gender</code> as the predictor.';} else {document.getElementById('result_37866').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -986,7 +993,7 @@ Yes, the p-value associated with GenderM coefficient is lower than 0.05.
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(taskmodel3) <span class="co"># p-value associated with coefficient estimate for GenderM = 0.957</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p><span style="color:green;"><strong>Q12.7</strong></span> The adjusted R<sup>2</sup> coefficient of the model is <code>-0.006433</code>. True or false: This means that male participants, on average, score 0.006433 fewer points than female participants on the <code>Vocab</code> test?</p>
+<p><span style="color:green;"><strong>Q12.7</strong></span> The adjusted <em>R</em><sup>2</sup> coefficient of the model is <code>-0.006433</code>. True or false: This means that male participants, on average, score 0.006433 fewer points than female participants on the <code>Vocab</code> test?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_Q12_7" onsubmit="return validate_form_Q12_7()" method="post">
@@ -1003,7 +1010,7 @@ False.
 <input type="submit" value="Check answer">
 <div id="result_Q12_7"></div>
 </form>
-<script>function validate_form_Q12_7() {var x, text; var x = document.forms['form_Q12_7']['answer_Q12_7'].value;if (x == 'False.'){text = 'You are correct. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.';} else {text = 'No, that’s incorrect.';} document.getElementById('result_Q12_7').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q12_7() {var x, text; var x = document.forms['form_Q12_7']['answer_Q12_7'].value;if (x == 'False.'){text = 'You are correct. This statement is completely wrong: the model’s <em>R</em>-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple <em>R</em>-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple <em>R</em>-squared coefficient is almost 0 (0.0000187). In this model, the multiple <em>R</em>-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.';} else {text = 'No, that’s incorrect.';} document.getElementById('result_Q12_7').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
          if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_Q12_1').innerText == 'That’s right, well done! 🎉'; res2 = document.getElementById('result_Q12_2').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_Q12_3').innerText == 'That’s right, well done! 🎉'; res4 = document.getElementById('result_Q12_4').innerText == 'Indeed! ✅'; res5 = document.getElementById('result_Q12_5').innerText == 'You’re right.'; res6 = document.getElementById('result_Q12_6').innerText == 'That’s right! ✅'; res7 = document.getElementById('result_Q12_7').innerText == 'You are correct. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
          return false;
@@ -1026,7 +1033,7 @@ False.
 <div id="callout-3" class="callout-3-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>In this task, you will explore whether L2 participants’ native language is a useful predictor when trying to model their English <code>Vocab</code> scores.</p>
-<p><span style="color:green;"><strong>Q12.8</strong></span> Fit a linear model to model L2 participants’ <code>Vocab</code> score based on their native language (<code>NativeLg</code>). According to the model’s adjusted R<sup>2</sup> coefficient, how much of the variance in <code>Vocab</code> scores among L2 participants does this model account for?</p>
+<p><span style="color:green;"><strong>Q12.8</strong></span> Fit a linear model to model L2 participants’ <code>Vocab</code> score based on their native language (<code>NativeLg</code>). According to the model’s adjusted <em>R</em><sup>2</sup> coefficient, how much of the variance in <code>Vocab</code> scores among L2 participants does this model account for?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_Q12_8" onsubmit="return validate_form_Q12_8()" method="post">
@@ -1071,10 +1078,10 @@ About 49%
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>taskmodel3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> Vocab <span class="sc">~</span> NativeLg,</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> L2.data) </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(taskmodel3) <span class="co"># Adjusted R-squared:  0.1331 </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(taskmodel3) <span class="co"># Adjusted *R*-squared:  0.1331 </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p><span style="color:green;"><strong>Q12.9</strong></span> In this model, there is a greater difference between the multiple R<sup>2</sup> and the adjusted R<sup>2</sup> coefficients than in all previous models in this chapter. Why might that be?</p>
+<p><span style="color:green;"><strong>Q12.9</strong></span> In this model, there is a greater difference between the multiple <em>R</em><sup>2</sup> and the adjusted <em>R</em><sup>2</sup> coefficients than in all previous models in this chapter. Why might that be?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_Q12_9" onsubmit="return validate_form_Q12_9()" method="post">
@@ -1101,16 +1108,16 @@ Because the model's p-value is only just below 0.05.
 <input type="submit" value="Check answer">
 <div id="result_Q12_9"></div>
 </form>
-<script>function validate_form_Q12_9() {var text; var x1 = document.getElementById('answer_Q12_9_1'); var x2 = document.getElementById('answer_Q12_9_2'); var x3 = document.getElementById('answer_Q12_9_3'); var x4 = document.getElementById('answer_Q12_9_4'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == false){text = 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.';} else {text = 'No, that’s not the reason.';} document.getElementById('result_Q12_9').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q12_9() {var text; var x1 = document.getElementById('answer_Q12_9_1'); var x2 = document.getElementById('answer_Q12_9_2'); var x3 = document.getElementById('answer_Q12_9_3'); var x4 = document.getElementById('answer_Q12_9_4'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == false){text = 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted <em>R</em>-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.';} else {text = 'No, that’s not the reason.';} document.getElementById('result_Q12_9').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
          if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9;res1 = document.getElementById('result_Q12_1').innerText == 'That’s right, well done! 🎉'; res2 = document.getElementById('result_Q12_2').innerText == 'Awesome! Note that we also use the predict() function to extract the model’s predicted value for any combination of predictor values, e.g. predict(taskmodel1, data.frame(Blocks = 20))'; res3 = document.getElementById('result_Q12_3').innerText == 'That’s right, well done! 🎉'; res4 = document.getElementById('result_Q12_4').innerText == 'Indeed! ✅'; res5 = document.getElementById('result_Q12_5').innerText == 'You’re right.'; res6 = document.getElementById('result_Q12_6').innerText == 'That’s right! ✅'; res7 = document.getElementById('result_Q12_7').innerText == 'You are correct. This statement is completely wrong: the model’s R-squared coefficients tell us how much of the variance in Vocab scores our model accounts for. The values of the multiple R-squared are always between 0 and 1: a value of 0 means that the model cannot predict anything using these predictors. A value of 1 means that it can make perfect predictions. Here, the multiple R-squared coefficient is almost 0 (0.0000187). In this model, the multiple R-squared coefficient is so low that, once adjusted, it falls slightly below zero. The adjustment made is based on the number of predictors (or, in the case of categorical predictors, the number of levels in each predictor) that are entered into the model.'; res8 = document.getElementById('result_Q12_8').innerText == 'That’s right! ✅'; res9 = document.getElementById('result_Q12_9').innerText == 'That’s right, given that the dataset only includes 67 L2 participants, 10 different native languages is a lot! There is a strong risk that the model may overfit the data. The adjusted R-squared coefficient accounts for this by drastically reducing its estimation of the amount of variance in Vocab scores that can genuinely be accounted for by a model that only includes participants’ native language.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_13536" onclick="return show_hint_13536()">🐭 Click on the mouse for a hint.</div>
-<div id="result_13536" onclick="return show_hint_13536()"></div>
-<script>function show_hint_13536(){var x = document.getElementById('result_13536').innerHTML; if(!x){document.getElementById('result_13536').innerHTML = 'Only one of these reasons is correct.';} else {document.getElementById('result_13536').innerHTML = '';}}</script>
+<div id="hint_57138" onclick="return show_hint_57138()">🐭 Click on the mouse for a hint.</div>
+<div id="result_57138" onclick="return show_hint_57138()"></div>
+<script>function show_hint_57138(){var x = document.getElementById('result_57138').innerHTML; if(!x){document.getElementById('result_57138').innerHTML = 'Only one of these reasons is correct.';} else {document.getElementById('result_57138').innerHTML = '';}}</script>
 </div>
 </div>
 <p><span style="color:green;"><strong>Q12.10</strong></span> One way to reduce the number of levels in the <code>NativeLg</code> variable is to model <code>Vocab</code> scores based on L2 participants’ native language family, instead. Fit a model that attempts to predict <code>Vocab</code> scores among L2 participants based on the <code>NativeLgFamily</code> variable (the creation of this variable was a <span style="color:green;">Your turn!</span> task in <a href="../9_DataWrangling.html#sec-casewhen" class="quarto-xref"><span>Using case_when()</span></a>). Based on your comparison of the two models, which of the following statements is/are true?</p>
@@ -1128,8 +1135,8 @@ When adjusted for the number of predictors, the language family model is worse a
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q12_10_3" value="The more predictors there are, the easier it is to predict the Vocab scores of the sample. This is why the language family model has a lower multiple R-squared coefficient.">
-The more predictors there are, the easier it is to predict the Vocab scores of the sample. This is why the language family model has a lower multiple R-squared coefficient.
+<input type="checkbox" id="answer_Q12_10_3" value="The more predictors there are, the easier it is to predict the Vocab scores of the sample. This is why the language family model has a lower multiple *R*-squared coefficient.">
+The more predictors there are, the easier it is to predict the Vocab scores of the sample. This is why the language family model has a lower multiple *R*-squared coefficient.
 </label>
 <br>
 <label>
@@ -1161,18 +1168,18 @@ The language family model is statistically less significant than the other model
 <div class="cell-output-display">
 <form name="form_Q12_11" onsubmit="return validate_form_Q12_11()" method="post">
 <label>
-<input type="radio" name="answer_Q12_11" id="answer_Q12_11_1" value="-23.749">
--23.749
-</label>
-<br>
-<label>
-<input type="radio" name="answer_Q12_11" id="answer_Q12_11_2" value="9.497">
+<input type="radio" name="answer_Q12_11" id="answer_Q12_11_1" value="9.497">
 9.497
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q12_11" id="answer_Q12_11_3" value="73.778">
-73.778
+<input type="radio" name="answer_Q12_11" id="answer_Q12_11_2" value="0.1133">
+0.1133
+</label>
+<br>
+<label>
+<input type="radio" name="answer_Q12_11" id="answer_Q12_11_3" value="-23.749">
+-23.749
 </label>
 <br>
 <label>
@@ -1181,8 +1188,8 @@ The language family model is statistically less significant than the other model
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q12_11" id="answer_Q12_11_5" value="0.1133">
-0.1133
+<input type="radio" name="answer_Q12_11" id="answer_Q12_11_5" value="73.778">
+73.778
 </label>
 <br>
 <input type="submit" value="Check answer">
@@ -1195,9 +1202,9 @@ The language family model is statistically less significant than the other model
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_84249" onclick="return show_hint_84249()">🐭 Click on the mouse for a hint.</div>
-<div id="result_84249" onclick="return show_hint_84249()"></div>
-<script>function show_hint_84249(){var x = document.getElementById('result_84249').innerHTML; if(!x){document.getElementById('result_84249').innerHTML = 'The Baltic language family is the first and, therefore reference, level in the variable <code>NativeLgFamily</code>.';} else {document.getElementById('result_84249').innerHTML = '';}}</script>
+<div id="hint_2526" onclick="return show_hint_2526()">🐭 Click on the mouse for a hint.</div>
+<div id="result_2526" onclick="return show_hint_2526()"></div>
+<script>function show_hint_2526(){var x = document.getElementById('result_2526').innerHTML; if(!x){document.getElementById('result_2526').innerHTML = 'The Baltic language family is the first and, therefore reference, level in the variable <code>NativeLgFamily</code>.';} else {document.getElementById('result_2526').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -1215,13 +1222,13 @@ The language family model is statistically less significant than the other model
 <div class="cell-output-display">
 <form name="form_Q12_12" onsubmit="return validate_form_Q12_12()" method="post">
 <label>
-<input type="radio" name="answer_Q12_12" id="answer_Q12_12_1" value="23.749">
-23.749
+<input type="radio" name="answer_Q12_12" id="answer_Q12_12_1" value="-23.749">
+-23.749
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q12_12" id="answer_Q12_12_2" value="73.778">
-73.778
+<input type="radio" name="answer_Q12_12" id="answer_Q12_12_2" value="23.749">
+23.749
 </label>
 <br>
 <label>
@@ -1230,13 +1237,13 @@ The language family model is statistically less significant than the other model
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q12_12" id="answer_Q12_12_4" value="50.029">
-50.029
+<input type="radio" name="answer_Q12_12" id="answer_Q12_12_4" value="73.778">
+73.778
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q12_12" id="answer_Q12_12_5" value="-23.749">
--23.749
+<input type="radio" name="answer_Q12_12" id="answer_Q12_12_5" value="50.029">
+50.029
 </label>
 <br>
 <input type="submit" value="Check answer">
@@ -1249,9 +1256,9 @@ The language family model is statistically less significant than the other model
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_55084" onclick="return show_hint_55084()">🐭 Click on the mouse for a hint.</div>
-<div id="result_55084" onclick="return show_hint_55084()"></div>
-<script>function show_hint_55084(){var x = document.getElementById('result_55084').innerHTML; if(!x){document.getElementById('result_55084').innerHTML = 'Remember that, to find the predicted score for Slavic L1 speakers, you need to add the Slavic L1 coefficient to the Intercept coefficient. Alternatively, you can plot the predicted values and read the prediction off the graph.';} else {document.getElementById('result_55084').innerHTML = '';}}</script>
+<div id="hint_42552" onclick="return show_hint_42552()">🐭 Click on the mouse for a hint.</div>
+<div id="result_42552" onclick="return show_hint_42552()"></div>
+<script>function show_hint_42552(){var x = document.getElementById('result_42552').innerHTML; if(!x){document.getElementById('result_42552').innerHTML = 'Remember that, to find the predicted score for Slavic L1 speakers, you need to add the Slavic L1 coefficient to the Intercept coefficient. Alternatively, you can plot the predicted values and read the prediction off the graph.';} else {document.getElementById('result_42552').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -1284,18 +1291,18 @@ Because the model chose a particularly low α-level.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q12_13" id="answer_Q12_13_2" value="Because the data for Hellenic speakers is less reliable than for the other L2 speakers.">
+<input type="radio" name="answer_Q12_13" id="answer_Q12_13_2" value="Because the dataset only includes one Greek L1 speaker.">
+Because the dataset only includes one Greek L1 speaker.
+</label>
+<br>
+<label>
+<input type="radio" name="answer_Q12_13" id="answer_Q12_13_3" value="Because the data for Hellenic speakers is less reliable than for the other L2 speakers.">
 Because the data for Hellenic speakers is less reliable than for the other L2 speakers.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q12_13" id="answer_Q12_13_3" value="Because p-values have nothing to do with effect sizes.">
+<input type="radio" name="answer_Q12_13" id="answer_Q12_13_4" value="Because p-values have nothing to do with effect sizes.">
 Because p-values have nothing to do with effect sizes.
-</label>
-<br>
-<label>
-<input type="radio" name="answer_Q12_13" id="answer_Q12_13_4" value="Because the dataset only includes one Greek L1 speaker.">
-Because the dataset only includes one Greek L1 speaker.
 </label>
 <br>
 <input type="submit" value="Check answer">
@@ -1308,14 +1315,14 @@ Because the dataset only includes one Greek L1 speaker.
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_55583" onmouseover="return show_hint_55583()">🦉 Hover over the owl for a first hint.</div>
-<div id="result_55583" onmouseover="return show_hint_55583()"></div>
-<script>function show_hint_55583(){var x = document.getElementById('result_55583').innerHTML; if(!x){document.getElementById('result_55583').innerHTML = 'It is never the model that chooses the α-level, but rather us, the researchers.';} else {document.getElementById('result_55583').innerHTML = '';}}</script>
+<div id="hint_59884" onmouseover="return show_hint_59884()">🦉 Hover over the owl for a first hint.</div>
+<div id="result_59884" onmouseover="return show_hint_59884()"></div>
+<script>function show_hint_59884(){var x = document.getElementById('result_59884').innerHTML; if(!x){document.getElementById('result_59884').innerHTML = 'It is never the model that chooses the α-level, but rather us, the researchers.';} else {document.getElementById('result_59884').innerHTML = '';}}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_67847" onclick="return show_hint_67847()">🐭 Click on the mouse for a second hint.</div>
-<div id="result_67847" onclick="return show_hint_67847()"></div>
-<script>function show_hint_67847(){var x = document.getElementById('result_67847').innerHTML; if(!x){document.getElementById('result_67847').innerHTML = 'Remember that p-values depend on three different factors, see Section 11.3';} else {document.getElementById('result_67847').innerHTML = '';}}</script>
+<div id="hint_39801" onclick="return show_hint_39801()">🐭 Click on the mouse for a second hint.</div>
+<div id="result_39801" onclick="return show_hint_39801()"></div>
+<script>function show_hint_39801(){var x = document.getElementById('result_39801').innerHTML; if(!x){document.getElementById('result_39801').innerHTML = 'Remember that p-values depend on three different factors, see Section 11.3';} else {document.getElementById('result_39801').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -1343,13 +1350,13 @@ Because the dataset only includes one Greek L1 speaker.
 <div class="cell-output-display">
 <form name="form_Q12_14" onsubmit="return validate_form_Q12_14()" method="post">
 <label>
-<input type="radio" name="answer_Q12_14" id="answer_Q12_14_1" value="If we were to repeat this study many times, in the long run, 95% of the intervals that would calculate for this prediction would contain the true mean score.">
-If we were to repeat this study many times, in the long run, 95% of the intervals that would calculate for this prediction would contain the true mean score.
+<input type="radio" name="answer_Q12_14" id="answer_Q12_14_1" value="We can be 95% confident that the true mean score is located within this confidence interval.">
+We can be 95% confident that the true mean score is located within this confidence interval.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q12_14" id="answer_Q12_14_2" value="We can be 95% confident that the true mean score is located within this confidence interval.">
-We can be 95% confident that the true mean score is located within this confidence interval.
+<input type="radio" name="answer_Q12_14" id="answer_Q12_14_2" value="If we were to repeat this study many times, in the long run, 95% of the intervals that would calculate for this prediction would contain the true mean score.">
+If we were to repeat this study many times, in the long run, 95% of the intervals that would calculate for this prediction would contain the true mean score.
 </label>
 <br>
 <input type="submit" value="Check answer">
@@ -1362,9 +1369,9 @@ We can be 95% confident that the true mean score is located within this confiden
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_11976" onclick="return show_hint_11976()">🐭 Click on the mouse for a second hint.</div>
-<div id="result_11976" onclick="return show_hint_11976()"></div>
-<script>function show_hint_11976(){var x = document.getElementById('result_11976').innerHTML; if(!x){document.getElementById('result_11976').innerHTML = 'Common misconceptions about confidence intervals are highlighted in Section 11.2.';} else {document.getElementById('result_11976').innerHTML = '';}}</script>
+<div id="hint_11981" onclick="return show_hint_11981()">🐭 Click on the mouse for a second hint.</div>
+<div id="result_11981" onclick="return show_hint_11981()"></div>
+<script>function show_hint_11981(){var x = document.getElementById('result_11981').innerHTML; if(!x){document.getElementById('result_11981').innerHTML = 'Common misconceptions about confidence intervals are highlighted in Section 11.2.';} else {document.getElementById('result_11981').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">

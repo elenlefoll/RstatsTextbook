@@ -33,15 +33,7 @@ In this chapter, you will learn how to:
 ::: {.callout-warning collapse="false"}
 ### Prerequisites
 
-This chapter assumes that you are familiar with the concepts of descriptive statistics explained in @sec-DescRiptiveStats and the data wrangling functions from @sec-DataWrangling.
-
-All examples and quiz questions are based on data from:
-
-> Dąbrowska, Ewa. 2019. Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. Language Learning 69(S1). 72-100. <https://doi.org/10.1111/lang.12323>.
-
-Our starting point for this chapter is the wrangled combined dataset that we created and saved in @sec-DataWrangling. Follow the instructions in @sec-filter to create this `R` object.
-
-Alternatively, you can download `Dabrowska2019.zip` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/raw/69d1e31be7394f2b612825f031ebffeb75886390/Dabrowska2019.zip){.uri}. To launch the project correctly, first unzip the file and then double-click on the `Dabrowska2019.Rproj` file.
+This chapter assumes that you are familiar with the concepts of descriptive statistics explained in @sec-DescRiptiveStats and the data wrangling functions from @sec-DataWrangling. All examples and quiz questions are based on data from @DabrowskaExperienceAptitudeIndividual2019. Our starting point for this chapter is the wrangled combined dataset that we created and saved in @sec-DataWrangling. Follow the instructions in @sec-filter to create this `R` object. Alternatively, you can download `Dabrowska2019.zip` from [the textbook's GitHub repository](https://github.com/elenlefoll/RstatsTextbook/raw/69d1e31be7394f2b612825f031ebffeb75886390/Dabrowska2019.zip){.uri}. To launch the project correctly, first unzip the file and then double-click on the `Dabrowska2019.Rproj` file.
 :::
 
 Before we begin, we must load the `combined_L1_L2_data.rds` file that we created and saved in @sec-DataWrangling. This file contains the data of all the L1 and L2 participants of @DabrowskaExperienceAptitudeIndividual2019. We have converted all categorical variables to factors and corrected obvious data entry errors and typos (see @sec-DataWrangling).
@@ -232,6 +224,7 @@ BrailleR::Describe()
 
 Instead of using the **data** argument of the `ggplot()` function as we did above, we can **pipe** the data into the function's first argument (see @sec-Piping). Compare these two methods and their outputs.
 
+::::::: {.content-visible when-format="html"}
 :::::: columns
 ::: {.column width="48%"}
 **Using the data argument of `ggplot()`**
@@ -265,20 +258,15 @@ Dabrowska.data |>
 ```
 :::
 ::::::
+:::::::
 
-:::::: content-hidden
-### Second attempt for PDF
-
-This currently does not work as expected. Code inspired by this discussion: https://github.com/quarto-dev/quarto-cli/issues/13410.
-
-::::: {layout="[47.5,-5,47.5]"}
-<div>
-
+::::: {.content-visible when-format="pdf"}
 **Using the data argument of `ggplot()`**
 
 ```{r}
 #| fig-alt: "This is the same barplot as above."
 #| out-width: "40%"
+#| eval: false
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = OccupGroup)) +
@@ -287,15 +275,12 @@ ggplot(data = Dabrowska.data,
        y = "Number of participants")
 ```
 
-</div>
-
-<div>
-
 **Piping the data into `ggplot()`**
 
 ```{r}
 #| fig-alt: "This is the same barplot as above even though the code used to generate it is slightly different."
 #| out-width: "40%" 
+#| eval: false
 
 Dabrowska.data |> 
   ggplot(mapping = aes(x = OccupGroup)) +
@@ -303,10 +288,7 @@ Dabrowska.data |>
   labs(x = "Occupational group",
        y = "Number of participants")
 ```
-
-</div>
 :::::
-::::::
 
 The outputs are exactly the same! Piping the dataset into the `ggplot()` function, however, allows us to easily wrangle the data that we want to visualise 'on the fly', without transforming the data object itself. For example, we can use the tidyverse `filter()` function (see @sec-filter) to examine the distribution of occupational groups among L2 participants only (see @fig-BarOccupGroupL2).
 
@@ -471,7 +453,7 @@ Dabrowska.data |>
   scale_fill_manual(values = c("purple", "#34027d"))
 ```
 
-**Scale** layers can be used to control the axes of your plots. Play around with the "expand" and "limits" arguments of the `scale_y_continuous()` function to understand how they work.
+**Scale** layers can be used to control the axes of your plots. Play around with the `expand` and `limits` arguments of the `scale_y_continuous()` function to understand how they work.
 
 ```{r}
 #| fig-cap: "A barplot with a *y-*axis that starts at zero and ends at 100"
@@ -498,8 +480,9 @@ Colour blindness is a condition that results in a decreased ability to see colou
 #| fig-cap: "Default {scales} discrete palette as perceived with different forms of colour blindness"
 #| label: "fig-colorBlindness"
 #| fig-alt: "A graphic composed of multiple coloured boxes, the top row corresponding to the default {scales} discrete palette as perceived by people with 'normal vision'. The following rows simulate how these colours are perceived by someone with deuteranope and protanope colour blindness, and in grey-scale, respectively. In these rows, the shades of the six colours are hardly distinguisable from each other."
-#| out-width: 80%
-#| fig-height: 5
+#| out-width: 60%
+#| fig-width: 4
+#| fig-asp: 0.5
 
 #install.packages("colorBlindness")
 library(colorBlindness)
@@ -512,8 +495,9 @@ Using the {colorBlindness} package, we can immediately see that the default {sca
 #| fig-cap: "The colours we selected in @fig-PurpleBarplot as perceived with different forms of colour blindness"
 #| label: "fig-colorBlindness2"
 #| fig-alt: "A similar graphic to the one above, but this time with the two shades of purple selected earlier and the contrast between the two is clear for all types of colour blindness represented by this package."
-#| fig-height: 3
-#| out-width: 70%
+#| out-width: 30%
+#| fig-width: 2
+#| fig-asp: 1
 
 colorBlindness::displayAllColors(c("pink", "#34027d"))
 ```
@@ -521,11 +505,12 @@ colorBlindness::displayAllColors(c("pink", "#34027d"))
 But you need not manually pick colours, as many people have developed and shared `R` packages that feature attractive, ready-to-use colour-blind friendly palettes. The [{viridis}](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) package [@garnierSjmgarnierViridisCRAN2023], for example, includes eight such palettes ("magma", "inferno", "plasma", "cividis", "rocket", "turbo") that also reproduce well in grey-scale. And, as it is included in the {ggplot2} installation, you don't even need to install the {viridis} package separately!
 
 ```{r}
-#| fig-height: 5
-#| out-width: 80%
 #| label: "fig-colourBlindnessViridis"
 #| fig-cap: "Colours from the {viridis} package palette as perceived with different forms of colour blindness"
 #| fig-alt: "A similar graphic to the one above, but this time with colours from the viridis package, which can be distinguished by most colour-blind people."
+#| out-width: 60%
+#| fig-width: 4
+#| fig-asp: 0.5
 
 colorBlindness::displayAllColors(viridis::viridis(6))
 ```
@@ -535,7 +520,7 @@ Choosing an appropriate palette is not the only way to make your visualisations 
 Finally, it is important to remember that colour blindness is by no means the only type of visual impairment you should consider when creating visualisations. Worldwide, far more people are affected by **blindness** and **low vision**. @sec-QuartoFigures explains how to add **alternative texts** (alt-text) to plots and images. Many people with visual impairments rely on screen readers that use these alternative texts to provide audio descriptions of images and plots. These alternative texts can also improve the experience of users facing internet connection issues resulting in images that do not load properly or quickly enough.
 :::
 
-Some academic publishers still require grey-scale plots, in which case you will want to use the **scale** layer `scale_fill_grey()`. Alternatively, the colour palettes of the {viridis} package (see information box on colour blindness) render well in grey, too. The {viridis} function for a discrete colour scale (as needed for a categorical variable such as `Gender`) can be called up using the `scale_fill_viridis_d()` function. With the "option" argument, you can switch between eight different viridis palettes ("magma", "inferno", "plasma", "cividis", "rocket", "turbo").
+Some academic publishers still require grey-scale plots, in which case you will want to use the **scale** layer `scale_fill_grey()`. Alternatively, the colour palettes of the {viridis} package (see information box on colour blindness) render well in grey, too. The {viridis} function for a discrete colour scale (as needed for a categorical variable such as `Gender`) can be called up using the `scale_fill_viridis_d()` function. With the `option` argument, you can switch between eight different viridis palettes ("magma", "inferno", "plasma", "cividis", "rocket", "turbo").
 
 :::: {.content-visible when-format="html"}
 ::: panel-tabset
@@ -809,7 +794,7 @@ As with colour palettes, you can also install additional packages that will give
 #| label: fig-Economist
 #| fig-cap: "Barplot with a theme inspired by *The Economist* magazine"
 #| fig-alt: "The barplot from Figure 10.5 labels in a different font, bars filled with different shades of blue and grey, a light blue background, white lines, and a legend at the top of the graph as opposed to one the right."
-#| out-width: 70%
+#| out-width: 60%
 
 #install.packages("ggthemes")
 library(ggthemes)
@@ -889,7 +874,7 @@ For example, to be able to display the full names of the four occupational group
 #| fig-asp: 0.3
 #| fig-width: 8
 #| label: "fig-FlippedBarplot"
-#| fig-cap: "@fig-ColourStackedBarplot displayed horizontally."
+#| fig-cap: "@fig-ColourStackedBarplot displayed horizontally"
 #| fig-alt: "A horizontal barplot showing the number of participants by occupational group and gender. The chart shows four occupational categories on the y-axis with their full names: Professional-level job/student, Manual profession, Professionally inactive, and Clerical profession."
 
 Dabrowska.data |> 
@@ -937,6 +922,10 @@ Dabrowska.data |>
 So far, we have seen how the syntax of the Grammar of Graphics can be used to build statistical graphs layer by layer. We now turn to the **semantics** of graphics. As linguists are well placed to know, semantics is the study of **meaning**. In the Grammar of Graphics, the semantics of graphics is defined as "the meanings of the representative symbols and arrangements we use to display information" [@wilkinsonGrammarGraphics2005: 20]. In what follows, we will see how thinking about the semantics of graphics can help us to think about how the different components of a graph interact to convey insightful visual information from raw data. This will help us to make informed choices when choosing the geometries, scales, facets, and themes of our data visualisations.
 
 But, first, let's think about why we visualise data. Data visualisation is about more than just communicating the results of our analyses to others at the publication stage. In fact, good data visualisation can help us make informed decisions throughout the research process from the data wrangling stage to the evaluation of complex statistical models. Here are some reasons for visualising data. Can you think of others? `r emoji("thinking")`
+
+::: {.content-visible when-format="pdf"}
+![](images/whitespace.png){width="30%"}
+:::      
 
 :::::: columns
 ::: {.column width="40%"}
@@ -987,9 +976,10 @@ Then, click on the "Show `R` code" button the figure to compare your intuitions 
 ```{r}
 #| code-fold: true
 #| code-summary: "Show `R` code to generate plot."
-#| out-width: 85%
+#| out-width: 80%
+#| fig-asp: 0.5
 #| label: "fig-NativeLanguagesBarplot"
-#| fig-cap: "Horizontal bar chart tallying L2 participants' native languages"
+#| fig-cap: "Horizontal barplot tallying L2 participants' native languages"
 #| fig-alt: "A horizontal barplot showing the distribution of native languages among second language learners, with bars colored by language family and a colour legend to the right of the plot."
 
 Dabrowska.data |> 
@@ -1278,6 +1268,8 @@ In @sec-DistributionsNumeric, we visually examined the distribution of participa
 #| label: "fig-AgeBarPlot"
 #| fig-cap: "Barplot of participant ages in @DabrowskaExperienceAptitudeIndividual2019."
 #| fig-alt: "Barplot tallying participants' ages in the Dabrowska study. There is one bar per age."
+#| out-width: 80%
+
 ggplot(data = Dabrowska.data,
        mapping = aes(Age)) +
   geom_bar() +
@@ -1300,6 +1292,7 @@ Clearly, these data are unsuitable for a barplot! The distribution of participan
 #| source-line-numbers: "3"
 #| fig-cap: "Histogram of participant ages in @DabrowskaExperienceAptitudeIndividual2019."
 #| fig-alt: "Histogram of participant ages in the Dabrowska study. Compared to the barplot, the gaps between the bars have disappeared."
+#| out-width: 80%
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = Age)) +
@@ -1311,7 +1304,7 @@ ggplot(data = Dabrowska.data,
 
 When generating this histogram, a message appears in the `R` console that informs us that, by default, the `geom_histogram()` function subdivided the `Age` values into 30 **bins**. This means that the age range from `r min(Dabrowska.data$Age)` to `r max(Dabrowska.data$Age)` was subdivided into 30 groups of equal size. Given that there is a range of 48 in the `Age` values in this dataset, this is not a great way to subdivide the values of this variable.
 
-As indicated in the message, to change this behaviour, we can adjust the value of the "binwidth" argument. This argument determines how many years go in each bin. So if we choose to have two years in each subdivision of the `Age` variable, we will end up with 24 bins. Thus, if we decide to group four years in each subdivision of the `Age` variable, we will end up with just 12 bins.
+As indicated in the message, to change this behaviour, we can adjust the value of the `binwidth` argument. This argument determines how many years go in each bin. So if we choose to have two years in each subdivision of the `Age` variable, we will end up with 24 bins. Thus, if we decide to group four years in each subdivision of the `Age` variable, we will end up with just 12 bins.
 
 Compare the three histograms below. In your opinion, which binwidth provides the most effective way to visualise the distribution of participants' ages? `r emoji("thinking")`
 
@@ -1368,6 +1361,7 @@ ggplot(data = Dabrowska.data,
 ```{r}
 #| echo: false
 #| out-width: 100%
+#| fig-asp: 0.5
 
 bin2 <- ggplot(data = Dabrowska.data,
        mapping = aes(x = Age)) +
@@ -1405,6 +1399,7 @@ The distribution of two continuous variables can also be compared by superimposi
 #| source-line-numbers: "3:4,5:6"
 #| fig-cap: "Overlapping histograms showing L1 and L2 participants' ages"
 #| fig-alt: "Two overlapping histograms of participant ages in the Dabrowska study, with the data for L2 speakers in yellow superimposed on the data for L1 speakers in purple, creating a different colour where they overlap. The plot shows that the L2 data is more centered around the median and the L1 data that has more younger and more older participants and fewer middle-aged ones."
+#| out-width: 80%
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = Age,
@@ -1679,8 +1674,7 @@ An alternative to displaying the data in discrete bins is to apply a density fun
 #| label: "fig-GrammarDensity"
 #| fig-cap: "Distribution of English vocabulary test results" 
 #| fig-alt: "A density plot of English grammar test scores: there is a small bump around 10 and a large mountain around 95."
-#| fig-height: 4
-#| fig-width: 5
+#| out-width: 70%
 
 ggplot(data = Dabrowska.data,
        mapping = aes(x = Grammar)) +
@@ -1769,7 +1763,7 @@ Dabrowska.data |>
 ::::: {.callout-note collapse="false"}
 #### Going further: Setting properties within geoms
 
-You can also change the **attributes** of any geometry layer by specifying them as **arguments** within their `geom_` function. The help file of each `geom_` function provides a list of the **aesthetics** arguments that each function has (see below for relevant extract). If we do not specify any of the optional aesthetics of the `geom_` functions, sensible default values will be used. For instance, the line colour of density plots will be black, unless otherwise specified with the argument "colour".
+You can also change the **attributes** of any geometry layer by specifying them as **arguments** within their `geom_` function. The help file of each `geom_` function provides a list of the **aesthetics** arguments that each function has (see below for relevant extract). If we do not specify any of the optional aesthetics of the `geom_` functions, sensible default values will be used. For instance, the line colour of density plots will be black, unless otherwise specified with the argument `colour`.
 
 ```{r}
 #| eval: false
@@ -1833,6 +1827,7 @@ It goes without saying that, just because you *can* customise many aspects of a 
 #| fig-alt: "Two overlapping density plots for L1 and L2 participants' non-verbal IQ scores, with a dotted line indicating the mean for each group. The hill for the L2 speakers' results is taller, and its mean is greater."
 #| code-fold: true
 #| code-summary: "Show annotated `R` code to generate figure below."
+#| out-width: 80%
 
 mean.blocks <- Dabrowska.data |> # <1>
   group_by(Group) |>
@@ -1874,11 +1869,12 @@ In @sec-IQR, we saw that **boxplots** are a great way to visualise both the cent
 Whilst it's possible to plot just a single boxplot, that rarely makes sense. In fact, the `x`-axis in @fig-GrammarBoxPlot is entirely nonsensical! The distribution of `Grammar` scores across the entire dataset is much better visualised as a histogram or density plot (see @sec-Density) than as a single boxplot.
 
 ```{r}
-#| fig-height: 3
-#| fig-width: 4
 #| label: "fig-GrammarBoxPlot"
-#| fig-cap: "Boxplot of participants' English grammar test results."
+#| fig-cap: "Boxplot of participants' English grammar test results"
 #| fig-alt: "A vertical boxplot of participants' English grammar test results. The minimum is placed slightly below 50 with an interquartile range from 75 to 95 and a median at 90. There are several outliers from 0 to the minimum."
+#| out-width: 50%
+#| fig-asp: 0.8
+#| fig-width: 4.5
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar)) +
@@ -1891,11 +1887,11 @@ Dabrowska.data |>
 If, however, we want to compare the `Grammar` scores of two or more different groups of participants, a boxplot makes a lot more sense (see @fig-GrammarBoxPlotGroup). To achieve this, we add a second argument within the `aes()` function, which maps the values of the `Group` variable (which are either "L1" or "L2") to the plot's `x`-axis.
 
 ```{r}
-#| fig-height: 3
-#| fig-width: 5
 #| label: "fig-GrammarBoxPlotGroup"
 #| fig-cap: "Boxplots of L1 and L2 participants' English grammar test results."
 #| fig-alt: "The previous boxplot has been divided into two individual charts for L1 and L2 participants' results. For L1 participants the minimum and interquartile range have shifted upwards very slightly and there is a single outlier below 50. For L2 participants the minimum has been extended down to 0 and the interquartile range stretched down below 50."
+#| out-width: 60%
+#| fig-width: 5
 
 Dabrowska.data |>
   ggplot(mapping = aes(y = Grammar, 
@@ -2199,7 +2195,8 @@ In the following, we will build a scatterplot to explore the following hypothesi
 To explore this hypothesis, we map the total number of years that participants spent in formal education (`EduTotal`) onto the *x*-axis and their `Grammar` scores onto the *y*-axis. In addition, we use the `facet_wrap()` function to split the data into two panels: one for the L1 participants and the other for the L2 group.
 
 ```{r}
-#| fig-asp: 0.8
+#| fig-asp: 0.7
+#| out-width: 70%
 #| fig-cap: "Scatterplot comparing participants' grammar comprehension test scores with number of years of formal education."
 #| fig-alt: "A scatterplot comparing L1 and L2 participants' grammar comprehension test scores with the number of years of formal education they have received. For the L1 participants, the dots are clustered near the top left, indicating higher scores and fewer years of formal education. For the L2 partipants, the dots cluster at the top and bottom center, indicating a wider range of test scores and more formal education on average."
 
@@ -2218,7 +2215,8 @@ At first glance, it would seem that our data do not support our initial hypothes
 ```{r}
 #| label: "fig-GrammarScatterPlot"
 #| source-line-numbers: "6-7"
-#| fig-asp: 0.8
+#| fig-asp: 0.7
+#| out-width: 70%
 #| fig-cap: "Regression lines for participants' grammar comprehension test scores vs. years of formal education."
 #| fig-alt: "The previous scatterplots with a blue lines indicating the correlation between the two variables. For L1 speakers the line proceeds through the cluster upwards and to the right at a shallow angle. For L2 speakers a similar line trajectory cuts through the bottom of the top cluster. For both groups there is a weak positive correlation."
 
@@ -2601,8 +2599,8 @@ ggplot(aes(x = Age,
 Part of the magic of the Grammar of Graphics is that we can easily combine different geometries and aesthetics to create highly informative graphs. This is a feature that we have already made use of in several plots so far in this chapter (e.g., @fig-UsefulDensityPlot). @Fig-GrammarPointBoxplot is another example. In this plot, we combine two geometries, `geom_boxplot()` and `geom_point()`, to see both the defining characteristics of the distributions of grammar test scores among L1 and L2 participants, as well as the exact score of each individual participant.
 
 ```{r}
-#| fig-asp: 1.2
-#| fig-width: 3.5
+#| fig-asp: 1
+#| fig-width: 5
 #| out-width: 50%
 #| label: "fig-GrammarPointBoxplot"
 #| fig-cap: "Boxplots of participants' grammar comprehension test scores overlaid with dots representing each individual scores"
@@ -2624,8 +2622,8 @@ Dabrowska.data |>
 When there are too many points overlapping, even adding some transparency to the points with the `alpha` option may not suffice to tell the points apart. An alternative is to add a little bit of randomness to the position of the dots using the `geom_jitter()` function to ensure that there are fewer overlaps (@fig-JitteredGrammar).
 
 ```{r}
-#| fig-asp: 1.2
-#| fig-width: 3.5
+#| fig-asp: 1
+#| fig-width: 5
 #| out-width: 50%
 #| source-line-numbers: "5-7"
 #| label: "fig-JitteredGrammar"
@@ -2647,8 +2645,8 @@ Dabrowska.data |>
 We can also map the colour of the jittered points to another categorical variable from our dataset, e.g. `Gender` as in @fig-JitteredGrammarGender.
 
 ```{r}
-#| fig-asp: 1
-#| fig-width: 4
+#| fig-asp: 0.9
+#| fig-width: 4.5
 #| out-width: 60%
 #| source-line-numbers: "4,10"
 #| label: fig-JitteredGrammarGender
@@ -2675,8 +2673,8 @@ Dabrowska.data |>
 We can, in theory, visualise even more of our data by adding a **shape** `aesthetics` to the `geom_jitter()` (see @fig-JitteredGrammarGender). However, increased plot complexity does not necessarily result in more meaningful or effective statistical graphics. How effective is @fig-JitteredGrammarComplex in your opinion?
 
 ```{r}
-#| fig-asp: 0.9
-#| fig-width: 5
+#| fig-asp: 0.8
+#| fig-width: 4.5
 #| out-width: 70%
 #| source-line-numbers: "7"
 #| label: "fig-JitteredGrammarComplex"
@@ -2894,7 +2892,7 @@ Well done! You have successfully completed this chapter on data visualisation us
 ::: {.content-visible when-format="pdf"}
 ### Check your progress {.unnumbered}
 
-It's time to try your hand at some creative plot-making: complete this chapter's [tasks and quizzes](https://elenlefoll.github.io/RstatsTextbook/11_quiz.html)! `r emoji("art")`
+It's time to try your hand at some creative plot-making: complete this chapter's [tasks and quizzes](https://elenlefoll.github.io/RstatsTextbook/quizzes/11_quiz.html)! `r emoji("art")`
 :::
 
 Are you confident that you can...?
