@@ -290,7 +290,7 @@
 \subtitle{A very gentle introduction to statistics and data
 visualisation in \texttt{R}}
 \author{Elen Le Foll}
-\date{24 June 2026}
+\date{9 July 2026}
 \begin{document}
 \maketitle
 
@@ -3312,7 +3312,7 @@ and a bit of patience. \emoji{person-in-lotus-position}
 The \{installr\} package simplifies updating \texttt{R} on Windows. To
 install the package use the usual commands:
 
-\protect\phantomsection\label{annotated-cell-337}%
+\protect\phantomsection\label{annotated-cell-343}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{install.packages}\NormalTok{(}\StringTok{"installr"}\NormalTok{) }\hspace*{\fill}\NormalTok{\circled{1}}
@@ -6259,7 +6259,7 @@ Consider the three lines of code below. Without running them, can you
 tell which of the three lines of code will output the square root of L1
 participant's average age to two decimal places?
 
-\protect\phantomsection\label{annotated-cell-373}%
+\protect\phantomsection\label{annotated-cell-379}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{round}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(L1.Age) }\AttributeTok{digits =} \DecValTok{2}\NormalTok{)) }\hspace*{\fill}\NormalTok{\circled{1}}
@@ -8693,7 +8693,7 @@ using base \texttt{R} functions. For example, the \texttt{mutate()} code
 chunk above could be replaced by the following lines of base \texttt{R}
 code:
 
-\protect\phantomsection\label{annotated-cell-437}%
+\protect\phantomsection\label{annotated-cell-443}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{L2.data}\SpecialCharTok{$}\NormalTok{NativeLg.cleaned.base }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(}\StringTok{"([a{-}zA{-}Z]+).*"}\NormalTok{, }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{1"}\NormalTok{, L2.data}\SpecialCharTok{$}\NormalTok{NativeLg) }\hspace*{\fill}\NormalTok{\circled{1}}
@@ -9638,11 +9638,14 @@ out to them.
 
 A good alt-text aims to convey the main message and insights of the
 graph, allowing someone who cannot see it to understand the information
-being presented (WAI) (2022). In the context of online publications,
-alt-text is also useful in regions with low bandwidth as images may take
-a very long time to load. By including alt-text, we can therefore make
-our work more accessible and inclusive, enabling more people to engage
-with and understand our data and analyses.
+being presented. In the context of online publications, alt-text is also
+useful in regions with low bandwidth as images may take a very long time
+to load. By including alt-text, we can therefore make our work more
+accessible and inclusive, enabling more people to engage with and
+understand our data and analyses. The University of South Carolina
+(2026) and the W3C Web Accessibility Initiative (2022) provide good,
+concise tutorials on how to write good alt-texts for all kinds of
+images.
 
 Section~\ref{sec-QuartoFigures} explains how to add alt-text to plots
 and figures in Quarto documents. If you take a peek at the
@@ -10737,7 +10740,7 @@ good idea to do so! It can, however, be very useful to help identify
 different elements within a complex plot such as
 Figure~\ref{fig-UsefulDensityPlot}.
 
-\protect\phantomsection\label{annotated-cell-463}%
+\protect\phantomsection\label{annotated-cell-469}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{mean.blocks }\OtherTok{\textless{}{-}}\NormalTok{ Dabrowska.data }\SpecialCharTok{|\textgreater{}} \hspace*{\fill}\NormalTok{\circled{1}}
@@ -11063,7 +11066,9 @@ We will use the \texttt{geom\_text\_wordcloud()} function to create a
 word cloud representing L2 participants' native languages (see
 Figure~\ref{fig-WordCloud}). To this end, we first need to create a
 table that tallies how often each native language was mentioned. {We
-also include a column for the language family.}
+also include a column for the language
+family.}{\textbf{Q9.9}}---{\textbf{Q9.12}} in
+Section~\ref{sec-casewhen}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -11128,6 +11133,135 @@ two main reasons:
   sizes.
 \end{enumerate}
 
+\subsection{Mapping geographical data}\label{sec-Maps}
+
+\texttt{R} is also widely used for working with geographical data. In
+the following example, we create a map showing the countries on the
+African continent that have French as an official language using the
+\{tmap\} (Tennekes 2018) and \{rnaturalearth\} (Massicotte \& South
+2026). Other map packages are available, but this textbook demonstrates
+the use of \{tmap\} because, like \{ggplot2\}, it is also based on the
+principles of the Grammar of Graphics (Wilkinson 2005).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tmap"}\NormalTok{, }\AttributeTok{repos =} \FunctionTok{c}\NormalTok{(}\StringTok{"https://r{-}tmap.r{-}universe.dev"}\NormalTok{,}
+                                   \StringTok{"https://cloud.r{-}project.org"}\NormalTok{))}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"rnaturalearth"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+To find out which countries have French as an official language, we rely
+on data scraped from Wikipedia and made available as part of the
+\{worldlanguages\} package by fellow linguist, Joseph Casillas (2026).
+This package can be downloaded from GitHub using the \{remotes\}
+package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"remotes"}\NormalTok{)}
+\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"jvcasillas/worldlanguages"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We will be using the dataset \texttt{languages\_by\_country} from the
+\{worldlanguages\} package which lists languages spoken across 212
+countries, distinguishing between official, regional, minority, and
+national languages (Casillas 2026). Note that this list is not
+necessarily up-to-date: for example, as of writing, it still featured
+French as the official language of Burkina Faso, even though this was
+changed to Mooré in December 2023 (AfricaNews 2023).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(worldlanguages)}
+\FunctionTok{str}\NormalTok{(languages\_by\_country)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+tibble [212 x 6] (S3: tbl_df/tbl/data.frame)
+ $ country_region   : chr [1:212] "Abkhazia" "Afghanistan" "Albania" "Algeria" ...
+ $ official_language: chr [1:212] "Abkhaz, Russian" "Persian (Dari), Pashto" "Albanian" "Arabic, Tamazight" ...
+ $ regional_language: chr [1:212] "" "Uzbek, Turkmen, Pashayi, Nuristani, Balochi, Pamiri" "" "" ...
+ $ minority_language: chr [1:212] "Georgian" "" "Greek, Macedonian, Aromanian" "" ...
+ $ national_language: chr [1:212] "Abkhaz" "Persian (Dari), Pashto" "" "Arabic, Tamazight" ...
+ $ widely_spoken    : chr [1:212] "" "Persian (Dari)" "Italian" "French" ...
+\end{verbatim}
+
+We first filter the list for countries that include French as (one of)
+their official language(s) using the \texttt{str\_detect()} function and
+store the names of these countries in a new \texttt{R} object called
+\texttt{FrenchOfficial}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{FrenchOfficial }\OtherTok{\textless{}{-}}\NormalTok{ languages\_by\_country }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(official\_language, }\StringTok{"French"}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{pull}\NormalTok{(country\_region)}
+\end{Highlighting}
+\end{Shaded}
+
+Next, we retrieve geographic data of national borders in Africa using
+the \texttt{ne\_countries()} function. The dataset that this function
+returns has a row per country. We add a column to this dataset using the
+\texttt{mutate()} function that indicates whether each country has
+French as (one of) its official language(s) based on the data that we
+retrieved from the \texttt{languages\_by\_country} dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tmap)}
+\FunctionTok{library}\NormalTok{(rnaturalearth)}
+
+\NormalTok{Africa\_FR }\OtherTok{\textless{}{-}} \FunctionTok{ne\_countries}\NormalTok{(}\AttributeTok{continent =} \StringTok{"africa"}\NormalTok{, }
+                          \AttributeTok{returnclass =} \StringTok{"sf"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{french\_speaking =} 
+           \FunctionTok{ifelse}\NormalTok{(name }\SpecialCharTok{\%in\%}\NormalTok{ FrenchOfficial, }
+                  \ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+We then map this geographic data using the \texttt{tm\_shape()} and
+\texttt{tm\_polygons()} functions. The values of the
+\texttt{french\_speaking} variable (``TRUE'' or ``FALSE'') are mapped
+onto the fill colour of each polygon (i.e.~each country) using the
+\texttt{fill.scale} argument. The \texttt{lwd} argument controls the
+width of the line delimiting the country borders. Check the package
+documentation to find out about the many other options:
+\url{https://r-tmap.github.io/tmap/}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tm\_shape}\NormalTok{(Africa\_FR) }\SpecialCharTok{+}
+  \FunctionTok{tm\_polygons}\NormalTok{(}\AttributeTok{fill =} \StringTok{"french\_speaking"}\NormalTok{,}
+              \AttributeTok{fill.scale =} \FunctionTok{tm\_scale}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"grey"}\NormalTok{, }\StringTok{"purple"}\NormalTok{)),}
+              \AttributeTok{fill.legend =} \FunctionTok{tm\_legend\_hide}\NormalTok{(),}
+              \AttributeTok{lwd =} \FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio,alt={Map of Africa with French-speaking countries highlighted in pink. Most of them are situated in west and central Africa. A large exception is Madagascar, an inland state located off the southeastern coast of Africa. Perhaps surprisingly countries like Algeria and Morroco where French is widely spoken are not highlighted because it is not an official language in these former colonies of France.}]{10_Dataviz_files/figure-pdf/fig-AfricaFR-1.pdf}}
+
+}
+
+\caption{\label{fig-AfricaFR}African countries with French as (one of)
+their official language(s), according to possibly outdated Wikipedia
+data}
+
+\end{figure}%
+
+It is beyond the scope of this textbook to go in any more details as to
+the why and/or how to use \texttt{R} for geocomputation. The interested
+reader is invited to consult Lovelace, Nowosad \& Münchow (2025) and
+Tennekes \& Nowosad (2025), which are fantastic resources for creating
+many different types of maps in \texttt{R}, including animated and
+interactive maps.
+
 \subsection{Combining geometries}\label{sec-CombiningGeoms}
 
 Part of the magic of the Grammar of Graphics is that we can easily
@@ -11140,7 +11274,7 @@ we combine two geometries, \texttt{geom\_boxplot()} and
 distributions of grammar test scores among L1 and L2 participants, as
 well as the exact score of each individual participant.
 
-\protect\phantomsection\label{annotated-cell-194}%
+\protect\phantomsection\label{annotated-cell-200}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{Dabrowska.data }\SpecialCharTok{|\textgreater{}}
@@ -11653,7 +11787,7 @@ living in the UK.
 In the language and education sciences we rarely have access to the
 entire population for which we would ideally like to generalise our
 findings. For example, we can hardly go and test \emph{all} English
-speakers living in the UK. Instead, we have to make due with a
+speakers living in the UK. Instead, we have to make do with a
 \textbf{sample} of L1 and L2 English speakers. Since our studies attempt
 to \emph{infer} information about entire populations based only sample
 data, the quality of our samples is crucial: no sophisticated
@@ -14670,7 +14804,7 @@ predicted values (as blue lines) and the confidence intervals output by
 the \texttt{emmeans()} function (as grey bands) together with the
 model's residuals (as grey dots).
 
-\protect\phantomsection\label{annotated-cell-248}%
+\protect\phantomsection\label{annotated-cell-254}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#install.packages("visreg")}
@@ -15401,7 +15535,7 @@ Let's decipher the summary of \texttt{model4\_c} step-by-step:
   years (\texttt{EduTotal}), we combine the coefficient estimates as
   follows:
 
-\protect\phantomsection\label{annotated-cell-538}%
+\protect\phantomsection\label{annotated-cell-545}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \FloatTok{70.5852} \SpecialCharTok{+} \hspace*{\fill}\NormalTok{\circled{1}}
@@ -16321,7 +16455,7 @@ hypothesis, we formulate the following null hypothesis:
 We now fit a model to find out if we have enough evidence to reject this
 null hypothesis:
 
-\protect\phantomsection\label{annotated-cell-274}%
+\protect\phantomsection\label{annotated-cell-280}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{L1.data }\OtherTok{\textless{}{-}}\NormalTok{ L1.data }\SpecialCharTok{|\textgreater{}} \hspace*{\fill}\NormalTok{\circled{1}}
@@ -16430,7 +16564,7 @@ Based on the coefficient estimates of the model summary, we can
 therefore calculate the predicted \texttt{Vocab} score of the student /
 support worker as follows:
 
-\protect\phantomsection\label{annotated-cell-276}%
+\protect\phantomsection\label{annotated-cell-282}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \FloatTok{51.9162} \SpecialCharTok{+} \hspace*{\fill}\NormalTok{\circled{1}}
@@ -16459,7 +16593,7 @@ Interaction effect between scoring 31 points on the ART and having spent
 
 And similarly for the housewife with the same ART score:
 
-\protect\phantomsection\label{annotated-cell-277}%
+\protect\phantomsection\label{annotated-cell-283}%
 \begin{Shaded}
 \begin{Highlighting}[]
 \FloatTok{51.9162} \SpecialCharTok{+} \hspace*{\fill}\NormalTok{\circled{1}}
@@ -20327,6 +20461,11 @@ New and updated tests of print exposure and reading abilities in college
 students. \emph{Behavior Research Methods} 40(1). 278--289.
 \url{https://doi.org/10.3758/brm.40.1.278}.
 
+\bibitem[\citeproctext]{ref-africanewsCommeAuMali2023}
+AfricaNews. 2023. Comme au mali, le burkina abandonne le français comme
+langue officielle. \emph{Africanews}.
+\url{https://fr.africanews.com/2023/12/07/comme-au-mali-le-burkina-abandonne-le-francais-comme-langue-officielle/}.
+
 \bibitem[\citeproctext]{ref-alhazmiVisualInterpretationStandard2020}
 Alhazmi, Fahd. 2020. A visual interpretation of the standard deviation.
 \emph{Medium}.
@@ -20396,6 +20535,11 @@ Verb placement in L3 french and L3 german: The role of language-internal
 factors in determining cross-linguistic influence from prior languages.
 \emph{Linguistic Approaches to Bilingualism} 13(5). 693--716.
 \url{https://doi.org/10.1075/lab.22058.bus}.
+
+\bibitem[\citeproctext]{ref-worldlanguages}
+Casillas, Joseph Vincent. 2026. \emph{Worldlanguages: An {R} package
+containing 8 data sets about the world's languages}.
+\url{https://github.com/jvcasillas/worldlanguages}.
 
 \bibitem[\citeproctext]{ref-centerforopenscienceChoosingRightPreregistration2025}
 Center for Open Science. 2025. Choosing the right preregistration
@@ -20625,6 +20769,12 @@ Loker, David. 2025. AI vs human code gen report: AI code creates 1.7x
 more issues. \emph{CodeRabbit}.
 \url{https://www.coderabbit.ai/blog/state-of-ai-vs-human-code-generation-report}.
 
+\bibitem[\citeproctext]{ref-lovelaceGeocomputation2025}
+Lovelace, Robin, Jakub Nowosad \& Jannes Münchow. 2025.
+\emph{Geocomputation with {R}} (Chapman \& Hall/CRC the r Series).
+Second edition. Boca Raton, FL: CRC Press, Taylor \& Francis Group.
+\url{https://r.geocompx.org/}.
+
 \bibitem[\citeproctext]{ref-horstOpenscapesTidyData2020}
 Lowndes, Julie \& Allison Horst. 2020. Openscapes - {Tidy} data for
 efficiency, reproducibility, and collaboration.
@@ -20664,6 +20814,11 @@ cheese --- and that's going to cause huge problems. \emph{Marcus on AI}.
 Marcus, Gary \& Nathan Hamiel. 2025. LLMs + coding agents = security
 nightmare. \emph{Marcus on AI}.
 \url{https://garymarcus.substack.com/p/llms-coding-agents-security-nightmare}.
+
+\bibitem[\citeproctext]{ref-rnaturalearth}
+Massicotte, Philippe \& Andy South. 2026. \emph{{rnaturalearth}: World
+map data from natural earth}.
+\url{https://doi.org/10.32614/CRAN.package.rnaturalearth}.
 
 \bibitem[\citeproctext]{ref-matuteIllusionsCausalityHow2015}
 Matute, Helena, Fernando Blanco, Ion Yarritu, Marcos Díaz-Lago, Miguel
@@ -20889,6 +21044,16 @@ Tamkin, Alex \& Judy Hanwen Shen. 2026. How AI impacts skill formation.
 TEI Consortium. 2025. TEI P5: Guidelines for electronic text encoding
 and interchange. Zenodo. \url{https://doi.org/10.5281/zenodo.17161156}.
 
+\bibitem[\citeproctext]{ref-tmap}
+Tennekes, Martijn. 2018. {tmap}: Thematic maps in {R}. \emph{Journal of
+Statistical Software} 84(6). 1--39.
+\url{https://doi.org/10.18637/jss.v084.i06}.
+
+\bibitem[\citeproctext]{ref-nowosadSpatialDataVisualization2026}
+Tennekes, Martijn \& Jakub Nowosad. 2025. Spatial data visualization
+with tmap: A practical guide to thematic mapping in {R}.
+\url{https://tmap.geocompx.org}.
+
 \bibitem[\citeproctext]{ref-theturingwaycommunityTuringWayHandbook2022}
 The Turing Way Community. 2022. The {Turing} {Way}: A handbook for
 reproducible, ethical and collaborative research (1.0.2). Zenodo.
@@ -20913,7 +21078,7 @@ Marketing} 89(5). 1--20.
 \url{https://doi.org/10.1177/00222429251314491}.
 
 \bibitem[\citeproctext]{ref-universityofsouthcarolinaAlternativeText}
-University of South Carolina. Alternative text.
+University of South Carolina. 2026. Alternative text.
 \url{https://sc.edu/about/offices_and_divisions/digital-accessibility/toolbox/best_practices/alternative_text/}.
 
 \bibitem[\citeproctext]{ref-usheyRenvProjectEnvironments2023}
@@ -20939,7 +21104,7 @@ Attention is all you need. Long Beach, CA, USA.
 \url{https://doi.org/10.48550/arXiv.1706.03762}.
 
 \bibitem[\citeproctext]{ref-w3cwebaccessibilityinitiativewaiImages2022}
-(WAI), W3C Web Accessibility Initiative. 2022. Images. \emph{Strategies,
+W3C Web Accessibility Initiative. 2022. Images. \emph{Strategies,
 standards, resources to make the Web accessible to people with
 disabilities}. \url{https://www.w3.org/WAI/tutorials/images/}.
 

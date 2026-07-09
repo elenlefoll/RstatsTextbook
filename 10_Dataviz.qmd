@@ -2443,7 +2443,7 @@ The {ggplot2} library does not include an in-built function to create word cloud
 library(ggwordcloud)
 ```
 
-We will use the `geom_text_wordcloud()` function to create a word cloud representing L2 participants' native languages (see @fig-WordCloud). To this end, we first need to create a table that tallies how often each native language was mentioned. [We also include a column for the language family.]{.content-visible when-format="pdf"}[We also include a column for the language family (see [**Q9.9**]{style="color:green;"}—[**Q9.12**]{style="color:green;"} in @sec-casewhen).]{.content-visible when-format="html"}
+We will use the `geom_text_wordcloud()` function to create a word cloud representing L2 participants' native languages (see @fig-WordCloud). To this end, we first need to create a table that tallies how often each native language was mentioned. [We also include a column for the language family.]{.content-visible when-format="pdf"}[We also include a column for the language family (see]{.content-visible when-format="html"}[**Q9.9**]{style="color:green;"}—[**Q9.12**]{style="color:green;"} in @sec-casewhen).
 
 ```{r}
 NativeLg_freq <- Dabrowska.data |> 
@@ -2593,6 +2593,76 @@ ggplot(aes(x = Age,
 ```
 :::::
 ::::::
+
+### Mapping geographical data {#sec-Maps}
+
+`R` is also widely used for working with geographical data. In the following example, we create a map showing the countries on the African continent that have French as an official language using the {tmap} [@tmap] and {rnaturalearth} [@rnaturalearth]. Other map packages are available, but this textbook demonstrates the use of {tmap} because, like {ggplot2}, it is also based on the principles of the Grammar of Graphics [@wilkinsonGrammarGraphics2005].
+
+```{r}
+#| eval: false
+install.packages("tmap", repos = c("https://r-tmap.r-universe.dev",
+                                   "https://cloud.r-project.org"))
+install.packages("rnaturalearth")
+```
+
+:::: {.content-visible when-format="html"}
+::: column-margin
+![Hex sticker of the [{tmap}](https://r-tmap.github.io/tmap/) package](images/hex_tmap.png){width="100"}
+:::
+::::
+
+To find out which countries have French as an official language, we rely on data scraped from Wikipedia and made available as part of the {worldlanguages} package by fellow linguist, Joseph @worldlanguages. This package can be downloaded from GitHub using the {remotes} package.
+
+```{r}
+#| eval: false
+install.packages("remotes")
+remotes::install_github("jvcasillas/worldlanguages")
+```
+
+We will be using the dataset `languages_by_country` from the {worldlanguages} package which lists languages spoken across 212 countries, distinguishing between official, regional, minority, and national languages [@worldlanguages]. Note that this list is not necessarily up-to-date: for example, as of writing, it still featured French as the official language of Burkina Faso, even though this was changed to Mooré in December 2023 [@africanewsCommeAuMali2023].
+
+```{r}
+library(worldlanguages)
+str(languages_by_country)
+```
+
+We first filter the list for countries that include French as (one of) their official language(s) using the `str_detect()` function and store the names of these countries in a new `R` object called `FrenchOfficial`.
+
+```{r}
+FrenchOfficial <- languages_by_country |> 
+  filter(str_detect(official_language, "French")) |> 
+  pull(country_region)
+```
+
+Next, we retrieve geographic data of national borders in Africa using the `ne_countries()` function. The dataset that this function returns has a row per country. We add a column to this dataset using the `mutate()` function that indicates whether each country has French as (one of) its official language(s) based on the data that we retrieved from the `languages_by_country` dataset.
+
+```{r}
+library(tmap)
+library(rnaturalearth)
+
+Africa_FR <- ne_countries(continent = "africa", 
+                          returnclass = "sf") |> 
+  mutate(french_speaking = 
+           ifelse(name %in% FrenchOfficial, 
+                  TRUE, FALSE))
+```
+
+We then map this geographic data using the `tm_shape()` and `tm_polygons()` functions. The values of the `french_speaking` variable ("TRUE" or "FALSE") are mapped onto the fill colour of each polygon (i.e. each country) using the `fill.scale` argument. The `lwd` argument controls the width of the line delimiting the country borders. Check the package documentation to find out about the many other options: <https://r-tmap.github.io/tmap/>.
+
+```{r}
+#| width: 5
+#| label: "fig-AfricaFR"
+#| fig-cap: "African countries with French as (one of) their official language(s), according to possibly outdated Wikipedia data"
+#| fig-alt: "Map of Africa with French-speaking countries highlighted in pink. Most of them are situated in west and central Africa. A large exception is Madagascar, an inland state located off the southeastern coast of Africa. Perhaps surprisingly countries like Algeria and Morroco where French is widely spoken are not highlighted because it is not an official language in these former colonies of France."
+
+tm_shape(Africa_FR) +
+  tm_polygons(fill = "french_speaking",
+              fill.scale = tm_scale(values = c("#F3E5F5", "#AB47BC")),
+              fill.legend = tm_legend_hide(),
+              lwd = 0.5)
+```
+
+It is beyond the scope of this textbook to go in any more details as to the why and/or how to use `R` for geocomputation. The interested reader is invited to consult @lovelaceGeocomputation2025 and @nowosadSpatialDataVisualization2026, which are fantastic resources for creating many different types of maps in `R`, including animated and interactive maps.
 
 ### Combining geometries {#sec-CombiningGeoms}
 
