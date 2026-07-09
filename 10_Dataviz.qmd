@@ -2594,9 +2594,9 @@ ggplot(aes(x = Age,
 :::::
 ::::::
 
-### Mapping geographical data {#sec-Maps}
+### Maps {#sec-Maps}
 
-`R` is also widely used for working with geographical data. In the following example, we create a map showing the countries on the African continent that have French as an official language using the {tmap} [@tmap] and {rnaturalearth} [@rnaturalearth]. Other map packages are available, but this textbook demonstrates the use of {tmap} because, like {ggplot2}, it is also based on the principles of the Grammar of Graphics [@wilkinsonGrammarGraphics2005].
+`R` is also widely used for mapping geographical data. In the following example, we create a map showing African countries that have French as an official language using the {tmap} [@tmap] and {rnaturalearth} [@rnaturalearth] packages. Like {ggplot2}, {tmap} is also based on the principles of the Grammar of Graphics [@wilkinsonGrammarGraphics2005].
 
 ```{r}
 #| eval: false
@@ -2626,7 +2626,7 @@ library(worldlanguages)
 str(languages_by_country)
 ```
 
-We first filter the list for countries that include French as (one of) their official language(s) using the `str_detect()` function and store the names of these countries in a new `R` object called `FrenchOfficial`.
+We first filter the list for countries that include French as (one of) their official language(s) using the `str_detect()` function from the tidyverse {stringr} package (see @sec-stringR) and store the names of these countries in a new `R` object called `FrenchOfficial`.
 
 ```{r}
 FrenchOfficial <- languages_by_country |> 
@@ -2634,7 +2634,7 @@ FrenchOfficial <- languages_by_country |>
   pull(country_region)
 ```
 
-Next, we retrieve geographic data of national borders in Africa using the `ne_countries()` function. The dataset that this function returns has a row per country. We add a column to this dataset using the `mutate()` function that indicates whether each country has French as (one of) its official language(s) based on the data that we retrieved from the `languages_by_country` dataset.
+Next, we retrieve geographic data of national borders in Africa using the `ne_countries()` function. The dataset that this function returns has a row per country. We add a column to this dataset using the `mutate()` function (see @sec-mutate) that indicates whether each country has French as (one of) its official language(s) based on the data that we retrieved from the `languages_by_country` dataset.
 
 ```{r}
 library(tmap)
@@ -2647,7 +2647,7 @@ Africa_FR <- ne_countries(continent = "africa",
                   TRUE, FALSE))
 ```
 
-We then map this geographic data using the `tm_shape()` and `tm_polygons()` functions. The values of the `french_speaking` variable ("TRUE" or "FALSE") are mapped onto the fill colour of each polygon (i.e. each country) using the `fill.scale` argument. The `lwd` argument controls the width of the line delimiting the country borders. Check the package documentation to find out about the many other options: <https://r-tmap.github.io/tmap/>.
+We then map this geographic data using the `tm_shape()` and `tm_polygons()` functions. The values of the `french_speaking` variable ("TRUE" or "FALSE") are mapped onto the fill colour of each polygon (i.e. each country) using the `fill.scale` argument. The `lwd` argument controls the width of the lines delimiting the country borders. Check the package documentation to find out about the many other options: <https://r-tmap.github.io/tmap/>.
 
 ```{r}
 #| width: 5
