@@ -207,17 +207,6 @@ A good alt-text aims to convey the main message and insights of the graph, allow
 
 Blind and low-vision readers may also want to check out the [{BrailleR}](https://ajrgodfrey.github.io/BrailleR/articles/BrailleR.html) package [@godfreyBrailleRImprovedAccess2025], which converts plots generated in `R` into a textual form that can be interpreted by blind and low-vision `R` users who cannot access the graphs without printing the image to a tactile embosser, or who need the extra text to support any tactile images that they have created.
 
-```{r}
-#| include: false
-#| eval: false
-
-# https://github.com/ajrgodfrey/BrailleR
-#install.packages("remotes")
-remotes::install_github("ajrgodfrey/BrailleR", upgrade=TRUE, quiet=TRUE)
-
-library(BrailleR)
-BrailleR::Describe()
-```
 :::
 
 ### Data {#sec-ggplotData}
@@ -2475,7 +2464,7 @@ ggplot(data = NativeLg_freq,
   theme_minimal()
 ```
 
-![Word cloud representing the native languages of L2 participants in @DabrowskaExperienceAptitudeIndividual2019](images/WordCloud.png){#fig-WordCloud fig-alt="A word cloud of participants' native languages coloured according to language family and sized according to the number of participant speakers." width="50%"}
+![Word cloud representing the native languages of L2 participants](images/WordCloud.png){#fig-WordCloud fig-alt="A word cloud of participants' native languages coloured according to language family and sized according to the number of participant speakers." width="50%"}
 
 Word clouds are widely used in the media and corporate world, but they are much rarer in academic research. Although word clouds can help to visualise the most prominent words in a set of words, they mostly serve decorative purposes. Data visualisation experts warn against them for two main reasons:
 
@@ -2642,27 +2631,27 @@ library(rnaturalearth)
 
 Africa_FR <- ne_countries(continent = "africa", 
                           returnclass = "sf") |> 
-  mutate(french_speaking = 
-           ifelse(name %in% FrenchOfficial, 
+  mutate(french_official = 
+           ifelse(name_long %in% FrenchOfficial, 
                   TRUE, FALSE))
 ```
 
-We then map this geographic data using the `tm_shape()` and `tm_polygons()` functions. The values of the `french_speaking` variable ("TRUE" or "FALSE") are mapped onto the fill colour of each polygon (i.e. each country) using the `fill.scale` argument. The `lwd` argument controls the width of the lines delimiting the country borders. Check the package documentation to find out about the many other options: <https://r-tmap.github.io/tmap/>.
+We then map this geographic data using the `tm_shape()` and `tm_polygons()` functions. The values of the `french_official` variable ("TRUE" or "FALSE") are mapped onto the fill colour of each polygon (i.e. each country) using the `fill.scale` argument. The `lwd` argument controls the width of the lines delimiting the country borders. Check the package documentation to find out about the many other options: <https://r-tmap.github.io/tmap/>.
 
 ```{r}
 #| width: 5
 #| label: "fig-AfricaFR"
-#| fig-cap: "African countries with French as (one of) their official language(s), according to possibly outdated Wikipedia data"
-#| fig-alt: "Map of Africa with French-speaking countries highlighted in pink. Most of them are situated in west and central Africa. A large exception is Madagascar, an inland state located off the southeastern coast of Africa. Perhaps surprisingly countries like Algeria and Morroco where French is widely spoken are not highlighted because it is not an official language in these former colonies of France."
+#| fig-cap: "Map showing African countries with French as (one of) their official language(s) (according to likely outdated Wikipedia data)"
+#| fig-alt: "Map of Africa with French-speaking countries highlighted in purple. Most of these countries are situated in west and central Africa. A large exception is Madagascar, an inland state located off the southeastern coast of Africa. Perhaps surprisingly, north African countries such as Algeria and Morroco where French is widely spoken are not highlighted because it is no longer an official language in these former colonies of France."
 
 tm_shape(Africa_FR) +
-  tm_polygons(fill = "french_speaking",
+  tm_polygons(fill = "french_official",
               fill.scale = tm_scale(values = c("#F3E5F5", "#AB47BC")),
               fill.legend = tm_legend_hide(),
               lwd = 0.5)
 ```
 
-It is beyond the scope of this textbook to go in any more details as to the why and/or how to use `R` for geocomputation. The interested reader is invited to consult @lovelaceGeocomputation2025 and @nowosadSpatialDataVisualization2026, which are fantastic resources for creating many different types of maps in `R`, including animated and interactive maps.
+It is beyond the scope of this textbook to go in any more details on how to use `R` for more complex geocomputation, but you should know that the possibilities are pretty much endless! The interested reader is invited to consult @lovelaceGeocomputation2025 and @nowosadSpatialDataVisualization2026, which are fantastic resources for creating many different types of maps in `R`, including animated and interactive maps.
 
 ### Combining geometries {#sec-CombiningGeoms}
 
