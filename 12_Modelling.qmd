@@ -17,17 +17,17 @@ library(tidyverse)
 
 This chapter will take you from statistical tests to statistical modelling. By the end of this chapter, you will be able to:
 
--   Use the `lm()` function to fit linear regression models with:
-    -   a single numeric predictor variable
-    -   a single (binary) categorical predictor variable.
--   Understand the relationship between:
-    -   correlation tests and linear regression models with a single numeric predictor
-    -   *t*-tests and linear regression models with a single binary categorical predictor.
--   Interpret the summary output of simple linear regression models.
--   Explain what the intercept of a simple linear regression model corresponds to.
--   Visualise the predictions of simple linear regression models.
--   Understand why "association does not imply causation".
--   Check the most important assumptions of linear regression models.
+- Use the `lm()` function to fit linear regression models with:
+  - a single numeric predictor variable
+  - a single (binary) categorical predictor variable.
+- Understand the relationship between:
+  - correlation tests and linear regression models with a single numeric predictor
+  - *t*-tests and linear regression models with a single binary categorical predictor.
+- Interpret the summary output of simple linear regression models.
+- Explain what the intercept of a simple linear regression model corresponds to.
+- Visualise the predictions of simple linear regression models.
+- Understand why 'association does not imply causation'.
+- Check the most important assumptions of linear regression models.
 
 ## Correlations as regression over a numeric variable {#sec-Correlationsregression}
 
@@ -65,10 +65,10 @@ set.seed(42)
 # Second, we simulate the number of questions that 100 learners answered correctly using the `sample()` function that generates random numbers, specifying that learners got between 1 and 10 questions right:
 N.correct <- sample(1:10, 100, replace = TRUE)
 
- # Third, we convert the number of correctly answered questions into the percentage of questions that these learners answered correctly:
+# Third, we convert the number of correctly answered questions into the percentage of questions that these learners answered correctly:
 Accuracy <- N.correct / 10 * 100
 
-# Finally, we put these two variables together in a dataframe:
+# Finally, we put these two variables together in a tabular format:
 test.results <- data.frame(N.correct, Accuracy)
 ```
 
@@ -86,7 +86,7 @@ We can now plot the two variables of our simulated dataset as a scatter plot to 
 #| fig-cap: "The correlation between learners' test results expressed as the number of correct answers and the percentage of questions they answered correctly"
 #| fig-alt: "Scatter plot of learners' test results expressed as the number of correct answers they got on the x-axis and as the percentage of correctly answered questions on the y-axis. The data points form a perfect linear relationship. A straight blue regression line runs through all the data points."
 #| fig-width: 4.5
-#| out-width: 50%
+#| out-width: 60%
 #| fig-asp: 0.9
 
 library(tidyverse)
@@ -98,8 +98,8 @@ ggplot(data = test.results,
              size = 2) +
   labs(x = "Number of correct answers",
        y = "% of questions correctly answered") +
-  scale_x_continuous(limits = c(0, 10.5), expand = c(0,0), breaks = c(0,2,4,6,8,10)) +
-  scale_y_continuous(limits = c(0, 105), expand = c(0,0), breaks = c(0, 20, 40, 60, 80, 100)) +
+  scale_x_continuous(limits = c(0, 10.5), expand = c(0, 0), breaks = c(0, 2, 4, 6, 8, 10)) +
+  scale_y_continuous(limits = c(0, 105), expand = c(0, 0), breaks = c(0, 20, 40, 60, 80, 100)) +
   theme_bw()
 ```
 
@@ -114,11 +114,11 @@ cor.test(~ N.correct + Accuracy,
          data = test.results)
 ```
 
-Now, we use the base `R` function `lm()` to fit a simple linear model to predict the percentage of questions that learners correctly answered based on the number of correct answers that they gave. Like the significance test functions that we saw in @sec-Inferential, `lm()` takes a **formula** as its first argument. We want to predict the proportion of questions that learners correctly answered as a percentage (`Accuracy`) so this variable comes *before* the tilde (`~`). In statistical modelling, the variable that we want to predict is referred to as the **outcome variable**.[^12_simplelinearregression-1] We want to use the number of correct answers that the learners gave to make our prediction, so we place the variable `N.correct` *after* the tilde. Variables used to predict the outcome are called **predictors**.[^12_simplelinearregression-2]
+Now, we use the base `R` function `lm()` to fit a simple linear model to predict the percentage of questions that learners correctly answered based on the number of correct answers that they gave. Like the significance test functions that we saw in @sec-Inferential, `lm()` takes a **formula** as its first argument. We want to predict the proportion of questions that learners correctly answered as a percentage (`Accuracy`) so this variable comes *before* the tilde (`~`). In statistical modelling, the variable that we want to predict is referred to as the **outcome variable**.[^12_modelling-1] We want to use the number of correct answers that the learners gave to make our prediction, so we place the variable `N.correct` *after* the tilde. Variables used to predict the outcome are called **predictors**.[^12_modelling-2]
 
-[^12_simplelinearregression-1]: This variable is sometimes referred to as the **dependent variable** (see @sec-IntSummary).
+[^12_modelling-1]: This variable is sometimes referred to as the **dependent variable** (see @sec-IntSummary).
 
-[^12_simplelinearregression-2]: These variables are also sometimes referred to as **independent variables** (see @sec-IntSummary).
+[^12_modelling-2]: These variables are also sometimes referred to as **independent variables** (see @sec-IntSummary).
 
 ```{r}
 test.model <- lm(formula = Accuracy ~ N.correct,
@@ -133,7 +133,7 @@ We have saved our model to our local environment as an `R` object called `test.m
 summary(test.model)
 ```
 
-In addition to this model summary, the code above outputs a warning about an "essentially perfect fit" in the Console. We will come to this warning at the end of this section, but for now let's start by looking at the **coefficients** of our model summary. Every model has an **intercept** coefficient estimate `(Intercept)`, which is the value that the model predicts for the outcome variable when the predictor variables are zero. In other words, it is where the regression line would cross the *y*-axis if the line were extended to go all the way to zero as in @fig-RTScatterPLotIntercept.
+In addition to this model summary, the code above outputs a warning about an "essentially perfect fit". We will come back to this warning at the end of this section but, for now, let's start by looking at the **coefficients** of our model summary. Every model has an **intercept coefficient estimate** `(Intercept)`, which is the value that the model predicts for the outcome variable when the predictor variables are zero. In other words, it is where the regression line would cross the *y*-axis if the line were extended to go all the way to zero as in @fig-RTScatterPLotIntercept.
 
 ```{r}
 #| code-fold: true
@@ -143,7 +143,7 @@ In addition to this model summary, the code above outputs a warning about an "es
 #| fig-alt: "This is the same plot as above. The only difference is that a dotted blue line extends the fit blue line to zero."
 #| echo: !expr "knitr::is_html_output()"
 #| fig-width: 4.5
-#| out-width: 50%
+#| out-width: 60%
 #| fig-asp: 0.9
 
 ggplot(data = test.results,
@@ -158,12 +158,12 @@ ggplot(data = test.results,
              size = 2) +
   labs(x = "Number of correct answers",
        y = "% of questions correctly answered") +
-  scale_x_continuous(limits = c(0, 10.5), expand = c(0,0), breaks = c(0,2,4,6,8,10)) +
-  scale_y_continuous(limits = c(0, 105), expand = c(0,0), breaks = c(0, 20, 40, 60, 80, 100)) +
+  scale_x_continuous(limits = c(0, 10.5), expand = c(0, 0), breaks = c(0, 2, 4, 6, 8, 10)) +
+  scale_y_continuous(limits = c(0, 105), expand = c(0, 0), breaks = c(0, 20, 40, 60, 80, 100)) +
   theme_bw()
 ```
 
-In our case, we only have one predictor, so the intercept coefficient that our model estimates (`5.151e-15`) corresponds to the predicted percentage of questions answered correctly (outcome) when the number of correct answers (predictor) is equal to zero. Instinctively, we know that this value should be zero because 0 points in a test = 0% correct in the test. And, indeed, our model predicts an intercept extremely close to zero (`5.151e-15`). Using the `format()` function, we can convert this coefficient estimate from **scientific notation** to standard notation:
+In our case, we only have one predictor, so the intercept coefficient that our model estimates (`5.151e-15`) corresponds to the predicted percentage of questions answered correctly (outcome) when the number of correct answers (predictor) is equal to zero. Instinctively, we know that this value should be zero because 0 points in a test = 0% accuracy on the test. And, indeed, our model predicts an intercept extremely close to zero (`5.151e-15`). Using the `format()` function, we can convert this intercept coefficient estimate from scientific notation to standard notation:
 
 ```{r}
 format(5.151e-15, scientific = FALSE)
@@ -178,14 +178,19 @@ format(1.000e+01, scientific = FALSE)
 This coefficient estimate means that, for every correct answer, our prediction for the percentage of questions answered correctly increases by 10%. For example, if a student answered 9 questions correctly, our model predicts that the percentage of correctly answered question is equal to the intercept coefficient of (nearly) zero plus 9 multiplied by 10, which is equal to 90%:
 
 ```{r}
--5.151e-15 + 9 * 10
+-5.151e-15 + 9 * 1.000e+01
 ```
 
-In our model summary, the coefficient estimate for `N.correct` is associated with a *p*-value of `<2e-16`. It corresponds to the *p*-value of our `cor.test()` on the same data, and is actually the smallest value that `R` will display. In other words, it is extremely small. This *p*-value indicates that we can safely reject the null hypothesis that this coefficient is zero under the assumptions of a linear regression model. In other words, we can reject the null hypothesis that the number of correct answers is *not* a useful predictor to predict the percentage of correctly answered questions under the assumption of a linear regression model (more on these assumptions in @sec-Assumptions).
+In our model summary, the coefficient estimate for `N.correct` is associated with a *p*-value of `<2e-16`. It corresponds to the *p*-value of our `cor.test()` on the same data, and is actually the smallest value that `R` can display. In other words, it is extremely small. This *p*-value indicates that we can safely reject the null hypothesis that this coefficient is zero under the assumptions of a linear regression model. In other words, we can reject the null hypothesis that the number of correct answers is *not* a useful predictor to predict the percentage of correctly answered questions under the assumption of a linear regression model (more on these assumptions in @sec-Assumptions).
 
-The penultimate line of the model summary is also important. It features two ***R*****-squared (*R*^2^) values**. Like the absolute values of correlation coefficients, these can range between 0 and 1. *R*^2^=0 means that the model accounts for 0% of the variance in the outcome variable. *R*^2^=1 means that the model accounts for 100% of the variance, i.e. that it can perfectly predict the values of the outcome variable from the predictor variable(s). As our simulated `test.results` dataset is based on a perfect correlation, our model is able to perfectly predict the outcome variable, hence both our *R*^2^ values equal `1`. In this chapter and @sec-MLR, however, we will focus on the **adjusted *R*-squared value** because it accounts for the fact that the more predictors we include in our model, the easier it is to predict the outcome variable.
+The penultimate line of the model summary is also important. It features two ***R*****-squared (*R*^2^) values**. Like the absolute values of correlation coefficients, these can range between 0 and 1.
 
-Finally, you may have also noticed that the `lm()` function returned a warning message when we fitted this toy model:
+- *R*^2^ = 0 means that the model accounts for 0% of the variance in the outcome variable, i.e. the predictor variables are not at all helpful to predict the values of the outcome variable.
+- *R*^2^ = 1 means that the model accounts for 100% of the variance, i.e. that it can perfectly predict the values of the outcome variable from the predictor variable(s).
+
+As our simulated `test.results` dataset is based on a perfect correlation, our model is able to perfectly predict the outcome variable, hence both our *R*^2^ values are equal to `1`. In this chapter and @sec-MLR, however, we will focus on the **adjusted *R*-squared value** because it accounts for the fact that the more predictors we include in our model, the easier it is to predict the outcome variable.
+
+Finally, we return to the warning message returned by the `lm()` function when we fitted this toy model:
 
 ```         
 Warning message:
@@ -193,7 +198,7 @@ In summary.lm(test.model) :
   essentially perfect fit: summary may be unreliable
 ```
 
-With this message, the authors of the `lm()` function are warning us that our model can make almost perfect predictions. Given that in real-life research this is extremely unlikely, an "essentially perfect" prediction is usually a sign that we may have made an error of some kind. Here, however, we can safely ignore this warning because we know that the number of correct answers can, indeed, be converted to percentages of correctly answered questions with perfect accuracy (hence our *R*^2^ of `1` or 100%).
+With this message, the authors of the `lm()` function are warning us that our model is making almost perfect predictions. Given that, in real-life scenarios, this is extremely unlikely, an "essentially perfect" prediction is usually a sign that we may have made an error of some kind. Here, however, we can safely ignore this warning because we know that the number of correct answers can, indeed, be converted to percentages of correctly answered questions with perfect accuracy (hence our *R*^2^ of `1` or 100%!).
 
 ### A real-life prediction
 
@@ -210,7 +215,7 @@ library(here)
 Dabrowska.data <- readRDS(file = here("data", "processed", "combined_L1_L2_data.rds"))
 ```
 
-Before you get started, check that you have correctly imported the data by examining the output of `View(Dabrowska.data)` and `str(Dabrowska.data)`. In addition, run the following lines of code to load the {tidyverse} packages and create "clean" versions of the L1 and L2 datasets as separate `R` objects:
+Before you get started, check that you have correctly imported the data by examining the output of `View(Dabrowska.data)` and `str(Dabrowska.data)`. In addition, run the following lines of code to load the {tidyverse} packages and create "clean" versions of the L1 and L2 datasets:
 
 ```{r}
 library(tidyverse)
@@ -225,7 +230,7 @@ L2.data <- Dabrowska.data |>
 Once you are satisfied that the data are correctly loaded, you are ready to start modelling! `r emoji("rocket")`
 :::
 
-Recall that, in @sec-Correlations, we saw that there is a **positive correlation** between the total number of years that English L1 speakers spent in formal education (`EduTotal`) and their English grammar comprehension test scores (`Grammar`). @fig-EducationYearsVocab suggests that this positive correlation also holds for the association between the number of years participants spent in formal education and their receptive vocabulary test scores (`Vocab`).
+In @sec-Correlations, we saw that there is a **positive correlation** between the total number of years that English L1 speakers spent in formal education (`EduTotal`) and their English grammar comprehension test scores (`Grammar`). @fig-EducationYearsVocab suggests that this positive correlation also holds for the association between the number of years participants spent in formal education and their receptive vocabulary test scores (`Vocab`).
 
 ```{r}
 #| code-fold: true
@@ -233,9 +238,9 @@ Recall that, in @sec-Correlations, we saw that there is a **positive correlation
 #| echo: !expr "knitr::is_html_output()"
 #| label: "fig-EducationYearsVocab"
 #| fig-cap: "Relationship between years spent in formal education and vocabulary test scores among L1 speakers"
-#| fig-alt: "Scatter plot of vocabulary scores on the y-axis, and  years of education on the x-axis. A blue regression line slopes upward, indicating a positive relationship: higher formal education tends to be associated with higher vocabulary scores."
+#| fig-alt: "Scatter plot of vocabulary scores on the y-axis, and  years of education on the x-axis. A blue regression line slopes upward, indicating a positive relationship: more years in formal education tend to be associated with higher vocabulary scores."
 #| fig-width: 4.5
-#| out-width: 50%
+#| out-width: 60%
 #| fig-asp: 0.9
 
 L1.data |> 
@@ -254,9 +259,9 @@ cor.test(formula = ~ Vocab + EduTotal,
          data = L1.data)
 ```
 
-The straight (i.e. linear) regression line going through our scatter plot in @fig-EducationYearsVocab, does not go through all the data points like it did in @fig-RTScatterPLot. This is because, if we know how long an L1 participant was in formal education, we cannot *perfectly* predict how well they will perform on the `Vocab` test, even though we do know that, on average, having spent longer in formal education correlates with `Vocab` test scores. Indeed, @fig-EducationYearsVocab clearly shows that some of the individuals who attended formal education for the least amount of time scored very low, whilst others scored very high in the `Vocab` test. This is not surprising, as we can expect that many other factors will play a role in L1 vocabulary knowledge.
+The straight (i.e. linear) regression line going through our scatter plot in @fig-EducationYearsVocab, does not go through all the data points like it did in @fig-RTScatterPLot. This is because, if we know how long an L1 participant was in formal education, we cannot *perfectly* predict how well they will perform on the `Vocab` test, even though we do know that, on average, having spent longer in formal education correlates with `Vocab` test scores. Indeed, @fig-EducationYearsVocab clearly shows that some of the individuals who attended formal education for the least amount of time scored very low, whilst others scored very high in the `Vocab` test. This is not surprising, as we can expect that many other factors will play a role in L1 vocabulary knowledge and not all vocabulary is learnt in formal education contexts.
 
-We now fit a simple linear regression model using the `lm()` function (which stands for **linear model**) to the L1 data from @DabrowskaExperienceAptitudeIndividual2019 with the aim of predicting `Vocab` scores (our outcome variable) based on the number of years that they spent in formal education (`EduTotal`; our predictor variable):
+We now fit a simple linear regression model using the `lm()` function (which stands for **linear model**) to the L1 data from @DabrowskaExperienceAptitudeIndividual2019 with the aim of predicting `Vocab` scores (our outcome variable) based on the number of years that they spent in formal education (our predictor variable):
 
 ```{r}
 model1 <- lm(formula = Vocab ~ EduTotal,
@@ -271,34 +276,34 @@ summary(model1)
 
 This time, we'll begin our interpretation of the model summary from the top:
 
--   The first line is a reminder of the model **formula** and of the **data** on which we fitted our linear model (`lm`).
+- The first line is a reminder of the model **formula** and of the **data** on which we fitted our linear model.
 
--   The second paragraph provides information about the **residuals**. They represent the difference between participants' actual `Vocab` scores (the observed values) and the model's predictions (the predicted values). Hence, they correspond to the variance in `Vocab` scores that is left unaccounted for by the model. The closer to zero the residuals are, the better the model fits the data. However, no real-life model is perfect so we expect there to be some "left-over" variance.
+- The second paragraph provides information about the **residuals**. They represent the difference between participants' actual `Vocab` scores (the observed values) and the model's predictions (the predicted values). Hence, they correspond to the variance in `Vocab` scores that is left unaccounted for by the model. The closer to zero the residuals are, the better the model fits the data. However, no real-life model is perfect so there will always be some "leftover" variance.
 
-    -   `Min`, `1Q`, `Median`, `3Q`, and `Max` are the minimum, first quartile, median, third quartile, and maximum residuals, respectively. These are the descriptive statistics of a distribution that are typically displayed in a boxplot (see @sec-IQR). These statistics give us a sense of the spread of the residuals. Whilst these values can be informative, it's best to plot residuals to get a sense of their distribution (see @sec-Residuals). Ideally, the residuals should be normally distributed and centred around zero (see @sec-AssumptionsLR).
+  - `Min`, `1Q`, `Median`, `3Q`, and `Max` are the minimum, first quartile, median, third quartile, and maximum residuals, respectively. These are the descriptive statistics of a distribution that are typically displayed in a boxplot (see @sec-IQR). These statistics give us a sense of the spread of the residuals. Whilst these values can be informative, it's best to plot residuals to get a sense of their distribution (see @sec-Residuals). Ideally, the residuals should be normally distributed and centred around zero (see @sec-AssumptionsLR).
 
--   The **intercept coefficient estimate** of `20.516` is the model's prediction for the vocabulary score of participants who spent zero years (!) in formal education (`EduTotal` = 0). It is the model's baseline or reference `Vocab` score.
+- The **intercept coefficient estimate** of `20.516` is the model's prediction for the vocabulary score of participants who spent zero years in formal education (`EduTotal` = 0). It is the model's baseline or reference `Vocab` score.
 
--   The **EduTotal coefficient estimate** of `3.546` means that, for each year of formal education, our model predicts that `Vocab` test scores will increase by an additional 3.546 units on top of the baseline score of `20.516`, provided that all other variables remain the same. Hence, if an individual spent 14 years in formal education, their predicted `Vocab` score is:
+- The **EduTotal coefficient estimate** of `3.546` means that, for each year of formal education, our model predicts that `Vocab` test scores will increase by an additional 3.546 units on top of the baseline score of `20.516`, provided that all other variables remain the same. Hence, if an individual spent 14 years in formal education, the model predicts that their `Vocab` score will be:
 
-    ```{r}
-    20.5159 + 14*3.5460
-    ```
+  ```{r}
+  20.5159 + 14*3.5460
+  ```
 
--   The ***p-*****value** associated with the `EduTotal` coefficient is very small (`2.72e-05`).
+- The ***p-*****value** associated with the `EduTotal` coefficient is very small (`2.72e-05`).
 
-    ```{r}
-    format(2.72e-05, scientific = FALSE)
-    ```
+  ```{r}
+  format(2.72e-05, scientific = FALSE)
+  ```
 
-    It suggests that the predictor `EduTotal` makes a statistically significant contribution to our model predicting `Vocab` scores among L1 speakers (for more on *p*-values, see @sec-PValues).
+  This very low *p*-value suggests that the predictor `EduTotal` makes a statistically significant contribution to our model predicting `Vocab` scores among L1 speakers (for more on *p*-values, see @sec-PValues).
 
--   The **adjusted *R*-squared (*R*^2^)** is `0.1729`, which means that our model accounts for ca. 17% of the total variance in `Vocab` scores. That may not seem a lot, but it is worth recalling that our model only includes one predictor variable. We can reasonably assume that other predictors will help us to predict L1 speakers' vocabulary knowledge more accurately (e.g. their age, how much they read, perhaps their profession, etc.).
+- The **adjusted *R*-squared (*R*^2^)** is `0.1729`, which means that our model accounts for ca. 17% of the total variance in `Vocab` scores. That may not seem a lot, but it is worth recalling that our model only includes one predictor variable. We can reasonably assume that other predictors will help us to predict L1 speakers' vocabulary knowledge more accurately (e.g. their age, how much they read, perhaps their profession, etc.).
 
 ::: callout-note
 # It's all linear regression! `r emoji("exploding_head")`
 
-Did you notice that the ***t*****-value** and the ***p*****-value** associated with the `EduTotal` coefficient in our linear regression model are exactly the same as those that we obtained earlier using the `cor.test()` function? This is because linear regression with a single numeric predictor is -- under the hood -- exactly the same as a Pearson's correlation test!
+Did you notice that the ***t*****-value** and the ***p*****-value** associated with the `EduTotal` coefficient in our linear regression model are exactly the same as those that we obtained earlier using the `cor.test()` function? This is because linear regression with a single numeric predictor is -- under the hood -- exactly the same as a Pearson's correlation test!
 
 Moreover, we said that ***R***^**2**^ stands for the **squared coefficient of correlation**, which is why, if we take the square root of our unadjusted *R*^2^ coefficient, we get 0.43, which corresponds to the **correlation coefficient** (Pearson's *r*) that we obtained from the `cor.test()` function:
 
@@ -321,7 +326,7 @@ Having gone through @sec-Inferential, you may now ask yourself: why do we need c
 #| fig-cap: "Relationship between years spent in formal education and predicted vocabulary test scores"
 #| fig-alt: "A scatter plot showing the relationship between years in formal education and predicted vocabulary scores. The points form an upward linear trend and their size corresponds to the number of people in the L1 dataset who reported being in formal education for that many years. Most people reported spending between 11 and 14 years in formal education but some as many 21 years."
 #| fig-width: 4.5
-#| out-width: 50%
+#| out-width: 60%
 #| fig-asp: 0.9
 
 ggplot(L1.data, 
@@ -344,13 +349,13 @@ This is all very well, but as we learnt from @fig-EducationYearsVocab, in realit
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Show code to generate annotated plot."
+#| code-summary: "Show code to generate the annotated plot."
 #| echo: !expr "knitr::is_html_output()"
 #| label: "fig-ActualPredictedVocab"
 #| fig-cap: "Relationship between actual and predicted `Vocab` test scores"
 #| fig-alt: "Scatter plot with predicted Vocab scores on the x-axis and actual Vocab scores on the y-axis with a dotted blue diagonal line showing where the dots would lie if the model's prediction were perfect. The model's predictions are far from perfect; few dots fall on the dotted line. For two dots, there is a blue line drawn from the dot to the dotted line; the length of these lines represent the model's residuals for these two participants."
 #| fig-width: 4.5
-#| out-width: 50%
+#| out-width: 60%
 #| fig-asp: 0.9
 
 
@@ -395,22 +400,22 @@ ggplot(L1.data,
   theme_bw()
 ```
 
-In @fig-ActualPredictedVocab, the dotted blue line represents where the points would lie, if `model1` perfectly predicted `Vocab` scores based only on the number of years that participants spent in formal education. The dots that fall on or very close to the dotted line stand for L1 participants for whom our model accurately predicts their `Vocab` score based solely on the number of years they spent in formal education. The further the dots are from the dotted line, the worse the predictions for these speakers. The distances between each point and the dotted line in @fig-ActualPredictedVocab correspond to the model's residuals. **Residuals** are therefore the "left-over" variability in the data that our model cannot account for.
+In @fig-ActualPredictedVocab, the dotted blue line represents where the points would lie, if `model1` perfectly predicted `Vocab` scores based only on the number of years that participants spent in formal education. The dots that fall on or very close to the dotted line stand for L1 participants for whom our model accurately predicts their `Vocab` score based solely on the number of years they spent in formal education. The further the dots are from the dotted line, the worse the predictions for these speakers. The distances between each point and the dotted line in @fig-ActualPredictedVocab correspond to the model's residuals. **Residuals** are therefore the "leftover" variability in the data that our model does not account for.
 
-Residuals can be positive or negative, depending on whether the dots on the predicted vs. actual values plot are above or below the dotted line of perfect fit. However, what matters more are their absolute values. The larger the residuals, the worse the model fit. Returning to the question, "How good is our model fit?", we can conclude from @fig-ActualPredictedVocab that it's not great. But we already knew that from the model's fairly low *R*^2^ value and, crucially, we also know that many other factors are likely to account for some of the remaining variation in vocabulary scores.
+Residuals can be positive or negative, depending on whether the dots on the predicted vs. actual values plot (e.g. @fig-ActualPredictedVocab) are above or below the dotted line of perfect fit. However, what matters more are their absolute values. The larger the residuals, the worse the model fit. Returning to the question, "How good is our model fit?", we can conclude from @fig-ActualPredictedVocab that it's not great. But we already knew that from the model's fairly low *R*^2^ value and, crucially, we also know that many other factors could help us to account for some of the remaining variation in vocabulary scores.
 
 ::: {#nte-Causation .callout-important title="Association does not imply causation!"}
 You may be familiar with the Latin phrase:
 
--   ***Cum hoc ergo propter hoc*** ('with this, therefore because of this')
+- ***Cum hoc ergo propter hoc*** ('with this, therefore because of this')
 
 or its English equivalent:
 
--   ***Correlation does not imply causation***.
+- **Correlation does not imply causation**.
 
-They both refer to the human tendency to assume that, if two things are regularly associated, one probably *causes* the other. However, this is a logical fallacy. For example, even if we had observed a very high correlation between the number of years participants were in formal education and their receptive vocabulary test scores (and had therefore reported an excellent model fit with very small residuals), this would by no means imply that, on average, spending more time in formal education *leads to* greater vocabulary knowledge. A correlation merely describes an association; it tells us nothing about any causal relationship.
+They both refer to the human tendency to assume that, if two things are regularly associated, one probably *causes* the other. However, this is a logical fallacy. For example, even if we had observed a very high correlation between the number of years participants were in formal education and their receptive vocabulary test scores (and had therefore reported an excellent model fit with very small residuals), this would not imply that, on average, spending more time in formal education *leads to* greater vocabulary knowledge. A correlation merely describes an association and this association need not be causal.
 
-It is often tempting to interpret the results of statistical tests and models causally, but this is the result of a well-known human cognitive bias [see e.g. @matuteIllusionsCausalityHow2015; @kaufmanIllusionCausalityCognitive2018]. In the language sciences and across the social sciences more generally, there are usually far too many potential factors at play to warrant any causal interpretation. What we are modelling throughout this chapter and @sec-MLR are **statistical associations**. We cannot draw any conclusions about what *caused* what from these data and models. In the context of statistical modelling, we can extend the famous saying to **association does not imply causation**.
+It is often tempting to interpret the results of statistical tests and models causally. This is the result of a well-known human cognitive bias [see e.g. @matuteIllusionsCausalityHow2015; @kaufmanIllusionCausalityCognitive2018]. In the language sciences and across the social sciences more generally, there are usually far too many potential factors at play to warrant any causal interpretation. What we are modelling throughout this chapter and @sec-MLR are **statistical associations**. We cannot draw any conclusions about what *caused* what from these data and models. In the context of statistical modelling, we can therefore extend the famous saying to: **association does not imply causation**.
 
 There are three main reasons for this:
 
@@ -418,16 +423,16 @@ There are three main reasons for this:
 
 2.  Even if there is a causal effect, it may not be in the **direction** that we assume. For example, the vocabulary knowledge of adult learners of a foreign language is probably a fairly good predictor of how many foreign language classes these adult learners have attended. However, this does not mean that vocabulary knowledge *causes* adults to attend classes. If anything, it is more likely to be the other way around. Whilst it seems rather obvious in this example, in linguistics and education, complex interdependencies between predictors are very common. Consider reading ability: the more a child reads, the better they become at reading. Therefore, we might conclude that spending more time reading leads to better reading skills. However, for some children, poor reading skills may contribute to a lack of motivation and interest in reading in the first place. Clearly, determining causal relationships is tricky!
 
-3.  Finally, it is important to consider the possibility that even a statistically significant association could be entirely **spurious**. This happens more often than you might think, and it is more likely to happen with smaller datasets. Moreover, the more we test associations, the more likely we are to find statistically significant ones (see @sec-pHacking on the risks of multiple testing and Type 1 errors). When associations are very strong, we may be tempted to think that they are real, but this may not be the case. To raise awareness of this risk, [Tyler Vigen](https://tylervigen.com/about-spurious-correlations) conducted correlation tests on millions of combinations of randomly selected variables and created a website featuring thousands of examples of very large and highly significant correlations that are all entirely spurious (e.g. @fig-SpuriousCorrelation).
+3.  Finally, it is important to consider the possibility that even a statistically significant association could be entirely **spurious**. This happens more often than you might think, and it is more likely to happen with smaller datasets. Moreover, the more we test associations, the more likely we are to find statistically significant ones (see @sec-pHacking on the risks of multiple testing and Type 1 errors). When associations are very strong, we may be tempted to think that they are real, but this may not be the case. To raise awareness of this risk, [Tyler Vigen](https://tylervigen.com/about-spurious-correlations) conducted correlation tests on millions of combinations of randomly selected variables and created a website featuring thousands of examples of very large and highly significant correlations that are all entirely spurious. One of these is reproduced in @fig-SpuriousCorrelation. How likely is this association?
 
-    ![Find this spurious correlation and thousands more by Tyler Vigen at <https://tylervigen.com/spurious-correlations> (CC BY 4.0)](images/Vigen_unhealthy-air-quality-in-johnstown-pennsylvania_correlates-with_masters-degrees-awarded-in-education.png){#fig-SpuriousCorrelation fig-alt="A linear line chart with years as the x-axis and two variables on the y-axis. The first variable is air pollution in Johnstown, Pennsylvania and the second variable is Master's degrees awarded in education. The chart goes from 2012 to 2021, and the trends in the two variables match closely over that time. The following statistics are displayed on the graph: Pearson's r = 0.989, R-squared = 0.979, p < 0.01. The source is also labelled: tylervigen.com/spurious/correlation/3139" width="70%"}
+    ![Find this spurious correlation and thousands more by Tyler Vigen at <https://tylervigen.com/spurious-correlations> (CC BY 4.0)](images/Vigen_unhealthy-air-quality-in-johnstown-pennsylvania_correlates-with_masters-degrees-awarded-in-education.png){#fig-SpuriousCorrelation fig-alt="A linear line chart with years as the x-axis and two variables on the y-axis. The first variable is air pollution in Johnstown, Pennsylvania and the second variable is Master's degrees awarded in education. The chart goes from 2012 to 2021, and the trends in the two variables match closely over that time. The following statistics are displayed on the graph: Pearson's r = 0.989, R-squared = 0.979, p < 0.01. The source is also labelled: tylervigen.com/spurious/correlation/3139" width="80%"}
 :::
 
 :::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-In this task, you will seek answers to the research question: To what extent can the results of the non-verbal IQ `Blocks` test be used to predict `Vocab` scores among L1 and L2 speakers of English based on the data from @DabrowskaExperienceAptitudeIndividual2019? As we will be answering this question within a linear regression framework, what we are really asking is: To what extent are these variables linearly associated with each other?
+In this task, you will seek answers to the research question: To what extent can the results of the non-verbal IQ `Blocks` test be used to predict `Vocab` scores among L1 and L2 speakers of English? Our analysis will be based on the data from @DabrowskaExperienceAptitudeIndividual2019. As we will be answering this question within a linear regression framework, what we are really asking is: To what extent are these variables linearly associated with each other?
 
 [**Q12.1**]{style="color:green;"} Fit a linear model to predict `Vocab` scores among L1 participants based on their `Blocks` test scores. What is the adjusted *R*^2^ value of this model?
 
@@ -458,7 +463,7 @@ check_question("0.07",
 taskmodel1 <- lm(formula = Vocab ~ Blocks,
                  data = L1.data)
 
-summary(taskmodel1) # Adjusted *R*-squared:  0.07232 
+summary(taskmodel1) # Adjusted R-squared:  0.07232 
 ```
 
 [**Q12.2**]{style="color:green;"} According to your model, which of these values is the predicted `Vocab` score of an L1 speaker with a `Blocks` score of 20?
@@ -491,10 +496,10 @@ check_hint("If you choose to do solve this question numerically, you will need t
 #| code-summary: "Show code to answer Q12.2"
 #| eval: false
 
-# a) Taking a numerical approach, you can add up the model coefficients printed in the model summary. As always, start with the intercept coefficient and add to it the coefficient corresponding to an increase in one point on the Blocks test multiplied by the number of points that this participant achieved (20):
+# a) Taking a numerical approach, you can add up the model coefficients printed in the model summary. Start with the intercept coefficient and add to it the coefficient corresponding to an increase in one point on the Blocks test multiplied by the number of points that this participant achieved (20):
 summary(taskmodel1)
 
-54.5614 + 1.0527*20
+54.5614 + 1.0527 * 20
 
 # Alternatively, we can take the coefficient estimate values directly from the model object to get an even more precise prediction like this:
 taskmodel1$coefficients[1] + (taskmodel1$coefficients[2] * 20)
@@ -554,19 +559,19 @@ check_hint("Only one of these statements is true.",
 taskmodel2 <- lm(formula = Vocab ~ Blocks,
                  data = L2.data)
 
-summary(taskmodel2) # Adjusted *R*-squared:  0.007177 
-summary(taskmodel1) # Adjusted *R*-squared:  0.07232 
+summary(taskmodel2) # Adjusted R-squared:  0.007177 
+summary(taskmodel1) # Adjusted R-squared:  0.07232 
 ```
 
-[**Q12.4**]{style="color:green;"} In your L2 model, the *p*-value for the `Blocks` predictor should be `0.228620`. True or false: This *p*-value means that there is a 23% chance of obtaining a Blocks coefficient estimate of 0.72 or higher in a random sample of 67 L2 speakers of English when there is actually no association between the results of the `Blocks` test and those of the `Vocab` test?
+[**Q12.4**]{style="color:green;"} In your L2 model, the *p*-value for the `Blocks` predictor should be `0.228620`. True or false: This *p*-value means that there is a 23% chance of obtaining a Blocks coefficient estimate of 0.72 or higher in a random sample of 67 L2 speakers of English when there is actually no association between the results of the Blocks test and those of the vocabulary test?
 
 ```{r}
 #| echo: false
 #| label: "Q12.4"
 
-check_question("True.",
-               options = c("True.",
-                           "False."),
+check_question("True",
+               options = c("True",
+                           "False"),
                type = "radio",
                q_id = "Q12.4", 
                button_label = "Check answer",
@@ -600,7 +605,12 @@ group_means <- Dabrowska.data |>
 ggplot(data = Dabrowska.data, 
        aes(x = Group, 
            y = Vocab)) +
-  geom_boxplot(width = 0.5) +
+  geom_boxplot(width = 0.5,
+               outliers = FALSE) +
+  geom_jitter(alpha = 0.5,
+              colour = "grey",
+              size = 1.5,
+              width = 0.15) +
   stat_summary(
     fun = mean,                     # what to plot
     geom = "point",                 # as a point
@@ -649,26 +659,24 @@ summary(model2)
 
 Let's break down the model summary:
 
--   The **intercept coefficient estimate** is the predicted `Vocab` score when `Group` is at its reference level. By default, in `R`, the reference level of a categorical variable is the level that comes first alphabetically. Here, it's therefore 'L1' for the English native speaker group. The model's estimated `Vocab` test score for an L1 participant is therefore `69.136` points. If you check @fig-IQL1L2, you will see that this value corresponds to the mean L1 `Vocab` score in our data.
+- The **intercept coefficient estimate** is the predicted `Vocab` score when `Group` is at its reference level. By default, in `R`, the reference level of a categorical variable is the level that comes first alphabetically. Here, it's therefore 'L1' for the English native speaker group. This means that the model's estimated `Vocab` test score for an L1 participant is `69.136` points. If you check @fig-IQL1L2, you will see that this value corresponds to the mean L1 `Vocab` score in our data.
 
--   The **`GroupL2` coefficient estimate** is the estimated change in `Vocab` score for an L2 speaker as compared to the reference level of an L1 speaker. The estimate is `-16.333`, which means that L2 speakers are predicted to score 16.333 points *lower* than L1 speakers on this test. If you subtract this `GroupL2` coefficient estimate from the `Intercept`, you will find that it corresponds to the mean L2 `Vocab` score in our data:
+- The **`GroupL2` coefficient estimate** is the estimated change in `Vocab` score for an L2 speaker as compared to the reference level of an L1 speaker. The estimate is `-16.333`, which means that L2 speakers are predicted to score 16.333 points *lower* than L1 speakers on this test. If you subtract this `GroupL2` coefficient estimate from the `Intercept`, you will find that it corresponds to the mean L2 `Vocab` score in our data:
 
-    ```{r}
-    69.136 - 16.333
-    ```
+  ```{r}
+  69.136 - 16.333
+  ```
 
--   The ***p*****-value** associated with the coefficient `GroupL2` is extremely small (`4.64e-06`). It informs us that, in this model, `Group` is a statistically significant predictor of receptive English vocabulary knowledge.
+- The ***p*****-value** associated with the coefficient `GroupL2` is extremely small (`4.64e-06`). It informs us that, in this model, `Group` is a statistically significant predictor of receptive English vocabulary knowledge. In other words, if there were no association between native language status and English vocabulary knowledge, we would be highly unlikely to observe such a large difference or an even larger one.
 
--   The **adjusted *R*-squared** value indicates the proportion of variation in `Vocab` scores that the model can account for when we know a participant's native-speaker status: 12.13% (`0.1213`). This value might not seem particularly impressive. However, this is not surprising given that our model attempts to predict vocabulary scores based solely on whether someone is an L1 or L2 speaker of English. With only this information, the model can only predict that all L1 speakers will achieve the mean L1 score and all L2 speakers the mean L2 score of the sample data.
+- The **adjusted *R*-squared** value indicates the proportion of variation in `Vocab` scores that the model can account for when we know a participant's native-speaker status. It is equal to 12.13% (`0.1213`). This value might not seem particularly impressive. However, you have to remember that this model attempts to predict vocabulary scores based solely on whether someone is an L1 or L2 speaker of English. With only this information, the model can only predict that all L1 speakers will achieve the mean L1 score and all L2 speakers the mean L2 score of the sample data.
 
 ::: {.callout-note collapse="false"}
 # It's (still) all linear regression! `r emoji("exploding_head")`
 
-Here, too, it is worth noticing that fitting a simple linear regression model with a single binary predictor is under the hood exactly the same thing as conducting an **independent two-sample *t*-test**. Compare the *t*-statistic of the *t*-test that we computed earlier with that of the *t*-statistic of the `GroupL2` coefficient reported in the summary of our second model. If we ignore the signs of the *t*-values, we can see that they are almost identical!
+Here, too, it is worth noticing that fitting a simple linear regression model with a single binary predictor is -- under the hood -- exactly the same thing as conducting an **independent two-sample *t*-test**. Compare the *t*-statistic of the *t*-test that we computed earlier with that of the *t*-statistic of the `GroupL2` coefficient reported in the summary of our second model. If we ignore the signs of the *t*-values, we can see that they are almost identical!
 
-Also, notice how the *p*-value computed by the `t.test()` function and that reported for our `GroupL2` coefficient are almost identical. They both correspond to values that are extremely close to zero.
-
-The very small differences between these values are due to the default correction that the `t.test()` function in `R` makes for unequal group variances (see @sec-Variability). If we switch off this correction, both the *t*-statistic and the *p*-value are exactly the same as those reported in the summary of our second linear model above:
+Also, notice how the *p*-value computed by the `t.test()` function and that reported for our `GroupL2` coefficient are almost identical. They both correspond to values that are extremely close to zero. The very small differences between these values are due to the default correction that the `t.test()` function in `R` makes for unequal group variances (see @sec-Variability). If we switch off this correction, both the *t*-statistic and the *p*-value are exactly the same as those reported in the summary of our second linear model above:
 
 ```{r}
 t.test(Vocab ~ Group, 
@@ -681,14 +689,14 @@ t.test(Vocab ~ Group,
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
 
-[**Q12.5**]{style="color:green;"} Draw a boxplot showing the distribution of `Vocab` scores among male and female participants in `Dabrowska.data`. Based on your boxplot, do you expect `Gender` to be a statistically significant predictor of `Vocab` scores?
+[**Q12.5**]{style="color:green;"} Generate a boxplot showing the distribution of `Vocab` scores among male and female participants in `Dabrowska.data`. Based on your boxplot, do you expect `Gender` to be a statistically significant predictor of `Vocab` scores?
 
 ```{r}
 #| echo: false
 #| label: "Q12.5"
 
-check_question("No, because there is a lot of overlap between the two distributions and the female and male median Vocab scores are very close to each other.",
-               options = c("No, because there is a lot of overlap between the two distributions and the female and male median Vocab scores are very close to each other.",
+check_question("No, because there is a lot of overlap between the two distributions and the median Vocab scores of male and female speakers are very close to each other.",
+               options = c("No, because there is a lot of overlap between the two distributions and the median Vocab scores of male and female speakers are very close to each other.",
                            "No, because the female and male mean Vocab scores are very close to each other.",
                            "Yes, because the mean Vocab score of male participants is higher than that of female participants.",
                            "Yes, because there are a lot of very low Vocab scores among female participants.",
@@ -744,7 +752,7 @@ check_hint("You will need to fit a linear model with `Vocab` as the outcome vari
 taskmodel3 <- lm(formula = Vocab ~ Gender,
                  data = Dabrowska.data)
 
-summary(taskmodel3) # p-value associated with coefficient estimate for GenderM = 0.957
+summary(taskmodel3) # The p-value associated with coefficient estimate for GenderM = 0.957
 ```
 
 [**Q12.7**]{style="color:green;"} The adjusted *R*^2^ coefficient of the model is `-0.006433`. True or false: This means that male participants, on average, score 0.006433 fewer points than female participants on the `Vocab` test?
@@ -753,9 +761,9 @@ summary(taskmodel3) # p-value associated with coefficient estimate for GenderM =
 #| echo: false
 #| label: "Q12.7"
 
-check_question("False.",
-               options = c("True.",
-                           "False."),
+check_question("False",
+               options = c("True",
+                           "False"),
                type = "radio",
                q_id = "Q12.7", 
                button_label = "Check answer",
@@ -766,7 +774,7 @@ check_question("False.",
 :::
 ::::
 
-## Regressing over a categorical predictor with more than two levels {#sec-Categoricalpredictor}
+## Regression over a categorical predictor with more than two levels {#sec-Categoricalpredictor}
 
 The beauty of the statistical modelling approach -- as opposed to the testing approach -- is that we can include all kinds of predictors in our models using a single function, `lm()`, and `R`'s formula syntax. So far, we have seen that predictors can be numeric variables (e.g. `EduTotal`) and categorical binary variables (e.g. `Group`). In this section, we see how a categorical variable with more than two levels can be entered in a linear regression model.
 
@@ -786,7 +794,7 @@ According to the descriptive statistics visualised in @fig-VocabByOccupation, it
 #| label: "fig-VocabByOccupation"
 #| fig-cap: "Boxplots comparing the distribution of vocabulary test scores across the four occupational groups with mean values highlighted as diamonds"
 #| fig-alt: "Boxplot showing predicted vocabulary scores across four occupational groups (C, I, M, and PS). Individual data points are overlaid as dots on each boxplot. All groups show substantial variability and some extreme outliers at the lower end of the distribution."
-#| out-width: 80%
+#| out-width: 85%
 
 OccupGroup_means <- Dabrowska.data |> 
   group_by(OccupGroup) |> 
@@ -797,12 +805,15 @@ Dabrowska.data |>
            aes(y = Vocab, 
                x = OccupGroup,
                colour = OccupGroup)) +
-  geom_boxplot() +
+  geom_boxplot(outliers = FALSE) +
+  geom_jitter(alpha = 0.2,
+              size = 1.5,
+              width = 0.15) +  
   stat_summary(
     fun = mean,                     # plotting the means
     geom = "point",                 # as a point
     shape = 18,                     # in a diamond shape
-    size = 3) +
+    size = 3.5) +
   geom_text(data = OccupGroup_means,
     aes(x = as.numeric(OccupGroup), 
         y = mean_vocab,
@@ -822,23 +833,23 @@ model3 <- lm(formula = Vocab ~ OccupGroup,
 summary(model3)
 ```
 
--   The estimate of the **intercept** corresponds to the reference level of the `OccupGroup` variable. Remember that the **reference level** is always the first level. We can check the order of the levels in any factor variable using the `levels()` function:
+- The estimate of the **intercept** corresponds to the reference level of the `OccupGroup` variable. Remember that the **reference level** is always the first level. We can check the order of the levels in any factor variable using the `levels()` function:
 
-    ```{r}
-    levels(Dabrowska.data$OccupGroup)
-    ```
+  ```{r}
+  levels(Dabrowska.data$OccupGroup)
+  ```
 
-    By default, the levels are ordered alphabetically. In the `OccupGroup` variable, the first level is "C", which corresponds to a clerical position. This means that our third model predicts that English speakers in a clerical position will score `63.333` points on the `Vocab` test. Those that belong to the "inactive" group ("I") will score `12.393` more points than those, i.e.:
+  By default, the levels are ordered alphabetically. In the `OccupGroup` variable, the first level is "C", which corresponds to a clerical position. This means that this third model predicts that English speakers in a clerical position will score `63.333` points on the `Vocab` test. Those that belong to the "inactive" group ("I") will score `12.393` more points than that, i.e.:
 
-    ```{r}
-    63.333 + 12.393
-    ```
+  ```{r}
+  63.333 + 12.393
+  ```
 
-    Participants who have manual jobs ("M") are predicted to score `-9.133` points fewer than those in clerical positions, and so-called "professionals" ("PS") will do slightly worse than than those in clerical professors ("C" `-2.261` points). Compare these predicted values to those observed in the data shown in @fig-VocabByOccupation.
+  Participants who have manual jobs ("M") are predicted to score `-9.133` points fewer than those in clerical positions, and so-called "professionals" ("PS") are predicted to perform slightly worse than than those in clerical professors ("C" `-2.261` points). Compare these predicted values to those observed in the data shown in @fig-VocabByOccupation.
 
--   The **adjusted *R*^2^ value** for our model is relatively low (`0.07509`). This means that our model accounts for about 7.5% of the total variance in `Vocab` scores across the dataset. Given that the *R*^2^ of `model1` was `0.1213`, this indicates that `OccupGroup` is a considerably less useful predictor variable to help us predict participants' `Vocab` scores than whether or not they are an L1 speaker (`Group`).
+- The **adjusted *R*^2^ value** for our model is relatively low (`0.07509`). This means that our model only accounts for about 7.5% of the total variance in `Vocab` scores across the dataset. Given that the *R*^2^ of `model1` was `0.1213`, this indicates that `OccupGroup` is a considerably less useful predictor variable to help us predict participants' `Vocab` scores than whether or not they are an L1 speaker (`Group`).
 
--   What's more, the model summary reveals that only one of the three coefficient estimates is statistically significantly different from 0 at the $\alpha$-level of 0.05: `OccupGroupI` with a ***p*****-value** of `0.0335`. This means that we can reject the null hypothesis that there is no difference in `Vocab` scores between speakers of the occupational group "C" (the reference level) and those of the occupational group "I". For the other two occupational groups, we do not have enough evidence to reject the null hypothesis of no difference compared to the reference level "C".
+- What's more, the model summary reveals that only one of the three coefficient estimates is statistically significantly different from 0 at the $\alpha$-level of 0.05: `OccupGroupI` with a ***p*****-value** of `0.0335`. This means that we can reject the null hypothesis that there is no difference in `Vocab` scores between speakers of the occupational group "C" (the reference level) and those of the occupational group "I". For the other two occupational groups, we do not have enough evidence to reject the null hypothesis of no difference compared to the reference level "C".
 
 We can display the predicted `Vocab` scores for each occupational group, together with a 95% confidence interval around these predicted values using the `emmeans()` function from the [{emmeans}](https://rvlenth.github.io/emmeans/index.html) package [@lenthEmmeansEstimatedMarginal2025a]:
 
@@ -849,21 +860,13 @@ library(emmeans)
 emmeans(model3, ~ OccupGroup)
 ```
 
-```{r}
-#| eval: false
-#| include: false
-library(marginaleffects)
-
-estimate_means(model3, "OccupGroup") 
-```
-
-These estimated means are informative, but model estimates are best visualised — ideally together with a visual depiction of the model accuracy. The [{visreg}](https://pbreheny.github.io/visreg/index.html) package [@brehenyVisualizationRegressionModels2017] provides an efficient way of visualising model predictions and residuals (see @sec-PredictedResiduals). In @fig-PredictedVocabByOccupation we visualise the model's predicted values (as blue lines) and the confidence intervals output by the `emmeans()` function (as grey bands) together with the model's residuals (as grey dots).
+These estimated means are informative, but model estimates are best visualised, ideally together with a visual depiction of the model accuracy. The [{visreg}](https://pbreheny.github.io/visreg/index.html) package [@brehenyVisualizationRegressionModels2017] provides an efficient way of visualising model predictions and residuals (see @sec-PredictedResiduals). In @fig-PredictedVocabByOccupation we visualise the model's predicted values (as blue lines) and the confidence intervals output by the `emmeans()` function (as grey bands) together with the model's residuals (as grey dots).
 
 ```{r}
 #| label: "fig-PredictedVocabByOccupation"
 #| fig-cap: "Distribution of predicted vocabulary test scores across four occupational groups"
 #| fig-alt: "Boxplot showing predicted vocabulary scores across four occupational groups (C, I, M, and PS). Individual residual points are shown as gray dots overlaid on gray boxplots with blue median lines."
-#| out-width: 80%
+#| out-width: 85%
 
 #install.packages("visreg")
 library(visreg)
@@ -893,7 +896,7 @@ estimate_means(model3, "OccupGroup") |>
 ```
 
 ::: {.callout-note collapse="false"}
-#### What about ANOVAs? `r emoji("thinking")` {.unnumbered} 
+#### What about ANOVAs? `r emoji("thinking")` {.unnumbered}
 
 The type of simple linear regression model that we have just covered, involving a continuous numeric outcome variable and a single categorical predictor with more than two levels, also comes under the guise of a statistical significance test, namely the **one-way ANOVA** (ANalysis Of VAriance).
 
@@ -1175,9 +1178,9 @@ If our data do not meet the assumption of independence, we need to use a differe
 
 Here are some great starting points (in alphabetical order) to learn about mixed-effects models for linguistics research and how to fit them in `R`:
 
--   @griesStatisticsLinguisticsPractical2021: Chapter 6
--   @LevshinaHowlinguisticsData2015: Chapter 8
--   @winterStatisticsLinguistsIntroduction2020: Chapters 14-15
+- @griesStatisticsLinguisticsPractical2021: Chapter 6
+- @LevshinaHowlinguisticsData2015: Chapter 8
+- @winterStatisticsLinguistsIntroduction2020: Chapters 14-15
 :::
 ::::
 
@@ -1185,7 +1188,7 @@ Here are some great starting points (in alphabetical order) to learn about mixed
 
 The linearity assumption requires that the relationship between the numeric predictor variables entered into a model and the outcome variable follows a straight (i.e. linear) line rather than a curved one. This assumption is fundamental because linear regression, as the name suggests, can only ever fit a straight line through the data. If the true relationship between our predictors is curved, forcing a straight line through the data will lead to poor predictions and misleading conclusions.
 
-To check this assumption, it is best to plot the predictor variable against the outcome variable in the form of a scatter plot (see @sec-Linearity). When examining such plots, we are looking for rough straight-line patterns. We are not expecting all the same data points to fall on the linear regression line (that would be entirely unrealistic with real data!). However, the points should be scattered around an imaginary straight line without showing any obvious curved patterns. In @fig-Nonlinear, by contrast, the data points follow a curved pattern and the blue linear regression line is nonsensical. With these data, making predictions based on this linear model would generate systematic prediction errors. Such a pattern of errors indicates that the assumption of linearity is violated.
+To check this assumption, it is best to plot the predictor variable against the outcome variable in the form of a scatter plot (see @sec-Linearity). When examining such plots, we are looking for rough straight-line patterns. We are not expecting all the same data points to fall on the linear regression line (that would be entirely unrealistic with real data!). However, the points should be scattered around an imaginary straight line without showing any obvious curved patterns. In @fig-Nonlinear, by contrast, the data points follow a curved pattern and the blue linear regression line fits the data very poorly. With these data, making predictions based on this linear model would generate systematic prediction errors. Such a pattern of errors indicates that the assumption of linearity is violated.
 
 ```{r}
 #| echo: false
@@ -1193,7 +1196,7 @@ To check this assumption, it is best to plot the predictor variable against the 
 #| fig-cap: "Non-linear distribution of word frequencies in the Brown corpus (Kucera & Francis 1967)"
 #| fig-alt: "A scatter plot comparing word frequency and word rank. The dots follow a curve starting at around word frequency 6,000 and word rank 1, and become increasingly spread out as word frequency decreases and word rank increases, forming a sloping horn shape. A shallow downward-sloping regression line cuts through the lower half of the funnel and ends at around word rank 550."
 #| fig-width: 4.5
-#| out-width: 60%
+#| out-width: 70%
 
 library(zipfR)
 
@@ -1212,7 +1215,7 @@ Brown.spc |> # Data taken from the Brown corpus (Kucera and Francis 1967)
 
 ### Assumption 3: Homogeneity of residuals {#sec-Residuals}
 
-Linear regression models assume homogeneity — or constant variance — of the residuals (see @sec-Homoscedasticity). This assumption is best checked by visually examining the model residuals. In @fig-VocabResidual, we plot the residuals of `model1` and check that their variability does not systematically increase or decrease as the outcome variable increases or decreases.
+Linear regression models assume homogeneity (i.e. constant variance) of the residuals (see @sec-Homoscedasticity). This assumption is best checked by visually examining the model residuals. In @fig-VocabResidual, we plot the residuals of `model1` and check that their variability does not systematically increase or decrease as the outcome variable increases or decreases.
 
 ```{r}
 #| code-fold: true
@@ -1280,9 +1283,9 @@ When the sample size is small and the model residuals are not normally distribut
 
 In this chapter, we fitted simple linear regression models. These models demonstrate that we can -- to a greater or lesser degree -- predict (or **model**) participants' receptive vocabulary knowledge test scores on the basis of a single predictor such as the number of years that they spent in formal education or their occupational group.
 
-We have referred to the variable that we are trying to predict as the outcome variable. It is worth knowing that it is sometimes also called the **dependent variable** because we are attempting to model its 'dependence' on one or more **independent variables** (which we have called predictors). In @sec-MLR, we will continue to use the terminology of **outcome** and **predictor** variables, but you should be aware that some textbooks and researchers will speak of dependent and independent variables, instead.[^12_simplelinearregression-3]
+We have referred to the variable that we are trying to predict as the outcome variable. It is worth knowing that it is sometimes also called the **dependent variable** because we are attempting to model its 'dependence' on one or more **independent variables** (which we have called predictors). In @sec-MLR, we will continue to use the terminology of **outcome** and **predictor** variables, but you should be aware that some textbooks and researchers will speak of dependent and independent variables, instead.[^12_modelling-3]
 
-[^12_simplelinearregression-3]: This choice of terminology is largely a personal one but, in my experience, learners find this terminology less confusing as it is immediately obvious what is being predicted (the outcome or dependent variable) and what is used to make the prediction (the predictors or the independent variables). Another advantage is that the term predictor can be used by itself (i.e. without the word "variable"), which is handy because when we enter a categorical variable into a model there are as many predictors as there are variable levels.
+[^12_modelling-3]: This choice of terminology is largely a personal one but, in my experience, learners find this terminology less confusing as it is immediately obvious what is being predicted (the outcome or dependent variable) and what is used to make the prediction (the predictors or the independent variables). Another advantage is that the term predictor can be used by itself (i.e. without the word "variable"), which is handy because when we enter a categorical variable into a model there are as many predictors as there are variable levels.
 
 While our simple linear regression models did allow us to account for some of the variance in participants' `Vocab` test scores, like the statistical tests that we conducted in @sec-Inferential, they still only allow us to capture one aspect of receptive vocabulary knowledge at a time. What we really want to do is to be able to enter several predictor variables into a single model. For example, it would be interesting to know whether the number of years spent in formal education remains a significant predictor of `Vocab` scores when controlling for participants' occupational groups. This can be achieved with multiple linear regression, and that's coming up in @sec-MLR!
 
@@ -1300,10 +1303,10 @@ Try your hand at simple linear regression before moving on to multiple regressio
 
 Are you confident that you can...?
 
--   [ ] Fit a simple linear model to predict a numeric outcome variable (@sec-Correlationsregression)
--   [ ] Visualise the predictions of a simple linear regression model (@sec-PredictedResiduals)
--   [ ] Find out what the intercept of a model corresponds to and interpret the model's coefficient estimates (@sec-Ttestsregression)
--   [ ] Interpret a model's adjusted *R*^2^ coefficient (@sec-Ttestsregression)
--   [ ] Check for the main assumptions of linear regression: independence, linearity, homoscedasticity, and normality of residuals (@sec-AssumptionsLR)
+- [ ] Fit a simple linear model to predict a numeric outcome variable (@sec-Correlationsregression)
+- [ ] Visualise the predictions of a simple linear regression model (@sec-PredictedResiduals)
+- [ ] Find out what the intercept of a model corresponds to and interpret the model's coefficient estimates (@sec-Ttestsregression)
+- [ ] Interpret a model's adjusted *R*^2^ coefficient (@sec-Ttestsregression)
+- [ ] Check for the main assumptions of linear regression: independence, linearity, homoscedasticity, and normality of residuals (@sec-AssumptionsLR)
 
 You are now ready to move on the really exciting stuff: multiple regression modelling! `r emoji("nerd_face")`
