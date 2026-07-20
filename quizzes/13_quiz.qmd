@@ -154,7 +154,7 @@ check_hint("The person described corresponds to the reference levels of all the 
 62.5728 + -2.5115 + 0.5526*20 # <1>
 ```
 
-1. We must add together the coefficient for the intercept, the coefficient for the manual occupation (which is negative), and the ART coefficient multiplied by 20 (remember that we did not center this predictor).
+1.  We must add together the coefficient for the intercept, the coefficient for the manual occupation (which is negative), and the ART coefficient multiplied by 20 (remember that we did not center this predictor).
 
 [**Q13.4**]{style="color:green;"} By default, the `visreg()` function displays a 95% confidence band around predicted values, corresponding to a significance level of 0.05. How can you change this default to display a 99% confidence band instead? Run the command `?visreg()` to find out how to achieve this from the function's help file.
 
@@ -190,9 +190,10 @@ visreg(model.ART, # <2>
        xvar = "ART", 
        alpha = .01) # <3>
 ```
+
 1.  The alpha value that corresponds to a 99% confidence interval is equal 0.01.
 2.  Hence the code should (minimally) include these arguments.
-3.  The argument that we need to change is called `alpha` because the significance level is also called the alpha-level (see Section 11.4). 
+3.  The argument that we need to change is called `alpha` because the significance level is also called the alpha-level (see Section 11.4).
 
 Observe how the width of the confidence bands changes when you increase the significance level from 0.01 to 0.1: the higher the significance level, the narrower the confidence band becomes. Remember that the significance level corresponds to the risk that we are willing to take of wrongly rejecting the null hypothesis when it is actually true. Therefore, when we lower this risk by choosing a lower significance level (i.e. 0.01), we end up with wider confidence bands that are more likely to allow us to draw a flat line (see @sec-Correlations). If we can draw a flat line through a 99% confidence band, this means that we do not have enough evidence to reject the null hypothesis at the significance level of 0.01.
 :::
@@ -238,7 +239,6 @@ rel.imp.metric.df |> # <4>
 2.  Compute the lmg values
 3.  Extract the lmg values and store them as a data frame.
 4.  Display the lmg values as a table.
-
 :::
 ::: {.callout-tip collapse="false"}
 #### Your turn! {.unnumbered}
@@ -361,12 +361,12 @@ check_hint("Think about whether a horizontal line indicating no correlation (i.e
 
 visreg(model5.int, 
        xvar = "EduTotal_c", 
-       by = "Group",
-       xtrans = function(x) x + median(Dabrowska.data$EduTotal), 
-       gg = TRUE) + 
+       by = "Group") +
   labs(x = "Years in formal education",
        y = "Predicted Vocab scores") +
-  theme_bw()
+  theme_bw() +
+  scale_x_continuous(labels = function(x) x + median(Dabrowska.data$EduTotal), 
+                     breaks = seq(-11, 10, 3))   
 ```
 :::
 ::: {.callout-tip collapse="false"}
@@ -376,9 +376,9 @@ So far in this chapter, we have fitted a model of L1 speakers' `Vocab` scores. W
 
 In this task, your aim is to find out which predictors and interactions among predictors can be used to predict `Vocab` scores among L2 speakers and to what degree of accuracy. In addition to the predictors that we entered in our full L1 model, you can enter three additional predictors in your model that are relevant to L2 speakers only:
 
--   Age at which they started living in an English-speaking country (`Arrival`)
--   Total number of years they have been living in an English-speaking country (`LoR`)
--   Number of hours they spend reading in English in a typical week (`ReadEng`)
+- Age at which they started living in an English-speaking country (`Arrival`)
+- Total number of years they have been living in an English-speaking country (`LoR`)
+- Number of hours they spend reading in English in a typical week (`ReadEng`)
 
 Run the following code to median-center some of these numeric variables in `L2.data`:
 

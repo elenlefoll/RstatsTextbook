@@ -20,15 +20,15 @@ select <- dplyr::select
 
 In this chapter, you will learn how to:
 
--   Fit a linear regression model with multiple predictors.
--   Center numeric predictor variables when meaningful.
--   Interpret the coefficient estimates of a multiple linear regression model.
--   Interpret a model's coefficients of determination (multiple *R*^2^ and adjusted *R*^2^).
--   Compute and plot the relative importance of predictors.
--   Fit interaction effects and interpret their coefficient estimates.
--   Visualise the predictions of a multiple linear regression model and its (partial) residuals.
--   Report the results of a multiple linear regression model in tabular and graphical formats.
--   Check that the assumptions of multiple linear regression models are met.
+- Fit a linear regression model with multiple predictors.
+- Center numeric predictor variables.
+- Interpret the coefficient estimates of a multiple linear regression model.
+- Interpret a model's coefficients of determination (multiple *R*^2^ and adjusted *R*^2^).
+- Compute and plot the relative importance of predictors.
+- Fit interaction effects and interpret their coefficient estimates.
+- Visualise the predictions of a multiple linear regression model and its (partial) residuals.
+- Report the results of a multiple linear regression model in tabular and graphical formats.
+- Check that the assumptions of multiple linear regression models are met.
 
 ## From simple to multiple linear regression models
 
@@ -76,7 +76,7 @@ Once you are satisfied that the data have been correctly imported and that you a
 
 ## Combining multiple predictors {#sec-MultipleLM}
 
-In the following, we will attempt to model the variability in the receptive English vocabulary test scores of L1 and L2 English participants from @DabrowskaExperienceAptitudeIndividual2019. To this end, we will use multiple numeric and categorical predictors:
+In the following, we will attempt to model the variability in the English vocabulary test scores of L1 and L2 English participants from @DabrowskaExperienceAptitudeIndividual2019. To this end, we will use multiple numeric and categorical predictors:
 
 a.  participants' native-speaker status (`Group`)
 b.  their `Age`,
@@ -85,7 +85,7 @@ d.  their `Gender`
 e.  their non-verbal IQ test score (`Blocks`), and
 f.  the number of years they were in formal education (`EduTotal`).
 
-We use the `+` operator to construct the model formula. It doesn't matter in which order we list the predictors, as the model will consider them all simultaneously.
+We use the `+` operator to construct the model formula. It doesn't matter in which order we list the predictors. The model will consider them all simultaneously.
 
 ```{r}
 model4 <- lm(Vocab ~ Group + Age + OccupGroup + Gender + Blocks + EduTotal, 
@@ -96,7 +96,7 @@ summary(model4)
 
 As with the simple linear regression models in @sec-SLR, we begin our interpretation of the model summary with the coefficient estimate for the **intercept** (see @sec-Ttestsregression). The first question we ask ourselves is:
 
--   In this model, what does the intercept correspond to?
+- In this model, what does the intercept correspond to?
 
 Remember that the reference levels of **categorical predictors** correspond to the **first level** of these variables. This is why, here, the coefficient estimate for the intercept corresponds to a female English native speaker with a clerical occupation:
 
@@ -106,7 +106,7 @@ levels(Dabrowska.data$Group) # 'L1' is the first level.
 levels(Dabrowska.data$OccupGroup) # 'C' corresponding to a clerical professional occupation is the first level.
 ```
 
-The reference level of the **numeric predictors**, by contrast, corresponds to the value of **zero**. In `model4`, therefore, the estimated coefficient for the intercept corresponds to the predicted `Vocab` score of an adult English native speaker who belongs to the occupational group "C", is female, who is aged 0 (!), scored 0 on the Blocks test, and spent 0 years (!) in formal education. Needless to say that trying to interpret this value is utterly meaningless! This is why, in this case, it makes sense to **center** our numeric predictor variables before entering them into our model. Another way to go about this would be to standardise the predictors using a *z*-transformation [see also @winterStatisticsLinguistsIntroduction2020: Section 5.2].
+The reference level of the **numeric predictors**, by contrast, corresponds to the value of **zero**. In `model4`, therefore, the estimated coefficient for the intercept corresponds to the predicted `Vocab` score of an adult English native speaker who belongs to the occupational group "C", is female, who is aged 0 (!), scored 0 on the Blocks test, and spent 0 years (!) in formal education. Needless to say that trying to interpret this value is utterly meaningless! This is why, in this case, it makes sense to **center** our numeric predictor variables before entering them into our model. Another way to go about this would be to standardise the predictors using a *z*-transformation [see e.g. @winterStatisticsLinguistsIntroduction2020: Section 5.2].
 
 ## Centering numeric predictors {#sec-Centering}
 
@@ -171,121 +171,121 @@ model4_c <- lm(Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal
 summary(model4_c)
 ```
 
-If you compare the summary of `model4` with that of `model4_c`, you will notice that, whilst the intercept coefficient estimate has changed, all the other coefficient estimates have stayed the same.
+If you compare the summary of `model4` with that of `model4_c`, you will notice that the intercept coefficient estimate has changed, but that all the other coefficient estimates have stayed the same.
 
 Let's decipher the summary of `model4_c` step-by-step:
 
--   In this model, the estimated coefficient for the **intercept** corresponds to the predicted `Vocab` score of an English native speaker (`Group` = L1) who is aged `r median(Dabrowska.data$Age)` (the median `Age`), belongs to the occupational group `C`, is female, scored `r median(Dabrowska.data$Blocks)` on the Blocks test (the median `Blocks` score), and was in formal education for `r median(Dabrowska.data$EduTotal)` years (the median number of years).
+- In this model, the estimated coefficient for the **intercept** corresponds to the predicted `Vocab` score of an English native speaker (`Group` = L1) who is aged `r median(Dabrowska.data$Age)` (the median `Age`), belongs to the occupational group `C`, is female, scored `r median(Dabrowska.data$Blocks)` on the Blocks test (the median `Blocks` score), and was in formal education for `r median(Dabrowska.data$EduTotal)` years (the median number of years).
 
--   As with the simple linear regression models that we computed in @sec-SLR, the **coefficient estimates of the numeric predictors** (`Age_c`, `Blocks_c`, and `EduTotal_c`) correspond to increases or decreases in `Vocab` scores for each additional unit of that predictor variable, whilst keeping all other predictors at their reference level. Remember that, for numeric predictors, the reference level is 0, which, given that we have centered them, corresponds to the variable's median value. Looking at the coefficient estimate for `Blocks_c` (`1.3011`), this means that someone who scored one point more than the median score in the Blocks test is predicted to have a `Vocab` test result that is `1.3011` points higher than the intercept, namely:
+- As with the simple linear regression models that we computed in @sec-SLR, the **coefficient estimates of the numeric predictors** (`Age_c`, `Blocks_c`, and `EduTotal_c`) correspond to increases or decreases in `Vocab` scores for each additional unit of that predictor variable, whilst keeping all other predictors at their reference level. Remember that, for numeric predictors, the reference level is 0 which, given that we have centered them, corresponds to the variable's median value. Looking at the coefficient estimate for `Blocks_c` (`1.3011`), this means that someone who scored one point more than the median score in the Blocks test is predicted to have a `Vocab` test result that is `1.3011` points higher than the intercept, namely:
 
-    ```{r}
-    70.5852 + 1.3011
-    ```
+  ```{r}
+  70.5852 + 1.3011
+  ```
 
--   To calculate the predicted `Vocab` score of an L1 female speaker in a clerical occupation, of median age, who spent the median number of years in formal education, but scored an impressive 26 points on the Blocks test, we multiply the estimated `Blocks_c` coefficient (`1.3011`) by 26 minus the median Blocks score (`r median(Dabrowska.data$Blocks)`) and add this to the intercept coefficient:
+- To calculate the predicted `Vocab` score of an L1 female speaker in a clerical occupation, of median age, who spent the median number of years in formal education, but scored an impressive 26 points on the Blocks test, we multiply the estimated `Blocks_c` coefficient (`1.3011`) by 26 minus the median Blocks score (`r median(Dabrowska.data$Blocks)`) and add this to the intercept coefficient:
 
-    ```{r}
-    70.5852 + 1.3011*(26 - median(Dabrowska.data$Blocks))
-    ```
+  ```{r}
+  70.5852 + 1.3011*(26 - median(Dabrowska.data$Blocks))
+  ```
 
--   You'll be pleased to read that the interpretation of **coefficient estimates of categorical predictors** is less involved. Recall that, for categorical variables, the reference level is always the variable's first level (see @sec-MultipleLM). If we want to make a prediction for an L2 instead of an L1 female speaker, but keep all other predictors at the reference level (i.e. clerical occupation, median age, median number of years in formal education, and median Blocks score), all we need to do is add the coefficient estimate for `GroupL2` (`-22.2896`) to the intercept coefficient. Given that this coefficient is negative, this addition will result in a predicted `Vocab` score that is lower than the model's reference level:
+- Interpreting the **coefficient estimates of categorical predictors** is less involved — as long as you remember what the reference levels are! In @sec-MultipleLM, we saw that, for categorical variables, the reference level is always the variable's first level. If we want to make a prediction for an L2 instead of an L1 female speaker while keeping all other predictors at their reference level (i.e. clerical occupation, median age, median number of years in formal education, and median Blocks score), all we need to do is add the coefficient estimate for `GroupL2` (`-22.2896`) to the intercept coefficient. Given that this coefficient is negative, this addition will result in a predicted `Vocab` score that is lower than the model's reference level:
 
-    ```{r}
-    70.5852 + -22.2896
-    ```
+  ```{r}
+  70.5852 + -22.2896
+  ```
 
--   Since very few people are perfectly average, let us now calculate the predicted `Vocab` score of an actual, randomly chosen person: the 154^th^ participant in our dataset. As shown below using the {tidyverse} function `slice()`, the 154^th^ participant is a 46-year-old Polish male driver who scored 23 points on the Blocks test and attended formal education for 10 years.
+- Since very few people are perfectly average, let us now calculate the predicted `Vocab` score of an actual, randomly chosen person: the 154^th^ participant in our dataset. As shown below using the {tidyverse} function `slice()`, the 154^th^ participant is a 46-year-old Polish male driver who scored 23 points on the Blocks test and attended formal education for 10 years.
 
-    ```{r}
-    Dabrowska.data |> 
-      slice(154) |> 
-      select(Group, Age, NativeLg, Occupation, OccupGroup, Gender, Blocks, EduTotal)
-    ```
+  ```{r}
+  Dabrowska.data |> 
+    slice(154) |> 
+    select(Group, Age, NativeLg, Occupation, OccupGroup, Gender, Blocks, EduTotal)
+  ```
 
-    To obtain the model's predicted `Vocab` score for a 46-year-old male L2 speaker with a manual occupation (`M`) who scored 23 points on the `Blocks` test and was in formal education for 10 years (`EduTotal`), we combine the coefficient estimates as follows:
+  To obtain the model's predicted `Vocab` score for a 46-year-old male L2 speaker with a manual occupation (`M`) who scored 23 points on the `Blocks` test and was in formal education for 10 years (`EduTotal`), we combine the coefficient estimates as follows:
 
-    ```{r}
-    70.5852 +                                       # <1>     
-    -22.2896 +                                      # <2>
-    0.3718 * (46 - median(Dabrowska.data$Age)) +    # <3>
-    -3.9993 +                                       # <4>
-    -3.7177 +                                       # <5>
-    1.3011 * (23 - median(Dabrowska.data$Blocks)) + # <6>
-    2.4308 * (10 - median(Dabrowska.data$EduTotal)) # <7>
-    ```
+  ```{r}
+  70.5852 +                                       # <1>     
+  -22.2896 +                                      # <2>
+  0.3718 * (46 - median(Dabrowska.data$Age)) +    # <3>
+  -3.9993 +                                       # <4>
+  -3.7177 +                                       # <5>
+  1.3011 * (23 - median(Dabrowska.data$Blocks)) + # <6>
+  2.4308 * (10 - median(Dabrowska.data$EduTotal)) # <7>
+  ```
 
-    1.  Intercept coefficient
-    2.  L2 speaker
-    3.  46 years old
-    4.  Manual occupation (OccupGroupM)
-    5.  Male
-    6.  23 points on Blocks test
-    7.  10 years in formal education
+  1.  Intercept coefficient
+  2.  L2 speaker
+  3.  46 years old
+  4.  Manual occupation (OccupGroupM)
+  5.  Male
+  6.  23 points on Blocks test
+  7.  10 years in formal education
 
-::: {.callout-tip .content-visible when-format="html"}
-You can hover your mouse over the circled numbers to find out how this predicted score was calculated. All the coefficient estimates were copied from the model summary output by `summary(model4_c)`.
-:::
+  ::: {.callout-tip .content-visible when-format="html"}
+  Hover your mouse over the circled numbers to find out how this predicted score was calculated. All the coefficient estimates were copied from the model summary output by `summary(model4_c)`.
+  :::
 
--   We can check that we did the maths correctly by outputting the model's prediction for the 154^th^ observation directly. To this end, we apply the `predict()` function to the model object `model4_c` and extract the model's predicted score for the 154^th^ data point:
+- We can check that we did the maths correctly by outputting the model's prediction for the 154^th^ observation directly. To this end, we apply the `predict()` function to the model object `model4_c` and extract the model's predicted score for the 154^th^ data point:
 
-    ```{r}
-    predict(model4_c)[154]
-    ```
+  ```{r}
+  predict(model4_c)[154]
+  ```
 
-    As you can see, we obtain the same predicted `Vocab` score. The minor difference after the decimal point is due to us using coefficient estimates rounded-off to four decimal places (as displayed in the model's summary output) rather than the exact values to which the `predict()` function has access.
+  As you can see, we obtain the same predicted `Vocab` score. Note that the minor difference after the decimal point is due to us copying-and-pasting the coefficient estimates rounded-off to four decimal places displayed in the model's summary output rather than using the exact coefficients to which the `predict()` function has access.
 
--   This is all very well, but how accurate is this model prediction? To find out, we can compare this predicted score (that our model predicts for any male 46-year old with a manual occupation, a Blocks score of 23, and 10 years in formal education) to the 46-year-old Polish driver's actual `Vocab` score:
+- This is all very well, but how accurate is this model prediction? To find out, we can compare this predicted score (that our model predicts for any male 46-year old with a manual occupation, a Blocks score of 23, and 10 years in formal education) to the 46-year-old Polish driver's actual `Vocab` score:
 
-    ```{r}
-    Dabrowska.data |> 
-      slice(154) |> 
-      select(Group, Age, NativeLg, Occupation, OccupGroup, Gender, Blocks, EduTotal, Vocab)
-    ```
+  ```{r}
+  Dabrowska.data |> 
+    slice(154) |> 
+    select(Group, Age, NativeLg, Occupation, OccupGroup, Gender, Blocks, EduTotal, Vocab)
+  ```
 
--   Our model prediction (`45.53989`) is close to our Polish driver's real `Vocab` test score (`48.88889`), but our model has slightly underestimated his performance. This underestimation results in a positive **residual**. The residual is positive because there are points "left over" by the model. Model residuals are calculated by subtracting a model's prediction from the real, observed value of the outcome variable for any specific data point. In our case, we substract our model's predicted `Vocab` score for a male 46-year old with a manual occupation, a Blocks score of 23, and 10 years in formal education from the Polish 46-year-old driver's actual `Vocab` score:
+- Our model prediction (`45.53989`) is close to our Polish driver's real `Vocab` test score (`48.88889`), but our model has slightly underestimated his performance. This underestimation results in a positive **residual**. The residual is positive because there are points "left over" by the model. Model residuals are calculated by subtracting a model's prediction from the real, observed value of the outcome variable for any specific data point. In our case, we substract our model's predicted `Vocab` score for a male 46-year old with a manual occupation, a Blocks score of 23, and 10 years in formal education from the Polish 46-year-old driver's actual `Vocab` score:
 
-    ```{r}
-    48.88889 - 45.53989
-    ```
+  ```{r}
+  48.88889 - 45.53989
+  ```
 
-    Residuals are also stored in the model object and be accesssed like this:
+  Residuals are also stored in the model object and be accesssed like this:
 
-    ```{r}
-    model4_c$residuals[154]
-    ```
+  ```{r}
+  model4_c$residuals[154]
+  ```
 
--   We can compare this particular residual (corresponding to the 154^th^ participant in the dataset) to all model residuals (corresponding to all participants) by examining the **summary statistics of all residuals**, which are displayed at the top of the model summary output (`summary(model4_c)`). These descriptive statistics inform us that the residual for the 154^th^ participant is slightly higher than the average (median) residual, but well within the IQR (see @sec-IQR) of model residuals:
+- We can compare this particular residual (corresponding to the 154^th^ participant in the dataset) to all model residuals (corresponding to all participants) by examining the **summary statistics of all residuals**, which are displayed at the top of the model summary output. These descriptive statistics inform us that the residual for the 154^th^ participant is slightly higher than the average (median) residual, but well within the IQR (see @sec-IQR) of model residuals:
 
-    ```         
-    Residuals:
-        Min      1Q  Median      3Q     Max 
-    -62.825 -10.838   1.831  12.185  38.345 
-    ```
+  ```         
+  Residuals:
+      Min      1Q  Median      3Q     Max 
+  -62.825 -10.838   1.831  12.185  38.345 
+  ```
 
-    Looking at the minimum and maximum residuals, we can see that our model overestimates at least one person's `Vocab` score by 63 points (this is the most negative residual: `Min`), whilst in another case it underestimates it by 38 points (this is the largest positive residual: `Max`). Run the following code to find out more about the participant whose `Vocab` score was most dramatically underestimated by our model.
+  Looking at the minimum and maximum residuals, we can see that our model overestimates at least one person's `Vocab` score by 63 points (this is the largest negative residual: `Min`), whilst in another case it underestimates it by 38 points (this is the largest positive residual: `Max`). Run the following code to find out more about the participant whose `Vocab` score was most dramatically underestimated by our model.
 
-    ```{r}
-    #| code-fold: true
-    #| code-summary: "Click here to find out whose score was most underestimated!"
-    #| eval: false
+  ```{r}
+  #| code-fold: true
+  #| code-summary: "Click here to find out whose receptive English vcoabularly knowledge was most underestimated!"
+  #| eval: false
 
-    Dabrowska.data |> 
-      slice(which.max(model4_c$residuals)) |> 
-      select(Group, NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)
-    ```
+  Dabrowska.data |> 
+    slice(which.max(model4_c$residuals)) |> 
+    select(Group, NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)
+  ```
 
--   The ***p*****-values** associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable levels, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in @sec-Categoricalpredictor, we fitted a simple linear regression model (`model3`) which included only `OccupGroup` as a single predictor. In this simple model, the coefficient estimate for `OccupGroupI` made a statistically significant contribution to the model at an $\alpha$-level of 0.05 (*p* = 0.0335). By contrast, in the present multiple linear regression model, the predictor level `OccupGroupI` does not make a statistically significant contribution (*p* = 0.077600 which is \> 0.05). This is because our multiple regression model `model4_c` includes predictors that account for some of the same variance in `Vocab` scores in the data that occupational groups accounted for in our earlier model. This leaves less unique variance attributable to belonging to one or the other occupational group, thereby rendering it statistically non-significant.
+- The ***p*****-values** associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable levels, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in @sec-Categoricalpredictor, we fitted a simple linear regression model (`model3`) which included only `OccupGroup` as a single predictor. In this simple model, the coefficient estimate for `OccupGroupI` made a statistically significant contribution to the model at an $\alpha$-level of 0.05 (*p* = 0.0335, which is \< 0.05). By contrast, in the present multiple linear regression model, the predictor level `OccupGroupI` does not make a statistically significant contribution (*p* = 0.077600, which is \> 0.05). This is because our multiple regression model `model4_c` includes predictors that account for some of the same variance in `Vocab` scores in the data that occupational groups accounted for in our earlier model. This leaves less unique variance attributable to belonging to one or the other occupational group, thereby rendering it statistically non-significant.
 
--   From the **adjusted *R*-squared** value (`0.3276`) displayed at the bottom of the model summary output, we can see that our multiple linear regression model accounts for around 33% of the total variance in `Vocab` scores found in the @DabrowskaExperienceAptitudeIndividual2019 data. This is considerably more than we achieved with any of the simple linear models that we fitted in @sec-SLR.
+- From the **adjusted *R*-squared** value (`0.3276`) displayed at the bottom of the model summary output, we can see that our multiple linear regression model accounts for around 33% of the total variance in `Vocab` scores found in the @DabrowskaExperienceAptitudeIndividual2019 data. This is considerably more than we achieved with any of the simple linear models that we fitted in @sec-SLR.
 
 ### Interpreting model predictions {#sec-ModelPredictions}
 
-Whilst it is important to understand how to interpret the coefficients of a multiple linear regression model from the model summary, in practice, it is always a good idea to also visualise model predictions. On the one hand, this reduces the risk of making any obvious interpretation errors and, on the other, it is much easier to interpret the residuals of a model when they are visualised alongside model predictions.
+Whilst it is important to understand how to interpret the coefficients of a multiple linear regression model from its model summary, in practice, it is always a good idea to also visualise model predictions. On the one hand, this reduces the risk of making any obvious interpretation errors and, on the other, it is much easier to interpret the residuals of a model when they are visualised alongside model predictions.
 
-To fully visualise the predictions of a multiple linear model, we would need to be able to plot as many dimensions as there are predictors in the model. The trouble is that, as humans, we find it difficult to interpret data visualisations with more than two dimensions. Indeed, although 3D plots can sometimes be useful \[and can be generated in `R`, see e.g. @kabacoffModernDataVisualization2024: [Section 10.1](https://rkabacoff.github.io/datavis/Other.html#Scatter3D)\], we are much better at interpreting two-dimensional plots. To bypass this inherent human weakness, we will plot the values predicted by our model on several plots: one for each predictor variable (see @fig-VisregVocab).
+To fully visualise the predictions of a multiple linear model, we would need to plot as many dimensions as there are predictors in the model. The trouble is that, as humans, we find it difficult to interpret data visualisations with more than two dimensions. Indeed, although 3D plots can sometimes be useful [and can be generated in `R`, see e.g. @kabacoffModernDataVisualization2024: [Section 10.1](https://rkabacoff.github.io/datavis/Other.html#Scatter3D)], we are much better at interpreting two-dimensional plots. To bypass this inherent human weakness, we will plot the values predicted by our model on several plots: one for each predictor variable (see @fig-VisregVocab).
 
-Run the following command and then follow the instructions displayed in the Console pane to view the plots one by one. You may need to resize your Plot pane for the plots to be displayed. If you have a small screen, you may find the "`r emoji("magnifying-glass-tilted-right")` Zoom" option in *RStudio*'s Plots pane useful as it allows you to view the plots in a separate window.
+Run the following command and then follow the instructions displayed in the Console pane to view the plots one by one. You may need to resize your Plot pane for the plots to be displayed. If you have a small screen, you may find the "`r emoji("mag_right")` Zoom" option in *RStudio*'s Plots pane useful as it allows you to view the plots in a separate window.
 
 ```{r}
 #| eval: false
@@ -311,23 +311,23 @@ estimate_means(model4_c) |>
 #| fig-cap: "`Vocab` scores as predicted by `model4_c` (blue lines) as a function of various predictor variables and partial model residuals (grey points)"
 #| fig-alt: "Six-panel scatterplot showing vocabulary scores predicted by various factors, with partial residual points and blue regression lines in each panel. Categorical predictors show relatively flat trends and continuous predictors show positive linear relationships."
 
-model4Group <- visreg(model4_c, "Group", whitespace = 0.3, gg = TRUE) + theme_bw()
-model4Age <- visreg(model4_c, "Age_c", gg = TRUE) + theme_bw()
-model4OccupGroup <- visreg(model4_c, "OccupGroup", whitespace = 0.4, gg = TRUE) + theme_bw()
-model4Gender <- visreg(model4_c, "Gender", whitespace = 0.3, gg = TRUE) + theme_bw()
-model4Blocks <- visreg(model4_c, "Blocks_c", gg = TRUE) + theme_bw()
-model4EduTotal <- visreg(model4_c, "EduTotal_c", gg = TRUE) + theme_bw()
+model4Group <- visreg(model4_c, "Group") + theme_bw()
+model4Age <- visreg(model4_c, "Age_c") + theme_bw()
+model4OccupGroup <- visreg(model4_c, "OccupGroup") + theme_bw()
+model4Gender <- visreg(model4_c, "Gender") + theme_bw()
+model4Blocks <- visreg(model4_c, "Blocks_c") + theme_bw()
+model4EduTotal <- visreg(model4_c, "EduTotal_c") + theme_bw()
 
 library(patchwork)
 model4Group + model4Age + model4OccupGroup + model4Gender + model4Blocks + model4EduTotal
 ```
 
-On plots produced by the `visreg()` function, as in @fig-PredictedVocabByOccupation, the model's predicted values are displayed as blue lines. By default, these predictions are surrounded by 95% grey confidence bands. Now that we have several predictors in our model, the points in `visreg()` plots represent the model's **partial residuals**. Partial residuals are the left-over variance (i.e. the residual) relative to the predictor that we are examining after having subtracted off the contribution of all the other predictors in the model.
+On plots produced by the `visreg()` function, as in @fig-PredictedVocabByOccupation, the model's predicted values are displayed as blue lines. By default, these predictions are surrounded by 95% grey confidence bands. As we have several predictors in our model, the points in these `visreg()` plots represent the model's **partial residuals**. Partial residuals are the leftover variance (i.e. the residual) relative to the predictor that we are examining after having subtracted off the contribution of all the other predictors in the model.
 
-When interpreting the numeric predictors plotted in @fig-VisregVocab above, it is important to remember that we entered centered numeric predictors in `model4_c`. This means that an `Age_c` value of 0 corresponds to the median age in the dataset: 31 years. This is why @fig-VisregVocab features negative ages: the negative values correspond to participants who are younger than 31. By contrast, positive scores correspond to participants who are older than 31 years. This is not very intuitive so, for the purposes of visualising and interpreting our model, it is best to transform these variables back to their original scale (see @fig-PredictedVocabAge). This is achieved by adding the following `xtrans` argument within the `visreg()` function.
+When interpreting the numeric predictors plotted in @fig-VisregVocab above, it is important to remember that, in this model (`model4_c`), we entered centered numeric predictors. This means that an `Age_c` value of 0 corresponds to the median age in the dataset: 31 years. This is why @fig-VisregVocab features negative ages: the negative values correspond to participants who are younger than 31. By contrast, positive scores correspond to participants who are older than 31 years. This is not very intuitive so, for the purposes of visualising and interpreting our model, it is best to transform these variables back to their original scale (see @fig-PredictedVocabAge). This is achieved using the `labels` argument with the {ggplot2} `scale_x_continuous()` function.
 
-:::: {.content-visible when-format="html"}
-::: {.callout-warning}
+:::: content-hidden
+::: callout-warning
 ### Bug in version 2.8 of the {visreg} package 🐞 {.unnumbered}
 
 Due to a bug that was introduced in the latest version of the {visreg} package, it is currently necessary to install version 2.7 of the {visreg} package for the `xtrans` argument to work as expected. You can find out which package version you currently have installed, if any, using this function:
@@ -357,23 +357,59 @@ Finally, load the {remotes} library and then install version 2.7.0 of the {visre
 #| eval: false
 remotes::install_version("visreg", "2.7.0")
 ```
-
 :::
 ::::
 
+::: callout-warning
+### Bug in version 2.8 of the {visreg} package 🐞 {.unnumbered}
+
+Due to a bug in the current CRAN version of the {visreg} package (v. 2.8), it is currently necessary to install the latest development version of the package for this chapter. You can find out which package version you currently have installed, if any, using this function:
+
 ```{r}
 #| eval: false
-#| source-line-numbers: "4"
+packageVersion("visreg")
+```
+
+If you have version 2.8.0 or earlier, begin by deleting your current installation of the package:
+
+```{r}
+#| eval: false
+remove.packages("visreg")
+```
+
+Then, install the {remotes} package, which allows you to install older and developmental versions of packages (if they are compatible with your `R` version). You will likely get a message notifying you that it is necessary to restart your `R` session. Click "yes". If you don't get this message, it is probably still a good idea to shut down *RStudio* and start again afresh.
+
+```{r}
+#| eval: false
+install.packages("remotes")
+```
+
+Finally, install version the latest version of the {visreg} package directly from the developer's GitHub page:
+
+```{r}
+#| eval: false
+remotes::install_github("pbreheny/visreg")
+```
+:::
+
+```{r}
+#| eval: false
+#| source-line-numbers: "9-10"
+#| fig-asp: 0.7
+#| out-width: 80%
+#| fig-cap: "`Vocab` scores as predicted by `model4_c` for speakers of various ages (blue line) and partial model residuals represented as points."
+#| fig-alt: "Scatterplot showing predicted vocabulary scores versus age in years, with partial residual points and a blue regression line with gray confidence band showing a slight positive trend."
 
 library(visreg)
 
 visreg(model4_c, 
-       xvar = "Age_c", 
-       xtrans = function(x) x + median(Dabrowska.data$Age), 
-       gg = TRUE) + 
+       xvar = "Age_c") + 
   labs(x = "Age (in years)",
        y = "Predicted Vocab scores") +
-  theme_bw()
+  theme_bw() +
+  scale_y_continuous(limits = c(0, 110)) +
+  scale_x_continuous(labels = function(x) x + median(Dabrowska.data$Age), 
+                     breaks = seq(-11, 41, 10))
 ```
 
 ```{r}
@@ -381,20 +417,23 @@ visreg(model4_c,
 #| fig-asp: 0.7
 #| out-width: 80%
 #| label: "fig-PredictedVocabAge"
-#| fig-cap: "`Vocab` scores as predicted by `model4_c` for speakers of various ages (blue line) and partial model residuals represented as points. In the version printed in the textbook, two data points are highlighted: one representing a very large positive residual and one representing a very small residual."
+#| fig-cap: "`Vocab` scores as predicted by `model4_c` for speakers of various ages (blue line) and partial model residuals represented as points. Two data points are highlighted: one representing a very large positive residual and one representing a very small residual."
 #| fig-alt: "Scatterplot showing predicted vocabulary scores versus age in years, with partial residual points and a blue regression line with gray confidence band showing a slight positive trend. Two data points are highlighted: a pink point labeled Lithuanian bar staff showing a large positive residual around age 25, and a purple point labeled Polish driver showing a small residual around age 50."
+
+vr.res <- visreg(model4_c, 
+       xvar = "Age_c", 
+       plot = FALSE)
 
 vr <- visreg(model4_c, 
        xvar = "Age_c", 
-       xtrans = function(x) x + median(Dabrowska.data$Age), 
-       points=list(size = 2),
-       gg = TRUE)
+       points = list(size = 2))
 
-PolishDriver <- data.frame(x = Dabrowska.data$Age_c[154] + median(Dabrowska.data$Age), 
-                           y = vr$data$y[154])
+PolishDriver <- data.frame(x = Dabrowska.data$Age_c[154], 
+                           y = vr.res$res$visreg_res[154])
 
-LithuanianBarStaff <- data.frame(x = Dabrowska.data$Age_c[141] + median(Dabrowska.data$Age), 
-                           y = vr$data$y[141])
+LithuanianBarStaff <- data.frame(x = Dabrowska.data$Age_c[141],
+                                 y = vr.res$res$visreg_res[141])
+
 vr +
   geom_point(
     data = PolishDriver,
@@ -479,44 +518,13 @@ geom_segment(
   
   labs(x = "Age (in years)",
        y = "Predicted Vocab scores") +
-  theme_bw()
+  theme_bw() +
+  scale_y_continuous(limits = c(0, 116)) +
+  scale_x_continuous(labels = function(x) x + median(Dabrowska.data$Age),
+                     breaks = seq(-11, 41, 10))  
 ```
 
 In @fig-PredictedVocabAge, we focus on one predictor from our model: `Age`. We know from our model summary that the coefficient estimate for age is positive (`0.3718`), hence the upward blue line. The grey 95% confidence band visualises the uncertainty around the estimated mean predicted `Vocab` scores. The points on @fig-PredictedVocabAge represent the partial residuals. This means that there are as many points as there are participants in the dataset used to fit the model. The further away a point is from the predicted value (the blue line), the poorer the prediction is for that particular participant. Some of the partial residuals are particularly large: the `Vocab` score of the 23-year-old Lithuanian bar staff, for instance, is vastly underestimated. By contrast, the 46-year-old Polish driver's predicted score is well within the confidence band of the predicted `Vocab` score for his age, indicating that our model makes a pretty accurate prediction for this L2 speaker.
-
-```{r}
-#| echo: false
-#| eval: false
-
-# I decided not to include this plot in the final version of the textbook, but this code can be used to highlight a single data point on a plot of predicted values and partial residuals from {visreg}.
-
-i <- 154 # row index in the original data
-
-# x‑coordinate: the centerd value + the median that you added in xtrans
-x_i <- Dabrowska.data$EduTotal_c[i] + median(Dabrowska.data$EduTotal)
-
-vr <- visreg(model4_c, 
-       xvar = "EduTotal_c", 
-       xtrans = function(x) x + median(Dabrowska.data$EduTotal), 
-       gg = TRUE)
-
-# y‑coordinate: the *partial residual* that visreg plotted.
-y_i <- vr$data$y[i]
-
-# Put them in a tiny data frame (required by geom_point)
-highlight_df <- data.frame(x = x_i, y = y_i)
-
-vr +
-  geom_point(
-    data = highlight_df,
-    aes(x = x, y = y),
-    colour = "purple",
-    size = 1) +  
-  labs(x = "Time spent in formal education (in years)",
-       y = "Predicted Vocab scores") +
-  theme_bw()
-
-```
 
 :::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
@@ -673,7 +681,7 @@ check_hint("The person described corresponds to the reference levels of all the 
 62.5728 + -2.5115 + 0.5526*20 # <1>
 ```
 
-1. We must add together the coefficient for the intercept, the coefficient for the manual occupation (which is negative), and the ART coefficient multiplied by 20 (remember that we did not center this predictor).
+1.  We must add together the coefficient for the intercept, the coefficient for the manual occupation (which is negative), and the ART coefficient multiplied by 20 (remember that we did not center this predictor).
 
 [**Q13.4**]{style="color:green;"} By default, the `visreg()` function displays a 95% confidence band around predicted values, corresponding to a significance level of 0.05. How can you change this default to display a 99% confidence band instead? Run the command `?visreg()` to find out how to achieve this from the function's help file.
 
@@ -709,9 +717,10 @@ visreg(model.ART, # <2>
        xvar = "ART", 
        alpha = .01) # <3>
 ```
+
 1.  The alpha value that corresponds to a 99% confidence interval is equal 0.01.
 2.  Hence the code should (minimally) include these arguments.
-3.  The argument that we need to change is called `alpha` because the significance level is also called the alpha-level (see Section 11.4). 
+3.  The argument that we need to change is called `alpha` because the significance level is also called the alpha-level (see Section 11.4).
 
 Observe how the width of the confidence bands changes when you increase the significance level from 0.01 to 0.1: the higher the significance level, the narrower the confidence band becomes. Remember that the significance level corresponds to the risk that we are willing to take of wrongly rejecting the null hypothesis when it is actually true. Therefore, when we lower this risk by choosing a lower significance level (i.e. 0.01), we end up with wider confidence bands that are more likely to allow us to draw a flat line (see @sec-Correlations). If we can draw a flat line through a 99% confidence band, this means that we do not have enough evidence to reject the null hypothesis at the significance level of 0.01.
 :::
@@ -747,7 +756,6 @@ rel.imp.metric <- calc.relimp(model4_c,
 ```
 
 ::: callout-important
-
 Loading the {relaimpo} package returns several warnings informing us, on the one hand, about packages that {relaimpo} requires to work and which are therefore also automatically loaded (these are called **dependencies**) and, on the other, about objects being **masked** by different packages, e.g.:
 
 ```         
@@ -848,7 +856,6 @@ rel.imp.metric.df |> # <4>
 2.  Compute the lmg values
 3.  Extract the lmg values and store them as a data frame.
 4.  Display the lmg values as a table.
-
 :::
 ::::
 
@@ -954,12 +961,12 @@ The best way to avoid misinterpreting interaction effects is to make sure you al
 
 visreg(model5, 
        xvar = "Age_c", 
-       by = "Group",
-       xtrans = function(x) x + median(Dabrowska.data$Age), 
-       gg = TRUE) + 
+       by = "Group") +
   labs(x = "Age (in years)",
        y = "Predicted Vocab scores") +
-  theme_bw()
+  theme_bw() +
+  scale_x_continuous(labels = function(x) x + median(Dabrowska.data$Age),
+                     breaks = seq(-11, 41, 10))  
 ```
 
 If we compare @fig-PredictedVocabAgeInteraction (in which the points represent the model's partial residuals) to @fig-CorVocabAge (in which the points represent the actual, observed values), we can see that the partial residuals are, on average, smaller than the differences between the observed values and the regression lines of @fig-CorVocabAge. This is because the regression lines of @fig-CorVocabAge correspond to a model that only includes three coefficients, `Age_c`, `Group` and their interaction (`Age_c:Group`), whereas the partial residuals in @fig-PredictedVocabAgeInteraction correspond to the left-over variance in `Vocab` scores once all other predictors of the `model5` have been taken into account.
@@ -1088,12 +1095,12 @@ check_hint("Think about whether a horizontal line indicating no correlation (i.e
 
 visreg(model5.int, 
        xvar = "EduTotal_c", 
-       by = "Group",
-       xtrans = function(x) x + median(Dabrowska.data$EduTotal), 
-       gg = TRUE) + 
+       by = "Group") +
   labs(x = "Years in formal education",
        y = "Predicted Vocab scores") +
-  theme_bw()
+  theme_bw() +
+  scale_x_continuous(labels = function(x) x + median(Dabrowska.data$EduTotal), 
+                     breaks = seq(-11, 10, 3))   
 ```
 :::
 ::::
@@ -1125,12 +1132,12 @@ In @fig-PredictedVocabAgeByEdu, we visualise this statistically non-significant 
 
 visreg(model6,
        xvar = "Age_c", 
-       by = "EduTotal_c",
-       xtrans = function(x) x + median(Dabrowska.data$Age), 
-       gg = TRUE) + 
+       by = "EduTotal_c") +
   labs(x = "Age",
        y = "Predicted Vocab scores") +
-  theme_bw()
+  theme_bw() +
+  scale_x_continuous(labels = function(x) x + median(Dabrowska.data$Age),
+                     breaks = seq(-11, 41, 10))  
 ```
 
 The `visreg()` function provides two ways to visualise interaction effects between two numeric variables: in @fig-PredictedVocabAgeByEdu, below-average, average, and above-average number of years in formal education were visualised across three panels. @fig-PredictedVocabAgeRL shows the same predictions but, this time, the code includes the argument `overlay = TRUE`, which results in a single panel with three coloured regression lines superimposed. This can make it easier to check whether the lines are parallel. From @fig-PredictedVocabAgeRL, it is easier to see that the three lines are pretty much parallel to each other. This suggests that the positive effect of `Age` on `Vocab` scores does not change as a function of the number of years that participants were in formal education.
@@ -1145,12 +1152,12 @@ The `visreg()` function provides two ways to visualise interaction effects betwe
 visreg(model6,
        xvar = "Age_c", 
        by = "EduTotal_c",
-       overlay = TRUE,
-       xtrans = function(x) x + median(Dabrowska.data$Age), 
-       gg = TRUE) + 
+       overlay = TRUE) +
   labs(x = "Age",
        y = "Predicted Vocab scores") +
-  theme_bw()
+  theme_bw() +
+  scale_x_continuous(labels = function(x) x + median(Dabrowska.data$Age),
+                     breaks = seq(-11, 41, 10))  
 ```
 
 In order to interpret the output of a model featuring a significant interaction between two numeric predictors, we will now fit a simpler model predicting the `Vocab` scores of the L1 participants only (`L1.data`) using only two predictor variables: years in formal education (`EduTotal`) and Author Recognition Test (`ART`) scores. The Author Recognition Test [@acheson2008] is a measure of print exposure to literature, which is known to be a strong predictor of vocabulary knowledge. This is confirmed in the L1 dataset as `ART` and `Vocab` scores are strongly correlated:
@@ -1167,7 +1174,7 @@ cor(L1.data$EduTotal, L1.data$Vocab)
 
 In the following, we explore the possibility that this positive association between Author Recognition Test (`ART`) scores and `Vocab` scores may be moderated by the number of years spent in formal education (`EduTotal`). If this interaction effect were negative, this would mean that, if two individuals both have the same high `ART` score, but one spent longer in formal education, then the effect of those extra years of education would not be as strong as they would be for someone with a lower `ART` score. To test this hypothesis, we formulate the following null hypothesis:
 
--   **H~0~**: The number of years spent in formal education does not moderate the association of L1 English speakers' `ART` scores with their `Vocab` scores.
+- **H~0~**: The number of years spent in formal education does not moderate the association of L1 English speakers' `ART` scores with their `Vocab` scores.
 
 We now fit a model to find out if we have enough evidence to reject this null hypothesis:
 
@@ -1197,9 +1204,9 @@ L1.data |>
   select(Occupation, OccupGroup, ART, EduTotal, Vocab)
 ```
 
--   Participant No. 2 is a student and support worker with an ART score of 31 points, who has (so far) spent 13 years in formal education.
+- Participant No. 2 is a student and support worker with an ART score of 31 points, who has (so far) spent 13 years in formal education.
 
--   Participant No. 18 is a housewife who also scored 31 points on the ART and who was in formal education for a total of 17 years.
+- Participant No. 18 is a housewife who also scored 31 points on the ART and who was in formal education for a total of 17 years.
 
 In general, we can calculate the `Vocab` scores that our `L1.model` predicts by combining the model's coefficient estimates like this:
 
@@ -1256,12 +1263,12 @@ Notice how these two predicted scores are very similar, even though the housewif
 
 visreg(L1.model,
        xvar = "EduTotal_c", 
-       by = "ART",
-       xtrans = function(x) x + median(L1.data$EduTotal), 
-       gg = TRUE) + 
+       by = "ART") +
   labs(x = "Years in formal education",
        y = "Predicted Vocab scores") +
-  theme_bw()
+  theme_bw() +
+  scale_x_continuous(labels = function(x) x + median(Dabrowska.data$EduTotal),
+                     breaks = seq(-11, 10, 3))  
 ```
 
 For low and mid-level ART scores, the model predicts a positive correlation between the number of years a participant has spent in formal education and their predicted `Vocab` scores. However, this is not the case for participants who scored high on the ART test (third panel). The three regression lines representing the model's predicted scores are clearly not parallel, and it would not be possible to draw parallel lines that each stay within their respective 95% confidence bands. This confirms that, in this L1 model, the interaction between ART scores and years in formal education is statistically significant at $\alpha$ = 0.05. Crucially, it means that the main effects of `ART` and `EduYears` cannot be meaningfully interpreted without considering this interaction.
@@ -1334,7 +1341,7 @@ summary(L1.model.back3)
 
 This was not a good idea as `L1.model.back3` accounts for 49% of the variance (adjusted *R*^2^ = `0.4864`), which is considerably less than `L1.model.back2`. We will therefore report and interpret `L1.model.back2`.
 
-::::: callout-note
+:::::: callout-note
 ## How to report a multiple regression model
 
 There are many ways to report the **numerical** results of a statistical model. Researchers typically include a table reporting the model's coefficient estimates (sometimes referred to as $\beta$, "beta"), together with a measure of variability around these estimates (e.g. standard error or confidence intervals), as well as their associated *p*-values. In addition, it is important to report the accuracy of the model. Various **goodness-of-fit measures** are used for this; one of the most common being the adjusted coefficient of determination, *R*^2^. The output of the `summary()` function includes all of these statistics and is therefore suitable for a research report.
@@ -1386,16 +1393,16 @@ The message warns us that we should not attempt to interpret `ART` and `EduTotal
 
 visreg(fit = L1.model.back2, 
        xvar = "EduTotal_c", 
-       xtrans = function(x) x + median(L1.data$EduTotal), 
-       by = "ART",
-       gg = TRUE) +
+       by = "ART") +
   labs(x = "Years in formal education",
        y = "Predicted Vocab scores") +
-  theme_bw()  
+  theme_bw() +
+  scale_x_continuous(labels = function(x) x + median(L1.data$EduTotal),
+                     breaks = seq(-10, 10, 3))   
 ```
 
 @fig-PredictedVocabEduLit shows the predicted effect of the number of years in formal education on `Vocab` scores for participants who scored 3, 10, and 31 points on the `ART`. The regression line shows a positive relation between `Vocab` scores and years in formal education for below-average and average `ART` scores, but the regression line is almost flat for above-average `ART` scores. This indicates that, for individuals who score very high on the `ART`, years in education is no longer a useful predictor of their `Vocab` scores. Finally, we should also report the outcome of our model assumption checks. This is covered in the following section.
-:::::
+::::::
 
 ## Checking model assumptions {#sec-ModelAssumptions}
 
@@ -1405,15 +1412,15 @@ These problems can occur for a number of reasons, but most often because the mod
 
 The model assumptions for multiple linear regression models are the same as for simple linear regression models (see @sec-AssumptionsLR):
 
--   Independence of the data points (see @sec-Independence and @sec-IndependenceSLR)
--   Linear relationships between the predictors (see @sec-Linearity and @sec-LinearitySLR)
--   Homogeneity of the model residuals (see @sec-Homoscedasticity and @sec-Residuals)
--   Normality of the model residuals (see @sec-Normality)
--   No overly influential outliers (see @sec-Linearity)
+- Independence of the data points (see @sec-Independence and @sec-IndependenceSLR)
+- Linear relationships between the predictors (see @sec-Linearity and @sec-LinearitySLR)
+- Homogeneity of the model residuals (see @sec-Homoscedasticity and @sec-Residuals)
+- Normality of the model residuals (see @sec-Normality)
+- No overly influential outliers (see @sec-Linearity)
 
 There is only one additional assumption that is specific to models that include multiple predictors:
 
--   No multicollinearity
+- No multicollinearity
 
 In the following, we use the `check_model()` function from the {[performance](https://easystats.github.io/performance)} package [@ludeckePerformancePackageAssessment2021] to check these assumptions graphically. The `check_model()` function also requires the installation of the {[qqplotr](https://aloy.github.io/qqplotr/index.html)} [@almeidaGgplot2CompatibleQuantilequantile2018] and {[see](https://easystats.github.io/see/)} [@ludeckeSeePackageVisualizing2021] packages to work.
 
@@ -1429,9 +1436,9 @@ install.packages(c("performance", "qqplotr", "see"))
 library(performance)
 ```
 
-Running the `check_model()` function on the saved model object generates a large figure comprising six plots (see @fig-6plots).[^13_regression-2] In the following, we will learn to interpret them one-by-one.
+Running the `check_model()` function on the saved model object generates a large figure comprising six plots (see @fig-6plots).[^13_regression-1] In the following, we will learn to interpret them one-by-one.
 
-[^13_regression-2]: If your version of *RStudio* does not display the six-panelled figure but instead only a white canvas, this is probably because your Plots pane is too small. In this case, you will need to make it as large as possible and then try running the function again. If that doesn't work either, don't worry as we will save and examine individual plots in the next paragraph.
+[^13_regression-1]: If your version of *RStudio* does not display the six-panelled figure but instead only a white canvas, this is probably because your Plots pane is too small. In this case, you will need to make it as large as possible and then try running the function again. If that doesn't work either, don't worry as we will save and examine individual plots in the next paragraph.
 
 ```{r}
 #| fig-width: 8
@@ -1560,9 +1567,9 @@ So far in this chapter, we have fitted a model of L1 speakers' `Vocab` scores. W
 
 In this task, your aim is to find out which predictors and interactions among predictors can be used to predict `Vocab` scores among L2 speakers and to what degree of accuracy. In addition to the predictors that we entered in our full L1 model, you can enter three additional predictors in your model that are relevant to L2 speakers only:
 
--   Age at which they started living in an English-speaking country (`Arrival`)
--   Total number of years they have been living in an English-speaking country (`LoR`)
--   Number of hours they spend reading in English in a typical week (`ReadEng`)
+- Age at which they started living in an English-speaking country (`Arrival`)
+- Total number of years they have been living in an English-speaking country (`LoR`)
+- Number of hours they spend reading in English in a typical week (`ReadEng`)
 
 Run the following code to median-center some of these numeric variables in `L2.data`:
 
@@ -1812,7 +1819,7 @@ visreg(fit = L2.model.b,
 
 This chapter aimed to provide first insights into the potential of statistical modelling with multiple predictors. It has demonstrated the importance of considering interactions between predictors and of visualising both the observed sample data, as well as simulated values based on the predictions of a statistical model.
 
-You may have noted that *p*-values were *not* at the heart of this chapter. Instead, we focused on model accuracy (as measured by the adjusted *R*^2^), coefficient estimates and their relative importance (as measured by the lmg metric), predicted values, and (partial) model residuals. This is because there is an unfortunate tendency among some students and researchers to be misled into thinking that, if a result turns out to be statistically significant, it must be true. As statistician Andrew @gelmanEthicsStatisticalPractice2018[ : 43] puts it, some confuse statistics for "a form of modern alchemy, transforming the uncertainty and variation of the laboratory and field measurements into clean scientific conclusions that can be taken as truth".
+You may have noted that *p*-values were *not* at the heart of this chapter. Instead, we focused on model accuracy (as measured by the adjusted *R*^2^), coefficient estimates and their relative importance (as measured by the lmg metric), predicted values, and (partial) model residuals. This is because there is an unfortunate tendency among some students and researchers to be misled into thinking that, if a result turns out to be statistically significant, it must be true. As statistician Andrew @gelmanEthicsStatisticalPractice2018 [ : 43] puts it, some confuse statistics for "a form of modern alchemy, transforming the uncertainty and variation of the laboratory and field measurements into clean scientific conclusions that can be taken as truth".
 
 I hope that working through @sec-Inferential to [-@sec-MLR] has shown you that a big part of learning to work with quantitative data in the language sciences is really about "embracing variation and accepting uncertainty" [@gelmanEmbracingVariationAccepting2019]. If we intend to report inferential statistics based on sample data, it is important that we decide on significance level thresholds, model selection criteria, and other such parameters *before* conducting our data analysis [on the benefits of preregistrating protocols and methods in the language sciences, see @mertzenBenefitsPreregistrationHypothesisdriven2021; @roettgerPreregistrationExperimentalLinguistics2021]. If we want to test hypotheses, these must be well-defined hypotheses and we must strive to quantify (and ideally also visualise!) **uncertainty**. Ultimately, it is worth remembering that "in almost all practical data analysis situations – we can only draw uncertain conclusions from data, regardless of whether we manage to obtain statistical significance or not" [@vasishthHowEmbraceVariation2021: 1311]. Crucially, we must be extremely careful when extrapolating our results beyond the range of our observed data.
 
@@ -1820,30 +1827,30 @@ As explained in @sec-Inferential, statistical inference based on NHST and *p*-va
 
 Does this mean that we should give up with quantitative data analysis and statistics all together? No, of course not. On the contrary, this uncertainty makes research in the language sciences all the more interesting and worth pursuing! It also means that there is much more to be learnt in terms of methods. In this chapter, you have learnt about **frequentist fixed-effects linear regression models**. These models are incredibly useful and can be used in many contexts, but they make a number of important assumptions that do not always hold:
 
--   Perhaps the most obvious, yet one that we have not discussed so far, is that the **outcome variable** of a linear regression model must be **quantitative**, like the `Vocab` variable in `Dabrowska.data`, which ranges from -13.33 to 95.56 (see @sec-Variables). Other types of statistical models can be used to model other types of outcome variables include:
+- Perhaps the most obvious, yet one that we have not discussed so far, is that the **outcome variable** of a linear regression model must be **quantitative**, like the `Vocab` variable in `Dabrowska.data`, which ranges from -13.33 to 95.56 (see @sec-Variables). Other types of statistical models can be used to model other types of outcome variables include:
 
-    -   **Binomial (or binary) logistic regression models** allow us to predict **binary** outcomes (e.g. whether or not a verb is negated) [see @LevshinaHowlinguisticsData2015: Chapter 12; @sondereggerRegressionModelingLinguistic2023: Chapter 6; @winterStatisticsLinguistsIntroduction2020: Chapter 12].
+  - **Binomial (or binary) logistic regression models** allow us to predict **binary** outcomes (e.g. whether or not a verb is negated) [see @LevshinaHowlinguisticsData2015: Chapter 12; @sondereggerRegressionModelingLinguistic2023: Chapter 6; @winterStatisticsLinguistsIntroduction2020: Chapter 12].
 
-    -   **Multinomial logistic regression models** can be used to model **categorical** outcome variables with more than two levels (e.g. which modal verb is used in certain constructions) [see @LevshinaHowlinguisticsData2015: Chapter 13].
+  - **Multinomial logistic regression models** can be used to model **categorical** outcome variables with more than two levels (e.g. which modal verb is used in certain constructions) [see @LevshinaHowlinguisticsData2015: Chapter 13].
 
-    -   **Poisson regression models** are used to model **count** variables, i.e. discrete numeric variables such as the frequency of fillers (such as *uh* and *oh*) in certain contexts [see @winterStatisticsLinguistsIntroduction2020: Chapter 13].
+  - **Poisson regression models** are used to model **count** variables, i.e. discrete numeric variables such as the frequency of fillers (such as *uh* and *oh*) in certain contexts [see @winterStatisticsLinguistsIntroduction2020: Chapter 13].
 
--   The observations (i.e. the data points) used to fit a **fixed-effect model** must be independent of each other. In the language sciences, such a situation is actually quite rare (see @sec-IndependenceSLR). To model interdependencies between observations, we can fit **mixed-effects models** (also called multilevel or hierarchical models) [see @klieglLinearMixedModels; @sondereggerRegressionModelingLinguistic2023: Chapters 8-10; @winterStatisticsLinguistsIntroduction2020: Chapters 14-15].
+- The observations (i.e. the data points) used to fit a **fixed-effect model** must be independent of each other. In the language sciences, such a situation is actually quite rare (see @sec-IndependenceSLR). To model interdependencies between observations, we can fit **mixed-effects models** (also called multilevel or hierarchical models) [see @klieglLinearMixedModels; @sondereggerRegressionModelingLinguistic2023: Chapters 8-10; @winterStatisticsLinguistsIntroduction2020: Chapters 14-15].
 
--   Linear regression models assume **linear** relationships between the predictors. There are different ways to circumvent this problem. In some cases, predictors can be **transformed** to meet this assumption [see @winterStatisticsLinguistsIntroduction2020: Chapter 5]. In others, it may be wiser to model non-linear associations with other kinds of models such as Generalised Additive Mixed Models [GAMMS; see @soskuthyGeneralisedAdditiveMixed2017; @wielingAnalyzingDynamicPhonetic2018].
+- Linear regression models assume **linear** relationships between the predictors. There are different ways to circumvent this problem. In some cases, predictors can be **transformed** to meet this assumption [see @winterStatisticsLinguistsIntroduction2020: Chapter 5]. In others, it may be wiser to model non-linear associations with other kinds of models such as Generalised Additive Mixed Models [GAMMS; see @soskuthyGeneralisedAdditiveMixed2017; @wielingAnalyzingDynamicPhonetic2018].
 
--   Finally, we need not stick to the **frequentist** school of statistics. In fact, quantitative linguists are increasingly turning to **Bayesian** statistics and finding that Bayesian models help them work with the particularities of linguistic data [see @levshinaComparingBayesianFrequentist2022; @nicenboimIntroductionBayesianData2026].
+- Finally, we need not stick to the **frequentist** school of statistics. In fact, quantitative linguists are increasingly turning to **Bayesian** statistics and finding that Bayesian models help them work with the particularities of linguistic data [see @levshinaComparingBayesianFrequentist2022; @nicenboimIntroductionBayesianData2026].
 
 ::: callout-note
 ## Recommended further reading `r emoji("books")`
 
 In this textbook, we have only just scratched the surface of statistical modelling. We can do much, much more with these kinds of models, and there are lots of additional things to take into account. The good news is that there are lots of excellent resources to help you continue your statistical modelling journey. Here are some good places to get started (in alphabetical order):
 
--   Gries, Stefan Thomas. 2021. *Statistics for linguistics with R: A practical introduction* (De Gruyter Mouton Textbook). 3^rd^ revised edition. De Gruyter Mouton.
--   Levshina, Natalia. 2015. *How to do linguistics with R: Data exploration and statistical analysis*. John Benjamins.
--   Nicenboim, Bruno, Daniel Schad & Shravan Vasishth. 2026. Introduction to Bayesian Data Analysis for cognitive science (Chapman & Hall/CRC Statistics in the Social and Behavioral Sciences Series). CRC Press. Open Access version: <https://bruno.nicenboim.me/bayescogsci/>.
--   Sonderegger, Morgan. 2023. *Regression modeling for linguistic data*. Cambridge, Massachusetts: The MIT Press. Open Access version: <https://osf.io/pnumg/>.
--   Winter, Bodo. 2020. Statistics for Linguists: An Introduction Using R. Routledge.
+- Gries, Stefan Thomas. 2021. *Statistics for linguistics with R: A practical introduction* (De Gruyter Mouton Textbook). 3^rd^ revised edition. De Gruyter Mouton.
+- Levshina, Natalia. 2015. *How to do linguistics with R: Data exploration and statistical analysis*. John Benjamins.
+- Nicenboim, Bruno, Daniel Schad & Shravan Vasishth. 2026. Introduction to Bayesian Data Analysis for cognitive science (Chapman & Hall/CRC Statistics in the Social and Behavioral Sciences Series). CRC Press. Open Access version: <https://bruno.nicenboim.me/bayescogsci/>.
+- Sonderegger, Morgan. 2023. *Regression modeling for linguistic data*. Cambridge, Massachusetts: The MIT Press. Open Access version: <https://osf.io/pnumg/>.
+- Winter, Bodo. 2020. Statistics for Linguists: An Introduction Using R. Routledge.
 
 Although they go further than the present textbook, you will also find that these resources begin by explaining many of the things already covered in this chapter and previous chapters, and that's actually a good thing. There's no harm in revising these complex topics from a different perspective, with different examples, `R` packages, and coding styles.
 :::
@@ -1862,9 +1869,9 @@ That was a lot to take in: well done for getting through this chapter! Completin
 
 Are you confident that you can...?
 
--   [ ] Fit a linear regression model in `R` with multiple numeric and categorical predictors and interpret the intercept and predictor coefficients (@sec-MultipleLM)
--   [ ] Center numeric predictors to make the intercept more meaningful and improve model interpretability (@sec-Centering)
--   [ ] Assess the importance of predictors using metrics like lmg (@sec-RelativeImp)
--   [ ] Visualise and interpret model predictions (with confidence bands) and partial residuals using the {visreg} library (@sec-ModelPredictions)
--   [ ] Model and interpret interactions between predictors in multiple linear regression models, and visualise these interactions to see how one predictor moderates the effect of another on the outcome variable (@sec-Interactions)
--   [ ] Check linear regression model assumptions using the {performance} package (@sec-ModelAssumptions).
+- [ ] Fit a linear regression model in `R` with multiple numeric and categorical predictors and interpret the intercept and predictor coefficients (@sec-MultipleLM)
+- [ ] Center numeric predictors to make the intercept more meaningful and improve model interpretability (@sec-Centering)
+- [ ] Assess the importance of predictors using metrics like lmg (@sec-RelativeImp)
+- [ ] Visualise and interpret model predictions (with confidence bands) and partial residuals using the {visreg} library (@sec-ModelPredictions)
+- [ ] Model and interpret interactions between predictors in multiple linear regression models, and visualise these interactions to see how one predictor moderates the effect of another on the outcome variable (@sec-Interactions)
+- [ ] Check linear regression model assumptions using the {performance} package (@sec-ModelAssumptions).

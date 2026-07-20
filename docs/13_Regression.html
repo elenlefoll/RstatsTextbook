@@ -695,7 +695,7 @@ window.Quarto = {
 <p>In this chapter, you will learn how to:</p>
 <ul>
 <li>Fit a linear regression model with multiple predictors.</li>
-<li>Center numeric predictor variables when meaningful.</li>
+<li>Center numeric predictor variables.</li>
 <li>Interpret the coefficient estimates of a multiple linear regression model.</li>
 <li>Interpret a model’s coefficients of determination (multiple <em>R</em><sup>2</sup> and adjusted <em>R</em><sup>2</sup>).</li>
 <li>Compute and plot the relative importance of predictors.</li>
@@ -748,7 +748,7 @@ window.Quarto = {
 </section>
 <section id="sec-MultipleLM" class="level2" data-number="13.2">
 <h2 data-number="13.2" class="anchored" data-anchor-id="sec-MultipleLM"><span class="header-section-number">13.2</span> Combining multiple predictors</h2>
-<p>In the following, we will attempt to model the variability in the receptive English vocabulary test scores of L1 and L2 English participants from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="References.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>. To this end, we will use multiple numeric and categorical predictors:</p>
+<p>In the following, we will attempt to model the variability in the English vocabulary test scores of L1 and L2 English participants from <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="References.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span>. To this end, we will use multiple numeric and categorical predictors:</p>
 <ol type="a">
 <li>participants’ native-speaker status (<code>Group</code>)</li>
 <li>their <code>Age</code>,</li>
@@ -757,7 +757,7 @@ window.Quarto = {
 <li>their non-verbal IQ test score (<code>Blocks</code>), and</li>
 <li>the number of years they were in formal education (<code>EduTotal</code>).</li>
 </ol>
-<p>We use the <code>+</code> operator to construct the model formula. It doesn’t matter in which order we list the predictors, as the model will consider them all simultaneously.</p>
+<p>We use the <code>+</code> operator to construct the model formula. It doesn’t matter in which order we list the predictors. The model will consider them all simultaneously.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Vocab <span class="sc">~</span> Group <span class="sc">+</span> Age <span class="sc">+</span> OccupGroup <span class="sc">+</span> Gender <span class="sc">+</span> Blocks <span class="sc">+</span> EduTotal, </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> Dabrowska.data)</span>
@@ -811,7 +811,7 @@ F-statistic:  10.5 on 8 and 148 DF,  p-value: 1.327e-11</code></pre>
 <pre data-code-line-numbers=""><code>[1] "C"  "I"  "M"  "PS"</code></pre>
 </div>
 </div>
-<p>The reference level of the <strong>numeric predictors</strong>, by contrast, corresponds to the value of&nbsp;<strong>zero</strong>. In <code>model4</code>, therefore, the estimated coefficient for the intercept corresponds to the predicted <code>Vocab</code> score of an adult English native speaker who belongs to the occupational group “C”, is female, who is aged 0 (!), scored 0 on the Blocks test, and spent 0 years (!) in formal education. Needless to say that trying to interpret this value is utterly meaningless! This is why, in this case, it makes sense to <strong>center</strong> our numeric predictor variables before entering them into our model. Another way to go about this would be to standardise the predictors using a <em>z</em>-transformation <span class="citation" data-cites="winterStatisticsLinguistsIntroduction2020">(see also <a href="References.html#ref-winterStatisticsLinguistsIntroduction2020" role="doc-biblioref">Winter 2019</a>: Section 5.2)</span>.</p>
+<p>The reference level of the <strong>numeric predictors</strong>, by contrast, corresponds to the value of&nbsp;<strong>zero</strong>. In <code>model4</code>, therefore, the estimated coefficient for the intercept corresponds to the predicted <code>Vocab</code> score of an adult English native speaker who belongs to the occupational group “C”, is female, who is aged 0 (!), scored 0 on the Blocks test, and spent 0 years (!) in formal education. Needless to say that trying to interpret this value is utterly meaningless! This is why, in this case, it makes sense to <strong>center</strong> our numeric predictor variables before entering them into our model. Another way to go about this would be to standardise the predictors using a <em>z</em>-transformation <span class="citation" data-cites="winterStatisticsLinguistsIntroduction2020">(see e.g. <a href="References.html#ref-winterStatisticsLinguistsIntroduction2020" role="doc-biblioref">Winter 2019</a>: Section 5.2)</span>.</p>
 </section>
 <section id="sec-Centering" class="level2" data-number="13.3">
 <h2 data-number="13.3" class="anchored" data-anchor-id="sec-Centering"><span class="header-section-number">13.3</span> Centering numeric predictors</h2>
@@ -969,11 +969,11 @@ Multiple R-squared:  0.3621,    Adjusted R-squared:  0.3276
 F-statistic:  10.5 on 8 and 148 DF,  p-value: 1.327e-11</code></pre>
 </div>
 </div>
-<p>If you compare the summary of <code>model4</code> with that of <code>model4_c</code>, you will notice that, whilst the intercept coefficient estimate has changed, all the other coefficient estimates have stayed the same.</p>
+<p>If you compare the summary of <code>model4</code> with that of <code>model4_c</code>, you will notice that the intercept coefficient estimate has changed, but that all the other coefficient estimates have stayed the same.</p>
 <p>Let’s decipher the summary of <code>model4_c</code> step-by-step:</p>
 <ul>
 <li><p>In this model, the estimated coefficient for the <strong>intercept</strong> corresponds to the predicted <code>Vocab</code> score of an English native speaker (<code>Group</code>&nbsp;=&nbsp;L1) who is aged 31 (the median <code>Age</code>), belongs to the occupational group <code>C</code>, is female, scored 16 on the Blocks test (the median <code>Blocks</code> score), and was in formal education for 14 years (the median number of years).</p></li>
-<li><p>As with the simple linear regression models that we computed in <a href="12_Modelling.html" class="quarto-xref"><span>Chapter 12</span></a>, the <strong>coefficient estimates of the numeric predictors</strong> (<code>Age_c</code>, <code>Blocks_c</code>, and <code>EduTotal_c</code>) correspond to increases or decreases in <code>Vocab</code> scores for each additional unit of that predictor variable, whilst keeping all other predictors at their reference level. Remember that, for numeric predictors, the reference level is 0, which, given that we have centered them, corresponds to the variable’s median value. Looking at the coefficient estimate for <code>Blocks_c</code> (<code>1.3011</code>), this means that someone who scored one point more than the median score in the Blocks test is predicted to have a <code>Vocab</code> test result that is <code>1.3011</code> points higher than the intercept, namely:</p>
+<li><p>As with the simple linear regression models that we computed in <a href="12_Modelling.html" class="quarto-xref"><span>Chapter 12</span></a>, the <strong>coefficient estimates of the numeric predictors</strong> (<code>Age_c</code>, <code>Blocks_c</code>, and <code>EduTotal_c</code>) correspond to increases or decreases in <code>Vocab</code> scores for each additional unit of that predictor variable, whilst keeping all other predictors at their reference level. Remember that, for numeric predictors, the reference level is 0 which, given that we have centered them, corresponds to the variable’s median value. Looking at the coefficient estimate for <code>Blocks_c</code> (<code>1.3011</code>), this means that someone who scored one point more than the median score in the Blocks test is predicted to have a <code>Vocab</code> test result that is <code>1.3011</code> points higher than the intercept, namely:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fl">70.5852</span> <span class="sc">+</span> <span class="fl">1.3011</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -987,7 +987,7 @@ F-statistic:  10.5 on 8 and 148 DF,  p-value: 1.327e-11</code></pre>
 <pre data-code-line-numbers=""><code>[1] 83.5962</code></pre>
 </div>
 </div></li>
-<li><p>You’ll be pleased to read that the interpretation of <strong>coefficient estimates of categorical predictors</strong> is less involved. Recall that, for categorical variables, the reference level is always the variable’s first level (see <a href="#sec-MultipleLM" class="quarto-xref"><span>Section 13.2</span></a>). If we want to make a prediction for an L2 instead of an L1 female speaker, but keep all other predictors at the reference level (i.e.&nbsp;clerical occupation, median age, median number of years in formal education, and median Blocks score), all we need to do is add the coefficient estimate for <code>GroupL2</code> (<code>-22.2896</code>) to the intercept coefficient. Given that this coefficient is negative, this addition will result in a predicted <code>Vocab</code> score that is lower than the model’s reference level:</p>
+<li><p>Interpreting the <strong>coefficient estimates of categorical predictors</strong> is less involved&nbsp;— as long as you remember what the reference levels are! In <a href="#sec-MultipleLM" class="quarto-xref"><span>Section 13.2</span></a>, we saw that, for categorical variables, the reference level is always the variable’s first level. If we want to make a prediction for an L2 instead of an L1 female speaker while keeping all other predictors at their reference level (i.e.&nbsp;clerical occupation, median age, median number of years in formal education, and median Blocks score), all we need to do is add the coefficient estimate for <code>GroupL2</code> (<code>-22.2896</code>) to the intercept coefficient. Given that this coefficient is negative, this addition will result in a predicted <code>Vocab</code> score that is lower than the model’s reference level:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fl">70.5852</span> <span class="sc">+</span> <span class="sc">-</span><span class="fl">22.2896</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1048,8 +1048,7 @@ F-statistic:  10.5 on 8 and 148 DF,  p-value: 1.327e-11</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 45.5401</code></pre>
 </div>
-</div></li>
-</ul>
+</div>
 <div class="content-visible callout callout-style-default callout-tip callout-titled" data-when-format="html">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1060,10 +1059,9 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You can hover your mouse over the circled numbers to find out how this predicted score was calculated. All the coefficient estimates were copied from the model summary output by <code>summary(model4_c)</code>.</p>
+<p>Hover your mouse over the circled numbers to find out how this predicted score was calculated. All the coefficient estimates were copied from the model summary output by <code>summary(model4_c)</code>.</p>
 </div>
-</div>
-<ul>
+</div></li>
 <li><p>We can check that we did the maths correctly by outputting the model’s prediction for the 154<sup>th</sup> observation directly. To this end, we apply the <code>predict()</code> function to the model object <code>model4_c</code> and extract the model’s predicted score for the 154<sup>th</sup> data point:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model4_c)[<span class="dv">154</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1072,7 +1070,7 @@ Tip
 45.53989 </code></pre>
 </div>
 </div>
-<p>As you can see, we obtain the same predicted <code>Vocab</code> score. The minor difference after the decimal point is due to us using coefficient estimates rounded-off to four decimal places (as displayed in the model’s summary output) rather than the exact values to which the <code>predict()</code> function has access.</p></li>
+<p>As you can see, we obtain the same predicted <code>Vocab</code> score. Note that the minor difference after the decimal point is due to us copying-and-pasting the coefficient estimates rounded-off to four decimal places displayed in the model’s summary output rather than using the exact coefficients to which the <code>predict()</code> function has access.</p></li>
 <li><p>This is all very well, but how accurate is this model prediction? To find out, we can compare this predicted score (that our model predicts for any male 46-year old with a manual occupation, a Blocks score of 23, and 10 years in formal education) to the 46-year-old Polish driver’s actual <code>Vocab</code> score:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
@@ -1098,27 +1096,27 @@ Tip
 3.348998 </code></pre>
 </div>
 </div></li>
-<li><p>We can compare this particular residual (corresponding to the 154<sup>th</sup> participant in the dataset) to all model residuals (corresponding to all participants) by examining the <strong>summary statistics of all residuals</strong>, which are displayed at the top of the model summary output (<code>summary(model4_c)</code>). These descriptive statistics inform us that the residual for the 154<sup>th</sup> participant is slightly higher than the average (median) residual, but well within the IQR (see <a href="8_DescriptiveStats.html#sec-IQR" class="quarto-xref"><span>Section 8.3.2</span></a>) of model residuals:</p>
+<li><p>We can compare this particular residual (corresponding to the 154<sup>th</sup> participant in the dataset) to all model residuals (corresponding to all participants) by examining the <strong>summary statistics of all residuals</strong>, which are displayed at the top of the model summary output. These descriptive statistics inform us that the residual for the 154<sup>th</sup> participant is slightly higher than the average (median) residual, but well within the IQR (see <a href="8_DescriptiveStats.html#sec-IQR" class="quarto-xref"><span>Section 8.3.2</span></a>) of model residuals:</p>
 <pre data-code-line-numbers=""><code>Residuals:
     Min      1Q  Median      3Q     Max 
 -62.825 -10.838   1.831  12.185  38.345 </code></pre>
-<p>Looking at the minimum and maximum residuals, we can see that our model overestimates at least one person’s <code>Vocab</code> score by 63 points (this is the most negative residual: <code>Min</code>), whilst in another case it underestimates it by 38 points (this is the largest positive residual: <code>Max</code>). Run the following code to find out more about the participant whose <code>Vocab</code> score was most dramatically underestimated by our model.</p>
+<p>Looking at the minimum and maximum residuals, we can see that our model overestimates at least one person’s <code>Vocab</code> score by 63 points (this is the largest negative residual: <code>Min</code>), whilst in another case it underestimates it by 38 points (this is the largest positive residual: <code>Max</code>). Run the following code to find out more about the participant whose <code>Vocab</code> score was most dramatically underestimated by our model.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Click here to find out whose score was most underestimated!</summary>
+<summary>Click here to find out whose receptive English vcoabularly knowledge was most underestimated!</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>Dabrowska.data <span class="sc">|&gt;</span> </span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">which.max</span>(model4_c<span class="sc">$</span>residuals)) <span class="sc">|&gt;</span> </span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Group, NativeLg, Age, Occupation, Gender, Blocks, EduTotal, Vocab)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div></li>
-<li><p>The <strong><em>p</em>-values</strong> associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable levels, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in <a href="12_Modelling.html#sec-Categoricalpredictor" class="quarto-xref"><span>Section 12.3</span></a>, we fitted a simple linear regression model (<code>model3</code>) which included only <code>OccupGroup</code> as a single predictor. In this simple model, the coefficient estimate for <code>OccupGroupI</code> made a statistically significant contribution to the model at an <span class="math inline">\(\alpha\)</span>-level of 0.05 (<em>p</em>&nbsp;=&nbsp;0.0335). By contrast, in the present multiple linear regression model, the predictor level <code>OccupGroupI</code> does not make a statistically significant contribution (<em>p</em>&nbsp;=&nbsp;0.077600 which is &gt;&nbsp;0.05). This is because our multiple regression model <code>model4_c</code> includes predictors that account for some of the same variance in <code>Vocab</code> scores in the data that occupational groups accounted for in our earlier model. This leaves less unique variance attributable to belonging to one or the other occupational group, thereby rendering it statistically non-significant.</p></li>
+<li><p>The <strong><em>p</em>-values</strong> associated with each coefficient estimate in the model summary indicate which predictor variables (or predictor variable levels, in the case of categorical variables) make a statistically significant contribution to the model. You may recall that, in <a href="12_Modelling.html#sec-Categoricalpredictor" class="quarto-xref"><span>Section 12.3</span></a>, we fitted a simple linear regression model (<code>model3</code>) which included only <code>OccupGroup</code> as a single predictor. In this simple model, the coefficient estimate for <code>OccupGroupI</code> made a statistically significant contribution to the model at an <span class="math inline">\(\alpha\)</span>-level of 0.05 (<em>p</em>&nbsp;=&nbsp;0.0335, which is &lt;&nbsp;0.05). By contrast, in the present multiple linear regression model, the predictor level <code>OccupGroupI</code> does not make a statistically significant contribution (<em>p</em>&nbsp;=&nbsp;0.077600, which is &gt;&nbsp;0.05). This is because our multiple regression model <code>model4_c</code> includes predictors that account for some of the same variance in <code>Vocab</code> scores in the data that occupational groups accounted for in our earlier model. This leaves less unique variance attributable to belonging to one or the other occupational group, thereby rendering it statistically non-significant.</p></li>
 <li><p>From the <strong>adjusted <em>R</em>-squared</strong> value (<code>0.3276</code>) displayed at the bottom of the model summary output, we can see that our multiple linear regression model accounts for around 33% of the total variance in <code>Vocab</code> scores found in the <span class="citation" data-cites="DabrowskaExperienceAptitudeIndividual2019">Dąbrowska (<a href="References.html#ref-DabrowskaExperienceAptitudeIndividual2019" role="doc-biblioref">2019</a>)</span> data. This is considerably more than we achieved with any of the simple linear models that we fitted in <a href="12_Modelling.html" class="quarto-xref"><span>Chapter 12</span></a>.</p></li>
 </ul>
 <section id="sec-ModelPredictions" class="level3" data-number="13.4.1">
 <h3 data-number="13.4.1" class="anchored" data-anchor-id="sec-ModelPredictions"><span class="header-section-number">13.4.1</span> Interpreting model predictions</h3>
-<p>Whilst it is important to understand how to interpret the coefficients of a multiple linear regression model from the model summary, in practice, it is always a good idea to also visualise model predictions. On the one hand, this reduces the risk of making any obvious interpretation errors and, on the other, it is much easier to interpret the residuals of a model when they are visualised alongside model predictions.</p>
-<p>To fully visualise the predictions of a multiple linear model, we would need to be able to plot as many dimensions as there are predictors in the model. The trouble is that, as humans, we find it difficult to interpret data visualisations with more than two dimensions. Indeed, although 3D plots can sometimes be useful [and can be generated in <code>R</code>, see e.g. <span class="citation" data-cites="kabacoffModernDataVisualization2024">Kabacoff (<a href="References.html#ref-kabacoffModernDataVisualization2024" role="doc-biblioref">2024</a>)</span>: <a href="https://rkabacoff.github.io/datavis/Other.html#Scatter3D">Section 10.1</a>], we are much better at interpreting two-dimensional plots. To bypass this inherent human weakness, we will plot the values predicted by our model on several plots: one for each predictor variable (see <a href="#fig-VisregVocab" class="quarto-xref">Figure&nbsp;<span>13.1</span></a>).</p>
-<p>Run the following command and then follow the instructions displayed in the Console pane to view the plots one by one. You may need to resize your Plot pane for the plots to be displayed. If you have a small screen, you may find the “:magnifying-glass-tilted-right: Zoom” option in <em>RStudio</em>’s Plots pane useful as it allows you to view the plots in a separate window.</p>
+<p>Whilst it is important to understand how to interpret the coefficients of a multiple linear regression model from its model summary, in practice, it is always a good idea to also visualise model predictions. On the one hand, this reduces the risk of making any obvious interpretation errors and, on the other, it is much easier to interpret the residuals of a model when they are visualised alongside model predictions.</p>
+<p>To fully visualise the predictions of a multiple linear model, we would need to plot as many dimensions as there are predictors in the model. The trouble is that, as humans, we find it difficult to interpret data visualisations with more than two dimensions. Indeed, although 3D plots can sometimes be useful <span class="citation" data-cites="kabacoffModernDataVisualization2024">(and can be generated in <code>R</code>, see e.g. <a href="References.html#ref-kabacoffModernDataVisualization2024" role="doc-biblioref">Kabacoff 2024</a>: <a href="https://rkabacoff.github.io/datavis/Other.html#Scatter3D">Section 10.1</a>)</span>, we are much better at interpreting two-dimensional plots. To bypass this inherent human weakness, we will plot the values predicted by our model on several plots: one for each predictor variable (see <a href="#fig-VisregVocab" class="quarto-xref">Figure&nbsp;<span>13.1</span></a>).</p>
+<p>Run the following command and then follow the instructions displayed in the Console pane to view the plots one by one. You may need to resize your Plot pane for the plots to be displayed. If you have a small screen, you may find the “<span class="emoji" data-emoji="mag_right">🔎</span> Zoom” option in <em>RStudio</em>’s Plots pane useful as it allows you to view the plots in a separate window.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visreg)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(model4_c)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1137,8 +1135,8 @@ Figure&nbsp;13.1: <code>Vocab</code> scores as predicted by <code>model4_c</code
 </div>
 </div>
 </div>
-<p>On plots produced by the <code>visreg()</code> function, as in <a href="12_Modelling.html#fig-PredictedVocabByOccupation" class="quarto-xref">Figure&nbsp;<span>12.9</span></a>, the model’s predicted values are displayed as blue lines. By default, these predictions are surrounded by 95% grey confidence bands. Now that we have several predictors in our model, the points in <code>visreg()</code> plots represent the model’s <strong>partial residuals</strong>. Partial residuals are the left-over variance (i.e.&nbsp;the residual) relative to the predictor that we are examining after having subtracted off the contribution of all the other predictors in the model.</p>
-<p>When interpreting the numeric predictors plotted in <a href="#fig-VisregVocab" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> above, it is important to remember that we entered centered numeric predictors in <code>model4_c</code>. This means that an <code>Age_c</code> value of&nbsp;0 corresponds to the median age in the dataset: 31 years. This is why <a href="#fig-VisregVocab" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> features negative ages: the negative values correspond to participants who are younger than 31. By contrast, positive scores correspond to participants who are older than 31 years. This is not very intuitive so, for the purposes of visualising and interpreting our model, it is best to transform these variables back to their original scale (see <a href="#fig-PredictedVocabAge" class="quarto-xref">Figure&nbsp;<span>13.2</span></a>). This is achieved by adding the following <code>xtrans</code> argument within the <code>visreg()</code> function.</p>
+<p>On plots produced by the <code>visreg()</code> function, as in <a href="12_Modelling.html#fig-PredictedVocabByOccupation" class="quarto-xref">Figure&nbsp;<span>12.9</span></a>, the model’s predicted values are displayed as blue lines. By default, these predictions are surrounded by 95% grey confidence bands. As we have several predictors in our model, the points in these <code>visreg()</code> plots represent the model’s <strong>partial residuals</strong>. Partial residuals are the leftover variance (i.e.&nbsp;the residual) relative to the predictor that we are examining after having subtracted off the contribution of all the other predictors in the model.</p>
+<p>When interpreting the numeric predictors plotted in <a href="#fig-VisregVocab" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> above, it is important to remember that, in this model (<code>model4_c</code>), we entered centered numeric predictors. This means that an <code>Age_c</code> value of&nbsp;0 corresponds to the median age in the dataset: 31 years. This is why <a href="#fig-VisregVocab" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> features negative ages: the negative values correspond to participants who are younger than 31. By contrast, positive scores correspond to participants who are older than 31 years. This is not very intuitive so, for the purposes of visualising and interpreting our model, it is best to transform these variables back to their original scale (see <a href="#fig-PredictedVocabAge" class="quarto-xref">Figure&nbsp;<span>13.2</span></a>). This is achieved using the <code>labels</code> argument with the {ggplot2} <code>scale_x_continuous()</code> function.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1149,44 +1147,45 @@ Figure&nbsp;13.1: <code>Vocab</code> scores as predicted by <code>model4_c</code
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Due to a bug that was introduced in the latest version of the {visreg} package, it is currently necessary to install version 2.7 of the {visreg} package for the <code>xtrans</code> argument to work as expected. You can find out which package version you currently have installed, if any, using this function:</p>
+<p>Due to a bug in the current CRAN version of the {visreg} package (v.&nbsp;2.8), it is currently necessary to install the latest development version of the package for this chapter. You can find out which package version you currently have installed, if any, using this function:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">"visreg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>If you have version 2.8.0, begin by deleting your current installation:</p>
+<p>If you have version 2.8.0 or earlier, begin by deleting your current installation of the package:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="st">"visreg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Then, install the {remotes} package, which allows you to install older versions of packages (if they are compatible with your <code>R</code> version). You will likely get a message notifying you that it is necessary to restart your <code>R</code> session. Click “yes”. If you don’t get this message, it is probably still a good idea to shut down <em>RStudio</em> and start again afresh.</p>
+<p>Then, install the {remotes} package, which allows you to install older and developmental versions of packages (if they are compatible with your <code>R</code> version). You will likely get a message notifying you that it is necessary to restart your <code>R</code> session. Click “yes”. If you don’t get this message, it is probably still a good idea to shut down <em>RStudio</em> and start again afresh.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Finally, load the {remotes} library and then install version 2.7.0 of the {visreg} package:</p>
+<p>Finally, install version the latest version of the {visreg} package directly from the developer’s GitHub page:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_version</span>(<span class="st">"visreg"</span>, <span class="st">"2.7.0"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"pbreheny/visreg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
-<div class="cell" data-source-line-numbers="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40" data-source-line-numbers="4" data-code-line-numbers="4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visreg)</span>
+<div class="cell" data-source-line-numbers="9-10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40" data-source-line-numbers="9-10" data-code-line-numbers="9-10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visreg)</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(model4_c, </span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">xvar =</span> <span class="st">"Age_c"</span>, </span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">xtrans =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(Dabrowska.data<span class="sc">$</span>Age), </span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">gg =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age (in years)"</span>,</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">xvar =</span> <span class="st">"Age_c"</span>) <span class="sc">+</span> </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age (in years)"</span>,</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">110</span>)) <span class="sc">+</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(Dabrowska.data<span class="sc">$</span>Age), </span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">11</span>, <span class="dv">41</span>, <span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-PredictedVocabAge" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatterplot showing predicted vocabulary scores versus age in years, with partial residual points and a blue regression line with gray confidence band showing a slight positive trend. Two data points are highlighted: a pink point labeled Lithuanian bar staff showing a large positive residual around age 25, and a purple point labeled Polish driver showing a small residual around age 50.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-PredictedVocabAge-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="13_Regression_files/figure-html/fig-PredictedVocabAge-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;13.2: Vocab scores as predicted by model4_c for speakers of various ages (blue line) and partial model residuals represented as points. In the version printed in the textbook, two data points are highlighted: one representing a very large positive residual and one representing a very small residual."><img src="13_Regression_files/figure-html/fig-PredictedVocabAge-1.png" class="img-fluid figure-img" style="width:80.0%" alt="Scatterplot showing predicted vocabulary scores versus age in years, with partial residual points and a blue regression line with gray confidence band showing a slight positive trend. Two data points are highlighted: a pink point labeled Lithuanian bar staff showing a large positive residual around age 25, and a purple point labeled Polish driver showing a small residual around age 50."></a>
+<a href="13_Regression_files/figure-html/fig-PredictedVocabAge-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;13.2: Vocab scores as predicted by model4_c for speakers of various ages (blue line) and partial model residuals represented as points. Two data points are highlighted: one representing a very large positive residual and one representing a very small residual."><img src="13_Regression_files/figure-html/fig-PredictedVocabAge-1.png" class="img-fluid figure-img" style="width:80.0%" alt="Scatterplot showing predicted vocabulary scores versus age in years, with partial residual points and a blue regression line with gray confidence band showing a slight positive trend. Two data points are highlighted: a pink point labeled Lithuanian bar staff showing a large positive residual around age 25, and a purple point labeled Polish driver showing a small residual around age 50."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-PredictedVocabAge-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.2: <code>Vocab</code> scores as predicted by <code>model4_c</code> for speakers of various ages (blue line) and partial model residuals represented as points. In the version printed in the textbook, two data points are highlighted: one representing a very large positive residual and one representing a very small residual.
+Figure&nbsp;13.2: <code>Vocab</code> scores as predicted by <code>model4_c</code> for speakers of various ages (blue line) and partial model residuals represented as points. Two data points are highlighted: one representing a very large positive residual and one representing a very small residual.
 </figcaption>
 </figure>
 </div>
@@ -1215,8 +1214,8 @@ Figure&nbsp;13.2: <code>Vocab</code> scores as predicted by <code>model4_c</code
 <div class="cell-output-display">
 <form name="form_Q13_1" onsubmit="return validate_form_Q13_1()" method="post">
 <label>
-<input type="radio" name="answer_Q13_1" id="answer_Q13_1_1" value="ART ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c">
-ART ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c
+<input type="radio" name="answer_Q13_1" id="answer_Q13_1_1" value="Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART">
+Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART
 </label>
 <br>
 <label>
@@ -1230,8 +1229,8 @@ Vocab ~ model4_c + ART
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q13_1" id="answer_Q13_1_4" value="Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART">
-Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART
+<input type="radio" name="answer_Q13_1" id="answer_Q13_1_4" value="ART ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c">
+ART ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c
 </label>
 <br>
 <input type="submit" value="Check answer">
@@ -1244,9 +1243,9 @@ Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_15701" onclick="return show_hint_15701()">🐭 Click on the mouse for a hint.</div>
-<div id="result_15701" onclick="return show_hint_15701()"></div>
-<script>function show_hint_15701(){var x = document.getElementById('result_15701').innerHTML; if(!x){document.getElementById('result_15701').innerHTML = 'Watch out: Although they are easily confused, the plus sign (<code>+</code>) and the asterisk sign (<code>*</code>) have different meanings in model formulas.';} else {document.getElementById('result_15701').innerHTML = '';}}</script>
+<div id="hint_45722" onclick="return show_hint_45722()">🐭 Click on the mouse for a hint.</div>
+<div id="result_45722" onclick="return show_hint_45722()"></div>
+<script>function show_hint_45722(){var x = document.getElementById('result_45722').innerHTML; if(!x){document.getElementById('result_45722').innerHTML = 'Watch out: Although they are easily confused, the plus sign (<code>+</code>) and the asterisk sign (<code>*</code>) have different meanings in model formulas.';} else {document.getElementById('result_45722').innerHTML = '';}}</script>
 </div>
 </div>
 <p><span style="color:green;"><strong>Q13.2</strong></span> Fit a model using the correct formula from above and save it as <code>model.ART</code>. Examine the summary of your new model. Which of these statements is/are true?</p>
@@ -1254,48 +1253,48 @@ Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c + ART
 <div class="cell-output-display">
 <form name="form_Q13_2" onsubmit="return validate_form_Q13_2()" method="post">
 <label>
-<input type="checkbox" id="answer_Q13_2_1" value="Recognising more real authors on the ART is associated with higher Vocab scores.">
-Recognising more real authors on the ART is associated with higher Vocab scores.
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q13_2_2" value="The model that does not include ART (model4_c) accounts for more of the variance in Vocab scores than the model that does.">
-The model that does not include ART (model4_c) accounts for more of the variance in Vocab scores than the model that does.
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q13_2_3" value="ART does not make a statistically significant contribution to the model at the α-level of 0.05.">
-ART does not make a statistically significant contribution to the model at the α-level of 0.05.
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q13_2_4" value="Recognising more real authors on the ART is associated with lower Vocab scores.">
-Recognising more real authors on the ART is associated with lower Vocab scores.
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q13_2_5" value="The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c).">
+<input type="checkbox" id="answer_Q13_2_1" value="The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c).">
 The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c).
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q13_2_6" value="ART makes a statistically significant contribution to the model at the α-level of 0.05.">
+<input type="checkbox" id="answer_Q13_2_2" value="ART makes a statistically significant contribution to the model at the α-level of 0.05.">
 ART makes a statistically significant contribution to the model at the α-level of 0.05.
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q13_2_3" value="Recognising more real authors on the ART is associated with higher Vocab scores.">
+Recognising more real authors on the ART is associated with higher Vocab scores.
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q13_2_4" value="ART does not make a statistically significant contribution to the model at the α-level of 0.05.">
+ART does not make a statistically significant contribution to the model at the α-level of 0.05.
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q13_2_5" value="Recognising more real authors on the ART is associated with lower Vocab scores.">
+Recognising more real authors on the ART is associated with lower Vocab scores.
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q13_2_6" value="The model that does not include ART (model4_c) accounts for more of the variance in Vocab scores than the model that does.">
+The model that does not include ART (model4_c) accounts for more of the variance in Vocab scores than the model that does.
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_Q13_2"></div>
 </form>
-<script>function validate_form_Q13_2() {var text; var x1 = document.getElementById('answer_Q13_2_1'); var x2 = document.getElementById('answer_Q13_2_2'); var x3 = document.getElementById('answer_Q13_2_3'); var x4 = document.getElementById('answer_Q13_2_4'); var x5 = document.getElementById('answer_Q13_2_5'); var x6 = document.getElementById('answer_Q13_2_6'); if (x1.checked == true&x2.checked == false&x3.checked == false&x4.checked == false&x5.checked == true&x6.checked == true){text = 'That’s right! Well done!';} else {text = 'No, not quite. Check the hint and the code below if you need some help.';} document.getElementById('result_Q13_2').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q13_2() {var text; var x1 = document.getElementById('answer_Q13_2_1'); var x2 = document.getElementById('answer_Q13_2_2'); var x3 = document.getElementById('answer_Q13_2_3'); var x4 = document.getElementById('answer_Q13_2_4'); var x5 = document.getElementById('answer_Q13_2_5'); var x6 = document.getElementById('answer_Q13_2_6'); if (x1.checked == true&x2.checked == true&x3.checked == true&x4.checked == false&x5.checked == false&x6.checked == false){text = 'That’s right! Well done!';} else {text = 'No, not quite. Check the hint and the code below if you need some help.';} document.getElementById('result_Q13_2').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
          if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'That’s right! Well done!';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_91340" onclick="return show_hint_91340()">🐭 Click on the mouse for a hint.</div>
-<div id="result_91340" onclick="return show_hint_91340()"></div>
-<script>function show_hint_91340(){var x = document.getElementById('result_91340').innerHTML; if(!x){document.getElementById('result_91340').innerHTML = 'Three of these statements are correct.';} else {document.getElementById('result_91340').innerHTML = '';}}</script>
+<div id="hint_79399" onclick="return show_hint_79399()">🐭 Click on the mouse for a hint.</div>
+<div id="result_79399" onclick="return show_hint_79399()"></div>
+<script>function show_hint_79399(){var x = document.getElementById('result_79399').innerHTML; if(!x){document.getElementById('result_79399').innerHTML = 'Three of these statements are correct.';} else {document.getElementById('result_79399').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -1342,7 +1341,7 @@ ART makes a statistically significant contribution to the model at the α-level 
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="13_Regression_files/figure-html/unnamed-chunk-29-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Observed relationship between participants’ age and their Author Recognition Test (ART) scores. The blue line shows that there is a moderate positive correlation between these two variables."><img src="13_Regression_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" alt="Scatterplot showing the relationship between age on the x-axis and Author Recognition Test (ART) scores on the y-axis, with data points scattered throughout. A blue regression line with gray confidence band shows a moderate positive correlation." width="576"></a></p>
+<p><a href="13_Regression_files/figure-html/unnamed-chunk-32-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Observed relationship between participants’ age and their Author Recognition Test (ART) scores. The blue line shows that there is a moderate positive correlation between these two variables."><img src="13_Regression_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" alt="Scatterplot showing the relationship between age on the x-axis and Author Recognition Test (ART) scores on the y-axis, with data points scattered throughout. A blue regression line with gray confidence band shows a moderate positive correlation." width="576"></a></p>
 <figcaption>Observed relationship between participants’ age and their Author Recognition Test (ART) scores. The blue line shows that there is a moderate positive correlation between these two variables.</figcaption>
 </figure>
 </div>
@@ -1353,33 +1352,33 @@ ART makes a statistically significant contribution to the model at the α-level 
 <div class="cell-output-display">
 <form name="form_Q13_3" onsubmit="return validate_form_Q13_3()" method="post">
 <label>
-<input type="radio" name="answer_Q13_3" id="answer_Q13_3_1" value="71.1133">
-71.1133
-</label>
-<br>
-<label>
-<input type="radio" name="answer_Q13_3" id="answer_Q13_3_2" value="73.6248">
-73.6248
-</label>
-<br>
-<label>
-<input type="radio" name="answer_Q13_3" id="answer_Q13_3_3" value="74.3556">
-74.3556
-</label>
-<br>
-<label>
-<input type="radio" name="answer_Q13_3" id="answer_Q13_3_4" value="74.1007">
+<input type="radio" name="answer_Q13_3" id="answer_Q13_3_1" value="74.1007">
 74.1007
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q13_3" id="answer_Q13_3_5" value="8.5405">
+<input type="radio" name="answer_Q13_3" id="answer_Q13_3_2" value="8.5405">
 8.5405
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q13_3" id="answer_Q13_3_6" value="123.3076">
+<input type="radio" name="answer_Q13_3" id="answer_Q13_3_3" value="73.6248">
+73.6248
+</label>
+<br>
+<label>
+<input type="radio" name="answer_Q13_3" id="answer_Q13_3_4" value="123.3076">
 123.3076
+</label>
+<br>
+<label>
+<input type="radio" name="answer_Q13_3" id="answer_Q13_3_5" value="71.1133">
+71.1133
+</label>
+<br>
+<label>
+<input type="radio" name="answer_Q13_3" id="answer_Q13_3_6" value="74.3556">
+74.3556
 </label>
 <br>
 <input type="submit" value="Check answer">
@@ -1392,9 +1391,9 @@ ART makes a statistically significant contribution to the model at the α-level 
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_349" onclick="return show_hint_349()">🐭 Click on the mouse for a hint.</div>
-<div id="result_349" onclick="return show_hint_349()"></div>
-<script>function show_hint_349(){var x = document.getElementById('result_349').innerHTML; if(!x){document.getElementById('result_349').innerHTML = 'The person described corresponds to the reference levels of all the predictors except for their occupational group and ART score.';} else {document.getElementById('result_349').innerHTML = '';}}</script>
+<div id="hint_22729" onclick="return show_hint_22729()">🐭 Click on the mouse for a hint.</div>
+<div id="result_22729" onclick="return show_hint_22729()"></div>
+<script>function show_hint_22729(){var x = document.getElementById('result_22729').innerHTML; if(!x){document.getElementById('result_22729').innerHTML = 'The person described corresponds to the reference levels of all the predictors except for their occupational group and ART score.';} else {document.getElementById('result_22729').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -1416,18 +1415,18 @@ ART makes a statistically significant contribution to the model at the α-level 
 <div class="cell-output-display">
 <form name="form_Q13_4" onsubmit="return validate_form_Q13_4()" method="post">
 <label>
-<input type="radio" name="answer_Q13_4" id="answer_Q13_4_1" value="visreg(model.ART, xvar = &quot;ART&quot;, trans = CI(0.99))">
-visreg(model.ART, xvar = "ART", trans = CI(0.99))
+<input type="radio" name="answer_Q13_4" id="answer_Q13_4_1" value="visreg(model.ART, xvar = &quot;ART&quot;, alpha = 0.01)">
+visreg(model.ART, xvar = "ART", alpha = 0.01)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q13_4" id="answer_Q13_4_2" value="visreg(model.ART, xvar = &quot;ART&quot;, alpha = 99)">
-visreg(model.ART, xvar = "ART", alpha = 99)
-</label>
-<br>
-<label>
-<input type="radio" name="answer_Q13_4" id="answer_Q13_4_3" value="visreg(model.ART, xvar = &quot;ART&quot;, alpha = &quot;99%&quot;)">
+<input type="radio" name="answer_Q13_4" id="answer_Q13_4_2" value="visreg(model.ART, xvar = &quot;ART&quot;, alpha = &quot;99%&quot;)">
 visreg(model.ART, xvar = "ART", alpha = "99%")
+</label>
+<br>
+<label>
+<input type="radio" name="answer_Q13_4" id="answer_Q13_4_3" value="visreg(model.ART, xvar = &quot;ART&quot;, trans = CI(0.99))">
+visreg(model.ART, xvar = "ART", trans = CI(0.99))
 </label>
 <br>
 <label>
@@ -1436,8 +1435,8 @@ visreg(model.ART, xvar = "ART", CI = 0.01)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q13_4" id="answer_Q13_4_5" value="visreg(model.ART, xvar = &quot;ART&quot;, alpha = 0.01)">
-visreg(model.ART, xvar = "ART", alpha = 0.01)
+<input type="radio" name="answer_Q13_4" id="answer_Q13_4_5" value="visreg(model.ART, xvar = &quot;ART&quot;, alpha = 99)">
+visreg(model.ART, xvar = "ART", alpha = 99)
 </label>
 <br>
 <input type="submit" value="Check answer">
@@ -1450,9 +1449,9 @@ visreg(model.ART, xvar = "ART", alpha = 0.01)
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_19644" onclick="return show_hint_19644()">🐭 Click on the mouse for a hint.</div>
-<div id="result_19644" onclick="return show_hint_19644()"></div>
-<script>function show_hint_19644(){var x = document.getElementById('result_19644').innerHTML; if(!x){document.getElementById('result_19644').innerHTML = '99% expressed as a probability is 0.99. The significance level is equal to 1 minus the confidence level expressed as a probability.';} else {document.getElementById('result_19644').innerHTML = '';}}</script>
+<div id="hint_16061" onclick="return show_hint_16061()">🐭 Click on the mouse for a hint.</div>
+<div id="result_16061" onclick="return show_hint_16061()"></div>
+<script>function show_hint_16061(){var x = document.getElementById('result_16061').innerHTML; if(!x){document.getElementById('result_16061').innerHTML = '99% expressed as a probability is 0.99. The significance level is equal to 1 minus the confidence level expressed as a probability.';} else {document.getElementById('result_16061').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -1736,12 +1735,12 @@ F-statistic: 10.98 on 9 and 147 DF,  p-value: 5.537e-13</code></pre>
 <div class="cell" data-source-line-numbers="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55" data-source-line-numbers="3" data-code-line-numbers="3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(model5, </span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">xvar =</span> <span class="st">"Age_c"</span>, </span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"Group"</span>,</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">xtrans =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(Dabrowska.data<span class="sc">$</span>Age), </span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">gg =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age (in years)"</span>,</span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"Group"</span>) <span class="sc">+</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age (in years)"</span>,</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(Dabrowska.data<span class="sc">$</span>Age),</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">11</span>, <span class="dv">41</span>, <span class="dv">10</span>))  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-PredictedVocabAgeInteraction" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel plot showing vocabulary scores versus age for L1 and L2 groups, with data points and blue regression lines with gray confidence bands. The L1 panel shows a positive correlation, while the L2 panel shows a negative correlation.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1775,38 +1774,38 @@ Figure&nbsp;13.5: <code>Vocab</code> scores as predicted by <code>model5</code> 
 <div class="cell-output-display">
 <form name="form_Q13_6" onsubmit="return validate_form_Q13_6()" method="post">
 <label>
-<input type="checkbox" id="answer_Q13_6_1" value="The number of years that L1 participants spent in formal education is positively correlated with their Vocab scores. This is not the case for L2 participants.">
-The number of years that L1 participants spent in formal education is positively correlated with their Vocab scores. This is not the case for L2 participants.
-</label>
-<br>
-<label>
-<input type="checkbox" id="answer_Q13_6_2" value="For both L1 and L2 participants, the number of years that they spent in formal education is positively correlated with their Vocab scores.">
+<input type="checkbox" id="answer_Q13_6_1" value="For both L1 and L2 participants, the number of years that they spent in formal education is positively correlated with their Vocab scores.">
 For both L1 and L2 participants, the number of years that they spent in formal education is positively correlated with their Vocab scores.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q13_6_3" value="For both L1 and L2 participants, the number of years that they spent in formal education is negatively correlated with their Vocab scores.">
+<input type="checkbox" id="answer_Q13_6_2" value="For both L1 and L2 participants, the number of years that they spent in formal education is negatively correlated with their Vocab scores.">
 For both L1 and L2 participants, the number of years that they spent in formal education is negatively correlated with their Vocab scores.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q13_6_4" value="For both L1 and L2 participants, the correlation between the number of years that they spent in formal education and their Vocab scores is not statistically significant.">
+<input type="checkbox" id="answer_Q13_6_3" value="For both L1 and L2 participants, the correlation between the number of years that they spent in formal education and their Vocab scores is not statistically significant.">
 For both L1 and L2 participants, the correlation between the number of years that they spent in formal education and their Vocab scores is not statistically significant.
+</label>
+<br>
+<label>
+<input type="checkbox" id="answer_Q13_6_4" value="The number of years that L1 participants spent in formal education is positively correlated with their Vocab scores. This is not the case for L2 participants.">
+The number of years that L1 participants spent in formal education is positively correlated with their Vocab scores. This is not the case for L2 participants.
 </label>
 <br>
 <input type="submit" value="Check answer">
 <div id="result_Q13_6"></div>
 </form>
-<script>function validate_form_Q13_6() {var text; var x1 = document.getElementById('answer_Q13_6_1'); var x2 = document.getElementById('answer_Q13_6_2'); var x3 = document.getElementById('answer_Q13_6_3'); var x4 = document.getElementById('answer_Q13_6_4'); if (x1.checked == false&x2.checked == true&x3.checked == false&x4.checked == false){text = 'That’s right, well done! 🎉';} else {text = 'No, that’s incorrect. Check the code below if you’re struggling to generate the plot.';} document.getElementById('result_Q13_6').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_Q13_6() {var text; var x1 = document.getElementById('answer_Q13_6_1'); var x2 = document.getElementById('answer_Q13_6_2'); var x3 = document.getElementById('answer_Q13_6_3'); var x4 = document.getElementById('answer_Q13_6_4'); if (x1.checked == true&x2.checked == false&x3.checked == false&x4.checked == false){text = 'That’s right, well done! 🎉';} else {text = 'No, that’s incorrect. Check the code below if you’re struggling to generate the plot.';} document.getElementById('result_Q13_6').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'That’s right! Well done!'; res3 = document.getElementById('result_Q13_3').innerText == 'Absolutely, well done!'; res4 = document.getElementById('result_Q13_4').innerText == 'That’s right, well done!'; res5 = document.getElementById('result_Q13_5').innerText == 'That’s right! Note that entering this predictor in the model changes the relative importance of all the other predictors, too.'; res6 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉';text = res1 + res2 + res3 + res4 + res5 + res6;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_38901" onclick="return show_hint_38901()">🐭 Click on the mouse for a hint.</div>
-<div id="result_38901" onclick="return show_hint_38901()"></div>
-<script>function show_hint_38901(){var x = document.getElementById('result_38901').innerHTML; if(!x){document.getElementById('result_38901').innerHTML = 'Only one of these statements is correct.';} else {document.getElementById('result_38901').innerHTML = '';}}</script>
+<div id="hint_86443" onclick="return show_hint_86443()">🐭 Click on the mouse for a hint.</div>
+<div id="result_86443" onclick="return show_hint_86443()"></div>
+<script>function show_hint_86443(){var x = document.getElementById('result_86443').innerHTML; if(!x){document.getElementById('result_86443').innerHTML = 'Only one of these statements is correct.';} else {document.getElementById('result_86443').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -1829,18 +1828,18 @@ For both L1 and L2 participants, the correlation between the number of years tha
 <div class="cell-output-display">
 <form name="form_Q13_7" onsubmit="return validate_form_Q13_7()" method="post">
 <label>
-<input type="radio" name="answer_Q13_7" id="answer_Q13_7_1" value="+ EduTotal_c:Group">
-+ EduTotal_c:Group
-</label>
-<br>
-<label>
-<input type="radio" name="answer_Q13_7" id="answer_Q13_7_2" value="+ Vocab ~ EduTotal_c:Group">
+<input type="radio" name="answer_Q13_7" id="answer_Q13_7_1" value="+ Vocab ~ EduTotal_c:Group">
 + Vocab ~ EduTotal_c:Group
 </label>
 <br>
 <label>
-<input type="radio" name="answer_Q13_7" id="answer_Q13_7_3" value="+ EduTotal_c:Group:Vocab">
+<input type="radio" name="answer_Q13_7" id="answer_Q13_7_2" value="+ EduTotal_c:Group:Vocab">
 + EduTotal_c:Group:Vocab
+</label>
+<br>
+<label>
+<input type="radio" name="answer_Q13_7" id="answer_Q13_7_3" value="+ EduTotal_c:Group">
++ EduTotal_c:Group
 </label>
 <br>
 <input type="submit" value="Check answer">
@@ -1848,7 +1847,7 @@ For both L1 and L2 participants, the correlation between the number of years tha
 </form>
 <script>function validate_form_Q13_7() {var x, text; var x = document.forms['form_Q13_7']['answer_Q13_7'].value;if (x == '+ EduTotal_c:Group'){text = 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!';} else {text = 'No, that’s not it.';} document.getElementById('result_Q13_7').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'That’s right! Well done!'; res3 = document.getElementById('result_Q13_3').innerText == 'Absolutely, well done!'; res4 = document.getElementById('result_Q13_4').innerText == 'That’s right, well done!'; res5 = document.getElementById('result_Q13_5').innerText == 'That’s right! Note that entering this predictor in the model changes the relative importance of all the other predictors, too.'; res6 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉'; res7 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉'; res2 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1872,7 +1871,7 @@ Yes, it does.
 </form>
 <script>function validate_form_Q13_8() {var x, text; var x = document.forms['form_Q13_8']['answer_Q13_8'].value;if (x == 'No, it does not.'){text = 'That’s right. The <em>p</em>-value associated with the interaction coefficient is greater than 0.05.';} else {text = 'No. The <em>p</em>-value associated with the interaction coefficient is greater than 0.05.';} document.getElementById('result_Q13_8').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'That’s right! Well done!'; res3 = document.getElementById('result_Q13_3').innerText == 'Absolutely, well done!'; res4 = document.getElementById('result_Q13_4').innerText == 'That’s right, well done!'; res5 = document.getElementById('result_Q13_5').innerText == 'That’s right! Note that entering this predictor in the model changes the relative importance of all the other predictors, too.'; res6 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉'; res7 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!'; res8 = document.getElementById('result_Q13_8').innerText == 'That’s right. The p-value associated with the interaction coefficient is greater than 0.05.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉'; res2 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!'; res3 = document.getElementById('result_Q13_8').innerText == 'That’s right. The p-value associated with the interaction coefficient is greater than 0.05.';text = res1 + res2 + res3;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1920,14 +1919,14 @@ None of these conclusions can be drawn from the plot alone.
 </form>
 <script>function validate_form_Q13_9() {var x, text; var x = document.forms['form_Q13_9']['answer_Q13_9'].value;if (x == 'Years in formal education is a statistically significant predictor of Vocab scores for both L1 and L2 speakers, and there is no striking difference in the strength of this association between the L1 and the L2 group.'){text = 'That’s right, well done! We can tell from the plot that years in education is a statistically significant predictor because, in both the L1 and the L2 panel, it is impossible to draw a horizontal line that stays within the confidence band. A horizontal line would represent the null hypothesis of no association and, if we cannot draw it within the confidence band, this means that we can reject the null hypothesis. Concerning the statistical significance of the interaction, however, it is not obvious that the slopes of the two lines differ much. All the predicted Vocab scores for L2 speakers are lower than for L1 speakers, but the increase associated with more years of formal education, as represented by the gradients of the two slopes, look about the same. This is why the interaction coefficient turned out not to be statistically significant.';} else {text = 'No. Remember that the strength of the association is represented by the gradient of the slope of the regression lines.';} document.getElementById('result_Q13_9').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'That’s right! Well done!'; res3 = document.getElementById('result_Q13_3').innerText == 'Absolutely, well done!'; res4 = document.getElementById('result_Q13_4').innerText == 'That’s right, well done!'; res5 = document.getElementById('result_Q13_5').innerText == 'That’s right! Note that entering this predictor in the model changes the relative importance of all the other predictors, too.'; res6 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉'; res7 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!'; res8 = document.getElementById('result_Q13_8').innerText == 'That’s right. The p-value associated with the interaction coefficient is greater than 0.05.'; res9 = document.getElementById('result_Q13_9').innerText == 'That’s right, well done! We can tell from the plot that years in education is a statistically significant predictor because, in both the L1 and the L2 panel, it is impossible to draw a horizontal line that stays within the confidence band. A horizontal line would represent the null hypothesis of no association and, if we cannot draw it within the confidence band, this means that we can reject the null hypothesis. Concerning the statistical significance of the interaction, however, it is not obvious that the slopes of the two lines differ much. All the predicted Vocab scores for L2 speakers are lower than for L1 speakers, but the increase associated with more years of formal education, as represented by the gradients of the two slopes, look about the same. This is why the interaction coefficient turned out not to be statistically significant.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉'; res2 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!'; res3 = document.getElementById('result_Q13_8').innerText == 'That’s right. The p-value associated with the interaction coefficient is greater than 0.05.'; res4 = document.getElementById('result_Q13_9').innerText == 'That’s right, well done! We can tell from the plot that years in education is a statistically significant predictor because, in both the L1 and the L2 panel, it is impossible to draw a horizontal line that stays within the confidence band. A horizontal line would represent the null hypothesis of no association and, if we cannot draw it within the confidence band, this means that we can reject the null hypothesis. Concerning the statistical significance of the interaction, however, it is not obvious that the slopes of the two lines differ much. All the predicted Vocab scores for L2 speakers are lower than for L1 speakers, but the increase associated with more years of formal education, as represented by the gradients of the two slopes, look about the same. This is why the interaction coefficient turned out not to be statistically significant.';text = res1 + res2 + res3 + res4;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_94434" onclick="return show_hint_94434()">🐭 Click on the mouse for a hint.</div>
-<div id="result_94434" onclick="return show_hint_94434()"></div>
-<script>function show_hint_94434(){var x = document.getElementById('result_94434').innerHTML; if(!x){document.getElementById('result_94434').innerHTML = 'Think about whether a horizontal line indicating no correlation (i.e. the null hypothesis) could be drawn within the confidence bands.';} else {document.getElementById('result_94434').innerHTML = '';}}</script>
+<div id="hint_91996" onclick="return show_hint_91996()">🐭 Click on the mouse for a hint.</div>
+<div id="result_91996" onclick="return show_hint_91996()"></div>
+<script>function show_hint_91996(){var x = document.getElementById('result_91996').innerHTML; if(!x){document.getElementById('result_91996').innerHTML = 'Think about whether a horizontal line indicating no correlation (i.e. the null hypothesis) could be drawn within the confidence bands.';} else {document.getElementById('result_91996').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -1935,12 +1934,12 @@ None of these conclusions can be drawn from the plot alone.
 <summary>Show code to help you complete Q13.9</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(model5.int, </span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">xvar =</span> <span class="st">"EduTotal_c"</span>, </span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"Group"</span>,</span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">xtrans =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(Dabrowska.data<span class="sc">$</span>EduTotal), </span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">gg =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Years in formal education"</span>,</span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
-<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"Group"</span>) <span class="sc">+</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Years in formal education"</span>,</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(Dabrowska.data<span class="sc">$</span>EduTotal), </span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">11</span>, <span class="dv">10</span>, <span class="dv">3</span>))   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1992,12 +1991,12 @@ F-statistic: 9.842 on 10 and 146 DF,  p-value: 1.78e-12</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(model6,</span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">xvar =</span> <span class="st">"Age_c"</span>, </span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"EduTotal_c"</span>,</span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">xtrans =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(Dabrowska.data<span class="sc">$</span>Age), </span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">gg =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
-<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age"</span>,</span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"EduTotal_c"</span>) <span class="sc">+</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age"</span>,</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(Dabrowska.data<span class="sc">$</span>Age),</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">11</span>, <span class="dv">41</span>, <span class="dv">10</span>))  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-PredictedVocabAgeByEdu" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three-panel plot showing predicted vocabulary scores versus age for different education levels, with partial residual points and blue regression lines with gray confidence bands. All three panels show positive correlations between age and vocabulary scores, with higher education levels showing higher predicted scores overall.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2016,12 +2015,12 @@ Figure&nbsp;13.6: <code>Vocab</code> scores as predicted by <code>model6</code> 
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63" data-source-line-numbers="4" data-code-line-numbers="4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(model6,</span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">xvar =</span> <span class="st">"Age_c"</span>, </span>
 <span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"EduTotal_c"</span>,</span>
-<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">overlay =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">xtrans =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(Dabrowska.data<span class="sc">$</span>Age), </span>
-<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">gg =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
-<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age"</span>,</span>
-<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
-<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">overlay =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age"</span>,</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(Dabrowska.data<span class="sc">$</span>Age),</span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">11</span>, <span class="dv">41</span>, <span class="dv">10</span>))  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-PredictedVocabAgeRL" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Visreg plot showing predicted vocabulary scores versus age for three education levels, with color-coded partial residual points and regression lines with confidence bands. The red line is rising from approximately 55 to 80, the green line is rising from about 65 to 90, and the blue lines is rising from approximately 75 to 95.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2205,12 +2204,12 @@ F-statistic: 24.67 on 3 and 86 DF,  p-value: 1.311e-11</code></pre>
 <summary>Show code to generate plot.</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(L1.model,</span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">xvar =</span> <span class="st">"EduTotal_c"</span>, </span>
-<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"ART"</span>,</span>
-<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">xtrans =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(L1.data<span class="sc">$</span>EduTotal), </span>
-<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">gg =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
-<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Years in formal education"</span>,</span>
-<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
-<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"ART"</span>) <span class="sc">+</span></span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Years in formal education"</span>,</span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(Dabrowska.data<span class="sc">$</span>EduTotal),</span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">11</span>, <span class="dv">10</span>, <span class="dv">3</span>))  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-VocabEduART" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three-panel plot showing predicted vocabulary scores versus years in formal education for three ART scores (3, 10, and 31), with partial residual points and blue regression lines with gray confidence bands. The left panel (ART: 3) shows a strong positive correlation, the middle panel (ART: 10) shows a moderate positive correlation, and the right panel (ART: 31) shows a nearly flat but negative relationship around 90.">
@@ -2488,12 +2487,12 @@ F-statistic: 22.07 on 4 and 85 DF,  p-value: 1.615e-12</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(<span class="at">fit =</span> L1.model.back2, </span>
 <span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">xvar =</span> <span class="st">"EduTotal_c"</span>, </span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">xtrans =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(L1.data<span class="sc">$</span>EduTotal), </span>
-<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"ART"</span>,</span>
-<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">gg =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Years in formal education"</span>,</span>
-<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
-<span id="cb90-8"><a href="#cb90-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">by =</span> <span class="st">"ART"</span>) <span class="sc">+</span></span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Years in formal education"</span>,</span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
+<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(L1.data<span class="sc">$</span>EduTotal),</span>
+<span id="cb90-8"><a href="#cb90-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">3</span>))   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-PredictedVocabEduLit" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three-panel plot showing predicted vocabulary scores versus years in formal education for L1 speakers at different ART scores (3, 10, and 31), with partial residual points and blue regression lines with gray confidence bands. The relationship between education and vocabulary scores weakens with higher ART scores.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2744,14 +2743,14 @@ Note
 </form>
 <script>function validate_form_Q13_10() {var x, text; var x = document.forms['form_Q13_10']['answer_Q13_10'].value;if (x == '5'){text = 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.';} else {text = 'No, that’s incorrect.';} document.getElementById('result_Q13_10').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'That’s right! Well done!'; res3 = document.getElementById('result_Q13_3').innerText == 'Absolutely, well done!'; res4 = document.getElementById('result_Q13_4').innerText == 'That’s right, well done!'; res5 = document.getElementById('result_Q13_5').innerText == 'That’s right! Note that entering this predictor in the model changes the relative importance of all the other predictors, too.'; res6 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉'; res7 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!'; res8 = document.getElementById('result_Q13_8').innerText == 'That’s right. The p-value associated with the interaction coefficient is greater than 0.05.'; res9 = document.getElementById('result_Q13_9').innerText == 'That’s right, well done! We can tell from the plot that years in education is a statistically significant predictor because, in both the L1 and the L2 panel, it is impossible to draw a horizontal line that stays within the confidence band. A horizontal line would represent the null hypothesis of no association and, if we cannot draw it within the confidence band, this means that we can reject the null hypothesis. Concerning the statistical significance of the interaction, however, it is not obvious that the slopes of the two lines differ much. All the predicted Vocab scores for L2 speakers are lower than for L1 speakers, but the increase associated with more years of formal education, as represented by the gradients of the two slopes, look about the same. This is why the interaction coefficient turned out not to be statistically significant.'; res10 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_77034" onclick="return show_hint_77034()">🐭 Click on the mouse for a hint.</div>
-<div id="result_77034" onclick="return show_hint_77034()"></div>
-<script>function show_hint_77034(){var x = document.getElementById('result_77034').innerHTML; if(!x){document.getElementById('result_77034').innerHTML = 'By definition, all of the interactions entered in a model make a contribution, however small, to the model. Note that the question here is not about whether these contributions are statistically significantly different from zero.';} else {document.getElementById('result_77034').innerHTML = '';}}</script>
+<div id="hint_26516" onclick="return show_hint_26516()">🐭 Click on the mouse for a hint.</div>
+<div id="result_26516" onclick="return show_hint_26516()"></div>
+<script>function show_hint_26516(){var x = document.getElementById('result_26516').innerHTML; if(!x){document.getElementById('result_26516').innerHTML = 'By definition, all of the interactions entered in a model make a contribution, however small, to the model. Note that the question here is not about whether these contributions are statistically significantly different from zero.';} else {document.getElementById('result_26516').innerHTML = '';}}</script>
 </div>
 </div>
 <p><span style="color:green;"><strong>Q13.11</strong></span> Use the <code>check_model()</code> function to visually check whether <code>L2.model</code> meets the most important assumptions of multiple linear regression models. Which assumption(s) are obviously violated?</p>
@@ -2798,14 +2797,14 @@ None of these assumptions
 </form>
 <script>function validate_form_Q13_11() {var text; var x1 = document.getElementById('answer_Q13_11_1'); var x2 = document.getElementById('answer_Q13_11_2'); var x3 = document.getElementById('answer_Q13_11_3'); var x4 = document.getElementById('answer_Q13_11_4'); var x5 = document.getElementById('answer_Q13_11_5'); var x6 = document.getElementById('answer_Q13_11_6'); var x7 = document.getElementById('answer_Q13_11_7'); if (x1.checked == false&x2.checked == false&x3.checked == false&x4.checked == false&x5.checked == false&x6.checked == true&x7.checked == false){text = 'Yes, well done! 🎉';} else {text = 'No, not quite.';} document.getElementById('result_Q13_11').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'That’s right! Well done!'; res3 = document.getElementById('result_Q13_3').innerText == 'Absolutely, well done!'; res4 = document.getElementById('result_Q13_4').innerText == 'That’s right, well done!'; res5 = document.getElementById('result_Q13_5').innerText == 'That’s right! Note that entering this predictor in the model changes the relative importance of all the other predictors, too.'; res6 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉'; res7 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!'; res8 = document.getElementById('result_Q13_8').innerText == 'That’s right. The p-value associated with the interaction coefficient is greater than 0.05.'; res9 = document.getElementById('result_Q13_9').innerText == 'That’s right, well done! We can tell from the plot that years in education is a statistically significant predictor because, in both the L1 and the L2 panel, it is impossible to draw a horizontal line that stays within the confidence band. A horizontal line would represent the null hypothesis of no association and, if we cannot draw it within the confidence band, this means that we can reject the null hypothesis. Concerning the statistical significance of the interaction, however, it is not obvious that the slopes of the two lines differ much. All the predicted Vocab scores for L2 speakers are lower than for L1 speakers, but the increase associated with more years of formal education, as represented by the gradients of the two slopes, look about the same. This is why the interaction coefficient turned out not to be statistically significant.'; res10 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.'; res11 = document.getElementById('result_Q13_11').innerText == 'Yes, well done! 🎉';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.'; res2 = document.getElementById('result_Q13_11').innerText == 'Yes, well done! 🎉';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>
 <div class="cell-output-display">
-<div id="hint_88040" onclick="return show_hint_88040()">🐭 Click on the mouse for a hint.</div>
-<div id="result_88040" onclick="return show_hint_88040()"></div>
-<script>function show_hint_88040(){var x = document.getElementById('result_88040').innerHTML; if(!x){document.getElementById('result_88040').innerHTML = 'From the six diagnostic plots produced by the check_model() function, it transpires that one of these assumptions is severely violated.';} else {document.getElementById('result_88040').innerHTML = '';}}</script>
+<div id="hint_86655" onclick="return show_hint_86655()">🐭 Click on the mouse for a hint.</div>
+<div id="result_86655" onclick="return show_hint_86655()"></div>
+<script>function show_hint_86655(){var x = document.getElementById('result_86655').innerHTML; if(!x){document.getElementById('result_86655').innerHTML = 'From the six diagnostic plots produced by the check_model() function, it transpires that one of these assumptions is severely violated.';} else {document.getElementById('result_86655').innerHTML = '';}}</script>
 </div>
 </div>
 <div class="cell">
@@ -2884,7 +2883,7 @@ None of these assumptions
 </form>
 <script>function validate_form_Q13_12() {var x, text; var x = document.forms['form_Q13_12']['answer_Q13_12'].value;if (x == 'About 20%'){text = 'You’re right, well done! 🎉';} else {text = 'No, this is not the correct value.';} document.getElementById('result_Q13_12').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'That’s right! Well done!'; res3 = document.getElementById('result_Q13_3').innerText == 'Absolutely, well done!'; res4 = document.getElementById('result_Q13_4').innerText == 'That’s right, well done!'; res5 = document.getElementById('result_Q13_5').innerText == 'That’s right! Note that entering this predictor in the model changes the relative importance of all the other predictors, too.'; res6 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉'; res7 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!'; res8 = document.getElementById('result_Q13_8').innerText == 'That’s right. The p-value associated with the interaction coefficient is greater than 0.05.'; res9 = document.getElementById('result_Q13_9').innerText == 'That’s right, well done! We can tell from the plot that years in education is a statistically significant predictor because, in both the L1 and the L2 panel, it is impossible to draw a horizontal line that stays within the confidence band. A horizontal line would represent the null hypothesis of no association and, if we cannot draw it within the confidence band, this means that we can reject the null hypothesis. Concerning the statistical significance of the interaction, however, it is not obvious that the slopes of the two lines differ much. All the predicted Vocab scores for L2 speakers are lower than for L1 speakers, but the increase associated with more years of formal education, as represented by the gradients of the two slopes, look about the same. This is why the interaction coefficient turned out not to be statistically significant.'; res10 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.'; res11 = document.getElementById('result_Q13_11').innerText == 'Yes, well done! 🎉'; res12 = document.getElementById('result_Q13_12').innerText == 'You’re right, well done! 🎉';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.'; res2 = document.getElementById('result_Q13_11').innerText == 'Yes, well done! 🎉'; res3 = document.getElementById('result_Q13_12').innerText == 'You’re right, well done! 🎉';text = res1 + res2 + res3;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -2944,7 +2943,7 @@ ReadEng
 </form>
 <script>function validate_form_Q13_13() {var text; var x1 = document.getElementById('answer_Q13_13_1'); var x2 = document.getElementById('answer_Q13_13_2'); var x3 = document.getElementById('answer_Q13_13_3'); var x4 = document.getElementById('answer_Q13_13_4'); var x5 = document.getElementById('answer_Q13_13_5'); var x6 = document.getElementById('answer_Q13_13_6'); var x7 = document.getElementById('answer_Q13_13_7'); if (x1.checked == false&x2.checked == false&x3.checked == false&x4.checked == false&x5.checked == false&x6.checked == false&x7.checked == true){text = 'That’s right, only one main-effect predictor makes a statistically significant contribution to this model of receptive vocabularly knowledge among L2 speakers of English.';} else {text = 'Humm, not quite. Which coefficient estimate(s) are associated with p-values that are lower than 0.05?';} document.getElementById('result_Q13_13').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'That’s right! Well done!'; res3 = document.getElementById('result_Q13_3').innerText == 'Absolutely, well done!'; res4 = document.getElementById('result_Q13_4').innerText == 'That’s right, well done!'; res5 = document.getElementById('result_Q13_5').innerText == 'That’s right! Note that entering this predictor in the model changes the relative importance of all the other predictors, too.'; res6 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉'; res7 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!'; res8 = document.getElementById('result_Q13_8').innerText == 'That’s right. The p-value associated with the interaction coefficient is greater than 0.05.'; res9 = document.getElementById('result_Q13_9').innerText == 'That’s right, well done! We can tell from the plot that years in education is a statistically significant predictor because, in both the L1 and the L2 panel, it is impossible to draw a horizontal line that stays within the confidence band. A horizontal line would represent the null hypothesis of no association and, if we cannot draw it within the confidence band, this means that we can reject the null hypothesis. Concerning the statistical significance of the interaction, however, it is not obvious that the slopes of the two lines differ much. All the predicted Vocab scores for L2 speakers are lower than for L1 speakers, but the increase associated with more years of formal education, as represented by the gradients of the two slopes, look about the same. This is why the interaction coefficient turned out not to be statistically significant.'; res10 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.'; res11 = document.getElementById('result_Q13_11').innerText == 'Yes, well done! 🎉'; res12 = document.getElementById('result_Q13_12').innerText == 'You’re right, well done! 🎉'; res13 = document.getElementById('result_Q13_13').innerText == 'That’s right, only one main-effect predictor makes a statistically significant contribution to this model of receptive vocabularly knowledge among L2 speakers of English.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.'; res2 = document.getElementById('result_Q13_11').innerText == 'Yes, well done! 🎉'; res3 = document.getElementById('result_Q13_12').innerText == 'You’re right, well done! 🎉'; res4 = document.getElementById('result_Q13_13').innerText == 'That’s right, only one main-effect predictor makes a statistically significant contribution to this model of receptive vocabularly knowledge among L2 speakers of English.';text = res1 + res2 + res3 + res4;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -2968,7 +2967,7 @@ No, the ReadEng coefficient is larger than all other coefficients, which violate
 </form>
 <script>function validate_form_Q13_14() {var x, text; var x = document.forms['form_Q13_14']['answer_Q13_14'].value;if (x == 'Yes, the ReadEng coefficient is positive, which means that the more time L2 speakers regularly spend reading in English, the higher their predicted receptive English vocabulary test scores.'){text = 'Yes, reading is a great way to learn new vocabularly! And reading a statistics textbook is therefore doubly beneficial: you get to learn about quantitative data analysis <em>and</em> expand your English vocabulary! 🤓';} else {text = 'No, only individual observations (i.e. data points) can be considered outliers, not coefficient estimates.';} document.getElementById('result_Q13_14').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'That’s right! Well done!'; res3 = document.getElementById('result_Q13_3').innerText == 'Absolutely, well done!'; res4 = document.getElementById('result_Q13_4').innerText == 'That’s right, well done!'; res5 = document.getElementById('result_Q13_5').innerText == 'That’s right! Note that entering this predictor in the model changes the relative importance of all the other predictors, too.'; res6 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉'; res7 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!'; res8 = document.getElementById('result_Q13_8').innerText == 'That’s right. The p-value associated with the interaction coefficient is greater than 0.05.'; res9 = document.getElementById('result_Q13_9').innerText == 'That’s right, well done! We can tell from the plot that years in education is a statistically significant predictor because, in both the L1 and the L2 panel, it is impossible to draw a horizontal line that stays within the confidence band. A horizontal line would represent the null hypothesis of no association and, if we cannot draw it within the confidence band, this means that we can reject the null hypothesis. Concerning the statistical significance of the interaction, however, it is not obvious that the slopes of the two lines differ much. All the predicted Vocab scores for L2 speakers are lower than for L1 speakers, but the increase associated with more years of formal education, as represented by the gradients of the two slopes, look about the same. This is why the interaction coefficient turned out not to be statistically significant.'; res10 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.'; res11 = document.getElementById('result_Q13_11').innerText == 'Yes, well done! 🎉'; res12 = document.getElementById('result_Q13_12').innerText == 'You’re right, well done! 🎉'; res13 = document.getElementById('result_Q13_13').innerText == 'That’s right, only one main-effect predictor makes a statistically significant contribution to this model of receptive vocabularly knowledge among L2 speakers of English.'; res14 = document.getElementById('result_Q13_14').innerText == 'Yes, reading is a great way to learn new vocabularly! And reading a statistics textbook is therefore doubly beneficial: you get to learn about quantitative data analysis and expand your English vocabulary! 🤓';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.'; res2 = document.getElementById('result_Q13_11').innerText == 'Yes, well done! 🎉'; res3 = document.getElementById('result_Q13_12').innerText == 'You’re right, well done! 🎉'; res4 = document.getElementById('result_Q13_13').innerText == 'That’s right, only one main-effect predictor makes a statistically significant contribution to this model of receptive vocabularly knowledge among L2 speakers of English.'; res5 = document.getElementById('result_Q13_14').innerText == 'Yes, reading is a great way to learn new vocabularly! And reading a statistics textbook is therefore doubly beneficial: you get to learn about quantitative data analysis and expand your English vocabulary! 🤓';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -3002,7 +3001,7 @@ None of them
 </form>
 <script>function validate_form_Q13_15() {var text; var x1 = document.getElementById('answer_Q13_15_1'); var x2 = document.getElementById('answer_Q13_15_2'); var x3 = document.getElementById('answer_Q13_15_3'); var x4 = document.getElementById('answer_Q13_15_4'); if (x1.checked == false&x2.checked == false&x3.checked == false&x4.checked == true){text = 'You are correct: none of them make a statistically significant contribution to the model. However, that doesn’t necessarily mean that their coefficients do not point to any real associations. We may not have enough data to observe any statistically significant interactions.';} else {text = 'Hummm, are you sure? check the model summary again.';} document.getElementById('result_Q13_15').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'That’s right! Well done!'; res3 = document.getElementById('result_Q13_3').innerText == 'Absolutely, well done!'; res4 = document.getElementById('result_Q13_4').innerText == 'That’s right, well done!'; res5 = document.getElementById('result_Q13_5').innerText == 'That’s right! Note that entering this predictor in the model changes the relative importance of all the other predictors, too.'; res6 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉'; res7 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!'; res8 = document.getElementById('result_Q13_8').innerText == 'That’s right. The p-value associated with the interaction coefficient is greater than 0.05.'; res9 = document.getElementById('result_Q13_9').innerText == 'That’s right, well done! We can tell from the plot that years in education is a statistically significant predictor because, in both the L1 and the L2 panel, it is impossible to draw a horizontal line that stays within the confidence band. A horizontal line would represent the null hypothesis of no association and, if we cannot draw it within the confidence band, this means that we can reject the null hypothesis. Concerning the statistical significance of the interaction, however, it is not obvious that the slopes of the two lines differ much. All the predicted Vocab scores for L2 speakers are lower than for L1 speakers, but the increase associated with more years of formal education, as represented by the gradients of the two slopes, look about the same. This is why the interaction coefficient turned out not to be statistically significant.'; res10 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.'; res11 = document.getElementById('result_Q13_11').innerText == 'Yes, well done! 🎉'; res12 = document.getElementById('result_Q13_12').innerText == 'You’re right, well done! 🎉'; res13 = document.getElementById('result_Q13_13').innerText == 'That’s right, only one main-effect predictor makes a statistically significant contribution to this model of receptive vocabularly knowledge among L2 speakers of English.'; res14 = document.getElementById('result_Q13_14').innerText == 'Yes, reading is a great way to learn new vocabularly! And reading a statistics textbook is therefore doubly beneficial: you get to learn about quantitative data analysis and expand your English vocabulary! 🤓'; res15 = document.getElementById('result_Q13_15').innerText == 'You are correct: none of them make a statistically significant contribution to the model. However, that doesn’t necessarily mean that their coefficients do not point to any real associations. We may not have enough data to observe any statistically significant interactions.';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6;res1 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.'; res2 = document.getElementById('result_Q13_11').innerText == 'Yes, well done! 🎉'; res3 = document.getElementById('result_Q13_12').innerText == 'You’re right, well done! 🎉'; res4 = document.getElementById('result_Q13_13').innerText == 'That’s right, only one main-effect predictor makes a statistically significant contribution to this model of receptive vocabularly knowledge among L2 speakers of English.'; res5 = document.getElementById('result_Q13_14').innerText == 'Yes, reading is a great way to learn new vocabularly! And reading a statistics textbook is therefore doubly beneficial: you get to learn about quantitative data analysis and expand your English vocabulary! 🤓'; res6 = document.getElementById('result_Q13_15').innerText == 'You are correct: none of them make a statistically significant contribution to the model. However, that doesn’t necessarily mean that their coefficients do not point to any real associations. We may not have enough data to observe any statistically significant interactions.';text = res1 + res2 + res3 + res4 + res5 + res6;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -3046,7 +3045,7 @@ by = "ART"
 </form>
 <script>function validate_form_Q13_16() {var text; var x1 = document.getElementById('answer_Q13_16_1'); var x2 = document.getElementById('answer_Q13_16_2'); var x3 = document.getElementById('answer_Q13_16_3'); var x4 = document.getElementById('answer_Q13_16_4'); var x5 = document.getElementById('answer_Q13_16_5'); var x6 = document.getElementById('answer_Q13_16_6'); if (x1.checked == true&x2.checked == false&x3.checked == true&x4.checked == false&x5.checked == false&x6.checked == true){text = 'Yes, well done! 🎉 Now you can focus on interpreting your model’s predicted values (the blue lines) and examine the partial residuals (the grey points that represent the variance in Vocab scores that is not accounted for by this model). It should be clear from this plot that this L2 model is not able to predict <code>Vocab</code> scores as well as our L1 model could (hence the considerably lower adjusted coefficient of determination (<em>R</em>-squared). Is this because L2 learners are more diverse and therefore less predictable? Or is it (also) because the sample size is smaller (67 instead of 90 participants)? We cannot tell from this data alone. What is certain is that more research is needed to answer these fascinating questions!';} else {text = 'No, that won’t quite do.';} document.getElementById('result_Q13_16').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15, res16;res1 = document.getElementById('result_Q13_1').innerText == 'That’s right, well done!'; res2 = document.getElementById('result_Q13_2').innerText == 'That’s right! Well done!'; res3 = document.getElementById('result_Q13_3').innerText == 'Absolutely, well done!'; res4 = document.getElementById('result_Q13_4').innerText == 'That’s right, well done!'; res5 = document.getElementById('result_Q13_5').innerText == 'That’s right! Note that entering this predictor in the model changes the relative importance of all the other predictors, too.'; res6 = document.getElementById('result_Q13_6').innerText == 'That’s right, well done! 🎉'; res7 = document.getElementById('result_Q13_7').innerText == 'That’s right. Now fit the model and check the model summary to see if this interaction makes a significant contribution to the model!'; res8 = document.getElementById('result_Q13_8').innerText == 'That’s right. The p-value associated with the interaction coefficient is greater than 0.05.'; res9 = document.getElementById('result_Q13_9').innerText == 'That’s right, well done! We can tell from the plot that years in education is a statistically significant predictor because, in both the L1 and the L2 panel, it is impossible to draw a horizontal line that stays within the confidence band. A horizontal line would represent the null hypothesis of no association and, if we cannot draw it within the confidence band, this means that we can reject the null hypothesis. Concerning the statistical significance of the interaction, however, it is not obvious that the slopes of the two lines differ much. All the predicted Vocab scores for L2 speakers are lower than for L1 speakers, but the increase associated with more years of formal education, as represented by the gradients of the two slopes, look about the same. This is why the interaction coefficient turned out not to be statistically significant.'; res10 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.'; res11 = document.getElementById('result_Q13_11').innerText == 'Yes, well done! 🎉'; res12 = document.getElementById('result_Q13_12').innerText == 'You’re right, well done! 🎉'; res13 = document.getElementById('result_Q13_13').innerText == 'That’s right, only one main-effect predictor makes a statistically significant contribution to this model of receptive vocabularly knowledge among L2 speakers of English.'; res14 = document.getElementById('result_Q13_14').innerText == 'Yes, reading is a great way to learn new vocabularly! And reading a statistics textbook is therefore doubly beneficial: you get to learn about quantitative data analysis and expand your English vocabulary! 🤓'; res15 = document.getElementById('result_Q13_15').innerText == 'You are correct: none of them make a statistically significant contribution to the model. However, that doesn’t necessarily mean that their coefficients do not point to any real associations. We may not have enough data to observe any statistically significant interactions.'; res16 = document.getElementById('result_Q13_16').innerText == 'Yes, well done! 🎉 Now you can focus on interpreting your model’s predicted values (the blue lines) and examine the partial residuals (the grey points that represent the variance in Vocab scores that is not accounted for by this model). It should be clear from this plot that this L2 model is not able to predict Vocab scores as well as our L1 model could (hence the considerably lower adjusted coefficient of determination (R-squared). Is this because L2 learners are more diverse and therefore less predictable? Or is it (also) because the sample size is smaller (67 instead of 90 participants)? We cannot tell from this data alone. What is certain is that more research is needed to answer these fascinating questions!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15 + res16;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_Q13_10').innerText == 'That’s right! ✅ The model formula includes five interactions and they all contribute to the model predictions. That said, their coefficient estimates are very small and none of their contributions to the model are statistically significantly different from zero.'; res2 = document.getElementById('result_Q13_11').innerText == 'Yes, well done! 🎉'; res3 = document.getElementById('result_Q13_12').innerText == 'You’re right, well done! 🎉'; res4 = document.getElementById('result_Q13_13').innerText == 'That’s right, only one main-effect predictor makes a statistically significant contribution to this model of receptive vocabularly knowledge among L2 speakers of English.'; res5 = document.getElementById('result_Q13_14').innerText == 'Yes, reading is a great way to learn new vocabularly! And reading a statistics textbook is therefore doubly beneficial: you get to learn about quantitative data analysis and expand your English vocabulary! 🤓'; res6 = document.getElementById('result_Q13_15').innerText == 'You are correct: none of them make a statistically significant contribution to the model. However, that doesn’t necessarily mean that their coefficients do not point to any real associations. We may not have enough data to observe any statistically significant interactions.'; res7 = document.getElementById('result_Q13_16').innerText == 'Yes, well done! 🎉 Now you can focus on interpreting your model’s predicted values (the blue lines) and examine the partial residuals (the grey points that represent the variance in Vocab scores that is not accounted for by this model). It should be clear from this plot that this L2 model is not able to predict Vocab scores as well as our L1 model could (hence the considerably lower adjusted coefficient of determination (R-squared). Is this because L2 learners are more diverse and therefore less predictable? Or is it (also) because the sample size is smaller (67 instead of 90 participants)? We cannot tell from this data alone. What is certain is that more research is needed to answer these fascinating questions!';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
          return false;
          }}</script>
 </div>
