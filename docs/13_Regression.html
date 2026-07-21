@@ -1171,7 +1171,7 @@ Figure&nbsp;13.1: <code>Vocab</code> scores as predicted by <code>model4_c</code
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(model4_c, </span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">xvar =</span> <span class="st">"Age_c"</span>) <span class="sc">+</span> </span>
 <span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age (in years)"</span>,</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Predicted Vocab scores"</span>) <span class="sc">+</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Vocab scores"</span>) <span class="sc">+</span></span>
 <span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">110</span>)) <span class="sc">+</span></span>
 <span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="cf">function</span>(x) x <span class="sc">+</span> <span class="fu">median</span>(Dabrowska.data<span class="sc">$</span>Age), </span>
@@ -1179,13 +1179,13 @@ Figure&nbsp;13.1: <code>Vocab</code> scores as predicted by <code>model4_c</code
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-PredictedVocabAge" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatterplot showing predicted vocabulary scores versus age in years, with partial residual points and a blue regression line with gray confidence band showing a slight positive trend. Two data points are highlighted: a pink point labeled Lithuanian bar staff showing a large positive residual around age 25, and a purple point labeled Polish driver showing a small residual around age 50.">
+<div id="fig-PredictedVocabAge" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatterplot showing predicted vocabulary scores versus age in years, with partial residual points and a blue regression line with gray confidence band showing a slight positive trend. Two data points are highlighted: a pink point labeled Lithuanian bar staff showing a large positive residual around age 25, and a purple point labeled Polish driver showing a small positive residual around age 50.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-PredictedVocabAge-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="13_Regression_files/figure-html/fig-PredictedVocabAge-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;13.2: Vocab scores as predicted by model4_c for speakers of various ages (blue line) and partial model residuals represented as points. Two data points are highlighted: one representing a very large positive residual and one representing a very small residual."><img src="13_Regression_files/figure-html/fig-PredictedVocabAge-1.png" class="img-fluid figure-img" style="width:80.0%" alt="Scatterplot showing predicted vocabulary scores versus age in years, with partial residual points and a blue regression line with gray confidence band showing a slight positive trend. Two data points are highlighted: a pink point labeled Lithuanian bar staff showing a large positive residual around age 25, and a purple point labeled Polish driver showing a small residual around age 50."></a>
+<a href="13_Regression_files/figure-html/fig-PredictedVocabAge-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;13.2: Vocab scores as predicted by model4_c for speakers of various ages (blue line with 95% CI) and partial model residuals (represented as grey points). Two data points are highlighted: one representing a very large positive residual and one representing a very small positive residual."><img src="13_Regression_files/figure-html/fig-PredictedVocabAge-1.png" class="img-fluid figure-img" style="width:80.0%" alt="Scatterplot showing predicted vocabulary scores versus age in years, with partial residual points and a blue regression line with gray confidence band showing a slight positive trend. Two data points are highlighted: a pink point labeled Lithuanian bar staff showing a large positive residual around age 25, and a purple point labeled Polish driver showing a small positive residual around age 50."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-PredictedVocabAge-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.2: <code>Vocab</code> scores as predicted by <code>model4_c</code> for speakers of various ages (blue line) and partial model residuals represented as points. Two data points are highlighted: one representing a very large positive residual and one representing a very small residual.
+Figure&nbsp;13.2: <code>Vocab</code> scores as predicted by <code>model4_c</code> for speakers of various ages (blue line with 95% CI) and partial model residuals (represented as grey points). Two data points are highlighted: one representing a very large positive residual and one representing a very small positive residual.
 </figcaption>
 </figure>
 </div>
@@ -1209,7 +1209,7 @@ Figure&nbsp;13.2: <code>Vocab</code> scores as predicted by <code>model4_c</code
 <p>The test consists of a list of 130 names, half of which are names of real authors. The participants’ task is to mark the names that they know to be those of published authors. To penalize guessing, the score is computed by subtracting the number of foils [wrong guesses] from the number of real authors selected. Thus, the maximum possible score is 65, and the minimum score could be negative if a participant selects more foils than real authors. When this happened, the negative number was replaced with 0.</p>
 <p>The ART has been shown to be a valid and reliable measure of print exposure, which, unlike questionnaire-based measures, is not contaminated by socially desirable responses and assesses lifetime reading experience as opposed to current reading (see Acheson et al., 2008; Stanovich &amp; Cunningham, 1992).</p>
 </blockquote>
-<p><span style="color:green;"><strong>Q13.1</strong></span> For this task, you will fit a new multiple linear regression model that predicts <code>Vocab</code> scores among L1 and L2 speakers using all of the predictors that we used in <code>model4_c</code> plus <code>ART</code> scores. Which formula do you need to specify inside the <code>lm()</code>function to fit this new model (which we will name <code>model.ART</code>)?</p>
+<p><span style="color:green;"><strong>Q13.1</strong></span> For this task, you will fit a new multiple linear regression model that predicts <code>Vocab</code> scores among L1 and L2 speakers using all of the predictors that we used in <code>model4_c</code> plus <code>ART</code> scores. Which formula do you need to specify inside the <code>lm()</code>function to fit this new model?</p>
 <div class="cell">
 <div class="cell-output-display">
 <form name="form_Q13_1" onsubmit="return validate_form_Q13_1()" method="post">
@@ -1245,7 +1245,7 @@ ART ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c
 <div class="cell-output-display">
 <div id="hint_45722" onclick="return show_hint_45722()">🐭 Click on the mouse for a hint.</div>
 <div id="result_45722" onclick="return show_hint_45722()"></div>
-<script>function show_hint_45722(){var x = document.getElementById('result_45722').innerHTML; if(!x){document.getElementById('result_45722').innerHTML = 'Watch out: Although they are easily confused, the plus sign (<code>+</code>) and the asterisk sign (<code>*</code>) have different meanings in model formulas.';} else {document.getElementById('result_45722').innerHTML = '';}}</script>
+<script>function show_hint_45722(){var x = document.getElementById('result_45722').innerHTML; if(!x){document.getElementById('result_45722').innerHTML = 'Watch out: The plus sign (<code>+</code>) and the asterisk sign (<code>*</code>) have different meanings in model formulas.';} else {document.getElementById('result_45722').innerHTML = '';}}</script>
 </div>
 </div>
 <p><span style="color:green;"><strong>Q13.2</strong></span> Fit a model using the correct formula from above and save it as <code>model.ART</code>. Examine the summary of your new model. Which of these statements is/are true?</p>
@@ -1253,13 +1253,13 @@ ART ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTotal_c
 <div class="cell-output-display">
 <form name="form_Q13_2" onsubmit="return validate_form_Q13_2()" method="post">
 <label>
-<input type="checkbox" id="answer_Q13_2_1" value="The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c).">
-The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c).
+<input type="checkbox" id="answer_Q13_2_1" value="The model that includes ART as a predictor accounts for more of the variance in Vocab scores than the model that does not (model4_c).">
+The model that includes ART as a predictor accounts for more of the variance in Vocab scores than the model that does not (model4_c).
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q13_2_2" value="ART makes a statistically significant contribution to the model at the α-level of 0.05.">
-ART makes a statistically significant contribution to the model at the α-level of 0.05.
+<input type="checkbox" id="answer_Q13_2_2" value="ART scores make a statistically significant contribution to the model at the α-level of 0.05.">
+ART scores make a statistically significant contribution to the model at the α-level of 0.05.
 </label>
 <br>
 <label>
@@ -1268,8 +1268,8 @@ Recognising more real authors on the ART is associated with higher Vocab scores.
 </label>
 <br>
 <label>
-<input type="checkbox" id="answer_Q13_2_4" value="ART does not make a statistically significant contribution to the model at the α-level of 0.05.">
-ART does not make a statistically significant contribution to the model at the α-level of 0.05.
+<input type="checkbox" id="answer_Q13_2_4" value="ART scores do not make a statistically significant contribution to the model at the α-level of 0.05.">
+ART scores do not make a statistically significant contribution to the model at the α-level of 0.05.
 </label>
 <br>
 <label>
@@ -1705,7 +1705,7 @@ F-statistic: 10.98 on 9 and 147 DF,  p-value: 5.537e-13</code></pre>
 <p>In the model summary above, the interaction term between <code>Age</code> and <code>Group</code> is the last coefficient listed (<code>GroupL2:Age_c</code>). The values associated with this coefficient confirm our intuition based on our descriptive visualisation of the data (<a href="#fig-CorVocabAge" class="quarto-xref">Figure&nbsp;<span>13.4</span></a>): there is a statistically significant interaction between age and native-speaker status (<em>p</em>&nbsp;=&nbsp;0.002089) and the interaction coefficient for this interaction term is negative (<code>-0.8982</code>). This means that, whilst being older is generally associated with higher <code>Vocab</code> scores for the reference level of L1 speakers, if a participant is an L2 English speaker, this trend is reversed.</p>
 <p>To understand how this works in practice, let’s compare the predicted <code>Vocab</code> scores of two 35-year-olds: an L1 and an L2 speaker. For the purposes of this illustration, we will assume that, apart from their native-speaker status, all their other characteristics correspond to the reference level in our model (i.e.&nbsp;they are both female, have a clerical occupation, scored average on the Blocks test and were in formal education for the average number of years). For the L1 speaker, we calculate their predicted <code>Vocab</code> score as before. We take the intercept (<code>69.1314</code>) as our starting point and then add the <code>Age_c</code> coefficient (<code>0.5466</code>) multiplied by the difference between their age and the median age (which is the reference level of our centered predictor) (i.e.&nbsp;35&nbsp;-&nbsp;31&nbsp;=&nbsp;4). This means that their predicted <code>Vocab</code> score is:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fl">69.1314</span> <span class="sc">+</span> <span class="fl">0.5466</span><span class="sc">*</span><span class="dv">4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fl">69.1314</span> <span class="sc">+</span> <span class="fl">0.5466</span> <span class="sc">*</span> <span class="dv">4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 71.3178</code></pre>
 </div>

@@ -864,7 +864,7 @@ These estimated means are informative, but model estimates are best visualised, 
 
 ```{r}
 #| label: "fig-PredictedVocabByOccupation"
-#| fig-cap: "Distribution of predicted vocabulary test scores across four occupational groups"
+#| fig-cap: "Predicted vocabulary test scores (in blue with 95% confidence intervals in grey) across four occupational groups and model residuals (displayed as grey dots)"
 #| fig-alt: "Boxplot showing predicted vocabulary scores across four occupational groups (C, I, M, and PS). Individual residual points are shown as gray dots overlaid on gray boxplots with blue median lines."
 #| out-width: 85%
 
@@ -874,7 +874,7 @@ library(visreg)
 visreg(model3, 
        gg = TRUE) + # <1>
   labs(x = "Occupational groups",
-       y = "Predicted Vocab scores") +
+       y = "Vocab scores") +
   theme_bw()
 ```
 
@@ -1071,7 +1071,8 @@ summary(taskmodel4)
 # b) Graphical approach
 library(visreg)
 
-visreg(taskmodel4, gg = TRUE) +
+visreg(taskmodel4, 
+       gg = TRUE) +
   labs(title = "Participants' L1 language family",
        x = NULL,
        y = "Vocab scores") +
@@ -1112,7 +1113,9 @@ check_hint("Remember that p-values depend on three different factors, see Sectio
 
 # The plot of predicted values (see code below) shows that the coefficient estimate for Hellenic speakers is based on only one data point (as is also the case for Germanic speakers).
 library(visreg)
-visreg(taskmodel4, gg = TRUE) +
+
+visreg(taskmodel4, 
+       gg = TRUE) +
   labs(title = "Participants' L1 language family",
        x = NULL,
        y = "Vocab scores") +

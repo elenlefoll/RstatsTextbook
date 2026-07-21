@@ -405,7 +405,7 @@ library(visreg)
 visreg(model4_c, 
        xvar = "Age_c") + 
   labs(x = "Age (in years)",
-       y = "Predicted Vocab scores") +
+       y = "Vocab scores") +
   theme_bw() +
   scale_y_continuous(limits = c(0, 110)) +
   scale_x_continuous(labels = function(x) x + median(Dabrowska.data$Age), 
@@ -417,8 +417,8 @@ visreg(model4_c,
 #| fig-asp: 0.7
 #| out-width: 80%
 #| label: "fig-PredictedVocabAge"
-#| fig-cap: "`Vocab` scores as predicted by `model4_c` for speakers of various ages (blue line) and partial model residuals represented as points. Two data points are highlighted: one representing a very large positive residual and one representing a very small residual."
-#| fig-alt: "Scatterplot showing predicted vocabulary scores versus age in years, with partial residual points and a blue regression line with gray confidence band showing a slight positive trend. Two data points are highlighted: a pink point labeled Lithuanian bar staff showing a large positive residual around age 25, and a purple point labeled Polish driver showing a small residual around age 50."
+#| fig-cap: "`Vocab` scores as predicted by `model4_c` for speakers of various ages (blue line with 95% CI) and partial model residuals (represented as grey points). Two data points are highlighted: one representing a very large positive residual and one representing a very small positive residual."
+#| fig-alt: "Scatterplot showing predicted vocabulary scores versus age in years, with partial residual points and a blue regression line with gray confidence band showing a slight positive trend. Two data points are highlighted: a pink point labeled Lithuanian bar staff showing a large positive residual around age 25, and a purple point labeled Polish driver showing a small positive residual around age 50."
 
 vr.res <- visreg(model4_c, 
        xvar = "Age_c", 
@@ -517,7 +517,7 @@ geom_segment(
 ) +
   
   labs(x = "Age (in years)",
-       y = "Predicted Vocab scores") +
+       y = "Vocab scores") +
   theme_bw() +
   scale_y_continuous(limits = c(0, 116)) +
   scale_x_continuous(labels = function(x) x + median(Dabrowska.data$Age),
@@ -561,7 +561,7 @@ Dabrowska.data <- Dabrowska.data |>
 
 ```
 
-[**Q13.1**]{style="color:green;"} For this task, you will fit a new multiple linear regression model that predicts `Vocab` scores among L1 and L2 speakers using all of the predictors that we used in `model4_c` plus `ART` scores. Which formula do you need to specify inside the `lm()`function to fit this new model (which we will name `model.ART`)?
+[**Q13.1**]{style="color:green;"} For this task, you will fit a new multiple linear regression model that predicts `Vocab` scores among L1 and L2 speakers using all of the predictors that we used in `model4_c` plus `ART` scores. Which formula do you need to specify inside the `lm()`function to fit this new model?
 
 ```{r}
 #| echo: false
@@ -578,7 +578,7 @@ check_question("Vocab ~ Group + Age_c + OccupGroup + Gender + Blocks_c + EduTota
                button_label = "Check answer",
                right = "That's right, well done!",
                wrong = "No, try it out for yourself and see which formula generates the right model.") 
-check_hint("Watch out: Although they are easily confused, the plus sign (`+`) and the asterisk sign (`*`) have different meanings in model formulas.", 
+check_hint("Watch out: The plus sign (`+`) and the asterisk sign (`*`) have different meanings in model formulas.", 
            hint_title = "🐭 Click on the mouse for a hint.")
 ```
 
@@ -589,13 +589,13 @@ check_hint("Watch out: Although they are easily confused, the plus sign (`+`) an
 #| label: "Q13.2"
 
 check_question(c("Recognising more real authors on the ART is associated with higher Vocab scores.",
-                 "ART makes a statistically significant contribution to the model at the α-level of 0.05.",
-                 "The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c)."),
+                 "ART scores make a statistically significant contribution to the model at the α-level of 0.05.",
+                 "The model that includes ART as a predictor accounts for more of the variance in Vocab scores than the model that does not (model4_c)."),
                options = c("Recognising more real authors on the ART is associated with higher Vocab scores.",
-                 "ART makes a statistically significant contribution to the model at the α-level of 0.05.",
-                 "The model that includes ART accounts for more of the variance in Vocab scores than the model that does not (model4_c).",
+                 "ART scores make a statistically significant contribution to the model at the α-level of 0.05.",
+                 "The model that includes ART as a predictor accounts for more of the variance in Vocab scores than the model that does not (model4_c).",
                  "Recognising more real authors on the ART is associated with lower Vocab scores.",
-                 "ART does not make a statistically significant contribution to the model at the α-level of 0.05.",
+                 "ART scores do not make a statistically significant contribution to the model at the α-level of 0.05.",
                  "The model that does not include ART (model4_c) accounts for more of the variance in Vocab scores than the model that does."),
                random_answer_order = TRUE,
                type = "check",
@@ -900,7 +900,7 @@ In the model summary above, the interaction term between `Age` and `Group` is th
 To understand how this works in practice, let's compare the predicted `Vocab` scores of two 35-year-olds: an L1 and an L2 speaker. For the purposes of this illustration, we will assume that, apart from their native-speaker status, all their other characteristics correspond to the reference level in our model (i.e. they are both female, have a clerical occupation, scored average on the Blocks test and were in formal education for the average number of years). For the L1 speaker, we calculate their predicted `Vocab` score as before. We take the intercept (`69.1314`) as our starting point and then add the `Age_c` coefficient (`0.5466`) multiplied by the difference between their age and the median age (which is the reference level of our centered predictor) (i.e. 35 - 31 = 4). This means that their predicted `Vocab` score is:
 
 ```{r}
-69.1314 + 0.5466*4
+69.1314 + 0.5466 * 4
 ```
 
 ```{r}
