@@ -327,7 +327,9 @@ On plots produced by the `visreg()` function, as in @fig-PredictedVocabByOccupat
 When interpreting the numeric predictors plotted in @fig-VisregVocab above, it is important to remember that, in this model (`model4_c`), we entered centered numeric predictors. This means that an `Age_c` value of 0 corresponds to the median age in the dataset: 31 years. This is why @fig-VisregVocab features negative ages: the negative values correspond to participants who are younger than 31. By contrast, positive scores correspond to participants who are older than 31 years. This is not very intuitive so, for the purposes of visualising and interpreting our model, it is best to transform these variables back to their original scale (see @fig-PredictedVocabAge). This is achieved using the `labels` argument with the {ggplot2} `scale_x_continuous()` function.
 
 :::: content-hidden
+
 ::: callout-warning
+
 ### Bug in version 2.8 of the {visreg} package 🐞 {.unnumbered}
 
 Due to a bug that was introduced in the latest version of the {visreg} package, it is currently necessary to install version 2.7 of the {visreg} package for the `xtrans` argument to work as expected. You can find out which package version you currently have installed, if any, using this function:
@@ -357,10 +359,9 @@ Finally, load the {remotes} library and then install version 2.7.0 of the {visre
 #| eval: false
 remotes::install_version("visreg", "2.7.0")
 ```
-:::
-::::
 
-::: callout-warning
+:::
+
 ### Bug in version 2.8 of the {visreg} package 🐞 {.unnumbered}
 
 Due to a bug in the current CRAN version of the {visreg} package (v. 2.8), it is currently necessary to install the latest development version of the package for this chapter. You can find out which package version you currently have installed, if any, using this function:
@@ -390,7 +391,8 @@ Finally, install version the latest version of the {visreg} package directly fro
 #| eval: false
 remotes::install_github("pbreheny/visreg")
 ```
-:::
+
+::::
 
 ```{r}
 #| eval: false
@@ -923,7 +925,7 @@ predict(model5, newdata = new_obsL1, type = "response")
 For the L2 speaker, we begin by combining the same coefficient estimates as above but, this time, we also add the `GroupL2` coefficient (`-19.9128`), and the interaction coefficient (`GroupL2:Age_c`). The interaction coefficient (`-0.8982`) has to be multiplied by the difference between the speaker's age and the median age (which remains 4 years). This L2 speaker's predicted score is therefore:
 
 ```{r}
-69.1314 + 0.5466*4 + -19.9128 + -0.8982*4
+69.1314 + 0.5466 * 4 + -19.9128 + -0.8982 * 4
 ```
 
 ```{r}
