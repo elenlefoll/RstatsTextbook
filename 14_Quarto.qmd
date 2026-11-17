@@ -984,7 +984,6 @@ You may also want to check out Andrew Heiss' [Quarto extension](https://github.c
 The easiest way to manually construct a table in a Quarto document in *RStudio* is to switch to Visual mode and click on *Insert \> Table*. You can choose how many rows and columns you need and then fill in your table in the Visual editor.
 
 ::: {#tbl-Terminology}
-
 |                               | Same data    | Different data |
 |-------------------------------|--------------|----------------|
 | **Same analysis method**      | Reproducible | Replicable     |
@@ -1007,7 +1006,7 @@ When you switch to the Source mode, you will see that, in **Markdown** (see @sec
 :::
 ```
 
-Note that adding a label starting with `#tbl-` immediately after the caption will number the table and allow for cross-referencing using the shorthand `@tbl-`. For example, we can include the following sentence in our Quarto document:
+Note that adding a label starting with `#tbl-` in the header will number the table and allow for cross-referencing using the shorthand `@tbl-`. For example, we can include the following sentence in our Quarto document:
 
 ``` markdown
 Although frequently confused, in this textbook, reproducibility and replicability refer to two different concepts (see @tbl-Terminology).
@@ -1170,7 +1169,25 @@ An important aspect of academic writing is the inclusion of in-text bibliographi
 
 Alternatively, if you start typing `@` in the Visual editor, a quick reference menu will appear. Either way, any references that you add will be displayed as `@` followed by a **reference identifier**. For example, in the source code of this Quarto document, every reference to @DabrowskaExperienceAptitudeIndividual2019 is indicated as `@DabrowskaExperienceAptitudeIndividual2019`.
 
-When you insert your first reference in a Quarto document, *RStudio* will automatically create a `references.bib` file in your project folder. All references are automatically added to this new [BibLaTeX](https://en.wikipedia.org/wiki/BibLaTeX) file. As shown below, `.bib` files contain entries that begin with `@` followed by the type of reference (`article`, `book`, `manual`, `url`, etc.) and the reference identifier (e.g. `DabrowskaExperienceAptitudeIndividual2019`, `wickhamDataScienceImport2023`). The rest of the entries contains structured information about each reference including its title, date of publication, and DOI or ISBN.
+::::: callout-tip
+#### Literature management `r emoji("books")` {.unnumbered}
+
+Managing the large number of references that we need to consult, read, and cite when doing research can be a real challenge. The good news is that **reference management software** are there to help you overcome this challenge! Whether you are working on a term paper, a Master's dissertation, PhD thesis, or post-doctoral project, it is *always* worth investing the time to learn to use a reference manager!
+
+[Zotero](https://www.zotero.org/) is a free and open-source bibliographic reference manager that will help you organise all your sources and generate beautifully formatted bibliographies for all your projects. It offers various [browser extensions](https://www.zotero.org/download/) that enable you to quickly add references to your library directly from your web browser.
+
+:::: {.content-visible when-format="html"}
+::: column-margin
+![[Zotero](https://www.zotero.org/) logo](images/Zotero_logo.png){width="100" fig-alt="A red Z on a folder with bookmarks."}
+:::
+::::
+
+What's more, Zotero can be integrated in RStudio, making it very easy to include BibTeX-formatted references in your Quarto documents. Find out more in the [*RStudio* documentation](https://rstudio.github.io/visual-markdown-editing/citations.html). Combining Zotero and Quarto also allows you to generate annotated bibliographies. Benjamin Tjepkes explains how to do this in a detailed [blog post](https://btjepkes.github.io/posts/building-annotated-bibliographies-with-quarto/).
+:::::
+
+### Listing cited references
+
+When you insert your first reference in a Quarto document, *RStudio* will automatically create a `references.bib` file in your project folder. All references are automatically added to this new [BibLaTeX](https://en.wikipedia.org/wiki/BibLaTeX) file. As shown below, `.bib` files contain entries that begin with `@` followed by the type of reference (`article`, `book`, `manual`, `url`, etc.) and the reference identifier (e.g. `DabrowskaExperienceAptitudeIndividual2019`, `francom2025`). The rest of the entries contains structured information about each reference including its title, date of publication, and DOI or ISBN.
 
 ``` bib
 @article{
@@ -1187,20 +1204,18 @@ When you insert your first reference in a Quarto document, *RStudio* will automa
   pages={72–100}
 }
 
-@book{
-  wickhamDataScienceImport2023,
-  place={Beijing, Boston, Farnham, Sebastopol, Tokyo},
-  edition={2},
-  title={R for Data Science: Import, tidy, transform, visualize, and model data},
-  ISBN={978-1-4920-9740-2},
-  url={https://r4ds.hadley.nz/},
-  publisher={O’Reilly},
-  author={Wickham, Hadley and Çetinkaya-Rundel, Mine and Grolemund, Garrett},
-  year={2023} 
+@book{francom2025,
+  title = {An Introduction to Quantitative Text Analysis for Linguistics: Reproducible Research Using {R}},
+  author = {Francom, Jerid},
+  year = {2025},
+  publisher = {Routledge},
+  address = {London},
+  doi = {10.4324/9781003393764},
+  isbn = {978-1-003-39376-4}
 }
 ```
 
-In order to connect this `bibliography.bib` file with our Quarto document, we need to add a `bibliography` key to our **YAML header** (see @sec-StartQuarto). Provided that our `references.bib` file is located in the same folder as our Quarto document (which is what *RStudio* does by default), we can simply add the following line to our document header:
+In order to connect this `bibliography.bib` file with our Quarto document, we need to add a `bibliography` key to our **YAML header** (see @sec-StartQuarto). Provided that our `references.bib` file is located in the same folder as our Quarto document (which is what *RStudio* does by default), we add the following line to our document header:
 
 ```{yaml}
 --- 
@@ -1218,7 +1233,7 @@ With this modified YAML header, when the document is rendered, a bibliography wi
 >
 > Dąbrowska, Ewa. 2019. "Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers." *Language Learning* 69 (S1): 72-100. <https://doi.org/10.1111/lang.12323>.
 >
-> Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. *R for Data Science: Import, Tidy, Transform, Visualize, and Model Data*. 2nd ed. O'Reilly. <https://r4ds.hadley.nz/>.
+> Francom, Jerid. 2025. *An Introduction to Quantitative Text Analysis for Linguistics: Reproducible Research Using R*. London: Routledge. <https://doi.org/10.4324/9781003393764>.
 
 By default, Quarto will use the [Chicago Manual of Style](https://chicagomanualofstyle.org/) author-date citation format (as above). However, we can point to a different **citation stylesheet** in the form of a `.csl` (Citation Style Language) file in the YAML header. This allows us to determine exactly how our bibliography and in-text citations should be formatted. Many institutions, publishers, and journals have their own (sometimes annoyingly specific!) requirements. Luckily, the open-source research community has put together a large repository of citation stylesheets for you to choose from: <https://www.zotero.org/styles>. You can download any of these stylesheets (as a `.csl` file), place the file in your project folder, and then link it to your Quarto document by adding a `cls` key to your header.
 
@@ -1239,7 +1254,24 @@ For example, if you wanted to submit your paper to the [International Journal of
 >
 > Dąbrowska, E. (2019). Experience, Aptitude, and Individual Differences in Linguistic Attainment: A Comparison of Native and Nonnative Speakers. *Language Learning*, *69*(S1), 72-100. <https://doi.org/10.1111/lang.12323>.
 >
-> Wickham, H., Çetinkaya-Rundel, M., & Grolemund, G. (2023). *R for data science: Import, tidy, transform, visualize, and model data* (2nd ed.). O'Reilly. Retrieved from <https://r4ds.hadley.nz/>.
+> Francom, J. (2025). *An Introduction to Quantitative Text Analysis for Linguistics: Reproducible Research Using R*. Routledge. <https://doi.org/10.4324/9781003393764>
+
+### Inserting citations
+
+There are many ways to include bibliography references in our writing. As shown in @tbl-CitationSxtax, citations can be integrated in our prose or listed in brackets after a statement. Note that we use square brackets for this purpose. We can also add page or chapter numbers and any other relevant information within the square brackets. The minus sign is useful to avoid repeating an authors' name (for more formatting options, check out the official [Quarto Guide](https://quarto.org/docs/authoring/citations.html)).
+
+::: {#tbl-CitationSxtax}
+| Quarto source code | Rendered output |
+|----|----|
+| `As explained in @francom2025, we can also use Quarto to create presentation slides and easily publish them online.` | As explained in @francom2025, we can also use Quarto to create presentation slides and easily publish them online. |
+| @francom2025 [`p. 314`]`explains that "Quarto encourages modular and reproducible research practices, which connect public-facing with peer-facing communication".` | @francom2025 [p. 314] explains that "Quarto encourages modular and reproducible research practices, which connect public-facing with peer-facing communication". |
+| Quarto is great for authoring and publishing reproducible research [@francom2025; @lefollQuartoReproducibleResearch2026]. | Quarto is great for authoring and publishing reproducible research [@francom2025; @lefollQuartoReproducibleResearch2026]. |
+| "Whether for other researchers or for your future self, creating research that is well-documented and reproducible is a fundamental part of conducting modern scientific inquiry" [@francom2025, p. 314]. | "Whether for other researchers or for your future self, creating research that is well-documented and reproducible is a fundamental part of conducting modern scientific inquiry" [@francom2025, p. 314]. |
+| Quarto allows for the seamless integration of references and resources in your writing [for more on Quarto, see @francom2025: Ch. 12]. | Quarto allows for the seamless integration of references and resources in your writing [for more on Quarto, see @francom2025: Ch. 12]. |
+| Quarto encourages us to ensure that our research is transparent, well-documented, reproducible, and accessible [see @francom2025; @lefollDataAnalysisLanguage2026; -@lefollQuartoReproducibleResearch2026]. | Quarto encourages us to ensure that our research is transparent, well-documented, reproducible, and accessible [see @francom2025; @lefollDataAnalysisLanguage2026; -@lefollQuartoReproducibleResearch2026]. |
+
+Quarto syntax for citations
+:::
 
 :::: {.content-visible when-profile="OER"}
 ::: {.callout-tip collapse="false"}
@@ -1296,22 +1328,6 @@ wrong = "No, not quite. Citation styles can look very similar, but the devil is 
 ```
 :::
 ::::
-
-::::: callout-tip
-#### Literature management `r emoji("books")` {.unnumbered}
-
-Managing the large number of references that we need to consult, read, and cite when doing research can be a real challenge. The good news is that **reference management software** are there to help you overcome this challenge! Whether you are working on a term paper, a Master's dissertation, PhD thesis, or post-doctoral project, it is *always* worth investing the time to learn to use a reference manager!
-
-[Zotero](https://www.zotero.org/) is a free and open-source bibliographic reference manager that will help you organise all your sources and generate beautifully formatted bibliographies for all your projects. It offers various [browser extensions](https://www.zotero.org/download/) that enable you to quickly add references to your library directly from your web browser.
-
-:::: {.content-visible when-format="html"}
-::: column-margin
-![[Zotero](https://www.zotero.org/) logo](images/Zotero_logo.png){width="100" fig-alt="A red Z on a folder with bookmarks."}
-:::
-::::
-
-What's more, Zotero can be integrated in RStudio, making it very easy to include BibTeX-formatted references in your Quarto documents. Find out more in the [*RStudio* documentation](https://rstudio.github.io/visual-markdown-editing/citations.html). Combining Zotero and Quarto also allows you to generate annotated bibliographies. Benjamin Tjepkes explains how to do this in a detailed [blog post](https://btjepkes.github.io/posts/building-annotated-bibliographies-with-quarto/).
-:::::
 
 ## Computing environment {#sec-Packages}
 
@@ -1625,15 +1641,11 @@ format:
 In research, it's quite common that you will be working on a project that will be submitted as a paper or thesis (e.g. in PDF format) *and* that you'll also want to present in class, to your research group, or at a conference. Conveniently, we can turn our Quarto document into presentation slides. At the time of writing, there are three presentation formats to choose from. @tbl-Slides provides links to extensive documentation on each of these publishing formats.
 
 ::: {#tbl-Slides}
-+----------------------------------------------------------------------+---------------------------------------------------------------------+--------------------+
-|                                                                      |                                                                     |                    |
-+======================================================================+=====================================================================+====================+
-| [Revealjs](https://quarto.org/docs/presentations/revealjs/)          | An open-source HTML presentation framework.                         | `format: revealjs` |
-+----------------------------------------------------------------------+---------------------------------------------------------------------+--------------------+
-| [Power-Point](https://quarto.org/docs/presentations/powerpoint.html) | Microsoft Office's presentation editing software.                   | `format: pptx`     |
-+----------------------------------------------------------------------+---------------------------------------------------------------------+--------------------+
-| [Beamer](https://quarto.org/docs/presentations/beamer.html)          | A LaTeX class for producing presentations and slides in PDF format. | `format: beamer`   |
-+----------------------------------------------------------------------+---------------------------------------------------------------------+--------------------+
+|  |  |  |
+|----|----|----|
+| [Revealjs](https://quarto.org/docs/presentations/revealjs/) | An open-source HTML presentation framework. | `format: revealjs` |
+| [Power-Point](https://quarto.org/docs/presentations/powerpoint.html) | Microsoft Office's presentation editing software. | `format: pptx` |
+| [Beamer](https://quarto.org/docs/presentations/beamer.html) | A LaTeX class for producing presentations and slides in PDF format. | `format: beamer` |
 
 : Presentation slide formats
 :::
